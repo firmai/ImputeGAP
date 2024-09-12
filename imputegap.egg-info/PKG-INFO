@@ -1,0 +1,26 @@
+Metadata-Version: 2.1
+Name: imputegap
+Version: 0.1.0
+Summary: Imputation tool for Time Series
+Home-page: https://github.com/eXascaleInfolab/ImputeGAP
+Author: Quentin Nater
+Author-email: quentin.nater@unifr.ch
+License: The Unlicense
+Project-URL: Documentation, https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs
+Project-URL: Source, https://github.com/eXascaleInfolab/ImputeGAP
+Classifier: Development Status :: 1 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Imputation
+Requires-Python: >= 3.8,<3.12
+Description-Content-Type: text/markdown
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+
+![My Logo](assets/imputegab_logo.png)
+
+# Welcome to ImputeGAP
+ImputeGAP is a unified framework for imputation algorithms that provides a narrow-waist interface between algorithm evaluation and parameterization for datasets issued from various domains ranging from neuroscience, medicine, climate to energy.
+
+The interface provides advanced imputation algorithms, construction of various missing values patterns, and different evaluation metrics. In addition, the framework offers support for AutoML parameterization techniques, feature extraction, and, potentially, analysis of feature impact using SHAP. The framework should allow a straightforward integration of new algorithms, datasets, and metrics.

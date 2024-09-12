@@ -1,0 +1,24 @@
+name: MyPy Type Check - ImputeGAP
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install numpy matplotlib types-setuptools
+          pip install mypy
+
+      - name: Run MyPy
+        run: mypy .
