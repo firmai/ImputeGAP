@@ -20,7 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install numpy matplotlib
+        pip install numpy matplotlib types-setuptools types-matplotlib
         pip install mypy
         pip install pytest
 
