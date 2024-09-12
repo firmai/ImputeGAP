@@ -20,7 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install numpy==1.24.4 matplotlib==3.7.5 types-setuptools types-matplotlib
+        pip install numpy==1.24.4 matplotlib==3.7.5 types-setuptools
         pip install mypy
         pip install pytest
 

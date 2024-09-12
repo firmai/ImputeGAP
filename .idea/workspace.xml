@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/mypy_check.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/mypy_check.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pytest-10.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest-10.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/pytest.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -139,7 +138,7 @@
       <updated>1725978124751</updated>
       <workItem from="1725978126099" duration="3347000" />
       <workItem from="1725982931118" duration="823000" />
-      <workItem from="1726129982991" duration="21273000" />
+      <workItem from="1726129982991" duration="21556000" />
     </task>
     <servers />
   </component>
