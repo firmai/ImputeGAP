@@ -2,36 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/mypy_check.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/pytest-10.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/pytest.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/ruff_lint.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/imputegab_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/imputegab_picture.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/assets/test_contamination.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/assets/test_ground_truth.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/bafu.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/chlorine.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/climate.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/drift.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/meteo.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/test.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/manager/_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/assets/test_contaminate.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/assets/test_ground_truth.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/dataset/chlorine.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/dataset/test.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_contamination_mcar.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_loading.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/contamination/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/manager/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/contamination/_contamination.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/dataset/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/dataset/_dataset.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/manager/_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/manager/_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +138,7 @@
       <updated>1725978124751</updated>
       <workItem from="1725978126099" duration="3347000" />
       <workItem from="1725982931118" duration="823000" />
-      <workItem from="1726129982991" duration="20176000" />
+      <workItem from="1726129982991" duration="20444000" />
     </task>
     <servers />
   </component>
