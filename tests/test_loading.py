@@ -9,7 +9,7 @@ class TestLoading(unittest.TestCase):
         """
         Verify if the manager of a dataset is working
         """
-        impute_gap = TimeSeriesGAP("./dataset/test.txt")
+        impute_gap = TimeSeriesGAP("./imputegap/dataset/test.txt")
 
         self.assertEqual(impute_gap.ts.shape, (10, 25))
         self.assertEqual(not impute_gap.filename, False)
@@ -20,7 +20,7 @@ class TestLoading(unittest.TestCase):
         """
         Verify if the manager of a dataset is working
         """
-        impute_gap = TimeSeriesGAP("./dataset/chlorine.txt")
+        impute_gap = TimeSeriesGAP("./imputegap/dataset/chlorine.txt")
 
         self.assertEqual(impute_gap.ts.shape, (50, 1000))
         self.assertEqual(not impute_gap.filename, False)
@@ -34,8 +34,8 @@ class TestLoading(unittest.TestCase):
         #if not hasattr(matplotlib.get_backend(), 'required_interactive_framework'):
         #    matplotlib.use('Agg')
 
-        impute_gap = TimeSeriesGAP("./dataset/test.txt")
-        filename = "./assets"
+        impute_gap = TimeSeriesGAP("./imputegap/dataset/test.txt")
+        filename = "./imputegap/assets"
 
         impute_gap.plot("ground_truth", "test", filename, 5, (16, 8), False)
 

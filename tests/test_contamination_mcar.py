@@ -12,7 +12,7 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the selected values are contaminated
         """
-        impute_gap = TimeSeriesGAP("./dataset/test.txt")
+        impute_gap = TimeSeriesGAP("./imputegap/dataset/test.txt")
         series_selection = [["1", "3", "4"], ["-2"], ["+2"], ["*"]]
         missing_rates = [0.1, 0.2, 0.4, 0.8]
         seeds_start, seeds_end = 42, 43
@@ -47,7 +47,7 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if the starting position is always guaranteed
         """
-        impute_gap = TimeSeriesGAP("./dataset/test.txt")
+        impute_gap = TimeSeriesGAP("./imputegap/dataset/test.txt")
         series_selection = [["1", "3", "4"], ["-2"], ["+2"], ["*"]]
         missing_rates = [0.1, 0.2, 0.4, 0.8]
         ten_percent_index = int(impute_gap.ts.shape[1] * 0.1)
@@ -73,7 +73,7 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the selected values are contaminated
         """
-        impute_gap = TimeSeriesGAP("./dataset/chlorine.txt")
+        impute_gap = TimeSeriesGAP("./imputegap/dataset/chlorine.txt")
         series_selection = [["1", "3", "4"], ["-2"], ["+2"], ["*"]]
         missing_rates = [0.1, 0.2, 0.4, 0.8]
         seeds_start, seeds_end = 42, 43
@@ -108,7 +108,7 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if the starting position is always guaranteed
         """
-        impute_gap = TimeSeriesGAP("./dataset/chlorine.txt")
+        impute_gap = TimeSeriesGAP("./imputegap/dataset/chlorine.txt")
         series_selection = [["1", "3", "4"], ["-2"], ["+2"], ["*"]]
         missing_rates = [0.1, 0.2, 0.4, 0.8]
         seeds_start, seeds_end = 42, 43
@@ -138,8 +138,8 @@ class TestContamination(unittest.TestCase):
         #if not hasattr(matplotlib.get_backend(), 'required_interactive_framework'):
         #    matplotlib.use('Agg')
 
-        impute_gap = TimeSeriesGAP("./dataset/chlorine.txt")
-        filename = "./assets"
+        impute_gap = TimeSeriesGAP("./imputegap/dataset/chlorine.txt")
+        filename = "./imputegap/assets"
 
         impute_gap.plot("contaminate", "test", filename, 5, (16, 8), False)
 
