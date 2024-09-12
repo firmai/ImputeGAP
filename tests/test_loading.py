@@ -34,7 +34,7 @@ class TestLoading(unittest.TestCase):
         Verify if the manager of a dataset is working
         """
         if not hasattr(matplotlib.get_backend(), 'required_interactive_framework'):
-            matplotlib.use('TkAgg')
+            matplotlib.use('Agg')
 
         impute_gap = TimeSeriesGAP("./dataset/test.txt")
         filename = "./assets"
