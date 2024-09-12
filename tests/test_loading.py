@@ -3,13 +3,19 @@ import unittest
 
 from imputegap.manager._manager import TimeSeriesGAP
 
+commit = True
 
 class TestLoading(unittest.TestCase):
     def test_loading_set(self):
         """
         Verify if the manager of a dataset is working
         """
-        impute_gap = TimeSeriesGAP("./imputegap/dataset/test.txt")
+        if commit:
+            file_path = "./imputegap/dataset/test.txt"
+        else:
+            file_path = "./dataset/test.txt"
+
+        impute_gap = TimeSeriesGAP(file_path)
 
         self.assertEqual(impute_gap.ts.shape, (10, 25))
         self.assertEqual(not impute_gap.filename, False)
@@ -20,7 +26,12 @@ class TestLoading(unittest.TestCase):
         """
         Verify if the manager of a dataset is working
         """
-        impute_gap = TimeSeriesGAP("./imputegap/dataset/chlorine.txt")
+        if commit:
+            file_path = "./imputegap/dataset/chlorine.txt"
+        else:
+            file_path = "./dataset/chlorine.txt"
+
+        impute_gap = TimeSeriesGAP(file_path)
 
         self.assertEqual(impute_gap.ts.shape, (50, 1000))
         self.assertEqual(not impute_gap.filename, False)
@@ -34,9 +45,15 @@ class TestLoading(unittest.TestCase):
         #if not hasattr(matplotlib.get_backend(), 'required_interactive_framework'):
         #    matplotlib.use('Agg')
 
-        impute_gap = TimeSeriesGAP("./imputegap/dataset/test.txt")
-        filename = "./imputegap/assets"
+        if commit:
+            file_path = "./imputegap/dataset/test.txt"
+            save_path = "./imputegap/assets"
+        else:
+            file_path = "./dataset/test.txt"
+            save_path = "./assets"
 
-        impute_gap.plot("ground_truth", "test", filename, 5, (16, 8), False)
+        impute_gap = TimeSeriesGAP(file_path)
 
-        self.assertTrue(os.path.exists(filename))
+        impute_gap.plot("ground_truth", "test", save_path, 5, (16, 8), False)
+
+        self.assertTrue(os.path.exists(save_path))
