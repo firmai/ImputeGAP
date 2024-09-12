@@ -13,7 +13,7 @@ setuptools.setup(
     license="The Unlicense",
     project_urls = {
         "Documentation": "https://exascale.info/",
-        "Source" : "https://exascale.info/"
+        "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"
     },
     classifiers=[
         "Development Status :: 1 - Beta",
