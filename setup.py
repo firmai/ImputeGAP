@@ -7,12 +7,12 @@ setuptools.setup(
     description="Imputation tool for Time Series",
     long_description=pathlib.Path("README.md").read_text(),
     long_description_content_type="text/markdown",
-    url="https://exascale.info/",
+    url="https://github.com/eXascaleInfolab/ImputeGAP",
     author="Quentin Nater",
     author_email="quentin.nater@unifr.ch",
     license="The Unlicense",
     project_urls = {
-        "Documentation": "https://exascale.info/",
+        "Documentation": "https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs",
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"
     },
     classifiers=[
@@ -21,8 +21,9 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Topic :: Imputation"
     ],
-    python_requires=">= 3.8,<3.10",
-    install_requires=["pandas, numpy"],
+    python_requires=">= 3.8,<3.12",
+    install_requires=["pandas", "numpy", "matplotlib"],
     packages=setuptools.find_packages(),
-    include_package_data=True
+    include_package_data=True,
+    entry_points={"console_scripts": ["imputegap = imputegap.runner:display_title"]}
 )
