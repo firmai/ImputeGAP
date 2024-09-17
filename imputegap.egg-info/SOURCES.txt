@@ -12,9 +12,9 @@ imputegap.egg-info/requires.txt
 imputegap.egg-info/top_level.txt
 imputegap/Wrapper/__init__.py
 imputegap/Wrapper/airq_normal.txt
-imputegap/Wrapper/airq_normal.txt:Zone.Identifier
+imputegap/Wrapper/airq_normal.txtZone.Identifier
 imputegap/Wrapper/algo_collection.py
-imputegap/Wrapper/algo_collection.py:Zone.Identifier
+imputegap/Wrapper/algo_collection.pyZone.Identifier
 imputegap/Wrapper/algo_collection_test.py
 imputegap/Wrapper/libAlgoCollection.so
 imputegap/Wrapper/testWrapper.py
@@ -67,6 +67,7 @@ imputegap/dataset/climate.txt
 imputegap/dataset/drift.txt
 imputegap/dataset/meteo.txt
 imputegap/dataset/test.txt
+imputegap/evaluation/_evaluation.py
 imputegap/imputation/__init__.py
 imputegap/imputation/_imputation.py
 imputegap/manager/__init__.py

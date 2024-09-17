@@ -14,10 +14,12 @@ Classifier: Programming Language :: Python :: 3.8
 Classifier: Topic :: Imputation
 Requires-Python: >= 3.8,<3.12.2
 Description-Content-Type: text/markdown
-Requires-Dist: numpy
-Requires-Dist: pandas
-Requires-Dist: matplotlib
-Requires-Dist: toml
+Requires-Dist: numpy==1.24.4
+Requires-Dist: pandas==2.0.3
+Requires-Dist: matplotlib==3.7.5
+Requires-Dist: toml==0.10.2
+Requires-Dist: scikit-learn==1.3.2
+Requires-Dist: scipy==1.10.1
 
 ![My Logo](assets/imputegab_logo.png)
 
