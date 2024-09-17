@@ -5,19 +5,34 @@ from imputegap.manager._manager import TimeSeriesGAP
 
 
 def resolve_path(local_path, github_actions_path):
+    """
+    Find the accurate path for tests
+
+    :param local_path: path of local code
+    :param github_actions_path: path on GitHub action
+    :return: correct file paths
+    """
     if os.path.exists(local_path):
         return local_path
     elif os.path.exists(github_actions_path):
         return github_actions_path
     else:
-        raise FileNotFoundError(f"File not found in both: {local_path} and {github_actions_path}.")
+        raise FileNotFoundError("File not found in both: ", local_path, " and ", github_actions_path)
 
 
 def get_save_path():
+    """
+    Find the accurate path for saving files of tests
+    :return: correct file paths
+    """
     return resolve_path('../imputegap/assets', './imputegap/assets')
 
 
 def get_file_path(set_name="test"):
+    """
+    Find the accurate path for loading files of tests
+    :return: correct file paths
+    """
     return resolve_path(f'../imputegap/dataset/{set_name}.txt', f'./imputegap/dataset/{set_name}.txt')
 
 

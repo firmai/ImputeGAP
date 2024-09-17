@@ -1,63 +1,73 @@
-import toml
-from imputegap.algorithms.cdrec import native_cdrec_param
+import numpy as np
+from sklearn.metrics import mutual_info_score
+from scipy.stats import pearsonr
 
 
 
 
+class EvaluationGAP:
 
-class ImputationGAP:
-
-    def __init__(self, gap=None):
+    def __init__(self, ground_truth, imputation, contamination):
         """
-        Initialize the ImputationGAP class.
-
-        :param gap: the TimeSeriesGAP object managing the time series.
-        """
-        self.gap = gap
-        self.config = self.load_toml()
-
-    def load_toml(self):
-        """
-        Load default values of algorithms
-        :return: the config of default values
-        """
-        with open("../env/default_values.toml", "r") as file:
-            config = toml.load(file)
-        return config
-
-
-    def metrics_computation(self, ground_truth, imputed_matrix, contamination):
-        rmse = compute_rmse()
-        mae = 1
-        nmi = 1
-        corr = 1
-
-        return [rmse, mae, nmi, corr]
-
-    def cdrec(self, ground_truth, contamination, params):
-        """
-        Imputation of data with CDREC algorithm
-        @author Quentin Nater
+        Initialize the EvaluationGAP class.
 
         :param ground_truth: original time series without contamination
+        :param imputation: new time series with imputation values
         :param contamination: time series with contamination
-        :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
-
-        :return: all time series with imputation data
         """
+        self.ground_truth = ground_truth
+        self.imputation = imputation
+        self.contamination = contamination
 
-        if params is not None:
-            truncation_rank, epsilon, iterations = params
-        else:
-            truncation_rank = self.config['cdrec']['default_reduction_rank']
-            epsilon = self.config['cdrec']['default_epsilon_str']
-            iterations = self.config['cdrec']['default_iteration']
 
-        imputed_matrix = native_cdrec_param(__py_matrix=contamination, __py_rank=int(truncation_rank),
-                                            __py_eps=float("1" + epsilon), __py_iters=int(iterations))
+    def compute_rmse(self):
+        """
+        Compute the RMSE score based on the ground_truth, the imputation values and the contamination set
+        :return: the RMSE score between ground truth and imputation for NaN positions in contamination.
+        """
+        nan_locations = np.isnan(self.contamination)
 
-        self.gap.imputation = imputed_matrix
+        mse = np.mean((self.ground_truth[nan_locations] - self.imputation[nan_locations]) ** 2)
+        rmse = np.sqrt(np.mean(mse))
 
-        metrics = metrics_computation(ground_truth, imputed_matrix, contamination)
+        return float(rmse)
 
-        return self.gap.imputation
+
+    def compute_mae(self):
+        """
+        Computes MAE only for the positions where there are NaN values in the contamination.
+        :return : the mean absolute error between ground truth and imputation for NaN positions in contamination.
+        """
+        nan_locations = np.isnan(self.contamination)
+
+        absolute_error = np.abs(self.ground_truth[nan_locations] - self.imputation[nan_locations])
+        mean_absolute_error = np.mean(absolute_error)
+
+        return mean_absolute_error
+
+    def compute_mi(self):
+        """
+        Computes Mutual Information (MI) only for the positions where there are NaN values in the contamination.
+        :return : the mutual information between ground truth and imputation for NaN positions in contamination.
+        """
+        nan_locations = np.isnan(self.contamination)
+
+        # Discretize the continuous data into bins
+        ground_truth_binned = np.digitize(self.ground_truth[nan_locations], bins=np.histogram_bin_edges(self.ground_truth[nan_locations], bins=10))
+        imputation_binned = np.digitize(self.imputation[nan_locations], bins=np.histogram_bin_edges(self.imputation[nan_locations], bins=10))
+
+        mi_discrete = mutual_info_score(ground_truth_binned, imputation_binned)
+        #mi_continuous = mutual_info_score(self.ground_truth[nan_locations], self.ground_truth[nan_locations])
+
+        return mi_discrete
+
+    def compute_correlation(self):
+        """
+        Computes the Pearson correlation coefficient only for the positions where there are NaN values in the contamination.
+
+        :return: the Pearson correlation coefficient between ground truth and imputation for NaN positions in contamination.
+        """
+        nan_locations = np.isnan(self.contamination)
+        correlation, _ = pearsonr(self.ground_truth[nan_locations], self.imputation[nan_locations])
+
+        return correlation

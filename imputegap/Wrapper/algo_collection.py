@@ -14,14 +14,18 @@ import numpy as __numpy_import;
 
 __NATIVE_CENTROID_LIBRARY_PATH_DEBUG = "./src/libAlgoCollection.so"; # same folder
 __NATIVE_CENTROID_LIBRARY_PATH = "libAlgoCollection.so"; # will pick up from anything in $PATH
-__NATIVE_CENTROID_LIBRARY_PATH_ALT = "/Home/Dev/Wrapper/src/libAlgoCollection.so"; # manual
-__NATIVE_CENTROID_LIBRARY_PATH_ALT_WSL = "/mnt/d/Git/msc_thesis_timeseries/Wrapper/src/libAlgoCollection.so"; # manual
-__NATIVE_CENTROID_LIBRARY_PATH_ALT_WSL_LAPTOP = "/mnt/c/Git/msc_thesis_timeseries/Wrapper/src/libAlgoCollection.so"; # manual
+__NATIVE_CENTROID_LIBRARY_PATH_DEBUG_WIN = "./Wrapper/src/libAlgoCollection.so"; # same folder
+__NATIVE_CENTROID_LIBRARY_PATH_WIN = "./Wrapper/libAlgoCollection.so"; # will pick up from anything in $PATH
+__NATIVE_CENTROID_LIBRARY_PATH_ALT = "/Home/naterq/Wrapper/src/libAlgoCollection.so"; # manual
+__NATIVE_CENTROID_LIBRARY_PATH_ALT_WSL = "/mnt/d/Git/imputegap/imputegap/Wrapper/src/libAlgoCollection.so"; # manual
+__NATIVE_CENTROID_LIBRARY_PATH_ALT_WSL_LAPTOP = "/mnt/c/Git/imputegap/imputegap/Wrapper/src/libAlgoCollection.so"; # manual
 __NATIVE_CENTROID_LIBRARY_PATH_Linux = "../Wrapper/src/libAlgoCollection.so"; # manual
 __NATIVE_CENTROID_LIBRARY_PATH_Linux_2 = "../../Wrapper/src/libAlgoCollection.so"; # manual
 __NATIVE_CENTROID_LIBRARY_PATH_DOCKER = "/app/Wrapper/libAlgoCollection.so"; # manual
 
 paths = [
+    __NATIVE_CENTROID_LIBRARY_PATH_DEBUG_WIN,
+    __NATIVE_CENTROID_LIBRARY_PATH_WIN,
     __NATIVE_CENTROID_LIBRARY_PATH_DEBUG,
     __NATIVE_CENTROID_LIBRARY_PATH,
     __NATIVE_CENTROID_LIBRARY_PATH_ALT,
@@ -33,6 +37,7 @@ paths = [
 ]
 
 for path in paths:
+    print("checking :", path)
     if __os_path_import.isfile(path):
         __ctype_libcd_native = __native_c_types_import.cdll.LoadLibrary(path)
         break

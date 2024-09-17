@@ -1,110 +1,62 @@
-import math
-import numpy as np
+import toml
+from imputegap.algorithms.cdrec import native_cdrec_param
+from imputegap.evaluation._evaluation import EvaluationGAP
 
 
-class ContaminationGAP:
+class ImputationGAP:
 
-    def __init__(self, gap=None):
+    def __init__(self):
         """
-        Initialize the ContaminationGAP class.
+        Initialize the ImputationGAP class.
 
-        :param manager: the TimeSeriesGAP object managing the time series.
+        :param gap: the TimeSeriesGAP object managing the time series.
         """
-        self.gap = gap
+        self.config = self.load_toml()
 
-    def format_selection(self, selection):
+
+    def load_toml(self):
         """
-        Format the selection of series based on keywords
+        Load default values of algorithms
+        :return: the config of default values
+        """
+        with open("../env/default_values.toml", "r") as file:
+            config = toml.load(file)
+        return config
+
+    def metrics_computation(self, ground_truth, imputation, contamination):
+
+        evaluation = EvaluationGAP(ground_truth, ground_truth+0.1, contamination) # test, to change
+
+        rmse = evaluation.compute_rmse()
+        mae = evaluation.compute_mae()
+        mi_d = evaluation.compute_mi()
+        correlation = evaluation.compute_correlation()
+
+        return [rmse, mae, mi_d, correlation]
+
+    def cdrec(self, ground_truth, contamination, params):
+        """
+        Imputation of data with CDREC algorithm
         @author Quentin Nater
 
-        :param selection: current selection of series
-        :return series_selected : correct format of selection series
+        :param ground_truth: original time series without contamination
+        :param contamination: time series with contamination
+        :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
+
+        :return: all time series with imputation data
         """
-        if not selection:
-            selection = ["*"]
 
-        if selection == ["*"]:
-            series_selected = []
-            for i in range(0, self.ts.shape[0]):
-                series_selected.append(str(i))
-            return series_selected
-
-        elif "-" in selection[0]:
-            series_selected = []
-            value = selection[0]
-            ending = int(value[1:])
-            for i in range(0, self.ts.shape[0] - ending):
-                series_selected.append(str(i))
-            return series_selected
-
-        elif "+" in selection[0]:
-            series_selected = []
-            value = selection[0]
-            starting = int(value[1:])
-            for i in range(starting, self.ts.shape[0]):
-                series_selected.append(str(i))
-            return series_selected
-
+        if params is not None:
+            truncation_rank, epsilon, iterations = params
         else:
-            return selection
+            truncation_rank = self.config['cdrec']['default_reduction_rank']
+            epsilon = self.config['cdrec']['default_epsilon_str']
+            iterations = self.config['cdrec']['default_iteration']
 
-    def contamination_mcar(self, missing_rate=0.1, block_size=10, starting_position=0.1, series_selected=["*"],
-                           use_seed=True, seed=42):
-        """
-        Contamination with MCAR scenario
-        @author Quentin Nater
+        imputed_matrix = native_cdrec_param(__py_matrix=contamination, __py_rank=int(truncation_rank),
+                                            __py_eps=float("1" + epsilon), __py_iters=int(iterations))
 
-        :param ts: time series to contaminate
-        :param missing_rate: total percentage of contamination
-        :param block_size: size of the contamination from a random point
-        :param starting_position : all elements before this position is protected from contamination
-        :param series_selected: series to contaminate
-        :param use_seed : use seed value as random constant to reproduce the experimentation
-        :param seed : seed value for random constant
-        :return: all time series with and without contamination
-        """
 
-        ts_contaminated = self.gap.ts.copy()
-        n_series, n_values = ts_contaminated.shape
-        series_selected = self.format_selection(series_selected)
+        metrics = self.metrics_computation(ground_truth, imputed_matrix, contamination)
 
-        # protect the % before the contamination
-        start_index = int(math.ceil((n_values * starting_position)))
-
-        population = (n_values - start_index) * len(series_selected)
-
-        to_remove = int(math.ceil(population * missing_rate))
-
-        block_to_remove = int(to_remove / block_size)
-
-        print("\nMCAR contamination has been called with :"
-              "\n\ta missing rate of ", missing_rate * 100, "%",
-              "\n\ta starting position at ", start_index,
-              "\n\ta block size of ", block_size,
-              "\n\twith a seed option set to ", use_seed,
-              "\n\tshape of the set ", ts_contaminated.shape,
-              "\n\tthis selection of series", *series_selected,
-              "\n\tfor a total population of ", population,
-              "\n\tnumber of values to removed set to ", to_remove,
-              "\n\tblocks to remove ", block_to_remove, "\n")
-
-        if use_seed:
-            np.random.seed(seed)
-
-        if block_to_remove <= 0:
-            raise ValueError("The number of block to remove must be greater than 0. "
-                             "The dataset or the number of blocks may not be appropriate.")
-
-        missing_indices = np.random.choice(population, int(to_remove / block_size), replace=False)
-
-        for index in missing_indices:
-            for current_block_jump in range(0, block_size):
-                row = int(series_selected[index % len(series_selected)])
-                col = (index // len(series_selected)) + start_index + current_block_jump
-                if col >= n_values:  # outbound limitation
-                    col = col - n_values + start_index
-                ts_contaminated[row, col] = np.nan
-
-        self.gap.contaminated_ts = ts_contaminated
-
-        return self.gap.contaminated_ts
+        return imputed_matrix, metrics

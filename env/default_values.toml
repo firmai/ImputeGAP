@@ -1,0 +1,37 @@
+[cdrec]
+default_reduction_rank = 1
+default_epsilon = 0.000001
+default_epsilon_str = "E-6"
+default_iteration = 100
+
+[stmvl]
+default_window_size = 2
+default_gamma = 0.85
+default_alpha = 7
+
+[iim]
+default_neighbor = 10
+
+[mrnn]
+default_hidden_dim = 10
+default_learning_rate = 0.01
+default_iterations = 1000
+default_keep_prob = 1.0
+default_sequence_length = 7
+
+[explainer]
+splitter = 10
+nbr_series = 15
+
+[loading]
+load_dataset = "drift"
+load_algorithm = "cdrec"
+load_normalization = "Normal"
+load_series = ["-3:all_except_two"]
+load_missing_rate = "20"
+load_scenario = "missing_pourcentage"
+load_series_contamination = []
+load_missing_rate_contamination = "0"
+
+[colors]
+chart = ["#696969", "#2b908f", "#a6c96a", "#876d5d", "#8f10ba", "#f7a35c", "#434348", "#f15c80", "#910000", "#8085e9", "#365e0c", "#90ed7d"]
