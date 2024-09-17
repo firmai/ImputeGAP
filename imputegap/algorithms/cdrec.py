@@ -1,8 +1,5 @@
 import ctypes as __native_c_types_import;
-import os
-
 import numpy as __numpy_import;
-import os.path as __os_path_import;
 
 
 __NATIVE_CENTROID_LIBRARY_PATH_DEBUG = "./Wrapper/src/libAlgoCollection.so"; # same folder
@@ -38,7 +35,6 @@ def __marshal_as_native_column(__py_matrix):
 
 
 def native_cdrec_param(__py_matrix, __py_rank, __py_eps, __py_iters):
-    # type: (__numpy_import.array, int, float, int) -> __numpy_import.array
     """
     Recovers missing values (designated as NaN) in a matrix. Supports additional parameters
     :param __py_matrix: 2D array
