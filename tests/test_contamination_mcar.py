@@ -1,24 +1,51 @@
 import os
 import unittest
 import numpy as np
+
+from imputegap.contamination._contamination import ContaminationGAP
 from imputegap.manager._manager import TimeSeriesGAP
 
-commit = True
+
+def resolve_path(local_path, github_actions_path):
+    """
+    Find the accurate path for tests
+
+    :param local_path: path of local code
+    :param github_actions_path: path on GitHub action
+    :return: correct file paths
+    """
+    if os.path.exists(local_path):
+        return local_path
+    elif os.path.exists(github_actions_path):
+        return github_actions_path
+    else:
+        raise FileNotFoundError("File not found in both: ", local_path, " and ", github_actions_path)
+
+
+def get_save_path():
+    """
+    Find the accurate path for saving files of tests
+    :return: correct file paths
+    """
+    return resolve_path('../imputegap/assets', './imputegap/assets')
+
+
+def get_file_path(set_name="test"):
+    """
+    Find the accurate path for loading files of tests
+    :return: correct file paths
+    """
+    return resolve_path(f'../imputegap/dataset/{set_name}.txt', f'./imputegap/dataset/{set_name}.txt')
+
 
 class TestContamination(unittest.TestCase):
-
 
     def test_mcar_selection(self):
         """
         the goal is to test if only the selected values are contaminated
         """
-        
-        if commit:
-            file_path ="./imputegap/dataset/test.txt"
-        else:
-            file_path ="./dataset/test.txt"
+        impute_gap = TimeSeriesGAP(get_file_path("test"))
 
-        impute_gap = TimeSeriesGAP(file_path)
         series_selection = [["1", "3", "4"], ["-2"], ["+2"], ["*"]]
         missing_rates = [0.1, 0.2, 0.4, 0.8]
         seeds_start, seeds_end = 42, 43
@@ -30,7 +57,7 @@ class TestContamination(unittest.TestCase):
                     impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=2, starting_position=0.1,
                                                   series_selected=series_selected, use_seed=True, seed=seed_value)
 
-                    series_check = impute_gap.format_selection(series_selected)
+                    series_check = ContaminationGAP().format_selection(impute_gap.ts, series_selected)
 
                     impute_gap.print()
 
@@ -53,12 +80,8 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if the starting position is always guaranteed
         """
-        if commit:
-            file_path ="./imputegap/dataset/test.txt"
-        else:
-            file_path ="./dataset/test.txt"
+        impute_gap = TimeSeriesGAP(get_file_path("test"))
 
-        impute_gap = TimeSeriesGAP(file_path)
         series_selection = [["1", "3", "4"], ["-2"], ["+2"], ["*"]]
         missing_rates = [0.1, 0.2, 0.4, 0.8]
         ten_percent_index = int(impute_gap.ts.shape[1] * 0.1)
@@ -84,12 +107,8 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the selected values are contaminated
         """
-        if commit:
-            file_path ="./imputegap/dataset/chlorine.txt"
-        else:
-            file_path ="./dataset/chlorine.txt"
+        impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
 
-        impute_gap = TimeSeriesGAP(file_path)
         series_selection = [["1", "3", "4"], ["-2"], ["+2"], ["*"]]
         missing_rates = [0.1, 0.2, 0.4, 0.8]
         seeds_start, seeds_end = 42, 43
@@ -101,7 +120,7 @@ class TestContamination(unittest.TestCase):
                     impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=10, starting_position=0.1,
                                                   series_selected=series_selected, use_seed=True, seed=seed_value)
 
-                    series_check = impute_gap.format_selection(series_selected)
+                    series_check = ContaminationGAP().format_selection(impute_gap.ts, series_selected)
 
                     impute_gap.print()
 
@@ -124,12 +143,7 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if the starting position is always guaranteed
         """
-        if commit:
-            file_path ="./imputegap/dataset/chlorine.txt"
-        else:
-            file_path ="./dataset/chlorine.txt"
-
-        impute_gap = TimeSeriesGAP(file_path)
+        impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
 
         series_selection = [["1", "3", "4"], ["-2"], ["+2"], ["*"]]
         missing_rates = [0.1, 0.2, 0.4, 0.8]
@@ -157,18 +171,11 @@ class TestContamination(unittest.TestCase):
         """
         Verify if the manager of a dataset is working
         """
-        #if not hasattr(matplotlib.get_backend(), 'required_interactive_framework'):
+        # if not hasattr(matplotlib.get_backend(), 'required_interactive_framework'):
         #    matplotlib.use('Agg')
 
-        if commit:
-            file_path ="./imputegap/dataset/chlorine.txt"
-            save_path = "./imputegap/assets"
-        else:
-            file_path ="./dataset/chlorine.txt"
-            save_path = "./assets"
+        impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
 
-        impute_gap = TimeSeriesGAP(file_path)
+        impute_gap.plot("contaminate", "test", get_save_path(), 5, (16, 8), False)
 
-        impute_gap.plot("contaminate", "test", save_path, 5, (16, 8), False)
-
-        self.assertTrue(os.path.exists(save_path))
+        self.assertTrue(os.path.exists(get_save_path()))
