@@ -49,7 +49,7 @@ class ContaminationGAP:
         else:
             return selection
 
-    def contamination_mcar(self, ts, missing_rate=0.1, block_size=10, starting_position=0.1, series_selected=["*"],
+    def contamination_mcar(self, ts, missing_rate=0.1, block_size=10, series_selected=["*"], starting_position=0.1,
                            use_seed=True, seed=42):
         """
         Contamination with MCAR scenario
@@ -62,7 +62,7 @@ class ContaminationGAP:
         :param series_selected: series to contaminate
         :param use_seed : use seed value as random constant to reproduce the experimentation
         :param seed : seed value for random constant
-        :return: all time series with and without contamination
+        :return: ts_contaminated, all time series with and without contamination
         """
 
         ts_contaminated = ts.copy()

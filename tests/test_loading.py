@@ -1,6 +1,10 @@
 import os
 import unittest
 
+import numpy as np
+from scipy.stats import zscore
+from sklearn.preprocessing import MinMaxScaler
+
 from imputegap.manager._manager import TimeSeriesGAP
 
 
@@ -25,7 +29,7 @@ def get_save_path():
     Find the accurate path for saving files of tests
     :return: correct file paths
     """
-    return resolve_path('../imputegap/assets', './imputegap/assets')
+    return resolve_path('../tests/assets', './tests/assets')
 
 
 def get_file_path(set_name="test"):
@@ -68,3 +72,38 @@ class TestLoading(unittest.TestCase):
         impute_gap.plot("ground_truth", "test", get_save_path(), 5, (16, 8), False)
 
         self.assertTrue(os.path.exists(get_save_path()))
+
+    def test_loading_normalization_min_max(self):
+        impute_gap = TimeSeriesGAP(get_file_path("test"))
+        impute_gap.normalization_min_max()
+
+        assert np.isclose(np.min(impute_gap.normalized_ts), 0), f"Min value after Min-Max normalization is not 0: {np.min(impute_gap.normalized_ts)}"
+        assert np.isclose(np.max(impute_gap.normalized_ts), 1), f"Max value after Min-Max normalization is not 1: {np.max(impute_gap.normalized_ts)}"
+
+    def test_loading_normalization_z_score(self):
+        impute_gap = TimeSeriesGAP(get_file_path("test"))
+        impute_gap.normalization_z_score()
+
+        mean = np.mean(impute_gap.normalized_ts)
+        std_dev = np.std(impute_gap.normalized_ts)
+
+        assert np.isclose(mean, 0, atol=1e-7), f"Mean after Z-score normalization is not 0: {mean}"
+        assert np.isclose(std_dev, 1, atol=1e-7), f"Standard deviation after Z-score normalization is not 1: {std_dev}"
+
+    def test_loading_normalization_min_max_lib(impute_gap):
+        impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
+        impute_gap.normalization_min_max()
+
+        scaler = MinMaxScaler()
+        lib_normalized = scaler.fit_transform(impute_gap.ts)
+
+        assert np.allclose(impute_gap.normalized_ts, lib_normalized)
+
+    def test_loading_normalization_z_score_lib(impute_gap):
+        impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
+        impute_gap.normalization_z_score()
+
+        lib_normalized = zscore(impute_gap.ts, axis=None)
+
+        assert np.allclose(impute_gap.normalized_ts, lib_normalized)
+
