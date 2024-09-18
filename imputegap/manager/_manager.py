@@ -99,7 +99,13 @@ class TimeSeriesGAP:
         """
         print("Normalization of the original time series dataset with min/max...")
 
-        data_normalized = (self.ts - self.ts.min()) / (self.ts.max() - self.ts.min())
+        ts_min = self.ts.min(axis=0)  # Min for each series
+        ts_max = self.ts.max(axis=0)  # Max for each series
+
+        range_ts = ts_max - ts_min
+        range_ts[range_ts == 0] = 1  # To avoid division by zero for constant series
+
+        data_normalized = (self.ts - ts_min) / range_ts
         self.normalized_ts = data_normalized
 
         return self.normalized_ts

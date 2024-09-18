@@ -1,3 +1,5 @@
+import os
+
 import toml
 from imputegap.algorithms.cdrec import native_cdrec_param
 from imputegap.evaluation._evaluation import EvaluationGAP
@@ -13,12 +15,15 @@ class ImputationGAP:
         """
         self.config = self.load_toml()
 
-    def load_toml(self):
+    def load_toml(self, filepath = "../env/default_values.toml"):
         """
         Load default values of algorithms
         :return: the config of default values
         """
-        with open("../env/default_values.toml", "r") as file:
+        if os.path.exists(filepath) == False:
+            filepath = "./env/default_values.toml"
+
+        with open(filepath, "r") as file:
             config = toml.load(file)
         return config
 
