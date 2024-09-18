@@ -20,7 +20,7 @@ class ImputationGAP:
         Load default values of algorithms
         :return: the config of default values
         """
-        if os.path.exists(filepath) == False:
+        if not os.path.exists(filepath):
             filepath = "./env/default_values.toml"
 
         with open(filepath, "r") as file:
