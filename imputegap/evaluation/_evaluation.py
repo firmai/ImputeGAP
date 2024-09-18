@@ -3,8 +3,6 @@ from sklearn.metrics import mutual_info_score
 from scipy.stats import pearsonr
 
 
-
-
 class EvaluationGAP:
 
     def __init__(self, ground_truth, imputation, contamination):
@@ -19,7 +17,6 @@ class EvaluationGAP:
         self.imputation = imputation
         self.contamination = contamination
 
-
     def compute_rmse(self):
         """
         Compute the RMSE score based on the ground_truth, the imputation values and the contamination set
@@ -31,7 +28,6 @@ class EvaluationGAP:
         rmse = np.sqrt(np.mean(mse))
 
         return float(rmse)
-
 
     def compute_mae(self):
         """
@@ -53,11 +49,13 @@ class EvaluationGAP:
         nan_locations = np.isnan(self.contamination)
 
         # Discretize the continuous data into bins
-        ground_truth_binned = np.digitize(self.ground_truth[nan_locations], bins=np.histogram_bin_edges(self.ground_truth[nan_locations], bins=10))
-        imputation_binned = np.digitize(self.imputation[nan_locations], bins=np.histogram_bin_edges(self.imputation[nan_locations], bins=10))
+        ground_truth_binned = np.digitize(self.ground_truth[nan_locations],
+                                          bins=np.histogram_bin_edges(self.ground_truth[nan_locations], bins=10))
+        imputation_binned = np.digitize(self.imputation[nan_locations],
+                                        bins=np.histogram_bin_edges(self.imputation[nan_locations], bins=10))
 
         mi_discrete = mutual_info_score(ground_truth_binned, imputation_binned)
-        #mi_continuous = mutual_info_score(self.ground_truth[nan_locations], self.ground_truth[nan_locations])
+        # mi_continuous = mutual_info_score(self.ground_truth[nan_locations], self.ground_truth[nan_locations])
 
         return mi_discrete
 

@@ -9,7 +9,7 @@ The interface provides advanced imputation algorithms, construction of various m
 ## Installation
 To install in local ImputeGAP, download the package from GitHub and run the command : 
 
-```pip install -e``` 
+```pip install -e .``` 
 
 ## Loading - Manager
 The model of management is able to load any kind of time series datasets that respect this format : <b>(Values,Series), series are seperated by space et values by a carriage return \n.</b>

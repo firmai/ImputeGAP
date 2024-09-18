@@ -13,7 +13,6 @@ class ImputationGAP:
         """
         self.config = self.load_toml()
 
-
     def load_toml(self):
         """
         Load default values of algorithms
@@ -24,17 +23,26 @@ class ImputationGAP:
         return config
 
     def metrics_computation(self, ground_truth, imputation, contamination):
+        """
+        Compute the metrics to express the results of the imputation based on the ground truth and the contamination set
 
-        evaluation = EvaluationGAP(ground_truth, ground_truth+0.1, contamination) # test, to change
+        :param ground_truth: original time series without contamination
+        :param imputation: new time series with imputation values
+        :param contamination: time series with contamination
+        :return: metrics, dictionary containing each metric of the imputation
+        """
+        evaluation = EvaluationGAP(ground_truth, imputation, contamination)  # test, to change
 
         rmse = evaluation.compute_rmse()
         mae = evaluation.compute_mae()
         mi_d = evaluation.compute_mi()
         correlation = evaluation.compute_correlation()
 
-        return [rmse, mae, mi_d, correlation]
+        metrics = {"RMSE": rmse, "MAE": mae, "MI": mi_d, "CORRELATION": correlation}
 
-    def cdrec(self, ground_truth, contamination, params):
+        return metrics
+
+    def cdrec(self, ground_truth, contamination, params=None):
         """
         Imputation of data with CDREC algorithm
         @author Quentin Nater
@@ -43,7 +51,7 @@ class ImputationGAP:
         :param contamination: time series with contamination
         :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
 
-        :return: all time series with imputation data
+        :return: imputed_matrix, metrics : all time series with imputation data and their metrics
         """
 
         if params is not None:
@@ -56,7 +64,8 @@ class ImputationGAP:
         imputed_matrix = native_cdrec_param(__py_matrix=contamination, __py_rank=int(truncation_rank),
                                             __py_eps=float("1" + epsilon), __py_iters=int(iterations))
 
+        metrics = self.metrics_computation(ground_truth, ground_truth+0.1, contamination)
 
-        metrics = self.metrics_computation(ground_truth, imputed_matrix, contamination)
+        print("CDREC Imputation completed without error.\n")
 
         return imputed_matrix, metrics
