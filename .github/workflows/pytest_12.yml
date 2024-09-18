@@ -24,5 +24,10 @@ jobs:
         pip install mypy
         pip install pytest
 
+    - name: test
+      run : |
+        apt-get install python3-distutils
+
+
     - name: Run pytest
       run: python -m pytest ./tests/

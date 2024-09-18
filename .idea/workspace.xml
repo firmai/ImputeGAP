@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/pytest_12.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest_12.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +156,7 @@
       <workItem from="1725982931118" duration="823000" />
       <workItem from="1726129982991" duration="23189000" />
       <workItem from="1726571882844" duration="16115000" />
-      <workItem from="1726655689620" duration="5705000" />
+      <workItem from="1726655689620" duration="6503000" />
     </task>
     <servers />
   </component>
