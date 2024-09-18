@@ -54,8 +54,7 @@ class TestContamination(unittest.TestCase):
             for series_selected in series_selection:
                 for missing_rate in missing_rates:
 
-                    impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=2, starting_position=0.1,
-                                                  series_selected=series_selected, use_seed=True, seed=seed_value)
+                    impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=2, series_selected=series_selected, starting_position=0.1, use_seed=True, seed=seed_value)
 
                     series_check = ContaminationGAP().format_selection(impute_gap.ts, series_selected)
 
@@ -91,8 +90,7 @@ class TestContamination(unittest.TestCase):
             for series_selected in series_selection:
                 for missing_rate in missing_rates:
 
-                    impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=2, starting_position=0.1,
-                                                  series_selected=series_selected, use_seed=True, seed=seed_value)
+                    impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=2, series_selected=series_selected, starting_position=0.1, use_seed=True, seed=seed_value)
 
                     if np.isnan(impute_gap.contaminated_ts[:, :ten_percent_index]).any():
                         check_position = False
@@ -117,8 +115,7 @@ class TestContamination(unittest.TestCase):
                 for series_selected in series_selection:
                     for missing_rate in missing_rates:
 
-                        impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=10, starting_position=0.1,
-                                                      series_selected=series_selected, use_seed=True, seed=seed_value)
+                        impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=10, series_selected=series_selected, starting_position=0.1, use_seed=True, seed=seed_value)
 
                         series_check = ContaminationGAP().format_selection(impute_gap.ts, series_selected)
 
@@ -155,8 +152,7 @@ class TestContamination(unittest.TestCase):
                 for series_selected in series_selection:
                     for missing_rate in missing_rates:
 
-                        impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=10, starting_position=0.1,
-                                                      series_selected=series_selected, use_seed=True, seed=seed_value)
+                        impute_gap.contamination_mcar(missing_rate=missing_rate, block_size=10, series_selected=series_selected, starting_position=0.1, use_seed=True, seed=seed_value)
 
                         if np.isnan(impute_gap.contaminated_ts[:, :ten_percent_index]).any():
                             check_position = False
@@ -173,8 +169,7 @@ class TestContamination(unittest.TestCase):
         #    matplotlib.use('Agg')
 
         impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
-        impute_gap.contamination_mcar(missing_rate=0.1, block_size=10, starting_position=0.1,
-                                      series_selected=["1"], use_seed=True)
+        impute_gap.contamination_mcar(missing_rate=0.1, block_size=10, series_selected=["1"], starting_position=0.1, use_seed=True)
 
         impute_gap.plot("contamination", "test", get_save_path(), 5, (16, 8), False)
 

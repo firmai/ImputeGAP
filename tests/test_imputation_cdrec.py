@@ -46,7 +46,9 @@ class TestContamination(unittest.TestCase):
         the goal is to test if only the simple imputation with cdrec has the expected outcome
         """
         impute_gap = TimeSeriesGAP(get_file_path("test"))
+
         contaminer = ContaminationGAP()
+
         imputation = ImputationGAP()
 
         ts_contaminated = contaminer.contamination_mcar(ts=impute_gap.ts, missing_rate=0.4, block_size=2, starting_position=0.1, series_selected=["1", "2", "3"], use_seed=True, seed=42)

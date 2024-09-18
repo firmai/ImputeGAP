@@ -197,16 +197,16 @@ class TimeSeriesGAP:
 
         plt.close()
 
-    def contamination_mcar(self, ts=None, missing_rate=0.1, block_size=10, starting_position=0.1, series_selected=["*"],
-                           use_seed=True, seed=42):
+    def contamination_mcar(self, ts=None, missing_rate=0.1, block_size=10, series_selected=["*"],
+                           starting_position=0.1, use_seed=True, seed=42):
         """
         Contamination with MCAR scenario
         @author Quentin Nater
 
         :param missing_rate: total percentage of contamination
         :param block_size: size of the contamination from a random point
-        :param starting_position : all elements before this position is protected from contamination
         :param series_selected: series to contaminate
+        :param starting_position : all elements before this position is protected from contamination
         :param use_seed : use seed value as random constant to reproduce the experimentation
         :param seed : seed value for random constant
         :return: all time series with and without contamination
@@ -215,7 +215,7 @@ class TimeSeriesGAP:
             ts = self.ts
 
         self.contaminated_ts = ContaminationGAP(self).contamination_mcar(ts, missing_rate, block_size,
-                                                                         starting_position, series_selected, use_seed,
+                                                                         series_selected, starting_position, use_seed,
                                                                          seed)
 
     def imputation_cdrec(self, ground_truth=None, contamination=None, params=None):

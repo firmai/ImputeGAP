@@ -8,7 +8,6 @@ class EvaluationGAP:
     def __init__(self, ground_truth, imputation, contamination):
         """
         Initialize the EvaluationGAP class.
-
         :param ground_truth: original time series without contamination
         :param imputation: new time series with imputation values
         :param contamination: time series with contamination

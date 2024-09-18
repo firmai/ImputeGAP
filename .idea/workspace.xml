@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pytest_12.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest_12.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap.egg-info/SOURCES.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap.egg-info/requires.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/contamination/_contamination.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/contamination/_contamination.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/evaluation/_evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/evaluation/_evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/manager/_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/manager/_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_contamination_mcar.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_contamination_mcar.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_cdrec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_loading.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,18 +41,18 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/nquen/switchdrive2/ASE_2024/00_mini_project/00_tuto/todobackend-aiohttp-min-master",
+    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap/algorithms",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\algorithms" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\.github\workflows" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\evaluation" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap" />
-      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\algorithms" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests" />
@@ -156,7 +165,7 @@
       <workItem from="1725982931118" duration="823000" />
       <workItem from="1726129982991" duration="23189000" />
       <workItem from="1726571882844" duration="16115000" />
-      <workItem from="1726655689620" duration="7864000" />
+      <workItem from="1726655689620" duration="14878000" />
     </task>
     <servers />
   </component>
@@ -175,8 +184,8 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/imputegap$runner.coverage" NAME="runner Coverage Results" MODIFIED="1726660807779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$runner.coverage" NAME="runner Coverage Results" MODIFIED="1726676226760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$_loading.coverage" NAME="_loading Coverage Results" MODIFIED="1726134442146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/loading" />
-    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1726661162848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1726676233716" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>

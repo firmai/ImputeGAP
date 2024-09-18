@@ -2,6 +2,8 @@ import os
 import unittest
 
 import numpy as np
+from scipy.stats import zscore
+from sklearn.preprocessing import MinMaxScaler
 
 from imputegap.manager._manager import TimeSeriesGAP
 
@@ -87,4 +89,21 @@ class TestLoading(unittest.TestCase):
 
         assert np.isclose(mean, 0, atol=1e-7), f"Mean after Z-score normalization is not 0: {mean}"
         assert np.isclose(std_dev, 1, atol=1e-7), f"Standard deviation after Z-score normalization is not 1: {std_dev}"
+
+    def test_loading_normalization_min_max_lib(impute_gap):
+        impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
+        impute_gap.normalization_min_max()
+
+        scaler = MinMaxScaler()
+        lib_normalized = scaler.fit_transform(impute_gap.ts)
+
+        assert np.allclose(impute_gap.normalized_ts, lib_normalized)
+
+    def test_loading_normalization_z_score_lib(impute_gap):
+        impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
+        impute_gap.normalization_z_score()
+
+        lib_normalized = zscore(impute_gap.ts, axis=None)
+
+        assert np.allclose(impute_gap.normalized_ts, lib_normalized)
 

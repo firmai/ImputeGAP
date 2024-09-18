@@ -25,13 +25,15 @@ if __name__ == '__main__':
     impute_gap.normalization_min_max()
     impute_gap.plot(ts_type="ground_truth_normalized", title="min_max", save_path="assets/", limitation=6, display=False)
 
-    impute_gap.contamination_mcar(missing_rate=0.4, block_size=2, starting_position=0.1, series_selected=["1", "2", "3"], use_seed=True, seed=42)
+    impute_gap.contamination_mcar(missing_rate=0.4, block_size=2, series_selected=["1", "2", "3"], starting_position=0.1, use_seed=True, seed=42)
     impute_gap.print()
     impute_gap.plot(ts_type="contamination", title="test", save_path="assets/", limitation=2, display=False)
 
     impute_gap.imputation_cdrec()
     impute_gap.print_results()
     impute_gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=2, display=True)
+
+
 
     print("\n", "_"*95, "end")
 
