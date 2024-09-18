@@ -20,7 +20,7 @@ jobs:
 
     - name: python3-distutils
       run : |
-        apt-get install python3-distutils
+        sudo apt-get install python3-distutils
 
     - name: Install dependencies
       run: |
