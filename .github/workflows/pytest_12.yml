@@ -18,16 +18,15 @@ jobs:
       with:
         python-version: '3.12'
 
+    - name: python3-distutils
+      run : |
+        apt-get install python3-distutils
+
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
         pip install mypy
         pip install pytest
-
-    - name: test
-      run : |
-        apt-get install python3-distutils
-
 
     - name: Run pytest
       run: python -m pytest ./tests/
