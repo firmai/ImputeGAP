@@ -3,7 +3,7 @@ from sklearn.metrics import mutual_info_score
 from scipy.stats import pearsonr
 
 
-class EvaluationGAP:
+class Evaluation:
 
     def __init__(self, ground_truth, imputation, contamination):
         """
@@ -15,6 +15,24 @@ class EvaluationGAP:
         self.ground_truth = ground_truth
         self.imputation = imputation
         self.contamination = contamination
+
+    def metrics_computation(self):
+        """
+        Compute the metrics to express the results of the imputation based on the ground truth and the contamination set
+
+        :param ground_truth: original time series without contamination
+        :param imputation: new time series with imputation values
+        :param contamination: time series with contamination
+        :return: metrics, dictionary containing each metric of the imputation
+        """
+        rmse = self.compute_rmse()
+        mae = self.compute_mae()
+        mi_d = self.compute_mi()
+        correlation = self.compute_correlation()
+
+        metrics = {"RMSE": rmse, "MAE": mae, "MI": mi_d, "CORRELATION": correlation}
+
+        return metrics
 
     def compute_rmse(self):
         """

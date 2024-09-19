@@ -1,45 +1,69 @@
 import os
 import numpy as np
 from matplotlib import pyplot as plt  # type: ignore
-from imputegap.contamination._contamination import ContaminationGAP
-from imputegap.imputation._imputation import ImputationGAP
+from imputegap.contamination.contamination import Contamination
+from imputegap.imputation.imputation import Imputation
 
 
-class TimeSeriesGAP:
+class TimeSeries:
 
-    def __init__(self, filename):
+    def __init__(self, data=None, normalization=None):
         """
-        :param filename: file path to the time series dataset
         :param ts : Original time series without alteration (ground-truth)
         :param contaminated_ts : time series after contamination
         :param imputation : time series after reconstruction of the missing data
         :param optimal_params : optimal parameters found for a specific algorithm and time series dataset
         :param explainer : result of the shap algorithm to explain the imputation of the time series dataset
         """
-        self.filename = filename
-        self.ts = self.load_timeseries()
-        self.normalized_ts = None
-        self.contaminated_ts = None
-        self.imputation = None
-        self.imputation_metrics = []
+        self.ts = self.load_timeseries(data, normalization)
+        self.ts_contaminate = None
+        self.ts_imputation = None
+        self.metrics = []
         self.optimal_params = None
         self.explainer = None
 
-    def load_timeseries(self):
+    def load_timeseries(self, data=None, normalization=None):
         """
         Load timeseries manager from file
         FORMAT : (Values,Series), values are seperated by space et series by \n
         @author Quentin Nater
 
         :param filename: path of the time series dataset
-        :return: panda set of series transposed
+        :param normalization : [OPTIONAL] choice of normalization ("z_score" or "min_max")
+        :return: time series format for imputegap from dataset
         """
 
-        print("\nThe time series has been loaded from " + str(self.filename) + "\n")
-        time_series = np.genfromtxt(self.filename, delimiter=' ')
-        self.ts = time_series.T
+        ts = None
 
-        return self.ts
+        if data is not None:
+
+            if isinstance(data, str):
+                print("\nThe time series has been loaded from " + str(data) + "\n")
+
+                ts = np.genfromtxt(data, delimiter=' ')
+
+            elif isinstance(data, list):
+                print("\nThe time series has been loaded from code ", *data, "\n")
+                ts = np.array(data)
+
+            elif isinstance(data, np.ndarray):
+                print("\nThe time series has been loaded from code ", *data, "\n")
+                ts = data
+            else:
+                print("\nThe time series has not been loaded, format unknown\n")
+                return None
+
+            ts = ts.T
+
+            if normalization is not None:
+                if normalization == "z_score":
+                    ts = self.normalization_z_score(ts)
+                elif normalization == "min_max":
+                    ts = self.normalization_min_max(ts)
+                else:
+                    print("Normalization asked is not registered...\n")
+
+        return ts
 
     def print(self, limitation=10):
         """
@@ -55,26 +79,18 @@ class TimeSeriesGAP:
         if limitation < self.ts.shape[0]:
             print("...")
 
-
-        if self.normalized_ts is not None:
-            print("\nGround-truth set normalized :")
-            for i, series in enumerate(self.normalized_ts[:limitation]):
-                print(f"Series {i} " + " ".join([f"{elem:6}" for elem in series]))
-            if limitation < self.ts.shape[0]:
-                print("...")
-
-        if self.contaminated_ts is not None:
+        if self.ts_contaminate is not None:
             print("\nContaminated set :")
-            for i, series in enumerate(self.contaminated_ts[:limitation]):
+            for i, series in enumerate(self.ts_contaminate[:limitation]):
                 print(f"Series {i} " + " ".join([f"{elem:6}" for elem in series]))
-            if limitation < self.contaminated_ts.shape[0]:
+            if limitation < self.ts_contaminate.shape[0]:
                 print("...")
 
-        if self.imputation is not None:
+        if self.ts_imputation is not None:
             print("\nImputation set :")
-            for i, series in enumerate(self.imputation[:limitation]):
+            for i, series in enumerate(self.ts_imputation[:limitation]):
                 print(f"Series {i} " + " ".join([f"{elem:6}" for elem in series]))
-            if limitation < self.imputation.shape[0]:
+            if limitation < self.ts_imputation.shape[0]:
                 print("...")
 
         print("\nshape : ", self.ts.shape[0], " x ", self.ts.shape[1], "\n")
@@ -85,11 +101,11 @@ class TimeSeriesGAP:
         @author Quentin Nater
         """
         print("\n\nResults of the imputation : ")
-        for key, value in self.imputation_metrics.items():
+        for key, value in self.metrics.items():
             print(f"{key:<20} = {value}")
         print("\n")
 
-    def normalization_min_max(self):
+    def normalization_min_max(self, ts):
         """
         Normalization of a dataset with MIN/MAX
         @author Quentin Nater
@@ -99,18 +115,17 @@ class TimeSeriesGAP:
         """
         print("Normalization of the original time series dataset with min/max...")
 
-        ts_min = self.ts.min(axis=0)  # Min for each series
-        ts_max = self.ts.max(axis=0)  # Max for each series
+        ts_min = ts.min(axis=0)  # Min for each series
+        ts_max = ts.max(axis=0)  # Max for each series
 
         range_ts = ts_max - ts_min
         range_ts[range_ts == 0] = 1  # To avoid division by zero for constant series
 
-        data_normalized = (self.ts - ts_min) / range_ts
-        self.normalized_ts = data_normalized
+        min_max = (ts - ts_min) / range_ts
 
-        return self.normalized_ts
+        return min_max
 
-    def normalization_z_score(self):
+    def normalization_z_score(self, ts):
         """
         Normalization of a dataset with Z-Score
         @author Quentin Nater
@@ -120,13 +135,12 @@ class TimeSeriesGAP:
         """
         print("Normalization of the original time series dataset with Z-Score...")
 
-        mean = np.mean(self.ts)
-        std_dev = np.std(self.ts)
+        mean = np.mean(ts)
+        std_dev = np.std(ts)
 
-        z_scores = (self.ts - mean) / std_dev
-        self.normalized_ts = z_scores
+        z_scores = (ts - mean) / std_dev
 
-        return self.normalized_ts
+        return z_scores
 
     def plot(self, ts_type="ground_truth", title='Time Series Data', save_path="", limitation=10, size=(16, 8),
              display=True, colors=['dimgrey', 'plum', 'lightblue', 'mediumseagreen', 'khaki']):
@@ -165,7 +179,7 @@ class TimeSeriesGAP:
                 color = colors[i % len(colors)]
 
                 plt.plot(np.arange(self.ts.shape[1]), self.ts[i, :], 'r--', label=f'Series {i + 1}-GT')
-                plt.plot(np.arange(self.contaminated_ts.shape[1]), self.contaminated_ts[i, :], linewidth=2.5,
+                plt.plot(np.arange(self.ts_contaminate.shape[1]), self.ts_contaminate[i, :], linewidth=2.5,
                          color=color, linestyle='-', label=f'Series {i + 1}-MV')
 
                 number_of_series += 1
@@ -175,7 +189,7 @@ class TimeSeriesGAP:
         elif ts_type == "imputation":
             for i in range(self.ts.shape[0]):
                 color = colors[i % len(colors)]
-                plt.plot(np.arange(self.imputation.shape[1]), self.imputation[i, :], linewidth=2.5, color=color,
+                plt.plot(np.arange(self.ts_imputation.shape[1]), self.ts_imputation[i, :], linewidth=2.5, color=color,
                          linestyle='-', label=f'Series{i + 1}-IMP')
 
                 number_of_series += 1
@@ -196,44 +210,3 @@ class TimeSeriesGAP:
             plt.show()
 
         plt.close()
-
-    def contamination_mcar(self, ts=None, missing_rate=0.1, block_size=10, series_selected=["*"],
-                           starting_position=0.1, use_seed=True, seed=42):
-        """
-        Contamination with MCAR scenario
-        @author Quentin Nater
-
-        :param missing_rate: total percentage of contamination
-        :param block_size: size of the contamination from a random point
-        :param series_selected: series to contaminate
-        :param starting_position : all elements before this position is protected from contamination
-        :param use_seed : use seed value as random constant to reproduce the experimentation
-        :param seed : seed value for random constant
-        :return: all time series with and without contamination
-        """
-        if ts is None:
-            ts = self.ts
-
-        self.contaminated_ts = ContaminationGAP(self).contamination_mcar(ts, missing_rate, block_size,
-                                                                         series_selected, starting_position, use_seed,
-                                                                         seed)
-
-    def imputation_cdrec(self, ground_truth=None, contamination=None, params=None):
-        """
-        Imputation of data with CDREC algorithm
-        @author Quentin Nater
-
-        :param ground_truth: original time series without contamination, if None, self are loaded
-        :param contamination: time series with contamination, if None, self are loaded
-        :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
-
-        :return: all time series with imputation data
-        """
-        if ground_truth is None:
-            ground_truth = self.ts
-        if contamination is None:
-            contamination = self.contaminated_ts
-
-        self.imputation, self.imputation_metrics = ImputationGAP().cdrec(ground_truth, contamination, params)
-
-        return self.imputation, self.imputation_metrics

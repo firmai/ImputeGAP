@@ -2,9 +2,9 @@ import os
 import unittest
 import numpy as np
 
-from imputegap.contamination._contamination import ContaminationGAP
-from imputegap.imputation._imputation import ImputationGAP
-from imputegap.manager._manager import TimeSeriesGAP
+from imputegap.contamination.contamination import Contamination
+from imputegap.imputation.imputation import Imputation
+from imputegap.manager.manager import TimeSeries
 
 
 def resolve_path(local_path, github_actions_path):
@@ -45,27 +45,23 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with cdrec has the expected outcome
         """
-        impute_gap = TimeSeriesGAP(get_file_path("test"))
+        impute_gap = TimeSeries(get_file_path("test"))
 
-        contaminer = ContaminationGAP()
-
-        imputation = ImputationGAP()
-
-        ts_contaminated = contaminer.contamination_mcar(ts=impute_gap.ts, missing_rate=0.4, block_size=2, starting_position=0.1, series_selected=["1", "2", "3"], use_seed=True, seed=42)
-        imputation, metrics = imputation.cdrec(impute_gap.ts, ts_contaminated)
+        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
+        imputation, metrics = Imputation.MR.cdrec(impute_gap.ts, ts_contaminated)
 
         #assert not np.isnan(imputation).any(), "The imputed data contains NaN values."
 
         expected_metrics = {
             "RMSE": 0.1,
             "MAE": 0.1,
-            "MI": 2.047559296044748,
-            "CORRELATION": 0.9999999999999999
+            "MI": 1.7246251229429979,
+            "CORRELATION": 1.0
         }
 
-        impute_gap.contaminated_ts = ts_contaminated
-        impute_gap.imputation = imputation
-        impute_gap.imputation_metrics = metrics
+        impute_gap.ts_contaminate = ts_contaminated
+        impute_gap.ts_imputation = imputation
+        impute_gap.metrics = metrics
         impute_gap.print_results()
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"
@@ -77,28 +73,26 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with cdrec has the expected outcome
         """
-        impute_gap = TimeSeriesGAP(get_file_path("chlorine"))
-        contaminer = ContaminationGAP()
-        imputation = ImputationGAP()
+        impute_gap = TimeSeries(get_file_path("chlorine"))
 
-        ts_contaminated = contaminer.contamination_mcar(ts=impute_gap.ts, missing_rate=0.4, block_size=10,
-                                                        starting_position=0.1, series_selected=["1", "2", "3"],
-                                                        use_seed=True, seed=42)
+        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=10,
+                                                      protection=0.1,
+                                                      use_seed=True, seed=42)
 
-        imputation, metrics = imputation.cdrec(impute_gap.ts, ts_contaminated)
+        imputation, metrics = Imputation.MR.cdrec(impute_gap.ts, ts_contaminated)
 
         # assert not np.isnan(imputation).any(), "The imputed data contains NaN values."
 
         expected_metrics = {
             "RMSE": 0.1,
             "MAE": 0.1,
-            "MI": 2.171918862466761,
-            "CORRELATION": 0.9999999999999999
+            "MI": 2.0338412511352497,
+            "CORRELATION": 0.9999999999999989
         }
 
-        impute_gap.contaminated_ts = ts_contaminated
-        impute_gap.imputation = imputation
-        impute_gap.imputation_metrics = metrics
+        impute_gap.ts_contaminate = ts_contaminated
+        impute_gap.ts_imputation = imputation
+        impute_gap.metrics = metrics
         impute_gap.print_results()
 
         assert np.isclose(metrics["RMSE"], expected_metrics[
