@@ -7,7 +7,7 @@ from imputegap.imputation.imputation import Imputation
 
 class TimeSeries:
 
-    def __init__(self, filename, normalization=None):
+    def __init__(self, data=None, normalization=None):
         """
         :param ts : Original time series without alteration (ground-truth)
         :param contaminated_ts : time series after contamination
@@ -15,14 +15,14 @@ class TimeSeries:
         :param optimal_params : optimal parameters found for a specific algorithm and time series dataset
         :param explainer : result of the shap algorithm to explain the imputation of the time series dataset
         """
-        self.ts = self.load_timeseries(filename, normalization)
+        self.ts = self.load_timeseries(data, normalization)
         self.ts_contaminate = None
         self.ts_imputation = None
         self.metrics = []
         self.optimal_params = None
         self.explainer = None
 
-    def load_timeseries(self, filename, normalization=None):
+    def load_timeseries(self, data=None, normalization=None):
         """
         Load timeseries manager from file
         FORMAT : (Values,Series), values are seperated by space et series by \n
@@ -33,18 +33,35 @@ class TimeSeries:
         :return: time series format for imputegap from dataset
         """
 
-        print("\nThe time series has been loaded from " + str(filename) + "\n")
+        ts = None
 
-        time_series = np.genfromtxt(filename, delimiter=' ')
-        ts = time_series.T
+        if data is not None:
 
-        if normalization is not None:
-            if normalization == "z_score":
-                ts = self.normalization_z_score(ts)
-            elif normalization == "min_max":
-                ts = self.normalization_min_max(ts)
+            if isinstance(data, str):
+                print("\nThe time series has been loaded from " + str(data) + "\n")
+
+                ts = np.genfromtxt(data, delimiter=' ')
+
+            elif isinstance(data, list):
+                print("\nThe time series has been loaded from code ", *data, "\n")
+                ts = np.array(data)
+
+            elif isinstance(data, np.ndarray):
+                print("\nThe time series has been loaded from code ", *data, "\n")
+                ts = data
             else:
-                print("Normalization asked is not registered...\n")
+                print("\nThe time series has not been loaded, format unknown\n")
+                return None
+
+            ts = ts.T
+
+            if normalization is not None:
+                if normalization == "z_score":
+                    ts = self.normalization_z_score(ts)
+                elif normalization == "min_max":
+                    ts = self.normalization_min_max(ts)
+                else:
+                    print("Normalization asked is not registered...\n")
 
         return ts
 
