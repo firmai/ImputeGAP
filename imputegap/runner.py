@@ -1,4 +1,6 @@
-from imputegap.manager._manager import TimeSeriesGAP
+from imputegap.contamination.contamination import Contamination
+from imputegap.imputation.imputation import Imputation
+from imputegap.manager.manager import TimeSeries
 
 def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP",
                   university="University Fribourg - exascale infolab", file="runner"):
@@ -12,29 +14,21 @@ def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP",
 
 
 if __name__ == '__main__':
+
     display_title()
 
-    impute_gap = TimeSeriesGAP("./dataset/test.txt")
+    gap = TimeSeries(filename="./dataset/test.txt", normalization="z_score")
 
-    impute_gap.print(limitation=5)
-    impute_gap.plot(title="test", save_path="assets/", limitation=6, display=False)
+    gap.print(limitation=5)
+    gap.plot(title="test", save_path="assets/", limitation=6, display=False)
 
-    impute_gap.normalization_z_score()
-    impute_gap.plot(ts_type="ground_truth_normalized", title="z_score", save_path="assets/", limitation=6, display=False)
+    gap.ts_contaminate = Contamination.scenario_mcar(ts=gap.ts, missing_rate=0.4, block_size=2, series_selected=["1", "2", "3"], starting_position=0.1, use_seed=True, seed=42)
+    gap.print()
+    gap.plot(ts_type="contamination", title="test", save_path="assets/", limitation=2, display=False)
 
-    impute_gap.normalization_min_max()
-    impute_gap.plot(ts_type="ground_truth_normalized", title="min_max", save_path="assets/", limitation=6, display=False)
-
-    impute_gap.contamination_mcar(missing_rate=0.4, block_size=2, series_selected=["1", "2", "3"], starting_position=0.1, use_seed=True, seed=42)
-    impute_gap.print()
-    impute_gap.plot(ts_type="contamination", title="test", save_path="assets/", limitation=2, display=False)
-
-    impute_gap.imputation_cdrec()
-    impute_gap.print_results()
-    impute_gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=2, display=True)
-
-
+    gap.ts_imputation, gap.metrics = Imputation.Stats.zero_impute(ground_truth=gap.ts, contamination=gap.ts_contaminate)
+    gap.print()
+    gap.print_results()
+    gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=2, display=True)
 
     print("\n", "_"*95, "end")
-
-

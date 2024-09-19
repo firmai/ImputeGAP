@@ -2,17 +2,9 @@ import math
 import numpy as np
 
 
-class ContaminationGAP:
+class Contamination:
 
-    def __init__(self, gap=None):
-        """
-        Initialize the ContaminationGAP class.
-
-        :param gap: the TimeSeriesGAP object managing the time series.
-        """
-
-
-    def format_selection(self, ts, selection):
+    def format_selection(ts, selection):
         """
         Format the selection of series based on keywords
         @author Quentin Nater
@@ -49,8 +41,8 @@ class ContaminationGAP:
         else:
             return selection
 
-    def contamination_mcar(self, ts, missing_rate=0.1, block_size=10, series_selected=["*"], starting_position=0.1,
-                           use_seed=True, seed=42):
+    def scenario_mcar(ts, missing_rate=0.1, block_size=10, series_selected=["*"], starting_position=0.1,
+                      use_seed=True, seed=42):
         """
         Contamination with MCAR scenario
         @author Quentin Nater
@@ -67,7 +59,7 @@ class ContaminationGAP:
 
         ts_contaminated = ts.copy()
         n_series, n_values = ts_contaminated.shape
-        series_selected = self.format_selection(ts_contaminated, series_selected)
+        series_selected = Contamination.format_selection(ts_contaminated, series_selected)
 
         # protect the % before the contamination
         start_index = int(math.ceil((n_values * starting_position)))
@@ -105,6 +97,5 @@ class ContaminationGAP:
                 if col >= n_values:  # outbound limitation
                     col = col - n_values + start_index
                 ts_contaminated[row, col] = np.nan
-
 
         return ts_contaminated
