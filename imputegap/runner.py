@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     display_title()
 
-    gap = TimeSeries(data="./dataset/test.txt", normalization="z_score")
+    gap = TimeSeries(data="./dataset/test.txt")
 
     """
     X = [[1.5, 0.5, 0.1, 0.1, 0.1, 0.1, 1.4, 1.0, 1.0, 0.0],
@@ -51,13 +51,13 @@ if __name__ == '__main__':
     gap.print(limitation=5)
     gap.plot(title="test", save_path="assets/", limitation=6, display=False)
 
-    gap.ts_contaminate = Contamination.scenario_mcar(ts=gap.ts, missing_rate=0.4, block_size=2, series_selected=["1", "2", "3"], starting_position=0.1, use_seed=True, seed=42)
+    gap.ts_contaminate = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
     gap.print()
-    gap.plot(ts_type="contamination", title="test", save_path="assets/", limitation=2, display=False)
+    gap.plot(ts_type="contamination", title="test", save_path="assets/", limitation=3, display=False)
 
-    gap.ts_imputation, gap.metrics = Imputation.Stats.zero_impute(ground_truth=gap.ts, contamination=gap.ts_contaminate)
-    gap.print()
-    gap.print_results()
-    gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=2, display=True)
+    #gap.ts_imputation, gap.metrics = Imputation.Stats.zero_impute(ground_truth=gap.ts, contamination=gap.ts_contaminate)
+    #gap.print()
+    #gap.print_results()
+    #gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=2, display=True)
 
     print("\n", "_"*95, "end")

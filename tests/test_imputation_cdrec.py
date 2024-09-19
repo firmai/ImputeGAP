@@ -47,7 +47,7 @@ class TestContamination(unittest.TestCase):
         """
         impute_gap = TimeSeries(get_file_path("test"))
 
-        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, missing_rate=0.4, block_size=2, starting_position=0.1, series_selected=["1", "2", "3"], use_seed=True, seed=42)
+        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
         imputation, metrics = Imputation.MR.cdrec(impute_gap.ts, ts_contaminated)
 
         #assert not np.isnan(imputation).any(), "The imputed data contains NaN values."
@@ -55,8 +55,8 @@ class TestContamination(unittest.TestCase):
         expected_metrics = {
             "RMSE": 0.1,
             "MAE": 0.1,
-            "MI": 2.047559296044748,
-            "CORRELATION": 0.9999999999999999
+            "MI": 1.7246251229429979,
+            "CORRELATION": 1.0
         }
 
         impute_gap.ts_contaminate = ts_contaminated
@@ -75,9 +75,9 @@ class TestContamination(unittest.TestCase):
         """
         impute_gap = TimeSeries(get_file_path("chlorine"))
 
-        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, missing_rate=0.4, block_size=10,
-                                                   starting_position=0.1, series_selected=["1", "2", "3"],
-                                                   use_seed=True, seed=42)
+        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=10,
+                                                      protection=0.1,
+                                                      use_seed=True, seed=42)
 
         imputation, metrics = Imputation.MR.cdrec(impute_gap.ts, ts_contaminated)
 
@@ -86,8 +86,8 @@ class TestContamination(unittest.TestCase):
         expected_metrics = {
             "RMSE": 0.1,
             "MAE": 0.1,
-            "MI": 2.171918862466761,
-            "CORRELATION": 0.9999999999999999
+            "MI": 2.0338412511352497,
+            "CORRELATION": 0.9999999999999989
         }
 
         impute_gap.ts_contaminate = ts_contaminated

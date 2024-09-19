@@ -41,61 +41,54 @@ class Contamination:
         else:
             return selection
 
-    def scenario_mcar(ts, missing_rate=0.1, block_size=10, series_selected=["*"], starting_position=0.1,
-                      use_seed=True, seed=42):
-        """
-        Contamination with MCAR scenario
-        @author Quentin Nater
-
-        :param ts: time series to contaminate
-        :param missing_rate: total percentage of contamination
-        :param block_size: size of the contamination from a random point
-        :param starting_position : all elements before this position is protected from contamination
-        :param series_selected: series to contaminate
-        :param use_seed : use seed value as random constant to reproduce the experimentation
-        :param seed : seed value for random constant
-        :return: ts_contaminated, all time series with and without contamination
-        """
-
-        ts_contaminated = ts.copy()
-        n_series, n_values = ts_contaminated.shape
-        series_selected = Contamination.format_selection(ts_contaminated, series_selected)
-
-        # protect the % before the contamination
-        start_index = int(math.ceil((n_values * starting_position)))
-
-        population = (n_values - start_index) * len(series_selected)
-
-        to_remove = int(math.ceil(population * missing_rate))
-
-        block_to_remove = int(to_remove / block_size)
-
-        print("\n\nMCAR contamination has been called with :"
-              "\n\ta missing rate of ", missing_rate * 100, "%",
-              "\n\ta starting position at ", start_index,
-              "\n\ta block size of ", block_size,
-              "\n\twith a seed option set to ", use_seed,
-              "\n\tshape of the set ", ts_contaminated.shape,
-              "\n\tthis selection of series", *series_selected,
-              "\n\tfor a total population of ", population,
-              "\n\tnumber of values to removed set to ", to_remove,
-              "\n\tblocks to remove ", block_to_remove, "\n\n")
+    def scenario_mcar(ts, series_impacted=0.1, missing_rate=0.1, block_size=10, protection=0.1, use_seed=True, seed=42):
 
         if use_seed:
             np.random.seed(seed)
 
-        if block_to_remove <= 0:
-            raise ValueError("The number of block to remove must be greater than 0. "
-                             "The dataset or the number of blocks may not be appropriate.")
+        ts_contaminated = ts.copy()
+        M, _ = ts_contaminated.shape
 
-        missing_indices = np.random.choice(population, int(to_remove / block_size), replace=False)
+        nbr_series_impacted = int(np.ceil(M * series_impacted))
+        series_indices = [str(idx) for idx in np.random.choice(M, nbr_series_impacted, replace=False)]
+        series_selected = Contamination.format_selection(ts_contaminated, series_indices)
 
-        for index in missing_indices:
-            for current_block_jump in range(0, block_size):
-                row = int(series_selected[index % len(series_selected)])
-                col = (index // len(series_selected)) + start_index + current_block_jump
-                if col >= n_values:  # outbound limitation
-                    col = col - n_values + start_index
-                ts_contaminated[row, col] = np.nan
+
+        print("\n\nMCAR contamination has been called with :"
+              "\n\ta number of series impacted ", series_impacted * 100, "%",
+              "\n\ta missing rate of ", missing_rate * 100, "%",
+              "\n\ta starting position at ", protection,
+              "\n\ta block size of ", block_size,
+              "\n\twith a seed option set to ", use_seed,
+              "\n\tshape of the set ", ts_contaminated.shape,
+              "\n\tthis selection of series", *series_selected, "\n\n")
+
+        for series in series_selected:
+            S = int(series)
+            N = len(ts_contaminated[S])  # number of values in the series
+            P = int(N * protection)  # values to protect in the begining of the series
+            W = int((N - P) * missing_rate)  # number of data to remove
+            B = int(W / block_size)  # number of block to remove
+
+            if B <= 0:
+                raise ValueError("The number of block to remove must be greater than 0. "
+                                 "The dataset or the number of blocks may not be appropriate.")
+
+            data_to_remove = np.random.choice(range(P, N), B, replace=False)
+
+            for start_point in data_to_remove:
+                for jump in range(block_size):  # remove the block size for each random position
+                    position = start_point + jump
+
+                    if position >= N:  # If block exceeds the series length
+                        position = P + (position - N)  # Wrap around to the start after protection
+
+                    while np.isnan(ts_contaminated[S, position]):
+                        position = position+1
+
+                        if position >= N:  # If block exceeds the series length
+                            position = P + (position - N)  # Wrap around to the start after protection
+
+                    ts_contaminated[S, position] = np.nan
 
         return ts_contaminated
