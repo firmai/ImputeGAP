@@ -35,7 +35,7 @@ def native_cdrec_param(__py_matrix, __py_rank, __py_eps, __py_iters):
     local_path_lin = './algorithms/lib/lib_algo.so'
 
     if not os.path.exists(local_path_win):
-        local_path_win = './imputegap/algorithms/lib/lib_algo.so'
+        local_path_win = './imputegap/algorithms/lib/lib_algo.dll'
         local_path_lin = './imputegap/algorithms/lib/lib_algo.so'
 
     if platform.system() == 'Windows':
