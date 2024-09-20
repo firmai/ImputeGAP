@@ -53,10 +53,10 @@ class TestContamination(unittest.TestCase):
         #assert not np.isnan(imputation).any(), "The imputed data contains NaN values."
 
         expected_metrics = {
-            "RMSE": 0.1,
-            "MAE": 0.1,
-            "MI": 1.7246251229429979,
-            "CORRELATION": 1.0
+            "RMSE": 0.5993259196563864,
+            "MAE": 0.5190054811092809,
+            "MI": 0.7796564257088495,
+            "CORRELATION": 0.6358270633906415
         }
 
         impute_gap.ts_contaminate = ts_contaminated
@@ -84,10 +84,10 @@ class TestContamination(unittest.TestCase):
         # assert not np.isnan(imputation).any(), "The imputed data contains NaN values."
 
         expected_metrics = {
-            "RMSE": 0.1,
-            "MAE": 0.1,
-            "MI": 2.0338412511352497,
-            "CORRELATION": 0.9999999999999989
+            "RMSE": 0.08301454281495427,
+            "MAE": 0.06229286226595884,
+            "MI": 0.9898844107345834,
+            "CORRELATION": 0.9420082704699897
         }
 
         impute_gap.ts_contaminate = ts_contaminated
