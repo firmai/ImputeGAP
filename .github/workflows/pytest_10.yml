@@ -20,6 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        sudo apt-get update
         sudo apt-get install libmlpack-dev
         sudo apt-get install libopenblas-dev
         pip install -r requirements.txt
