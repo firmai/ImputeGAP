@@ -189,6 +189,11 @@ class TimeSeries:
         elif ts_type == "imputation":
             for i in range(self.ts.shape[0]):
                 color = colors[i % len(colors)]
+
+                plt.plot(np.arange(self.ts.shape[1]), self.ts[i, :], 'r--', label=f'Series {i + 1}-GT')
+                plt.plot(np.arange(self.ts_contaminate.shape[1]), self.ts_contaminate[i, :], linewidth=2.5,
+                         color=color, linestyle='-', label=f'Series {i + 1}-MV')
+
                 plt.plot(np.arange(self.ts_imputation.shape[1]), self.ts_imputation[i, :], linewidth=2.5, color=color,
                          linestyle='-', label=f'Series{i + 1}-IMP')
 

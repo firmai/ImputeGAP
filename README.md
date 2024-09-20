@@ -15,4 +15,5 @@ To install in local ImputeGAP, download the package from GitHub and run the comm
 The model of management is able to load any kind of time series datasets that respect this format : <b>(Values,Series), series are seperated by space et values by a carriage return \n.</b>
 
 ## Contamination
-ImputeGAP allows to contaminate the dataset with a specific scenario to reproduce a situation. Up to now, the scenarios are : <b>MCAR, ...</b>
+ImputeGAP allows to contaminate datasets with a specific scenario to reproduce a situation. Up to now, the scenarios are : <b>MCAR, ...</b><br />
+Please find the documentation in this page : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/contamination#readme" >missing data scenarios</a>

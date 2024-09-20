@@ -1,6 +1,6 @@
 import os
 import toml
-from imputegap.algorithms.cdrec import native_cdrec_param
+from imputegap.algorithms.cdrec import native_cdrec_param, cdrec
 from imputegap.algorithms.zero_impute import zero_impute
 from imputegap.evaluation.evaluation import Evaluation
 
@@ -32,19 +32,20 @@ class Imputation:
 
             :return: imputed_matrix, metrics : all time series with imputation data and their metrics
             """
-
             if params is not None:
                 truncation_rank, epsilon, iterations = params
             else:
                 config = Imputation.load_toml()
                 truncation_rank = config['cdrec']['default_reduction_rank']
-                epsilon = config['cdrec']['default_epsilon_str']
+                epsilon = config['cdrec']['default_epsilon']
                 iterations = config['cdrec']['default_iteration']
 
-            imputed_matrix = native_cdrec_param(__py_matrix=contamination, __py_rank=int(truncation_rank),
-                                                __py_eps=float("1" + epsilon), __py_iters=int(iterations))
+            print("CDREC Imputation lanched with : ", params, "\n")
 
-            metrics = Evaluation(ground_truth, ground_truth + 0.1, contamination).metrics_computation()
+
+            imputed_matrix = cdrec(ground_truth=ground_truth, contamination=contamination, truncation_rank=truncation_rank, iterations=iterations, epsilon=epsilon)
+
+            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
 
             print("CDREC Imputation completed without error.\n")
 

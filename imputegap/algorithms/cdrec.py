@@ -1,25 +1,10 @@
+import numpy as np
+import ctypes
+import os
+import platform
+import os.path as __os_path_import;
 import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
-
-
-__NATIVE_CENTROID_LIBRARY_PATH_DEBUG = "./Wrapper/src/libAlgoCollection.so"; # same folder
-__NATIVE_CENTROID_LIBRARY_PATH = "./Wrapper/libAlgoCollection.so"; # will pick up from anything in $PATH
-__NATIVE_CENTROID_LIBRARY_PATH_ALT = "/Home/naterq/imputegap/imputegap/Wrapper/src/libAlgoCollection.so"; # manual
-__NATIVE_CENTROID_LIBRARY_PATH_ALT_WSL = "/mnt/d/Git/imputegap/imputegap/Wrapper/src/libAlgoCollection.so"; # manual
-__NATIVE_CENTROID_LIBRARY_PATH_ALT_WSL_LAPTOP = "/mnt/c/Git/imputegap/imputegap/Wrapper/src/libAlgoCollection.so"; # manual
-__NATIVE_CENTROID_LIBRARY_PATH_Linux = "../Wrapper/src/libAlgoCollection.so"; # manual
-__NATIVE_CENTROID_LIBRARY_PATH_Linux_2 = "../../Wrapper/src/libAlgoCollection.so"; # manual
-
-
-paths = [
-    __NATIVE_CENTROID_LIBRARY_PATH,
-    __NATIVE_CENTROID_LIBRARY_PATH_ALT,
-    __NATIVE_CENTROID_LIBRARY_PATH_ALT_WSL,
-    __NATIVE_CENTROID_LIBRARY_PATH_ALT_WSL_LAPTOP,
-    __NATIVE_CENTROID_LIBRARY_PATH_Linux,
-    __NATIVE_CENTROID_LIBRARY_PATH_Linux_2,
-    __NATIVE_CENTROID_LIBRARY_PATH_DEBUG
-]
 
 
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
@@ -27,12 +12,12 @@ def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
 
     return __numpy_marshal;
 
+
 def __marshal_as_native_column(__py_matrix):
     __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
     __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
 
     return __ctype_marshal;
-
 
 def native_cdrec_param(__py_matrix, __py_rank, __py_eps, __py_iters):
     """
@@ -43,6 +28,22 @@ def native_cdrec_param(__py_matrix, __py_rank, __py_eps, __py_iters):
     :param __py_iters: maximum number of allowed iterations for the algorithms
     :return: 2D array recovered matrix
     """
+
+    # Determine the OS and load the correct shared library
+
+    local_path_win = './algorithms/lib/lib_algo.dll'
+    local_path_lin = './algorithms/lib/lib_algo.so'
+
+    if not os.path.exists(local_path_win):
+        local_path_win = '../algorithms/lib/lib_algo.dll'
+        local_path_lin = '../algorithms/lib/lib_algo.so'
+
+    if platform.system() == 'Windows':
+        lib_path = os.path.join(local_path_win)
+    else:
+        lib_path = os.path.join(local_path_lin)
+
+    cdrec_lib = ctypes.CDLL(lib_path)
 
     __py_sizen = len(__py_matrix);
     __py_sizem = len(__py_matrix[0]);
@@ -62,24 +63,38 @@ def native_cdrec_param(__py_matrix, __py_rank, __py_eps, __py_iters):
     # Native code uses linear matrix layout, and also it's easier to pass it in like this
     __ctype_input_matrix = __marshal_as_native_column(__py_matrix);
 
-    """
-    for path in paths:
-        if __os_path_import.isfile(path):
-            __ctype_libcd_native = __native_c_types_import.cdll.LoadLibrary(path)
-            break
-    else:
-        print("Cannot load the shared library - file not found")
-        raise Exception('Failed to load the shared library.')
-
-
-    __ctype_libcd_native.cdrec_imputation_simple(
+    # extern "C" void
+    # cdrec_imputation_parametrized(
+    #         double *matrixNative, size_t dimN, size_t dimM,
+    #         size_t truncation, double epsilon, size_t iters
+    # )
+    cdrec_lib.cdrec_imputation_parametrized(
         __ctype_input_matrix, __ctype_sizen, __ctype_sizem,
-        __ctype_rank
+        __ctype_rank, __ctype_eps, __ctype_iters
     );
-    """
 
     __py_recovered = __marshal_as_numpy_column(__ctype_input_matrix, __py_sizen, __py_sizem);
 
     return __py_recovered;
 
-# end function
+def cdrec(ground_truth, contamination, truncation_rank, iterations, epsilon):
+    """
+    CDREC algorithm for imputation of missing data
+    @author : Quentin Nater
+
+    :param ground_truth: original time series without contamination
+    :param contamination: time series with contamination
+    :param truncation_rank: rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series)
+    :param epsilon : learning rate
+    :param iterations : number of iterations
+
+    :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+
+    """
+
+    # Call the C++ function to perform recovery
+    imputed_matrix = native_cdrec_param(contamination, truncation_rank, epsilon, iterations)
+
+    return imputed_matrix
+
+
