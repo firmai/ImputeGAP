@@ -11,12 +11,12 @@ default_alpha = 7
 
 [iim]
 default_neighbor = 10
+default_algorithm_code = "iim 2"
 
 [mrnn]
 default_hidden_dim = 10
 default_learning_rate = 0.01
 default_iterations = 1000
-default_keep_prob = 1.0
 default_sequence_length = 7
 
 [explainer]

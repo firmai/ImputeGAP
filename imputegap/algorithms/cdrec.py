@@ -43,6 +43,8 @@ def native_cdrec_param(__py_matrix, __py_rank, __py_eps, __py_iters):
     else:
         lib_path = os.path.join(local_path_lin)
 
+    print("\n", lib_path , " has been loaded...")
+
     cdrec_lib = ctypes.CDLL(lib_path)
 
     __py_sizen = len(__py_matrix);

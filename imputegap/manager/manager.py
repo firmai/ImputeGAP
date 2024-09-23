@@ -1,9 +1,8 @@
 import os
 import numpy as np
+import matplotlib
+matplotlib.use('TkAgg')  # ou 'TkAgg' si vous souhaitez une interface graphique
 from matplotlib import pyplot as plt  # type: ignore
-from imputegap.contamination.contamination import Contamination
-from imputegap.imputation.imputation import Imputation
-
 
 class TimeSeries:
 
@@ -21,6 +20,8 @@ class TimeSeries:
         self.metrics = []
         self.optimal_params = None
         self.explainer = None
+
+
 
     def load_timeseries(self, data=None, normalization=None):
         """

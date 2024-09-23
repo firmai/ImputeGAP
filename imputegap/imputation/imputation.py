@@ -1,6 +1,9 @@
 import os
 import toml
-from imputegap.algorithms.cdrec import native_cdrec_param, cdrec
+from imputegap.algorithms.cdrec import cdrec
+from imputegap.algorithms.iim import iim
+from imputegap.algorithms.min_impute import min_impute
+from imputegap.algorithms.mrnn import mrnn
 from imputegap.algorithms.zero_impute import zero_impute
 from imputegap.evaluation.evaluation import Evaluation
 
@@ -39,23 +42,112 @@ class Imputation:
                 truncation_rank = config['cdrec']['default_reduction_rank']
                 epsilon = config['cdrec']['default_epsilon']
                 iterations = config['cdrec']['default_iteration']
+                params = truncation_rank, epsilon, iterations
 
-            print("CDREC Imputation lanched with : ", params, "\n")
-
+            print("\n\nCDREC Imputation lanched with : ", params, "\n")
 
             imputed_matrix = cdrec(ground_truth=ground_truth, contamination=contamination, truncation_rank=truncation_rank, iterations=iterations, epsilon=epsilon)
 
             metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
 
-            print("CDREC Imputation completed without error.\n")
+            print("\nCDREC Imputation completed without error.\n")
 
             return imputed_matrix, metrics
 
     class Stats:
         def zero_impute(ground_truth, contamination, params=None):
+            """
+            Template zero impute for adding your own algorithms
+            @author : Quentin Nater
+
+            :param ground_truth: original time series without contamination
+            :param contamination: time series with contamination
+            :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
+
+            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+            """
             imputed_matrix = zero_impute(ground_truth, contamination, params)
             metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
 
-            print("ZERO Imputation completed without error.\n")
+            print("\n\nZERO Imputation completed without error.\n")
+
+            return imputed_matrix, metrics
+
+        def min_impute(ground_truth, contamination, params=None):
+            """
+            Impute NaN values with the minimum value of the ground truth time series.
+            @author : Quentin Nater
+
+            :param ground_truth: original time series without contamination
+            :param contamination: time series with contamination
+            :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
+
+            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+            """
+            imputed_matrix = min_impute(ground_truth, contamination, params)
+            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
+
+            print("\n\nMIN Imputation completed without error.\n")
+
+            return imputed_matrix, metrics
+
+
+    class Regression:
+        def iim_imputation(ground_truth, contamination, params=None):
+            """
+           Imputation of data with IIM algorithm
+           @author Quentin Nater
+
+           :param ground_truth: original time series without contamination
+           :param contamination: time series with contamination
+           :param params: [Optional] parameters of the algorithm, if None, default ones are loaded : neighbors, algo_code
+
+           :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+           """
+            if params is not None:
+                neighbors, algo_code = params
+            else:
+                config = Imputation.load_toml()
+                neighbors = config['iim']['default_neighbor']
+                algo_code = config['iim']['default_algorithm_code']
+
+            print("\n\nIIM Imputation lanched...\n")
+
+            imputed_matrix = iim(contamination=contamination, number_neighbor=neighbors, algo_code=algo_code)
+
+            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
+
+            print("\nIIM Imputation completed without error.\n")
+
+            return imputed_matrix, metrics
+
+    class ML:
+        def mrnn_imputation(ground_truth, contamination, params=None):
+            """
+           Imputation of data with MRNN algorithm
+           @author Quentin Nater
+
+           :param ground_truth: original time series without contamination
+           :param contamination: time series with contamination
+           :param params: [Optional] parameters of the algorithm, hidden_dim, learning_rate, iterations, keep_prob, sequence_length, if None, default ones are loaded
+
+           :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+           """
+            if params is not None:
+                hidden_dim, learning_rate, iterations, keep_prob, sequence_length = params
+            else:
+                config = Imputation.load_toml()
+                hidden_dim = config['mrnn']['default_hidden_dim']
+                learning_rate = config['mrnn']['default_learning_rate']
+                iterations = config['mrnn']['default_iterations']
+                sequence_length = config['mrnn']['default_sequence_length']
+
+            print("\n\nMRNN Imputation lanched...\n")
+
+            imputed_matrix = mrnn(contamination=contamination, hidden_dim=hidden_dim, learning_rate=learning_rate, iterations=iterations, sequence_length=sequence_length)
+
+            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
+
+            print("\nMRNN Imputation completed without error.\n")
 
             return imputed_matrix, metrics

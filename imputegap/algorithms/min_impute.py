@@ -1,10 +1,9 @@
 import numpy as np
 
 
-def zero_impute(ground_truth, contamination, params=None):
+def min_impute(ground_truth, contamination, params=None):
     """
-    Template zero impute for adding your own algorithms
-    @author : Quentin Nater
+    Impute NaN values with the minimum value of the ground truth time series.
 
     :param ground_truth: original time series without contamination
     :param contamination: time series with contamination
@@ -12,6 +11,11 @@ def zero_impute(ground_truth, contamination, params=None):
 
     :return: imputed_matrix : all time series with imputation data
     """
-    imputed_matrix = np.nan_to_num(contamination, nan=0)
+
+    # logic
+    min_value = np.nanmin(ground_truth)
+
+    # Imputation
+    imputed_matrix = np.nan_to_num(contamination, nan=min_value)
 
     return imputed_matrix
