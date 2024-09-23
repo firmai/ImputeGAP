@@ -2,28 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/imputegap/algorithms/iim.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/algorithms/min_impute.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/algorithms/mrnn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/assets/iim_imputation.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/test-large.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/IIM/testerIIM.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/MRNN/Data_Loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/MRNN/M_RNN.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/MRNN/testerMRNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/imputegap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/imputegap.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_imputation_iim.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_imputation_mrnn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/default_values.toml" beforeDir="false" afterPath="$PROJECT_DIR$/env/default_values.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/algorithms/cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/algorithms/cdrec.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/algorithms/zero_impute.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/algorithms/zero_impute.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/imputation/imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/imputation/imputation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/manager/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/manager/manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoCollection/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoCollection/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoCollection/libcdrec.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoCollection/libcdrec.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/IIM/testerIIM.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/IIM/testerIIM.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +46,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap/algorithms/lib",
+    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/tests",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
@@ -72,11 +54,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\algorithms\lib" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\dataset" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\algorithms" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\wrapper\AlgoPython\IIM" />
-      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\wrapper\AlgoPython\MRNN\results" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap" />
@@ -85,7 +67,7 @@
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\assets" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.runner">
+  <component name="RunManager" selected="Python tests.Python tests in test_imputation_mrnn.py">
     <configuration name="runner" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -152,7 +134,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in test_contamination_mcar.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in test_imputation_mrnn.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -163,7 +145,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_contamination_mcar.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_imputation_mrnn.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
@@ -186,16 +168,16 @@
       <item itemvalue="Python.runner" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.test (1)" />
-      <item itemvalue="Python tests.Python tests in test_contamination_mcar.py" />
+      <item itemvalue="Python tests.Python tests in test_imputation_mrnn.py" />
       <item itemvalue="Python tests.Python tests in tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests in test_imputation_mrnn.py" />
         <item itemvalue="Python.runner" />
         <item itemvalue="Python.test (1)" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python tests.Python tests in tests" />
-        <item itemvalue="Python tests.Python tests in test_contamination_mcar.py" />
       </list>
     </recent_temporary>
   </component>
@@ -216,7 +198,7 @@
       <workItem from="1726754624898" duration="11066000" />
       <workItem from="1726829350941" duration="18021000" />
       <workItem from="1727089360789" duration="542000" />
-      <workItem from="1727089982123" duration="13147000" />
+      <workItem from="1727089982123" duration="13445000" />
     </task>
     <servers />
   </component>
@@ -239,6 +221,6 @@
     <SUITE FILE_PATH="coverage/imputegap$test.coverage" NAME="test Coverage Results" MODIFIED="1727099350719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/imputegap$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1727099954120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$_loading.coverage" NAME="_loading Coverage Results" MODIFIED="1726134442146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/loading" />
-    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1726844736776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1727103822288" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>

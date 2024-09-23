@@ -419,38 +419,3 @@ def impute_with_algorithm(alg_code: str, matrix: np.ndarray, neighbors=None):
     matrix_imputed[nan_mask] = np.sqrt(np.finfo('d').max / 100000.0)
 
     return matrix_imputed
-
-def impute_file_data(alg_code, input, output, rt = 0):
-    """Executes the imputation algorithm for a matrix given by a file and writes the imputation back into an output file. Alternatively, with a flag writes runtime instead.
-
-    Parameters
-    ----------
-    alg_code : str
-        The algorithm and its parameters.
-        The first parameter is the name, the second the number of neighbors and the third whether to use adaptive or not.
-
-    Returns
-    -------
-    list
-        The imputed matrix.
-    """
-    
-    matrix = np.loadtxt(input)
-    n = len(matrix)
-    
-    # beginning of imputation process - start time measurement
-    start_time = time.time()
-    matrix_imputed = impute_with_algorithm(alg_code, matrix)
-    # imputation is complete - stop time measurement
-    end_time = time.time()
-
-    exec_time = (end_time - start_time) * 1000 * 1000
-
-    #if rt > 0:
-    #    np.savetxt(output, np.array([exec_time]))
-    #else:
-    #    np.savetxt(output, matrix_imputed)
-    #end if
-
-    print('')
-    print('Time (IIM):', exec_time)
