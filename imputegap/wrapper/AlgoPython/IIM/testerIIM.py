@@ -252,10 +252,7 @@ def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
 
     # Line 8-10 Select best model for each tuple
     best_models_indices = np.argmin(costs, axis=1)
-    learning_neighbors = [range(1, all_entries + 1, step_size)[best_models_index]
-                          for best_models_index in best_models_indices]
-    #print("Determined following learning neighbors for each tuple with missing attributes: {}".format(learning_neighbors))
-    # Organizing the model parameters into a numpy array
+
     number_of_attributes = incomplete_tuples.shape[1]
     lr_models = np.empty((number_of_incomplete_tuples, number_of_attributes, l), dtype=object)
 

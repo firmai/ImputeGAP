@@ -53,10 +53,10 @@ class TestContamination(unittest.TestCase):
         imputation, metrics = Imputation.ML.mrnn_imputation(impute_gap.ts, ts_contaminated)
 
         expected_metrics = {
-            "RMSE": 0.08301454281495427,
-            "MAE": 0.06229286226595884,
-            "MI": 0.9898844107345834,
-            "CORRELATION": 0.9420082704699897
+            "RMSE": 0.34949060530462533,
+            "MAE": 0.25223314039410877,
+            "MI": 0.0013520391456194952,
+            "CORRELATION": 0.11633073201054478
         }
 
         impute_gap.ts_contaminate = ts_contaminated

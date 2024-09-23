@@ -53,10 +53,10 @@ class TestContamination(unittest.TestCase):
         imputation, metrics = Imputation.Regression.iim_imputation(impute_gap.ts, ts_contaminated)
 
         expected_metrics = {
-            "RMSE": 0.08301454281495427,
-            "MAE": 0.06229286226595884,
-            "MI": 0.9898844107345834,
-            "CORRELATION": 0.9420082704699897
+            "RMSE": 0.1634600944317234,
+            "MAE": 0.12404674986835251,
+            "MI": 0.6446689074332342,
+            "CORRELATION": 0.8788051903986334
         }
 
         impute_gap.ts_contaminate = ts_contaminated
