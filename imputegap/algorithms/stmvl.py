@@ -42,7 +42,6 @@ def load_share_lib(name = "lib_algo"):
 
 
 def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
-    # type: (__numpy_import.array, int, float, int) -> __numpy_import.array
     """
     Recovers missing values (designated as NaN) in a matrix. Supports additional parameters
     :param __py_matrix: 2D array
