@@ -255,7 +255,7 @@ def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
     best_models_indices = np.argmin(costs, axis=1)
 
     number_of_attributes = incomplete_tuples.shape[1]
-    lr_models = np.empty((number_of_incomplete_tuples, number_of_attributes, l), dtype=object)
+    lr_models = np.empty((number_of_incomplete_tuples, number_of_attributes, my_model), dtype=object)
 
     for i in range(number_of_incomplete_tuples):
         best_models_indices_for_tuple = best_models_indices[i]
