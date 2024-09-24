@@ -15,7 +15,7 @@ class TimeSeries:
         :param contaminated_ts : time series after contamination
         :param imputation : time series after reconstruction of the missing data
         :param optimal_params : optimal parameters found for a specific algorithm and time series dataset
-        :param explainer : result of the shap algorithm to explain the imputation of the time series dataset
+        :param explainer : result of the explainer algorithm to explain the imputation of the time series dataset
         """
         self.ts = self.load_timeseries(data, normalization)
         self.ts_contaminate = None

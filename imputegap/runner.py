@@ -1,6 +1,8 @@
 from imputegap.contamination.contamination import Contamination
 from imputegap.imputation.imputation import Imputation
 from imputegap.manager.manager import TimeSeries
+from imputegap.explainer.explainer import Explainer
+
 
 def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg - exascale infolab"):
     print("=" * 100)
@@ -21,7 +23,7 @@ if __name__ == '__main__':
 
     display_title()
 
-    filename = "./dataset/test.txt"
+    filename = "./dataset/chlorine.txt"
     gap = TimeSeries(data=filename)
 
     block_size, plot_limit = check_block_size(filename)
@@ -33,9 +35,11 @@ if __name__ == '__main__':
     gap.print()
     gap.plot(ts_type="contamination", title="test", save_path="assets/", limitation=3, display=False)
 
-    gap.ts_imputation, gap.metrics = Imputation.Pattern.stmvl_imputation(ground_truth=gap.ts, contamination=gap.ts_contaminate)
+    gap.ts_imputation, gap.metrics = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=gap.ts_contaminate)
     gap.print()
     gap.print_results()
-    gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=plot_limit, display=True)
+    gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=plot_limit, display=False)
+
+    gt_matrices, c_matrices, metrics, input_params, shap_values = Explainer.shap_explainer(ground_truth=gap.ts)
 
     print("\n", "_"*95, "end")

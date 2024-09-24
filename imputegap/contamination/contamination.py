@@ -41,7 +41,19 @@ class Contamination:
         else:
             return selection
 
-    def scenario_mcar(ts, series_impacted=0.1, missing_rate=0.1, block_size=10, protection=0.1, use_seed=True, seed=42):
+    def scenario_mcar(ts, series_impacted=0.2, missing_rate=0.2, block_size=10, protection=0.1, use_seed=True, seed=42, explainer=False):
+        """
+        Contamination of time series base on the Missing Completely at Random scenario
+
+        :param series_impacted: percentage of series contaminated | default 0.2
+        :param missing_rate: percentage of missing values by series  | default 0.2
+        :param block_size: size of the block to remove at each random position selected  | default 10
+        :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1
+        :param use_seed: use a seed to reproduce the test | default true
+        :param seed: value of the seed | default 42
+        :param explainer : use the MCAR on specific series to explain the imputation # default False
+        :return: the contaminated time series
+        """
 
         if use_seed:
             np.random.seed(seed)
@@ -49,10 +61,13 @@ class Contamination:
         ts_contaminated = ts.copy()
         M, _ = ts_contaminated.shape
 
-        nbr_series_impacted = int(np.ceil(M * series_impacted))
-        series_indices = [str(idx) for idx in np.random.choice(M, nbr_series_impacted, replace=False)]
-        series_selected = Contamination.format_selection(ts_contaminated, series_indices)
+        if not explainer:  # use random series
+            nbr_series_impacted = int(np.ceil(M * series_impacted))
+            series_indices = [str(idx) for idx in np.random.choice(M, nbr_series_impacted, replace=False)]
+        else:  # use fix series
+            series_indices = [str(series_impacted)]
 
+        series_selected = Contamination.format_selection(ts_contaminated, series_indices)
 
         print("\n\nMCAR contamination has been called with :"
               "\n\ta number of series impacted ", series_impacted * 100, "%",
