@@ -196,8 +196,7 @@ def imputation(incomplete_tuples: np.ndarray, lr_coef_and_threshold: np.ndarray)
 
 
 # Algorithm 3: Adaptive
-def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int, max_learning_neighbors: int = 100,
-             step_size: int = 4):
+def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int, max_learning_neighbors: int = 100, step_size: int = 4):
     """Adaptive learning of regression parameters
 
     Parameters
@@ -239,10 +238,8 @@ def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
             for my_model in range(0, number_of_models):  # Line 6, for l in 1..n
                 model_params_for_tuple = phi_list[my_model][incomplete_tuple_idx]
                 for attribute_index, model_params in enumerate(model_params_for_tuple):
-                    # print(f"Attribute index: {attribute_index}, model_params: {model_params}")
 
-                    if model_params is not None and not np.any(
-                            model_params is None):  # Only compute cost for NaN attributes
+                    if model_params is not None and not np.any(model_params is None):  # Only compute cost for NaN attributes
                         coefs, intercepts = zip(*model_params)
                         expanded_coef = np.array(coefs)
                         # set NaN attributes in neighbors_filtered to 0 (Nan to Num should also work)
@@ -252,7 +249,7 @@ def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
                         phi_models = (expanded_coef @ neighbors_filtered_copy[:, :, None]).squeeze() + np.array(
                             intercepts)
                         errors = np.abs(complete_tuple[attribute_index] - phi_models)
-                        costs[incomplete_tuple_idx, l] += np.sum(np.power(errors, 2)) / len(phi_models)
+                        costs[incomplete_tuple_idx, my_model] += np.sum(np.power(errors, 2)) / len(phi_models)
 
     # Line 8-10 Select best model for each tuple
     best_models_indices = np.argmin(costs, axis=1)
