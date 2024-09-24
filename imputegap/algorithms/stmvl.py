@@ -16,7 +16,7 @@ def __marshal_as_native_column(__py_matrix):
     return __ctype_marshal;
 
 
-def load_share_lib(name = "lib_algo"):
+def load_share_lib(name = "lib_stmvl"):
     """
     Determine the OS and load the correct shared library
     :param name: name of the library
@@ -26,7 +26,7 @@ def load_share_lib(name = "lib_algo"):
     local_path_win = './algorithms/lib/'+name+'.dll'
     local_path_lin = './algorithms/lib/'+name+'.so'
 
-    if not os.path.exists(local_path_win):
+    if not os.path.exists(local_path_lin):
         local_path_win = './imputegap/algorithms/lib/'+name+'.dll'
         local_path_lin = './imputegap/algorithms/lib/'+name+'.so'
 

@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
     display_title()
 
-    filename = "./dataset/chlorine.txt"
+    filename = "./dataset/test.txt"
     gap = TimeSeries(data=filename)
 
     block_size, plot_limit = check_block_size(filename)

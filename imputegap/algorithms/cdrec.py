@@ -4,10 +4,12 @@ import platform
 import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
 
+
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
     __numpy_marshal = __numpy_import.array(__ctype_container).reshape(__py_sizem, __py_sizen).T;
 
     return __numpy_marshal;
+
 
 def __marshal_as_native_column(__py_matrix):
     __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
@@ -16,19 +18,19 @@ def __marshal_as_native_column(__py_matrix):
     return __ctype_marshal;
 
 
-def load_share_lib(name = "lib_algo"):
+def load_share_lib(name="lib_algo"):
     """
     Determine the OS and load the correct shared library
     :param name: name of the library
     :return: the correct path to the library
     """
 
-    local_path_win = './algorithms/lib/'+name+'.dll'
-    local_path_lin = './algorithms/lib/'+name+'.so'
+    local_path_win = './algorithms/lib/' + name + '.dll'
+    local_path_lin = './algorithms/lib/' + name + '.so'
 
-    if not os.path.exists(local_path_win):
-        local_path_win = './imputegap/algorithms/lib/'+name+'.dll'
-        local_path_lin = './imputegap/algorithms/lib/'+name+'.so'
+    if not os.path.exists(local_path_lin):
+        local_path_win = './imputegap/algorithms/lib/' + name + '.dll'
+        local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
 
     if platform.system() == 'Windows':
         lib_path = os.path.join(local_path_win)
@@ -37,7 +39,6 @@ def load_share_lib(name = "lib_algo"):
     print("\n", lib_path, " has been loaded...")
 
     return ctypes.CDLL(lib_path)
-
 
 
 def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
@@ -84,6 +85,7 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
 
     return __py_recovered;
 
+
 def cdrec(contamination, truncation_rank, iterations, epsilon):
     """
     CDREC algorithm for imputation of missing data
@@ -102,5 +104,3 @@ def cdrec(contamination, truncation_rank, iterations, epsilon):
     imputed_matrix = native_cdrec(contamination, truncation_rank, epsilon, iterations)
 
     return imputed_matrix
-
-
