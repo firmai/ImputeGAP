@@ -4,6 +4,7 @@ from imputegap.algorithms.cdrec import cdrec
 from imputegap.algorithms.iim import iim
 from imputegap.algorithms.min_impute import min_impute
 from imputegap.algorithms.mrnn import mrnn
+from imputegap.algorithms.stmvl import stmvl
 from imputegap.algorithms.zero_impute import zero_impute
 from imputegap.evaluation.evaluation import Evaluation
 
@@ -134,7 +135,7 @@ class Imputation:
            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
            """
             if params is not None:
-                hidden_dim, learning_rate, iterations, keep_prob, sequence_length = params
+                hidden_dim, learning_rate, iterations, sequence_length = params
             else:
                 config = Imputation.load_toml()
                 hidden_dim = config['mrnn']['default_hidden_dim']
@@ -149,5 +150,37 @@ class Imputation:
             metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
 
             print("\nMRNN Imputation completed without error.\n")
+
+            return imputed_matrix, metrics
+
+    class Pattern:
+        def stmvl_imputation(ground_truth, contamination, params=None):
+            """
+           Imputation of data with MRNN algorithm
+           @author Quentin Nater
+
+           :param ground_truth: original time series without contamination
+           :param contamination: time series with contamination
+           :param params: [Optional] parameters of the algorithm, window_size, gamma, alpha, if None, default ones are loaded
+                :param window_size: window size for temporal component
+                :param gamma: smoothing parameter for temporal weight
+                :param alpha: power for spatial weight
+           :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+           """
+            if params is not None:
+                window_size, gamma, alpha = params
+            else:
+                config = Imputation.load_toml()
+                window_size = config['stmvl']['default_window_size']
+                gamma = config['stmvl']['default_gamma']
+                alpha = config['stmvl']['default_alpha']
+
+            print("\n\nST-MVL Imputation lanched...\n")
+
+            imputed_matrix = stmvl(contamination=contamination, window_size=window_size, gamma=gamma, alpha=alpha)
+
+            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
+
+            print("\nST-MVL Imputation completed without error.\n")
 
             return imputed_matrix, metrics

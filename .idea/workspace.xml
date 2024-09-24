@@ -2,17 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/pytest_contamination.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/pytest_imp_iim.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/pytest_imp_mrnn.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/pytest_loading.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pytest.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest_imp_cdrec.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/pytest_imp_stmvl.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imputegap/algorithms/stmvl.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_imputation_stmvl.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/algorithms/cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/algorithms/cdrec.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/assets/test_contamination.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/test_contamination.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/assets/test_ground_truth.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/test_ground_truth.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/assets/test_imputation.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/test_imputation.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/manager/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/manager/manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/imputation/imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/imputation/imputation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_iim.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_iim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_mrnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_mrnn.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,9 +64,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\.github\workflows" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests" />
+      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\algorithms" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\algorithms\lib" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\dataset" />
-      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\algorithms" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap" />
@@ -206,7 +207,7 @@
       <workItem from="1726829350941" duration="18021000" />
       <workItem from="1727089360789" duration="542000" />
       <workItem from="1727089982123" duration="14843000" />
-      <workItem from="1727176127889" duration="1326000" />
+      <workItem from="1727176127889" duration="2571000" />
     </task>
     <servers />
   </component>
@@ -224,8 +225,18 @@
       </map>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/tests/test_imputation_stmvl.py</url>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/imputegap$runner.coverage" NAME="runner Coverage Results" MODIFIED="1727177376812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$runner.coverage" NAME="runner Coverage Results" MODIFIED="1727178535935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$test.coverage" NAME="test Coverage Results" MODIFIED="1727099350719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/imputegap$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1727099954120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$_loading.coverage" NAME="_loading Coverage Results" MODIFIED="1726134442146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/loading" />

@@ -40,13 +40,15 @@ def load_share_lib(name = "lib_algo"):
 
 
 
-def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
+
+def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
+    # type: (__numpy_import.array, int, float, int) -> __numpy_import.array
     """
     Recovers missing values (designated as NaN) in a matrix. Supports additional parameters
     :param __py_matrix: 2D array
-    :param __py_rank: truncation rank to be used (0 = detect truncation automatically)
-    :param __py_eps: threshold for difference during recovery
-    :param __py_iters: maximum number of allowed iterations for the algorithms
+    :param __py_window: window size for temporal component
+    :param __py_gamma: smoothing parameter for temporal weight
+    :param __py_alpha: power for spatial weight
     :return: 2D array recovered matrix
     """
 
@@ -55,51 +57,52 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
     __py_sizen = len(__py_matrix);
     __py_sizem = len(__py_matrix[0]);
 
-    assert (__py_rank >= 0);
-    assert (__py_rank < __py_sizem);
-    assert (__py_eps > 0);
-    assert (__py_iters > 0);
+    assert (__py_window >= 2);
+    assert (__py_gamma > 0.0);
+    assert (__py_gamma < 1.0);
+    assert (__py_alpha > 0.0);
 
     __ctype_sizen = __native_c_types_import.c_ulonglong(__py_sizen);
     __ctype_sizem = __native_c_types_import.c_ulonglong(__py_sizem);
 
-    __ctype_rank = __native_c_types_import.c_ulonglong(__py_rank);
-    __ctype_eps = __native_c_types_import.c_double(__py_eps);
-    __ctype_iters = __native_c_types_import.c_ulonglong(__py_iters);
+    __ctype_window = __native_c_types_import.c_ulonglong(__py_window);
+    __ctype_gamma = __native_c_types_import.c_double(__py_gamma);
+    __ctype_alpha = __native_c_types_import.c_double(__py_alpha);
 
     # Native code uses linear matrix layout, and also it's easier to pass it in like this
     __ctype_input_matrix = __marshal_as_native_column(__py_matrix);
 
     # extern "C" void
-    # cdrec_imputation_parametrized(
+    # stmvl_imputation_parametrized(
     #         double *matrixNative, size_t dimN, size_t dimM,
-    #         size_t truncation, double epsilon, size_t iters
+    #         size_t window_size, double gamma, double alpha
     # )
-    shared_lib.cdrec_imputation_parametrized(
+    shared_lib.stmvl_imputation_parametrized(
         __ctype_input_matrix, __ctype_sizen, __ctype_sizem,
-        __ctype_rank, __ctype_eps, __ctype_iters
+        __ctype_window, __ctype_gamma, __ctype_alpha
     );
 
     __py_recovered = __marshal_as_numpy_column(__ctype_input_matrix, __py_sizen, __py_sizem);
 
     return __py_recovered;
 
-def cdrec(contamination, truncation_rank, iterations, epsilon):
+
+def stmvl(contamination, window_size, gamma, alpha):
     """
     CDREC algorithm for imputation of missing data
     @author : Quentin Nater
 
     :param contamination: time series with contamination
-    :param truncation_rank: rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series)
-    :param epsilon : learning rate
-    :param iterations : number of iterations
+    :param window_size: window size for temporal component
+    :param gamma: smoothing parameter for temporal weight
+    :param alpha: power for spatial weight
 
     :return: imputed_matrix, metrics : all time series with imputation data and their metrics
 
     """
 
     # Call the C++ function to perform recovery
-    imputed_matrix = native_cdrec(contamination, truncation_rank, epsilon, iterations)
+    imputed_matrix = native_stmvl(contamination, window_size, gamma, alpha)
 
     return imputed_matrix
 

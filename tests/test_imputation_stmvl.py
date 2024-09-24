@@ -41,7 +41,7 @@ def get_file_path(set_name="test"):
 
 class TestContamination(unittest.TestCase):
 
-    def test_imputation_iim_chlorine(self):
+    def test_imputation_mrnn_chlorine(self):
         """
         the goal is to test if only the simple imputation with cdrec has the expected outcome
         """
@@ -50,13 +50,13 @@ class TestContamination(unittest.TestCase):
         ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=10,
                                                       protection=0.1, use_seed=True, seed=42)
 
-        imputation, metrics = Imputation.Regression.iim_imputation(impute_gap.ts, ts_contaminated)
+        imputation, metrics = Imputation.Pattern.stmvl_imputation(impute_gap.ts, ts_contaminated)
 
         expected_metrics = {
-            "RMSE": 0.1634600944317234,
-            "MAE": 0.12404674986835251,
-            "MI": 0.6446689074332342,
-            "CORRELATION": 0.8788051903986334
+            "RMSE": 0.05795429338869703,
+            "MAE": 0.038205100250362625,
+            "MI": 1.1432357124176236,
+            "CORRELATION": 0.9729604272282141
         }
 
         impute_gap.ts_contaminate = ts_contaminated

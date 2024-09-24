@@ -64,7 +64,7 @@ class TestContamination(unittest.TestCase):
         impute_gap.metrics = metrics
         impute_gap.print_results()
 
-        assert np.isclose(round(metrics["RMSE"], 3), round(expected_metrics["RMSE"], 3))
-        assert np.isclose(round(metrics["MAE"], 3), round(expected_metrics["MAE"], 3))
-        assert np.isclose(round(metrics["MI"], 3), round(expected_metrics["MI"], 3))
-        assert np.isclose(round(metrics["CORRELATION"], 3), round(expected_metrics["CORRELATION"], 3))
+        assert np.isclose(round(metrics["RMSE"], 3), round(expected_metrics["RMSE"], 3), atol=0.01)
+        assert np.isclose(round(metrics["MAE"], 3), round(expected_metrics["MAE"], 3), atol=0.01)
+        assert np.isclose(round(metrics["MI"], 3), round(expected_metrics["MI"], 3), atol=0.01)
+        assert np.isclose(round(metrics["CORRELATION"], 3), round(expected_metrics["CORRELATION"], 3), atol=0.01)

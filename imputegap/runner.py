@@ -12,19 +12,19 @@ def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", u
 
 def check_block_size(filename):
     if "test" in filename:
-        return 2
+        return (2, 2)
     else:
-        return 10
+        return (10, 10)
 
 
 if __name__ == '__main__':
 
     display_title()
 
-    filename = "./dataset/test-large.txt"
+    filename = "./dataset/chlorine.txt"
     gap = TimeSeries(data=filename)
 
-    block_size = check_block_size(filename)
+    block_size, plot_limit = check_block_size(filename)
 
     gap.print(limitation=5)
     gap.plot(title="test", save_path="assets/", limitation=6, display=False)
@@ -33,9 +33,9 @@ if __name__ == '__main__':
     gap.print()
     gap.plot(ts_type="contamination", title="test", save_path="assets/", limitation=3, display=False)
 
-    gap.ts_imputation, gap.metrics = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=gap.ts_contaminate)
+    gap.ts_imputation, gap.metrics = Imputation.Pattern.stmvl_imputation(ground_truth=gap.ts, contamination=gap.ts_contaminate)
     gap.print()
     gap.print_results()
-    gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=2, display=True)
+    gap.plot(ts_type="imputation", title="test", save_path="assets/", limitation=plot_limit, display=True)
 
     print("\n", "_"*95, "end")
