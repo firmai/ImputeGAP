@@ -47,7 +47,7 @@ class Imputation:
 
             print("\n\nCDREC Imputation lanched with : ", params, "\n")
 
-            imputed_matrix = cdrec(ground_truth=ground_truth, contamination=contamination, truncation_rank=truncation_rank, iterations=iterations, epsilon=epsilon)
+            imputed_matrix = cdrec(contamination=contamination, truncation_rank=truncation_rank, iterations=iterations, epsilon=epsilon)
 
             metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
 
