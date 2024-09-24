@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
     display_title()
 
-    filename = "./dataset/test.txt"
+    filename = "./dataset/test-large.txt"
     gap = TimeSeries(data=filename)
 
     block_size = check_block_size(filename)

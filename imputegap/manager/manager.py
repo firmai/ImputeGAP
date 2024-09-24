@@ -1,7 +1,10 @@
 import os
 import numpy as np
-#import matplotlib
-#matplotlib.use('TkAgg')  # ou 'TkAgg' si vous souhaitez une interface graphique
+import matplotlib
+
+if os.getenv('CI') is None:
+    matplotlib.use('TkAgg')
+
 from matplotlib import pyplot as plt  # type: ignore
 
 class TimeSeries:

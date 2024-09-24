@@ -1,4 +1,5 @@
-name: Pytest - ImputeGAP - 08
+
+name: Pytest - ImputeGAP - Imputation - MRNN - 8
 
 on:
   push:
@@ -28,4 +29,4 @@ jobs:
         pip install pytest
 
     - name: Run pytest
-      run: python -m pytest ./tests/
+      run: python -m pytest ./tests/test_imputation_mrnn.py
