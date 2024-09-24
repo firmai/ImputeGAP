@@ -9,6 +9,7 @@ from sklearn.linear_model import Ridge
 
 global rmse;
 
+
 def iim_recovery(matrix_nan: np.ndarray, adaptive_flag: bool = False, learning_neighbors: int = 10):
     """Implementation of the IIM algorithm
     Via the adaptive flag, the algorithm can be run in two modes:
@@ -32,17 +33,20 @@ def iim_recovery(matrix_nan: np.ndarray, adaptive_flag: bool = False, learning_n
     """
     tuples_with_nan = np.isnan(matrix_nan).any(axis=1)
     if np.any(tuples_with_nan):  # if there are any tuples with missing values as NaN
-        incomplete_tuples_indices = np.array(np.where(tuples_with_nan == True))
+        incomplete_tuples_indices = np.array(np.where(tuples_with_nan))
         incomplete_tuples = matrix_nan[tuples_with_nan]
         complete_tuples = matrix_nan[~tuples_with_nan]  # Rows that do not contain a NaN value
         if learning_neighbors > len(complete_tuples):
-            print("Warning: More learning neighbors than complete tuples, setting learning neighbors to number of complete tuples")
-            learning_neighbors = min(len(complete_tuples), learning_neighbors)  # Make sure we don't have more neighbors than tuples
+            print(
+                "Warning: More learning neighbors than complete tuples, setting learning neighbors to number of complete tuples")
+            learning_neighbors = min(len(complete_tuples),
+                                     learning_neighbors)  # Make sure we don't have more neighbors than tuples
         if len(complete_tuples) == 0:
             print("No complete tuples found, unable to proceed, returning original matrix")
             return matrix_nan
         if adaptive_flag:
-            lr_models = adaptive(complete_tuples, incomplete_tuples, learning_neighbors, max_learning_neighbors=min(len(complete_tuples), 10))
+            lr_models = adaptive(complete_tuples, incomplete_tuples, learning_neighbors,
+                                 max_learning_neighbors=min(len(complete_tuples), 10))
             imputation_result = imputation(incomplete_tuples, lr_models)
 
         else:
@@ -58,7 +62,7 @@ def iim_recovery(matrix_nan: np.ndarray, adaptive_flag: bool = False, learning_n
 
 
 #  Algorithm 1: Learning
-def learning(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, l: int = 10):
+def learning(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, learn: int = 10):
     """Learns individual regression models for each learning neighbor and each attribute,
        by fitting on the other attributes and the missing attribute
 
@@ -70,7 +74,7 @@ def learning(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, l: int 
     incomplete_tuples : np.ndarray
         The complete matrix of values with missing values in the form of NaN.
         Should already be normalized.
-    l : int, optional
+    learn : int, optional
         The number of neighbors to use for the KNN classifier, by default 10.
 
     Returns
@@ -82,9 +86,9 @@ def learning(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, l: int 
         - Third dimension: which learning neighbor we are looking at
     """
 
-    knn_euc = NearestNeighbors(n_neighbors=l, metric='euclidean').fit(complete_tuples)
+    knn_euc = NearestNeighbors(n_neighbors=learn, metric='euclidean').fit(complete_tuples)
     number_of_attributes = incomplete_tuples.shape[1]  # Number of attributes, should be 12
-    model_params = np.empty((len(incomplete_tuples), number_of_attributes, l), dtype=object)
+    model_params = np.empty((len(incomplete_tuples), number_of_attributes, learn), dtype=object)
 
     # Replace NaN values with 0
     incomplete_tuples_no_nan = np.nan_to_num(incomplete_tuples)
@@ -216,7 +220,7 @@ def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
     phi: np.ndarray[Ridge]
         The learned regression parameters for all tuples in r.
     """
-    #print("Starting Algorithm 3 'adaptive'")
+    # print("Starting Algorithm 3 'adaptive'")
     all_entries = min(int(complete_tuples.shape[0]), max_learning_neighbors)
     phi_list = [learning(complete_tuples, incomplete_tuples, l_learning)  # for l in 1..n
                 for l_learning in
@@ -225,26 +229,26 @@ def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
     number_of_models = max(len(phi_list) - 1, 1)
     number_of_incomplete_tuples = len(incomplete_tuples)
     costs = np.zeros((number_of_incomplete_tuples, number_of_models))
-    #print("Finished learning; Starting main loop of Algorithm 3 'adaptive'")
+    # print("Finished learning; Starting main loop of Algorithm 3 'adaptive'")
     for log, complete_tuple in enumerate(complete_tuples, 1):  # for t_i in r
-        #if (log % 50) == 0: print("Algorithm 3 'adaptive', processing tuple {}".format(str(log)))
+        # if (log % 50) == 0: print("Algorithm 3 'adaptive', processing tuple {}".format(str(log)))
         neighbors = nn.kneighbors(complete_tuple.reshape(1, -1), return_distance=False)[0]
         for incomplete_tuple_idx, incomplete_tuple in enumerate(incomplete_tuples):
             nan_indicator = np.isnan(incomplete_tuple)  # Show which attribute is missing as NaN
             neighbors_filtered = np.delete(complete_tuples[neighbors], nan_indicator, axis=1)
-            for l in range(0, number_of_models):  # Line 6, for l in 1..n
-                model_params_for_tuple = phi_list[l][incomplete_tuple_idx]
+            for my_model in range(0, number_of_models):  # Line 6, for l in 1..n
+                model_params_for_tuple = phi_list[my_model][incomplete_tuple_idx]
                 for attribute_index, model_params in enumerate(model_params_for_tuple):
-                    #print(f"Attribute index: {attribute_index}, model_params: {model_params}")
+                    # print(f"Attribute index: {attribute_index}, model_params: {model_params}")
 
                     if model_params is not None and not np.any(
-                            model_params == None):  # Only compute cost for NaN attributes
+                            model_params is None):  # Only compute cost for NaN attributes
                         coefs, intercepts = zip(*model_params)
                         expanded_coef = np.array(coefs)
                         # set NaN attributes in neighbors_filtered to 0 (Nan to Num should also work)
                         neighbors_filtered_copy = np.nan_to_num(neighbors_filtered)
 
-                        #print(expanded_coef.shape, neighbors_filtered_copy.shape)
+                        # print(expanded_coef.shape, neighbors_filtered_copy.shape)
                         phi_models = (expanded_coef @ neighbors_filtered_copy[:, :, None]).squeeze() + np.array(
                             intercepts)
                         errors = np.abs(complete_tuple[attribute_index] - phi_models)
@@ -265,26 +269,26 @@ def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
 
 def compute_cost_for_tuple(args):
     complete_tuple, log, complete_tuples, incomplete_tuples, nn, number_of_models, phi_list = args
-    #if (log % 50) == 0: print("Algorithm 3 'adaptive', processing tuple {}".format(str(log)))
+    # if (log % 50) == 0: print("Algorithm 3 'adaptive', processing tuple {}".format(str(log)))
     neighbors = nn.kneighbors(complete_tuple.reshape(1, -1), return_distance=False)[0]
     costs = np.zeros((len(incomplete_tuples), number_of_models))
     for incomplete_tuple_idx, incomplete_tuple in enumerate(incomplete_tuples):
         nan_indicator = np.isnan(incomplete_tuple)
         neighbors_filtered = np.delete(complete_tuples[neighbors], nan_indicator, axis=1)
-        for l in range(0, number_of_models):
+        for my_list in range(0, number_of_models):
             # TODO Find a way to do this with expanded coef better if adaptive is of interest
-            expanded_coef = np.array([coef for coef, _ in phi_list[l][incomplete_tuple_idx]])
+            expanded_coef = np.array([coef for coef, _ in phi_list[my_list][incomplete_tuple_idx]])
             phi_models = (expanded_coef @ neighbors_filtered[:, :, None]).squeeze() + np.array(
-                [intercept for _, intercept in phi_list[l][incomplete_tuple_idx]])
+                [intercept for _, intercept in phi_list[my_list][incomplete_tuple_idx]])
             errors = np.abs(complete_tuple[nan_indicator] - phi_models)
-            costs[incomplete_tuple_idx, l] += np.sum(np.power(errors, 2)) / len(phi_list[l][incomplete_tuple_idx])
+            costs[incomplete_tuple_idx, my_list] += np.sum(np.power(errors, 2)) / len(
+                phi_list[my_list][incomplete_tuple_idx])
     return costs
 
 
 def adaptive_multi(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
-                   max_learning_neighbors: int = 100,
-                   step_size: int = 4):
-    #print("Starting Algorithm 3 'adaptive'")
+                   max_learning_neighbors: int = 100, step_size: int = 4):
+    # print("Starting Algorithm 3 'adaptive'")
     all_entries = min(int(complete_tuples.shape[0]), max_learning_neighbors)
     phi_list = [learning(complete_tuples, incomplete_tuples, l_learning)
                 for l_learning in
@@ -292,7 +296,7 @@ def adaptive_multi(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k
     nn = NearestNeighbors(n_neighbors=k, metric='euclidean').fit(complete_tuples)
     number_of_models = len(phi_list) - 1
     number_of_incomplete_tuples = len(incomplete_tuples)
-    #print("Finished learning; Starting main loop of Algorithm 3 'adaptive'")
+    # print("Finished learning; Starting main loop of Algorithm 3 'adaptive'")
 
     # Create a pool of worker processes
     with Pool() as p:
@@ -304,9 +308,7 @@ def adaptive_multi(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k
     costs = np.sum(costs, axis=0)
 
     best_models_indices = np.argmin(costs, axis=1)
-    learning_neighbors = [range(1, all_entries + 1, step_size)[best_models_index]
-                          for best_models_index in best_models_indices]
-    #print("Determined following learning neighbors for each tuple with missing attributes: {}".format(learning_neighbors))
+
     phi = [phi_list[best_models_indices[i]][i] for i in range(number_of_incomplete_tuples)]
     return phi
 
@@ -346,15 +348,15 @@ def compute_weights(distances: List[float]):
         The weight of the candidate.
     """
 
-    distances = np.array(distances)
-    weights = np.zeros(distances.shape)
+    distances_n = np.array(distances)
+    weights = np.zeros(distances_n.shape)
 
-    nonzero_indices = distances != 0
-    weights[nonzero_indices] = 1 / distances[nonzero_indices] / np.sum(1 / distances[nonzero_indices])
+    nonzero_indices = distances_n != 0
+    weights[nonzero_indices] = 1 / distances_n[nonzero_indices] / np.sum(1 / distances_n[nonzero_indices])
 
     # Handle the case where all distances are zero
     if np.sum(weights) == 0:
-        weights = np.ones(distances.shape) / len(distances)
+        weights = np.ones(distances_n.shape) / len(distances_n)
 
     return weights
 
@@ -394,20 +396,21 @@ def impute_with_algorithm(alg_code: str, matrix: np.ndarray, neighbors=None):
     """
     global rmse
     # Imputation
-    alg_code = alg_code.split()
+    alg_code_spl = alg_code.split()
 
-    if len(alg_code) > 1:
-        match = re.match(r"(\d+)([a-zA-Z]+)", alg_code[1], re.I)
+    if len(alg_code_spl) > 1:
+        match = re.match(r"(\d+)([a-zA-Z]+)", alg_code_spl[1], re.I)
         if match:
             if neighbors is None:
                 neighbors, adaptive_flag = match.groups()
             else:
                 _, adaptive_flag = match.groups()
 
-            matrix_imputed = iim_recovery(matrix, adaptive_flag=adaptive_flag.startswith("a"), learning_neighbors=int(neighbors))
+            matrix_imputed = iim_recovery(matrix, adaptive_flag=adaptive_flag.startswith("a"),
+                                          learning_neighbors=int(neighbors))
         else:
             if neighbors is None:
-                neighbors = int(alg_code[1])
+                neighbors = int(alg_code_spl[1])
 
             matrix_imputed = iim_recovery(matrix, adaptive_flag=False, learning_neighbors=neighbors)
 
