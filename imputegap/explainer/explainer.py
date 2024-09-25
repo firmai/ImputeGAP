@@ -22,7 +22,7 @@ class Explainer:
         :return: Two dictionaries: categories and features.
         """
         if not os.path.exists(file_path):
-            file_path = file_path[4:]
+            file_path = file_path[1:]
 
         config_data = toml.load(file_path)
 

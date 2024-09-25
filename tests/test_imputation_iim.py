@@ -43,7 +43,7 @@ class TestIIM(unittest.TestCase):
 
     def test_imputation_iim_chlorine(self):
         """
-        the goal is to test if only the simple imputation with cdrec has the expected outcome
+        the goal is to test if only the simple imputation with IIM has the expected outcome
         """
         impute_gap = TimeSeries(get_file_path("chlorine"))
 
