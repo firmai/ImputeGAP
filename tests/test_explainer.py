@@ -22,6 +22,7 @@ def resolve_path(local_path, github_actions_path):
     else:
         raise FileNotFoundError("File not found in both: ", local_path, " and ", github_actions_path)
 
+
 def get_file_path(set_name="test"):
     """
     Find the accurate path for loading files of tests
@@ -46,7 +47,6 @@ class TestExplainer(unittest.TestCase):
 
         expected_categories, expected_features = Explainer.load_configuration()
 
-
         gap = TimeSeries(data=get_file_path(filename))
 
         shap_values, shap_details = Explainer.shap_explainer(ground_truth=gap.ts, file_name=filename, use_seed=True,
@@ -58,9 +58,7 @@ class TestExplainer(unittest.TestCase):
         for i, (_, output) in enumerate(shap_details):
             assert np.isclose(RMSE[i], output, atol=0.01)
 
-
-
-        for i, (x, algo, rate, description, feature, categorie, mean_features) in enumerate(shap_values):
+        for i, (x, algo, rate, description, feature, category, mean_features) in enumerate(shap_values):
             assert np.isclose(SHAP_VAL[i], rate, atol=0.01)
 
             self.assertTrue(x is not None and not (isinstance(x, (int, float)) and np.isnan(x)))
@@ -68,14 +66,15 @@ class TestExplainer(unittest.TestCase):
             self.assertTrue(rate is not None and not (isinstance(rate, (int, float)) and np.isnan(rate)))
             self.assertTrue(description is not None)
             self.assertTrue(feature is not None)
-            self.assertTrue(categorie is not None)
-            self.assertTrue(mean_features is not None and not (isinstance(mean_features, (int, float)) and np.isnan(mean_features)))
+            self.assertTrue(category is not None)
+            self.assertTrue(
+                mean_features is not None and not (isinstance(mean_features, (int, float)) and np.isnan(mean_features)))
 
             # Check relation feature/category
             feature_found_in_category = False
-            for category, features in expected_categories.items():
-                if feature in features:
-                    assert categorie == category, f"Feature '{feature}' should be in category '{category}', but is in '{categorie}'"
+            for exp_category, exp_features in expected_categories.items():
+                if feature in exp_features:
+                    assert category == exp_category, f"Feature '{feature}' must in '{exp_category}', but is in '{category}'"
                     feature_found_in_category = True
                     break
             assert feature_found_in_category, f"Feature '{feature}' not found in any category"
@@ -83,8 +82,6 @@ class TestExplainer(unittest.TestCase):
             # Check relation description/feature
             if feature in expected_features:
                 expected_description = expected_features[feature]
-                assert description == expected_description, f"Feature '{feature}' has wrong description. Expected '{expected_description}', got '{description}'"
+                assert description == expected_description, f"Feature '{feature}' has wrong description. Expected '{expected_description}', got '{description}' "
             else:
                 assert False, f"Feature '{feature}' not found in the FEATURES dictionary"
-
-

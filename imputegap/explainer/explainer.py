@@ -114,8 +114,8 @@ class Explainer:
                 print(f"\tRMSE SERIES {i:<5} : {output:<15}")
 
         print("\n\nSHAP Results details : ")
-        for (x, algo, rate, description, feature, categorie, mean_features) in shap_values:
-            print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {categorie:<18} {description:<75} {feature}\n")
+        for (x, algo, rate, description, feature, category, mean_features) in shap_values:
+            print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
 
     def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
@@ -145,9 +145,9 @@ class Explainer:
             print(tup[2], end=",")
 
         with open(to_save + "_results.txt", 'w') as file_output:
-            for (x, algo, rate, description, feature, categorie, mean_features) in result_display:
-                file_output.write(f"Feature : {x:<5} {algo:<10} with a score of {rate:<10} {categorie:<18} {description:<65} {feature}\n")
-                result_shap.append([file, algo, rate, description, feature, categorie, mean_features])
+            for (x, algo, rate, description, feature, category, mean_features) in result_display:
+                file_output.write(f"Feature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<65} {feature}\n")
+                result_shap.append([file, algo, rate, description, feature, category, mean_features])
 
         return result_shap
 
@@ -426,7 +426,7 @@ class Explainer:
         categories, features = Explainer.load_configuration()
 
         for current_series in range(0, limitation):
-            print("Generation ", current_series, "____________________________________________________________________")
+            print("Generation ", current_series, "___________________________________________________________________")
             print("\tContamination ", current_series, "...")
 
             if contamination == "mcar":
