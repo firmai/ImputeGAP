@@ -39,7 +39,7 @@ class Explainer:
         :return: Two dictionaries: categories and features.
         """
         if not os.path.exists(file_path):
-            file_path = "./imputegap" + file_path[2:]
+            file_path = "./imputegap" + file_path[1:]
 
         return file_path
 
