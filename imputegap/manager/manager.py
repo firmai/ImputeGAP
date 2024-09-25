@@ -212,7 +212,7 @@ class TimeSeries:
         plt.legend(loc='upper right', bbox_to_anchor=(1.10, 1))
 
         if save_path:
-            file_path = os.path.join(save_path + ts_type, title + "_" + ts_type + ".png")
+            file_path = os.path.join(save_path + "/" + ts_type, title + "_" + ts_type + ".png")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)
 
