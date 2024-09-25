@@ -146,8 +146,7 @@ class TimeSeries:
 
         return z_scores
 
-    def plot(self, ts_type="ground_truth", title='Time Series Data', save_path="", limitation=10, size=(16, 8),
-             display=True, colors=['dimgrey', 'plum', 'lightblue', 'mediumseagreen', 'khaki']):
+    def plot(self, ts_type="ground_truth", title='Time Series Data', save_path="", limitation=10, size=(16, 8), display=True, colors=['dimgrey', 'plum', 'lightblue', 'mediumseagreen', 'khaki']):
         """
         Plot a chosen time series
         @author Quentin Nater
@@ -158,6 +157,8 @@ class TimeSeries:
         :param size : size of the plots
         :param display : display or not the result
         :param colors : colors for each time series
+
+        :return : filepath
         """
         number_of_series = 0
         plt.figure(figsize=size)
@@ -211,7 +212,7 @@ class TimeSeries:
         plt.legend(loc='upper right', bbox_to_anchor=(1.10, 1))
 
         if save_path:
-            file_path = os.path.join(save_path, title + "_" + ts_type + ".png")
+            file_path = os.path.join(save_path + ts_type, title + "_" + ts_type + ".png")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)
 
@@ -219,3 +220,5 @@ class TimeSeries:
             plt.show()
 
         plt.close()
+
+        return file_path

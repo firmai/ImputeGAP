@@ -186,6 +186,6 @@ class TestContamination(unittest.TestCase):
                                                                 block_size=10, protection=0.1, use_seed=True, seed=42)
 
         impute_gap.print()
-        impute_gap.plot("contamination", "test", get_save_path(), 5, (16, 8), False)
+        filepath = impute_gap.plot("contamination", "test", get_save_path(), 5, (16, 8), False)
 
-        self.assertTrue(os.path.exists(get_save_path()))
+        self.assertTrue(os.path.exists(filepath))

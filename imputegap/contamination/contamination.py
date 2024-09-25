@@ -69,14 +69,15 @@ class Contamination:
 
         series_selected = Contamination.format_selection(ts_contaminated, series_indices)
 
-        print("\n\nMCAR contamination has been called with :"
-              "\n\ta number of series impacted ", series_impacted * 100, "%",
-              "\n\ta missing rate of ", missing_rate * 100, "%",
-              "\n\ta starting position at ", protection,
-              "\n\ta block size of ", block_size,
-              "\n\twith a seed option set to ", use_seed,
-              "\n\tshape of the set ", ts_contaminated.shape,
-              "\n\tthis selection of series", *series_selected, "\n\n")
+        if not explainer:
+            print("\n\nMCAR contamination has been called with :"
+                  "\n\ta number of series impacted ", series_impacted * 100, "%",
+                  "\n\ta missing rate of ", missing_rate * 100, "%",
+                  "\n\ta starting position at ", protection,
+                  "\n\ta block size of ", block_size,
+                  "\n\twith a seed option set to ", use_seed,
+                  "\n\tshape of the set ", ts_contaminated.shape,
+                  "\n\tthis selection of series", *series_selected, "\n\n")
 
         for series in series_selected:
             S = int(series)

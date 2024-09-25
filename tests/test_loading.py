@@ -67,9 +67,10 @@ class TestLoading(unittest.TestCase):
         Verify if the manager of a dataset is working
         """
         impute_gap = TimeSeries(get_file_path("test"))
-        impute_gap.plot("ground_truth", "test", get_save_path(), 5, (16, 8), False)
+        to_save = get_save_path()
+        file_path = impute_gap.plot("ground_truth", "test", to_save, 5, (16, 8), False)
 
-        self.assertTrue(os.path.exists(get_save_path()))
+        self.assertTrue(os.path.exists(file_path))
 
     def test_loading_normalization_min_max(self):
         impute_gap = TimeSeries(get_file_path("test"), normalization="min_max")

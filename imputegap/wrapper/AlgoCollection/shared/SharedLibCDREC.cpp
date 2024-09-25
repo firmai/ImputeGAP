@@ -9,6 +9,7 @@
 
 // cd as a factorization algo
 #include "../Algebra/CentroidDecomposition.h"
+#include "../Algebra/Auxiliary.h"
 
 // imputation algorithms
 #include "../Algorithms/CDMissingValueRecovery.h"

@@ -19,7 +19,7 @@ libSTMVL.so:
 libCDREC.so:
 	g++ -O3 -D ARMA_DONT_USE_WRAPPER -fPIC -rdynamic -shared -o lib_cdrec.so -Wall -Werror -Wextra -pedantic \
 	-Wconversion -Wsign-conversion -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -fopenmp -std=gnu++14 \
-	Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp  \
+	Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp  Algebra/Auxiliary.cpp \
 	Algebra/CentroidDecomposition.cpp  shared/SharedLibCDREC.cpp \
 	-lopenblas -larpack -lmlpack
 

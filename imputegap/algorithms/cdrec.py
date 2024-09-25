@@ -18,7 +18,7 @@ def __marshal_as_native_column(__py_matrix):
     return __ctype_marshal;
 
 
-def load_share_lib(name="lib_algo"):
+def load_share_lib(name="lib_cdrec"):
     """
     Determine the OS and load the correct shared library
     :param name: name of the library
@@ -36,7 +36,6 @@ def load_share_lib(name="lib_algo"):
         lib_path = os.path.join(local_path_win)
     else:
         lib_path = os.path.join(local_path_lin)
-    print("\n", lib_path, " has been loaded...")
 
     return ctypes.CDLL(lib_path)
 
@@ -71,11 +70,6 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
     # Native code uses linear matrix layout, and also it's easier to pass it in like this
     __ctype_input_matrix = __marshal_as_native_column(__py_matrix);
 
-    # extern "C" void
-    # cdrec_imputation_parametrized(
-    #         double *matrixNative, size_t dimN, size_t dimM,
-    #         size_t truncation, double epsilon, size_t iters
-    # )
     shared_lib.cdrec_imputation_parametrized(
         __ctype_input_matrix, __ctype_sizen, __ctype_sizem,
         __ctype_rank, __ctype_eps, __ctype_iters

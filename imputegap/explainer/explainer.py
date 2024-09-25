@@ -8,8 +8,6 @@ import toml
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
-
-
 from imputegap.contamination.contamination import Contamination
 from imputegap.imputation.imputation import Imputation
 
@@ -23,7 +21,6 @@ class Explainer:
         :param file_path: The path to the TOML file.
         :return: Two dictionaries: categories and features.
         """
-        # Load the TOML data from the file
         if not os.path.exists(file_path):
             file_path = file_path[4:]
 
@@ -35,6 +32,16 @@ class Explainer:
 
         return categories, features
 
+    def save_assets(file_path="./assets/shap/"):
+        """
+        Load path to save the assets on GitHub and local
+        :param file_path: The path to the TOML file.
+        :return: Two dictionaries: categories and features.
+        """
+        if not os.path.exists(file_path):
+            file_path = "./imputegap" + file_path[2:]
+
+        return file_path
 
     def extract_features(data, features_categories, features_list, do_catch24=True):
         """
@@ -48,8 +55,9 @@ class Explainer:
 
         :return : results, descriptions : dictionary of feature values by names, and array of their descriptions.
         """
-
         data = [[0 if num is None else num for num in sublist] for sublist in data]
+        data = [[0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num in sublist] for sublist in data]
+
         data = np.array(data)
 
         if isinstance(data, np.ndarray):
@@ -57,8 +65,6 @@ class Explainer:
         else:
             flat_data = [float(item) for sublist in data for item in sublist]
 
-        # If the data is a 2D list (similar to what's being read from the file),
-        # then flatten it into a 1D list.
         if isinstance(flat_data[0], list):
             flat_data = [float(item) for sublist in flat_data for item in sublist]
 
@@ -66,8 +72,10 @@ class Explainer:
 
         feature_names = catch_out['names']
         feature_values = catch_out['values']
-        results = {}
-        descriptions = []
+        results, descriptions = {}, []
+
+        if any(isinstance(value, (float, np.float32, np.float64)) and np.isnan(value) for value in feature_values):
+            raise ValueError("Error: NaN value detected in feature_values")
 
         for feature_name, feature_value in zip(feature_names, feature_values):
             results[feature_name] = feature_value
@@ -81,11 +89,35 @@ class Explainer:
 
             descriptions.append((feature_name, category_value, feature_description))
 
-        print("\n%%%%% pycatch22 : features extracted successfully %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n")
+        print("pycatch22 : features extracted successfully_______________________________________\n\n")
 
         return results, descriptions
 
-    def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, rmse):
+
+    def print(shap_values, shap_details=None):
+        """
+        Convert the SHAP brute result to a refined one to display in the front end
+        @author : Quentin Nater
+
+        :param shap_values: Values and results of the SHAP analytics
+        :param shap_details: Input and Ouput data of the Regression
+        """
+
+        if shap_details is not None:
+            print("\n\nx_data (with", len(shap_details), "elements) : ")
+            for i, (input, _) in enumerate(shap_details):
+                print("\tFEATURES VALUES", i, "(", len(input), ") : ", *input)
+
+            print("\ny_data (with", len(shap_details), "elements) : ")
+
+            for i, (_, output) in enumerate(shap_details):
+                print(f"\tRMSE SERIES {i:<5} : {output:<15}")
+
+        print("\n\nSHAP Results details : ")
+        for (x, algo, rate, description, feature, categorie, mean_features) in shap_values:
+            print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {categorie:<18} {description:<75} {feature}\n")
+
+    def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
         Convert the SHAP brute result to a refined one to display in the front end
         @author : Quentin Nater
@@ -97,33 +129,29 @@ class Explainer:
         :param features: Raw name of each feature
         :param categories: Category of each feature
         :param mean_features: Mean values of each feature
-        :param rmse: RMSE score of the imputation
+        :param to_save : path to save results
         :return: Perfect diplay for SHAP result
         """
-
-        print("\n\n----------CONVERT : ", tmp)
-        print("\n\n----------CONVERT : ", np.array(tmp).shape)
-
         result_display, display_details, result_shap = [], [], []
         for x, rate in enumerate(tmp):
             if math.isnan(rate) == False:
                 rate = float(round(rate, 2))
 
-            result_display.append(
-                (x, algo, rate, descriptions[0][x], features[0][x], categories[0][x], mean_features[x], rmse))
+            result_display.append((x, algo, rate, descriptions[0][x], features[0][x], categories[0][x], mean_features[x]))
 
         result_display = sorted(result_display, key=lambda tup: (tup[1], tup[2]), reverse=True)
 
-        for (x, algo, rate, description, feature, categorie, mean_features, rmse) in result_display:
-            print(x, " : ", algo, " with a score of ", rate, "  (", description, " / ", feature, " / ", categorie,
-                  ")\n")
-            result_shap.append([file, algo, rate, description, feature, categorie, mean_features, rmse])
+        for tup in result_display:
+            print(tup[2], end=",")
 
-        print("----------CONVERT : ", np.array(result_shap).shape)
+        with open(to_save + "_results.txt", 'w') as file_output:
+            for (x, algo, rate, description, feature, categorie, mean_features) in result_display:
+                file_output.write(f"Feature : {x:<5} {algo:<10} with a score of {rate:<10} {categorie:<18} {description:<65} {feature}\n")
+                result_shap.append([file, algo, rate, description, feature, categorie, mean_features])
 
         return result_shap
 
-    def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10):
+    def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False):
         """
         Launch the SHAP model for explaining the features of the dataset
         @author : Quentin Nater
@@ -134,11 +162,13 @@ class Explainer:
         :param file: dataset used
         :param algorithm: algorithm used
         :param splitter: splitter from data training and testing
+        :param display: display or not plots
         :return: results of the explainer model
         """
 
-        print("\n\n======= SHAP >> MODEL ======= shape set : ", np.array(x_information).shape,
-              "======= ======= ======= ======= ======= ======= ======= ======= ======= ")
+        print("\n\nInitilization of the SHAP model with ", np.array(x_information).shape)
+
+        path_file = Explainer.save_assets()
 
         x_features, x_categories, x_descriptions = [], [], []
         x_fs, x_cs, x_ds = [], [], []
@@ -167,30 +197,25 @@ class Explainer:
         y_train, y_test = y_dataset[:splitter], y_dataset[splitter:]
 
         # Print shapes to verify
-        print("\t SHAP_MODEL >> NATERQ x_train shape:", x_train.shape)
-        print("\t SHAP_MODEL >> NATERQ y_train shape:", y_train.shape)
-        print("\t SHAP_MODEL >> NATERQ x_test shape:", x_test.shape)
-        print("\t SHAP_MODEL >> NATERQ y_test shape:", y_test.shape, "\n")
-        print("\t SHAP_MODEL >> NATERQ x_features shape:", x_features.shape)
-        print("\t SHAP_MODEL >> NATERQ x_categories shape:", x_categories.shape)
-        print("\t SHAP_MODEL >> NATERQ x_descriptions shape:", x_descriptions.shape, "\n")
-        print("\t SHAP_MODEL >> NATERQ FEATURES OK:", np.all(np.all(x_features == x_features[0, :], axis=1)))
-        print("\t SHAP_MODEL >> NATERQ x_categories OK:", np.all(np.all(x_categories == x_categories[0, :], axis=1)))
-        print("\t SHAP_MODEL >> NATERQ x_descriptions OK:",
-              np.all(np.all(x_descriptions == x_descriptions[0, :], axis=1)), "\n\n")
+        print("\t SHAP_MODEL >> x_train shape:", x_train.shape)
+        print("\t SHAP_MODEL >> y_train shape:", y_train.shape)
+        print("\t SHAP_MODEL >> x_test shape:", x_test.shape)
+        print("\t SHAP_MODEL >> y_test shape:", y_test.shape, "\n")
+        print("\t SHAP_MODEL >> features shape:", x_features.shape)
+        print("\t SHAP_MODEL >> categories shape:", x_categories.shape)
+        print("\t SHAP_MODEL >> descriptions shape:", x_descriptions.shape, "\n")
+        print("\t SHAP_MODEL >> features OK:", np.all(np.all(x_features == x_features[0, :], axis=1)))
+        print("\t SHAP_MODEL >> categories OK:", np.all(np.all(x_categories == x_categories[0, :], axis=1)))
+        print("\t SHAP_MODEL >> descriptions OK:", np.all(np.all(x_descriptions==x_descriptions[0, :], axis=1)), "\n\n")
 
         model = RandomForestRegressor()
         model.fit(x_train, y_train)
-
-        # print("\t\t SHAP_MODEL >>  NATERQ model coefficients : \t", model.feature_importances_)
 
         exp = shap.KernelExplainer(model.predict, x_test)
         shval = exp.shap_values(x_test)
         shap_values = exp(x_train)
 
-        print("\t\t SHAP_MODEL >>  NATERQ shval selected : ", np.array(shval).shape,
-              "************************************")
-        print("\t\t SHAP_MODEL >>  NATERQ shval selected : \t", *shval)
+        #print("\t\tSHAP VALUES : ", np.array(shval).shape, " with : \n\t", *shval)
 
         optimal_display = []
         for desc, group in zip(x_descriptions[0], x_categories[0]):
@@ -200,45 +225,40 @@ class Explainer:
         for names in range(0, np.array(x_test).shape[0]):
             series_names.append("Series " + str(names + np.array(x_train).shape[0]))
 
-        shap.summary_plot(shval, x_test, plot_size=(25, 10), feature_names=optimal_display)
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_shap_plot.png"
+        shap.summary_plot(shval, x_test, plot_size=(25, 10), feature_names=optimal_display, show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_plot.png")
         plt.title("SHAP Details Results")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\n\n\t\t\tGRAPH has benn computed : ", alpha)
 
-        shap.summary_plot(np.array(shval).T, np.array(x_test).T, feature_names=series_names)
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_shap_reverse_plot.png"
+        shap.summary_plot(np.array(shval).T, np.array(x_test).T, feature_names=series_names, show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_reverse_plot.png")
         plt.title("SHAP Features by Series")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha)
 
-        shap.plots.waterfall(shap_values[0])
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_DTL_Waterfall.png"
+        shap.plots.waterfall(shap_values[0], show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Waterfall.png")
         plt.title("SHAP Waterfall Results")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha)
 
-        shap.plots.beeswarm(shap_values)
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_DTL_Beeswarm.png"
+        shap.plots.beeswarm(shap_values, show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Beeswarm.png")
         plt.title("SHAP Beeswarm Results")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha)
 
-        print("\n\n\t\t\tSHAP_BUILD_____________________________________________________________________")
         total_weights_for_all_algorithms = []
 
         t_shval = np.array(shval).T
         t_Xtest = np.array(x_test).T
 
         aggregation_features, aggregation_test = [], []
-
-        print("\t\t\tSHAP_BUILD >>  NATERQ t_shval shape : ", np.array(t_shval).shape,
-              "************************************")
-        print("\t\t\tSHAP_BUILD >>  NATERQ t_Xtest shape : ", np.array(t_Xtest).shape)
 
         geometry, correlation, transformation, trend = [], [], [], []
         geometryDesc, correlationDesc, transformationDesc, trendDesc = [], [], [], []
@@ -282,45 +302,37 @@ class Explainer:
         trendT = np.array(trendT)
         mean_features = np.array(mean_features)
 
-        print("\n\t\t\tSHAP_BUILD geometry:", geometry.shape)
-        print("\n\t\t\tSHAP_BUILD geometryT:", geometryT.shape)
-        print("\n\t\t\tSHAP_BUILD transformation:", transformation.shape)
-        print("\n\t\t\tSHAP_BUILD transformationT:", transformationT.shape)
-        print("\n\t\t\tSHAP_BUILD correlation:", correlation.shape)
-        print("\n\t\t\tSHAP_BUILD correlationT:", correlationT.shape)
-        print("\n\t\t\tSHAP_BUILD trend':", trend.shape)
-        print("\n\t\t\tSHAP_BUILD trendT:", trendT.shape)
-        print("\n\t\t\tSHAP_BUILD mean_features:", mean_features.shape)
-
-        shap.summary_plot(np.array(geometry).T, np.array(geometryT).T, plot_size=(20, 10), feature_names=geometryDesc)
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_shap_geometry_plot.png"
+        shap.summary_plot(np.array(geometry).T, np.array(geometryT).T, plot_size=(20, 10), feature_names=geometryDesc,
+                          show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_geometry_plot.png")
         plt.title("SHAP details of geometry")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha)
 
         shap.summary_plot(np.array(transformation).T, np.array(transformationT).T, plot_size=(20, 10),
-                          feature_names=transformationDesc)
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_shap_transformation_plot.png"
+                          feature_names=transformationDesc, show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_transformation_plot.png")
         plt.title("SHAP details of transformation")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha)
 
         shap.summary_plot(np.array(correlation).T, np.array(correlationT).T, plot_size=(20, 10),
-                          feature_names=correlationDesc)
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_shap_correlation_plot.png"
+                          feature_names=correlationDesc, show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_correlation_plot.png")
         plt.title("SHAP details of correlation")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha)
 
-        shap.summary_plot(np.array(trend).T, np.array(trendT).T, plot_size=(20, 8), feature_names=trendDesc)
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_shap_trend_plot.png"
+        shap.summary_plot(np.array(trend).T, np.array(trendT).T, plot_size=(20, 8), feature_names=trendDesc,
+                          show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_trend_plot.png")
         plt.title("SHAP details of Trend")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha)
 
         aggregation_features.append(np.mean(geometry, axis=0))
         aggregation_features.append(np.mean(correlation, axis=0))
@@ -336,20 +348,28 @@ class Explainer:
         aggregation_test = np.array(aggregation_test).T
 
         shap.summary_plot(aggregation_features, aggregation_test,
-                          feature_names=['Geometry', 'Correlation', 'Transformation', 'Trend'])
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_shap_aggregate_plot.png"
+                          feature_names=['Geometry', 'Correlation', 'Transformation', 'Trend'], show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_aggregate_plot.png")
         plt.title("SHAP Aggregation Results")
         plt.gca().axes.get_xaxis().set_visible(False)
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha)
 
-        shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names)
-        alpha = "parameterizer_frontend/src/assets_naterq/" + file + "_" + algorithm + "_shap_aggregate_reverse_plot.png"
+        shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names,
+                          show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_aggregate_reverse_plot.png")
         plt.title("SHAP Aggregation Features by Series")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\t SHAP_MODEL >>  GRAPH has benn computed : ", alpha)
+        print("\t\t\tGRAPH has benn computed : ", alpha, "\n\n")
+
+        print("\t\tSHAP Families details : \n")
+        print("\t\t\tgeometry:", geometry.shape)
+        print("\t\t\ttransformation:", transformation.shape)
+        print("\t\t\tcorrelation:", correlation.shape)
+        print("\t\t\ttrend':", trend.shape)
+        print("\t\t\tmean_features:", mean_features.shape, "\n\n")
 
         # Aggregate shapely values per element of X_test
         total_weights = [np.abs(shval.T[i]).mean(0) for i in range(len(shval[0]))]
@@ -360,11 +380,13 @@ class Explainer:
 
         total_weights_for_all_algorithms = np.append(total_weights_for_all_algorithms, total_weights_percent)
 
-        results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions, x_features, x_categories, mean_features, y_dataset.tolist())
+        results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions, x_features, x_categories, mean_features, to_save=path_file + file + "_" + algorithm)
 
         return results_shap
 
-    def shap_explainer(ground_truth, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4, block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0, nbr_values=800):
+    def shap_explainer(ground_truth, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
+                       block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
+                       file_name="ts", display=False):
         """
         Handle parameters and set the variables to launch a model SHAP
         @author : Quentin Nater
@@ -380,42 +402,46 @@ class Explainer:
         :param seed: value of the seed | default 42
         :param limitation: limitation of series for the model | default 15
         :param splitter: limitation of training series for the model | default 3/4 of limitation
-        :param nbr_values: limitation of the number of values for each series | default 800
+        :param display: display or not the plots | default False
 
         :return: ground_truth_matrixes, obfuscated_matrixes, output_metrics, input_params, shap_values
         """
 
-        print("°°°°°SHAP >> NATERQ params : missing_values (", missing_rate, ") \n",
-        "for a contamination (", contamination, "), \n",
-        "limited to (", limitation, ") with splitter (", splitter, ") \n")
-
-        print("°°°°°SHAP >> NATERQ params : algo (", algorithm, ") / params (", params, ")\n")
-
         if limitation > ground_truth.shape[0]:
-            limitation = int(ground_truth.shape[0]*0.75)
+            limitation = int(ground_truth.shape[0] * 0.75)
 
-        if splitter == 0 or splitter >= limitation-1 :
-            splitter = int(limitation*0.60)
+        if splitter == 0 or splitter >= limitation - 1:
+            splitter = int(limitation * 0.60)
 
-        print("\n\t\t\t\t\t°°°°°SHAP >> Splitter and Limitation after verification ", ground_truth.shape, "\n\t\t",
-                  " >> (limitation = ", limitation, " and splitter = ", splitter, ")...\n")
+        print("SHAP Explainer has been called\n\t",
+              "missing_values (", missing_rate*100, "%)\n\t",
+              "for a contamination (", contamination, "), \n\t",
+              "imputated by (", algorithm, ") with params (", params, ")\n\t",
+              "with limitation and splitter after verification of (", limitation, ") and (", splitter, ") for ",
+              ground_truth.shape, "...\n\n\tGeneration of the dataset with the time series...")
 
-        ground_truth_matrixes, obfuscated_matrixes = [], []
+        ground_truth_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
 
         categories, features = Explainer.load_configuration()
 
         for current_series in range(0, limitation):
+            print("Generation ", current_series, "____________________________________________________________________")
+            print("\tContamination ", current_series, "...")
 
             if contamination == "mcar":
-                obfuscated_matrix = Contamination.scenario_mcar(ts=ground_truth, series_impacted=current_series, missing_rate=missing_rate, block_size=block_size, protection=protection, use_seed=use_seed, seed=seed, explainer=True)
+                obfuscated_matrix = Contamination.scenario_mcar(ts=ground_truth, series_impacted=current_series,
+                                                                missing_rate=missing_rate, block_size=block_size,
+                                                                protection=protection, use_seed=use_seed, seed=seed,
+                                                                explainer=True)
             else:
                 print("Contamination proposed not found : ", contamination, " >> BREAK")
                 return None
 
-            ground_truth_matrixes.append(ground_truth)
-            obfuscated_matrixes.append(obfuscated_matrix)
+            ground_truth_matrices.append(ground_truth)
+            obfuscated_matrices.append(obfuscated_matrix)
 
+            print("\tImputation ", current_series, "...")
             if algorithm == "cdrec":
                 _, imputation_results = Imputation.MR.cdrec(ground_truth, obfuscated_matrix, params)
             elif algorithm == "stmvl":
@@ -435,24 +461,12 @@ class Explainer:
             input_params.append(extracted_features)
             input_params_full.append(descriptions)
 
-            print(
-                "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
-            print("\t\t°°°°°SHAP >> NATERQ Current series contamination : ", current_series, " °°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
-            print("\t\t°°°°°SHAP >> NATERQ SHAPE TEST : ", np.array(ground_truth).shape)
-            print("\t\t°°°°°SHAP >> NATERQ SHAPE TEST : ", np.array(obfuscated_matrix).shape)
-            print("\t\t°°°°°SHAP >> NATERQ Current series ", current_series, " contamination done")
-            print("\t\t°°°°°SHAP >> NATERQ Current series ", current_series, " imputation done")
-            print(
-                "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
+        shap_details = []
+        for input, output in zip(input_params, output_metrics):
+            shap_details.append((input, output["RMSE"]))
 
-        for read in output_metrics:
-            print("°°°°°SHAP >> NATERQ RESULTS_: Metrics RMSE : ", read["RMSE"])
+        shap_values = Explainer.launch_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm, splitter, display)
 
-        shap_values = Explainer.launch_shap_model(input_params, input_params_full, output_rmse, ground_truth, algorithm, splitter)
+        print("\n\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n\n\n")
 
-        print(
-            "°°°°°SHAP >> NATERQ SHAP COMPUTED AND ENDED SUCCESSFULLY ! °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n\n\n")
-
-        return ground_truth_matrixes, obfuscated_matrixes, output_metrics, input_params, shap_values
-
-
+        return shap_values, shap_details

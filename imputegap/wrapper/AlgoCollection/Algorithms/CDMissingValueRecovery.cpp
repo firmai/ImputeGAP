@@ -195,7 +195,7 @@ uint64_t CDMissingValueRecovery::performRecovery(bool determineReduction /*= fal
     }
     
     lastIterations = iter - 1;
-    std::cout << "recovery performed in " << lastIterations << " iterations " << std::endl;
+    //std::cout << "recovery performed in " << lastIterations << " iterations " << std::endl;
     
     // when the recovery is done, we need to clean up some stuff
     missingBlocks.clear();

@@ -39,7 +39,7 @@ def get_file_path(set_name="test"):
     return resolve_path(f'../imputegap/dataset/{set_name}.txt', f'./imputegap/dataset/{set_name}.txt')
 
 
-class TestContamination(unittest.TestCase):
+class TestCDREC(unittest.TestCase):
 
     def test_imputation_cdrec(self):
         """
