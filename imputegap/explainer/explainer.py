@@ -130,11 +130,11 @@ class Explainer:
         :param categories: Category of each feature
         :param mean_features: Mean values of each feature
         :param to_save : path to save results
-        :return: Perfect diplay for SHAP result
+        :return: Perfect display for SHAP result
         """
-        result_display, display_details, result_shap = [], [], []
+        result_display, result_shap = [], []
         for x, rate in enumerate(tmp):
-            if math.isnan(rate) == False:
+            if not math.isnan(rate):
                 rate = float(round(rate, 2))
 
             result_display.append((x, algo, rate, descriptions[0][x], features[0][x], categories[0][x], mean_features[x]))
