@@ -1,5 +1,5 @@
 
-name: Pytest - ImputeGAP - Imputation - ST-MVL - 8
+name: Pytest - ImputeGAP - ST-MVL - 8
 
 on:
   push:

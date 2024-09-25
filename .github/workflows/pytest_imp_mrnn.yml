@@ -1,5 +1,5 @@
 
-name: Pytest - ImputeGAP - Imputation - MRNN - 8
+name: Pytest - ImputeGAP - MRNN - 8
 
 on:
   push:
