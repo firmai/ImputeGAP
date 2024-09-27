@@ -61,5 +61,5 @@ class TestOptiSTMVL(unittest.TestCase):
 
         Optimization.save_optimization(optimal_params=optimal_params, algorithm=algorithm+"_test")
 
-        self.assertTrue(metrics_optimal["RMSE"] > metrics_default["RMSE"], True)
+        self.assertTrue(metrics_optimal["RMSE"] < metrics_default["RMSE"], True, f"Expected {metrics_optimal['RMSE']} > {metrics_default['RMSE']}")
         self.assertTrue(yi > 0, True)
