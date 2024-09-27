@@ -8,8 +8,6 @@ from imputegap.manager import utils
 from imputegap.manager.manager import TimeSeries
 
 
-
-
 class TestIIM(unittest.TestCase):
 
     def test_imputation_iim_chlorine(self):

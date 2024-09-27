@@ -8,57 +8,11 @@ from imputegap.algorithms.mrnn import mrnn
 from imputegap.algorithms.stmvl import stmvl
 from imputegap.algorithms.zero_impute import zero_impute
 from imputegap.evaluation.evaluation import Evaluation
+from imputegap.manager import utils
 
 
 class Imputation:
 
-    def load_parameters(query: str = "default", algorithm: str = "cdrec"):
-        """
-        Load default values of algorithms
-
-        :param query : ('optimal' or 'default'), load default or optimal parameters for algorithms | default "default"
-        :param algorithm : algorithm parameters to load | default "cdrec"
-
-        :return: tuples of optimal parameters and the config of default values
-        """
-
-        filepath = ""
-        if query == "default":
-            filepath = "../env/default_values.toml"
-        elif query == "optimal":
-            filepath = "../env/optimal_parameters_"+str(algorithm)+".toml"
-        else:
-            print("Query not found for this function ('optimal' or 'default')")
-
-        if not os.path.exists(filepath):
-            filepath = filepath[1:]
-
-        with open(filepath, "r") as _:
-            config = toml.load(filepath)
-
-        if algorithm == "cdrec":
-            truncation_rank = int(config['cdrec']['rank'])
-            epsilon = config['cdrec']['epsilon']
-            iterations = int(config['cdrec']['iteration'])
-            return (truncation_rank, epsilon, iterations)
-        elif algorithm == "stmvl":
-            window_size = int(config['stmvl']['window_size'])
-            gamma = float(config['stmvl']['gamma'])
-            alpha = int(config['stmvl']['alpha'])
-            return (window_size, gamma, alpha)
-        elif algorithm == "iim":
-            learning_neighbors = int(config['iim']['learning_neighbors'])
-            algo_code = config['iim']['algorithm_code']
-            return (learning_neighbors, algo_code)
-        elif algorithm == "mrnn":
-            hidden_dim = int(config['mrnn']['hidden_dim'])
-            learning_rate = float(config['mrnn']['learning_rate'])
-            iterations = int(config['mrnn']['iterations'])
-            sequence_length = int(config['mrnn']['sequence_length'])
-            return (hidden_dim, learning_rate, iterations, sequence_length)
-        else :
-            print("Default/Optimal config not found for this algorithm")
-            return None
 
     def evaluate_params(ground_truth, contamination, configuration, algorithm="cdrec"):
         """
@@ -81,8 +35,8 @@ class Imputation:
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
             imputation, error_measures = Imputation.Regression.iim_imputation(ground_truth, contamination, (learning_neighbours, alg_code))
         elif algorithm == 'mrnn':
-            hidden_dim, learning_rate, iterations, keep_prob, seq_len = configuration
-            imputation, error_measures = Imputation.ML.mrnn_imputation(ground_truth, contamination, (hidden_dim, learning_rate, iterations, seq_len))
+            hidden_dim, learning_rate, iterations = configuration
+            imputation, error_measures = Imputation.ML.mrnn_imputation(ground_truth, contamination, (hidden_dim, learning_rate, iterations, 7))
         elif algorithm == 'stmvl':
             window_size, gamma, alpha = configuration
             imputation, error_measures = Imputation.Pattern.stmvl_imputation(ground_truth, contamination, (window_size, gamma, alpha))
@@ -106,7 +60,7 @@ class Imputation:
             if params is not None:
                 truncation_rank, epsilon, iterations = params
             else:
-                truncation_rank, epsilon, iterations = Imputation.load_parameters(query="default", algorithm="cdrec")
+                truncation_rank, epsilon, iterations = utils.load_parameters(query="default", algorithm="cdrec")
 
             imputed_matrix = cdrec(contamination=contamination, truncation_rank=truncation_rank, iterations=iterations, epsilon=epsilon)
 
@@ -163,7 +117,7 @@ class Imputation:
             if params is not None:
                 neighbors, algo_code = params
             else:
-                neighbors, algo_code = Imputation.load_parameters(query="default", algorithm="iim")
+                neighbors, algo_code = utils.load_parameters(query="default", algorithm="iim")
 
             imputed_matrix = iim(contamination=contamination, number_neighbor=neighbors, algo_code=algo_code)
 
@@ -186,7 +140,7 @@ class Imputation:
             if params is not None:
                 hidden_dim, learning_rate, iterations, sequence_length = params
             else:
-                hidden_dim, learning_rate, iterations, sequence_length = Imputation.load_parameters(query="default", algorithm="mrnn")
+                hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
 
             imputed_matrix = mrnn(contamination=contamination, hidden_dim=hidden_dim, learning_rate=learning_rate, iterations=iterations, sequence_length=sequence_length)
 
@@ -211,7 +165,7 @@ class Imputation:
             if params is not None:
                 window_size, gamma, alpha = params
             else:
-                window_size, gamma, alpha = Imputation.load_parameters(query="default", algorithm="stmvl")
+                window_size, gamma, alpha = utils.load_parameters(query="default", algorithm="stmvl")
 
             imputed_matrix = stmvl(contamination=contamination, window_size=window_size, gamma=gamma, alpha=alpha)
 

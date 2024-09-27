@@ -40,7 +40,7 @@ class Optimization:
     class Bayesian:
 
         def bayesian_optimization(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec",
-                                  n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
+                                  n_calls=10, n_random_starts=50, acq_func='gp_hedge'):
             """
             Conduct the Bayesian optimization hyperparameter optimization.
 

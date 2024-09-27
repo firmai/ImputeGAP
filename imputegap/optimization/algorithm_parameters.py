@@ -27,7 +27,7 @@ STMVL_ALPHA_RANGE = [i for i in range(1, 10)]  # smoothing parameter alpha
 SEARCH_SPACES = {
     'cdrec': [Integer(1, 9, name='rank'), Real(1e-6, 1, "log-uniform", name='epsilon'), Integer(100, 1000, name='iteration')],
     'iim': [Integer(1, 100, name='learning_neighbors')],
-    'mrnn': [Integer(0, 9, name='hidden_dim'), Real(1e-6, 1, "log-uniform", name='learning_rate'), Integer(0, 95, name='iterations'), Integer(0, 99, name='seq_len')],
+    'mrnn': [Integer(10, 15, name='hidden_dim'), Real(1e-6, 1e-1, "log-uniform", name='learning_rate'), Integer(10, 95, name='iterations')],
     'stmvl': [Integer(2, 99, name='window_size'), Real(1e-6, 0.999999, "log-uniform", name='gamma'), Integer(1, 9, name='alpha')],
 }
 

@@ -26,7 +26,7 @@ class TestOptiCDREC(unittest.TestCase):
         print("\nOptimization done successfully... ")
         print("\n", optimal_params, "\n")
 
-        params = Imputation.load_parameters(query="default", algorithm=algorithm)
+        params = utils.load_parameters(query="default", algorithm=algorithm)
         params_optimal = (optimal_params['rank'], optimal_params['epsilon'], optimal_params['iteration'])
 
         _, metrics_optimal = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=ts_contaminated, params=params_optimal)

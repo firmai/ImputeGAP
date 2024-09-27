@@ -30,7 +30,7 @@ class TestOptiSTMVL(unittest.TestCase):
         print("\nOptimization done successfully... ")
         print("\n", optimal_params, "\n")
 
-        params = Imputation.load_parameters(query="default", algorithm=algorithm)
+        params = utils.load_parameters(query="default", algorithm=algorithm)
         params_optimal = (optimal_params['window_size'], optimal_params['gamma'], optimal_params['alpha'])
 
         _, metrics_optimal = Imputation.Pattern.stmvl_imputation(ground_truth=gap.ts, contamination=ts_contaminated,

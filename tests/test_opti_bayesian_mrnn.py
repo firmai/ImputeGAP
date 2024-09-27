@@ -20,8 +20,7 @@ class TestOptiMRNN(unittest.TestCase):
 
         algorithm = "mrnn"
 
-        ts_contaminated = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2,
-                                                      protection=0.1, use_seed=True, seed=42)
+        ts_contaminated = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
 
         optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts,
                                                                          contamination=ts_contaminated,
@@ -30,11 +29,10 @@ class TestOptiMRNN(unittest.TestCase):
         print("\nOptimization done successfully... ")
         print("\n", optimal_params, "\n")
 
-        params = Imputation.load_parameters(query="default", algorithm=algorithm)
+        params = utils.load_parameters(query="default", algorithm=algorithm)
         params_optimal = (optimal_params['hidden_dim'], optimal_params['learning_rate'], optimal_params['iterations'], optimal_params['sequence_length'])
 
-        _, metrics_optimal = Imputation.ML.mrnn_imputation(ground_truth=gap.ts, contamination=ts_contaminated,
-                                                 params=params_optimal)
+        _, metrics_optimal = Imputation.ML.mrnn_imputation(ground_truth=gap.ts, contamination=ts_contaminated, params=params_optimal)
         _, metrics_default = Imputation.ML.mrnn_imputation(ground_truth=gap.ts, contamination=ts_contaminated, params=params)
 
         Optimization.save_optimization(optimal_params=optimal_params, algorithm=algorithm+"_test")

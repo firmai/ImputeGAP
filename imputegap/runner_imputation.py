@@ -1,5 +1,6 @@
 from imputegap.contamination.contamination import Contamination
 from imputegap.imputation.imputation import Imputation
+from imputegap.manager import utils
 from imputegap.manager.manager import TimeSeries
 import os
 
@@ -36,7 +37,7 @@ if __name__ == '__main__':
     gap.print()
     gap.plot(ts_type="contamination", title="test", save_path="assets", limitation=plot_limit, display=False)
 
-    gap.optimal_params = Imputation.load_parameters(query="optimal", algorithm="cdrec")
+    gap.optimal_params = utils.load_parameters(query="optimal", algorithm="cdrec")
 
     gap.ts_imputation, gap.metrics = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=gap.ts_contaminate, params=gap.optimal_params)
     gap.print()
