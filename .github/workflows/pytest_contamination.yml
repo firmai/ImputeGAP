@@ -29,4 +29,6 @@ jobs:
         pip install pytest
 
     - name: Run pytest
-      run: python -m pytest ./tests/test_contamination_mcar.py
+      run:  |
+        python -m pytest ./tests/test_contamination_mcar.py
+        python -m pytest ./tests/test_contamination_mp.py
