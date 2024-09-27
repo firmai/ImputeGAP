@@ -37,11 +37,11 @@ if __name__ == '__main__':
     gap.print()
     gap.plot(ts_type="contamination", title="test", save_path="assets", limitation=3, display=False)
 
-    optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts, contamination=gap.ts_contaminate, algorithm="iim")
-
-    print("\nOptical Params : ", optimal_params)
-    print("\nyi : ", yi, "\n")
-
-    Optimization.save_optimization(optimal_params=optimal_params, algorithm="cdrec")
-
-    print("\n", "_"*95, "end")
+    for algo in ["cdrec", "stmvl", "iim", "mrnn"]:
+        print("RUN OPTIMIZATION FOR : ", algo, "...")
+        optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts, contamination=gap.ts_contaminate, algorithm=algo)
+        print("\nOptical Params : ", optimal_params)
+        print("\nyi : ", yi, "\n")
+        Optimization.save_optimization(optimal_params=optimal_params, algorithm=algo)
+        print("\n", "_"*95, "end")
+    print("\n", "_" * 95, "end")

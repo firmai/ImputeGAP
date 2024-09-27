@@ -12,7 +12,6 @@ from imputegap.evaluation.evaluation import Evaluation
 
 class Imputation:
 
-    @classmethod
     def load_parameters(query: str = "default", algorithm: str = "cdrec"):
         """
         Load default values of algorithms
@@ -33,8 +32,6 @@ class Imputation:
 
         if not os.path.exists(filepath):
             filepath = filepath[1:]
-
-        print(filepath)
 
         with open(filepath, "r") as _:
             config = toml.load(filepath)
@@ -111,7 +108,7 @@ class Imputation:
             if params is not None:
                 truncation_rank, epsilon, iterations = params
             else:
-                truncation_rank, epsilon, iterations = Imputation.load_parameters(algorithm="cdrec")
+                truncation_rank, epsilon, iterations = Imputation.load_parameters(query="default", algorithm="cdrec")
 
             imputed_matrix = cdrec(contamination=contamination, truncation_rank=truncation_rank, iterations=iterations, epsilon=epsilon)
 
@@ -168,7 +165,7 @@ class Imputation:
             if params is not None:
                 neighbors, algo_code = params
             else:
-                neighbors, algo_code = Imputation.load_parameters(algorithm="iim")
+                neighbors, algo_code = Imputation.load_parameters(query="default", algorithm="iim")
 
             imputed_matrix = iim(contamination=contamination, number_neighbor=neighbors, algo_code=algo_code)
 
@@ -191,7 +188,7 @@ class Imputation:
             if params is not None:
                 hidden_dim, learning_rate, iterations, sequence_length = params
             else:
-                hidden_dim, learning_rate, iterations, sequence_length = Imputation.load_parameters(algorithm="mrnn")
+                hidden_dim, learning_rate, iterations, sequence_length = Imputation.load_parameters(query="default", algorithm="mrnn")
 
             imputed_matrix = mrnn(contamination=contamination, hidden_dim=hidden_dim, learning_rate=learning_rate, iterations=iterations, sequence_length=sequence_length)
 
@@ -216,7 +213,7 @@ class Imputation:
             if params is not None:
                 window_size, gamma, alpha = params
             else:
-                window_size, gamma, alpha = Imputation.load_parameters(algorithm="stmvl")
+                window_size, gamma, alpha = Imputation.load_parameters(query="default", algorithm="stmvl")
 
             imputed_matrix = stmvl(contamination=contamination, window_size=window_size, gamma=gamma, alpha=alpha)
 

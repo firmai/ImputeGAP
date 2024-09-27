@@ -4,32 +4,10 @@ import numpy as np
 
 from imputegap.contamination.contamination import Contamination
 from imputegap.imputation.imputation import Imputation
+from imputegap.manager import utils
 from imputegap.manager.manager import TimeSeries
 from imputegap.optimization.bayesian_optimization import Optimization
 
-
-def resolve_path(local_path, github_actions_path):
-    """
-    Find the accurate path for tests
-
-    :param local_path: path of local code
-    :param github_actions_path: path on GitHub action
-    :return: correct file paths
-    """
-    if os.path.exists(local_path):
-        return local_path
-    elif os.path.exists(github_actions_path):
-        return github_actions_path
-    else:
-        raise FileNotFoundError("File not found in both: ", local_path, " and ", github_actions_path)
-
-
-def get_file_path(set_name="test"):
-    """
-    Find the accurate path for loading files of tests
-    :return: correct file paths
-    """
-    return resolve_path(f'../imputegap/dataset/{set_name}.txt', f'./imputegap/dataset/{set_name}.txt')
 
 
 class TestOptiIMM(unittest.TestCase):
@@ -38,7 +16,7 @@ class TestOptiIMM(unittest.TestCase):
         """
         the goal is to test if only the simple optimization with stmvl has the expected outcome
         """
-        gap = TimeSeries(get_file_path("chlorine"))
+        gap = TimeSeries(utils.get_file_path_dataset("chlorine"))
 
         algorithm = "iim"
 

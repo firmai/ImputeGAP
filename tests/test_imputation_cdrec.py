@@ -4,6 +4,7 @@ import numpy as np
 
 from imputegap.contamination.contamination import Contamination
 from imputegap.imputation.imputation import Imputation
+from imputegap.manager import utils
 from imputegap.manager.manager import TimeSeries
 
 
@@ -45,7 +46,7 @@ class TestCDREC(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with cdrec has the expected outcome
         """
-        impute_gap = TimeSeries(get_file_path("test"))
+        impute_gap = TimeSeries((utils.get_file_path_dataset("test")))
 
         ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
         imputation, metrics = Imputation.MR.cdrec(impute_gap.ts, ts_contaminated)
@@ -73,7 +74,7 @@ class TestCDREC(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with cdrec has the expected outcome
         """
-        impute_gap = TimeSeries(get_file_path("chlorine"))
+        impute_gap = TimeSeries(utils.get_file_path_dataset("chlorine"))
 
         ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=10,
                                                       protection=0.1,

@@ -4,39 +4,10 @@ import numpy as np
 
 from imputegap.contamination.contamination import Contamination
 from imputegap.imputation.imputation import Imputation
+from imputegap.manager import utils
 from imputegap.manager.manager import TimeSeries
 
 
-def resolve_path(local_path, github_actions_path):
-    """
-    Find the accurate path for tests
-
-    :param local_path: path of local code
-    :param github_actions_path: path on GitHub action
-    :return: correct file paths
-    """
-    if os.path.exists(local_path):
-        return local_path
-    elif os.path.exists(github_actions_path):
-        return github_actions_path
-    else:
-        raise FileNotFoundError("File not found in both: ", local_path, " and ", github_actions_path)
-
-
-def get_save_path():
-    """
-    Find the accurate path for saving files of tests
-    :return: correct file paths
-    """
-    return resolve_path('../tests/assets', './tests/assets')
-
-
-def get_file_path(set_name="test"):
-    """
-    Find the accurate path for loading files of tests
-    :return: correct file paths
-    """
-    return resolve_path(f'../imputegap/dataset/{set_name}.txt', f'./imputegap/dataset/{set_name}.txt')
 
 
 class TestIIM(unittest.TestCase):
@@ -45,7 +16,7 @@ class TestIIM(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with IIM has the expected outcome
         """
-        impute_gap = TimeSeries(get_file_path("chlorine"))
+        impute_gap = TimeSeries(utils.get_file_path_dataset("chlorine"))
 
         ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=10,
                                                       protection=0.1, use_seed=True, seed=42)

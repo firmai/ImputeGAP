@@ -4,31 +4,8 @@ import unittest
 import numpy as np
 
 from imputegap.explainer.explainer import Explainer
+from imputegap.manager import utils
 from imputegap.manager.manager import TimeSeries
-
-
-def resolve_path(local_path, github_actions_path):
-    """
-    Find the accurate path for tests
-
-    :param local_path: path of local code
-    :param github_actions_path: path on GitHub action
-    :return: correct file paths
-    """
-    if os.path.exists(local_path):
-        return local_path
-    elif os.path.exists(github_actions_path):
-        return github_actions_path
-    else:
-        raise FileNotFoundError("File not found in both: ", local_path, " and ", github_actions_path)
-
-
-def get_file_path(set_name="test"):
-    """
-    Find the accurate path for loading files of tests
-    :return: correct file paths
-    """
-    return resolve_path(f'../imputegap/dataset/{set_name}.txt', f'./imputegap/dataset/{set_name}.txt')
 
 
 class TestExplainer(unittest.TestCase):
@@ -47,7 +24,7 @@ class TestExplainer(unittest.TestCase):
 
         expected_categories, expected_features = Explainer.load_configuration()
 
-        gap = TimeSeries(data=get_file_path(filename))
+        gap = TimeSeries(data=utils.get_file_path_dataset(filename))
 
         shap_values, shap_details = Explainer.shap_explainer(ground_truth=gap.ts, file_name=filename, use_seed=True,
                                                              seed=42)
