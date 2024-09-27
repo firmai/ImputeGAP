@@ -32,7 +32,7 @@ class Imputation:
         if not os.path.exists(filepath):
             filepath = filepath[:1]
 
-        with open(filepath, "r") as file:
+        with open(filepath, "r") as _:
             config = toml.load(filepath)
 
         params = None
@@ -47,9 +47,9 @@ class Imputation:
             alpha = int(config['stmvl']['alpha'])
             params = (window_size, gamma, alpha)
         elif algorithm == "iim":
-            neighbors = int(config['iim']['neighbor'])
+            learning_neighbors = int(config['iim']['learning_neighbors'])
             algo_code = config['iim']['algorithm_code']
-            params = (neighbors, algo_code)
+            params = (learning_neighbors, algo_code)
         elif algorithm == "mrnn":
             hidden_dim = int(config['mrnn']['hidden_dim'])
             learning_rate = float(config['mrnn']['learning_rate'])

@@ -42,7 +42,7 @@ SEARCH_SPACES_PSO = {
 # Define the parameter names for each algorithm
 PARAM_NAMES = {
     'cdrec': ['rank', 'epsilon', 'iteration'],
-    'iim': ['neighbor'],
+    'iim': ['learning_neighbors'],
     'mrnn': ['hidden_dim', 'learning_rate', 'iterations', 'seq_len' ],
     'stmvl': ['window_size', 'gamma', 'alpha']
 }

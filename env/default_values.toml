@@ -10,7 +10,7 @@ gamma = 0.85
 alpha = 7
 
 [iim]
-neighbor = 10
+learning_neighbors = 10
 algorithm_code = "iim 2"
 
 [mrnn]

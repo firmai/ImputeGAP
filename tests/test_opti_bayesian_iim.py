@@ -55,8 +55,7 @@ class TestOptiIMM(unittest.TestCase):
         params = Imputation.load_parameters(query="default", algorithm=algorithm)
         params_optimal = (optimal_params['neighbor'], "iim 2")
 
-        _, metrics_optimal = Imputation.Regression.iim_imputation(ground_truth=gap.ts, contamination=ts_contaminated,
-                                                 params=params_optimal)
+        _, metrics_optimal = Imputation.Regression.iim_imputation(ground_truth=gap.ts, contamination=ts_contaminated, params=params_optimal)
         _, metrics_default = Imputation.Regression.iim_imputation(ground_truth=gap.ts, contamination=ts_contaminated, params=params)
 
         Optimization.save_optimization(optimal_params=optimal_params, algorithm=algorithm+"_test")
