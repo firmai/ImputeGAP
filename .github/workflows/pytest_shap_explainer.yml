@@ -1,5 +1,5 @@
 
-name: Pytest - ImputeGAP - SHAP - EXPLAINER - 8
+name: Pytest - ImputeGAP - SHAP - EXPLAINER - 12
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.8'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
