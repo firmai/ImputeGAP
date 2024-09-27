@@ -1,6 +1,7 @@
 import os
 import unittest
 import numpy as np
+import math
 
 from imputegap.contamination.contamination import Contamination
 from imputegap.manager.manager import TimeSeries
@@ -32,7 +33,7 @@ def get_file_path(set_name="test"):
 
 class TestContamination(unittest.TestCase):
 
-    def test_mcar_selection(self):
+    def test_mp_selection(self):
         """
         the goal is to test if only the selected values are contaminated
         """
@@ -41,12 +42,16 @@ class TestContamination(unittest.TestCase):
         series_impacted = [0.4]
         missing_rates = [0.4]
         seeds_start, seeds_end = 42, 43
-        series_check = ["1", "2", "3", "4"]
         protection = 0.1
+
+        length_of_gap_ts = len(impute_gap.ts[0])
+        len_expected = math.ceil(missing_rates[0] * length_of_gap_ts)
+        series_check = [str(i) for i in range(len_expected)]
 
         for seed_value in range(seeds_start, seeds_end):
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
+
 
                     ts_contaminate = Contamination.scenario_missing_percentage(ts=impute_gap.ts,
                                                                  series_impacted=series_sel,
@@ -69,7 +74,7 @@ class TestContamination(unittest.TestCase):
 
                     self.assertTrue(check_nan_series, True)
 
-    def test_mcar_position(self):
+    def test_mp_position(self):
         """
         the goal is to test if the starting position is always guaranteed
         """

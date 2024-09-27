@@ -142,8 +142,7 @@ class TestContamination(unittest.TestCase):
 
                         # 2) Check if the correct percentage of series are contaminated
                         contaminated_series = np.isnan(ts_contaminate).any(axis=1).sum()
-                        self.assertEqual(contaminated_series, expected_contaminated_series,
-                                         f"Expected {expected_contaminated_series} contaminated series but found {contaminated_series}")
+                        self.assertEqual(contaminated_series, expected_contaminated_series, f"Expected {expected_contaminated_series} contaminated series but found {contaminated_series}")
 
     def test_mcar_position_datasets(self):
         """

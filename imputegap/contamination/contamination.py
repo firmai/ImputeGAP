@@ -145,7 +145,7 @@ class Contamination:
             W = int((N - P) * missing_rate)  # number of data to remove
 
             for to_remove in range(0, W):
-                I = P + to_remove
-                ts_contaminated[S, I] = np.nan
+                index = P + to_remove
+                ts_contaminated[S, index] = np.nan
 
         return ts_contaminated

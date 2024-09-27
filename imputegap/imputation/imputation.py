@@ -12,6 +12,7 @@ from imputegap.evaluation.evaluation import Evaluation
 
 class Imputation:
 
+    @classmethod
     def load_parameters(query: str = "default", algorithm: str = "cdrec"):
         """
         Load default values of algorithms
@@ -22,6 +23,7 @@ class Imputation:
         :return: tuples of optimal parameters and the config of default values
         """
 
+        filepath = ""
         if query == "default":
             filepath = "../env/default_values.toml"
         elif query == "optimal":
@@ -32,34 +34,34 @@ class Imputation:
         if not os.path.exists(filepath):
             filepath = filepath[1:]
 
+        print(filepath)
+
         with open(filepath, "r") as _:
             config = toml.load(filepath)
 
-        params = None
         if algorithm == "cdrec":
             truncation_rank = int(config['cdrec']['rank'])
             epsilon = config['cdrec']['epsilon']
             iterations = int(config['cdrec']['iteration'])
-            params = (truncation_rank, epsilon, iterations)
+            return (truncation_rank, epsilon, iterations)
         elif algorithm == "stmvl":
             window_size = int(config['stmvl']['window_size'])
             gamma = float(config['stmvl']['gamma'])
             alpha = int(config['stmvl']['alpha'])
-            params = (window_size, gamma, alpha)
+            return (window_size, gamma, alpha)
         elif algorithm == "iim":
             learning_neighbors = int(config['iim']['learning_neighbors'])
             algo_code = config['iim']['algorithm_code']
-            params = (learning_neighbors, algo_code)
+            return (learning_neighbors, algo_code)
         elif algorithm == "mrnn":
             hidden_dim = int(config['mrnn']['hidden_dim'])
             learning_rate = float(config['mrnn']['learning_rate'])
             iterations = int(config['mrnn']['iterations'])
             sequence_length = int(config['mrnn']['sequence_length'])
-            params = (hidden_dim, learning_rate, iterations, sequence_length)
+            return (hidden_dim, learning_rate, iterations, sequence_length)
         else :
             print("Default/Optimal config not found for this algorithm")
-
-        return params
+            return None
 
     def evaluate_params(ground_truth, contamination, configuration, algorithm="cdrec"):
         """
