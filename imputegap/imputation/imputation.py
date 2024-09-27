@@ -30,7 +30,7 @@ class Imputation:
             print("Query not found for this function ('optimal' or 'default')")
 
         if not os.path.exists(filepath):
-            filepath = filepath[:1]
+            filepath = filepath[1:]
 
         with open(filepath, "r") as _:
             config = toml.load(filepath)

@@ -41,7 +41,8 @@ class Contamination:
         else:
             return selection
 
-    def scenario_mcar(ts, series_impacted=0.2, missing_rate=0.2, block_size=10, protection=0.1, use_seed=True, seed=42, explainer=False):
+    def scenario_mcar(ts, series_impacted=0.2, missing_rate=0.2, block_size=10, protection=0.1, use_seed=True, seed=42,
+                      explainer=False):
         """
         Contamination of time series base on the Missing Completely at Random scenario
 
@@ -82,7 +83,7 @@ class Contamination:
         for series in series_selected:
             S = int(series)
             N = len(ts_contaminated[S])  # number of values in the series
-            P = int(N * protection)  # values to protect in the begining of the series
+            P = int(N * protection)  # values to protect in the beginning of the series
             W = int((N - P) * missing_rate)  # number of data to remove
             B = int(W / block_size)  # number of block to remove
 
@@ -100,11 +101,51 @@ class Contamination:
                         position = P + (position - N)  # Wrap around to the start after protection
 
                     while np.isnan(ts_contaminated[S, position]):
-                        position = position+1
+                        position = position + 1
 
                         if position >= N:  # If block exceeds the series length
                             position = P + (position - N)  # Wrap around to the start after protection
 
                     ts_contaminated[S, position] = np.nan
+
+        return ts_contaminated
+
+    def scenario_missing_percentage(ts, series_impacted=0.2, missing_rate=0.2, protection=0.1, use_seed=True, seed=42):
+        """
+        Contamination of time series base on the missing percentage scenario
+
+        :param series_impacted: percentage of series contaminated | default 0.2
+        :param missing_rate: percentage of missing values by series  | default 0.2
+        :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1
+        :param use_seed: use a seed to reproduce the test | default true
+        :param seed: value of the seed | default 42
+        :return: the contaminated time series
+        """
+
+        if use_seed:
+            np.random.seed(seed)
+
+        ts_contaminated = ts.copy()
+        M, _ = ts_contaminated.shape
+
+        nbr_series_impacted = int(np.ceil(M * series_impacted))
+
+        print("\n\nMISSING PERCENTAGE contamination has been called with :"
+              "\n\ta number of series impacted ", series_impacted * 100, "%",
+              "\n\ta missing rate of ", missing_rate * 100, "%",
+              "\n\ta starting position at ", protection,
+              "\n\twith a seed option set to ", use_seed,
+              "\n\tshape of the set ", ts_contaminated.shape,
+              "\n\tthis selection of series 0 to ", nbr_series_impacted, "\n\n")
+
+        for series in range(0, nbr_series_impacted):
+            S = int(series)
+            N = len(ts_contaminated[S])  # number of values in the series
+            P = int(N * protection)  # values to protect in the beginning of the series
+            W = int((N - P) * missing_rate)  # number of data to remove
+
+            for to_remove in range(0, W):
+                index = P + to_remove
+                ts_contaminated.iat[series, index] = np.nan
 
         return ts_contaminated
