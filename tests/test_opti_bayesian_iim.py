@@ -34,7 +34,7 @@ def get_file_path(set_name="test"):
 
 class TestOptiIMM(unittest.TestCase):
 
-    def test_optimization_bayesian_stmvl(self):
+    def test_optimization_bayesian_iim(self):
         """
         the goal is to test if only the simple optimization with stmvl has the expected outcome
         """

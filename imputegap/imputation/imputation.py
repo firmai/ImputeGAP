@@ -79,7 +79,7 @@ class Imputation:
             imputation, error_measures = Imputation.MR.cdrec(ground_truth, contamination, (rank, eps, iters))
         elif algorithm == 'iim':
             learning_neighbours = configuration
-            alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
+            alg_code = "iim " + learning_neighbours
             imputation, error_measures = Imputation.Regression.iim_imputation(ground_truth, contamination, (learning_neighbours, alg_code))
         elif algorithm == 'mrnn':
             hidden_dim, learning_rate, iterations, keep_prob, seq_len = configuration

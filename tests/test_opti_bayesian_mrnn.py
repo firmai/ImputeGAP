@@ -32,9 +32,9 @@ def get_file_path(set_name="test"):
     return resolve_path(f'../imputegap/dataset/{set_name}.txt', f'./imputegap/dataset/{set_name}.txt')
 
 
-class TestOptiSTMVL(unittest.TestCase):
+class TestOptiMRNN(unittest.TestCase):
 
-    def test_optimization_bayesian_stmvl(self):
+    def test_optimization_bayesian_mrnn(self):
         """
         the goal is to test if only the simple optimization with mrnn has the expected outcome
         """
