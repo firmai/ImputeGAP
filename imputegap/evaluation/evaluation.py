@@ -2,7 +2,6 @@ import numpy as np
 from sklearn.metrics import mutual_info_score
 from scipy.stats import pearsonr
 
-
 class Evaluation:
 
     def __init__(self, ground_truth, imputation, contamination):

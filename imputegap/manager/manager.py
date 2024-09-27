@@ -163,6 +163,9 @@ class TimeSeries:
         number_of_series = 0
         plt.figure(figsize=size)
 
+        if limitation == 0:
+            limitation = self.ts.shape[0]
+
         if ts_type == "ground_truth":
             for i in range(self.ts.shape[0]):
                 plt.plot(np.arange(self.ts.shape[1]), self.ts[i, :], label=f'Series {i + 1}')
