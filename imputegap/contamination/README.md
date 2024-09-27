@@ -1,4 +1,4 @@
-![My Logo](../../assets/imputegab_logo.png)
+![My Logo](../../assets/logo_imputegab.png)
 
 # Scenarios
 <table>

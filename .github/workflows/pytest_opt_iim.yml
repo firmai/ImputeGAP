@@ -1,4 +1,5 @@
-name: Pytest - ImputeGAP - Loading - 8
+
+name: Pytest - ImputeGAP - OPT - IIM - 8
 
 on:
   push:
@@ -29,4 +30,4 @@ jobs:
         pip install pytest
 
     - name: Run pytest
-      run: python -m pytest ./tests/test_loading.py
+      run: python -m pytest ./tests/test_opti_bayesian_iim.py
