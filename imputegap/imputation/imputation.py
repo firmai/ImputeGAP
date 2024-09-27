@@ -77,7 +77,7 @@ class Imputation:
             rank, eps, iters = configuration
             imputation, error_measures = Imputation.MR.cdrec(ground_truth, contamination, (rank, eps, iters))
         elif algorithm == 'iim':
-            learning_neighbours = configuration
+            learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
             imputation, error_measures = Imputation.Regression.iim_imputation(ground_truth, contamination, (learning_neighbours, alg_code))
         elif algorithm == 'mrnn':
@@ -88,8 +88,6 @@ class Imputation:
             imputation, error_measures = Imputation.Pattern.stmvl_imputation(ground_truth, contamination, (window_size, gamma, alpha))
         else:
             raise ValueError(f"Invalid algorithm: {algorithm}")
-
-        #print("error_measures :", error_measures)
 
         return error_measures
 

@@ -1,4 +1,4 @@
-[cdrec]
-rank = "9"
-epsilon = 1.591301339858638e-5
-iteration = "100"
+[stmvl]
+window_size = "99"
+gamma = 0.39941056239594896
+alpha = "1"
