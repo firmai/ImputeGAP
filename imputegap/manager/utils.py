@@ -30,7 +30,7 @@ def get_save_path_asset():
     return filepath
 
 
-def load_parameters(query: str = "default", algorithm: str = "cdrec"):
+def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str="b"):
     """
     Load default values of algorithms
 
@@ -44,7 +44,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec"):
     if query == "default":
         filepath = "../env/default_values.toml"
     elif query == "optimal":
-        filepath = "../env/optimal_parameters_"+str(algorithm)+".toml"
+        filepath = "../env/optimal_parameters_"+str(optimizer)+"_"+str(dataset)+"_"+str(algorithm)+".toml"
     else:
         print("Query not found for this function ('optimal' or 'default')")
 

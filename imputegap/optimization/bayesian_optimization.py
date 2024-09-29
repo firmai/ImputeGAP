@@ -15,7 +15,7 @@ search_spaces = SEARCH_SPACES
 
 class Optimization:
 
-    def save_optimization(optimal_params, algorithm="cdrec", file_name=None):
+    def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="b", file_name=None):
         """
         Save the optimization parameters to a TOML file to use later without recomputing.
 
@@ -23,7 +23,7 @@ class Optimization:
         :param file_name: name of the TOML file to save the results. Default is 'optimization_results.toml'.
         """
         if file_name is None:
-            file_name = "../env/optimal_parameters_" + str(algorithm) + ".toml"
+            file_name = "../env/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
 
         if not os.path.exists(file_name):
             file_name = file_name[1:]
@@ -40,7 +40,7 @@ class Optimization:
     class Bayesian:
 
         def bayesian_optimization(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec",
-                                  n_calls=10, n_random_starts=50, acq_func='gp_hedge'):
+                                  n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
             """
             Conduct the Bayesian optimization hyperparameter optimization.
 

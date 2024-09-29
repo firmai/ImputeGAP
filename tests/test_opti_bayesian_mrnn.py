@@ -35,7 +35,5 @@ class TestOptiMRNN(unittest.TestCase):
         _, metrics_optimal = Imputation.ML.mrnn_imputation(ground_truth=gap.ts, contamination=ts_contaminated, params=params_optimal)
         _, metrics_default = Imputation.ML.mrnn_imputation(ground_truth=gap.ts, contamination=ts_contaminated, params=params)
 
-        Optimization.save_optimization(optimal_params=optimal_params, algorithm=algorithm+"_test")
-
         self.assertTrue(metrics_optimal["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal['RMSE']} > {metrics_default['RMSE']}")
         self.assertTrue(yi > 0, True)

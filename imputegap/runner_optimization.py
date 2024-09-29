@@ -23,25 +23,27 @@ def check_block_size(filename):
 if __name__ == '__main__':
 
     display_title()
+    datasets = ["bafu", "chlorine", "climate", "drift", "egg", "meteo", "test-large"]
 
-    filename = "eeg"
-    file_path = os.path.join("./dataset/", filename + ".txt")
-    gap = TimeSeries(data=file_path)
+    for filename in datasets :
+        file_path = os.path.join("./dataset/", filename + ".txt")
+        gap = TimeSeries(data=file_path)
 
-    block_size, plot_limit = check_block_size(filename)
+        block_size, plot_limit = check_block_size(filename)
 
-    gap.print(limitation=5)
-    gap.plot(title="test", save_path="assets", limitation=6, display=False)
+        gap.print(limitation=5)
+        gap.plot(title="test", save_path="assets", limitation=6, display=False)
 
-    gap.ts_contaminate = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=block_size, protection=0.1, use_seed=True, seed=42)
-    gap.print()
-    gap.plot(ts_type="contamination", title="test", save_path="assets", limitation=3, display=False)
+        gap.ts_contaminate = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=block_size, protection=0.1, use_seed=True, seed=42)
+        gap.print()
+        gap.plot(ts_type="contamination", title="test", save_path="assets", limitation=3, display=False)
 
-    for algo in ["cdrec", "stmvl", "iim", "mrnn"]:
-        print("RUN OPTIMIZATION FOR : ", algo, "...")
-        optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts, contamination=gap.ts_contaminate, algorithm=algo)
-        print("\nOptical Params : ", optimal_params)
-        print("\nyi : ", yi, "\n")
-        Optimization.save_optimization(optimal_params=optimal_params, algorithm=algo)
-        print("\n", "_"*95, "end")
+        for algo in ["cdrec", "stmvl", "iim", "mrnn"]:
+            print("RUN OPTIMIZATION FOR : ", algo, "... with ", filename, "...")
+            optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts, contamination=gap.ts_contaminate, algorithm=algo)
+            print("\nOptical Params : ", optimal_params)
+            print("\nyi : ", yi, "\n")
+            Optimization.save_optimization(optimal_params=optimal_params, algorithm=algo, dataset=filename, optimizer="b")
+            print("\n", "_"*95, "end")
+        print("\n", "_" * 95, "end")
     print("\n", "_" * 95, "end")
