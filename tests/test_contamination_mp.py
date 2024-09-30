@@ -1,11 +1,10 @@
-import os
 import unittest
 import numpy as np
 import math
 
-from imputegap.contamination.contamination import Contamination
-from imputegap.manager import utils
-from imputegap.manager.manager import TimeSeries
+from imputegap.recovery.contamination import Contamination
+from imputegap.tools import utils
+from imputegap.recovery.manager import TimeSeries
 
 
 class TestContamination(unittest.TestCase):
@@ -14,42 +13,29 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the selected values are contaminated
         """
-        impute_gap = TimeSeries(utils.get_file_path_dataset("test"))
+        gap = TimeSeries(utils.get_file_path_dataset("test"))
 
-        series_impacted = [0.4]
-        missing_rates = [0.4]
+        series_impacted = [0.4, 1]
+        missing_rates = [0.4, 1]
         seeds_start, seeds_end = 42, 43
         protection = 0.1
-
-        length_of_gap_ts = len(impute_gap.ts[0])
-        len_expected = math.ceil(missing_rates[0] * length_of_gap_ts)
-        series_check = [str(i) for i in range(len_expected)]
+        M, N = gap.ts.shape
 
         for seed_value in range(seeds_start, seeds_end):
-            for series_sel in series_impacted:
+            for series_per in series_impacted:
                 for missing_rate in missing_rates:
-
-
-                    ts_contaminate = Contamination.scenario_missing_percentage(ts=impute_gap.ts,
-                                                                 series_impacted=series_sel,
+                    ts_contaminate = Contamination.scenario_missing_percentage(ts=gap.ts,
+                                                                 series_impacted=series_per,
                                                                  missing_rate=missing_rate,
                                                                  protection=protection, use_seed=True,
                                                                  seed=seed_value)
 
-                    check_nan_series = False
+                    n_nan = np.isnan(ts_contaminate).sum()
+                    expected_nan_series = math.ceil(series_per * M)
+                    expected_nan_values = int((N - int(N * protection)) * missing_rate)
+                    expected = expected_nan_series * expected_nan_values
 
-                    for series, data in enumerate(ts_contaminate):
-                        if str(series) in series_check:
-                            if np.isnan(data).any():
-                                check_nan_series = True
-                        else:
-                            if np.isnan(data).any():
-                                check_nan_series = False
-                                break
-                            else:
-                                check_nan_series = True
-
-                    self.assertTrue(check_nan_series, True)
+                    self.assertEqual(n_nan, expected, f"Expected {expected} contaminated series but found {n_nan}")
 
     def test_mp_position(self):
         """

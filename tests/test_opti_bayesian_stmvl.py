@@ -1,12 +1,10 @@
-import os
 import unittest
-import numpy as np
 
-from imputegap.contamination.contamination import Contamination
-from imputegap.imputation.imputation import Imputation
-from imputegap.manager import utils
-from imputegap.manager.manager import TimeSeries
-from imputegap.optimization.bayesian_optimization import Optimization
+from imputegap.recovery.contamination import Contamination
+from imputegap.recovery.imputation import Imputation
+from imputegap.recovery.optimization import Optimization
+from imputegap.tools import utils
+from imputegap.recovery.manager import TimeSeries
 
 
 

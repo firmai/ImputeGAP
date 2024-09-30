@@ -5,8 +5,8 @@ import numpy as np
 from scipy.stats import zscore
 from sklearn.preprocessing import MinMaxScaler
 
-from imputegap.manager import utils
-from imputegap.manager.manager import TimeSeries
+from imputegap.tools import utils
+from imputegap.recovery.manager import TimeSeries
 
 class TestLoading(unittest.TestCase):
 
@@ -36,7 +36,7 @@ class TestLoading(unittest.TestCase):
         """
         impute_gap = TimeSeries(utils.get_file_path_dataset("test"))
         to_save = utils.get_save_path_asset()
-        file_path = impute_gap.plot("ground_truth", "test", to_save, 5, (16, 8), False)
+        file_path = impute_gap.plot("gt", "test", to_save, 5, (16, 8), False)
 
         self.assertTrue(os.path.exists(file_path))
 

@@ -1,16 +1,8 @@
-from imputegap.contamination.contamination import Contamination
-from imputegap.imputation.imputation import Imputation
-from imputegap.manager.manager import TimeSeries
+from imputegap.recovery.manager import TimeSeries
 from imputegap.explainer.explainer import Explainer
+from imputegap.tools.utils import display_title
+
 import os
-
-
-def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg - exascale infolab"):
-    print("=" * 100)
-    print(f"{title} : {aut}")
-    print("=" * 100)
-    print(f"    {lib} - {university}")
-    print("=" * 100)
 
 
 def check_block_size(filename):

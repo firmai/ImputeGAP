@@ -1,11 +1,10 @@
-import os
 import unittest
 
 import numpy as np
 
 from imputegap.explainer.explainer import Explainer
-from imputegap.manager import utils
-from imputegap.manager.manager import TimeSeries
+from imputegap.tools import utils
+from imputegap.recovery.manager import TimeSeries
 
 
 class TestExplainer(unittest.TestCase):

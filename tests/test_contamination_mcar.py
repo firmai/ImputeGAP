@@ -2,9 +2,9 @@ import os
 import unittest
 import numpy as np
 
-from imputegap.contamination.contamination import Contamination
-from imputegap.manager import utils
-from imputegap.manager.manager import TimeSeries
+from imputegap.recovery.contamination import Contamination
+from imputegap.tools import utils
+from imputegap.recovery.manager import TimeSeries
 
 
 class TestContamination(unittest.TestCase):

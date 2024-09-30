@@ -8,8 +8,8 @@ import toml
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
-from imputegap.contamination.contamination import Contamination
-from imputegap.imputation.imputation import Imputation
+from imputegap.recovery.contamination import Contamination
+from imputegap.recovery.imputation import Imputation
 
 
 class Explainer:
