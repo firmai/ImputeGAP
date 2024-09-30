@@ -145,7 +145,7 @@ class TimeSeries:
 
         return z_scores
 
-    def plot(self, ts_type="gt", title='Time Series Data', save_path="", limitation=10, size=(16, 8), display=True, colors=['dimgrey', 'plum', 'lightblue', 'mediumseagreen', 'khaki']):
+    def plot(self, ts_type="gt", title='Time Series Data', save_path="", limitation=10, size=(16, 8), display=True, colors=['dimgrey', 'plum', 'lightblue', 'mediumseagreen', 'khaki', 'gold', 'darkslategrey', 'hotpink', 'chocolate', 'lightseagreen', 'wheat']):
         """
         Plot a chosen time series
         @author Quentin Nater
@@ -180,10 +180,10 @@ class TimeSeries:
                 color = colors[i % len(colors)]
 
                 if np.isnan(self.ts_contaminate[i, :]).any():
-                    plt.plot(np.arange(self.ts.shape[1]), self.ts[i, :], 'r--', label=f'Series {i + 1}')
+                    plt.plot(np.arange(self.ts.shape[1]), self.ts[i, :], 'r--')
 
                 plt.plot(np.arange(self.ts_contaminate.shape[1]), self.ts_contaminate[i, :], linewidth=2.5,
-                         color=color, linestyle='-', label=f'Series {i + 1}-CNT')
+                         color=color, linestyle='-', label=f'Series {i + 1}')
 
                 number_of_series += 1
                 if number_of_series == limitation:
@@ -207,7 +207,7 @@ class TimeSeries:
         plt.xlabel('Time Shift')
         plt.ylabel('Values')
         plt.title(title)
-        plt.legend(loc='upper right', bbox_to_anchor=(1.10, 1))
+        plt.legend(loc='upper right', bbox_to_anchor=(1.14, 1))
 
         if save_path:
             file_path = os.path.join(save_path + "/" + ts_type, title + "_" + ts_type + ".png")

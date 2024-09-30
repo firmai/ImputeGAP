@@ -1,14 +1,15 @@
 import os
 import toml
+from itertools import product
 import numpy as np
 
 
 import skopt
-from skopt.space import Integer
 from skopt.utils import use_named_args
+from skopt.space import Integer
 
 from imputegap.recovery.imputation import Imputation
-from imputegap.tools.algorithm_parameters import SEARCH_SPACES
+from imputegap.tools.algorithm_parameters import SEARCH_SPACES, ALL_ALGO_PARAMS
 
 # Define the search space for each algorithm separately
 search_spaces = SEARCH_SPACES
@@ -37,6 +38,57 @@ class Optimization:
             print(f"\nOptimization parameters successfully saved to {file_name}")
         except Exception as e:
             print(f"\nAn error occurred while saving the file: {e}")
+
+    class Greedy:
+
+        def greedy_optimization(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=100):
+            """
+            Conduct the Greedy optimization hyperparameter optimization.
+
+            Parameters
+            ----------
+            :param ground_truth : time series data set to optimize
+            :param contamination : time series contaminate to impute
+            :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
+            :param algorithm : imputation algorithm | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default 'cdrec'
+            :param n_calls: bayesian parameters, number of calls to the objective function.
+
+            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
+            """
+            # Map the parameter ranges to the algorithm-specific search space
+            param_ranges = ALL_ALGO_PARAMS[algorithm]
+
+            # Extract parameter names and their ranges for the selected algorithm
+            param_names = list(param_ranges.keys())
+            param_values = list(param_ranges.values())
+
+            # Generate all combinations of parameters in the search space
+            param_combinations = list(product(*param_values))  # Cartesian product of all parameter values
+
+            # Placeholder for the best parameters and their score
+            best_params = None
+            best_score = float('inf')  # Assuming we are minimizing the objective function
+
+            # Objective function (to minimize)
+            def objective(params):
+                errors = Imputation.evaluate_params(ground_truth, contamination, params, algorithm)
+                return np.mean([errors[metric] for metric in selected_metrics])
+
+            # Conduct greedy optimization over parameter combinations
+            for params in param_combinations:
+                # Convert params to a dictionary for compatibility
+                params_dict = {name: value for name, value in zip(param_names, params)}
+
+                # Calculate the score for the current set of parameters
+                score = objective(params_dict)
+
+                # Update the best parameters if the current score is better
+                if score < best_score:
+                    best_score = score
+                    best_params = params_dict
+
+            print(f"Best score: {best_score} with params {best_params}")
+            return best_params, best_score
 
     class Bayesian:
 

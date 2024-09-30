@@ -33,9 +33,7 @@ if __name__ == '__main__':
     if load:
         gap.optimal_params = utils.load_parameters(query="optimal", algorithm=algo)
     else:
-        optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts,
-                                                                         contamination=gap.ts_contaminate,
-                                                                         algorithm=algo, n_calls=3)
+        optimal_params, yi = Optimization.Greedy.greedy_optimization(ground_truth=gap.ts, contamination=gap.ts_contaminate, algorithm=algo, n_calls=3)
         gap.optimal_params = tuple(optimal_params.values())
         print("\nOptical Params : ", gap.optimal_params)
 

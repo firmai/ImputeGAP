@@ -27,9 +27,13 @@ class TestOptiCDREC(unittest.TestCase):
 
         params = utils.load_parameters(query="default", algorithm=algorithm)
         params_optimal = (optimal_params['rank'], optimal_params['epsilon'], optimal_params['iteration'])
+        params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")
+
 
         _, metrics_optimal = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=ts_contaminated, params=params_optimal)
         _, metrics_default = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=ts_contaminated, params=params)
+        _, metrics_optimal_load = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=ts_contaminated, params=params_optimal_load)
 
-        self.assertTrue(metrics_optimal["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal['RMSE']} > {metrics_default['RMSE']}")
+        self.assertTrue(metrics_optimal["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal['RMSE']} < {metrics_default['RMSE']} ")
+        self.assertTrue(metrics_optimal_load["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal_load['RMSE']} < {metrics_default['RMSE']}")
         self.assertTrue(yi > 0, True)

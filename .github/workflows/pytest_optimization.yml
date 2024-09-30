@@ -1,5 +1,5 @@
 
-name: Pytest - ImputeGAP - OPT - MRNN - 12
+name: Pytest - ImputeGAP - OPTIMIZATION - 12
 
 on:
   push:
@@ -30,4 +30,8 @@ jobs:
         pip install pytest
 
     - name: Run pytest
-      run: python -m pytest ./tests/test_opti_bayesian_mrnn.py
+      run: |
+        python -m pytest ./tests/test_opti_bayesian_cdrec.py
+        python -m pytest ./tests/test_opti_bayesian_iim.py
+        python -m pytest ./tests/test_opti_bayesian_mrnn.py
+        python -m pytest ./tests/test_opti_bayesian_stmvl.py

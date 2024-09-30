@@ -1,5 +1,5 @@
 
-name: Pytest - ImputeGAP - ST-MVL - 12
+name: Pytest - ImputeGAP - IMPUTATION - 12
 
 on:
   push:
@@ -30,4 +30,8 @@ jobs:
         pip install pytest
 
     - name: Run pytest
-      run: python -m pytest ./tests/test_imputation_stmvl.py
+      run: |
+        python -m pytest ./tests/test_imputation_cdrec.py
+        python -m pytest ./tests/test_imputation_iim.py
+        python -m pytest ./tests/test_imputation_mrnn.py
+        python -m pytest ./tests/test_imputation_stmvl.py

@@ -44,3 +44,12 @@ PARAM_NAMES = {
     'mrnn': ['hidden_dim', 'learning_rate', 'iterations', 'seq_len' ],
     'stmvl': ['window_size', 'gamma', 'alpha']
 }
+
+
+CDREC_PARAMS = {'rank': CDREC_RANK_RANGE, 'epsilon': CDREC_EPS_RANGE, 'iteration': CDREC_ITERS_RANGE}
+IIM_PARAMS = {'learning_neighbors': IIM_LEARNING_NEIGHBOR_RANGE}
+MRNN_PARAMS = {'learning_rate': MRNN_LEARNING_RATE_CHANGE, 'hidden_dim': MRNN_HIDDEN_DIM_RANGE, 'seq_len': MRNN_SEQ_LEN_RANGE, 'iterations': MRNN_NUM_ITER_RANGE}
+STMVL_PARAMS = {'window_size': STMVL_WINDOW_SIZE_RANGE, 'gamma': STMVL_GAMMA_RANGE, 'alpha': STMVL_ALPHA_RANGE}
+
+# Create a dictionary to hold all parameter dictionaries for each algorithm
+ALL_ALGO_PARAMS = {'cdrec': CDREC_PARAMS, 'iim': IIM_PARAMS, 'mrnn': MRNN_PARAMS, 'stmvl': STMVL_PARAMS}

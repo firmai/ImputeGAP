@@ -17,25 +17,22 @@ class TestContamination(unittest.TestCase):
 
         series_impacted = [0.4, 1]
         missing_rates = [0.4, 1]
-        seeds_start, seeds_end = 42, 43
         protection = 0.1
         M, N = gap.ts.shape
 
-        for seed_value in range(seeds_start, seeds_end):
-            for series_per in series_impacted:
-                for missing_rate in missing_rates:
-                    ts_contaminate = Contamination.scenario_missing_percentage(ts=gap.ts,
-                                                                 series_impacted=series_per,
-                                                                 missing_rate=missing_rate,
-                                                                 protection=protection, use_seed=True,
-                                                                 seed=seed_value)
+        for series_per in series_impacted:
+            for missing_rate in missing_rates:
+                ts_contaminate = Contamination.scenario_missing_percentage(ts=gap.ts,
+                                                             series_impacted=series_per,
+                                                             missing_rate=missing_rate,
+                                                             protection=protection)
 
-                    n_nan = np.isnan(ts_contaminate).sum()
-                    expected_nan_series = math.ceil(series_per * M)
-                    expected_nan_values = int((N - int(N * protection)) * missing_rate)
-                    expected = expected_nan_series * expected_nan_values
+                n_nan = np.isnan(ts_contaminate).sum()
+                expected_nan_series = math.ceil(series_per * M)
+                expected_nan_values = int((N - int(N * protection)) * missing_rate)
+                expected = expected_nan_series * expected_nan_values
 
-                    self.assertEqual(n_nan, expected, f"Expected {expected} contaminated series but found {n_nan}")
+                self.assertEqual(n_nan, expected, f"Expected {expected} contaminated series but found {n_nan}")
 
     def test_mp_position(self):
         """
@@ -43,23 +40,20 @@ class TestContamination(unittest.TestCase):
         """
         impute_gap = TimeSeries(utils.get_file_path_dataset("test"))
 
-        series_impacted = [0.4, 1]
+        series_impacted = [0.4, 0.8]
         missing_rates = [0.1, 0.4, 0.6]
         ten_percent_index = int(impute_gap.ts.shape[1] * 0.1)
-        seeds_start, seeds_end = 42, 43
 
-        for seed_value in range(seeds_start, seeds_end):
-            for series_sel in series_impacted:
-                for missing_rate in missing_rates:
+        for series_sel in series_impacted:
+            for missing_rate in missing_rates:
 
-                    ts_contaminate = Contamination.scenario_missing_percentage(ts=impute_gap.ts,
-                                                                 series_impacted=series_sel,
-                                                                 missing_rate=missing_rate, protection=0.1,
-                                                                 use_seed=True, seed=seed_value)
+                ts_contaminate = Contamination.scenario_missing_percentage(ts=impute_gap.ts,
+                                                             series_impacted=series_sel,
+                                                             missing_rate=missing_rate, protection=0.1)
 
-                    if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
-                        check_position = False
-                    else:
-                        check_position = True
+                if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
+                    check_position = False
+                else:
+                    check_position = True
 
-                    self.assertTrue(check_position, True)
+                self.assertTrue(check_position, True)

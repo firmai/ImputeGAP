@@ -77,16 +77,17 @@ class Contamination:
         if use_seed:
             np.random.seed(seed)
 
-        missing_rate = Contamination.verification_limitation(missing_rate)
-        series_impacted = Contamination.verification_limitation(series_impacted)
-        protection = Contamination.verification_limitation(protection)
-
         ts_contaminated = ts.copy()
         M, _ = ts_contaminated.shape
 
         if not explainer:  # use random series
+            missing_rate = Contamination.verification_limitation(missing_rate)
+            series_impacted = Contamination.verification_limitation(series_impacted)
+            protection = Contamination.verification_limitation(protection)
+
             nbr_series_impacted = int(np.ceil(M * series_impacted))
             series_indices = [str(idx) for idx in np.random.choice(M, nbr_series_impacted, replace=False)]
+
         else:  # use fix series
             series_indices = [str(series_impacted)]
 
@@ -132,20 +133,15 @@ class Contamination:
 
         return ts_contaminated
 
-    def scenario_missing_percentage(ts, series_impacted=0.2, missing_rate=0.2, protection=0.1, use_seed=True, seed=42):
+    def scenario_missing_percentage(ts, series_impacted=0.2, missing_rate=0.2, protection=0.1):
         """
         Contamination of time series base on the missing percentage scenario
 
         :param series_impacted: percentage of series contaminated | default 0.2
         :param missing_rate: percentage of missing values by series  | default 0.2
         :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1
-        :param use_seed: use a seed to reproduce the test | default true
-        :param seed: value of the seed | default 42
         :return: the contaminated time series
         """
-
-        if use_seed:
-            np.random.seed(seed)
 
         ts_contaminated = ts.copy()
         M, _ = ts_contaminated.shape
@@ -160,7 +156,6 @@ class Contamination:
               "\n\ta number of series impacted ", series_impacted * 100, "%",
               "\n\ta missing rate of ", missing_rate * 100, "%",
               "\n\ta starting position at ", protection,
-              "\n\twith a seed option set to ", use_seed,
               "\n\tshape of the set ", ts_contaminated.shape,
               "\n\tthis selection of series 0 to ", nbr_series_impacted, "\n\n")
 
@@ -175,3 +170,15 @@ class Contamination:
                 ts_contaminated[S, index] = np.nan
 
         return ts_contaminated
+
+
+    def scenario_blackout(ts, missing_rate=0.2, protection=0.1):
+        """
+        Contamination of time series base on the blackout scenario
+
+        :param missing_rate: percentage of missing values by series  | default 0.2
+        :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1
+        :return: the contaminated time series
+        """
+        return Contamination.scenario_missing_percentage(ts, series_impacted=1, missing_rate=missing_rate, protection=protection)
+

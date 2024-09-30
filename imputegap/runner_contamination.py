@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     block_size, plot_limit = check_block_size(filename)
 
-    gap.ts_contaminate = Contamination.scenario_missing_percentage(ts=gap.ts, series_impacted=0.1, missing_rate=0.4, protection=0.1, use_seed=True, seed=42)
+    gap.ts_contaminate = Contamination.scenario_missing_percentage(ts=gap.ts, series_impacted=0.1, missing_rate=0.4, protection=0.1)
     gap.print(limitation=10)
     gap.plot(ts_type="contamination", title="test", save_path="assets", limitation=plot_limit, display=True)
 
