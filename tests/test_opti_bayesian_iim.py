@@ -25,7 +25,7 @@ class TestOptiIMM(unittest.TestCase):
 
         optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts,
                                                                          contamination=ts_contaminated,
-                                                                         algorithm=algorithm)
+                                                                         algorithm=algorithm, n_calls=3)
 
         print("\nOptimization done successfully... ")
         print("\n", optimal_params, "\n")

@@ -16,7 +16,7 @@ algorithm_code = "iim 2"
 [mrnn]
 hidden_dim = 10
 learning_rate = 0.01
-iterations = 1000
+iterations = 100
 sequence_length = 7
 
 [explainer]

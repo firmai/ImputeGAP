@@ -22,7 +22,7 @@ class TestOptiCDREC(unittest.TestCase):
 
         ts_contaminated = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
 
-        optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts, contamination=ts_contaminated, algorithm=algorithm)
+        optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts, contamination=ts_contaminated, algorithm=algorithm, n_calls=3)
 
         print("\nOptimization done successfully... ")
         print("\n", optimal_params, "\n")

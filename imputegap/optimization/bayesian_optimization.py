@@ -23,7 +23,7 @@ class Optimization:
         :param file_name: name of the TOML file to save the results. Default is 'optimization_results.toml'.
         """
         if file_name is None:
-            file_name = "../env/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+            file_name = "../params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
 
         if not os.path.exists(file_name):
             file_name = file_name[1:]

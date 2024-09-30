@@ -9,15 +9,14 @@ from matplotlib import pyplot as plt  # type: ignore
 
 class TimeSeries:
 
-    def __init__(self, data=None, normalization=None):
+    def __init__(self, data=None, normalization=None, limitation_values=None):
         """
         :param ts : Original time series without alteration (ground-truth)
         :param contaminated_ts : time series after contamination
         :param imputation : time series after reconstruction of the missing data
-        :param optimal_params : optimal parameters found for a specific algorithm and time series dataset
-        :param explainer : result of the explainer algorithm to explain the imputation of the time series dataset
+        :param limitation_values : limitation of the maximum number of values by series (computation limitation) | default None
         """
-        self.ts = self.load_timeseries(data, normalization)
+        self.ts = self.load_timeseries(data, normalization, limitation_values)
         self.ts_contaminate = None
         self.ts_imputation = None
         self.metrics = []
@@ -26,7 +25,7 @@ class TimeSeries:
 
 
 
-    def load_timeseries(self, data=None, normalization=None):
+    def load_timeseries(self, data=None, normalization=None, limitation=None):
         """
         Load timeseries manager from file
         FORMAT : (Values,Series), values are seperated by space et series by \n
@@ -34,6 +33,7 @@ class TimeSeries:
 
         :param filename: path of the time series dataset
         :param normalization : [OPTIONAL] choice of normalization ("z_score" or "min_max")
+        :param limitation : limitation of the maximum number of values by series (computation limitation) | default None
         :return: time series format for imputegap from dataset
         """
 
@@ -43,8 +43,7 @@ class TimeSeries:
 
             if isinstance(data, str):
                 print("\nThe time series has been loaded from " + str(data) + "\n")
-
-                ts = np.genfromtxt(data, delimiter=' ')
+                ts = np.genfromtxt(data, delimiter=' ', max_rows=limitation)
 
             elif isinstance(data, list):
                 print("\nThe time series has been loaded from code ", *data, "\n")

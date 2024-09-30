@@ -44,7 +44,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     if query == "default":
         filepath = "../env/default_values.toml"
     elif query == "optimal":
-        filepath = "../env/optimal_parameters_"+str(optimizer)+"_"+str(dataset)+"_"+str(algorithm)+".toml"
+        filepath = "../params/optimal_parameters_"+str(optimizer)+"_"+str(dataset)+"_"+str(algorithm)+".toml"
     else:
         print("Query not found for this function ('optimal' or 'default')")
 

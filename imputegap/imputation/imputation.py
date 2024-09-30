@@ -53,16 +53,16 @@ class Imputation:
 
             :param ground_truth: original time series without contamination
             :param contamination: time series with contamination
-            :param params: [Optional] (truncation_rank, epsilon, iterations) : parameters of the algorithm, if None, default ones are loaded
+            :param params: [Optional] (rank, epsilon, iterations) : parameters of the algorithm, if None, default ones are loaded
 
             :return: imputed_matrix, metrics : all time series with imputation data and their metrics
             """
             if params is not None:
-                truncation_rank, epsilon, iterations = params
+                rank, epsilon, iterations = params
             else:
-                truncation_rank, epsilon, iterations = utils.load_parameters(query="default", algorithm="cdrec")
+                rank, epsilon, iterations = utils.load_parameters(query="default", algorithm="cdrec")
 
-            imputed_matrix = cdrec(contamination=contamination, truncation_rank=truncation_rank, iterations=iterations, epsilon=epsilon)
+            imputed_matrix = cdrec(contamination=contamination, truncation_rank=rank, iterations=iterations, epsilon=epsilon)
 
             metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
 
