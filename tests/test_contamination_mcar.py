@@ -2,40 +2,9 @@ import os
 import unittest
 import numpy as np
 
-from imputegap.contamination.contamination import Contamination
-from imputegap.manager.manager import TimeSeries
-
-
-def resolve_path(local_path, github_actions_path):
-    """
-    Find the accurate path for tests
-
-    :param local_path: path of local code
-    :param github_actions_path: path on GitHub action
-    :return: correct file paths
-    """
-    if os.path.exists(local_path):
-        return local_path
-    elif os.path.exists(github_actions_path):
-        return github_actions_path
-    else:
-        raise FileNotFoundError("File not found in both: ", local_path, " and ", github_actions_path)
-
-
-def get_save_path():
-    """
-    Find the accurate path for saving files of tests
-    :return: correct file paths
-    """
-    return resolve_path('../tests/assets', './tests/assets')
-
-
-def get_file_path(set_name="test"):
-    """
-    Find the accurate path for loading files of tests
-    :return: correct file paths
-    """
-    return resolve_path(f'../imputegap/dataset/{set_name}.txt', f'./imputegap/dataset/{set_name}.txt')
+from imputegap.recovery.contamination import Contamination
+from imputegap.tools import utils
+from imputegap.recovery.manager import TimeSeries
 
 
 class TestContamination(unittest.TestCase):
@@ -44,7 +13,7 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the selected values are contaminated
         """
-        impute_gap = TimeSeries(get_file_path("test"))
+        impute_gap = TimeSeries(utils.get_file_path_dataset("test"))
 
         series_impacted = [0.4]
         missing_rates = [0.4]
@@ -82,7 +51,7 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if the starting position is always guaranteed
         """
-        impute_gap = TimeSeries(get_file_path("test"))
+        impute_gap = TimeSeries(utils.get_file_path_dataset("test"))
 
         series_impacted = [0.4, 1]
         missing_rates = [0.1, 0.4, 0.6]
@@ -118,7 +87,7 @@ class TestContamination(unittest.TestCase):
         block_size = 10
 
         for dataset in datasets:
-            impute_gap = TimeSeries(get_file_path(dataset))
+            impute_gap = TimeSeries(utils.get_file_path_dataset(dataset))
 
             for seed_value in range(seeds_start, seeds_end):
                 for series_sel in series_impacted:
@@ -142,8 +111,7 @@ class TestContamination(unittest.TestCase):
 
                         # 2) Check if the correct percentage of series are contaminated
                         contaminated_series = np.isnan(ts_contaminate).any(axis=1).sum()
-                        self.assertEqual(contaminated_series, expected_contaminated_series,
-                                         f"Expected {expected_contaminated_series} contaminated series but found {contaminated_series}")
+                        self.assertEqual(contaminated_series, expected_contaminated_series, f"Expected {expected_contaminated_series} contaminated series but found {contaminated_series}")
 
     def test_mcar_position_datasets(self):
         """
@@ -157,7 +125,7 @@ class TestContamination(unittest.TestCase):
         block_size = 10
 
         for dataset in datasets:
-            impute_gap = TimeSeries(get_file_path(dataset))
+            impute_gap = TimeSeries(utils.get_file_path_dataset(dataset))
             ten_percent_index = int(impute_gap.ts.shape[1] * 0.1)
 
             for seed_value in range(seeds_start, seeds_end):
@@ -181,11 +149,11 @@ class TestContamination(unittest.TestCase):
         """
         Verify if the manager of a dataset is working
         """
-        impute_gap = TimeSeries(get_file_path("chlorine"))
+        impute_gap = TimeSeries(utils.get_file_path_dataset("chlorine"))
         impute_gap.ts_contaminate = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.1,
                                                                 block_size=10, protection=0.1, use_seed=True, seed=42)
 
         impute_gap.print()
-        impute_gap.plot("contamination", "test", get_save_path(), 5, (16, 8), False)
+        filepath = impute_gap.plot("contamination", "test", utils.get_save_path_asset(), 5, (16, 8), False)
 
-        self.assertTrue(os.path.exists(get_save_path()))
+        self.assertTrue(os.path.exists(filepath))

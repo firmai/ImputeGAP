@@ -1,23 +1,23 @@
 [cdrec]
-default_reduction_rank = 1
-default_epsilon = 0.000001
-default_epsilon_str = "E-6"
-default_iteration = 100
+rank = 1
+epsilon = 0.000001
+epsilon_str = "E-6"
+iteration = 100
 
 [stmvl]
-default_window_size = 2
-default_gamma = 0.85
-default_alpha = 7
+window_size = 2
+gamma = 0.85
+alpha = 7
 
 [iim]
-default_neighbor = 10
+learning_neighbors = 10
+algorithm_code = "iim 2"
 
 [mrnn]
-default_hidden_dim = 10
-default_learning_rate = 0.01
-default_iterations = 1000
-default_keep_prob = 1.0
-default_sequence_length = 7
+hidden_dim = 10
+learning_rate = 0.01
+iterations = 50
+sequence_length = 7
 
 [explainer]
 splitter = 10

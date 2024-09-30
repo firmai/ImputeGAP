@@ -1,4 +1,5 @@
 import pathlib
+
 import setuptools
 
 setuptools.setup(
@@ -21,7 +22,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Topic :: Imputation"
     ],
-    python_requires=">= 3.8,<3.12.2",
+    python_requires=">= 3.9,<3.12.6",
     install_requires=pathlib.Path("requirements.txt").read_text().splitlines(),
     packages=setuptools.find_packages(),
     include_package_data=True,
