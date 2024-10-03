@@ -56,6 +56,9 @@ class Imputation:
             :return: imputed_matrix, metrics : all time series with imputation data and their metrics
             """
             if params is not None:
+                if isinstance(params, dict):
+                    params = tuple(params.values())
+
                 rank, epsilon, iterations = params
             else:
                 rank, epsilon, iterations = utils.load_parameters(query="default", algorithm="cdrec")
@@ -113,6 +116,9 @@ class Imputation:
            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
            """
             if params is not None:
+                if isinstance(params, dict):
+                    params = tuple(params.values())
+
                 neighbors, algo_code = params
             else:
                 neighbors, algo_code = utils.load_parameters(query="default", algorithm="iim")
@@ -136,6 +142,9 @@ class Imputation:
            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
            """
             if params is not None:
+                if isinstance(params, dict):
+                    params = tuple(params.values())
+
                 hidden_dim, learning_rate, iterations, sequence_length = params
             else:
                 hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
@@ -161,6 +170,9 @@ class Imputation:
            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
            """
             if params is not None:
+                if isinstance(params, dict):
+                    params = tuple(params.values())
+
                 window_size, gamma, alpha = params
             else:
                 window_size, gamma, alpha = utils.load_parameters(query="default", algorithm="stmvl")

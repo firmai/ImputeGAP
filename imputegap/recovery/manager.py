@@ -11,9 +11,10 @@ class TimeSeries:
 
     def __init__(self, data=None, normalization=None, limitation_values=None):
         """
+        IMPORT FORMAT : (Values,Series) : values are seperated by "SPACE" et series by "\\n"
+
         :param ts : Original time series without alteration (ground-truth)
-        :param contaminated_ts : time series after contamination
-        :param imputation : time series after reconstruction of the missing data
+        :param normalization : "z_score", "min_max" : apply a normalization to the data | default None
         :param limitation_values : limitation of the maximum number of values by series (computation limitation) | default None
         """
         self.ts = self.load_timeseries(data, normalization, limitation_values)
@@ -78,21 +79,21 @@ class TimeSeries:
 
         print("\nGround-truth set :")
         for i, series in enumerate(self.ts[:limitation]):
-            print(f"Series {i} " + " ".join([f"{elem:6}" for elem in series]))
+            print(f"Series {i} \t\t" + " ".join([f"{elem:6}" for elem in series]))
         if limitation < self.ts.shape[0]:
             print("...")
 
         if self.ts_contaminate is not None:
             print("\nContaminated set :")
             for i, series in enumerate(self.ts_contaminate[:limitation]):
-                print(f"Series {i} " + " ".join([f"{elem:6}" for elem in series]))
+                print(f"Series {i} \t\t" + " ".join([f"{elem:6}" for elem in series]))
             if limitation < self.ts_contaminate.shape[0]:
                 print("...")
 
         if self.ts_imputation is not None:
             print("\nImputation set :")
             for i, series in enumerate(self.ts_imputation[:limitation]):
-                print(f"Series {i} " + " ".join([f"{elem:6}" for elem in series]))
+                print(f"Series {i} \t\t" + " ".join([f"{elem:6}" for elem in series]))
             if limitation < self.ts_imputation.shape[0]:
                 print("...")
 
@@ -207,8 +208,9 @@ class TimeSeries:
         plt.xlabel('Time Shift')
         plt.ylabel('Values')
         plt.title(title)
-        plt.legend(loc='upper right', bbox_to_anchor=(1.14, 1))
+        plt.legend(loc='upper right', bbox_to_anchor=(1.11, 1))
 
+        file_path= None
         if save_path:
             file_path = os.path.join(save_path + "/" + ts_type, title + "_" + ts_type + ".png")
             plt.savefig(file_path, bbox_inches='tight')
