@@ -26,8 +26,11 @@ class Imputation:
         """
 
         if algorithm == 'cdrec':
-            rank, eps, iters = configuration
-            imputation, error_measures = Imputation.MR.cdrec(ground_truth, contamination, (rank, eps, iters))
+            rank, epsilon, iterations = configuration
+            algo = Imputation.MD.CDREC(contamination)
+            algo.impute((rank, epsilon, iterations))
+            algo.score(ground_truth, algo.imputed_matrix)
+            imputation, error_measures = algo.imputed_matrix, algo.metrics
         elif algorithm == 'iim':
             learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
@@ -43,31 +46,68 @@ class Imputation:
 
         return error_measures
 
-    class MR:
-        def cdrec(ground_truth, contamination, params=None):
-            """
-            Imputation of data with CDREC algorithm
-            @author Quentin Nater
+    class MD:
 
-            :param ground_truth: original time series without contamination
-            :param contamination: time series with contamination
-            :param params: [Optional] (rank, epsilon, iterations) : parameters of the algorithm, if None, default ones are loaded
+        class CDREC:
 
-            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-            """
-            if params is not None:
-                if isinstance(params, dict):
-                    params = tuple(params.values())
+            def __init__(self, infected_matrix):
+                """
+                Store the results of the CDREC algorithm
+                :param infected_matrix : Matrix used during the imputation of the time series
+                """
+                self.infected_matrix = infected_matrix
+                self.imputed_matrix = None
+                self.metrics = None
+                self.optimal_params = None
 
-                rank, epsilon, iterations = params
-            else:
-                rank, epsilon, iterations = utils.load_parameters(query="default", algorithm="cdrec")
+            def impute(self, params=None):
+                """
+                Imputation of data with CDREC algorithm
+                @author Quentin Nater
 
-            imputed_matrix = cdrec(contamination=contamination, truncation_rank=rank, iterations=iterations, epsilon=epsilon)
+                :param params: [Optional] (rank, epsilon, iterations) : parameters of the algorithm, if None, default ones are loaded
+                """
+                if params is not None:
+                    if isinstance(params, dict):
+                        params = tuple(params.values())
 
-            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
+                    rank, epsilon, iterations = params
+                else:
+                    rank, epsilon, iterations = utils.load_parameters(query="default", algorithm="cdrec")
 
-            return imputed_matrix, metrics
+                self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=int(rank), iterations=int(iterations), epsilon=float(epsilon))
+
+            def score(self, raw_matrix, imputed_matrix):
+                """
+                Imputation of data with CDREC algorithm
+                @author Quentin Nater
+
+                :param raw_matrix: original time series without contamination
+                :param infected_matrix: time series with contamination
+                :param imputed_matrix: time series with imputation
+                """
+                self.metrics = Evaluation(raw_matrix, imputed_matrix, self.infected_matrix).metrics_computation()
+
+            def optimize(self, raw_data, optimizer="bayesian", selected_metrics=["RMSE"], n_calls=3, n_random_starts=50, acq_func='gp_hedge'):
+                """
+                Conduct the optimization of the hyperparameters.
+
+                Parameters
+                ----------
+                :param raw_data : time series data set to optimize
+                :param optimizer : Choose the actual optimizer. | default "bayesian"
+                :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
+                :param n_calls: bayesian parameters, number of calls to the objective function.
+                :param n_random_starts: bayesian parameters, number of initial calls to the objective function, from random points.
+                :param acq_func: bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedgedge
+
+                :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
+                """
+                from imputegap.recovery.optimization import Optimization
+
+                if optimizer == "bayesian":
+                    optimal_params, _ = Optimization.Bayesian.bayesian_optimization(ground_truth=raw_data, contamination=self.infected_matrix, selected_metrics=selected_metrics, n_calls=n_calls, n_random_starts=n_random_starts, acq_func=acq_func)
+                self.optimal_params = optimal_params
 
     class Stats:
         def zero_impute(ground_truth, contamination, params=None):

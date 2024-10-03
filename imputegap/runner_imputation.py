@@ -1,48 +1,35 @@
-from imputegap.recovery.contamination import Contamination
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
-from imputegap.recovery.optimization import Optimization
 from imputegap.tools.utils import display_title
 from imputegap.tools import utils
-import os
-
-
-def check_block_size(filename):
-    if "test" in filename:
-        return (2, 2)
-    else:
-        return (10, 1)
 
 
 if __name__ == '__main__':
 
+    dataset, algo = "eeg", "cdrec"
+
     display_title()
 
-    filename = "eeg"
-    load = False
-    algo = "cdrec"
+    ts_1 = TimeSeries()
+    ts_1.load_timeseries(utils.search_path(dataset))
+    ts_1.plot(raw_matrix=ts_1.data, title="raw_data", max_series=1, save_path="assets", display=False)
+    infected_matrix = ts_1.Contaminate.mcar(ts_1.data)
 
-    file_path = os.path.join("./dataset/", filename + ".txt")
-    gap = TimeSeries(data=file_path, normalization="z_score")
+    ts_2 = TimeSeries()
+    ts_2.import_matrix(infected_matrix)
+    ts_2.print(view_by_series=True)
+    ts_2.plot(raw_matrix=ts_1.data, infected_matrix=ts_2.data, title="contamination", max_series=1, save_path="assets", display=False)
 
-    block_size, plot_limit = check_block_size(filename)
+    cdrec = Imputation.MD.CDREC(ts_2.data)
+    cdrec.optimize(ts_1.data)
+    cdrec.impute(cdrec.optimal_params)
+    cdrec.score(ts_1.data, cdrec.imputed_matrix)
 
-    gap.ts_contaminate = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=block_size, protection=0.1, use_seed=True, seed=42)
-    gap.print(limitation=10)
+    ts_3 = TimeSeries()
+    ts_3.import_matrix(cdrec.imputed_matrix)
+    ts_3.print(view_by_series=True)
+    ts_3.print_results(cdrec.metrics)
 
-    if load:
-        gap.optimal_params = utils.load_parameters(query="optimal", algorithm=algo)
-    else:
-        optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts,
-                                                                         contamination=gap.ts_contaminate,
-                                                                         algorithm=algo, n_calls=3)
-        gap.optimal_params = tuple(optimal_params.values())
-        print("\nOptical Params : ", gap.optimal_params)
-
-    gap.ts_imputation, gap.metrics = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=gap.ts_contaminate, params=gap.optimal_params)
-    gap.print(limitation=10)
-    gap.print_results()
-
-    gap.plot(ts_type="imputation", title="test", save_path="assets", limitation=plot_limit, display=False)
+    ts_3.plot(raw_matrix=ts_1.data, infected_matrix=ts_2.data, imputed_matrix=ts_3.data, title="imputation", max_series=1, save_path="assets", display=False)
 
     print("\n", "_"*95, "end")

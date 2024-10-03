@@ -10,7 +10,7 @@ def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", u
     print("=" * 100)
 
 
-def get_file_path_dataset(set_name="test"):
+def search_path(set_name="test"):
     """
     Find the accurate path for loading files of tests
     :return: correct file paths
@@ -81,6 +81,66 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         iterations = int(config['mrnn']['iterations'])
         sequence_length = int(config['mrnn']['sequence_length'])
         return (hidden_dim, learning_rate, iterations, sequence_length)
+    elif algorithm == "colors":
+        colors = config['colors']['plot']
+        return colors
     else :
         print("Default/Optimal config not found for this algorithm")
         return None
+
+
+def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
+    """
+    Format the percentage given by the user.
+    :param percentage: The percentage to be checked.
+    :param low_limit: The lower limit of the acceptable percentage range.
+    :param high_limit: The upper limit of the acceptable percentage range.
+    :return: Adjusted percentage.
+    """
+    if low_limit <= percentage <= high_limit:
+        return percentage  # No modification needed
+
+    elif 1 <= percentage <= 100:
+        print(f"The percentage {percentage} is between 1 and 100. Dividing by 100 to convert to a decimal.")
+        return percentage / 100
+
+    else:
+        print("The percentage", percentage, "is out of the acceptable range", low_limit, "-", high_limit, ".")
+        return percentage
+
+def format_selection(ts, selection):
+    """
+    Format the selection of series based on keywords
+    @author Quentin Nater
+
+    :param selection: current selection of series
+    :param ts: dataset to contaminate
+    :return series_selected : correct format of selection series
+    """
+    if not selection:
+        selection = ["*"]
+
+    if selection == ["*"]:
+        series_selected = []
+        for i in range(0, ts.shape[0]):
+            series_selected.append(str(i))
+        return series_selected
+
+    elif "-" in selection[0]:
+        series_selected = []
+        value = selection[0]
+        ending = int(value[1:])
+        for i in range(0, ts.shape[0] - ending):
+            series_selected.append(str(i))
+        return series_selected
+
+    elif "+" in selection[0]:
+        series_selected = []
+        value = selection[0]
+        starting = int(value[1:])
+        for i in range(starting, ts.shape[0]):
+            series_selected.append(str(i))
+        return series_selected
+
+    else:
+        return selection

@@ -1,32 +1,29 @@
-from imputegap.recovery.contamination import Contamination
-from imputegap.recovery.imputation import Imputation
+import numpy as np
+
 from imputegap.recovery.manager import TimeSeries
-from imputegap.recovery.optimization import Optimization
-from imputegap.tools.utils import display_title
-from imputegap.tools import utils
+
 import os
 
+from imputegap.tools import utils
 
-def check_block_size(filename):
-    if "test" in filename:
-        return (2, 2)
-    else:
-        return (10, 10)
 
 
 if __name__ == '__main__':
 
-    display_title()
+    dataset = "eeg"
 
-    filename = "eeg"
+    utils.display_title()
 
-    file_path = os.path.join("./dataset/", filename + ".txt")
-    gap = TimeSeries(data=file_path, normalization="z_score", limitation_values=100)
+    ts_1 = TimeSeries()
+    ts_1.load_timeseries(data=utils.search_path(dataset))
+    ts_1.print(view_by_series=True)
+    ts_1.plot(ts_1.data, display=False)
+    infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, use_seed=True, seed=42)
 
-    block_size, plot_limit = check_block_size(filename)
+    ts_2 = TimeSeries()
+    ts_2.import_matrix(infected_matrix)
 
-    gap.ts_contaminate = Contamination.scenario_missing_percentage(ts=gap.ts, series_impacted=0.1, missing_rate=0.4, protection=0.1)
-    gap.print(limitation=10)
-    gap.plot(ts_type="contamination", title="test", save_path="assets", limitation=plot_limit, display=True)
+    ts_2.print(view_by_series=True)
+    ts_2.plot(ts_1.data, ts_2.data, max_series=1, save_path="assets")
 
     print("\n", "_"*95, "end")

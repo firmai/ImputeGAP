@@ -25,15 +25,15 @@ if __name__ == '__main__':
         block_size, plot_limit = check_block_size(filename)
 
         gap.print(limitation=5)
-        gap.plot(title="test", save_path="assets", limitation=6, display=False)
+        gap.plot(title="test", save_path="assets", limit=6, display=False)
 
-        gap.ts_contaminate = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=block_size, protection=0.1, use_seed=True, seed=42)
+        gap.ts_contaminate = Contamination.mcar(ts=gap.data, series_impacted=0.4, missing_rate=0.4, block_size=block_size, protection=0.1, use_seed=True, seed=42)
         gap.print(limitation=5)
-        gap.plot(ts_type="contamination", title="test", save_path="assets", limitation=3, display=False)
+        gap.plot(ts_type="contamination", title="test", save_path="assets", limit=3, display=False)
 
         for algo in ["cdrec", "stmvl", "iim", "mrnn"]:
             print("RUN OPTIMIZATION FOR : ", algo, "... with ", filename, "...")
-            optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts, contamination=gap.ts_contaminate, algorithm=algo, n_calls=100)
+            optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.data, contamination=gap.ts_contaminate, algorithm=algo, n_calls=100)
             print("\nOptical Params : ", optimal_params)
             print("\nyi : ", yi, "\n")
             Optimization.save_optimization(optimal_params=optimal_params, algorithm=algo, dataset=filename, optimizer="b")

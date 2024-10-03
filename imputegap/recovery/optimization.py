@@ -104,8 +104,8 @@ class Optimization:
             :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
             :param algorithm : imputation algorithm | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default 'cdrec'
             :param n_calls: bayesian parameters, number of calls to the objective function.
-            n_random_starts: bayesian parameters, number of initial calls to the objective function, from random points.
-            acq_func: bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedge
+            :param n_random_starts: bayesian parameters, number of initial calls to the objective function, from random points.
+            :param acq_func: bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedge
 
             :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
             """

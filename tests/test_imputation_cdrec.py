@@ -46,10 +46,10 @@ class TestCDREC(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with cdrec has the expected outcome
         """
-        impute_gap = TimeSeries((utils.get_file_path_dataset("test")))
+        impute_gap = TimeSeries((utils.search_path("test")))
 
-        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
-        imputation, metrics = Imputation.MR.cdrec(impute_gap.ts, ts_contaminated)
+        ts_contaminated = Contamination.mcar(ts=impute_gap.data, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
+        imputation, metrics = Imputation.MD.cdrec(impute_gap.data, ts_contaminated)
 
         #assert not np.isnan(imputation).any(), "The imputed data contains NaN values."
 
@@ -74,13 +74,13 @@ class TestCDREC(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with cdrec has the expected outcome
         """
-        impute_gap = TimeSeries(utils.get_file_path_dataset("chlorine"), limitation_values=200)
+        impute_gap = TimeSeries(utils.search_path("chlorine"), limitation_values=200)
 
-        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=10,
-                                                      protection=0.1,
-                                                      use_seed=True, seed=42)
+        ts_contaminated = Contamination.mcar(ts=impute_gap.data, series_impacted=0.4, missing_rate=0.4, block_size=10,
+                                             protection=0.1,
+                                             use_seed=True, seed=42)
 
-        imputation, metrics = Imputation.MR.cdrec(impute_gap.ts, ts_contaminated)
+        imputation, metrics = Imputation.MD.cdrec(impute_gap.data, ts_contaminated)
 
         # assert not np.isnan(imputation).any(), "The imputed data contains NaN values."
 

@@ -16,11 +16,11 @@ class TestOptiCDREC(unittest.TestCase):
         algorithm = "cdrec"
         dataset = "chlorine"
 
-        gap = TimeSeries(utils.get_file_path_dataset(dataset))
+        gap = TimeSeries(utils.search_path(dataset))
 
-        ts_contaminated = Contamination.scenario_mcar(ts=gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
+        ts_contaminated = Contamination.mcar(ts=gap.data, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
 
-        optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.ts, contamination=ts_contaminated, algorithm=algorithm, n_calls=3)
+        optimal_params, yi = Optimization.Bayesian.bayesian_optimization(ground_truth=gap.data, contamination=ts_contaminated, algorithm=algorithm, n_calls=3)
 
         print("\nOptimization done successfully... ")
         print("\n", optimal_params, "\n")
@@ -30,9 +30,9 @@ class TestOptiCDREC(unittest.TestCase):
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")
 
 
-        _, metrics_optimal = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=ts_contaminated, params=params_optimal)
-        _, metrics_default = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=ts_contaminated, params=params)
-        _, metrics_optimal_load = Imputation.MR.cdrec(ground_truth=gap.ts, contamination=ts_contaminated, params=params_optimal_load)
+        _, metrics_optimal = Imputation.MD.cdrec(ground_truth=gap.data, contamination=ts_contaminated, params=params_optimal)
+        _, metrics_default = Imputation.MD.cdrec(ground_truth=gap.data, contamination=ts_contaminated, params=params)
+        _, metrics_optimal_load = Imputation.MD.cdrec(ground_truth=gap.data, contamination=ts_contaminated, params=params_optimal_load)
 
         self.assertTrue(metrics_optimal["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal['RMSE']} < {metrics_default['RMSE']} ")
         self.assertTrue(metrics_optimal_load["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal_load['RMSE']} < {metrics_default['RMSE']}")

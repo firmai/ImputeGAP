@@ -13,7 +13,7 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the selected values are contaminated
         """
-        impute_gap = TimeSeries(utils.get_file_path_dataset("test"))
+        impute_gap = TimeSeries(utils.search_path("test"))
 
         series_impacted = [0.4]
         missing_rates = [0.4]
@@ -26,11 +26,11 @@ class TestContamination(unittest.TestCase):
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
 
-                    ts_contaminate = Contamination.scenario_mcar(ts=impute_gap.ts,
-                                                                 series_impacted=series_sel,
-                                                                 missing_rate=missing_rate, block_size=block_size,
-                                                                 protection=protection, use_seed=True,
-                                                                 seed=seed_value)
+                    ts_contaminate = Contamination.mcar(ts=impute_gap.data,
+                                                        series_impacted=series_sel,
+                                                        missing_rate=missing_rate, block_size=block_size,
+                                                        protection=protection, use_seed=True,
+                                                        seed=seed_value)
 
                     check_nan_series = False
 
@@ -51,22 +51,22 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if the starting position is always guaranteed
         """
-        impute_gap = TimeSeries(utils.get_file_path_dataset("test"))
+        impute_gap = TimeSeries(utils.search_path("test"))
 
         series_impacted = [0.4, 1]
         missing_rates = [0.1, 0.4, 0.6]
-        ten_percent_index = int(impute_gap.ts.shape[1] * 0.1)
+        ten_percent_index = int(impute_gap.data.shape[1] * 0.1)
         seeds_start, seeds_end = 42, 43
 
         for seed_value in range(seeds_start, seeds_end):
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
 
-                    ts_contaminate = Contamination.scenario_mcar(ts=impute_gap.ts,
-                                                                 series_impacted=series_sel,
-                                                                 missing_rate=missing_rate,
-                                                                 block_size=2, protection=0.1,
-                                                                 use_seed=True, seed=seed_value)
+                    ts_contaminate = Contamination.mcar(ts=impute_gap.data,
+                                                        series_impacted=series_sel,
+                                                        missing_rate=missing_rate,
+                                                        block_size=2, protection=0.1,
+                                                        use_seed=True, seed=seed_value)
 
                     if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                         check_position = False
@@ -87,16 +87,16 @@ class TestContamination(unittest.TestCase):
         block_size = 10
 
         for dataset in datasets:
-            impute_gap = TimeSeries(utils.get_file_path_dataset(dataset))
+            impute_gap = TimeSeries(utils.search_path(dataset))
 
             for seed_value in range(seeds_start, seeds_end):
                 for series_sel in series_impacted:
                     for missing_rate in missing_rates:
-                        ts_contaminate = Contamination.scenario_mcar(ts=impute_gap.ts,
-                                                                     missing_rate=missing_rate,
-                                                                     series_impacted=series_sel,
-                                                                     block_size=block_size, protection=protection,
-                                                                     use_seed=True, seed=seed_value)
+                        ts_contaminate = Contamination.mcar(ts=impute_gap.data,
+                                                            missing_rate=missing_rate,
+                                                            series_impacted=series_sel,
+                                                            block_size=block_size, protection=protection,
+                                                            use_seed=True, seed=seed_value)
 
                         # 1) Check if the number of NaN values is correct
                         M, N = ts_contaminate.shape
@@ -125,18 +125,18 @@ class TestContamination(unittest.TestCase):
         block_size = 10
 
         for dataset in datasets:
-            impute_gap = TimeSeries(utils.get_file_path_dataset(dataset))
-            ten_percent_index = int(impute_gap.ts.shape[1] * 0.1)
+            impute_gap = TimeSeries(utils.search_path(dataset))
+            ten_percent_index = int(impute_gap.data.shape[1] * 0.1)
 
             for seed_value in range(seeds_start, seeds_end):
                 for series_sel in series_impacted:
                     for missing_rate in missing_rates:
 
-                        ts_contaminate = Contamination.scenario_mcar(ts=impute_gap.ts,
-                                                                     series_impacted=series_sel,
-                                                                     missing_rate=missing_rate,
-                                                                     block_size=block_size, protection=protection,
-                                                                     use_seed=True, seed=seed_value)
+                        ts_contaminate = Contamination.mcar(ts=impute_gap.data,
+                                                            series_impacted=series_sel,
+                                                            missing_rate=missing_rate,
+                                                            block_size=block_size, protection=protection,
+                                                            use_seed=True, seed=seed_value)
 
                         if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                             check_position = False
@@ -149,9 +149,9 @@ class TestContamination(unittest.TestCase):
         """
         Verify if the manager of a dataset is working
         """
-        impute_gap = TimeSeries(utils.get_file_path_dataset("chlorine"))
-        impute_gap.ts_contaminate = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.1,
-                                                                block_size=10, protection=0.1, use_seed=True, seed=42)
+        impute_gap = TimeSeries(utils.search_path("chlorine"))
+        impute_gap.ts_contaminate = Contamination.mcar(ts=impute_gap.data, series_impacted=0.4, missing_rate=0.1,
+                                                       block_size=10, protection=0.1, use_seed=True, seed=42)
 
         impute_gap.print()
         filepath = impute_gap.plot("contamination", "test", utils.get_save_path_asset(), 5, (16, 8), False)
