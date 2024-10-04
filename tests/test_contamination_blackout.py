@@ -1,8 +1,5 @@
 import unittest
 import numpy as np
-import math
-
-from imputegap.recovery.contamination import Contamination
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 
@@ -13,14 +10,15 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if only the selected values are contaminated
         """
-        gap = TimeSeries(utils.search_path("test"))
+        ts_1 = TimeSeries()
+        ts_1.load_timeseries(utils.search_path("test"))
 
         missing_rates = [0.4, 1]
         protection = 0.1
-        M, N = gap.data.shape
+        M, N = ts_1.data.shape
 
         for missing_rate in missing_rates:
-            ts_contaminate = Contamination.blackout(ts=gap.data, missing_rate=missing_rate, protection=protection)
+            ts_contaminate = ts_1.Contaminate.blackout(ts=ts_1.data, missing_rate=missing_rate, protection=protection)
 
             n_nan = np.isnan(ts_contaminate).sum()
             expected_nan_series = M
@@ -33,14 +31,15 @@ class TestContamination(unittest.TestCase):
         """
         the goal is to test if the starting position is always guaranteed
         """
-        impute_gap = TimeSeries(utils.search_path("test"))
+        ts_1 = TimeSeries()
+        ts_1.load_timeseries(utils.search_path("test"))
 
         missing_rates = [0.1, 0.4, 0.6]
-        ten_percent_index = int(impute_gap.data.shape[1] * 0.1)
+        ten_percent_index = int(ts_1.data.shape[1] * 0.1)
 
         for missing_rate in missing_rates:
 
-            ts_contaminate = Contamination.blackout(ts=impute_gap.data, missing_rate=missing_rate, protection=0.1)
+            ts_contaminate = ts_1.Contaminate.blackout(ts=ts_1.data, missing_rate=missing_rate, protection=0.1)
 
             if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                 check_position = False

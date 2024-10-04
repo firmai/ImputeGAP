@@ -35,3 +35,4 @@ jobs:
         python -m pytest ./tests/test_opti_bayesian_iim.py
         python -m pytest ./tests/test_opti_bayesian_mrnn.py
         python -m pytest ./tests/test_opti_bayesian_stmvl.py
+        python -m pytest ./tests/test_opti_greedy_cdrec.py

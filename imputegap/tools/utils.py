@@ -65,7 +65,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         truncation_rank = int(config['cdrec']['rank'])
         epsilon = config['cdrec']['epsilon']
         iterations = int(config['cdrec']['iteration'])
-        return (truncation_rank, epsilon, iterations)
+        return (truncation_rank, float(epsilon), iterations)
     elif algorithm == "stmvl":
         window_size = int(config['stmvl']['window_size'])
         gamma = float(config['stmvl']['gamma'])
@@ -73,14 +73,20 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         return (window_size, gamma, alpha)
     elif algorithm == "iim":
         learning_neighbors = int(config['iim']['learning_neighbors'])
-        algo_code = config['iim']['algorithm_code']
-        return (learning_neighbors, algo_code)
+        if query == "default":
+            algo_code = config['iim']['algorithm_code']
+            return (learning_neighbors, algo_code)
+        else:
+            return (learning_neighbors,)
     elif algorithm == "mrnn":
         hidden_dim = int(config['mrnn']['hidden_dim'])
         learning_rate = float(config['mrnn']['learning_rate'])
         iterations = int(config['mrnn']['iterations'])
-        sequence_length = int(config['mrnn']['sequence_length'])
-        return (hidden_dim, learning_rate, iterations, sequence_length)
+        if query == "default":
+            sequence_length = int(config['mrnn']['sequence_length'])
+            return (hidden_dim, learning_rate, iterations, sequence_length)
+        else:
+            return (hidden_dim, learning_rate, iterations)
     elif algorithm == "colors":
         colors = config['colors']['plot']
         return colors

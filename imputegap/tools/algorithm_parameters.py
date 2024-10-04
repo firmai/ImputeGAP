@@ -2,7 +2,7 @@ import numpy as np
 from skopt.space import Integer, Real
 
 # CDRec parameters
-CDREC_RANK_RANGE = [i for i in range(10)]  # replace with actual range
+CDREC_RANK_RANGE = [i for i in range(1, 11)]  # This will generate a range from 1 to 10
 CDREC_EPS_RANGE = np.logspace(-6, 0, num=10)  # log scale for eps
 CDREC_ITERS_RANGE = [i * 100 for i in range(1, 11)]  # replace with actual range
 

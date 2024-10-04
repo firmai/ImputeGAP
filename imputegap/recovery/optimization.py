@@ -41,7 +41,7 @@ class Optimization:
 
     class Greedy:
 
-        def greedy_optimization(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=100):
+        def optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=250):
             """
             Conduct the Greedy optimization hyperparameter optimization.
 
@@ -69,13 +69,17 @@ class Optimization:
             best_params = None
             best_score = float('inf')  # Assuming we are minimizing the objective function
 
-            # Objective function (to minimize)
             def objective(params):
                 errors = Imputation.evaluate_params(ground_truth, contamination, params, algorithm)
                 return np.mean([errors[metric] for metric in selected_metrics])
 
+            run_count = 0
             # Conduct greedy optimization over parameter combinations
             for params in param_combinations:
+
+                if n_calls is not None and run_count >= n_calls:
+                    break
+
                 # Convert params to a dictionary for compatibility
                 params_dict = {name: value for name, value in zip(param_names, params)}
 
@@ -87,13 +91,16 @@ class Optimization:
                     best_score = score
                     best_params = params_dict
 
+                # Increment the run counter
+                run_count += 1
+
             print(f"Best score: {best_score} with params {best_params}")
             return best_params, best_score
 
     class Bayesian:
 
-        def bayesian_optimization(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec",
-                                  n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
+        def optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec",
+                     n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
             """
             Conduct the Bayesian optimization hyperparameter optimization.
 

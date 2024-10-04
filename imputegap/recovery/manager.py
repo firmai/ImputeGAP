@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import matplotlib
+from sklearn.preprocessing import MinMaxScaler
 
 from imputegap.tools import utils
 
@@ -18,14 +19,13 @@ class TimeSeries:
         """
         self.data = None
 
-    def import_matrix(self, data=None, normalization=None):
+    def import_matrix(self, data=None):
         """
         Load timeseries manager from file
         FORMAT : (Series,Values), values are seperated by space et series by \n
         @author Quentin Nater
 
         :param data: matrix of time series
-        :param normalization : [OPTIONAL] choice of normalization ("z_score" or "min_max")
         :return: time series format for imputegap from dataset
         """
         if data is not None:
@@ -40,24 +40,13 @@ class TimeSeries:
                 print("\nThe time series has not been loaded, format unknown\n")
                 self.data = None
 
-            if normalization is not None and data is not None:
-                if normalization == "z_score":
-                    self.data = self.normalization_z_score(data)
-                elif normalization == "min_max":
-                    self.data = self.normalization_min_max(data)
-                else:
-                    print("Normalization asked is not registered...\n")
-
-        return self.data
-
-    def load_timeseries(self, data=None, normalization=None, max_series=None, max_values=None):
+    def load_timeseries(self, data=None, max_series=None, max_values=None):
         """
         Load timeseries manager from file
         FORMAT : (Values,Series), values are seperated by space et series by \n
         @author Quentin Nater
 
         :param filename: path of the time series dataset
-        :param normalization : [OPTIONAL] choice of normalization ("z_score" or "min_max")
         :param max_series : limitation of the maximum number of series (computation limitation) | default None
         :param max_values : limitation of the maximum number of values by series (computation limitation) | default None
         :return: time series format for imputegap from dataset
@@ -66,26 +55,15 @@ class TimeSeries:
         if data is not None:
             if isinstance(data, str):
                 print("\nThe time series has been loaded from " + str(data) + "\n")
-                data = np.genfromtxt(data, delimiter=' ', max_rows=max_values)
+                self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values)
 
                 if max_series is not None:
-                    data = data[:, :max_series]
-
+                    self.data = self.data[:, :max_series]
             else:
                 print("\nThe time series has not been loaded, format unknown\n")
-                data = None
+                self.data = None
 
-            self.data = data.T
-
-            if normalization is not None and data is not None:
-                if normalization == "z_score":
-                    self.data = self.normalization_z_score(data)
-                elif normalization == "min_max":
-                    self.data = self.normalization_min_max(data)
-                else:
-                    print("Normalization asked is not registered...\n")
-
-        return self.data
+            self.data = self.data.T
 
     def print(self, limit=10, view_by_series=False):
         """
@@ -125,53 +103,44 @@ class TimeSeries:
         print("\nshape of the time series :", to_print.shape, "\n\tnumber of series =", nbr_series,
               "\n\tnumber of values =", nbr_values, "\n\n")
 
-    def print_results(self, metrics):
+    def print_results(self, metrics, algorithm=""):
         """
         Display the result of the imputation
         :param metrics : [OPTIONAL], metrics to print in dictionary
+        :param algorithm : [OPTIONAL], print the algorithm used
         @author Quentin Nater
         """
-        print("\n\nResults of the imputation : ")
+        print("\n\nResults of the imputation ", algorithm, " :")
         for key, value in metrics.items():
             print(f"{key:<20} = {value}")
         print("\n")
 
-    def normalization_min_max(self, ts):
+    def normalize(self, normalizer="z_score"):
         """
-        Normalization of a dataset with MIN/MAX
+        Normalization of a dataset with "z_score", "min_max"
         @author Quentin Nater
 
-        :param ts: time series to normalize
+        :param normalizer: ("z_score", "min_max"), normalization technic to use | default = "z_score"
         :return: data_normalized, normalized dataset
         """
-        print("Normalization of the original time series dataset with min/max...")
+        print("Normalization of the original time series dataset with ", normalizer)
 
-        ts_min = ts.min(axis=0)  # Min for each series
-        ts_max = ts.max(axis=0)  # Max for each series
+        if normalizer == "min_max":
+            # Compute the min and max for each series (column-wise), ignoring NaN
+            ts_min = np.nanmin(self.data, axis=0)
+            ts_max = np.nanmax(self.data, axis=0)
 
-        range_ts = ts_max - ts_min
-        range_ts[range_ts == 0] = 1  # To avoid division by zero for constant series
+            # Compute the range for each series, and handle cases where the range is 0
+            range_ts = ts_max - ts_min
+            range_ts[range_ts == 0] = 1  # Prevent division by zero for constant series
 
-        min_max = (ts - ts_min) / range_ts
+            # Apply min-max normalization
+            self.data = (self.data - ts_min) / range_ts
+        else:
+            mean = np.mean(self.data)
+            std_dev = np.std(self.data)
 
-        return min_max
-
-    def normalization_z_score(self, ts):
-        """
-        Normalization of a dataset with Z-Score
-        @author Quentin Nater
-
-        :param ts: time series to normalize
-        :return: data_normalized, normalized dataset
-        """
-        print("Normalization of the original time series dataset with Z-Score...")
-
-        mean = np.mean(ts)
-        std_dev = np.std(ts)
-
-        z_scores = (ts - mean) / std_dev
-
-        return z_scores
+            self.data = (self.data - mean) / std_dev
 
     def plot(self, raw_matrix, infected_matrix=None, imputed_matrix=None, title="Time Series Data", max_series=None,
              max_values=None, size=(16, 8), save_path="", display=True):

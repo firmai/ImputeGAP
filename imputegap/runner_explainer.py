@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
     ts_1 = TimeSeries()
     ts_1.load_timeseries(utils.search_path(dataset))
-    shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name=dataset)
+    shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name=dataset, algorithm="iim")
 
     Explainer.print(shap_values, shap_details)
 

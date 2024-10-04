@@ -20,15 +20,26 @@ if __name__ == '__main__':
     ts_2.print(view_by_series=True)
     ts_2.plot(raw_matrix=ts_1.data, infected_matrix=ts_2.data, title="contamination", max_series=1, save_path="assets", display=False)
 
-    cdrec = Imputation.MD.CDREC(ts_2.data)
-    cdrec.optimize(ts_1.data)
-    cdrec.impute(cdrec.optimal_params)
-    cdrec.score(ts_1.data, cdrec.imputed_matrix)
+    if algo == "cdrec":
+        imp = Imputation.MD.CDRec(ts_2.data)
+    elif algo == "stmvl":
+        imp = Imputation.Pattern.STMVL(ts_2.data)
+    elif algo == "iim":
+        imp = Imputation.Regression.IIM(ts_2.data)
+    elif algo == "mrnn":
+        imp = Imputation.ML.MRNN(ts_2.data)
+    else:
+        imp = Imputation.Stats.MinImpute(ts_2.data)
+
+
+    imp.optimize(ts_1.data, n_calls=2)
+    imp.impute(imp.optimal_params)
+    imp.score(ts_1.data)
 
     ts_3 = TimeSeries()
-    ts_3.import_matrix(cdrec.imputed_matrix)
+    ts_3.import_matrix(imp.imputed_matrix)
     ts_3.print(view_by_series=True)
-    ts_3.print_results(cdrec.metrics)
+    ts_3.print_results(imp.metrics, algorithm=algo)
 
     ts_3.plot(raw_matrix=ts_1.data, infected_matrix=ts_2.data, imputed_matrix=ts_3.data, title="imputation", max_series=1, save_path="assets", display=False)
 

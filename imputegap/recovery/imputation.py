@@ -9,8 +9,64 @@ from imputegap.tools.evaluation import Evaluation
 from imputegap.tools import utils
 
 
-class Imputation:
+class BaseImputer:
+    algorithm = None  # Class variable to hold the algorithm name
 
+    def __init__(self, infected_matrix):
+        """
+        Store the results of the imputation algorithm.
+        :param infected_matrix : Matrix used during the imputation of the time series
+        """
+        self.infected_matrix = infected_matrix
+        self.imputed_matrix = None
+        self.metrics = None
+        self.optimal_params = None
+
+    def impute(self, params=None):
+        raise NotImplementedError("This method should be overridden by subclasses")
+
+    def score(self, raw_matrix):
+        """
+        Imputation of data with CDREC algorithm
+        @author Quentin Nater
+
+        :param raw_matrix: original time series without contamination
+        :param infected_matrix: time series with contamination
+        """
+        self.metrics = Evaluation(raw_matrix, self.imputed_matrix, self.infected_matrix).metrics_computation()
+
+    def optimize(self, raw_data, optimizer="bayesian", metrics=["RMSE"], n_calls=3, random_starts=50, func='gp_hedge'):
+        """
+        Conduct the optimization of the hyperparameters.
+
+        Parameters
+        ----------
+        :param raw_data : time series data set to optimize
+        :param optimizer : Choose the actual optimizer. | default "bayesian"
+        :param metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
+        :param n_calls: bayesian parameters, number of calls to the objective function.
+        :param random_starts: bayesian parameters, number of initial calls to the objective function, from random points.
+        :param func: bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedgedge
+
+        :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
+        """
+        from imputegap.recovery.optimization import Optimization
+
+        if optimizer == "bayesian":
+            optimal_params, _ = Optimization.Bayesian.optimize(ground_truth=raw_data,
+                                                               contamination=self.infected_matrix,
+                                                               selected_metrics=metrics,
+                                                               algorithm=self.algorithm,
+                                                               n_calls=n_calls,
+                                                               n_random_starts=random_starts,
+                                                               acq_func=func)
+        elif optimizer == "greedy":
+            optimal_params, _ = Optimization.Greedy.optimize(ground_truth=raw_data, contamination=self.infected_matrix, selected_metrics=metrics, algorithm=self.algorithm, n_calls=250)
+
+        self.optimal_params = optimal_params
+
+
+class Imputation:
 
     def evaluate_params(ground_truth, contamination, configuration, algorithm="cdrec"):
         """
@@ -25,40 +81,75 @@ class Imputation:
         :return: dict, a dictionary of computed statistics.
         """
 
+        if isinstance(configuration, dict):
+            configuration = tuple(configuration.values())
+
         if algorithm == 'cdrec':
             rank, epsilon, iterations = configuration
-            algo = Imputation.MD.CDREC(contamination)
-            algo.impute((rank, epsilon, iterations))
-            algo.score(ground_truth, algo.imputed_matrix)
-            imputation, error_measures = algo.imputed_matrix, algo.metrics
+            algo = Imputation.MD.CDRec(contamination)
+            algo.impute((int(rank), float(epsilon), int(iterations)))
+
         elif algorithm == 'iim':
             learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
-            imputation, error_measures = Imputation.Regression.iim_imputation(ground_truth, contamination, (learning_neighbours, alg_code))
+
+            algo = Imputation.Regression.IIM(contamination)
+            algo.impute((learning_neighbours, alg_code))
+
         elif algorithm == 'mrnn':
             hidden_dim, learning_rate, iterations = configuration
-            imputation, error_measures = Imputation.ML.mrnn_imputation(ground_truth, contamination, (hidden_dim, learning_rate, iterations, 7))
+
+            algo = Imputation.ML.MRNN(contamination)
+            algo.impute((hidden_dim, learning_rate, iterations, 7))
+
         elif algorithm == 'stmvl':
             window_size, gamma, alpha = configuration
-            imputation, error_measures = Imputation.Pattern.stmvl_imputation(ground_truth, contamination, (window_size, gamma, alpha))
+
+            algo = Imputation.Pattern.STMVL(contamination)
+            algo.impute((window_size, gamma, alpha))
+
         else:
             raise ValueError(f"Invalid algorithm: {algorithm}")
 
+        algo.score(ground_truth)
+        imputation, error_measures = algo.imputed_matrix, algo.metrics
+
         return error_measures
 
+    class Stats:
+
+        class ZeroImpute(BaseImputer):
+            algorithm = "zero_impute"
+
+            def impute(self, params=None):
+                """
+                Template zero impute for adding your own algorithms
+                @author : Quentin Nater
+
+                :param ground_truth: original time series without contamination
+                :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
+
+                :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+                """
+                self.imputed_matrix = zero_impute(self.infected_matrix, params)
+
+        class MinImpute(BaseImputer):
+            algorithm = "min_impute"
+
+            def impute(self, params=None):
+                """
+                Impute NaN values with the minimum value of the ground truth time series.
+                @author : Quentin Nater
+
+                :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
+
+                :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+                """
+                self.imputed_matrix = min_impute(self.infected_matrix, params)
+
     class MD:
-
-        class CDREC:
-
-            def __init__(self, infected_matrix):
-                """
-                Store the results of the CDREC algorithm
-                :param infected_matrix : Matrix used during the imputation of the time series
-                """
-                self.infected_matrix = infected_matrix
-                self.imputed_matrix = None
-                self.metrics = None
-                self.optimal_params = None
+        class CDRec(BaseImputer):
+            algorithm = "cdrec"
 
             def impute(self, params=None):
                 """
@@ -73,152 +164,91 @@ class Imputation:
 
                     rank, epsilon, iterations = params
                 else:
-                    rank, epsilon, iterations = utils.load_parameters(query="default", algorithm="cdrec")
+                    rank, epsilon, iterations = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=int(rank), iterations=int(iterations), epsilon=float(epsilon))
-
-            def score(self, raw_matrix, imputed_matrix):
-                """
-                Imputation of data with CDREC algorithm
-                @author Quentin Nater
-
-                :param raw_matrix: original time series without contamination
-                :param infected_matrix: time series with contamination
-                :param imputed_matrix: time series with imputation
-                """
-                self.metrics = Evaluation(raw_matrix, imputed_matrix, self.infected_matrix).metrics_computation()
-
-            def optimize(self, raw_data, optimizer="bayesian", selected_metrics=["RMSE"], n_calls=3, n_random_starts=50, acq_func='gp_hedge'):
-                """
-                Conduct the optimization of the hyperparameters.
-
-                Parameters
-                ----------
-                :param raw_data : time series data set to optimize
-                :param optimizer : Choose the actual optimizer. | default "bayesian"
-                :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
-                :param n_calls: bayesian parameters, number of calls to the objective function.
-                :param n_random_starts: bayesian parameters, number of initial calls to the objective function, from random points.
-                :param acq_func: bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedgedge
-
-                :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
-                """
-                from imputegap.recovery.optimization import Optimization
-
-                if optimizer == "bayesian":
-                    optimal_params, _ = Optimization.Bayesian.bayesian_optimization(ground_truth=raw_data, contamination=self.infected_matrix, selected_metrics=selected_metrics, n_calls=n_calls, n_random_starts=n_random_starts, acq_func=acq_func)
-                self.optimal_params = optimal_params
-
-    class Stats:
-        def zero_impute(ground_truth, contamination, params=None):
-            """
-            Template zero impute for adding your own algorithms
-            @author : Quentin Nater
-
-            :param ground_truth: original time series without contamination
-            :param contamination: time series with contamination
-            :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
-
-            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-            """
-            imputed_matrix = zero_impute(ground_truth, contamination, params)
-            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
-
-            return imputed_matrix, metrics
-
-        def min_impute(ground_truth, contamination, params=None):
-            """
-            Impute NaN values with the minimum value of the ground truth time series.
-            @author : Quentin Nater
-
-            :param ground_truth: original time series without contamination
-            :param contamination: time series with contamination
-            :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
-
-            :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-            """
-            imputed_matrix = min_impute(ground_truth, contamination, params)
-            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
-
-            return imputed_matrix, metrics
-
+                self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=rank,
+                                            iterations=iterations, epsilon=epsilon)
 
     class Regression:
-        def iim_imputation(ground_truth, contamination, params=None):
-            """
-           Imputation of data with IIM algorithm
-           @author Quentin Nater
 
-           :param ground_truth: original time series without contamination
-           :param contamination: time series with contamination
-           :param params: [Optional] (neighbors, algo_code) : parameters of the algorithm, if None, default ones are loaded : neighbors, algo_code
+        class IIM(BaseImputer):
+            algorithm = "iim"
 
-           :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-           """
-            if params is not None:
-                if isinstance(params, dict):
-                    params = tuple(params.values())
+            def impute(self, params=None):
+                """
+               Imputation of data with IIM algorithm
+               @author Quentin Nater
 
-                neighbors, algo_code = params
-            else:
-                neighbors, algo_code = utils.load_parameters(query="default", algorithm="iim")
+               :param params: [Optional] (neighbors, algo_code) : parameters of the algorithm, if None, default ones are loaded : neighbors, algo_code
 
-            imputed_matrix = iim(contamination=contamination, number_neighbor=neighbors, algo_code=algo_code)
+               :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+               """
+                if params is not None:
+                    if isinstance(params, dict):
+                        params = tuple(params.values())
 
-            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
+                    if len(params) == 1:
+                        learning_neighbours = params[0]
+                        algo_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
+                    else:
+                        learning_neighbours, algo_code = params
+                else:
+                    learning_neighbours, algo_code = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-            return imputed_matrix, metrics
+                self.imputed_matrix = iim(contamination=self.infected_matrix, number_neighbor=learning_neighbours, algo_code=algo_code)
 
     class ML:
-        def mrnn_imputation(ground_truth, contamination, params=None):
-            """
-           Imputation of data with MRNN algorithm
-           @author Quentin Nater
+        class MRNN(BaseImputer):
+            algorithm = "stmvl"
 
-           :param ground_truth: original time series without contamination
-           :param contamination: time series with contamination
-           :param params: [Optional] (hidden_dim, learning_rate, iterations, sequence_length) : parameters of the algorithm, hidden_dim, learning_rate, iterations, keep_prob, sequence_length, if None, default ones are loaded
+            def impute(self, params=None):
+                """
+               Imputation of data with MRNN algorithm
+               @author Quentin Nater
 
-           :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-           """
-            if params is not None:
-                if isinstance(params, dict):
-                    params = tuple(params.values())
+               :param params: [Optional] (hidden_dim, learning_rate, iterations, sequence_length) : parameters of the algorithm, hidden_dim, learning_rate, iterations, keep_prob, sequence_length, if None, default ones are loaded
 
-                hidden_dim, learning_rate, iterations, sequence_length = params
-            else:
-                hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
+               :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+               """
+                if params is not None:
+                    if isinstance(params, dict):
+                        params = tuple(params.values())
 
-            imputed_matrix = mrnn(contamination=contamination, hidden_dim=hidden_dim, learning_rate=learning_rate, iterations=iterations, sequence_length=sequence_length)
+                    if len(params) == 4:
+                        hidden_dim, learning_rate, iterations, sequence_length = params
+                    else:
+                        hidden_dim, learning_rate, iterations = params
+                        _, _, _, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
+                else:
+                    hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
 
-            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
-
-            return imputed_matrix, metrics
+                self.imputed_matrix = mrnn(contamination=self.infected_matrix, hidden_dim=hidden_dim,
+                                           learning_rate=learning_rate, iterations=iterations,
+                                           sequence_length=sequence_length)
 
     class Pattern:
-        def stmvl_imputation(ground_truth, contamination, params=None):
-            """
-           Imputation of data with MRNN algorithm
-           @author Quentin Nater
 
-           :param ground_truth: original time series without contamination
-           :param contamination: time series with contamination
-           :param params: [Optional] (window_size, gamma, alpha) : parameters of the algorithm, window_size, gamma, alpha, if None, default ones are loaded
-                :param window_size: window size for temporal component
-                :param gamma: smoothing parameter for temporal weight
-                :param alpha: power for spatial weight
-           :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-           """
-            if params is not None:
-                if isinstance(params, dict):
-                    params = tuple(params.values())
+        class STMVL(BaseImputer):
+            algorithm = "stmvl"
 
-                window_size, gamma, alpha = params
-            else:
-                window_size, gamma, alpha = utils.load_parameters(query="default", algorithm="stmvl")
+            def impute(self, params=None):
+                """
+               Imputation of data with MRNN algorithm
+               @author Quentin Nater
 
-            imputed_matrix = stmvl(contamination=contamination, window_size=window_size, gamma=gamma, alpha=alpha)
+               :param params: [Optional] (window_size, gamma, alpha) : parameters of the algorithm, window_size, gamma, alpha, if None, default ones are loaded
+                    :param window_size: window size for temporal component
+                    :param gamma: smoothing parameter for temporal weight
+                    :param alpha: power for spatial weight
+               :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+               """
+                if params is not None:
+                    if isinstance(params, dict):
+                        params = tuple(params.values())
 
-            metrics = Evaluation(ground_truth, imputed_matrix, contamination).metrics_computation()
+                    window_size, gamma, alpha = params
+                else:
+                    window_size, gamma, alpha = utils.load_parameters(query="default", algorithm="stmvl")
 
-            return imputed_matrix, metrics
+                self.imputed_matrix = stmvl(contamination=self.infected_matrix, window_size=window_size, gamma=gamma,
+                                            alpha=alpha)

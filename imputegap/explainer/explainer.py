@@ -443,16 +443,17 @@ class Explainer:
 
             print("\tImputation ", current_series, "...")
             if algorithm == "cdrec":
-                algo = Imputation.MD.CDREC(obfuscated_matrix)
-                algo.impute(params)
-                algo.score(raw_data, algo.imputed_matrix)
-                imputation_results = algo.metrics
+                algo = Imputation.MD.CDRec(obfuscated_matrix)
             elif algorithm == "stmvl":
-                _, imputation_results = Imputation.Pattern.stmvl_imputation(raw_data, obfuscated_matrix, params)
+                algo = Imputation.Pattern.STMVL(obfuscated_matrix)
             elif algorithm == "iim":
-                _, imputation_results = Imputation.Regression.iim_imputation(raw_data, obfuscated_matrix, params)
+                algo = Imputation.Regression.IIM(obfuscated_matrix)
             elif algorithm == "mrnn":
-                _, imputation_results = Imputation.ML.mrnn_imputation(raw_data, obfuscated_matrix, params)
+                algo = Imputation.ML.MRNN(obfuscated_matrix)
+
+            algo.impute(params)
+            algo.score(raw_data)
+            imputation_results = algo.metrics
 
             output_metrics.append(imputation_results)
             output_rmse.append(imputation_results["RMSE"])
