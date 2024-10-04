@@ -81,7 +81,7 @@ class TestLoading(unittest.TestCase):
         ts_1.load_timeseries(utils.search_path("chlorine"))
         ts_1.normalize()
 
-        lib_normalized = zscore(ground_truth.data, axis=None)
+        lib_normalized = zscore(ground_truth.data, axis=0)
 
         assert np.allclose(ts_1.data, lib_normalized)
 

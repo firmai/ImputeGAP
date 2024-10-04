@@ -137,9 +137,13 @@ class TimeSeries:
             # Apply min-max normalization
             self.data = (self.data - ts_min) / range_ts
         else:
-            mean = np.mean(self.data)
-            std_dev = np.std(self.data)
+            mean = np.mean(self.data, axis=0)
+            std_dev = np.std(self.data, axis=0)
 
+            # Avoid division by zero: set std_dev to 1 where it is zero
+            std_dev[std_dev == 0] = 1
+
+            # Apply z-score normalization
             self.data = (self.data - mean) / std_dev
 
     def plot(self, raw_matrix, infected_matrix=None, imputed_matrix=None, title="Time Series Data", max_series=None,
