@@ -23,9 +23,10 @@ class TestExplainer(unittest.TestCase):
 
         expected_categories, expected_features = Explainer.load_configuration()
 
-        gap = TimeSeries(data=utils.get_file_path_dataset(filename))
+        ts_1 = TimeSeries()
+        ts_1.load_timeseries(utils.search_path(filename))
 
-        shap_values, shap_details = Explainer.shap_explainer(ground_truth=gap.ts, file_name=filename, use_seed=True, seed=42)
+        shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name=filename, use_seed=True, seed=42)
 
         self.assertTrue(shap_values is not None)
         self.assertTrue(shap_details is not None)

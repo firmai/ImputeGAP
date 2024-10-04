@@ -8,8 +8,8 @@ import toml
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
-from imputegap.recovery.contamination import Contamination
 from imputegap.recovery.imputation import Imputation
+from imputegap.recovery.manager import TimeSeries
 
 
 class Explainer:
@@ -384,7 +384,7 @@ class Explainer:
 
         return results_shap
 
-    def shap_explainer(ground_truth, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
+    def shap_explainer(raw_data, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
                        block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
                        file_name="ts", display=False):
         """
@@ -407,18 +407,18 @@ class Explainer:
         :return: ground_truth_matrixes, obfuscated_matrixes, output_metrics, input_params, shap_values
         """
 
-        if limitation > ground_truth.shape[0]:
-            limitation = int(ground_truth.shape[0] * 0.75)
+        if limitation > raw_data.shape[0]:
+            limitation = int(raw_data.shape[0] * 0.75)
 
         if splitter == 0 or splitter >= limitation - 1:
             splitter = int(limitation * 0.60)
 
         print("SHAP Explainer has been called\n\t",
-              "missing_values (", missing_rate*100, "%)\n\t",
+              "missing_values (", missing_rate * 100, "%)\n\t",
               "for a contamination (", contamination, "), \n\t",
               "imputated by (", algorithm, ") with params (", params, ")\n\t",
               "with limitation and splitter after verification of (", limitation, ") and (", splitter, ") for ",
-              ground_truth.shape, "...\n\n\tGeneration of the dataset with the time series...")
+              raw_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
 
         ground_truth_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
@@ -430,26 +430,30 @@ class Explainer:
             print("\tContamination ", current_series, "...")
 
             if contamination == "mcar":
-                obfuscated_matrix = Contamination.scenario_mcar(ts=ground_truth, series_impacted=current_series,
-                                                                missing_rate=missing_rate, block_size=block_size,
-                                                                protection=protection, use_seed=use_seed, seed=seed,
-                                                                explainer=True)
+                obfuscated_matrix = TimeSeries().Contaminate.mcar(ts=raw_data, series_impacted=current_series,
+                                                       missing_rate=missing_rate, block_size=block_size,
+                                                       protection=protection, use_seed=use_seed, seed=seed,
+                                                       explainer=True)
             else:
                 print("Contamination proposed not found : ", contamination, " >> BREAK")
                 return None
 
-            ground_truth_matrices.append(ground_truth)
+            ground_truth_matrices.append(raw_data)
             obfuscated_matrices.append(obfuscated_matrix)
 
             print("\tImputation ", current_series, "...")
             if algorithm == "cdrec":
-                _, imputation_results = Imputation.MR.cdrec(ground_truth, obfuscated_matrix, params)
+                algo = Imputation.MD.CDRec(obfuscated_matrix)
             elif algorithm == "stmvl":
-                _, imputation_results = Imputation.Pattern.stmvl_imputation(ground_truth, obfuscated_matrix, params)
+                algo = Imputation.Pattern.STMVL(obfuscated_matrix)
             elif algorithm == "iim":
-                _, imputation_results = Imputation.Regression.iim_imputation(ground_truth, obfuscated_matrix, params)
+                algo = Imputation.Regression.IIM(obfuscated_matrix)
             elif algorithm == "mrnn":
-                _, imputation_results = Imputation.ML.mrnn_imputation(ground_truth, obfuscated_matrix, params)
+                algo = Imputation.ML.MRNN(obfuscated_matrix)
+
+            algo.impute(params)
+            algo.score(raw_data)
+            imputation_results = algo.metrics
 
             output_metrics.append(imputation_results)
             output_rmse.append(imputation_results["RMSE"])

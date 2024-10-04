@@ -1,5 +1,6 @@
 from imputegap.recovery.manager import TimeSeries
 from imputegap.explainer.explainer import Explainer
+from imputegap.tools import utils
 from imputegap.tools.utils import display_title
 
 import os
@@ -14,15 +15,13 @@ def check_block_size(filename):
 
 if __name__ == '__main__':
 
+    dataset = "eeg"
     display_title()
 
-    filename = "chlorine"
-    file_path = os.path.join("./dataset/", filename + ".txt")
-    gap = TimeSeries(data=file_path)
-
-    shap_values, shap_details = Explainer.shap_explainer(ground_truth=gap.ts, file_name=filename)
+    ts_1 = TimeSeries()
+    ts_1.load_timeseries(utils.search_path(dataset))
+    shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name=dataset, algorithm="iim")
 
     Explainer.print(shap_values, shap_details)
-
 
     print("\n", "_"*95, "end")

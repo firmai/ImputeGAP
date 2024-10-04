@@ -1,7 +1,4 @@
 import unittest
-import numpy as np
-
-from imputegap.recovery.contamination import Contamination
 from imputegap.recovery.imputation import Imputation
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
@@ -13,12 +10,17 @@ class TestMRNN(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with MRNN has the expected outcome
         """
-        impute_gap = TimeSeries(utils.get_file_path_dataset("chlorine"), limitation_values=200)
+        ts_1 = TimeSeries()
+        ts_1.load_timeseries(utils.search_path("chlorine"), max_values=200)
 
-        ts_contaminated = Contamination.scenario_mcar(ts=impute_gap.ts, series_impacted=0.4, missing_rate=0.4, block_size=10,
-                                                      protection=0.1, use_seed=True, seed=42)
+        infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, series_impacted=0.4, missing_rate=0.4, block_size=10,
+                                             protection=0.1, use_seed=True, seed=42)
 
-        imputation, metrics = Imputation.ML.mrnn_imputation(impute_gap.ts, ts_contaminated)
+        algo = Imputation.ML.MRNN(infected_matrix)
+        algo.impute()
+        algo.score(ts_1.data)
+
+        imputation, metrics = algo.imputed_matrix, algo.metrics
 
         expected_metrics = {
             "RMSE": 0.24304439492433505,
@@ -27,10 +29,7 @@ class TestMRNN(unittest.TestCase):
             "CORRELATION": 0.508581608867533
         }
 
-        impute_gap.ts_contaminate = ts_contaminated
-        impute_gap.ts_imputation = imputation
-        impute_gap.metrics = metrics
-        impute_gap.print_results()
+        ts_1.print_results(metrics)
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.1, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
         self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.1, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
