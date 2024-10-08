@@ -20,12 +20,12 @@ class BaseImputer:
         self.infected_matrix = infected_matrix
         self.imputed_matrix = None
         self.metrics = None
-        self.optimal_params = None
+        self.parameters = None
 
     def impute(self, params=None):
         raise NotImplementedError("This method should be overridden by subclasses")
 
-    def score(self, raw_matrix):
+    def score(self, raw_matrix, imputed_matrix=None):
         """
         Imputation of data with CDREC algorithm
         @author Quentin Nater
@@ -35,7 +35,42 @@ class BaseImputer:
         """
         self.metrics = Evaluation(raw_matrix, self.imputed_matrix, self.infected_matrix).metrics_computation()
 
-    def optimize(self, raw_data, optimizer="bayesian", metrics=["RMSE"], n_calls=3, random_starts=50, func='gp_hedge'):
+    def _check_params(self, params):
+        """
+        Format the parameters for optimization or imputation
+        :param params: list or dictionary of parameters
+        :return: tuples of parameters in the right format
+        """
+        if params is not None:
+            if isinstance(params, dict):
+                params = tuple(params.values())
+
+            if 'automl' in params:
+                print("\noptimizer has been called...\n")
+                flag, raw_data, *rest = params
+                self._optimize(raw_data, *rest)
+
+                if isinstance(self.parameters, dict):
+                    self.parameters = tuple(self.parameters.values())
+
+            else:
+                self.parameters = params
+
+            if self.algorithm == "iim":
+                if len(self.parameters) == 1:
+                    learning_neighbours = self.parameters[0]
+                    algo_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
+                    self.parameters = (learning_neighbours, algo_code)
+
+            if self.algorithm == "mrnn":
+                if len(self.parameters) == 3:
+                    hidden_dim, learning_rate, iterations = self.parameters
+                    _, _, _, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
+                    self.parameters = (hidden_dim, learning_rate, iterations, sequence_length)
+
+        return self.parameters
+
+    def _optimize(self, raw_data, optimizer="bayesian", n_calls=3, metrics=["RMSE"], random_starts=50, func='gp_hedge'):
         """
         Conduct the optimization of the hyperparameters.
 
@@ -61,9 +96,12 @@ class BaseImputer:
                                                                n_random_starts=random_starts,
                                                                acq_func=func)
         elif optimizer == "greedy":
-            optimal_params, _ = Optimization.Greedy.optimize(ground_truth=raw_data, contamination=self.infected_matrix, selected_metrics=metrics, algorithm=self.algorithm, n_calls=250)
+            optimal_params, _ = Optimization.Greedy.optimize(ground_truth=raw_data,
+                                                             contamination=self.infected_matrix,
+                                                             selected_metrics=metrics, algorithm=self.algorithm,
+                                                             n_calls=250)
 
-        self.optimal_params = optimal_params
+        self.parameters = optimal_params
 
 
 class Imputation:
@@ -87,7 +125,7 @@ class Imputation:
         if algorithm == 'cdrec':
             rank, epsilon, iterations = configuration
             algo = Imputation.MD.CDRec(contamination)
-            algo.impute((int(rank), float(epsilon), int(iterations)))
+            algo.impute((rank, epsilon, iterations))
 
         elif algorithm == 'iim':
             learning_neighbours = configuration[0]
@@ -133,6 +171,8 @@ class Imputation:
                 """
                 self.imputed_matrix = zero_impute(self.infected_matrix, params)
 
+                return self
+
         class MinImpute(BaseImputer):
             algorithm = "min_impute"
 
@@ -147,6 +187,8 @@ class Imputation:
                 """
                 self.imputed_matrix = min_impute(self.infected_matrix, params)
 
+                return self
+
     class MD:
         class CDRec(BaseImputer):
             algorithm = "cdrec"
@@ -156,18 +198,47 @@ class Imputation:
                 Imputation of data with CDREC algorithm
                 @author Quentin Nater
 
-                :param params: [Optional] (rank, epsilon, iterations) : parameters of the algorithm, if None, default ones are loaded
+                :param params: [Optional-IMPUTATION] parameters of the algorithm, if None, default ones are loaded
+                               [Optional-AUTO_ML]  parameters of the automl, if None, default ones are loaded
+
+                option 1 : algorithm parameters ___________________________________________________
+
+                    tuples((int) truncation_rank, (float) epsilon, (int) iterations)
+
+                    truncation_rank: rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series)
+
+                    epsilon : learning rate
+
+                    iterations : number of iterations
+
+
+                option 2 : automl parameters________________________________________________________
+
+                    tuples((str) flag, (numpy) ground truth, (str) optimizer*, (int) n_calls*, List(str) selected_metrics*, (int) n_random_starts*, (str) acq_func*)
+
+                    flag : activate or not the optimization : "automl"
+
+                    numpy : ground truth, TimeSeries().data
+
+                    optimizer : [OPTIONAL] choice of the optimizer : "bayesian" or "greedy"  | default "bayesian"
+
+                    n_calls: [OPTIONAL] bayesian parameters, number of calls to the objective function. | default 3
+
+                    selected_metrics : [OPTIONAL] list of selected metrics to consider for optimization. | default ["RMSE"]
+
+                    n_random_starts: [OPTIONAL] bayesian parameters, number of initial calls to the objective function, from random points. | default 50
+
+                    acq_func: [OPTIONAL] bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedge
+
                 """
                 if params is not None:
-                    if isinstance(params, dict):
-                        params = tuple(params.values())
-
-                    rank, epsilon, iterations = params
+                    rank, epsilon, iterations = self._check_params(params)
                 else:
                     rank, epsilon, iterations = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=rank,
-                                            iterations=iterations, epsilon=epsilon)
+                self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=rank, iterations=iterations, epsilon=epsilon)
+
+                return self
 
     class Regression:
 
@@ -184,22 +255,17 @@ class Imputation:
                :return: imputed_matrix, metrics : all time series with imputation data and their metrics
                """
                 if params is not None:
-                    if isinstance(params, dict):
-                        params = tuple(params.values())
-
-                    if len(params) == 1:
-                        learning_neighbours = params[0]
-                        algo_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
-                    else:
-                        learning_neighbours, algo_code = params
+                    learning_neighbours, algo_code = self._check_params(params)
                 else:
                     learning_neighbours, algo_code = utils.load_parameters(query="default", algorithm=self.algorithm)
 
                 self.imputed_matrix = iim(contamination=self.infected_matrix, number_neighbor=learning_neighbours, algo_code=algo_code)
 
+                return self
+
     class ML:
         class MRNN(BaseImputer):
-            algorithm = "stmvl"
+            algorithm = "mrnn"
 
             def impute(self, params=None):
                 """
@@ -211,20 +277,15 @@ class Imputation:
                :return: imputed_matrix, metrics : all time series with imputation data and their metrics
                """
                 if params is not None:
-                    if isinstance(params, dict):
-                        params = tuple(params.values())
-
-                    if len(params) == 4:
-                        hidden_dim, learning_rate, iterations, sequence_length = params
-                    else:
-                        hidden_dim, learning_rate, iterations = params
-                        _, _, _, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
+                    hidden_dim, learning_rate, iterations, sequence_length = self._check_params(params)
                 else:
                     hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
 
                 self.imputed_matrix = mrnn(contamination=self.infected_matrix, hidden_dim=hidden_dim,
                                            learning_rate=learning_rate, iterations=iterations,
                                            sequence_length=sequence_length)
+
+                return self
 
     class Pattern:
 
@@ -243,12 +304,10 @@ class Imputation:
                :return: imputed_matrix, metrics : all time series with imputation data and their metrics
                """
                 if params is not None:
-                    if isinstance(params, dict):
-                        params = tuple(params.values())
-
-                    window_size, gamma, alpha = params
+                    window_size, gamma, alpha = params = self._check_params(params)
                 else:
                     window_size, gamma, alpha = utils.load_parameters(query="default", algorithm="stmvl")
 
-                self.imputed_matrix = stmvl(contamination=self.infected_matrix, window_size=window_size, gamma=gamma,
-                                            alpha=alpha)
+                self.imputed_matrix = stmvl(contamination=self.infected_matrix, window_size=window_size, gamma=gamma, alpha=alpha)
+
+                return self

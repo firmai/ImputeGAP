@@ -25,7 +25,6 @@ if __name__ == '__main__':
     infected_matrix = ts_01.Contaminate.mcar(ts=ts_01.data, series_impacted=0.4, missing_rate=0.4, block_size=block_size, protection=0.1, use_seed=True, seed=42)
     ts_01.print(limit=5)
 
-    print("RUN OPTIMIZATION FOR : ", algo, "... with ", dataset, "...")
 
     if algo == "cdrec":
         manager = Imputation.MD.CDRec(infected_matrix)
@@ -37,9 +36,10 @@ if __name__ == '__main__':
         manager = Imputation.Pattern.STMVL(infected_matrix)
 
     manager.optimize(raw_data=ts_01.data, optimizer="greedy", n_calls=25)
+    manager.impute(params=("automl", ts_01.data, "greedy", 25))
 
-    print("\nOptical Params : ", manager.optimal_params, "\n")
+    print("\nOptical Params : ", manager.parameters, "\n")
 
-    Optimization.save_optimization(optimal_params=manager.optimal_params, algorithm=algo, dataset=dataset, optimizer="g")
+    Optimization.save_optimization(optimal_params=manager.parameters, algorithm=algo, dataset=dataset, optimizer="g")
 
     print("\n", "_" * 95, "end")

@@ -37,11 +37,11 @@ if __name__ == '__main__':
             else:
                 manager = Imputation.Pattern.STMVL(infected_matrix)
 
-            manager.optimize(raw_data=ts_01.data, optimizer="bayesian", n_calls=25)
+            manager.impute(params=("automl", ts_01.data, "bayesian", 25))
 
-            print("\nOptical Params : ", manager.optimal_params, "\n")
+            print("\nOptical Params : ", manager.parameters, "\n")
 
-            Optimization.save_optimization(optimal_params=manager.optimal_params, algorithm=algo, dataset=filename, optimizer="b")
+            Optimization.save_optimization(optimal_params=manager.parameters, algorithm=algo, dataset=filename, optimizer="b")
 
             print("\n", "_"*95, "end")
         print("\n", "_" * 95, "end")

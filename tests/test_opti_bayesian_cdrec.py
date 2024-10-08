@@ -23,8 +23,7 @@ class TestOptiCDREC(unittest.TestCase):
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")
 
         algo_opti = Imputation.MD.CDRec(infected_matrix)
-        algo_opti.optimize(raw_data=ts_1.data, optimizer="bayesian",  n_calls=3)
-        algo_opti.impute(params=algo_opti.optimal_params)
+        algo_opti.impute(("automl", ts_1.data, "bayesian", 3))
         algo_opti.score(raw_matrix=ts_1.data)
         metrics_optimal = algo_opti.metrics
 

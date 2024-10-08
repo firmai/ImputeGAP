@@ -4,9 +4,22 @@
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/assets/TimeSeriesData_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/TimeSeriesData_graph.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/assets/contamination_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/contamination_graph.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/assets/imputation_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/imputation_graph.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/assets/raw_data_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/raw_data_graph.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/recovery/imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/imputation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/recovery/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/runner_contamination.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_contamination.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/runner_greedy.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_greedy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/runner_imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_imputation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/runner_optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_contamination_mcar.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_contamination_mcar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_loading.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_cdrec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_iim.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_iim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_mrnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_mrnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_stmvl.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_stmvl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_greedy_cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_greedy_cdrec.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,17 +55,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/tests",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nquen/Downloads&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests" />
@@ -69,7 +82,7 @@
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\imputebench\AlgoCollection" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.runner_contamination">
+  <component name="RunManager" selected="Python tests.Python tests in tests">
     <configuration name="runner_contamination" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -92,7 +105,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="runner_greedy" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="runner_imputation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -105,7 +118,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/runner_greedy.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/runner_imputation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -160,7 +173,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.runner_greedy" />
+      <item itemvalue="Python.runner_imputation" />
       <item itemvalue="Python.runner_contamination" />
       <item itemvalue="Python tests.Python tests in test_loading.py" />
       <item itemvalue="Python tests.Python tests in test_opti_greedy_cdrec.py" />
@@ -168,11 +181,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests in tests" />
+        <item itemvalue="Python.runner_imputation" />
         <item itemvalue="Python.runner_contamination" />
         <item itemvalue="Python tests.Python tests in test_loading.py" />
-        <item itemvalue="Python tests.Python tests in tests" />
         <item itemvalue="Python tests.Python tests in test_opti_greedy_cdrec.py" />
-        <item itemvalue="Python.runner_greedy" />
       </list>
     </recent_temporary>
   </component>
@@ -211,7 +224,10 @@
       <workItem from="1727946558514" duration="717000" />
       <workItem from="1727962876543" duration="9843000" />
       <workItem from="1728028039941" duration="131000" />
-      <workItem from="1728039277962" duration="18030000" />
+      <workItem from="1728039277962" duration="18322000" />
+      <workItem from="1728283326447" duration="10602000" />
+      <workItem from="1728298298981" duration="25000" />
+      <workItem from="1728386905275" duration="7511000" />
     </task>
     <servers />
   </component>
@@ -231,15 +247,15 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/imputegap$runner.coverage" NAME="runner Coverage Results" MODIFIED="1727264924849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$runner_contamination.coverage" NAME="runner_contamination Coverage Results" MODIFIED="1728057447494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$runner_contamination.coverage" NAME="runner_contamination Coverage Results" MODIFIED="1728391007686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_explainer.coverage" NAME="runner_explainer Coverage Results" MODIFIED="1728051024083" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$test.coverage" NAME="test Coverage Results" MODIFIED="1727099350719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/imputegap$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1727099954120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$_loading.coverage" NAME="_loading Coverage Results" MODIFIED="1726134442146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/loading" />
     <SUITE FILE_PATH="coverage/imputegap$runner_greedy.coverage" NAME="runner_greedy Coverage Results" MODIFIED="1728055245493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1728057343630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1728394651314" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$demo.coverage" NAME="demo Coverage Results" MODIFIED="1727770278863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_optimization.coverage" NAME="runner_optimization Coverage Results" MODIFIED="1728051816835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$runner_imputation.coverage" NAME="runner_imputation Coverage Results" MODIFIED="1728051674777" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$runner_imputation.coverage" NAME="runner_imputation Coverage Results" MODIFIED="1728394607351" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
   </component>
 </project>
