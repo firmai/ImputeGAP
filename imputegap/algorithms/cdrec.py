@@ -1,6 +1,7 @@
 import ctypes
 import os
 import platform
+import time
 import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
 
@@ -80,7 +81,7 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
     return __py_recovered;
 
 
-def cdrec(contamination, truncation_rank, iterations, epsilon):
+def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True):
     """
     CDREC algorithm for imputation of missing data
     @author : Quentin Nater
@@ -90,11 +91,19 @@ def cdrec(contamination, truncation_rank, iterations, epsilon):
     :param epsilon : learning rate
     :param iterations : number of iterations
 
+    :param logs: print logs of time execution
+
     :return: imputed_matrix, metrics : all time series with imputation data and their metrics
 
     """
+    start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
     imputed_matrix = native_cdrec(contamination, truncation_rank, epsilon, iterations)
+
+    end_time = time.time()
+
+    if logs:
+        print(f"\n\t\t> logs, imputation cdrec - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return imputed_matrix

@@ -23,7 +23,7 @@ class TestOptiMRNN(unittest.TestCase):
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")
 
         algo_opti = Imputation.ML.MRNN(infected_matrix)
-        algo_opti.impute(("automl", ts_1.data, "bayesian", 2))
+        algo_opti.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})
 
         algo_opti.score(raw_matrix=ts_1.data)
         metrics_optimal = algo_opti.metrics

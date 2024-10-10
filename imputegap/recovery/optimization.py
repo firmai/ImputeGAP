@@ -1,19 +1,19 @@
 import os
 import toml
+import time
 from itertools import product
 import numpy as np
+from imputegap.recovery.imputation import Imputation
+from imputegap.tools.algorithm_parameters import SEARCH_SPACES, ALL_ALGO_PARAMS, PARAM_NAMES, SEARCH_SPACES_PSO
 
+# PSO IMPORT
+from functools import partial
+import pyswarms as ps
 
+# BAYESIAN IMPORT
 import skopt
 from skopt.utils import use_named_args
 from skopt.space import Integer
-
-from imputegap.recovery.imputation import Imputation
-from imputegap.tools.algorithm_parameters import SEARCH_SPACES, ALL_ALGO_PARAMS
-
-# Define the search space for each algorithm separately
-search_spaces = SEARCH_SPACES
-
 
 class Optimization:
 
@@ -55,6 +55,8 @@ class Optimization:
 
             :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
             """
+            start_time = time.time()  # Record start time
+
             # Map the parameter ranges to the algorithm-specific search space
             param_ranges = ALL_ALGO_PARAMS[algorithm]
 
@@ -94,13 +96,14 @@ class Optimization:
                 # Increment the run counter
                 run_count += 1
 
-            print(f"Best score: {best_score} with params {best_params}")
+            end_time = time.time()
+            print(f"\n\t\t> logs, optimization greedy - Execution Time: {(end_time - start_time):.4f} seconds\n")
+
             return best_params, best_score
 
     class Bayesian:
 
-        def optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec",
-                     n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
+        def optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
             """
             Conduct the Bayesian optimization hyperparameter optimization.
 
@@ -116,6 +119,9 @@ class Optimization:
 
             :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
             """
+            start_time = time.time()  # Record start time
+
+            search_spaces = SEARCH_SPACES
 
             # Adjust the search space for 'cdrec' based on obfuscated_matrix
             if algorithm == 'cdrec':
@@ -142,4 +148,70 @@ class Optimization:
             optimal_params = optimizer.Xi[np.argmin(optimizer.yi)]
             optimal_params_dict = {name: value for name, value in zip([dim.name for dim in space], optimal_params)}
 
+            end_time = time.time()
+            print(f"\n\t\t> logs, optimization bayesian - Execution Time: {(end_time - start_time):.4f} seconds\n")
+
             return optimal_params_dict, np.min(optimizer.yi)
+
+    class ParticleSwarm:
+
+        def _format_params(self, particle_params, algorithm):
+            if algorithm == 'cdrec':
+                particle_params = [int(particle_params[0]), particle_params[1], int(particle_params[2])]
+            if algorithm == 'iim':
+                particle_params = [int(particle_params[0])]
+            elif algorithm == 'mrnn':
+                particle_params = [int(particle_params[0]), particle_params[1], int(particle_params[2])]
+            elif algorithm == 'stmvl':
+                particle_params = [int(particle_params[0]), particle_params[1], int(particle_params[2])]
+
+            return particle_params
+
+        def _objective(self, ground_truth, contamination, algorithm, selected_metrics, params):
+            n_particles = params.shape[0]  # Get the number of particles
+            # Initialize array to hold the errors for each particle
+            errors_for_all_particles = np.zeros(n_particles)
+
+
+            for i in range(n_particles):  # Iterate over each particle
+                particle_params = self._format_params(params[i], algorithm)  # Get the parameters for this particle
+                errors = Imputation.evaluate_params(ground_truth, contamination, tuple(particle_params), algorithm)
+                errors_for_all_particles[i] = np.mean([errors[metric] for metric in selected_metrics])
+            return errors_for_all_particles
+
+        def optimize(self, ground_truth, contamination, selected_metrics, algorithm, n_particles, c1, c2, w, iterations, n_processes):
+
+            start_time = time.time()  # Record start time
+
+            # Define the search space
+            search_space = SEARCH_SPACES_PSO
+
+
+            if algorithm == 'cdrec':
+                max_rank = contamination.shape[1] - 1
+                search_space['cdrec'][0] = (search_space['cdrec'][0][0], min(search_space['cdrec'][0][1], max_rank))
+
+            # Select the correct search space based on the algorithm
+            bounds = search_space[algorithm]
+
+            # Convert search space to PSO-friendly format (two lists: one for min and one for max values for each parameter)
+            lower_bounds, upper_bounds = zip(*bounds)
+            bounds = (np.array(lower_bounds), np.array(upper_bounds))
+
+            # Call instance of PSO
+            optimizer = ps.single.GlobalBestPSO(n_particles=n_particles, dimensions=len(bounds[0]), options={'c1': c1, 'c2': c2, 'w': w}, bounds=bounds)
+
+            # Perform optimization
+            objective_with_args = partial(self._objective, ground_truth, contamination, algorithm, selected_metrics)
+            cost, pos = optimizer.optimize(objective_with_args, iters=iterations, n_processes=n_processes)
+
+            param_names = PARAM_NAMES
+
+            optimal_params = self._format_params(pos, algorithm)
+            optimal_params_dict = {param_name: value for param_name, value in zip(param_names[algorithm], optimal_params)}
+
+
+            end_time = time.time()
+            print(f"\n\t\t> logs, optimization pso - Execution Time: {(end_time - start_time):.4f} seconds\n")
+
+            return optimal_params_dict, cost

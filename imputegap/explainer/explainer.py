@@ -451,7 +451,7 @@ class Explainer:
             elif algorithm == "mrnn":
                 algo = Imputation.ML.MRNN(obfuscated_matrix)
 
-            algo.impute(params)
+            algo.impute(user_defined=True, params=params)
             algo.score(raw_data)
             imputation_results = algo.metrics
 

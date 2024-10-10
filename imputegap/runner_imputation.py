@@ -2,9 +2,7 @@ from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-
 if __name__ == '__main__':
-
     dataset, algo = "eeg", "cdrec"
     utils.display_title()
 
@@ -30,7 +28,10 @@ if __name__ == '__main__':
 
     # 4. imputation of the contaminated data
     # choice of the algorithm, and their parameters (default, automl, or defined by the user)
-    cdrec = Imputation.MD.CDRec(infected_data).impute(params=("automl", ts_1.data, "bayesian", 2))
+    #cdrec = Imputation.MD.CDRec(infected_data).impute()
+    #cdrec = Imputation.MD.CDRec(infected_data).impute(params={"rank": 5, "epsilon":0.00001, "iterations":100})
+    #cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=True, params=(5, 0.000001,100))
+    cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer":"bayesian", "options": {"n_calls": 2}})
 
     # [OPTIONAL] save your results in a new Time Series object
     ts_3 = TimeSeries().import_matrix(cdrec.imputed_matrix)
@@ -41,6 +42,6 @@ if __name__ == '__main__':
     # 6. display the results
     ts_2.print(view_by_series=True)
     ts_2.print_results(cdrec.metrics, algorithm=algo)
-    ts_2.plot(raw_data=ts_1.data, infected_data=ts_2.data, imputed_data=ts_3.data, max_series=1, save_path="assets", display=True)
+    ts_2.plot(raw_data=ts_1.data, infected_data=ts_2.data, imputed_data=ts_3.data, max_series=2, save_path="assets", display=True)
 
-    print("\n", "_"*95, "end")
+    print("\n", "_" * 95, "end")

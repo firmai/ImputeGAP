@@ -87,6 +87,25 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
             return (hidden_dim, learning_rate, iterations, sequence_length)
         else:
             return (hidden_dim, learning_rate, iterations)
+    elif algorithm == "greedy":
+        n_calls = int(config['greedy']['n_calls'])
+        selected_metrics = config['greedy']['selected_metrics']
+        return (n_calls, [selected_metrics])
+    elif algorithm == "bayesian":
+        n_calls = int(config['bayesian']['n_calls'])
+        n_random_starts = int(config['bayesian']['n_random_starts'])
+        acq_func = str(config['bayesian']['acq_func'])
+        selected_metrics = config['bayesian']['selected_metrics']
+        return (n_calls, n_random_starts, acq_func, [selected_metrics])
+    elif algorithm == "pso":
+        n_particles = int(config['pso']['n_particles'])
+        c1 = float(config['pso']['c1'])
+        c2 = float(config['pso']['c2'])
+        w = float(config['pso']['w'])
+        iterations = int(config['pso']['iterations'])
+        n_processes = int(config['pso']['n_processes'])
+        selected_metrics = config['pso']['selected_metrics']
+        return (n_particles, c1, c2, w, iterations, n_processes, [selected_metrics])
     elif algorithm == "colors":
         colors = config['colors']['plot']
         return colors

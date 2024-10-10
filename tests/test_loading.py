@@ -1,8 +1,6 @@
 import os
 import unittest
 import numpy as np
-from scipy.stats import zscore
-from sklearn.preprocessing import MinMaxScaler
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 
@@ -68,20 +66,18 @@ class TestLoading(unittest.TestCase):
 
         ts_2 = TimeSeries()
         ts_2.load_timeseries(utils.search_path("chlorine"))
-
-        scaler = MinMaxScaler()
-        ts_2.data = scaler.fit_transform(ts_2.data)
+        ts_2.normalize(normalizer="m_lib")
 
         assert np.allclose(ts_1.data, ts_2.data, atol=1e-7)
 
     def test_loading_normalization_z_score_lib(self):
-        ground_truth = TimeSeries()
-        ground_truth.load_timeseries(utils.search_path("chlorine"))
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path("chlorine"))
         ts_1.normalize()
 
-        lib_normalized = zscore(ground_truth.data, axis=0)
+        ts_2 = TimeSeries()
+        ts_2.load_timeseries(utils.search_path("chlorine"))
+        ts_2.normalize(normalizer="z_lib")
 
-        assert np.allclose(ts_1.data, lib_normalized)
+        assert np.allclose(ts_1.data, ts_2.data)
 

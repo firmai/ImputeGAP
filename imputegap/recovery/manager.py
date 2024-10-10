@@ -1,6 +1,10 @@
 import os
+import time
 import numpy as np
 import matplotlib
+from scipy.stats import zscore
+from sklearn.preprocessing import MinMaxScaler
+
 from imputegap.tools import utils
 
 if os.getenv('CI') is None:
@@ -28,11 +32,9 @@ class TimeSeries:
         """
         if data is not None:
             if isinstance(data, list):
-                print("\nThe time series has been loaded from your code...\n")
                 self.data = np.array(data)
 
             elif isinstance(data, np.ndarray):
-                print("\nThe time series has been loaded from code...\n")
                 self.data = data
             else:
                 print("\nThe time series has not been loaded, format unknown\n")
@@ -126,8 +128,11 @@ class TimeSeries:
         :return: data_normalized, normalized dataset
         """
         print("Normalization of the original time series dataset with ", normalizer)
+        self.data = self.data.T
 
         if normalizer == "min_max":
+            start_time = time.time()  # Record start time
+
             # Compute the min and max for each series (column-wise), ignoring NaN
             ts_min = np.nanmin(self.data, axis=0)
             ts_max = np.nanmax(self.data, axis=0)
@@ -138,7 +143,25 @@ class TimeSeries:
 
             # Apply min-max normalization
             self.data = (self.data - ts_min) / range_ts
+
+            end_time = time.time()
+        elif normalizer == "z_lib":
+            start_time = time.time()  # Record start time
+
+            self.data = zscore(self.data, axis=0)
+
+            end_time = time.time()
+
+        elif normalizer == "m_lib":
+            start_time = time.time()  # Record start time
+
+            scaler = MinMaxScaler()
+            self.data = scaler.fit_transform(self.data)
+
+            end_time = time.time()
         else:
+            start_time = time.time()  # Record start time
+
             mean = np.mean(self.data, axis=0)
             std_dev = np.std(self.data, axis=0)
 
@@ -147,6 +170,13 @@ class TimeSeries:
 
             # Apply z-score normalization
             self.data = (self.data - mean) / std_dev
+
+            end_time = time.time()
+
+        self.data = self.data.T
+
+        print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
+
 
     def plot(self, raw_data, infected_data=None, imputed_data=None, title="Time Series Data", max_series=None,
              max_values=None, size=(16, 8), save_path="", display=True):
@@ -189,25 +219,23 @@ class TimeSeries:
 
                 if infected_data is not None and imputed_data is None:  # plot infected matrix
 
-                    differentiated_matrix = np.where(np.isnan(infected_data), raw_data, np.nan)
-
-                    plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], color=color, linewidth=1.5, linestyle='-', label=f'TS-RAW {i + 1}')
-
                     if np.isnan(infected_data[i, :]).any():
-                        plt.plot(np.arange(min(differentiated_matrix.shape[1], max_values)), differentiated_matrix[i, :max_values], linewidth=3.5, color='r', linestyle='--', label=f'TS-CON {i + 1}')
+                        plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5, color='r', linestyle='--', label=f'TS-MB {i + 1}')
+
+                    plt.plot(np.arange(min(infected_data.shape[1], max_values)), infected_data[i, :max_values], color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+
 
 
                 if imputed_data is not None:  # plot imputed matrix
 
-                    differentiated_matrix = np.where(np.isnan(infected_data), raw_data, np.nan)
+                    if np.isnan(infected_data[i, :]).any():
+                        plt.plot(np.arange(min(imputed_data.shape[1], max_values)), imputed_data[i, :max_values], linestyle='-', color="r", label=f'TS-IMP {i + 1}')
 
                     if np.isnan(infected_data[i, :]).any():
-                        plt.plot(np.arange(min(differentiated_matrix.shape[1], max_values)),
-                                 differentiated_matrix[i, :max_values],
-                                 linewidth=2.5, linestyle='--', color='r', label=f'TS-CON {i + 1}')
+                        plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5, linestyle='--', color=color, label=f'TS-MB {i + 1}')
 
-                    plt.plot(np.arange(min(imputed_data.shape[1], max_values)), imputed_data[i, :max_values],
-                                 linestyle='-', color=color, label=f'TS-IMP {i + 1}')
+                    plt.plot(np.arange(min(infected_data.shape[1], max_values)), infected_data[i, :max_values], color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+
 
 
                 number_of_series += 1
@@ -228,7 +256,7 @@ class TimeSeries:
         if display:
             plt.show()
 
-        plt.close()
+        #plt.close()
 
         return file_path
 
