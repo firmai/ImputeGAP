@@ -43,7 +43,7 @@ class Optimization:
 
         def optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=250):
             """
-            Conduct the Greedy optimization hyperparameter optimization.
+            Conduct the Greedy for hyperparameters.
 
             Parameters
             ----------
@@ -105,7 +105,7 @@ class Optimization:
 
         def optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
             """
-            Conduct the Bayesian optimization hyperparameter optimization.
+            Conduct the Bayesian optimization for hyperparameters.
 
             Parameters
             ----------
@@ -117,7 +117,7 @@ class Optimization:
             :param n_random_starts: bayesian parameters, number of initial calls to the objective function, from random points.
             :param acq_func: bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedge
 
-            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
+            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores, Cost of the optimization
             """
             start_time = time.time()  # Record start time
 
@@ -180,7 +180,24 @@ class Optimization:
             return errors_for_all_particles
 
         def optimize(self, ground_truth, contamination, selected_metrics, algorithm, n_particles, c1, c2, w, iterations, n_processes):
+            """
+            Conduct the Particle swarm optimization for hyperparameters.
 
+            Parameters
+            ----------
+            :param ground_truth : time series data set to optimize
+            :param contamination : time series contaminate to impute
+            :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
+            :param algorithm : imputation algorithm | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default 'cdrec'
+            :param n_particles: pso parameters, number of particles used
+            :param c1: pso parameters, c1 option value
+            :param c2: pso parameters, c2 option value
+            :param w: pso parameters, w option value
+            :param iterations: pso parameters, number of iterations for the optimization
+            :param n_processes: pso parameters, number of process during the optimization
+
+            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores, Cost of the optimization
+            """
             start_time = time.time()  # Record start time
 
             # Define the search space
