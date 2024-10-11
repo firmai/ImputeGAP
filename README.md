@@ -17,7 +17,7 @@ In order to use **ImputeGAP**, you must have :
 * Run your implementation on a **Unix-compatible environment**.
 <br><br>
 
-To install these two prerequisites, please refer to the following documentation: <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/docs/installation#readme" >install requirements</a><br><br>
+To install these two prerequisites, please refer to the following documentation: <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs/installation" >install requirements</a><br><br>
 
 
 
