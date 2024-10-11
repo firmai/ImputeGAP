@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/example.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_opti_sh_cdrec.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pytest_optimization.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest_optimization.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/installation/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/default_values.toml" beforeDir="false" afterPath="$PROJECT_DIR$/env/default_values.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/TimeSeriesData_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/TimeSeriesData_graph.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/contamination_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/contamination_graph.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/raw_data_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/raw_data_graph.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/imputation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/optimization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_imputation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_optimization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/tools/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/tools/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/no" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/report.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/report.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +45,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/tests",
+    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/docs/installation",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "editor.preferences.fonts.default",
     "vue.rearranger.settings.migration": "true"
@@ -67,11 +53,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\docs\installation" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\params" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests\env" />
-      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests\params" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\env" />
@@ -241,7 +227,7 @@
       <workItem from="1728563006528" duration="3871000" />
       <workItem from="1728570687218" duration="591000" />
       <workItem from="1728574027395" duration="4566000" />
-      <workItem from="1728641868817" duration="9147000" />
+      <workItem from="1728641868817" duration="9557000" />
     </task>
     <servers />
   </component>
