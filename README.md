@@ -36,6 +36,13 @@ To install ImputeGAP locally, download the package from GitHub and run the comma
 
 <br /><hr /><br />
 
+## Datasets
+All datasets preconfigured in this library can be found here : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/naterq_skeleton_refac_3/imputegap/dataset" >link to datasets</a>
+
+
+
+<br /><hr /><br />
+
 
 
 ## Loading and pre-process
