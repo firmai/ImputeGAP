@@ -23,7 +23,7 @@ setuptools.setup(
         "Topic :: Imputation"
     ],
     python_requires=">= 3.12.0,<3.12.6",
-    install_requires=pathlib.Path("requirements.txt").read_text().splitlines(),
+    install_requires=open('requirements.txt').read().splitlines(),
     packages=setuptools.find_packages(),
     include_package_data=True,
     entry_points={"console_scripts": ["imputegap = imputegap.runner_display:display_title"]}

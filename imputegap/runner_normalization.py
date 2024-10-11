@@ -8,12 +8,18 @@ if __name__ == '__main__':
 
     # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
     ts_1 = TimeSeries()
+
+    # 2. load the timeseries from file or from the code
     ts_1.load_timeseries(utils.search_path(dataset))
+
+    # [OPTIONAL] you can plot your raw data / print the information
     ts_1.plot(raw_data=ts_1.data, title="normal", max_series=3, display=display)
 
+    # 3. normalization of your data with z_score
     ts_1.normalize()
     ts_1.plot(raw_data=ts_1.data, title="z_score", max_series=3, display=display)
 
+    # same process for all normalization
     ts_2 = TimeSeries()
     ts_2.load_timeseries(utils.search_path(dataset))
     ts_2.normalize(normalizer="min_max")

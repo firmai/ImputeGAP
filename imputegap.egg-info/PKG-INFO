@@ -60,9 +60,19 @@ To install these two prerequisites, please refer to the following documentation:
 
 
 ## Installation
-To install ImputeGAP locally, download the package from GitHub and run the command : 
+To install ImputeGAP locally, download the package from GitHub, move inside the folder.
 
-```pip install -e .``` 
+```bash
+$ git init
+$ git clone https://github.com/eXascaleInfolab/ImputeGAP
+$ cd ./ImputeGAP
+``` 
+
+Then, once inside, run the command : 
+
+```bash
+$ pip install -e .
+``` 
 
 
 
