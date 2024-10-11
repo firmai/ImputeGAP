@@ -26,8 +26,7 @@ class TestOptiIMM(unittest.TestCase):
 
 
         algo_opti = Imputation.Regression.IIM(infected_matrix)
-        algo_opti.optimize(raw_data=ts_1.data, optimizer="bayesian",  n_calls=2)
-        algo_opti.impute(params=algo_opti.optimal_params)
+        algo_opti.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})
         algo_opti.score(raw_matrix=ts_1.data)
         metrics_optimal = algo_opti.metrics
 

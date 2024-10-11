@@ -16,7 +16,7 @@ def Data_Loader_With_Dataset(seq_length, data):
         return numerator / (denominator + 1e-8), dmin, dmax
 
     # %% Data Preprocessing
-    print("Preparing data...")
+    #print("Preparing data...")
 
     # Comment out the line where the file is loaded, we assume data is already loaded
     # xy = np.loadtxt(filename, delimiter=" ", skiprows=0)

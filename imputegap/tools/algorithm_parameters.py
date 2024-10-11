@@ -29,26 +29,26 @@ SEARCH_SPACES = {
     'stmvl': [Integer(2, 99, name='window_size'), Real(1e-6, 0.999999, "log-uniform", name='gamma'), Integer(1, 9, name='alpha')],
 }
 
-# Define the search space for each algorithm separately for PSO
 SEARCH_SPACES_PSO = {
-    'cdrec': [(1, 10), (1e-6, 1), (100, 1000)],
+    'cdrec': [(1, 9), (1e-6, 1), (100, 1000)],
     'iim': [(1, 100)],
-    'mrnn': [(1, 100), (1e-6, 1e-2), (1, 100), (1, 100)],
-    'stmvl': [(2, 100), (1e-6, 1e-2), (1, 100)]
+    'mrnn': [(1, 15), (1e-6, 1e-1), (10, 95)],
+    'stmvl': [(2, 99), (1e-6, 0.999999), (1, 9)]
 }
+
 
 # Define the parameter names for each algorithm
 PARAM_NAMES = {
     'cdrec': ['rank', 'epsilon', 'iteration'],
     'iim': ['learning_neighbors'],
-    'mrnn': ['hidden_dim', 'learning_rate', 'iterations', 'seq_len' ],
+    'mrnn': ['hidden_dim', 'learning_rate', 'iterations'],
     'stmvl': ['window_size', 'gamma', 'alpha']
 }
 
 
 CDREC_PARAMS = {'rank': CDREC_RANK_RANGE, 'epsilon': CDREC_EPS_RANGE, 'iteration': CDREC_ITERS_RANGE}
 IIM_PARAMS = {'learning_neighbors': IIM_LEARNING_NEIGHBOR_RANGE}
-MRNN_PARAMS = {'learning_rate': MRNN_LEARNING_RATE_CHANGE, 'hidden_dim': MRNN_HIDDEN_DIM_RANGE, 'seq_len': MRNN_SEQ_LEN_RANGE, 'iterations': MRNN_NUM_ITER_RANGE}
+MRNN_PARAMS = {'learning_rate': MRNN_LEARNING_RATE_CHANGE, 'hidden_dim': MRNN_HIDDEN_DIM_RANGE, 'iterations': MRNN_NUM_ITER_RANGE}
 STMVL_PARAMS = {'window_size': STMVL_WINDOW_SIZE_RANGE, 'gamma': STMVL_GAMMA_RANGE, 'alpha': STMVL_ALPHA_RANGE}
 
 # Create a dictionary to hold all parameter dictionaries for each algorithm

@@ -1,6 +1,8 @@
 import os
+import time
 import numpy as np
 import matplotlib
+from scipy.stats import zscore
 from sklearn.preprocessing import MinMaxScaler
 
 from imputegap.tools import utils
@@ -30,15 +32,15 @@ class TimeSeries:
         """
         if data is not None:
             if isinstance(data, list):
-                print("\nThe time series has been loaded from your code...\n")
                 self.data = np.array(data)
 
             elif isinstance(data, np.ndarray):
-                print("\nThe time series has been loaded from code...\n")
                 self.data = data
             else:
                 print("\nThe time series has not been loaded, format unknown\n")
                 self.data = None
+
+            return self
 
     def load_timeseries(self, data=None, max_series=None, max_values=None):
         """
@@ -64,6 +66,8 @@ class TimeSeries:
                 self.data = None
 
             self.data = self.data.T
+
+            return self
 
     def print(self, limit=10, view_by_series=False):
         """
@@ -124,8 +128,11 @@ class TimeSeries:
         :return: data_normalized, normalized dataset
         """
         print("Normalization of the original time series dataset with ", normalizer)
+        self.data = self.data.T
 
         if normalizer == "min_max":
+            start_time = time.time()  # Record start time
+
             # Compute the min and max for each series (column-wise), ignoring NaN
             ts_min = np.nanmin(self.data, axis=0)
             ts_max = np.nanmax(self.data, axis=0)
@@ -136,7 +143,25 @@ class TimeSeries:
 
             # Apply min-max normalization
             self.data = (self.data - ts_min) / range_ts
+
+            end_time = time.time()
+        elif normalizer == "z_lib":
+            start_time = time.time()  # Record start time
+
+            self.data = zscore(self.data, axis=0)
+
+            end_time = time.time()
+
+        elif normalizer == "m_lib":
+            start_time = time.time()  # Record start time
+
+            scaler = MinMaxScaler()
+            self.data = scaler.fit_transform(self.data)
+
+            end_time = time.time()
         else:
+            start_time = time.time()  # Record start time
+
             mean = np.mean(self.data, axis=0)
             std_dev = np.std(self.data, axis=0)
 
@@ -146,15 +171,22 @@ class TimeSeries:
             # Apply z-score normalization
             self.data = (self.data - mean) / std_dev
 
-    def plot(self, raw_matrix, infected_matrix=None, imputed_matrix=None, title="Time Series Data", max_series=None,
+            end_time = time.time()
+
+        self.data = self.data.T
+
+        print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
+
+
+    def plot(self, raw_data, infected_data=None, imputed_data=None, title="Time Series Data", max_series=None,
              max_values=None, size=(16, 8), save_path="", display=True):
         """
         Plot a chosen time series
         @author Quentin Nater
 
-        :param raw_matrix: original time series without contamination
-        :param infected_matrix: time series with contamination
-        :param imputed_matrix: new time series with imputation values
+        :param raw_data: original time series without contamination
+        :param infected_data: time series with contamination
+        :param imputed_data: new time series with imputation values
         :param title: title of the plot
         :param max_series : limitation of the maximum number of series (computation limitation) | default None
         :param max_values : limitation of the maximum number of values by series (computation limitation) | default None
@@ -166,35 +198,45 @@ class TimeSeries:
         """
         number_of_series = 0
         plt.figure(figsize=size)
+        plt.grid(True, linestyle='--', color='#d3d3d3', linewidth=0.6)
 
         if max_series is None:
-            max_series, _ = raw_matrix.shape
+            max_series, _ = raw_data.shape
         if max_values is None:
-            _, max_values = raw_matrix.shape
+            _, max_values = raw_data.shape
 
-        if raw_matrix is not None:
+        if raw_data is not None:
 
             colors = utils.load_parameters("default", algorithm="colors")
 
-            for i in range(raw_matrix.shape[0]):
+            for i in range(raw_data.shape[0]):
                 color = colors[i % len(colors)]
 
-                if infected_matrix is None and imputed_matrix is None:  # plot only raw matrix
-                    plt.plot(np.arange(min(raw_matrix.shape[1], max_values)), raw_matrix[i, :max_values], linewidth=2.5,
+                if infected_data is None and imputed_data is None:  # plot only raw matrix
+                    plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=2.5,
                              color=color,
                              linestyle='-', label=f'TS {i + 1}')
 
-                if infected_matrix is not None:  # plot infected matrix
-                    if np.isnan(infected_matrix[i, :]).any():
-                        plt.plot(np.arange(min(raw_matrix.shape[1], max_values)), raw_matrix[i, :max_values], 'r--', label=f'TS-RAW {i + 1}')
+                if infected_data is not None and imputed_data is None:  # plot infected matrix
 
-                        if imputed_matrix is None:
-                            plt.plot(np.arange(min(infected_matrix.shape[1], max_values)),
-                                     infected_matrix[i, :max_values], linewidth=2.5, color=color, linestyle='-', label=f'TS-CON {i + 1}')
+                    if np.isnan(infected_data[i, :]).any():
+                        plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5, color='r', linestyle='--', label=f'TS-MB {i + 1}')
 
-                if imputed_matrix is not None:  # plot imputed matrix
-                    plt.plot(np.arange(min(imputed_matrix.shape[1], max_values)), imputed_matrix[i, :max_values],
-                             linewidth=2.5, color=color, linestyle='-', label=f'TS-IMP {i + 1}')
+                    plt.plot(np.arange(min(infected_data.shape[1], max_values)), infected_data[i, :max_values], color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+
+
+
+                if imputed_data is not None:  # plot imputed matrix
+
+                    if np.isnan(infected_data[i, :]).any():
+                        plt.plot(np.arange(min(imputed_data.shape[1], max_values)), imputed_data[i, :max_values], linestyle='-', color="r", label=f'TS-IMP {i + 1}')
+
+                    if np.isnan(infected_data[i, :]).any():
+                        plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5, linestyle='--', color=color, label=f'TS-MB {i + 1}')
+
+                    plt.plot(np.arange(min(infected_data.shape[1], max_values)), infected_data[i, :max_values], color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+
+
 
                 number_of_series += 1
                 if number_of_series == max_series:
@@ -203,7 +245,7 @@ class TimeSeries:
         plt.xlabel('Time Shift')
         plt.ylabel('Values')
         plt.title(title)
-        plt.legend(loc='upper right', bbox_to_anchor=(1.11, 1))
+        plt.legend(loc='upper right', fontsize=12, frameon=True, fancybox=True, shadow=True, borderpad=1.5)
 
         file_path = None
         if save_path:
@@ -214,11 +256,10 @@ class TimeSeries:
         if display:
             plt.show()
 
-        plt.close()
+        #plt.close()
 
         return file_path
 
-    import numpy as np
 
     class Contaminate:
 

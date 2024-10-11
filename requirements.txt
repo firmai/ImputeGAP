@@ -9,6 +9,7 @@ tensorflow==2.17.0
 shap==0.44.1
 pycatch22==0.4.5
 scikit-optimize==0.10.2
+pyswarms==1.3.0
 types-toml
 types-setuptools
 wheel

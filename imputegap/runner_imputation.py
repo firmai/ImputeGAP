@@ -1,46 +1,45 @@
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
-from imputegap.tools.utils import display_title
 from imputegap.tools import utils
 
-
 if __name__ == '__main__':
-
     dataset, algo = "eeg", "cdrec"
+    utils.display_title()
 
-    display_title()
-
+    # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
     ts_1 = TimeSeries()
+
+    # 2. load the timeseries from file or from the code
     ts_1.load_timeseries(utils.search_path(dataset))
-    ts_1.plot(raw_matrix=ts_1.data, title="raw_data", max_series=1, save_path="assets", display=False)
-    infected_matrix = ts_1.Contaminate.mcar(ts_1.data)
+    ts_1.normalize(normalizer="min_max")
 
-    ts_2 = TimeSeries()
-    ts_2.import_matrix(infected_matrix)
+    # [OPTIONAL] you can plot your raw data / print the information
+    ts_1.plot(raw_data=ts_1.data, title="raw_data", max_series=10, max_values=100, save_path="assets", display=False)
+    ts_1.print(limit=10)
+
+    # 3. contamination of the data
+    infected_data = ts_1.Contaminate.mcar(ts_1.data)
+
+    # [OPTIONAL] save your results in a new Time Series object
+    ts_2 = TimeSeries().import_matrix(infected_data)
+
+    # [OPTIONAL] you can plot your contaminated data / print the information
+    ts_2.print(limit=5)
+    ts_2.plot(raw_data=ts_1.data, infected_data=infected_data, title="contamination", max_series=1, save_path="assets", display=False)
+
+    # 4. imputation of the contaminated data
+    # choice of the algorithm, and their parameters (default, automl, or defined by the user)
+    cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer":"bayesian", "options": {"n_calls": 2}})
+
+    # [OPTIONAL] save your results in a new Time Series object
+    ts_3 = TimeSeries().import_matrix(cdrec.imputed_matrix)
+
+    # 5. score the imputation with the raw_data
+    cdrec.score(ts_1.data, ts_3.data)
+
+    # 6. display the results
     ts_2.print(view_by_series=True)
-    ts_2.plot(raw_matrix=ts_1.data, infected_matrix=ts_2.data, title="contamination", max_series=1, save_path="assets", display=False)
+    ts_2.print_results(cdrec.metrics, algorithm=algo)
+    ts_2.plot(raw_data=ts_1.data, infected_data=ts_2.data, imputed_data=ts_3.data, max_series=2, save_path="assets", display=True)
 
-    if algo == "cdrec":
-        imp = Imputation.MD.CDRec(ts_2.data)
-    elif algo == "stmvl":
-        imp = Imputation.Pattern.STMVL(ts_2.data)
-    elif algo == "iim":
-        imp = Imputation.Regression.IIM(ts_2.data)
-    elif algo == "mrnn":
-        imp = Imputation.ML.MRNN(ts_2.data)
-    else:
-        imp = Imputation.Stats.MinImpute(ts_2.data)
-
-
-    imp.optimize(ts_1.data, n_calls=2)
-    imp.impute(imp.optimal_params)
-    imp.score(ts_1.data)
-
-    ts_3 = TimeSeries()
-    ts_3.import_matrix(imp.imputed_matrix)
-    ts_3.print(view_by_series=True)
-    ts_3.print_results(imp.metrics, algorithm=algo)
-
-    ts_3.plot(raw_matrix=ts_1.data, infected_matrix=ts_2.data, imputed_matrix=ts_3.data, title="imputation", max_series=1, save_path="assets", display=False)
-
-    print("\n", "_"*95, "end")
+    print("\n", "_" * 95, "end")

@@ -1,4 +1,5 @@
 import ctypes
+import time
 import os
 import platform
 import ctypes as __native_c_types_import;
@@ -34,7 +35,7 @@ def load_share_lib(name = "lib_stmvl"):
         lib_path = os.path.join(local_path_win)
     else:
         lib_path = os.path.join(local_path_lin)
-    print("\n", lib_path, " has been loaded...")
+    #print("\n", lib_path, " has been loaded...")
 
     return ctypes.CDLL(lib_path)
 
@@ -86,7 +87,7 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     return __py_recovered;
 
 
-def stmvl(contamination, window_size, gamma, alpha):
+def stmvl(contamination, window_size, gamma, alpha, logs=True):
     """
     CDREC algorithm for imputation of missing data
     @author : Quentin Nater
@@ -96,12 +97,19 @@ def stmvl(contamination, window_size, gamma, alpha):
     :param gamma: smoothing parameter for temporal weight
     :param alpha: power for spatial weight
 
+    :param logs: print logs of time execution
+
     :return: imputed_matrix, metrics : all time series with imputation data and their metrics
 
     """
+    start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
     imputed_matrix = native_stmvl(contamination, window_size, gamma, alpha)
+
+    end_time = time.time()
+    if logs:
+        print(f"\n\t\t> logs, imputation stvml - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return imputed_matrix
 

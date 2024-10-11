@@ -59,7 +59,7 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
     denominator = dmax - dmin
     x = (x * denominator) + dmin
 
-    print("Time (MRNN):", (timev * 1000 * 1000))
+    #print("Time (MRNN):", (timev * 1000 * 1000))
 
     #if runtime > 0:
     #    np.savetxt(matrix_out, np.array([timev * 1000 * 1000]))  # to microsec
