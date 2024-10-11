@@ -11,6 +11,7 @@ if __name__ == '__main__':
 
     # 2. load the timeseries from file or from the code
     ts_1.load_timeseries(utils.search_path(dataset))
+    ts_1.normalize(normalizer="min_max")
 
     # [OPTIONAL] you can plot your raw data / print the information
     ts_1.plot(raw_data=ts_1.data, title="raw_data", max_series=10, max_values=100, save_path="assets", display=False)
@@ -28,9 +29,6 @@ if __name__ == '__main__':
 
     # 4. imputation of the contaminated data
     # choice of the algorithm, and their parameters (default, automl, or defined by the user)
-    #cdrec = Imputation.MD.CDRec(infected_data).impute()
-    #cdrec = Imputation.MD.CDRec(infected_data).impute(params={"rank": 5, "epsilon":0.00001, "iterations":100})
-    #cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=True, params=(5, 0.000001,100))
     cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer":"bayesian", "options": {"n_calls": 2}})
 
     # [OPTIONAL] save your results in a new Time Series object

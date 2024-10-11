@@ -106,6 +106,12 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         n_processes = int(config['pso']['n_processes'])
         selected_metrics = config['pso']['selected_metrics']
         return (n_particles, c1, c2, w, iterations, n_processes, [selected_metrics])
+    elif algorithm == "sh":
+        num_configs = int(config['sh']['num_configs'])
+        num_iterations = int(config['sh']['num_iterations'])
+        reduction_factor = int(config['sh']['reduction_factor'])
+        selected_metrics = config['sh']['selected_metrics']
+        return (num_configs, num_iterations, reduction_factor, [selected_metrics])
     elif algorithm == "colors":
         colors = config['colors']['plot']
         return colors

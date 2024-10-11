@@ -1,5 +1,6 @@
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
+from imputegap.recovery.optimization import Optimization
 from imputegap.tools import utils
 from imputegap.tools.utils import display_title
 
@@ -40,14 +41,14 @@ if __name__ == '__main__':
             else:
                 manager = Imputation.Pattern.STMVL(infected_matrix)
 
-            manager.impute(user_defined=False, params={"ground_truth": ts_01.data, "optimizer": "pso", "options": {"n_particles": 10, "iterations": 2}})
+            manager.impute(user_defined=False, params={"ground_truth": ts_01.data, "optimizer": "bayesian", "options": {"n_calls": 5}})
 
             print("\nOptical Params : ", manager.parameters, "\n")
 
             manager.score(ts_01.data)
             ts_01.print_results(metrics=manager.metrics, algorithm=algo)
 
-            #Optimization.save_optimization(optimal_params=manager.parameters, algorithm=algo, dataset=filename, optimizer="b")
+            Optimization.save_optimization(optimal_params=manager.parameters, algorithm=algo, dataset=filename, optimizer="sh")
 
             print("\n", "_"*45, "end")
     print("\n", "_" * 95, "end")

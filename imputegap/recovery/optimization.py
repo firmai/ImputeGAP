@@ -5,6 +5,8 @@ from itertools import product
 import numpy as np
 from imputegap.recovery.imputation import Imputation
 from imputegap.tools.algorithm_parameters import SEARCH_SPACES, ALL_ALGO_PARAMS, PARAM_NAMES, SEARCH_SPACES_PSO
+import imputegap.tools.algorithm_parameters as sh_params
+
 
 # PSO IMPORT
 from functools import partial
@@ -29,6 +31,10 @@ class Optimization:
 
         if not os.path.exists(file_name):
             file_name = file_name[1:]
+
+        dir_name = os.path.dirname(file_name)
+        if dir_name and not os.path.exists(dir_name):
+            os.makedirs(dir_name)
 
         params_to_save = {algorithm: optimal_params}
 
@@ -232,3 +238,90 @@ class Optimization:
             print(f"\n\t\t> logs, optimization pso - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
             return optimal_params_dict, cost
+
+    class SuccessiveHalving:
+
+
+        def _objective(self, errors_dict, selected_metrics):
+            selected_errors = [errors_dict[metric] for metric in selected_metrics]
+            return np.mean(selected_errors)
+
+        def optimize(self, ground_truth, contamination, selected_metrics, algorithm, num_configs, num_iterations, reduction_factor):
+            """
+            Conduct the Particle swarm optimization for hyperparameters.
+
+            Parameters
+            ----------
+            :param ground_truth : time series data set to optimize
+            :param contamination : time series contaminate to impute
+            :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
+            :param algorithm : imputation algorithm | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default 'cdrec'
+            :param num_configs: sh parameters, number of configurations to try.
+            :param num_iterations: sh parameters, number of iterations to run the optimization.
+            :param reduction_factor: sh parameters, reduction factor for the number of configurations kept after each iteration.
+
+
+            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores, Cost of the optimization
+            """
+            start_time = time.time()  # Record start time
+
+            # Define the parameter names for each algorithm
+            param_names = PARAM_NAMES
+
+            data_length = len(ground_truth)
+            chunk_size = data_length // num_iterations
+
+            # prepare configurations for each algorithm separately
+            if algorithm == 'cdrec':
+                max_rank = contamination.shape[1] - 1
+                temp_rank_range = [i for i in sh_params.CDREC_RANK_RANGE if i < max_rank]
+
+                if not temp_rank_range:
+                    raise ValueError("No suitable rank found within CDREC_RANK_RANGE for the given matrix shape!")
+
+                configs = [(np.random.choice(temp_rank_range),
+                            np.random.choice(sh_params.CDREC_EPS_RANGE),
+                            np.random.choice(sh_params.CDREC_ITERS_RANGE)) for _ in range(num_configs)]
+            elif algorithm == 'iim':
+                configs = [(np.random.choice(sh_params.IIM_LEARNING_NEIGHBOR_RANGE))
+                           for _ in range(num_configs)]
+            elif algorithm == 'mrnn':
+                configs = [(np.random.choice(sh_params.MRNN_HIDDEN_DIM_RANGE),
+                            np.random.choice(sh_params.MRNN_LEARNING_RATE_CHANGE),
+                            np.random.choice(sh_params.MRNN_NUM_ITER_RANGE)) for _ in range(num_configs)]
+            elif algorithm == 'stmvl':
+                configs = [(np.random.choice(sh_params.STMVL_WINDOW_SIZE_RANGE),
+                            np.random.choice(sh_params.STMVL_GAMMA_RANGE),
+                            np.random.choice(sh_params.STMVL_ALPHA_RANGE)) for _ in range(num_configs)]
+            else:
+                raise ValueError(f"Invalid algorithm: {algorithm}")
+
+            for i in range(num_iterations):
+                # Calculate how much data to use in this iteration
+                end_idx = (i + 1) * chunk_size
+                partial_ground_truth = ground_truth[:end_idx]
+                partial_obfuscated = contamination[:end_idx]
+
+                scores = [self._objective(Imputation.evaluate_params(partial_ground_truth, partial_obfuscated, config, algorithm), selected_metrics) for config in configs]
+
+                top_configs_idx = np.argsort(scores)[:max(1, len(configs) // reduction_factor)]
+                configs = [configs[i] for i in top_configs_idx]
+                if len(configs) <= 1:
+                    break  # Exit the loop if only 1 configuration remains
+
+            if not configs:
+                raise ValueError("No configurations left after successive halving.")
+
+            if algorithm == 'iim':
+                best_config = min(configs, key=lambda single_config: self._objective( Imputation.evaluate_params(ground_truth, contamination, [single_config], algorithm), selected_metrics))
+            else:
+                best_config = min(configs, key=lambda config: self._objective(Imputation.evaluate_params(ground_truth, contamination, config, algorithm), selected_metrics))
+
+            best_score = self._objective(Imputation.evaluate_params(ground_truth, contamination, best_config, algorithm), selected_metrics)
+
+            best_config_dict = {name: value for name, value in zip(param_names[algorithm], best_config)}
+
+            end_time = time.time()
+            print(f"\n\t\t> logs, optimization sh - Execution Time: {(end_time - start_time):.4f} seconds\n")
+
+            return best_config_dict, best_score

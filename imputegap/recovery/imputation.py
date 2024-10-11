@@ -100,10 +100,12 @@ class BaseImputer:
 
         if optimizer == "bayesian":
             n_calls_d, n_random_starts_d, acq_func_d, selected_metrics_d = defaults
-            n_calls = parameters.get('n_calls', n_calls_d)
-            random_starts = parameters.get('n_random_starts', n_random_starts_d)
-            func = parameters.get('acq_func', acq_func_d)
-            metrics = parameters.get('selected_metrics', selected_metrics_d)
+            options = parameters.get('options', {})
+
+            n_calls = options.get('n_calls', n_calls_d)
+            random_starts = options.get('n_random_starts', n_random_starts_d)
+            func = options.get('acq_func', acq_func_d)
+            metrics = options.get('selected_metrics', selected_metrics_d)
 
             optimal_params, _ = Optimization.Bayesian.optimize(ground_truth=raw_data,
                                                                contamination=self.infected_matrix,
@@ -115,13 +117,15 @@ class BaseImputer:
         elif optimizer == "pso":
 
             n_particles_d, c1_d, c2_d, w_d, iterations_d, n_processes_d, selected_metrics_d = defaults
-            n_particles = parameters.get('n_particles', n_particles_d)
-            c1 = parameters.get('c1', c1_d)
-            c2 = parameters.get('c2', c2_d)
-            w = parameters.get('w', w_d)
-            iterations = parameters.get('iterations', iterations_d)
-            n_processes = parameters.get('n_processes', n_processes_d)
-            metrics = parameters.get('selected_metrics', selected_metrics_d)
+            options = parameters.get('options', {})
+
+            n_particles = options.get('n_particles', n_particles_d)
+            c1 = options.get('c1', c1_d)
+            c2 = options.get('c2', c2_d)
+            w = options.get('w', w_d)
+            iterations = options.get('iterations', iterations_d)
+            n_processes = options.get('n_processes', n_processes_d)
+            metrics = options.get('selected_metrics', selected_metrics_d)
 
             swarm_optimizer = Optimization.ParticleSwarm()
 
@@ -129,11 +133,30 @@ class BaseImputer:
                                                              contamination=self.infected_matrix,
                                                              selected_metrics=metrics, algorithm=self.algorithm,
                                                              n_particles=n_particles, c1=c1, c2=c2, w=w, iterations=iterations,n_processes=n_processes)
+
+        elif optimizer == "sh":
+
+            num_configs_d, num_iterations_d, reduction_factor_d, selected_metrics_d = defaults
+            options = parameters.get('options', {})
+
+            num_configs = options.get('num_configs', num_configs_d)
+            num_iterations = options.get('num_iterations', num_iterations_d)
+            reduction_factor = options.get('reduction_factor', reduction_factor_d)
+            metrics = options.get('selected_metrics', selected_metrics_d)
+
+            sh_optimizer = Optimization.SuccessiveHalving()
+
+            optimal_params, _ = sh_optimizer.optimize(ground_truth=raw_data,
+                                                             contamination=self.infected_matrix,
+                                                             selected_metrics=metrics, algorithm=self.algorithm,
+                                                             num_configs=num_configs, num_iterations=num_iterations, reduction_factor=reduction_factor)
+
         else:
             n_calls_d, selected_metrics_d = defaults
+            options = parameters.get('options', {})
 
-            n_calls = parameters.get('n_calls', n_calls_d)
-            metrics = parameters.get('selected_metrics', selected_metrics_d)
+            n_calls = options.get('n_calls', n_calls_d)
+            metrics = options.get('selected_metrics', selected_metrics_d)
 
             optimal_params, _ = Optimization.Greedy.optimize(ground_truth=raw_data,
                                                              contamination=self.infected_matrix,
@@ -246,7 +269,7 @@ class Imputation:
 
                 option 1 : algorithm parameters ___________________________________________________
 
-                    tuples((int) truncation_rank, (float) epsilon, (int) iterations)
+                    dict { "rank" : (int), "epsilon": (float), "iteratios" : (int)}
 
                     truncation_rank: rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series)
 
@@ -257,15 +280,13 @@ class Imputation:
 
                 option 2 : automl parameters________________________________________________________
 
-                    tuples((str) flag, (numpy) ground truth, (str) optimizer*, (int) n_calls*, List(str) selected_metrics*, (int) n_random_starts*, (str) acq_func*)
+                    {"ground_truth": (numpy.ndarray), "optimizer": (string), "options": (dict)
 
-                    flag : activate or not the optimization : "automl"
+                    ground_truth : values of time series without contamination
 
-                    numpy : ground truth, TimeSeries().data
+                    optimizer = ("bayesian", "greedy", "pso", "sh"), name of the optimizer
 
-                    optimizer : [OPTIONAL] choice of the optimizer : "bayesian" or "greedy"  | default "bayesian"
-
-                    parameters : [OPTIONAL] parameters of each optimizer
+                    options : [OPTIONAL] parameters of each optimizer
 
                         Bayesian :
 
@@ -282,6 +303,28 @@ class Imputation:
                         n_calls: [OPTIONAL] bayesian parameters, number of calls to the objective function. | default 3
 
                         selected_metrics : [OPTIONAL] list of selected metrics to consider for optimization. | default ["RMSE"]
+
+                        PSO :
+
+                        n_particles: [OPTIONAL] pso parameters, number of particles used
+
+                        c1: [OPTIONAL] pso parameters, c1 option value
+
+                        c2: [OPTIONAL] pso parameters, c2 option value
+
+                        w: [OPTIONAL] pso parameters, w option value
+
+                        iterations: [OPTIONAL] pso parameters, number of iterations for the optimization
+
+                        n_processes: [OPTIONAL] pso parameters, number of process during the optimization
+
+                        SH :
+
+                        num_configs: [OPTIONAL] sh parameters, number of configurations to try.
+
+                        num_iterations: [OPTIONAL] sh parameters, number of iterations to run the optimization.
+
+                        reduction_factor: [OPTIONAL] sh parameters, reduction factor for the number of configurations kept after each iteration.
                 """
                 if params is not None:
                     rank, epsilon, iterations = self._check_params(user_defined, params)
