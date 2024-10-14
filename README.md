@@ -1,4 +1,4 @@
-![My Logo](assets/logo_imputegab.png)
+![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
 
 # Welcome to ImputeGAP
 ImputeGAP is a unified framework for imputation algorithms that provides a narrow-waist interface between algorithm evaluation and parameterization for datasets issued from various domains ranging from neuroscience, medicine, climate to energy.
@@ -17,7 +17,7 @@ In order to use **ImputeGAP**, you must have :
 * Run your implementation on a **Unix-compatible environment**.
 <br><br>
 
-To install these two prerequisites, please refer to the following documentation: <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/docs/installation#readme" >install requirements</a><br><br>
+To install these two prerequisites, please refer to the following documentation: <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs/installation" >install requirements</a><br><br>
 
 
 
@@ -28,9 +28,34 @@ To install these two prerequisites, please refer to the following documentation:
 
 
 ## Installation
-To install ImputeGAP locally, download the package from GitHub and run the command : 
+To install ImputeGAP locally, download the package from GitHub, move inside the folder.<br />
+<br />
 
-```pip install -e .``` 
+### Pip installation
+```bash
+$ pip install imputegap
+``` 
+<br />
+
+### Local installation
+```bash
+$ git init
+$ git clone https://github.com/eXascaleInfolab/ImputeGAP
+$ cd ./ImputeGAP
+``` 
+
+Then, once inside, run the command : 
+
+```bash
+$ pip install -e .
+``` 
+
+
+
+<br /><hr /><br />
+
+## Datasets
+All datasets preconfigured in this library can be found here : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/naterq_skeleton_refac_3/imputegap/dataset" >link to datasets</a>
 
 
 
@@ -176,7 +201,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 ts_1.load_timeseries(utils.search_path("eeg"))
 
-# Call the explaination of your dataset with a specific algorithm to gain insight on the Imputation results
+# call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
 shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name="eeg", algorithm="cdrec")
 
 # [OPTIONAL] print the results with the impact of each feature.

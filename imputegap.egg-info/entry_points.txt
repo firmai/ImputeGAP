@@ -1,2 +1,2 @@
 [console_scripts]
-imputegap = imputegap.runner:display_title
+imputegap = imputegap.runner_display:display_title
