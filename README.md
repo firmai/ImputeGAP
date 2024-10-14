@@ -1,4 +1,4 @@
-![My Logo](assets/logo_imputegab.png)
+![My Logo](https://raw.githubusercontent.com/eXascaleInfolab/ImputeGAP/main/assets/logo_imputegab.png)
 
 # Welcome to ImputeGAP
 ImputeGAP is a unified framework for imputation algorithms that provides a narrow-waist interface between algorithm evaluation and parameterization for datasets issued from various domains ranging from neuroscience, medicine, climate to energy.

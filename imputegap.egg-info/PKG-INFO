@@ -8,10 +8,10 @@ Author-email: quentin.nater@unifr.ch
 License: The Unlicense
 Project-URL: Documentation, https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs
 Project-URL: Source, https://github.com/eXascaleInfolab/ImputeGAP
-Classifier: Development Status :: 1 - Beta
+Classifier: Development Status :: 2 - Pre-Alpha
 Classifier: Intended Audience :: Developers
-Classifier: Programming Language :: Python :: 3.8
-Classifier: Topic :: Imputation
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering
 Requires-Python: >= 3.12.0,<3.12.6
 Description-Content-Type: text/markdown
 Requires-Dist: numpy==1.26.4

@@ -4,51 +4,40 @@ from imputegap.recovery.optimization import Optimization
 from imputegap.tools import utils
 from imputegap.tools.utils import display_title
 
-def check_block_size(filename):
-    if "test" in filename:
-        return (2, 2)
-    else:
-        return (10, 10)
-
 
 if __name__ == '__main__':
 
     display_title()
-    datasets = ["eeg"]
-    #datasets = ["bafu", "chlorine", "climate", "drift", "eeg", "meteo", "test-large"]
+    dataset, algorithm = "eeg", "cdrec"
 
-    algorithms = ["cdrec"]
-    #algorithms = ["cdrec", "stmvl", "iim", "mrnn"]
 
-    for filename in datasets :
-        ts_01 = TimeSeries()
-        ts_01.load_timeseries(data=utils.search_path(filename), max_series=100, max_values=1000)
+    # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
+    ts_01 = TimeSeries()
 
-        block_size, plot_limit = check_block_size(filename)
+    # 2. load the timeseries from file or from the code
+    ts_01.load_timeseries(data=utils.search_path(dataset), max_series=100, max_values=1000)
 
-        infected_matrix = ts_01.Contaminate.mcar(ts=ts_01.data, use_seed=True, seed=42)
-        ts_01.print(limit=5)
+    # 3. contamination of the data
+    infected_matrix = ts_01.Contaminate.mcar(ts=ts_01.data, use_seed=True, seed=42)
 
-        for algo in algorithms:
-            print("RUN OPTIMIZATION FOR : ", algo, "... with ", filename, "...")
+    # 4. config imputation depending on the algorithm
+    if algorithm == "cdrec":
+        manager = Imputation.MD.CDRec(infected_matrix)
+    elif algorithm == "mrnn":
+        manager = Imputation.ML.MRNN(infected_matrix)
+    elif algorithm == "iim":
+        manager = Imputation.Regression.IIM(infected_matrix)
+    else:
+        manager = Imputation.Pattern.STMVL(infected_matrix)
 
-            if algo == "cdrec":
-                manager = Imputation.MD.CDRec(infected_matrix)
-            elif algo == "mrnn":
-                manager = Imputation.ML.MRNN(infected_matrix)
-            elif algo == "iim":
-                manager = Imputation.Regression.IIM(infected_matrix)
-            else:
-                manager = Imputation.Pattern.STMVL(infected_matrix)
+    # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
+    manager.impute(user_defined=False, params={"ground_truth": ts_01.data, "optimizer": "bayesian", "options": {"n_calls": 5}})
 
-            manager.impute(user_defined=False, params={"ground_truth": ts_01.data, "optimizer": "bayesian", "options": {"n_calls": 5}})
+    print("\nOptical Params : ", manager.parameters, "\n")
 
-            print("\nOptical Params : ", manager.parameters, "\n")
+    # 5. score the imputation with the raw_data
+    manager.score(ts_01.data)
 
-            manager.score(ts_01.data)
-            ts_01.print_results(metrics=manager.metrics, algorithm=algo)
-
-            Optimization.save_optimization(optimal_params=manager.parameters, algorithm=algo, dataset=filename, optimizer="sh")
-
-            print("\n", "_"*45, "end")
-    print("\n", "_" * 95, "end")
+    # 6. display results and save the optimal values in a persistent file
+    ts_01.print_results(metrics=manager.metrics, algorithm=algorithm)
+    Optimization.save_optimization(optimal_params=manager.parameters, algorithm=algorithm, dataset=dataset, optimizer="sh")

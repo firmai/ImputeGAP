@@ -41,5 +41,3 @@ if __name__ == '__main__':
     ts_2.print(view_by_series=True)
     ts_2.print_results(cdrec.metrics, algorithm=algo)
     ts_2.plot(raw_data=ts_1.data, infected_data=ts_2.data, imputed_data=ts_3.data, max_series=2, save_path="assets", display=True)
-
-    print("\n", "_" * 95, "end")

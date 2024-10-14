@@ -6,7 +6,7 @@ setuptools.setup(
     name="imputegap",
     version="0.1.0",
     description="A Library of Imputation Techniques for Time Series Data",
-    long_description=pathlib.Path("README.md").read_text(),
+    long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     url="https://github.com/eXascaleInfolab/ImputeGAP",
     author="Quentin Nater",
@@ -17,10 +17,10 @@ setuptools.setup(
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"
     },
     classifiers=[
-        "Development Status :: 1 - Beta",
+        "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
-        "Programming Language :: Python :: 3.8",
-        "Topic :: Imputation"
+        "Programming Language :: Python :: 3.12",
+        "Topic :: Scientific/Engineering"
     ],
     python_requires=">= 3.12.0,<3.12.6",
     install_requires=open('requirements.txt').read().splitlines(),

@@ -1,0 +1,8 @@
+python3 -m build
+pip install .
+
+twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+pypi-AgEIcHlwaS5vcmcCJDUzZjgzMDNmLWY1YzctNDlkYy1iMTcyLTFmMjJjMGEwMzk4MAACKlszLCI4Nzc1ZWQzYS1hZTQxLTRlZTQtODUwMy02MzI1YTI4ZDQ2MTkiXQAABiCy_c2NRNpP7TIhDomCGXUAtdI2qkc04nPHSF0snaBN2A
+
+pip install --index-url https://test.pypi.org/simple/ imputegap
