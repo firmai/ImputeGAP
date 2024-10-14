@@ -1,4 +1,4 @@
-![My Logo](https://raw.githubusercontent.com/eXascaleInfolab/ImputeGAP/main/assets/logo_imputegab.png)
+![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
 
 # Welcome to ImputeGAP
 ImputeGAP is a unified framework for imputation algorithms that provides a narrow-waist interface between algorithm evaluation and parameterization for datasets issued from various domains ranging from neuroscience, medicine, climate to energy.
@@ -28,8 +28,16 @@ To install these two prerequisites, please refer to the following documentation:
 
 
 ## Installation
-To install ImputeGAP locally, download the package from GitHub, move inside the folder.
+To install ImputeGAP locally, download the package from GitHub, move inside the folder.<br />
+<br />
 
+### Pip installation
+```bash
+$ pip install imputegap
+``` 
+<br />
+
+### Local installation
 ```bash
 $ git init
 $ git clone https://github.com/eXascaleInfolab/ImputeGAP

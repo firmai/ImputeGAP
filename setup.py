@@ -13,7 +13,7 @@ setuptools.setup(
     author_email="quentin.nater@unifr.ch",
     license="The Unlicense",
     project_urls = {
-        "Documentation": "https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs",
+        "Documentation": "https://github.com/eXascaleInfolab/ImputeGAP/tree/main",
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"
     },
     classifiers=[

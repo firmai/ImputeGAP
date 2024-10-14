@@ -1,4 +1,5 @@
-![My Logo](../../assets/logo_imputegab.png)
+![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
+
 
 # ImputeGAP - Datasets
 ImputeGap uses several datasets containing different characteristics to test your implementations.
