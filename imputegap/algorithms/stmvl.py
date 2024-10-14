@@ -1,7 +1,7 @@
 import ctypes
 import time
 import os
-import platform
+import importlib.resources
 import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
 
@@ -17,25 +17,22 @@ def __marshal_as_native_column(__py_matrix):
     return __ctype_marshal;
 
 
-def load_share_lib(name = "lib_stmvl"):
+def load_share_lib(name = "lib_stmvl", lib=True):
     """
     Determine the OS and load the correct shared library
     :param name: name of the library
     :return: the correct path to the library
     """
 
-    local_path_win = './algorithms/lib/'+name+'.dll'
-    local_path_lin = './algorithms/lib/'+name+'.so'
-
-    if not os.path.exists(local_path_lin):
-        local_path_win = './imputegap/algorithms/lib/'+name+'.dll'
-        local_path_lin = './imputegap/algorithms/lib/'+name+'.so'
-
-    if platform.system() == 'Windows':
-        lib_path = os.path.join(local_path_win)
+    if lib:
+        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./lib_stmvl.so")
     else:
+        local_path_lin = './algorithms/lib/'+name+'.so'
+
+        if not os.path.exists(local_path_lin):
+            local_path_lin = './imputegap/algorithms/lib/'+name+'.so'
+
         lib_path = os.path.join(local_path_lin)
-    #print("\n", lib_path, " has been loaded...")
 
     return ctypes.CDLL(lib_path)
 

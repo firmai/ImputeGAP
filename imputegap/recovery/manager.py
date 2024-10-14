@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib
 from scipy.stats import zscore
 from sklearn.preprocessing import MinMaxScaler
+import importlib.resources
 
 from imputegap.tools import utils
 
@@ -11,6 +12,7 @@ if os.getenv('CI') is None:
     matplotlib.use('TkAgg')
 
 from matplotlib import pyplot as plt  # type: ignore
+
 
 
 class TimeSeries:
@@ -57,6 +59,10 @@ class TimeSeries:
         if data is not None:
             if isinstance(data, str):
                 print("\nThe time series has been loaded from " + str(data) + "\n")
+
+                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg.txt", "meteo.txt", "test.txt", "test-large.txt"] :
+                    data = importlib.resources.files('imputegap.dataset').joinpath(data)
+
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values)
 
                 if max_series is not None:

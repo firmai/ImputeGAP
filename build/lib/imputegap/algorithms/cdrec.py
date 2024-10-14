@@ -1,9 +1,10 @@
 import ctypes
 import os
-import platform
 import time
 import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
+import importlib.resources
+
 
 
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
@@ -19,23 +20,21 @@ def __marshal_as_native_column(__py_matrix):
     return __ctype_marshal;
 
 
-def load_share_lib(name="lib_cdrec"):
+def load_share_lib(name="lib_cdrec", lib=True):
     """
     Determine the OS and load the correct shared library
     :param name: name of the library
     :return: the correct path to the library
     """
 
-    local_path_win = './algorithms/lib/' + name + '.dll'
-    local_path_lin = './algorithms/lib/' + name + '.so'
-
-    if not os.path.exists(local_path_lin):
-        local_path_win = './imputegap/algorithms/lib/' + name + '.dll'
-        local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
-
-    if platform.system() == 'Windows':
-        lib_path = os.path.join(local_path_win)
+    if lib:
+        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./lib_cdrec.so")
     else:
+        local_path_lin = './algorithms/lib/' + name + '.so'
+
+        if not os.path.exists(local_path_lin):
+            local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
+
         lib_path = os.path.join(local_path_lin)
 
     return ctypes.CDLL(lib_path)
@@ -81,7 +80,7 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
     return __py_recovered;
 
 
-def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True):
+def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_path=None):
     """
     CDREC algorithm for imputation of missing data
     @author : Quentin Nater
@@ -92,6 +91,7 @@ def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True):
     :param iterations : number of iterations
 
     :param logs: print logs of time execution
+    :param lib_path: file to library
 
     :return: imputed_matrix, metrics : all time series with imputation data and their metrics
 

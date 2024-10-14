@@ -17,15 +17,15 @@ def search_path(set_name="test"):
     :return: correct file paths
     """
 
-    if set_name is ["bafu", "chlorine", "climate", "drift", "eeg", "meteo", "test", "test-large"]:
-        filepath = importlib.resources.files('imputegap.dataset').joinpath(set_name + ".txt")
+    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg", "meteo", "test", "test-large"]:
+        return set_name + ".txt"
     else:
         filepath = "../imputegap/dataset/" + set_name + ".txt"
 
         if not os.path.exists(filepath):
             filepath = filepath[1:]
 
-    return filepath
+        return filepath
 
 
 def get_save_path_asset():
