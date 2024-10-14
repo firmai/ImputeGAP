@@ -3,23 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/imputegap/algorithms/cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/imputegap/algorithms/cdrec.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/imputegap/algorithms/stmvl.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/imputegap/algorithms/stmvl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/imputegap/explainer/explainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/imputegap/explainer/explainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/imputegap/recovery/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/imputegap/recovery/manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/lib/imputegap/tools/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/build/lib/imputegap/tools/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/imputegap-0.1.0-py3-none-any.whl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/imputegap-0.1.0.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/imputegap-0.1.1-py3-none-any.whl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/imputegap-0.1.1.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/algorithms/cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/algorithms/cdrec.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/algorithms/stmvl.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/algorithms/stmvl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/TimeSeriesData_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/assets/TimeSeriesData_graph.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/tools/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/tools/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/report.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/report.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,17 +40,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap/dataset",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap/dataset&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\dataset" />
@@ -243,7 +228,8 @@
       <workItem from="1728570687218" duration="591000" />
       <workItem from="1728574027395" duration="4566000" />
       <workItem from="1728641868817" duration="13998000" />
-      <workItem from="1728902762091" duration="15392000" />
+      <workItem from="1728902762091" duration="15605000" />
+      <workItem from="1728932570281" duration="1546000" />
     </task>
     <servers />
   </component>
