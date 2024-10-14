@@ -1,7 +1,6 @@
 ![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
 
 
-
 # CONTAMINATION
 ## Scenarios
 <table>

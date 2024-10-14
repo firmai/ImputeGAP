@@ -249,6 +249,7 @@ class TimeSeries:
 
         file_path = None
         if save_path:
+            os.makedirs(save_path, exist_ok=True)
             file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_graph.png")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)

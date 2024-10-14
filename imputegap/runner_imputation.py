@@ -29,7 +29,8 @@ if __name__ == '__main__':
 
     # 4. imputation of the contaminated data
     # choice of the algorithm, and their parameters (default, automl, or defined by the user)
-    cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer":"bayesian", "options": {"n_calls": 2}})
+    cdrec = Imputation.MD.CDRec(infected_data).impute()
+    #cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer":"bayesian", "options": {"n_calls": 2}})
 
     # [OPTIONAL] save your results in a new Time Series object
     ts_3 = TimeSeries().import_matrix(cdrec.imputed_matrix)

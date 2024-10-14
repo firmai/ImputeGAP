@@ -1,5 +1,6 @@
 import os
 import toml
+import importlib.resources
 
 
 def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg - exascale infolab"):
@@ -16,10 +17,13 @@ def search_path(set_name="test"):
     :return: correct file paths
     """
 
-    filepath = "../imputegap/dataset/" + set_name + ".txt"
+    if set_name is ["bafu", "chlorine", "climate", "drift", "eeg", "meteo", "test", "test-large"]:
+        filepath = importlib.resources.files('imputegap.dataset').joinpath(set_name + ".txt")
+    else:
+        filepath = "../imputegap/dataset/" + set_name + ".txt"
 
-    if not os.path.exists(filepath):
-        filepath = filepath[1:]
+        if not os.path.exists(filepath):
+            filepath = filepath[1:]
 
     return filepath
 
@@ -37,7 +41,7 @@ def get_save_path_asset():
     return filepath
 
 
-def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str="b"):
+def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str="b", path=None):
     """
     Load default values of algorithms
 
@@ -47,11 +51,23 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     :return: tuples of optimal parameters and the config of default values
     """
 
+
     filepath = ""
     if query == "default":
-        filepath = "../env/default_values.toml"
+
+        if path is None:
+            filepath = importlib.resources.files('imputegap.env').joinpath("./default_values.toml")
+        else:
+            filepath = path
+
     elif query == "optimal":
-        filepath = "../params/optimal_parameters_"+str(optimizer)+"_"+str(dataset)+"_"+str(algorithm)+".toml"
+
+        if path is None:
+            filename = "./optimal_parameters_"+str(optimizer)+"_"+str(dataset)+"_"+str(algorithm)+".toml"
+            filepath = importlib.resources.files('imputegap.params').joinpath(filename)
+        else:
+            filepath = path
+
     else:
         print("Query not found for this function ('optimal' or 'default')")
 

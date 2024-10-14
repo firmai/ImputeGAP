@@ -1,18 +1,18 @@
 Metadata-Version: 2.1
 Name: imputegap
-Version: 0.1.0
+Version: 0.1.1
 Summary: A Library of Imputation Techniques for Time Series Data
 Home-page: https://github.com/eXascaleInfolab/ImputeGAP
 Author: Quentin Nater
 Author-email: quentin.nater@unifr.ch
 License: The Unlicense
-Project-URL: Documentation, https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs
+Project-URL: Documentation, https://github.com/eXascaleInfolab/ImputeGAP/tree/main
 Project-URL: Source, https://github.com/eXascaleInfolab/ImputeGAP
 Classifier: Development Status :: 2 - Pre-Alpha
 Classifier: Intended Audience :: Developers
 Classifier: Programming Language :: Python :: 3.12
 Classifier: Topic :: Scientific/Engineering
-Requires-Python: >= 3.12.0,<3.12.6
+Requires-Python: >= 3.12.0,<3.12.8
 Description-Content-Type: text/markdown
 Requires-Dist: numpy==1.26.4
 Requires-Dist: pandas==2.0.3
@@ -60,8 +60,16 @@ To install these two prerequisites, please refer to the following documentation:
 
 
 ## Installation
-To install ImputeGAP locally, download the package from GitHub, move inside the folder.
+To install ImputeGAP locally, download the package from GitHub, move inside the folder.<br />
+<br />
 
+### Pip installation
+```bash
+$ pip install imputegap
+``` 
+<br />
+
+### Local installation
 ```bash
 $ git init
 $ git clone https://github.com/eXascaleInfolab/ImputeGAP

@@ -1,5 +1,8 @@
 import math
 import os
+import time
+import importlib.resources
+
 
 import numpy as np
 import shap
@@ -14,17 +17,21 @@ from imputegap.recovery.manager import TimeSeries
 
 class Explainer:
 
-    def load_configuration(file_path="../env/default_explainer.toml"):
+    def load_configuration(file_path=None):
         """
         Load categories and features from a TOML file.
 
         :param file_path: The path to the TOML file.
         :return: Two dictionaries: categories and features.
         """
-        if not os.path.exists(file_path):
-            file_path = file_path[1:]
 
-        config_data = toml.load(file_path)
+        if file_path is None:
+            path = importlib.resources.files('imputegap.env').joinpath("./default_explainer.toml")
+        else:
+            if not os.path.exists(file_path):
+                file_path = file_path[1:]
+
+        config_data = toml.load(path)
 
         # Extract categories and features from the TOML data
         categories = config_data.get('CATEGORIES', {})
@@ -141,9 +148,6 @@ class Explainer:
 
         result_display = sorted(result_display, key=lambda tup: (tup[1], tup[2]), reverse=True)
 
-        for tup in result_display:
-            print(tup[2], end=",")
-
         with open(to_save + "_results.txt", 'w') as file_output:
             for (x, algo, rate, description, feature, category, mean_features) in result_display:
                 file_output.write(f"Feature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<65} {feature}\n")
@@ -151,7 +155,7 @@ class Explainer:
 
         return result_shap
 
-    def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False):
+    def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False):
         """
         Launch the SHAP model for explaining the features of the dataset
         @author : Quentin Nater
@@ -163,6 +167,7 @@ class Explainer:
         :param algorithm: algorithm used
         :param splitter: splitter from data training and testing
         :param display: display or not plots
+        :param verbose: display or not the prints
         :return: results of the explainer model
         """
 
@@ -201,12 +206,13 @@ class Explainer:
         print("\t SHAP_MODEL >> y_train shape:", y_train.shape)
         print("\t SHAP_MODEL >> x_test shape:", x_test.shape)
         print("\t SHAP_MODEL >> y_test shape:", y_test.shape, "\n")
-        print("\t SHAP_MODEL >> features shape:", x_features.shape)
-        print("\t SHAP_MODEL >> categories shape:", x_categories.shape)
-        print("\t SHAP_MODEL >> descriptions shape:", x_descriptions.shape, "\n")
-        print("\t SHAP_MODEL >> features OK:", np.all(np.all(x_features == x_features[0, :], axis=1)))
-        print("\t SHAP_MODEL >> categories OK:", np.all(np.all(x_categories == x_categories[0, :], axis=1)))
-        print("\t SHAP_MODEL >> descriptions OK:", np.all(np.all(x_descriptions==x_descriptions[0, :], axis=1)), "\n\n")
+        if verbose:
+            print("\t SHAP_MODEL >> features shape:", x_features.shape)
+            print("\t SHAP_MODEL >> categories shape:", x_categories.shape)
+            print("\t SHAP_MODEL >> descriptions shape:", x_descriptions.shape, "\n")
+            print("\t SHAP_MODEL >> features OK:", np.all(np.all(x_features == x_features[0, :], axis=1)))
+            print("\t SHAP_MODEL >> categories OK:", np.all(np.all(x_categories == x_categories[0, :], axis=1)))
+            print("\t SHAP_MODEL >> descriptions OK:", np.all(np.all(x_descriptions==x_descriptions[0, :], axis=1)), "\n\n")
 
         model = RandomForestRegressor()
         model.fit(x_train, y_train)
@@ -214,8 +220,6 @@ class Explainer:
         exp = shap.KernelExplainer(model.predict, x_test)
         shval = exp.shap_values(x_test)
         shap_values = exp(x_train)
-
-        #print("\t\tSHAP VALUES : ", np.array(shval).shape, " with : \n\t", *shval)
 
         optimal_display = []
         for desc, group in zip(x_descriptions[0], x_categories[0]):
@@ -228,6 +232,7 @@ class Explainer:
         shap.summary_plot(shval, x_test, plot_size=(25, 10), feature_names=optimal_display, show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_plot.png")
         plt.title("SHAP Details Results")
+        os.makedirs(path_file, exist_ok=True)
         plt.savefig(alpha)
         plt.close()
         print("\n\n\t\t\tGRAPH has benn computed : ", alpha)
@@ -364,12 +369,13 @@ class Explainer:
         plt.close()
         print("\t\t\tGRAPH has benn computed : ", alpha, "\n\n")
 
-        print("\t\tSHAP Families details : \n")
-        print("\t\t\tgeometry:", geometry.shape)
-        print("\t\t\ttransformation:", transformation.shape)
-        print("\t\t\tcorrelation:", correlation.shape)
-        print("\t\t\ttrend':", trend.shape)
-        print("\t\t\tmean_features:", mean_features.shape, "\n\n")
+        if verbose:
+            print("\t\tSHAP Families details :")
+            print("\t\t\tgeometry:", geometry.shape)
+            print("\t\t\ttransformation:", transformation.shape)
+            print("\t\t\tcorrelation:", correlation.shape)
+            print("\t\t\ttrend':", trend.shape)
+            print("\t\t\tmean_features:", mean_features.shape, "\n\n")
 
         # Aggregate shapely values per element of X_test
         total_weights = [np.abs(shval.T[i]).mean(0) for i in range(len(shval[0]))]
@@ -386,7 +392,7 @@ class Explainer:
 
     def shap_explainer(raw_data, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
                        block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
-                       file_name="ts", display=False):
+                       file_name="ts", display=False, verbose=False):
         """
         Handle parameters and set the variables to launch a model SHAP
         @author : Quentin Nater
@@ -403,9 +409,12 @@ class Explainer:
         :param limitation: limitation of series for the model | default 15
         :param splitter: limitation of training series for the model | default 3/4 of limitation
         :param display: display or not the plots | default False
+        :param verbose: display or not the prints
 
         :return: ground_truth_matrixes, obfuscated_matrixes, output_metrics, input_params, shap_values
         """
+
+        start_time = time.time()  # Record start time
 
         if limitation > raw_data.shape[0]:
             limitation = int(raw_data.shape[0] * 0.75)
@@ -413,12 +422,13 @@ class Explainer:
         if splitter == 0 or splitter >= limitation - 1:
             splitter = int(limitation * 0.60)
 
-        print("SHAP Explainer has been called\n\t",
-              "missing_values (", missing_rate * 100, "%)\n\t",
-              "for a contamination (", contamination, "), \n\t",
-              "imputated by (", algorithm, ") with params (", params, ")\n\t",
-              "with limitation and splitter after verification of (", limitation, ") and (", splitter, ") for ",
-              raw_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
+        if verbose:
+            print("SHAP Explainer has been called\n\t",
+                  "missing_values (", missing_rate * 100, "%)\n\t",
+                  "for a contamination (", contamination, "), \n\t",
+                  "imputated by (", algorithm, ") with params (", params, ")\n\t",
+                  "with limitation and splitter after verification of (", limitation, ") and (", splitter, ") for ",
+                  raw_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
 
         ground_truth_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
@@ -426,7 +436,8 @@ class Explainer:
         categories, features = Explainer.load_configuration()
 
         for current_series in range(0, limitation):
-            print("Generation ", current_series, "___________________________________________________________________")
+
+            print("Generation ", current_series, "/", limitation, "(", int((current_series/limitation)*100),"%)________________________________________________________")
             print("\tContamination ", current_series, "...")
 
             if contamination == "mcar":
@@ -451,6 +462,7 @@ class Explainer:
             elif algorithm == "mrnn":
                 algo = Imputation.ML.MRNN(obfuscated_matrix)
 
+            algo.logs = False
             algo.impute(user_defined=True, params=params)
             algo.score(raw_data)
             imputation_results = algo.metrics
@@ -469,8 +481,12 @@ class Explainer:
         for input, output in zip(input_params, output_metrics):
             shap_details.append((input, output["RMSE"]))
 
-        shap_values = Explainer.launch_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm, splitter, display)
+        shap_values = Explainer.launch_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm, splitter, display, verbose)
 
-        print("\n\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n\n\n")
+
+        print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
+
+        end_time = time.time()
+        print(f"\n\t\t> logs, shap explainer - Execution Time: {(end_time - start_time):.4f} seconds\n\n\n")
 
         return shap_values, shap_details

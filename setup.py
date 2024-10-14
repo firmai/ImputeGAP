@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name="imputegap",
-    version="0.1.0",
+    version="0.1.1",
     description="A Library of Imputation Techniques for Time Series Data",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
@@ -22,9 +22,12 @@ setuptools.setup(
         "Programming Language :: Python :: 3.12",
         "Topic :: Scientific/Engineering"
     ],
-    python_requires=">= 3.12.0,<3.12.6",
+    python_requires=">= 3.12.0,<3.12.8",
     install_requires=open('requirements.txt').read().splitlines(),
     packages=setuptools.find_packages(),
     include_package_data=True,
+    package_data={
+            'imputegap': ['env/*.toml', 'params/*.toml', 'dataset/*.txt'],  # Include the TOML files
+    },
     entry_points={"console_scripts": ["imputegap = imputegap.runner_display:display_title"]}
 )

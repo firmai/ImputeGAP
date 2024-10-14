@@ -1,5 +1,7 @@
 import math
 import os
+import importlib.resources
+
 
 import numpy as np
 import shap
@@ -14,17 +16,21 @@ from imputegap.recovery.manager import TimeSeries
 
 class Explainer:
 
-    def load_configuration(file_path="../env/default_explainer.toml"):
+    def load_configuration(file_path=None):
         """
         Load categories and features from a TOML file.
 
         :param file_path: The path to the TOML file.
         :return: Two dictionaries: categories and features.
         """
-        if not os.path.exists(file_path):
-            file_path = file_path[1:]
 
-        config_data = toml.load(file_path)
+        if file_path is None:
+            path = importlib.resources.files('imputegap.env').joinpath("./default_explainer.toml")
+        else:
+            if not os.path.exists(file_path):
+                file_path = file_path[1:]
+
+        config_data = toml.load(path)
 
         # Extract categories and features from the TOML data
         categories = config_data.get('CATEGORIES', {})
@@ -228,6 +234,7 @@ class Explainer:
         shap.summary_plot(shval, x_test, plot_size=(25, 10), feature_names=optimal_display, show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_plot.png")
         plt.title("SHAP Details Results")
+        os.makedirs(path_file, exist_ok=True)
         plt.savefig(alpha)
         plt.close()
         print("\n\n\t\t\tGRAPH has benn computed : ", alpha)
@@ -424,6 +431,9 @@ class Explainer:
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
 
         categories, features = Explainer.load_configuration()
+
+        print("categories", categories)
+        print("features", features)
 
         for current_series in range(0, limitation):
             print("Generation ", current_series, "___________________________________________________________________")
