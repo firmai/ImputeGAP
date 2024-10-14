@@ -80,8 +80,9 @@ ts_1.load_timeseries(utils.search_path("eeg"))
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
-ts_1.plot(raw_data=ts_1.data, title="raw data", max_series=10, max_values=100, save_path="./assets")
+ts_1.plot(raw_data=ts_1.data, title="raw data", max_series=10, max_values=100, save_path="./imputegap/assets")
 ts_1.print(limit=10)
+
 ```
 
 <br /><hr /><br />
@@ -90,7 +91,7 @@ ts_1.print(limit=10)
 
 ## Contamination
 ImputeGAP allows to contaminate datasets with a specific scenario to reproduce a situation. Up to now, the scenarios are : <b>MCAR, MISSING POURCENTAGE, ...</b><br />
-Please find the documentation in this page : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/contamination#readme" >missing data scenarios</a><br><br>
+Please find the documentation in this page : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >missing data scenarios</a><br><br>
 
 
 ### Example Contamination
@@ -107,6 +108,10 @@ ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR scenario
 infected_data = ts_1.Contaminate.mcar(ts_1.data, series_impacted=0.4, missing_rate=0.2, use_seed=True)
+
+# [OPTIONAL] you can plot your raw data / print the contamination
+ts_1.print(limit=10)
+ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_path="./imputegap/assets")
 ```
 
 <br /><hr /><br />
@@ -140,13 +145,16 @@ cdrec = Imputation.MD.CDRec(infected_data)
 # imputation with default values
 cdrec.impute()
 # OR imputation with user defined values
-cdrec.impute(params={"rank": 5, "epsilon":0.01, "iterations": 100})
+cdrec.impute(params={"rank": 5, "epsilon": 0.01, "iterations": 100})
 
 # [OPTIONAL] save your results in a new Time Series object
 ts_3 = TimeSeries().import_matrix(cdrec.imputed_matrix)
 
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, ts_3.data)
+
+# [OPTIONAL] print the results
+ts_3.print_results(cdrec.metrics)
 ```
 
 
@@ -174,14 +182,14 @@ ts_1.normalize(normalizer="min_max")
 infected_data = ts_1.Contaminate.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
-# choice of the algorithm, and their parameters (default, automl, or defined by the user)
-cdrec = Imputation.MD.CDRec(infected_data)
-
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec.impute = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 5}})
+cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 5}})
 
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, cdrec.imputed_matrix)
+
+# [OPTIONAL] print the results
+ts_1.print_results(cdrec.metrics)
 ```
 
 
