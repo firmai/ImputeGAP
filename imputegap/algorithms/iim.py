@@ -5,7 +5,7 @@ from imputegap.wrapper.AlgoPython.IIM.testerIIM import impute_with_algorithm
 def iim(contamination, number_neighbor, algo_code, logs=True):
     """
     Template zero impute for adding your own algorithms
-    @author : Quentin Nater
+    :author: Quentin Nater
 
     :param contamination: time series with contamination
     :param adaptive_flag: The algorithm will run the non-adaptive version of the algorithm, as described in the paper

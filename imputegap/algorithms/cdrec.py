@@ -83,7 +83,7 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
 def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_path=None):
     """
     CDREC algorithm for imputation of missing data
-    @author : Quentin Nater
+    :author: Quentin Nater
 
     :param contamination: time series with contamination
     :param truncation_rank: rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series)

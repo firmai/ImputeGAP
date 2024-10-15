@@ -27,7 +27,7 @@ class TimeSeries:
         """
         Load timeseries manager from file
         FORMAT : (Series,Values), values are seperated by space et series by \n
-        @author Quentin Nater
+        :author: Quentin Nater
 
         :param data: matrix of time series
         :return: time series format for imputegap from dataset
@@ -44,15 +44,16 @@ class TimeSeries:
 
             return self
 
-    def load_timeseries(self, data=None, max_series=None, max_values=None):
+    def load_timeseries(self, data=None, max_series=None, max_values=None, header=False):
         """
         Load timeseries manager from file
         FORMAT : (Values,Series), values are seperated by space et series by \n
-        @author Quentin Nater
+        :author: Quentin Nater
 
         :param filename: path of the time series dataset
         :param max_series : limitation of the maximum number of series (computation limitation) | default None
         :param max_values : limitation of the maximum number of values by series (computation limitation) | default None
+        :param header : has header or not | default False
         :return: time series format for imputegap from dataset
         """
 
@@ -60,10 +61,10 @@ class TimeSeries:
             if isinstance(data, str):
                 print("\nThe time series has been loaded from " + str(data) + "\n")
 
-                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg.txt", "meteo.txt", "test.txt", "test-large.txt"] :
+                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-test.txt", "eeg.txt", "meteo.txt", "test.txt", "test-large.txt"] :
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 
-                self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values)
+                self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values, skip_header=int(header))
 
                 if max_series is not None:
                     self.data = self.data[:, :max_series]
@@ -78,7 +79,7 @@ class TimeSeries:
     def print(self, limit=10, view_by_series=False):
         """
         Display the limited series from your dataset
-        @author Quentin Nater
+        :author: Quentin Nater
 
         :param limit: Number of series to print
         :param view_by_series: View (Values/Series) if true, (Series/Values) if false
@@ -118,7 +119,7 @@ class TimeSeries:
         Display the result of the imputation
         :param metrics : [OPTIONAL], metrics to print in dictionary
         :param algorithm : [OPTIONAL], print the algorithm used
-        @author Quentin Nater
+        :author: Quentin Nater
         """
         print("\n\nResults of the imputation ", algorithm, " :")
         for key, value in metrics.items():
@@ -128,7 +129,7 @@ class TimeSeries:
     def normalize(self, normalizer="z_score"):
         """
         Normalization of a dataset with "z_score", "min_max"
-        @author Quentin Nater
+        :author: Quentin Nater
 
         :param normalizer: ("z_score", "min_max"), normalization technic to use | default = "z_score"
         :return: data_normalized, normalized dataset
@@ -188,7 +189,7 @@ class TimeSeries:
              max_values=None, size=(16, 8), save_path="", display=True):
         """
         Plot a chosen time series
-        @author Quentin Nater
+        :author: Quentin Nater
 
         :param raw_data: original time series without contamination
         :param infected_data: time series with contamination
@@ -248,7 +249,7 @@ class TimeSeries:
                 if number_of_series == max_series:
                     break
 
-        plt.xlabel('Time Shift')
+        plt.xlabel('Timestamp')
         plt.ylabel('Values')
         plt.title(title)
         plt.legend(loc='upper right', fontsize=12, frameon=True, fancybox=True, shadow=True, borderpad=1.5)
@@ -274,6 +275,7 @@ class TimeSeries:
                  explainer=False):
             """
             Contamination of time series base on the Missing Completely at Random scenario
+            :author: Quentin Nater
 
             :param series_impacted: percentage of series contaminated | default 0.2
             :param missing_rate: percentage of missing values by series  | default 0.2
@@ -347,6 +349,7 @@ class TimeSeries:
         def missing_percentage(ts, series_impacted=0.2, missing_rate=0.2, protection=0.1):
             """
             Contamination of time series base on the missing percentage scenario
+            :author: Quentin Nater
 
             :param series_impacted: percentage of series contaminated | default 0.2
             :param missing_rate: percentage of missing values by series  | default 0.2
@@ -385,6 +388,7 @@ class TimeSeries:
         def blackout(ts, missing_rate=0.2, protection=0.1):
             """
             Contamination of time series base on the blackout scenario
+            :author: Quentin Nater
 
             :param missing_rate: percentage of missing values by series  | default 0.2
             :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1

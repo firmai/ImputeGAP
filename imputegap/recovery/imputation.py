@@ -28,7 +28,7 @@ class BaseImputer:
     def score(self, raw_matrix, imputed_matrix=None):
         """
         Imputation of data with CDREC algorithm
-        @author Quentin Nater
+        :author: Quentin Nater
 
         :param raw_matrix: original time series without contamination
         :param infected_matrix: time series with contamination
@@ -171,7 +171,7 @@ class Imputation:
     def evaluate_params(ground_truth, contamination, configuration, algorithm="cdrec"):
         """
         evaluate various statistics for given parameters.
-        @author : Quentin Nater
+        :author: Quentin Nater
 
         :param ground_truth: original time series without contamination
         :param contamination: time series with contamination
@@ -228,7 +228,7 @@ class Imputation:
             def impute(self, params=None):
                 """
                 Template zero impute for adding your own algorithms
-                @author : Quentin Nater
+                :author: Quentin Nater
 
                 :param ground_truth: original time series without contamination
                 :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
@@ -245,7 +245,7 @@ class Imputation:
             def impute(self, params=None):
                 """
                 Impute NaN values with the minimum value of the ground truth time series.
-                @author : Quentin Nater
+                :author: Quentin Nater
 
                 :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
 
@@ -257,75 +257,96 @@ class Imputation:
 
     class MD:
         class CDRec(BaseImputer):
+            """
+            CDRec class to impute missing value with Centroid Decomposition.
+
+            Methods
+            -------
+            impute(self, user_defined=True, params=None):
+                Launch the imputation of the CDREC
+            """
+
             algorithm = "cdrec"
 
             def impute(self, user_defined=True, params=None):
                 """
-                Imputation of data with CDREC algorithm
-                @author Quentin Nater
+                Imputation of data with CDREC algorithm.
 
-                :param params: [Optional-IMPUTATION] parameters of the algorithm, if None, default ones are loaded
-                               [Optional-AUTO_ML]  parameters of the automl, if None, default ones are loaded
+                Parameters
+                ----------
+                user_defined : bool, optional
+                    Decide whether to launch the imputation with default/user_defined parameters or auto-ml. Default is True.
+                params : dict, optional
+                    Parameters of the algorithm or Auto-ML, if None, default ones are loaded.
 
-                option 1 : algorithm parameters ___________________________________________________
+                    **Option 1: Algorithm parameters**
 
-                    dict { "rank" : (int), "epsilon": (float), "iteratios" : (int)}
+                    - rank : int
+                        Rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series).
+                    - epsilon : float
+                        Learning rate.
+                    - iterations : int
+                        Number of iterations.
 
-                    truncation_rank: rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series)
+                    **Option 2: AutoML parameters**
 
-                    epsilon : learning rate
+                    - ground_truth : numpy.ndarray
+                        Values of time series without contamination.
+                    - optimizer : str
+                        Optimizer to use, can be "bayesian", "greedy", "pso", or "sh".
+                    - options : dict, optional
+                        Optional parameters for each optimizer.
 
-                    iterations : number of iterations
+                        **Bayesian:**
 
+                        - n_calls : int, optional
+                            Number of calls to the objective function. Default is 3.
+                        - selected_metrics : list, optional
+                            List of selected metrics to consider for optimization. Default is ["RMSE"].
+                        - n_random_starts : int, optional
+                            Number of initial calls to the objective function from random points. Default is 50.
+                        - acq_func : str, optional
+                            Function to minimize over the Gaussian prior, one of 'LCB', 'EI', 'PI', or 'gp_hedge'. Default is 'gp_hedge'.
 
-                option 2 : automl parameters________________________________________________________
+                        **Greedy:**
 
-                    {"ground_truth": (numpy.ndarray), "optimizer": (string), "options": (dict)
+                        - n_calls : int, optional
+                            Number of calls to the objective function. Default is 3.
+                        - selected_metrics : list, optional
+                            List of selected metrics to consider for optimization. Default is ["RMSE"].
 
-                    ground_truth : values of time series without contamination
+                        **PSO:**
 
-                    optimizer = ("bayesian", "greedy", "pso", "sh"), name of the optimizer
+                        - n_particles : int, optional
+                            Number of particles used.
+                        - c1 : float, optional
+                            PSO c1 parameter.
+                        - c2 : float, optional
+                            PSO c2 parameter.
+                        - w : float, optional
+                            PSO w parameter.
+                        - iterations : int, optional
+                            Number of iterations for the optimization.
+                        - n_processes : int, optional
+                            Number of processes during the optimization.
 
-                    options : [OPTIONAL] parameters of each optimizer
+                        **SH:**
 
-                        Bayesian :
+                        - num_configs : int, optional
+                            Number of configurations to try.
+                        - num_iterations : int, optional
+                            Number of iterations to run the optimization.
+                        - reduction_factor : int, optional
+                            Reduction factor for the number of configurations kept after each iteration.
 
-                        n_calls: [OPTIONAL] bayesian parameters, number of calls to the objective function. | default 3
+                Returns
+                -------
+                self : CDRec
+                    CDRec object with `imputed_matrix` set.
 
-                        selected_metrics : [OPTIONAL] list of selected metrics to consider for optimization. | default ["RMSE"]
-
-                        n_random_starts: [OPTIONAL] bayesian parameters, number of initial calls to the objective function, from random points. | default 50
-
-                        acq_func: [OPTIONAL] bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedge
-
-                        Greedy :
-
-                        n_calls: [OPTIONAL] bayesian parameters, number of calls to the objective function. | default 3
-
-                        selected_metrics : [OPTIONAL] list of selected metrics to consider for optimization. | default ["RMSE"]
-
-                        PSO :
-
-                        n_particles: [OPTIONAL] pso parameters, number of particles used
-
-                        c1: [OPTIONAL] pso parameters, c1 option value
-
-                        c2: [OPTIONAL] pso parameters, c2 option value
-
-                        w: [OPTIONAL] pso parameters, w option value
-
-                        iterations: [OPTIONAL] pso parameters, number of iterations for the optimization
-
-                        n_processes: [OPTIONAL] pso parameters, number of process during the optimization
-
-                        SH :
-
-                        num_configs: [OPTIONAL] sh parameters, number of configurations to try.
-
-                        num_iterations: [OPTIONAL] sh parameters, number of iterations to run the optimization.
-
-                        reduction_factor: [OPTIONAL] sh parameters, reduction factor for the number of configurations kept after each iteration.
+                :author: Quentin Nater
                 """
+
                 if params is not None:
                     rank, epsilon, iterations = self._check_params(user_defined, params)
                 else:
@@ -343,7 +364,7 @@ class Imputation:
             def impute(self, user_defined=True, params=None):
                 """
                Imputation of data with IIM algorithm
-               @author Quentin Nater
+               :author: Quentin Nater
 
                :param params: [Optional] (neighbors, algo_code) : parameters of the algorithm, if None, default ones are loaded : neighbors, algo_code
 
@@ -365,7 +386,7 @@ class Imputation:
             def impute(self, user_defined=True, params=None):
                 """
                Imputation of data with MRNN algorithm
-               @author Quentin Nater
+               :author: Quentin Nater
 
                :param params: [Optional] (hidden_dim, learning_rate, iterations, sequence_length) : parameters of the algorithm, hidden_dim, learning_rate, iterations, keep_prob, sequence_length, if None, default ones are loaded
 
@@ -390,7 +411,7 @@ class Imputation:
             def impute(self, user_defined=True, params=None):
                 """
                Imputation of data with MRNN algorithm
-               @author Quentin Nater
+               :author: Quentin Nater
 
                :param params: [Optional] (window_size, gamma, alpha) : parameters of the algorithm, window_size, gamma, alpha, if None, default ones are loaded
                     :param window_size: window size for temporal component

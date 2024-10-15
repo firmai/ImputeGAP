@@ -10,13 +10,15 @@ if __name__ == '__main__':
     ts_1 = TimeSeries()
 
     # 2. load the timeseries from file or from the code
-    ts_1.load_timeseries(data=utils.search_path(dataset))
+    ts_1.load_timeseries(data=utils.search_path(dataset), header=True)
+    ts_1.normalize(normalizer="z_score")
 
     # [OPTIONAL] you can plot your raw data / print the information
     ts_1.print(view_by_series=True)
+    ts_1.plot(ts_1.data)
 
-    # 3. contamination of the data
-    infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, use_seed=True, seed=42)
+
+    infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, use_seed=True, seed=2)
 
     # [OPTIONAL] save your results in a new Time Series object
     ts_2 = TimeSeries()
@@ -24,4 +26,4 @@ if __name__ == '__main__':
 
     # [OPTIONAL] you can plot your raw data / print the contamination
     ts_2.print(view_by_series=True)
-    ts_2.plot(ts_1.data, ts_2.data, max_series=1, save_path="assets")
+    ts_2.plot(ts_1.data, ts_2.data, max_series=1, save_path="./assets")

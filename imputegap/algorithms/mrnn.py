@@ -6,7 +6,7 @@ def mrnn(contamination, hidden_dim, learning_rate, iterations, sequence_length, 
 
     """
     Template zero impute for adding your own algorithms
-    @author : Quentin Nater
+    :author: Quentin Nater
 
     :param contamination: time series with contamination
     :param hidden_dim: number of hidden dimension

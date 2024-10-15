@@ -17,7 +17,7 @@ def search_path(set_name="test"):
     :return: correct file paths
     """
 
-    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg", "meteo", "test", "test-large"]:
+    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg", "eeg-test", "meteo", "test", "test-large"]:
         return set_name + ".txt"
     else:
         filepath = "../imputegap/dataset/" + set_name + ".txt"
@@ -158,7 +158,7 @@ def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
 def format_selection(ts, selection):
     """
     Format the selection of series based on keywords
-    @author Quentin Nater
+    :author: Quentin Nater
 
     :param selection: current selection of series
     :param ts: dataset to contaminate

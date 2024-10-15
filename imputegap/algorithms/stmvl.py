@@ -87,7 +87,7 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
 def stmvl(contamination, window_size, gamma, alpha, logs=True):
     """
     CDREC algorithm for imputation of missing data
-    @author : Quentin Nater
+    :author: Quentin Nater
 
     :param contamination: time series with contamination
     :param window_size: window size for temporal component

@@ -42,6 +42,8 @@ class Explainer:
     def save_assets(file_path="./assets/shap/"):
         """
         Load path to save the assets on GitHub and local
+        :author: Quentin Nater
+
         :param file_path: The path to the TOML file.
         :return: Two dictionaries: categories and features.
         """
@@ -53,7 +55,7 @@ class Explainer:
     def extract_features(data, features_categories, features_list, do_catch24=True):
         """
         Extract features from time series data using pycatch22.
-        @author : Quentin Nater
+        :author: Quentin Nater
 
         :param data : time series dataset to extract features
         :param features_categories : way to category the features
@@ -104,7 +106,7 @@ class Explainer:
     def print(shap_values, shap_details=None):
         """
         Convert the SHAP brute result to a refined one to display in the front end
-        @author : Quentin Nater
+        :author: Quentin Nater
 
         :param shap_values: Values and results of the SHAP analytics
         :param shap_details: Input and Ouput data of the Regression
@@ -127,7 +129,7 @@ class Explainer:
     def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
         Convert the SHAP brute result to a refined one to display in the front end
-        @author : Quentin Nater
+        :author: Quentin Nater
 
         :param tmp: Current results
         :param file: Dataset used
@@ -158,7 +160,7 @@ class Explainer:
     def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False):
         """
         Launch the SHAP model for explaining the features of the dataset
-        @author : Quentin Nater
+        :author: Quentin Nater
 
         :param x_dataset:  Dataset of features extraction with descriptions
         :param x_information: Descriptions of all features group by categories
@@ -395,7 +397,7 @@ class Explainer:
                        file_name="ts", display=False, verbose=False):
         """
         Handle parameters and set the variables to launch a model SHAP
-        @author : Quentin Nater
+        :author: Quentin Nater
 
         :param dataset: imputegap dataset used for timeseries
         :param algorithm: [OPTIONAL] algorithm used for imputation ("cdrec", "stvml", "iim", "mrnn") | default : cdrec

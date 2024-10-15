@@ -4,7 +4,7 @@ import numpy as np
 def zero_impute(contamination, params=None):
     """
     Template zero impute for adding your own algorithms
-    @author : Quentin Nater
+    :author: Quentin Nater
 
     :param contamination: time series with contamination
     :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
