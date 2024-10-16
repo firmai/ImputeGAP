@@ -1,8 +1,21 @@
 imputegap.algorithms package
 ============================
 
+The `imputegap.algorithms` package contains various imputation algorithms used for handling missing values in time series data. This package supports multiple imputation techniques like CDRec, MRNN, IIM, and more.
+
 Submodules
 ----------
+
+.. autosummary::
+   :toctree: _autosummary
+   :recursive:
+
+   imputegap.algorithms.cdrec
+   imputegap.algorithms.iim
+   imputegap.algorithms.min_impute
+   imputegap.algorithms.mrnn
+   imputegap.algorithms.stmvl
+   imputegap.algorithms.zero_impute
 
 imputegap.algorithms.cdrec module
 ---------------------------------
@@ -20,8 +33,8 @@ imputegap.algorithms.iim module
    :undoc-members:
    :show-inheritance:
 
-imputegap.algorithms.min\_impute module
----------------------------------------
+imputegap.algorithms.min_impute module
+--------------------------------------
 
 .. automodule:: imputegap.algorithms.min_impute
    :members:
@@ -44,16 +57,17 @@ imputegap.algorithms.stmvl module
    :undoc-members:
    :show-inheritance:
 
-imputegap.algorithms.zero\_impute module
-----------------------------------------
+imputegap.algorithms.zero_impute module
+---------------------------------------
 
 .. automodule:: imputegap.algorithms.zero_impute
    :members:
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
+
+Modules
+-------
 
 .. automodule:: imputegap.algorithms
    :members:

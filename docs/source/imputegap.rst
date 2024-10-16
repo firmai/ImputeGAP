@@ -4,12 +4,15 @@ imputegap package
 Subpackages
 -----------
 
+
 .. toctree::
    :maxdepth: 4
 
    imputegap.algorithms
    imputegap.explainer
-   imputegap.recovery
+   imputegap.imputation
+   imputegap.optimization
+   imputegap.manager
    imputegap.tools
    imputegap.wrapper
 

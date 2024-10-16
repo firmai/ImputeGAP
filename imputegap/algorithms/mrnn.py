@@ -3,21 +3,41 @@ from imputegap.wrapper.AlgoPython.MRNN.testerMRNN import mrnn_recov
 
 
 def mrnn(contamination, hidden_dim, learning_rate, iterations, sequence_length, logs=True):
-
     """
-    Template zero impute for adding your own algorithms
+    Perform imputation using the Multivariate Recurrent Neural Network (MRNN) algorithm.
+
+    Parameters
+    ----------
+    contamination : numpy.ndarray
+        The input matrix with contamination (missing values represented as NaNs).
+    hidden_dim : int
+        The number of hidden dimensions in the MRNN model.
+    learning_rate : float
+        The learning rate for the training process.
+    iterations : int
+        The number of iterations for training the MRNN model.
+    sequence_length : int
+        The length of sequences used within the MRNN model.
+    logs : bool, optional
+        Whether to log the execution time (default is True).
+
+    Returns
+    -------
+    numpy.ndarray
+        The imputed matrix with missing values recovered.
+
+    Notes
+    -----
+    The MRNN algorithm is a machine learning-based approach for time series imputation, where missing values are recovered using a recurrent neural network structure.
+
+    This function logs the total execution time if `logs` is set to True.
+
+    Example
+    -------
+    >>> imputed_data = mrnn(contamination_matrix, hidden_dim=64, learning_rate=0.001, iterations=1000, sequence_length=7)
+    >>> print(imputed_data)
+
     :author: Quentin Nater
-
-    :param contamination: time series with contamination
-    :param hidden_dim: number of hidden dimension
-    :param learning_rate : learning rate of the training
-    :param iterations : iterations during the training
-    :param seq_length : length of the sequences inside MRNN
-
-    :param logs: print logs of time execution
-
-    :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-
     """
     start_time = time.time()  # Record start time
 

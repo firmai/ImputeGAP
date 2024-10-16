@@ -1,21 +1,14 @@
-imputegap.explainer package
-===========================
+imputegap.explainer.explainer package
+=======================================
 
 Submodules
 ----------
 
-imputegap.explainer.explainer module
-------------------------------------
-
-.. automodule:: imputegap.explainer.explainer
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 Module contents
 ---------------
 
-.. automodule:: imputegap.explainer
+.. automodule:: imputegap.explainer.explainer
    :members:
    :undoc-members:
    :show-inheritance:

@@ -3,7 +3,6 @@ import os
 import time
 import importlib.resources
 
-
 import numpy as np
 import shap
 import pycatch22
@@ -16,13 +15,48 @@ from imputegap.recovery.manager import TimeSeries
 
 
 class Explainer:
+    """
+    A class to manage SHAP-based model explanations and feature extraction for time series datasets.
 
+    Methods
+    -------
+    load_configuration(file_path=None)
+        Load categories and features from a TOML file.
+
+    save_assets(file_path="./assets/shap/")
+        Load path to save SHAP-related assets.
+
+    extract_features(data, features_categories, features_list, do_catch24=True)
+        Extract features from time series data using pycatch22.
+
+    print(shap_values, shap_details=None)
+        Print SHAP values and details for display.
+
+    convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save)
+        Convert SHAP raw results into a refined format for display.
+
+    launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)
+        Launch the SHAP model to explain the dataset features.
+
+    shap_explainer(raw_data, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
+                   block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
+                   file_name="ts", display=False, verbose=False)
+        Handle parameters and set variables to launch the SHAP model.
+
+    """
     def load_configuration(file_path=None):
         """
         Load categories and features from a TOML file.
 
-        :param file_path: The path to the TOML file.
-        :return: Two dictionaries: categories and features.
+        Parameters
+        ----------
+        file_path : str, optional
+            The path to the TOML file (default is None). If None, it loads the default configuration file.
+
+        Returns
+        -------
+        tuple
+            A tuple containing two dictionaries: categories and features.
         """
 
         if file_path is None:
@@ -41,12 +75,19 @@ class Explainer:
 
     def save_assets(file_path="./assets/shap/"):
         """
-        Load path to save the assets on GitHub and local
-        :author: Quentin Nater
+        Load path to save SHAP-related assets on GitHub and local.
 
-        :param file_path: The path to the TOML file.
-        :return: Two dictionaries: categories and features.
+        Parameters
+        ----------
+        file_path : str, optional
+            The path to save the SHAP assets (default is './assets/shap/').
+
+        Returns
+        -------
+        str
+            The file path where assets are saved.
         """
+
         if not os.path.exists(file_path):
             file_path = "./imputegap" + file_path[1:]
 
@@ -55,15 +96,26 @@ class Explainer:
     def extract_features(data, features_categories, features_list, do_catch24=True):
         """
         Extract features from time series data using pycatch22.
-        :author: Quentin Nater
 
-        :param data : time series dataset to extract features
-        :param features_categories : way to category the features
-        :param features_list : list of all features expected
-        :param do_catch24 : Flag to compute the mean and standard deviation. Defaults to True.
+        Parameters
+        ----------
+        data : numpy.ndarray
+            Time series dataset for feature extraction.
+        features_categories : dict
+            Dictionary that maps feature names to categories.
+        features_list : dict
+            Dictionary of all features expected.
+        do_catch24 : bool, optional
+            Flag to compute the mean and standard deviation for Catch24 (default is True).
 
-        :return : results, descriptions : dictionary of feature values by names, and array of their descriptions.
+        Returns
+        -------
+        tuple
+            A tuple containing:
+            - results (dict): A dictionary of feature values by feature names.
+            - descriptions (list): A list of tuples containing feature names, categories, and descriptions.
         """
+
         data = [[0 if num is None else num for num in sublist] for sublist in data]
         data = [[0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num in sublist] for sublist in data]
 
@@ -105,11 +157,18 @@ class Explainer:
 
     def print(shap_values, shap_details=None):
         """
-        Convert the SHAP brute result to a refined one to display in the front end
-        :author: Quentin Nater
+        Convert SHAP raw results to a refined format for display.
 
-        :param shap_values: Values and results of the SHAP analytics
-        :param shap_details: Input and Ouput data of the Regression
+        Parameters
+        ----------
+        shap_values : list
+            The SHAP values and results of the SHAP analysis.
+        shap_details : list, optional
+            Input and output data of the regression, if available (default is None).
+
+        Returns
+        -------
+        None
         """
 
         if shap_details is not None:
@@ -128,19 +187,33 @@ class Explainer:
 
     def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
-        Convert the SHAP brute result to a refined one to display in the front end
-        :author: Quentin Nater
+        Convert SHAP raw results to a refined format for display.
 
-        :param tmp: Current results
-        :param file: Dataset used
-        :param algo: Algorithm used
-        :param descriptions: Description of each feature
-        :param features: Raw name of each feature
-        :param categories: Category of each feature
-        :param mean_features: Mean values of each feature
-        :param to_save : path to save results
-        :return: Perfect display for SHAP result
+        Parameters
+        ----------
+        tmp : list
+            Current SHAP results.
+        file : str
+            Dataset used.
+        algo : str
+            Algorithm used for imputation.
+        descriptions : list
+            Descriptions of each feature.
+        features : list
+            Raw names of each feature.
+        categories : list
+            Categories of each feature.
+        mean_features : list
+            Mean values of each feature.
+        to_save : str
+            Path to save results.
+
+        Returns
+        -------
+        list
+            A list of processed SHAP results.
         """
+
         result_display, result_shap = [], []
         for x, rate in enumerate(tmp):
             if not math.isnan(rate):
@@ -159,18 +232,31 @@ class Explainer:
 
     def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False):
         """
-        Launch the SHAP model for explaining the features of the dataset
-        :author: Quentin Nater
+        Launch the SHAP model for explaining the features of the dataset.
 
-        :param x_dataset:  Dataset of features extraction with descriptions
-        :param x_information: Descriptions of all features group by categories
-        :param y_dataset: Label RMSE of each series
-        :param file: dataset used
-        :param algorithm: algorithm used
-        :param splitter: splitter from data training and testing
-        :param display: display or not plots
-        :param verbose: display or not the prints
-        :return: results of the explainer model
+        Parameters
+        ----------
+        x_dataset : numpy.ndarray
+            Dataset of feature extraction with descriptions.
+        x_information : list
+            Descriptions of all features grouped by categories.
+        y_dataset : numpy.ndarray
+            RMSE labels of each series.
+        file : str
+            Dataset used for SHAP analysis.
+        algorithm : str
+            Algorithm used for imputation (e.g., 'cdrec', 'stmvl', 'iim', 'mrnn').
+        splitter : int, optional
+            Split ratio for data training and testing (default is 10).
+        display : bool, optional
+            Whether to display the SHAP plots (default is False).
+        verbose : bool, optional
+            Whether to print detailed output (default is False).
+
+        Returns
+        -------
+        list
+            Results of the SHAP explainer model.
         """
 
         print("\n\nInitilization of the SHAP model with ", np.array(x_information).shape)
@@ -396,24 +482,53 @@ class Explainer:
                        block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
                        file_name="ts", display=False, verbose=False):
         """
-        Handle parameters and set the variables to launch a model SHAP
-        :author: Quentin Nater
+        Handle parameters and set variables to launch the SHAP model.
 
-        :param dataset: imputegap dataset used for timeseries
-        :param algorithm: [OPTIONAL] algorithm used for imputation ("cdrec", "stvml", "iim", "mrnn") | default : cdrec
-        :param params: [OPTIONAL] parameters of algorithms
-        :param contamination: scenario used to contaminate the series | default mcar
-        :param missing_rate: percentage of missing values by series  | default 0.2
-        :param block_size: size of the block to remove at each random position selected  | default 10
-        :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1
-        :param use_seed: use a seed to reproduce the test | default true
-        :param seed: value of the seed | default 42
-        :param limitation: limitation of series for the model | default 15
-        :param splitter: limitation of training series for the model | default 3/4 of limitation
-        :param display: display or not the plots | default False
-        :param verbose: display or not the prints
+        Parameters
+        ----------
+        raw_data : numpy.ndarray
+            The original time series dataset.
+        algorithm : str, optional
+            The algorithm used for imputation (default is 'cdrec'). Valid values: 'cdrec', 'stmvl', 'iim', 'mrnn'.
+        params : dict, optional
+            Parameters for the algorithm.
+        contamination : str, optional
+            Contamination scenario to apply (default is 'mcar').
+        missing_rate : float, optional
+            Percentage of missing values per series (default is 0.4).
+        block_size : int, optional
+            Size of the block to remove at each random position selected (default is 10).
+        protection : float, optional
+            Size of the uncontaminated section at the beginning of the time series (default is 0.1).
+        use_seed : bool, optional
+            Whether to use a seed for reproducibility (default is True).
+        seed : int, optional
+            Seed value for reproducibility (default is 42).
+        limitation : int, optional
+            Limitation on the number of series for the model (default is 15).
+        splitter : int, optional
+            Limitation on the training series for the model (default is 0).
+        file_name : str, optional
+            Name of the dataset file (default is 'ts').
+        display : bool, optional
+            Whether to display the SHAP plots (default is False).
+        verbose : bool, optional
+            Whether to print detailed output (default is False).
 
-        :return: ground_truth_matrixes, obfuscated_matrixes, output_metrics, input_params, shap_values
+        Returns
+        -------
+        tuple
+            A tuple containing:
+
+            - shap_values : list
+                SHAP values for each series.
+            - shap_details : list
+                Detailed SHAP analysis results.
+
+        Notes
+        -----
+        The contamination is applied to each time series using the specified method. The SHAP model is then used
+        to generate explanations for the imputation results, which are logged in a local directory.
         """
 
         start_time = time.time()  # Record start time

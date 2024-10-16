@@ -9,13 +9,34 @@ from imputegap.tools.evaluation import Evaluation
 from imputegap.tools import utils
 
 class BaseImputer:
+    """
+    Base class for imputation algorithms.
+
+    This class provides common methods for imputation tasks such as scoring, parameter checking,
+    and optimization. Specific algorithms should inherit from this class and implement the `impute` method.
+
+    Methods
+    -------
+    impute(params=None):
+        Abstract method to perform the imputation.
+    score(raw_matrix, imputed_matrix=None):
+        Compute metrics for the imputed time series.
+    _check_params(user_defined, params):
+        Check and format parameters for imputation.
+    _optimize(parameters={}):
+        Optimize hyperparameters for the imputation algorithm.
+    """
     algorithm = None  # Class variable to hold the algorithm name
     logs = True
 
     def __init__(self, infected_matrix):
         """
-        Store the results of the imputation algorithm.
-        :param infected_matrix : Matrix used during the imputation of the time series
+        Initialize the BaseImputer with an infected time series matrix.
+
+        Parameters
+        ----------
+        infected_matrix : numpy.ndarray
+            Matrix used during the imputation of the time series.
         """
         self.infected_matrix = infected_matrix
         self.imputed_matrix = None
@@ -23,15 +44,35 @@ class BaseImputer:
         self.parameters = None
 
     def impute(self, params=None):
+        """
+        Abstract method to perform the imputation. Must be implemented in subclasses.
+
+        Parameters
+        ----------
+        params : dict, optional
+            Dictionary of algorithm parameters (default is None).
+
+        Raises
+        ------
+        NotImplementedError
+            If the method is not implemented by a subclass.
+        """
         raise NotImplementedError("This method should be overridden by subclasses")
 
     def score(self, raw_matrix, imputed_matrix=None):
         """
-        Imputation of data with CDREC algorithm
-        :author: Quentin Nater
+        Compute evaluation metrics for the imputed time series.
 
-        :param raw_matrix: original time series without contamination
-        :param infected_matrix: time series with contamination
+        Parameters
+        ----------
+        raw_matrix : numpy.ndarray
+            The original time series without contamination.
+        imputed_matrix : numpy.ndarray, optional
+            The imputed time series (default is None).
+
+        Returns
+        -------
+        None
         """
         if self.imputed_matrix is None:
             self.imputed_matrix = imputed_matrix
@@ -40,9 +81,19 @@ class BaseImputer:
 
     def _check_params(self, user_defined, params):
         """
-        Format the parameters for optimization or imputation
-        :param params: list or dictionary of parameters
-        :return: tuples of parameters in the right format
+        Format the parameters for optimization or imputation.
+
+        Parameters
+        ----------
+        user_defined : bool
+            Whether the parameters are user-defined or not.
+        params : dict or list
+            List or dictionary of parameters.
+
+        Returns
+        -------
+        tuple
+            Formatted parameters as a tuple.
         """
 
         if params is not None:
@@ -74,18 +125,16 @@ class BaseImputer:
 
     def _optimize(self, parameters={}):
         """
-        Conduct the optimization of the hyperparameters.
+        Conduct the optimization of the hyperparameters using different optimizers.
 
         Parameters
         ----------
-        :param raw_data : time series data set to optimize
-        :param optimizer : Choose the actual optimizer. | default "bayesian"
-        :param metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
-        :param n_calls: bayesian parameters, number of calls to the objective function.
-        :param random_starts: bayesian parameters, number of initial calls to the objective function, from random points.
-        :param func: bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedgedge
+        parameters : dict
+            Dictionary containing optimization configurations such as ground_truth, optimizer, and options.
 
-        :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
+        Returns
+        -------
+        None
         """
         from imputegap.recovery.optimization import Optimization
 
@@ -167,18 +216,34 @@ class BaseImputer:
 
 
 class Imputation:
+    """
+    A class containing static methods for evaluating and running imputation algorithms on time series data.
+
+    Methods
+    -------
+    evaluate_params(ground_truth, contamination, configuration, algorithm="cdrec"):
+        Evaluate imputation performance using given parameters and algorithm.
+    """
 
     def evaluate_params(ground_truth, contamination, configuration, algorithm="cdrec"):
         """
-        evaluate various statistics for given parameters.
-        :author: Quentin Nater
+        Evaluate various metrics for given parameters and imputation algorithm.
 
-        :param ground_truth: original time series without contamination
-        :param contamination: time series with contamination
-        :param configuration : tuple of the configuration of the algorithm.
-        :param algorithm : imputation algorithm to use | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default = cdrec
-        :param selected_metrics : list of selected metrics to compute | default = ["rmse"]
-        :return: dict, a dictionary of computed statistics.
+        Parameters
+        ----------
+        ground_truth : numpy.ndarray
+            The original time series without contamination.
+        contamination : numpy.ndarray
+            The time series with contamination.
+        configuration : tuple
+            Tuple of the configuration of the algorithm.
+        algorithm : str, optional
+            Imputation algorithm to use. Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' (default is 'cdrec').
+
+        Returns
+        -------
+        dict
+            A dictionary of computed evaluation metrics.
         """
 
         if isinstance(configuration, dict):
@@ -221,81 +286,127 @@ class Imputation:
         return error_measures
 
     class Stats:
+        """
+        A class containing specific imputation algorithms for statistical methods.
+
+        Subclasses
+        ----------
+        ZeroImpute :
+            Imputation method that replaces missing values with zeros.
+        MinImpute :
+            Imputation method that replaces missing values with the minimum value of the ground truth.
+        """
 
         class ZeroImpute(BaseImputer):
+            """
+            ZeroImpute class to impute missing values with zeros.
+
+            Methods
+            -------
+            impute(self, params=None):
+                Perform imputation by replacing missing values with zeros.
+            """
             algorithm = "zero_impute"
 
             def impute(self, params=None):
                 """
-                Template zero impute for adding your own algorithms
-                :author: Quentin Nater
+                Impute missing values by replacing them with zeros.
+                Template for adding external new algorithm
 
-                :param ground_truth: original time series without contamination
-                :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
+                Parameters
+                ----------
+                params : dict, optional
+                    Dictionary of algorithm parameters (default is None).
 
-                :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+                Returns
+                -------
+                self : ZeroImpute
+                    The object with `imputed_matrix` set.
                 """
                 self.imputed_matrix = zero_impute(self.infected_matrix, params)
 
                 return self
 
         class MinImpute(BaseImputer):
+            """
+            MinImpute class to impute missing values with the minimum value of the ground truth.
+
+            Methods
+            -------
+            impute(self, params=None):
+                Perform imputation by replacing missing values with the minimum value of the ground truth.
+            """
             algorithm = "min_impute"
 
             def impute(self, params=None):
                 """
-                Impute NaN values with the minimum value of the ground truth time series.
-                :author: Quentin Nater
+                Impute missing values by replacing them with the minimum value of the ground truth.
+                Template for adding external new algorithm
 
-                :param params: [Optional] parameters of the algorithm, if None, default ones are loaded
+                Parameters
+                ----------
+                params : dict, optional
+                    Dictionary of algorithm parameters (default is None).
 
-                :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+                Returns
+                -------
+                self : MinImpute
+                    The object with `imputed_matrix` set.
                 """
                 self.imputed_matrix = min_impute(self.infected_matrix, params)
 
                 return self
 
     class MD:
+        """
+        A class containing imputation algorithms for matrix decomposition methods.
+
+        Subclasses
+        ----------
+        CDRec :
+            Imputation method using Centroid Decomposition.
+        """
+
         class CDRec(BaseImputer):
             """
-            CDRec class to impute missing value with Centroid Decomposition.
+            CDRec class to impute missing values using Centroid Decomposition (CDRec).
 
             Methods
             -------
             impute(self, user_defined=True, params=None):
-                Launch the imputation of the CDREC
+                Perform imputation using the CDRec algorithm.
             """
 
             algorithm = "cdrec"
 
             def impute(self, user_defined=True, params=None):
                 """
-                Imputation of data with CDREC algorithm.
+                Perform imputation using the CDRec algorithm.
 
                 Parameters
                 ----------
                 user_defined : bool, optional
-                    Decide whether to launch the imputation with default/user_defined parameters or auto-ml. Default is True.
+                    Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
-                    Parameters of the algorithm or Auto-ML, if None, default ones are loaded.
+                    Parameters of the CDRec algorithm or Auto-ML configuration, if None, default ones are loaded.
 
-                    **Option 1: Algorithm parameters**
+                    **Algorithm parameters:**
 
                     - rank : int
-                        Rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series).
+                        Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
                     - epsilon : float
-                        Learning rate.
+                        The learning rate used for the algorithm.
                     - iterations : int
-                        Number of iterations.
+                        The number of iterations to perform.
 
-                    **Option 2: AutoML parameters**
+                    **Auto-ML parameters:**
 
                     - ground_truth : numpy.ndarray
-                        Values of time series without contamination.
+                        The original time series dataset without contamination.
                     - optimizer : str
-                        Optimizer to use, can be "bayesian", "greedy", "pso", or "sh".
+                        The optimizer to use for parameter optimization. Valid values are "bayesian", "greedy", "pso", or "sh".
                     - options : dict, optional
-                        Optional parameters for each optimizer.
+                        Optional parameters specific to the optimizer.
 
                         **Bayesian:**
 
@@ -304,9 +415,9 @@ class Imputation:
                         - selected_metrics : list, optional
                             List of selected metrics to consider for optimization. Default is ["RMSE"].
                         - n_random_starts : int, optional
-                            Number of initial calls to the objective function from random points. Default is 50.
+                            Number of initial calls to the objective function, from random points. Default is 50.
                         - acq_func : str, optional
-                            Function to minimize over the Gaussian prior, one of 'LCB', 'EI', 'PI', or 'gp_hedge'. Default is 'gp_hedge'.
+                            Acquisition function to minimize over the Gaussian prior. Valid values: 'LCB', 'EI', 'PI', 'gp_hedge' (default is 'gp_hedge').
 
                         **Greedy:**
 
@@ -320,17 +431,17 @@ class Imputation:
                         - n_particles : int, optional
                             Number of particles used.
                         - c1 : float, optional
-                            PSO c1 parameter.
+                            PSO learning coefficient c1 (personal learning).
                         - c2 : float, optional
-                            PSO c2 parameter.
+                            PSO learning coefficient c2 (global learning).
                         - w : float, optional
-                            PSO w parameter.
+                            PSO inertia weight.
                         - iterations : int, optional
                             Number of iterations for the optimization.
                         - n_processes : int, optional
-                            Number of processes during the optimization.
+                            Number of processes during optimization.
 
-                        **SH:**
+                        **Successive Halving (SH):**
 
                         - num_configs : int, optional
                             Number of configurations to try.
@@ -343,6 +454,14 @@ class Imputation:
                 -------
                 self : CDRec
                     CDRec object with `imputed_matrix` set.
+
+                Example
+                -------
+                >>> cdrec_imputer = Imputation.MD.CDRec(infected_matrix)
+                >>> cdrec_imputer.impute()  # default parameters for imputation > or
+                >>> cdrec_imputer.impute(user_defined=True, params={'rank': 5, 'epsilon': 0.01, 'iterations': 100})  # user-defined > or
+                >>> cdrec_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> imputed_data = cdrec_imputer.imputed_matrix
 
                 :author: Quentin Nater
                 """
@@ -357,19 +476,55 @@ class Imputation:
                 return self
 
     class Regression:
+        """
+        A class containing imputation algorithms for regression-based methods.
+
+        Subclasses
+        ----------
+        IIM :
+            Imputation method using Iterative Imputation with Metric learning (IIM).
+        """
 
         class IIM(BaseImputer):
+            """
+            IIM class to impute missing values using Iterative Imputation with Metric Learning (IIM).
+
+            Methods
+            -------
+            impute(self, user_defined=True, params=None):
+                Perform imputation using the IIM algorithm.
+                    """
             algorithm = "iim"
 
             def impute(self, user_defined=True, params=None):
                 """
-               Imputation of data with IIM algorithm
-               :author: Quentin Nater
+                Perform imputation using the IIM algorithm.
 
-               :param params: [Optional] (neighbors, algo_code) : parameters of the algorithm, if None, default ones are loaded : neighbors, algo_code
+                Parameters
+                ----------
+                user_defined : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the IIM algorithm, if None, default ones are loaded.
 
-               :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-               """
+                    - learning_neighbours : int
+                        Number of nearest neighbors for learning.
+                    - algo_code : str
+                        Unique code for the algorithm configuration.
+
+                Returns
+                -------
+                self : IIM
+                    The object with `imputed_matrix` set.
+
+                Example
+                -------
+                >>> iim_imputer = Imputation.Regression.IIM(infected_matrix)
+                >>> iim_imputer.impute()  # default parameters for imputation > or
+                >>> iim_imputer.impute(user_defined=True, params={'learning_neighbors': 10})  # user-defined  > or
+                >>> iim_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> imputed_data = iim_imputer.imputed_matrix
+                """
                 if params is not None:
                     learning_neighbours, algo_code = self._check_params(user_defined, params)
                 else:
@@ -380,18 +535,59 @@ class Imputation:
                 return self
 
     class ML:
+        """
+        A class containing imputation algorithms for machine learning-based methods.
+
+        Subclasses
+        ----------
+        MRNN :
+            Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
+        """
+
         class MRNN(BaseImputer):
+            """
+            MRNN class to impute missing values using Multi-directional Recurrent Neural Networks (MRNN).
+
+            Methods
+            -------
+            impute(self, user_defined=True, params=None):
+                Perform imputation using the MRNN algorithm.
+            """
             algorithm = "mrnn"
 
             def impute(self, user_defined=True, params=None):
                 """
-               Imputation of data with MRNN algorithm
-               :author: Quentin Nater
+                Perform imputation using the MRNN algorithm.
 
-               :param params: [Optional] (hidden_dim, learning_rate, iterations, sequence_length) : parameters of the algorithm, hidden_dim, learning_rate, iterations, keep_prob, sequence_length, if None, default ones are loaded
+                Parameters
+                ----------
+                user_defined : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the MRNN algorithm, if None, default ones are loaded.
 
-               :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-               """
+                    - hidden_dim : int
+                        The number of hidden units in the neural network.
+                    - learning_rate : float
+                        Learning rate for training the neural network.
+                    - iterations : int
+                        Number of iterations for training.
+                    - sequence_length : int
+                        The length of the sequences used in the recurrent neural network.
+
+                Returns
+                -------
+                self : MRNN
+                    The object with `imputed_matrix` set.
+
+                Example
+                -------
+                >>> mrnn_imputer = Imputation.ML.MRNN(infected_matrix)
+                >>> mrnn_imputer.impute()  # default parameters for imputation > or
+                >>> mrnn_imputer.impute(user_defined=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
+                >>> mrnn_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> imputed_data = mrnn_imputer.imputed_matrix
+                """
                 if params is not None:
                     hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_defined, params)
                 else:
@@ -404,21 +600,57 @@ class Imputation:
                 return self
 
     class Pattern:
+        """
+        A class containing imputation algorithms for pattern-based methods.
+
+        Subclasses
+        ----------
+        STMVL :
+            Imputation method using Spatio-Temporal Matrix Variational Learning (STMVL).
+        """
 
         class STMVL(BaseImputer):
+            """
+            STMVL class to impute missing values using Spatio-Temporal Matrix Variational Learning (STMVL).
+
+            Methods
+            -------
+            impute(self, user_defined=True, params=None):
+                Perform imputation using the STMVL algorithm.
+            """
             algorithm = "stmvl"
 
             def impute(self, user_defined=True, params=None):
                 """
-               Imputation of data with MRNN algorithm
-               :author: Quentin Nater
+                Perform imputation using the STMVL algorithm.
 
-               :param params: [Optional] (window_size, gamma, alpha) : parameters of the algorithm, window_size, gamma, alpha, if None, default ones are loaded
-                    :param window_size: window size for temporal component
-                    :param gamma: smoothing parameter for temporal weight
-                    :param alpha: power for spatial weight
-               :return: imputed_matrix, metrics : all time series with imputation data and their metrics
-               """
+                Parameters
+                ----------
+                user_defined : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the STMVL algorithm, if None, default ones are loaded.
+
+                    - window_size : int
+                        The size of the temporal window for imputation.
+                    - gamma : float
+                        Smoothing parameter for temporal weights.
+                    - alpha : float
+                        Power for spatial weights.
+
+                Returns
+                -------
+                self : STMVL
+                    The object with `imputed_matrix` set.
+
+                Example
+                -------
+                >>> stmvl_imputer = Imputation.Pattern.STMVL(infected_matrix)
+                >>> stmvl_imputer.impute()  # default parameters for imputation > or
+                >>> stmvl_imputer.impute(user_defined=True, params={'window_size': 7, 'learning_rate':0.01, 'gamma':0.85, 'alpha': 7})  # user-defined  > or
+                >>> stmvl_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> imputed_data = stmvl_imputer.imputed_matrix
+                """
                 if params is not None:
                     window_size, gamma, alpha = self._check_params(user_defined, params)
                 else:

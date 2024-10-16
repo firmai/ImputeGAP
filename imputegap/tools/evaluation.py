@@ -3,13 +3,40 @@ from sklearn.metrics import mutual_info_score
 from scipy.stats import pearsonr
 
 class Evaluation:
+    """
+    A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.
+
+    Methods
+    -------
+    metrics_computation():
+        Compute various evaluation metrics (RMSE, MAE, MI, CORRELATION) for the imputation.
+    compute_rmse():
+        Compute the Root Mean Squared Error (RMSE) between the ground truth and the imputed values.
+    compute_mae():
+        Compute the Mean Absolute Error (MAE) between the ground truth and the imputed values.
+    compute_mi():
+        Compute the Mutual Information (MI) between the ground truth and the imputed values.
+    compute_correlation():
+        Compute the Pearson correlation coefficient between the ground truth and the imputed values.
+
+    """
 
     def __init__(self, ground_truth, imputation, contamination):
         """
-        Initialize the EvaluationGAP class.
-        :param ground_truth: original time series without contamination
-        :param imputation: new time series with imputation values
-        :param contamination: time series with contamination
+        Initialize the Evaluation class with ground truth, imputation, and contamination time series.
+
+        Parameters
+        ----------
+        ground_truth : numpy.ndarray
+            The original time series without contamination.
+        imputation : numpy.ndarray
+            The imputed time series.
+        contamination : numpy.ndarray
+            The time series with contamination (NaN values).
+
+        Returns
+        -------
+        None
         """
         self.ground_truth = ground_truth
         self.imputation = imputation
@@ -17,12 +44,18 @@ class Evaluation:
 
     def metrics_computation(self):
         """
-        Compute the metrics to express the results of the imputation based on the ground truth and the contamination set
+        Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.
 
-        :param ground_truth: original time series without contamination
-        :param imputation: new time series with imputation values
-        :param contamination: time series with contamination
-        :return: metrics, dictionary containing each metric of the imputation
+        The metrics include RMSE, MAE, Mutual Information (MI), and Pearson Correlation.
+
+        Returns
+        -------
+        dict
+            A dictionary containing the computed metrics:
+            - "RMSE": Root Mean Squared Error
+            - "MAE": Mean Absolute Error
+            - "MI": Mutual Information
+            - "CORRELATION": Pearson Correlation Coefficient
         """
         rmse = self.compute_rmse()
         mae = self.compute_mae()
@@ -35,8 +68,15 @@ class Evaluation:
 
     def compute_rmse(self):
         """
-        Compute the RMSE score based on the ground_truth, the imputation values and the contamination set
-        :return: the RMSE score between ground truth and imputation for NaN positions in contamination.
+        Compute the Root Mean Squared Error (RMSE) between the ground truth and imputed values for NaN positions in contamination.
+
+        The RMSE measures the average magnitude of the error between the imputed values and the ground truth,
+        giving higher weight to large errors.
+
+        Returns
+        -------
+        float
+            The RMSE value for NaN positions in the contamination dataset.
         """
         nan_locations = np.isnan(self.contamination)
 
@@ -47,8 +87,14 @@ class Evaluation:
 
     def compute_mae(self):
         """
-        Computes MAE only for the positions where there are NaN values in the contamination.
-        :return : the mean absolute error between ground truth and imputation for NaN positions in contamination.
+        Compute the Mean Absolute Error (MAE) between the ground truth and imputed values for NaN positions in contamination.
+
+        The MAE measures the average magnitude of the error in absolute terms, making it more robust to outliers than RMSE.
+
+        Returns
+        -------
+        float
+            The MAE value for NaN positions in the contamination dataset.
         """
         nan_locations = np.isnan(self.contamination)
 
@@ -59,8 +105,15 @@ class Evaluation:
 
     def compute_mi(self):
         """
-        Computes Mutual Information (MI) only for the positions where there are NaN values in the contamination.
-        :return : the mutual information between ground truth and imputation for NaN positions in contamination.
+        Compute the Mutual Information (MI) between the ground truth and imputed values for NaN positions in contamination.
+
+        MI measures the amount of shared information between the ground truth and the imputed values,
+        indicating how well the imputation preserves the underlying patterns of the data.
+
+        Returns
+        -------
+        float
+            The mutual information (MI) score for NaN positions in the contamination dataset.
         """
         nan_locations = np.isnan(self.contamination)
 
@@ -77,9 +130,15 @@ class Evaluation:
 
     def compute_correlation(self):
         """
-        Computes the Pearson correlation coefficient only for the positions where there are NaN values in the contamination.
+        Compute the Pearson Correlation Coefficient between the ground truth and imputed values for NaN positions in contamination.
 
-        :return: the Pearson correlation coefficient between ground truth and imputation for NaN positions in contamination.
+        Pearson Correlation measures the linear relationship between the ground truth and imputed values,
+        with 1 being a perfect positive correlation and -1 a perfect negative correlation.
+
+        Returns
+        -------
+        float
+            The Pearson correlation coefficient for NaN positions in the contamination dataset.
         """
         nan_locations = np.isnan(self.contamination)
         correlation, _ = pearsonr(self.ground_truth[nan_locations], self.imputation[nan_locations])

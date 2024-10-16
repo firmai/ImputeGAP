@@ -16,21 +16,68 @@ from matplotlib import pyplot as plt  # type: ignore
 
 
 class TimeSeries:
+    """
+    Class for managing and manipulating time series data.
+
+    This class allows importing, normalizing, and visualizing time series datasets. It also provides methods
+    to contaminate the datasets with missing values and plot results.
+
+    Methods
+    -------
+    __init__() :
+        Initializes the TimeSeries object.
+
+    import_matrix(data=None) :
+        Imports a matrix of time series data.
+
+    load_timeseries(data=None, max_series=None, max_values=None, header=False) :
+        Loads time series data from a file or predefined dataset.
+
+    print(limit=10, view_by_series=False) :
+        Prints a limited number of time series from the dataset.
+
+    print_results(metrics, algorithm="") :
+        Prints the results of the imputation process.
+
+    normalize(normalizer="z_score") :
+        Normalizes the time series dataset.
+
+    plot(raw_data, infected_data=None, imputed_data=None, title="Time Series Data",
+         max_series=None, max_values=None, size=(16, 8), save_path="", display=True) :
+        Plots the time series data, including raw, contaminated, or imputed data.
+
+    Contaminate :
+        Class containing methods to contaminate time series data with missing values based on different scenarios.
+
+    """
 
     def __init__(self):
         """
+        Initialize the TimeSeries object.
+
+        The class works with time series datasets, where each series is separated by space, and values
+        are separated by newline characters.
+
         IMPORT FORMAT : (Values,Series) : series are seperated by "SPACE" et values by "\\n"
         """
         self.data = None
 
     def import_matrix(self, data=None):
-        """
-        Load timeseries manager from file
-        FORMAT : (Series,Values), values are seperated by space et series by \n
-        :author: Quentin Nater
+        """"
+        Imports a matrix of time series data.
 
-        :param data: matrix of time series
-        :return: time series format for imputegap from dataset
+        The data can be provided as a list or a NumPy array. The format is (Series, Values),
+        where series are separated by space, and values are separated by newline characters.
+
+        Parameters
+        ----------
+        data : list or numpy.ndarray, optional
+            The matrix of time series data to import.
+
+        Returns
+        -------
+        TimeSeries
+            The TimeSeries object with the imported data.
         """
         if data is not None:
             if isinstance(data, list):
@@ -46,15 +93,26 @@ class TimeSeries:
 
     def load_timeseries(self, data=None, max_series=None, max_values=None, header=False):
         """
-        Load timeseries manager from file
-        FORMAT : (Values,Series), values are seperated by space et series by \n
-        :author: Quentin Nater
+        Loads time series data from a file or predefined dataset.
 
-        :param filename: path of the time series dataset
-        :param max_series : limitation of the maximum number of series (computation limitation) | default None
-        :param max_values : limitation of the maximum number of values by series (computation limitation) | default None
-        :param header : has header or not | default False
-        :return: time series format for imputegap from dataset
+        The data is loaded as a matrix of shape (Values, Series). You can limit the number of series
+        or values per series for computational efficiency.
+
+        Parameters
+        ----------
+        data : str, optional
+            The file path or name of a predefined dataset (e.g., 'bafu.txt').
+        max_series : int, optional
+            The maximum number of series to load.
+        max_values : int, optional
+            The maximum number of values per series.
+        header : bool, optional
+            Whether the dataset has a header. Default is False.
+
+        Returns
+        -------
+        TimeSeries
+            The TimeSeries object with the loaded data.
         """
 
         if data is not None:
@@ -78,11 +136,18 @@ class TimeSeries:
 
     def print(self, limit=10, view_by_series=False):
         """
-        Display the limited series from your dataset
-        :author: Quentin Nater
+        Prints a limited number of time series from the dataset.
 
-        :param limit: Number of series to print
-        :param view_by_series: View (Values/Series) if true, (Series/Values) if false
+        Parameters
+        ----------
+        limit : int, optional
+            The number of series to print. Default is 10.
+        view_by_series : bool, optional
+            Whether to view by series (True) or by values (False).
+
+        Returns
+        -------
+        None
         """
 
         print("\nTime Series set :")
@@ -116,11 +181,20 @@ class TimeSeries:
 
     def print_results(self, metrics, algorithm=""):
         """
-        Display the result of the imputation
-        :param metrics : [OPTIONAL], metrics to print in dictionary
-        :param algorithm : [OPTIONAL], print the algorithm used
-        :author: Quentin Nater
+        Prints the results of the imputation process.
+
+        Parameters
+        ----------
+        metrics : dict
+           A dictionary containing the imputation metrics to display.
+        algorithm : str, optional
+           The name of the algorithm used for imputation.
+
+        Returns
+        -------
+        None
         """
+
         print("\n\nResults of the imputation ", algorithm, " :")
         for key, value in metrics.items():
             print(f"{key:<20} = {value}")
@@ -128,11 +202,20 @@ class TimeSeries:
 
     def normalize(self, normalizer="z_score"):
         """
-        Normalization of a dataset with "z_score", "min_max"
-        :author: Quentin Nater
+        Normalize the time series dataset.
 
-        :param normalizer: ("z_score", "min_max"), normalization technic to use | default = "z_score"
-        :return: data_normalized, normalized dataset
+        Supported normalization techniques are "z_score" and "min_max". The method also logs
+        the execution time for the normalization process.
+
+        Parameters
+        ----------
+        normalizer : str, optional
+            The normalization technique to use. Options are "z_score" or "min_max". Default is "z_score".
+
+        Returns
+        -------
+        numpy.ndarray
+            The normalized time series data.
         """
         print("Normalization of the original time series dataset with ", normalizer)
         self.data = self.data.T
@@ -188,20 +271,33 @@ class TimeSeries:
     def plot(self, raw_data, infected_data=None, imputed_data=None, title="Time Series Data", max_series=None,
              max_values=None, size=(16, 8), save_path="", display=True):
         """
-        Plot a chosen time series
-        :author: Quentin Nater
+        Plot the time series data, including raw, contaminated, or imputed data.
 
-        :param raw_data: original time series without contamination
-        :param infected_data: time series with contamination
-        :param imputed_data: new time series with imputation values
-        :param title: title of the plot
-        :param max_series : limitation of the maximum number of series (computation limitation) | default None
-        :param max_values : limitation of the maximum number of values by series (computation limitation) | default None
-        :param size : size of the plots
-        :param save_path : path to save locally the plot
-        :param display : display or not the result
+        Parameters
+        ----------
+        raw_data : numpy.ndarray
+            The original time series data without contamination.
+        infected_data : numpy.ndarray, optional
+            The contaminated time series data.
+        imputed_data : numpy.ndarray, optional
+            The imputed time series data.
+        title : str, optional
+            Title of the plot. Default is "Time Series Data".
+        max_series : int, optional
+            The maximum number of series to plot.
+        max_values : int, optional
+            The maximum number of values per series to plot.
+        size : tuple, optional
+            Size of the plot in inches. Default is (16, 8).
+        save_path : str, optional
+            Path to save the plot locally.
+        display : bool, optional
+            Whether to display the plot. Default is True.
 
-        :return : filepath
+        Returns
+        -------
+        str or None
+            The file path of the saved plot, if applicable.
         """
         number_of_series = 0
         plt.figure(figsize=size)
@@ -270,21 +366,49 @@ class TimeSeries:
 
 
     class Contaminate:
+        """
+        Inner class to apply contamination scenarios to the time series data.
+
+        Methods
+        -------
+        mcar(ts, series_impacted=0.2, missing_rate=0.2, block_size=10, protection=0.1, use_seed=True, seed=42, explainer=False) :
+            Apply Missing Completely at Random (MCAR) contamination to the time series data.
+
+        missing_percentage(ts, series_impacted=0.2, missing_rate=0.2, protection=0.1) :
+            Apply missing percentage contamination to the time series data.
+
+        blackout(ts, missing_rate=0.2, protection=0.1) :
+            Apply blackout contamination to the time series data.
+        """
 
         def mcar(ts, series_impacted=0.2, missing_rate=0.2, block_size=10, protection=0.1, use_seed=True, seed=42,
                  explainer=False):
             """
-            Contamination of time series base on the Missing Completely at Random scenario
-            :author: Quentin Nater
+            Apply Missing Completely at Random (MCAR) contamination to the time series data.
 
-            :param series_impacted: percentage of series contaminated | default 0.2
-            :param missing_rate: percentage of missing values by series  | default 0.2
-            :param block_size: size of the block to remove at each random position selected  | default 10
-            :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1
-            :param use_seed: use a seed to reproduce the test | default true
-            :param seed: value of the seed | default 42
-            :param explainer : use the MCAR on specific series to explain the imputation # default False
-            :return: the contaminated time series
+            Parameters
+            ----------
+            ts : numpy.ndarray
+                The time series dataset to contaminate.
+            series_impacted : float, optional
+                Percentage of series to contaminate (default is 0.2).
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.2).
+            block_size : int, optional
+                Size of the block of missing data (default is 10).
+            protection : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+            use_seed : bool, optional
+                Whether to use a seed for reproducibility (default is True).
+            seed : int, optional
+                The value of the seed (default is 42).
+            explainer : bool, optional
+                Whether to apply MCAR to specific series for explanation purposes (default is False).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
             """
 
             if use_seed:
@@ -348,13 +472,23 @@ class TimeSeries:
 
         def missing_percentage(ts, series_impacted=0.2, missing_rate=0.2, protection=0.1):
             """
-            Contamination of time series base on the missing percentage scenario
-            :author: Quentin Nater
+            Apply missing percentage contamination to the time series data.
 
-            :param series_impacted: percentage of series contaminated | default 0.2
-            :param missing_rate: percentage of missing values by series  | default 0.2
-            :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1
-            :return: the contaminated time series
+            Parameters
+            ----------
+            ts : numpy.ndarray
+                The time series dataset to contaminate.
+            series_impacted : float, optional
+                Percentage of series to contaminate (default is 0.2).
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.2).
+            protection : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
             """
 
             ts_contaminated = ts.copy()
@@ -387,12 +521,21 @@ class TimeSeries:
 
         def blackout(ts, missing_rate=0.2, protection=0.1):
             """
-            Contamination of time series base on the blackout scenario
-            :author: Quentin Nater
+            Apply blackout contamination to the time series data.
 
-            :param missing_rate: percentage of missing values by series  | default 0.2
-            :param protection: size in the beginning of the time series where contamination is not proceeded  | default 0.1
-            :return: the contaminated time series
+            Parameters
+            ----------
+            ts : numpy.ndarray
+                The time series dataset to contaminate.
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.2).
+            protection : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
             """
             return TimeSeries.Contaminate.missing_percentage(ts, series_impacted=1, missing_rate=missing_rate,
                                                              protection=protection)

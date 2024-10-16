@@ -18,13 +18,50 @@ from skopt.utils import use_named_args
 from skopt.space import Integer
 
 class Optimization:
+    """
+    A class for performing optimization of imputation algorithm hyperparameters.
+
+    This class contains methods for various optimization strategies such as Greedy, Bayesian, Particle Swarm,
+    and Successive Halving, used to find the best parameters for different imputation algorithms.
+
+    Methods
+    -------
+    save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="b", file_name=None):
+        Save the optimization parameters to a TOML file for later use.
+
+    Greedy.optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=250):
+        Perform greedy optimization for hyperparameters.
+
+    Bayesian.optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
+        Perform Bayesian optimization for hyperparameters.
+
+    ParticleSwarm.optimize(ground_truth, contamination, selected_metrics, algorithm, n_particles, c1, c2, w, iterations, n_processes):
+        Perform Particle Swarm Optimization (PSO) for hyperparameters.
+
+    SuccessiveHalving.optimize(ground_truth, contamination, selected_metrics, algorithm, num_configs, num_iterations, reduction_factor):
+        Perform Successive Halving optimization for hyperparameters.
+    """
 
     def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="b", file_name=None):
         """
-        Save the optimization parameters to a TOML file to use later without recomputing.
+        Save the optimization parameters to a TOML file for later use without recomputing.
 
-        :param optimal_params: dictionary of the optimal parameters.
-        :param file_name: name of the TOML file to save the results. Default is 'optimization_results.toml'.
+        Parameters
+        ----------
+        optimal_params : dict
+            Dictionary of the optimal parameters.
+        algorithm : str, optional
+            The name of the imputation algorithm (default is 'cdrec').
+        dataset : str, optional
+            The name of the dataset (default is an empty string).
+        optimizer : str, optional
+            The name of the optimizer used (default is 'b').
+        file_name : str, optional
+            The name of the TOML file to save the results (default is None).
+
+        Returns
+        -------
+        None
         """
         if file_name is None:
             file_name = "../params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
@@ -49,17 +86,25 @@ class Optimization:
 
         def optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=250):
             """
-            Conduct the Greedy for hyperparameters.
+            Perform greedy optimization for hyperparameters.
 
             Parameters
             ----------
-            :param ground_truth : time series data set to optimize
-            :param contamination : time series contaminate to impute
-            :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
-            :param algorithm : imputation algorithm | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default 'cdrec'
-            :param n_calls: bayesian parameters, number of calls to the objective function.
+            ground_truth : numpy.ndarray
+                The ground truth time series dataset.
+            contamination : numpy.ndarray
+                The contaminated time series dataset to impute.
+            selected_metrics : list of str, optional
+                List of selected metrics for optimization (default is ["RMSE"]).
+            algorithm : str, optional
+                The imputation algorithm to optimize (default is 'cdrec').
+            n_calls : int, optional
+                Number of calls to the objective function (default is 250).
 
-            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores.
+            Returns
+            -------
+            tuple
+                A tuple containing the best parameters and their corresponding score.
             """
             start_time = time.time()  # Record start time
 
@@ -111,19 +156,29 @@ class Optimization:
 
         def optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
             """
-            Conduct the Bayesian optimization for hyperparameters.
+            Perform Bayesian optimization for hyperparameters.
 
             Parameters
             ----------
-            :param ground_truth : time series data set to optimize
-            :param contamination : time series contaminate to impute
-            :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
-            :param algorithm : imputation algorithm | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default 'cdrec'
-            :param n_calls: bayesian parameters, number of calls to the objective function.
-            :param n_random_starts: bayesian parameters, number of initial calls to the objective function, from random points.
-            :param acq_func: bayesian parameters, function to minimize over the Gaussian prior (one of 'LCB', 'EI', 'PI', 'gp_hedge') | default gp_hedge
+            ground_truth : numpy.ndarray
+                The ground truth time series dataset.
+            contamination : numpy.ndarray
+                The contaminated time series dataset to impute.
+            selected_metrics : list of str, optional
+                List of selected metrics for optimization (default is ["RMSE"]).
+            algorithm : str, optional
+                The imputation algorithm to optimize (default is 'cdrec').
+            n_calls : int, optional
+                Number of calls to the objective function (default is 100).
+            n_random_starts : int, optional
+                Number of random initial points (default is 50).
+            acq_func : str, optional
+                Acquisition function for the Gaussian prior (default is 'gp_hedge').
 
-            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores, Cost of the optimization
+            Returns
+            -------
+            tuple
+                A tuple containing the best parameters and their corresponding score.
             """
             start_time = time.time()  # Record start time
 
@@ -162,6 +217,21 @@ class Optimization:
     class ParticleSwarm:
 
         def _format_params(self, particle_params, algorithm):
+            """
+            Format parameters for the given algorithm.
+
+            Parameters
+            ----------
+            particle_params : list
+                List of particle parameters.
+            algorithm : str
+                The imputation algorithm name.
+
+            Returns
+            -------
+            list
+                Formatted list of parameters.
+            """
             if algorithm == 'cdrec':
                 particle_params = [int(particle_params[0]), particle_params[1], int(particle_params[2])]
             if algorithm == 'iim':
@@ -174,6 +244,27 @@ class Optimization:
             return particle_params
 
         def _objective(self, ground_truth, contamination, algorithm, selected_metrics, params):
+            """
+            Objective function for Particle Swarm Optimization.
+
+            Parameters
+            ----------
+            ground_truth : numpy.ndarray
+                The ground truth time series dataset.
+            contamination : numpy.ndarray
+                The contaminated time series dataset to impute.
+            algorithm : str
+                The imputation algorithm name.
+            selected_metrics : list of str
+                List of selected metrics for optimization.
+            params : numpy.ndarray
+                Parameter values for the optimization.
+
+            Returns
+            -------
+            numpy.ndarray
+                Array of error values for each particle.
+            """
             n_particles = params.shape[0]  # Get the number of particles
             # Initialize array to hold the errors for each particle
             errors_for_all_particles = np.zeros(n_particles)
@@ -187,22 +278,35 @@ class Optimization:
 
         def optimize(self, ground_truth, contamination, selected_metrics, algorithm, n_particles, c1, c2, w, iterations, n_processes):
             """
-            Conduct the Particle swarm optimization for hyperparameters.
+            Perform Particle Swarm Optimization for hyperparameters.
 
             Parameters
             ----------
-            :param ground_truth : time series data set to optimize
-            :param contamination : time series contaminate to impute
-            :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
-            :param algorithm : imputation algorithm | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default 'cdrec'
-            :param n_particles: pso parameters, number of particles used
-            :param c1: pso parameters, c1 option value
-            :param c2: pso parameters, c2 option value
-            :param w: pso parameters, w option value
-            :param iterations: pso parameters, number of iterations for the optimization
-            :param n_processes: pso parameters, number of process during the optimization
+            ground_truth : numpy.ndarray
+                The ground truth time series dataset.
+            contamination : numpy.ndarray
+                The contaminated time series dataset to impute.
+            selected_metrics : list of str, optional
+                List of selected metrics for optimization (default is ["RMSE"]).
+            algorithm : str, optional
+                The imputation algorithm to optimize (default is 'cdrec').
+            n_particles : int
+                Number of particles used in PSO.
+            c1 : float
+                PSO parameter, personal learning coefficient.
+            c2 : float
+                PSO parameter, global learning coefficient.
+            w : float
+                PSO parameter, inertia weight.
+            iterations : int
+                Number of iterations for the optimization.
+            n_processes : int
+                Number of processes during optimization.
 
-            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores, Cost of the optimization
+            Returns
+            -------
+            tuple
+                A tuple containing the best parameters and their corresponding score.
             """
             start_time = time.time()  # Record start time
 
@@ -241,27 +345,50 @@ class Optimization:
 
     class SuccessiveHalving:
 
-
         def _objective(self, errors_dict, selected_metrics):
+            """
+            Objective function for Successive Halving optimization.
+
+            Parameters
+            ----------
+            errors_dict : dict
+                Dictionary containing error metrics.
+            selected_metrics : list of str
+                List of selected metrics for optimization.
+
+            Returns
+            -------
+            float
+                Mean error for the selected metrics.
+            """
             selected_errors = [errors_dict[metric] for metric in selected_metrics]
             return np.mean(selected_errors)
 
         def optimize(self, ground_truth, contamination, selected_metrics, algorithm, num_configs, num_iterations, reduction_factor):
             """
-            Conduct the Particle swarm optimization for hyperparameters.
+            Perform Successive Halving optimization for hyperparameters.
 
             Parameters
             ----------
-            :param ground_truth : time series data set to optimize
-            :param contamination : time series contaminate to impute
-            :param selected_metrics : list of selected metrics to consider for optimization. | default ["RMSE"]
-            :param algorithm : imputation algorithm | Valid values: 'cdrec', 'mrnn', 'stmvl', 'iim' | default 'cdrec'
-            :param num_configs: sh parameters, number of configurations to try.
-            :param num_iterations: sh parameters, number of iterations to run the optimization.
-            :param reduction_factor: sh parameters, reduction factor for the number of configurations kept after each iteration.
+            ground_truth : numpy.ndarray
+                The ground truth time series dataset.
+            contamination : numpy.ndarray
+                The contaminated time series dataset to impute.
+            selected_metrics : list of str, optional
+                List of selected metrics for optimization (default is ["RMSE"]).
+            algorithm : str, optional
+                The imputation algorithm to optimize (default is 'cdrec').
+            num_configs : int
+                Number of configurations to try.
+            num_iterations : int
+                Number of iterations for the optimization.
+            reduction_factor : int
+                Reduction factor for the number of configurations kept after each iteration.
 
-
-            :return : Tuple[dict, Union[Union[int, float, complex], Any]], the best parameters and their corresponding scores, Cost of the optimization
+            Returns
+            -------
+            tuple
+                A tuple containing the best parameters and their corresponding score.
             """
             start_time = time.time()  # Record start time
 

@@ -1,192 +1,388 @@
+
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<html lang="en" data-content_root="./">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imputegap.algorithms package &mdash; imputegap 0.1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
 
-    <title>imputegap.algorithms package &#8212; imputegap 0.1.4 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
-    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=fd825880"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fd825880"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
+    <link rel="next" title="imputegap.algorithms.cdrec" href="_autosummary/imputegap.algorithms.cdrec.html" />
+    <link rel="prev" title="imputegap package" href="imputegap.html" /> 
+</head>
 
-  
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
           
+          
+          <a href="index.html" class="icon icon-home">
+            imputegap
+              <img src="https://www.naterscreations.com/imputegap/logo_imputegab.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.html">imputegap.algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.explainer.explainer.html">imputegap.explainer.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.tools.html">imputegap.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.wrapper.html">imputegap.wrapper</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="imputegap.html">imputegap package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="imputegap.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">imputegap.algorithms package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.algorithms.cdrec">imputegap.algorithms.cdrec module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.algorithms.iim">imputegap.algorithms.iim module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.algorithms.min_impute">imputegap.algorithms.min_impute module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.algorithms.mrnn">imputegap.algorithms.mrnn module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.algorithms.stmvl">imputegap.algorithms.stmvl module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.algorithms.zero_impute">imputegap.algorithms.zero_impute module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.algorithms">Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.explainer.explainer package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.tools.html">imputegap.tools package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.wrapper.html">imputegap.wrapper package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_contamination">imputegap.runner_contamination module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_display">imputegap.runner_display module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_explainer">imputegap.runner_explainer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_imputation">imputegap.runner_imputation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_normalization">imputegap.runner_normalization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_optimization">imputegap.runner_optimization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.explainer.html">imputegap.explainer</a></li>
+</ul>
 
-          <div class="body" role="main">
-            
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">imputegap</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="imputegap.html">imputegap package</a></li>
+      <li class="breadcrumb-item active">imputegap.algorithms package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/qnater/https://github.com/eXascaleInfolab/ImputeGAP/blob/https://github.com/eXascaleInfolab/ImputeGAPimputegap.algorithms.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="imputegap-algorithms-package">
-<h1>imputegap.algorithms package<a class="headerlink" href="#imputegap-algorithms-package" title="Link to this heading">¶</a></h1>
+<h1>imputegap.algorithms package<a class="headerlink" href="#imputegap-algorithms-package" title="Link to this heading"></a></h1>
+<p>The <cite>imputegap.algorithms</cite> package contains various imputation algorithms used for handling missing values in time series data. This package supports multiple imputation techniques like CDRec, MRNN, IIM, and more.</p>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#module-imputegap.algorithms.cdrec" title="imputegap.algorithms.cdrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.cdrec</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#module-imputegap.algorithms.iim" title="imputegap.algorithms.iim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.iim</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#module-imputegap.algorithms.min_impute" title="imputegap.algorithms.min_impute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.min_impute</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#module-imputegap.algorithms.mrnn" title="imputegap.algorithms.mrnn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.mrnn</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#module-imputegap.algorithms.stmvl" title="imputegap.algorithms.stmvl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.stmvl</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#module-imputegap.algorithms.zero_impute" title="imputegap.algorithms.zero_impute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.zero_impute</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="module-imputegap.algorithms.cdrec">
-<span id="imputegap-algorithms-cdrec-module"></span><h2>imputegap.algorithms.cdrec module<a class="headerlink" href="#module-imputegap.algorithms.cdrec" title="Link to this heading">¶</a></h2>
+<span id="imputegap-algorithms-cdrec-module"></span><h2>imputegap.algorithms.cdrec module<a class="headerlink" href="#module-imputegap.algorithms.cdrec" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.cdrec.cdrec">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">cdrec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.cdrec.cdrec" title="Link to this definition">¶</a></dt>
-<dd><p>CDREC algorithm for imputation of missing data
-:author: Quentin Nater</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">cdrec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncation_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/cdrec.html#cdrec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.cdrec.cdrec" title="Link to this definition"></a></dt>
+<dd><p>CDRec algorithm for matrix imputation of missing values using Centroid Decomposition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>contamination</strong> – time series with contamination</p></li>
-<li><p><strong>truncation_rank</strong> – rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series)</p></li>
-</ul>
-</dd>
-</dl>
-<p>:param epsilon : learning rate
-:param iterations : number of iterations</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>logs</strong> – print logs of time execution</p></li>
-<li><p><strong>lib_path</strong> – file to library</p></li>
+<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The input matrix with contamination (missing values represented as NaNs).</p></li>
+<li><p><strong>truncation_rank</strong> (<em>int</em>) – The truncation rank for matrix decomposition (must be greater than 1 and smaller than the number of series).</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em>) – The learning rate (stopping criterion threshold).</p></li>
+<li><p><strong>iterations</strong> (<em>int</em>) – The maximum number of iterations allowed for the algorithm.</p></li>
+<li><p><strong>logs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to log the execution time (default is True).</p></li>
+<li><p><strong>lib_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Custom path to the shared library file (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>imputed_matrix, metrics : all time series with imputation data and their metrics</p>
+<dd class="field-even"><p>The imputed matrix with missing values recovered.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">cdrec</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="n">contamination_matrix</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.000001</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.cdrec.load_share_lib">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">load_share_lib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lib_cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.cdrec.load_share_lib" title="Link to this definition">¶</a></dt>
-<dd><p>Determine the OS and load the correct shared library
-:param name: name of the library
-:return: the correct path to the library</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">load_share_lib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lib_cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/cdrec.html#load_share_lib"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.cdrec.load_share_lib" title="Link to this definition"></a></dt>
+<dd><p>Load the shared library based on the operating system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the shared library (default is “lib_cdrec”).</p></li>
+<li><p><strong>lib</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the function loads the library from the default ‘imputegap’ path; if False, it loads from a local path (default is True).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The loaded shared library object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ctypes.CDLL</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.cdrec.native_cdrec">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">native_cdrec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_iters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.cdrec.native_cdrec" title="Link to this definition">¶</a></dt>
-<dd><p>Recovers missing values (designated as NaN) in a matrix. Supports additional parameters
-:param __py_matrix: 2D array
-:param __py_rank: truncation rank to be used (0 = detect truncation automatically)
-:param __py_eps: threshold for difference during recovery
-:param __py_iters: maximum number of allowed iterations for the algorithms
-:return: 2D array recovered matrix</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">native_cdrec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_iters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/cdrec.html#native_cdrec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.cdrec.native_cdrec" title="Link to this definition"></a></dt>
+<dd><p>Perform matrix imputation using the CDRec algorithm with native C++ support.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>__py_matrix</strong> (<em>numpy.ndarray</em>) – The input matrix with missing values (NaNs).</p></li>
+<li><p><strong>__py_rank</strong> (<em>int</em>) – The truncation rank for matrix decomposition (must be greater than 0 and less than the number of columns).</p></li>
+<li><p><strong>__py_eps</strong> (<em>float</em>) – The epsilon value, used as the threshold for stopping iterations based on difference.</p></li>
+<li><p><strong>__py_iters</strong> (<em>int</em>) – The maximum number of allowed iterations for the algorithm.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The recovered matrix after imputation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="module-imputegap.algorithms.iim">
-<span id="imputegap-algorithms-iim-module"></span><h2>imputegap.algorithms.iim module<a class="headerlink" href="#module-imputegap.algorithms.iim" title="Link to this heading">¶</a></h2>
+<span id="imputegap-algorithms-iim-module"></span><h2>imputegap.algorithms.iim module<a class="headerlink" href="#module-imputegap.algorithms.iim" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.iim.iim">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.iim.</span></span><span class="sig-name descname"><span class="pre">iim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_neighbor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.iim.iim" title="Link to this definition">¶</a></dt>
-<dd><p>Template zero impute for adding your own algorithms
-:author: Quentin Nater</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.iim.</span></span><span class="sig-name descname"><span class="pre">iim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_neighbor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/iim.html#iim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.iim.iim" title="Link to this definition"></a></dt>
+<dd><p>Perform imputation using the Iterative Imputation Method (IIM) algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>contamination</strong> – time series with contamination</p></li>
-<li><p><strong>adaptive_flag</strong> – The algorithm will run the non-adaptive version of the algorithm, as described in the paper</p></li>
+<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The input matrix with contamination (missing values represented as NaNs).</p></li>
+<li><p><strong>number_neighbor</strong> (<em>int</em>) – The number of neighbors to use for the K-Nearest Neighbors (KNN) classifier (default is 10).</p></li>
+<li><p><strong>algo_code</strong> (<em>str</em>) – The specific action code for the IIM output. This determines the behavior of the algorithm.</p></li>
+<li><p><strong>logs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to log the execution time (default is True).</p></li>
 </ul>
 </dd>
-</dl>
-<p>:param number_neighbor : The number of neighbors to use for the KNN classifier, by default 10.
-:param algo_code : Action of the IIM output</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>logs</strong> – print logs of time execution</p>
-</dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>imputed_matrix, metrics : all time series with imputation data and their metrics</p>
+<dd class="field-even"><p>The imputed matrix with missing values recovered.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The IIM algorithm works by utilizing K-Nearest Neighbors (KNN) to estimate missing values in time series data.
+Depending on the provided <cite>algo_code</cite>, different versions of the algorithm may be executed.</p>
+<p>The function logs the total execution time if <cite>logs</cite> is set to True.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">iim</span><span class="p">(</span><span class="n">contamination_matrix</span><span class="p">,</span> <span class="n">number_neighbor</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">algo_code</span><span class="o">=</span><span class="s2">&quot;iim 2&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Quentin Nater</p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
 <section id="module-imputegap.algorithms.min_impute">
-<span id="imputegap-algorithms-min-impute-module"></span><h2>imputegap.algorithms.min_impute module<a class="headerlink" href="#module-imputegap.algorithms.min_impute" title="Link to this heading">¶</a></h2>
+<span id="imputegap-algorithms-min-impute-module"></span><h2>imputegap.algorithms.min_impute module<a class="headerlink" href="#module-imputegap.algorithms.min_impute" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.min_impute.min_impute">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.min_impute.</span></span><span class="sig-name descname"><span class="pre">min_impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.min_impute.min_impute" title="Link to this definition">¶</a></dt>
-<dd><p>Impute NaN values with the minimum value of the ground truth time series.</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.min_impute.</span></span><span class="sig-name descname"><span class="pre">min_impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/min_impute.html#min_impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.min_impute.min_impute" title="Link to this definition"></a></dt>
+<dd><p>Impute NaN values with the minimum value of the time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>contamination</strong> – time series with contamination</p></li>
-<li><p><strong>params</strong> – [Optional] parameters of the algorithm, if None, default ones are loaded</p></li>
+<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The input time series with contamination (missing values represented as NaNs).</p></li>
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Optional parameters for the algorithm. If None, the minimum value from the contamination is used (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>imputed_matrix : all time series with imputation data</p>
+<dd class="field-even"><p>The imputed matrix where NaN values have been replaced with the minimum value from the time series.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>This function finds the minimum non-NaN value in the time series and replaces all NaN values with this minimum value.
+It is a simple imputation technique for filling missing data points in a dataset.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">contamination</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_matrix</span> <span class="o">=</span> <span class="n">min_impute</span><span class="p">(</span><span class="n">contamination</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">imputed_matrix</span><span class="p">)</span>
+<span class="go">array([[1., 2., 1.],</span>
+<span class="go">       [4., 1., 6.]])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
 <section id="module-imputegap.algorithms.mrnn">
-<span id="imputegap-algorithms-mrnn-module"></span><h2>imputegap.algorithms.mrnn module<a class="headerlink" href="#module-imputegap.algorithms.mrnn" title="Link to this heading">¶</a></h2>
+<span id="imputegap-algorithms-mrnn-module"></span><h2>imputegap.algorithms.mrnn module<a class="headerlink" href="#module-imputegap.algorithms.mrnn" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.mrnn.mrnn">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.mrnn.</span></span><span class="sig-name descname"><span class="pre">mrnn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.mrnn.mrnn" title="Link to this definition">¶</a></dt>
-<dd><p>Template zero impute for adding your own algorithms
-:author: Quentin Nater</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.mrnn.</span></span><span class="sig-name descname"><span class="pre">mrnn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/mrnn.html#mrnn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.mrnn.mrnn" title="Link to this definition"></a></dt>
+<dd><p>Perform imputation using the Multivariate Recurrent Neural Network (MRNN) algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>contamination</strong> – time series with contamination</p></li>
-<li><p><strong>hidden_dim</strong> – number of hidden dimension</p></li>
+<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The input matrix with contamination (missing values represented as NaNs).</p></li>
+<li><p><strong>hidden_dim</strong> (<em>int</em>) – The number of hidden dimensions in the MRNN model.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate for the training process.</p></li>
+<li><p><strong>iterations</strong> (<em>int</em>) – The number of iterations for training the MRNN model.</p></li>
+<li><p><strong>sequence_length</strong> (<em>int</em>) – The length of sequences used within the MRNN model.</p></li>
+<li><p><strong>logs</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to log the execution time (default is True).</p></li>
 </ul>
 </dd>
-</dl>
-<p>:param learning_rate : learning rate of the training
-:param iterations : iterations during the training
-:param seq_length : length of the sequences inside MRNN</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>logs</strong> – print logs of time execution</p>
-</dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>imputed_matrix, metrics : all time series with imputation data and their metrics</p>
+<dd class="field-even"><p>The imputed matrix with missing values recovered.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The MRNN algorithm is a machine learning-based approach for time series imputation, where missing values are recovered using a recurrent neural network structure.</p>
+<p>This function logs the total execution time if <cite>logs</cite> is set to True.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">mrnn</span><span class="p">(</span><span class="n">contamination_matrix</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">sequence_length</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Quentin Nater</p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
 <section id="module-imputegap.algorithms.stmvl">
-<span id="imputegap-algorithms-stmvl-module"></span><h2>imputegap.algorithms.stmvl module<a class="headerlink" href="#module-imputegap.algorithms.stmvl" title="Link to this heading">¶</a></h2>
+<span id="imputegap-algorithms-stmvl-module"></span><h2>imputegap.algorithms.stmvl module<a class="headerlink" href="#module-imputegap.algorithms.stmvl" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.stmvl.load_share_lib">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">load_share_lib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lib_stmvl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.stmvl.load_share_lib" title="Link to this definition">¶</a></dt>
-<dd><p>Determine the OS and load the correct shared library
-:param name: name of the library
-:return: the correct path to the library</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">load_share_lib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lib_stmvl'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/stmvl.html#load_share_lib"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.stmvl.load_share_lib" title="Link to this definition"></a></dt>
+<dd><p>Load the shared library based on the operating system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the shared library (default is “lib_stmvl”).</p></li>
+<li><p><strong>lib</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the function loads the library from the default ‘imputegap’ path; if False, it loads from a local path (default is True).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The loaded shared library object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ctypes.CDLL</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.stmvl.native_stmvl">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">native_stmvl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_alpha</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.stmvl.native_stmvl" title="Link to this definition">¶</a></dt>
-<dd><p>Recovers missing values (designated as NaN) in a matrix. Supports additional parameters
-:param __py_matrix: 2D array
-:param __py_window: window size for temporal component
-:param __py_gamma: smoothing parameter for temporal weight
-:param __py_alpha: power for spatial weight
-:return: 2D array recovered matrix</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">native_stmvl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/stmvl.html#native_stmvl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.stmvl.native_stmvl" title="Link to this definition"></a></dt>
+<dd><p>Perform matrix imputation using the STMVL algorithm with native C++ support.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>__py_matrix</strong> (<em>numpy.ndarray</em>) – The input matrix with missing values (NaNs).</p></li>
+<li><p><strong>__py_window</strong> (<em>int</em>) – The window size for the temporal component in the STMVL algorithm.</p></li>
+<li><p><strong>__py_gamma</strong> (<em>float</em>) – The smoothing parameter for temporal weight (0 &lt; gamma &lt; 1).</p></li>
+<li><p><strong>__py_alpha</strong> (<em>float</em>) – The power for the spatial weight.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The recovered matrix after imputation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The STMVL algorithm leverages temporal and spatial relationships to recover missing values in a matrix.
+The native C++ implementation is invoked for better performance.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">stmvl</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="n">contamination_matrix</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">imputed_data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.stmvl.stmvl">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">stmvl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.stmvl.stmvl" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">stmvl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/stmvl.html#stmvl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.stmvl.stmvl" title="Link to this definition"></a></dt>
 <dd><p>CDREC algorithm for imputation of missing data
 :author: Quentin Nater</p>
 <dl class="field-list simple">
@@ -207,91 +403,77 @@
 
 </section>
 <section id="module-imputegap.algorithms.zero_impute">
-<span id="imputegap-algorithms-zero-impute-module"></span><h2>imputegap.algorithms.zero_impute module<a class="headerlink" href="#module-imputegap.algorithms.zero_impute" title="Link to this heading">¶</a></h2>
+<span id="imputegap-algorithms-zero-impute-module"></span><h2>imputegap.algorithms.zero_impute module<a class="headerlink" href="#module-imputegap.algorithms.zero_impute" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.zero_impute.zero_impute">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.zero_impute.</span></span><span class="sig-name descname"><span class="pre">zero_impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.algorithms.zero_impute.zero_impute" title="Link to this definition">¶</a></dt>
-<dd><p>Template zero impute for adding your own algorithms
-:author: Quentin Nater</p>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.zero_impute.</span></span><span class="sig-name descname"><span class="pre">zero_impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/algorithms/zero_impute.html#zero_impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.zero_impute.zero_impute" title="Link to this definition"></a></dt>
+<dd><p>Impute missing values (NaNs) with zeros in the time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>contamination</strong> – time series with contamination</p></li>
-<li><p><strong>params</strong> – [Optional] parameters of the algorithm, if None, default ones are loaded</p></li>
+<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The input time series matrix with missing values represented as NaNs.</p></li>
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Optional parameters for the algorithm. This is not used in the current implementation but can be passed for future extensions (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>imputed_matrix : all time series with imputation data</p>
+<dd class="field-even"><p>The imputed matrix where all NaN values have been replaced by zeros.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This simple imputation strategy replaces all missing values (NaNs) with zeros. This can be useful for initializing datasets where more complex imputation methods will follow.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">contamination</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_matrix</span> <span class="o">=</span> <span class="n">zero_impute</span><span class="p">(</span><span class="n">contamination</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">imputed_matrix</span><span class="p">)</span>
+<span class="go">array([[1., 2., 0.],</span>
+<span class="go">       [4., 0., 6.]])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Quentin Nater</p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
 <section id="module-imputegap.algorithms">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-imputegap.algorithms" title="Link to this heading">¶</a></h2>
+<span id="modules"></span><h2>Modules<a class="headerlink" href="#module-imputegap.algorithms" title="Link to this heading"></a></h2>
 </section>
 </section>
 
 
+           </div>
           </div>
-          
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="imputegap.html" class="btn btn-neutral float-left" title="imputegap package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_autosummary/imputegap.algorithms.cdrec.html" class="btn btn-neutral float-right" title="imputegap.algorithms.cdrec" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quentin Nater.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">imputegap</a></h1>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-
-
-
-
-
-
-
-
-<search id="searchbox" style="display: none" role="search">
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &#169;2024, Quentin Nater.
-      
-      |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
-      
-      |
-      <a href="_sources/imputegap.algorithms.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>

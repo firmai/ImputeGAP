@@ -6,11 +6,41 @@ import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
 
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
+    """
+    Convert a ctypes container to a numpy array in column-major order.
+
+    Parameters
+    ----------
+    __ctype_container : ctypes.Array
+        The input ctypes container (flattened matrix).
+    __py_sizen : int
+        The number of rows in the numpy array.
+    __py_sizem : int
+        The number of columns in the numpy array.
+
+    Returns
+    -------
+    numpy.ndarray
+        A numpy array reshaped to the original matrix dimensions (row-major order).
+    """
     __numpy_marshal = __numpy_import.array(__ctype_container).reshape(__py_sizem, __py_sizen).T;
 
     return __numpy_marshal;
 
 def __marshal_as_native_column(__py_matrix):
+    """
+    Convert a numpy array to a ctypes flat container for passing to native code.
+
+    Parameters
+    ----------
+    __py_matrix : numpy.ndarray
+        The input numpy matrix (2D array).
+
+    Returns
+    -------
+    ctypes.Array
+        A ctypes array containing the flattened matrix (in column-major order).
+    """
     __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
     __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
 
@@ -19,9 +49,19 @@ def __marshal_as_native_column(__py_matrix):
 
 def load_share_lib(name = "lib_stmvl", lib=True):
     """
-    Determine the OS and load the correct shared library
-    :param name: name of the library
-    :return: the correct path to the library
+    Load the shared library based on the operating system.
+
+    Parameters
+    ----------
+    name : str, optional
+        The name of the shared library (default is "lib_stmvl").
+    lib : bool, optional
+        If True, the function loads the library from the default 'imputegap' path; if False, it loads from a local path (default is True).
+
+    Returns
+    -------
+    ctypes.CDLL
+        The loaded shared library object.
     """
 
     if lib:
@@ -41,12 +81,34 @@ def load_share_lib(name = "lib_stmvl", lib=True):
 
 def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     """
-    Recovers missing values (designated as NaN) in a matrix. Supports additional parameters
-    :param __py_matrix: 2D array
-    :param __py_window: window size for temporal component
-    :param __py_gamma: smoothing parameter for temporal weight
-    :param __py_alpha: power for spatial weight
-    :return: 2D array recovered matrix
+    Perform matrix imputation using the STMVL algorithm with native C++ support.
+
+    Parameters
+    ----------
+    __py_matrix : numpy.ndarray
+        The input matrix with missing values (NaNs).
+    __py_window : int
+        The window size for the temporal component in the STMVL algorithm.
+    __py_gamma : float
+        The smoothing parameter for temporal weight (0 < gamma < 1).
+    __py_alpha : float
+        The power for the spatial weight.
+
+    Returns
+    -------
+    numpy.ndarray
+        The recovered matrix after imputation.
+
+    Notes
+    -----
+    The STMVL algorithm leverages temporal and spatial relationships to recover missing values in a matrix.
+    The native C++ implementation is invoked for better performance.
+
+    Example
+    -------
+    >>> imputed_data = stmvl(contamination=contamination_matrix, window_size=2, gamma=0.85, alpha=7)
+    >>> print(imputed_data)
+
     """
 
     shared_lib = load_share_lib()
