@@ -13,7 +13,7 @@ ts_1.print(view_by_series=True)
 ts_1.plot(ts_1.data)
 
 # 3. contamination of the data with MCAR scenario
-infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, use_seed=True, seed=2)
+infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, use_seed=True, seed=42)
 
 # [OPTIONAL] you can plot your raw data / print the contamination
 ts_1.print(limit=10)
