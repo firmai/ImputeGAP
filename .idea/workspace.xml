@@ -3,47 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/about/about.md" beforeDir="false" afterPath="$PROJECT_DIR$/procedure/about/about.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.algorithms.cdrec.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.algorithms.iim.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.algorithms.min_impute.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.algorithms.mrnn.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.algorithms.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.algorithms.stmvl.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.algorithms.zero_impute.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.recovery.evaluation.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.recovery.explainer.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.recovery.imputation.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.recovery.manager.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.recovery.optimization.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.tools.algorithm_parameters.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.tools.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.tools.utils.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/_autosummary/imputegap.wrapper.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.algorithm_parameters.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.algorithms.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.cdrec.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.evaluation.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.explainer.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.iim.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.imputation.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.manager.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.min_impute.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.mrnn.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.optimization.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.stmvl.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.tools.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.utils.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.wrapper.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/imputegap.zero_impute.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/index.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/modules.rst.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/installation/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/procedure/installation/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +240,7 @@
       <workItem from="1729003034883" duration="6705000" />
       <workItem from="1729089034671" duration="9189000" />
       <workItem from="1729150117287" duration="4258000" />
-      <workItem from="1729158721737" duration="11374000" />
+      <workItem from="1729158721737" duration="11923000" />
     </task>
     <servers />
   </component>
