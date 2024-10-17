@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.tools.evaluation &mdash; imputegap 0.1.4 documentation</title>
+  <title>imputegap.recovery.evaluation &mdash; imputegap 0.1.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
@@ -46,6 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -53,7 +54,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.evaluation.html">imputegap.tools.evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
@@ -74,7 +74,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">imputegap.tools.evaluation</li>
+      <li class="breadcrumb-item active">imputegap.recovery.evaluation</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -83,13 +83,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for imputegap.tools.evaluation</h1><div class="highlight"><pre>
+  <h1>Source code for imputegap.recovery.evaluation</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mutual_info_score</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">pearsonr</span>
 
 <div class="viewcode-block" id="Evaluation">
-<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation">[docs]</a>
 <span class="k">class</span> <span class="nc">Evaluation</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.</span>
@@ -131,7 +131,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">contamination</span> <span class="o">=</span> <span class="n">contamination</span>
 
 <div class="viewcode-block" id="Evaluation.metrics_computation">
-<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.metrics_computation">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.metrics_computation">[docs]</a>
     <span class="k">def</span> <span class="nf">metrics_computation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.</span>
@@ -158,7 +158,7 @@
 
 
 <div class="viewcode-block" id="Evaluation.compute_rmse">
-<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.compute_rmse">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_rmse">[docs]</a>
     <span class="k">def</span> <span class="nf">compute_rmse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the Root Mean Squared Error (RMSE) between the ground truth and imputed values for NaN positions in contamination.</span>
@@ -180,7 +180,7 @@
 
 
 <div class="viewcode-block" id="Evaluation.compute_mae">
-<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.compute_mae">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mae">[docs]</a>
     <span class="k">def</span> <span class="nf">compute_mae</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the Mean Absolute Error (MAE) between the ground truth and imputed values for NaN positions in contamination.</span>
@@ -201,7 +201,7 @@
 
 
 <div class="viewcode-block" id="Evaluation.compute_mi">
-<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.compute_mi">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mi">[docs]</a>
     <span class="k">def</span> <span class="nf">compute_mi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the Mutual Information (MI) between the ground truth and imputed values for NaN positions in contamination.</span>
@@ -229,7 +229,7 @@
 
 
 <div class="viewcode-block" id="Evaluation.compute_correlation">
-<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.compute_correlation">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_correlation">[docs]</a>
     <span class="k">def</span> <span class="nf">compute_correlation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the Pearson Correlation Coefficient between the ground truth and imputed values for NaN positions in contamination.</span>

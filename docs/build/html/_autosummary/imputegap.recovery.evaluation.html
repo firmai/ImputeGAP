@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.tools.evaluation &mdash; imputegap 0.1.4 documentation</title>
+  <title>imputegap.recovery.evaluation &mdash; imputegap 0.1.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="imputegap package" href="../imputegap.html" />
-    <link rel="prev" title="imputegap.tools.utils" href="imputegap.tools.utils.html" /> 
+    <link rel="next" title="imputegap.algorithms.cdrec" href="imputegap.algorithms.cdrec.html" />
+    <link rel="prev" title="imputegap.recovery.explainer" href="imputegap.recovery.explainer.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imputegap.recovery.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -56,7 +57,6 @@
 <li class="toctree-l1"><a class="reference internal" href="imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.tools.utils.html">imputegap.tools.utils</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">imputegap.tools.evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../imputegap.html">imputegap package</a></li>
@@ -76,9 +76,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">imputegap.tools.evaluation</li>
+      <li class="breadcrumb-item active">imputegap.recovery.evaluation</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/qnater/https://github.com/eXascaleInfolab/ImputeGAP/blob/https://github.com/eXascaleInfolab/ImputeGAP_autosummary/imputegap.tools.evaluation.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/qnater/https://github.com/eXascaleInfolab/ImputeGAP/blob/https://github.com/eXascaleInfolab/ImputeGAP_autosummary/imputegap.recovery.evaluation.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -86,12 +86,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-imputegap.tools.evaluation">
-<span id="imputegap-tools-evaluation"></span><h1>imputegap.tools.evaluation<a class="headerlink" href="#module-imputegap.tools.evaluation" title="Link to this heading"></a></h1>
+  <section id="module-imputegap.recovery.evaluation">
+<span id="imputegap-recovery-evaluation"></span><h1>imputegap.recovery.evaluation<a class="headerlink" href="#module-imputegap.recovery.evaluation" title="Link to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../imputegap.evaluation.html#id0" title="imputegap.tools.evaluation.Evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Evaluation</span></code></a>(ground_truth, imputation, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../imputegap.evaluation.html#id0" title="imputegap.recovery.evaluation.Evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Evaluation</span></code></a>(ground_truth, imputation, ...)</p></td>
 <td><p>A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.</p></td>
 </tr>
 </tbody>
@@ -102,8 +102,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="imputegap.tools.utils.html" class="btn btn-neutral float-left" title="imputegap.tools.utils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../imputegap.html" class="btn btn-neutral float-right" title="imputegap package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="imputegap.recovery.explainer.html" class="btn btn-neutral float-left" title="imputegap.recovery.explainer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="imputegap.algorithms.cdrec.html" class="btn btn-neutral float-right" title="imputegap.algorithms.cdrec" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -46,6 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -53,7 +54,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.evaluation.html">imputegap.tools.evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
@@ -85,13 +85,13 @@
              
   <h1>Source code for imputegap.recovery.imputation</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">imputegap.recovery.evaluation</span> <span class="kn">import</span> <span class="n">Evaluation</span>
 <span class="kn">from</span> <span class="nn">imputegap.algorithms.cdrec</span> <span class="kn">import</span> <span class="n">cdrec</span>
 <span class="kn">from</span> <span class="nn">imputegap.algorithms.iim</span> <span class="kn">import</span> <span class="n">iim</span>
 <span class="kn">from</span> <span class="nn">imputegap.algorithms.min_impute</span> <span class="kn">import</span> <span class="n">min_impute</span>
 <span class="kn">from</span> <span class="nn">imputegap.algorithms.mrnn</span> <span class="kn">import</span> <span class="n">mrnn</span>
 <span class="kn">from</span> <span class="nn">imputegap.algorithms.stmvl</span> <span class="kn">import</span> <span class="n">stmvl</span>
 <span class="kn">from</span> <span class="nn">imputegap.algorithms.zero_impute</span> <span class="kn">import</span> <span class="n">zero_impute</span>
-<span class="kn">from</span> <span class="nn">imputegap.tools.evaluation</span> <span class="kn">import</span> <span class="n">Evaluation</span>
 <span class="kn">from</span> <span class="nn">imputegap.tools</span> <span class="kn">import</span> <span class="n">utils</span>
 
 <div class="viewcode-block" id="BaseImputer">

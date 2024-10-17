@@ -1,7 +1,7 @@
-imputegap.tools.evaluation package
-==================================
+imputegap.recovery.evaluation package
+=====================================
 
-The `imputegap.tools.evaluation` package provides various utility functions and tools for handling algorithm parameters, evaluation, and other operations in the imputation process.
+The `imputegap.recovery.evaluation` package provides various utility functions and tools for handling algorithm parameters, evaluation, and other operations in the imputation process.
 
 Submodules
 ----------
@@ -15,7 +15,7 @@ Submodules
 Modules
 -------
 
-.. automodule:: imputegap.tools.evaluation
+.. automodule:: imputegap.recovery.evaluation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,10 +23,10 @@ Modules
 Submodule Documentation
 -----------------------
 
-imputegap.tools.evaluation module
----------------------------------
+imputegap.recovery.evaluation module
+------------------------------------
 
-.. automodule:: imputegap.tools.evaluation
+.. automodule:: imputegap.recovery.evaluation
    :members:
    :undoc-members:
    :show-inheritance:

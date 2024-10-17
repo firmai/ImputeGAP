@@ -1,11 +1,11 @@
 import re
+from imputegap.recovery.evaluation import Evaluation
 from imputegap.algorithms.cdrec import cdrec
 from imputegap.algorithms.iim import iim
 from imputegap.algorithms.min_impute import min_impute
 from imputegap.algorithms.mrnn import mrnn
 from imputegap.algorithms.stmvl import stmvl
 from imputegap.algorithms.zero_impute import zero_impute
-from imputegap.tools.evaluation import Evaluation
 from imputegap.tools import utils
 
 class BaseImputer:

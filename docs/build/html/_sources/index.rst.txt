@@ -16,6 +16,7 @@ The interface provides advanced imputation algorithms, construction of various m
    imputegap.recovery.imputation
    imputegap.recovery.optimization
    imputegap.recovery.explainer
+   imputegap.recovery.evaluation
    imputegap.algorithms.cdrec
    imputegap.algorithms.stmvl
    imputegap.algorithms.iim
@@ -23,7 +24,7 @@ The interface provides advanced imputation algorithms, construction of various m
    imputegap.algorithms.min_impute
    imputegap.algorithms.zero_impute
    imputegap.tools.utils
-   imputegap.tools.evaluation
+
 
 imputegap
 =========

@@ -46,6 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -53,7 +54,6 @@
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.tools.evaluation.html">imputegap.tools.evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.html">imputegap package</a></li>
@@ -168,15 +168,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imputegap.cdrec.html#imputegap.algorithms.cdrec.cdrec">cdrec() (in module imputegap.algorithms.cdrec)</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id1">compute_correlation() (imputegap.tools.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.compute_correlation">[1]</a>
+      <li><a href="imputegap.evaluation.html#id1">compute_correlation() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_correlation">[1]</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id2">compute_mae() (imputegap.tools.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.compute_mae">[1]</a>
+      <li><a href="imputegap.evaluation.html#id2">compute_mae() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mae">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.evaluation.html#id3">compute_mi() (imputegap.tools.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.compute_mi">[1]</a>
+      <li><a href="imputegap.evaluation.html#id3">compute_mi() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mi">[1]</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id4">compute_rmse() (imputegap.tools.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.compute_rmse">[1]</a>
+      <li><a href="imputegap.evaluation.html#id4">compute_rmse() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_rmse">[1]</a>
 </li>
       <li><a href="imputegap.explainer.html#id0">convert_results() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.convert_results">[1]</a>
 </li>
@@ -200,7 +200,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.evaluate_params">evaluate_params() (imputegap.recovery.imputation.Imputation method)</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id0">Evaluation (class in imputegap.tools.evaluation)</a>, <a href="imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation">[1]</a>
+      <li><a href="imputegap.evaluation.html#id0">Evaluation (class in imputegap.recovery.evaluation)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -333,6 +333,13 @@
 </li>
       </ul></li>
       <li>
+    imputegap.recovery.evaluation
+
+      <ul>
+        <li><a href="_autosummary/imputegap.recovery.evaluation.html#module-imputegap.recovery.evaluation">module</a>, <a href="imputegap.evaluation.html#module-0">[1]</a>, <a href="imputegap.evaluation.html#module-imputegap.recovery.evaluation">[2]</a>
+</li>
+      </ul></li>
+      <li>
     imputegap.recovery.explainer
 
       <ul>
@@ -410,13 +417,6 @@
 </li>
       </ul></li>
       <li>
-    imputegap.tools.evaluation
-
-      <ul>
-        <li><a href="_autosummary/imputegap.tools.evaluation.html#module-imputegap.tools.evaluation">module</a>, <a href="imputegap.evaluation.html#module-0">[1]</a>, <a href="imputegap.evaluation.html#module-imputegap.tools.evaluation">[2]</a>
-</li>
-      </ul></li>
-      <li>
     imputegap.tools.utils
 
       <ul>
@@ -470,7 +470,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contaminate.mcar">mcar() (imputegap.recovery.manager.TimeSeries.Contaminate method)</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id5">metrics_computation() (imputegap.tools.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.tools.evaluation.Evaluation.metrics_computation">[1]</a>
+      <li><a href="imputegap.evaluation.html#id5">metrics_computation() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.metrics_computation">[1]</a>
 </li>
       <li><a href="imputegap.min_impute.html#imputegap.algorithms.min_impute.min_impute">min_impute() (in module imputegap.algorithms.min_impute)</a>
 </li>
@@ -496,6 +496,8 @@
 </li>
         <li><a href="_autosummary/imputegap.algorithms.zero_impute.html#module-imputegap.algorithms.zero_impute">imputegap.algorithms.zero_impute</a>, <a href="imputegap.zero_impute.html#module-imputegap.algorithms.zero_impute">[1]</a>
 </li>
+        <li><a href="_autosummary/imputegap.recovery.evaluation.html#module-imputegap.recovery.evaluation">imputegap.recovery.evaluation</a>, <a href="imputegap.evaluation.html#module-0">[1]</a>, <a href="imputegap.evaluation.html#module-imputegap.recovery.evaluation">[2]</a>
+</li>
         <li><a href="_autosummary/imputegap.recovery.explainer.html#module-imputegap.recovery.explainer">imputegap.recovery.explainer</a>, <a href="imputegap.explainer.html#module-imputegap.recovery.explainer">[1]</a>
 </li>
         <li><a href="_autosummary/imputegap.recovery.imputation.html#module-imputegap.recovery.imputation">imputegap.recovery.imputation</a>, <a href="imputegap.imputation.html#module-imputegap.recovery.imputation">[1]</a>
@@ -517,8 +519,6 @@
         <li><a href="_autosummary/imputegap.tools.html#module-imputegap.tools">imputegap.tools</a>, <a href="imputegap.algorithm_parameters.html#module-imputegap.tools">[1]</a>, <a href="imputegap.tools.html#module-imputegap.tools">[2]</a>, <a href="imputegap.utils.html#module-imputegap.tools">[3]</a>
 </li>
         <li><a href="_autosummary/imputegap.tools.algorithm_parameters.html#module-imputegap.tools.algorithm_parameters">imputegap.tools.algorithm_parameters</a>, <a href="imputegap.algorithm_parameters.html#module-imputegap.tools.algorithm_parameters">[1]</a>
-</li>
-        <li><a href="_autosummary/imputegap.tools.evaluation.html#module-imputegap.tools.evaluation">imputegap.tools.evaluation</a>, <a href="imputegap.evaluation.html#module-0">[1]</a>, <a href="imputegap.evaluation.html#module-imputegap.tools.evaluation">[2]</a>
 </li>
         <li><a href="_autosummary/imputegap.tools.utils.html#module-imputegap.tools.utils">imputegap.tools.utils</a>, <a href="imputegap.utils.html#module-imputegap.tools.utils">[1]</a>
 </li>
