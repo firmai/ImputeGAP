@@ -6,7 +6,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"), header=True)
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data

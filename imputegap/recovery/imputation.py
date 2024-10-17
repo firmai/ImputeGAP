@@ -8,6 +8,7 @@ from imputegap.algorithms.stmvl import stmvl
 from imputegap.algorithms.zero_impute import zero_impute
 from imputegap.tools import utils
 
+
 class BaseImputer:
     """
     Base class for imputation algorithms.
@@ -156,13 +157,15 @@ class BaseImputer:
             func = options.get('acq_func', acq_func_d)
             metrics = options.get('selected_metrics', selected_metrics_d)
 
-            optimal_params, _ = Optimization.Bayesian.optimize(ground_truth=raw_data,
-                                                               contamination=self.infected_matrix,
-                                                               selected_metrics=metrics,
-                                                               algorithm=self.algorithm,
-                                                               n_calls=n_calls,
-                                                               n_random_starts=random_starts,
-                                                               acq_func=func)
+            bo_optimizer = Optimization.Bayesian()
+
+            optimal_params, _ = bo_optimizer.optimize(ground_truth=raw_data,
+                                                      contamination=self.infected_matrix,
+                                                      selected_metrics=metrics,
+                                                      algorithm=self.algorithm,
+                                                      n_calls=n_calls,
+                                                      n_random_starts=random_starts,
+                                                      acq_func=func)
         elif optimizer == "pso":
 
             n_particles_d, c1_d, c2_d, w_d, iterations_d, n_processes_d, selected_metrics_d = defaults
@@ -179,9 +182,10 @@ class BaseImputer:
             swarm_optimizer = Optimization.ParticleSwarm()
 
             optimal_params, _ = swarm_optimizer.optimize(ground_truth=raw_data,
-                                                             contamination=self.infected_matrix,
-                                                             selected_metrics=metrics, algorithm=self.algorithm,
-                                                             n_particles=n_particles, c1=c1, c2=c2, w=w, iterations=iterations,n_processes=n_processes)
+                                                         contamination=self.infected_matrix,
+                                                         selected_metrics=metrics, algorithm=self.algorithm,
+                                                         n_particles=n_particles, c1=c1, c2=c2, w=w,
+                                                         iterations=iterations, n_processes=n_processes)
 
         elif optimizer == "sh":
 
@@ -196,9 +200,10 @@ class BaseImputer:
             sh_optimizer = Optimization.SuccessiveHalving()
 
             optimal_params, _ = sh_optimizer.optimize(ground_truth=raw_data,
-                                                             contamination=self.infected_matrix,
-                                                             selected_metrics=metrics, algorithm=self.algorithm,
-                                                             num_configs=num_configs, num_iterations=num_iterations, reduction_factor=reduction_factor)
+                                                      contamination=self.infected_matrix,
+                                                      selected_metrics=metrics, algorithm=self.algorithm,
+                                                      num_configs=num_configs, num_iterations=num_iterations,
+                                                      reduction_factor=reduction_factor)
 
         else:
             n_calls_d, selected_metrics_d = defaults
@@ -207,10 +212,12 @@ class BaseImputer:
             n_calls = options.get('n_calls', n_calls_d)
             metrics = options.get('selected_metrics', selected_metrics_d)
 
-            optimal_params, _ = Optimization.Greedy.optimize(ground_truth=raw_data,
-                                                             contamination=self.infected_matrix,
-                                                             selected_metrics=metrics, algorithm=self.algorithm,
-                                                             n_calls=n_calls)
+            go_optimizer = Optimization.Greedy()
+
+            optimal_params, _ = go_optimizer.optimize(ground_truth=raw_data,
+                                                      contamination=self.infected_matrix,
+                                                      selected_metrics=metrics, algorithm=self.algorithm,
+                                                      n_calls=n_calls)
 
         self.parameters = optimal_params
 
@@ -268,14 +275,16 @@ class Imputation:
 
             algo = Imputation.ML.MRNN(contamination)
             algo.logs = False
-            algo.impute(user_defined=True, params={"hidden_dim": hidden_dim, "learning_rate": learning_rate, "iterations": iterations, "seq_length": 7})
+            algo.impute(user_defined=True,
+                        params={"hidden_dim": hidden_dim, "learning_rate": learning_rate, "iterations": iterations,
+                                "seq_length": 7})
 
         elif algorithm == 'stmvl':
             window_size, gamma, alpha = configuration
 
             algo = Imputation.Pattern.STMVL(contamination)
             algo.logs = False
-            algo.impute(user_defined=True, params={"window_size":window_size, "gamma": gamma, "alpha": alpha})
+            algo.impute(user_defined=True, params={"window_size": window_size, "gamma": gamma, "alpha": alpha})
 
         else:
             raise ValueError(f"Invalid algorithm: {algorithm}")
@@ -473,7 +482,8 @@ class Imputation:
                 else:
                     rank, epsilon, iterations = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=rank, iterations=iterations, epsilon=epsilon, logs=self.logs)
+                self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=rank,
+                                            iterations=iterations, epsilon=epsilon, logs=self.logs)
 
                 return self
 
@@ -537,7 +547,8 @@ class Imputation:
                 else:
                     learning_neighbours, algo_code = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.imputed_matrix = iim(contamination=self.infected_matrix, number_neighbor=learning_neighbours, algo_code=algo_code, logs=self.logs)
+                self.imputed_matrix = iim(contamination=self.infected_matrix, number_neighbor=learning_neighbours,
+                                          algo_code=algo_code, logs=self.logs)
 
                 return self
 
@@ -602,7 +613,8 @@ class Imputation:
                 if params is not None:
                     hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_defined, params)
                 else:
-                    hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default", algorithm="mrnn")
+                    hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default",
+                                                                                                   algorithm="mrnn")
 
                 self.imputed_matrix = mrnn(contamination=self.infected_matrix, hidden_dim=hidden_dim,
                                            learning_rate=learning_rate, iterations=iterations,
@@ -672,6 +684,7 @@ class Imputation:
                 else:
                     window_size, gamma, alpha = utils.load_parameters(query="default", algorithm="stmvl")
 
-                self.imputed_matrix = stmvl(contamination=self.infected_matrix, window_size=window_size, gamma=gamma, alpha=alpha, logs=self.logs)
+                self.imputed_matrix = stmvl(contamination=self.infected_matrix, window_size=window_size, gamma=gamma,
+                                            alpha=alpha, logs=self.logs)
 
                 return self

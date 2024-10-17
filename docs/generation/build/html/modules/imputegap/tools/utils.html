@@ -5,15 +5,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.tools.utils &mdash; imputegap 0.1.4 documentation</title>
+  <title>imputegap.tools.utils &mdash; imputegap 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
 
   
+    <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="../../../static/jquery.js?v=5d32c60e"></script>
       <script src="../../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../static/documentation_options.js?v=fd825880"></script>
+      <script src="../../../static/documentation_options.js?v=59fadc99"></script>
       <script src="../../../static/doctools.js?v=9bcbadda"></script>
       <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/js/theme.js"></script>
@@ -92,7 +93,8 @@
 
 <div class="viewcode-block" id="display_title">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.display_title">[docs]</a>
-<span class="k">def</span> <span class="nf">display_title</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Master Thesis&quot;</span><span class="p">,</span> <span class="n">aut</span><span class="o">=</span><span class="s2">&quot;Quentin Nater&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="s2">&quot;ImputeGAP&quot;</span><span class="p">,</span> <span class="n">university</span><span class="o">=</span><span class="s2">&quot;University Fribourg - exascale infolab&quot;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">display_title</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Master Thesis&quot;</span><span class="p">,</span> <span class="n">aut</span><span class="o">=</span><span class="s2">&quot;Quentin Nater&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="s2">&quot;ImputeGAP&quot;</span><span class="p">,</span>
+                  <span class="n">university</span><span class="o">=</span><span class="s2">&quot;University Fribourg - exascale infolab&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Display the title and author information.</span>
 
@@ -171,7 +173,8 @@
 
 <div class="viewcode-block" id="load_parameters">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.load_parameters">[docs]</a>
-<span class="k">def</span> <span class="nf">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span>
+                    <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load default or optimal parameters for algorithms from a TOML file.</span>
 
@@ -204,7 +207,7 @@
     <span class="k">elif</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;optimal&quot;</span><span class="p">:</span>
 
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;./optimal_parameters_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.toml&quot;</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;./optimal_parameters_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
             <span class="n">filepath</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.params&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">filepath</span> <span class="o">=</span> <span class="n">path</span>
@@ -272,7 +275,7 @@
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;colors&quot;</span><span class="p">:</span>
         <span class="n">colors</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;colors&#39;</span><span class="p">][</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">colors</span>
-    <span class="k">else</span> <span class="p">:</span>
+    <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Default/Optimal config not found for this algorithm&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
@@ -318,6 +321,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The percentage&quot;</span><span class="p">,</span> <span class="n">percentage</span><span class="p">,</span> <span class="s2">&quot;is out of the acceptable range&quot;</span><span class="p">,</span> <span class="n">low_limit</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">high_limit</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">percentage</span></div>
+
 
 
 <div class="viewcode-block" id="format_selection">
@@ -381,6 +385,7 @@
         <span class="k">return</span> <span class="n">selection</span></div>
 
 
+
 <div class="viewcode-block" id="load_share_lib">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.load_share_lib">[docs]</a>
 <span class="k">def</span> <span class="nf">load_share_lib</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;lib_cdrec&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -411,6 +416,80 @@
         <span class="n">lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="n">lib_path</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="save_optimization">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.save_optimization">[docs]</a>
+<span class="k">def</span> <span class="nf">save_optimization</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save the optimization parameters to a TOML file for later use without recomputing.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    optimal_params : dict</span>
+<span class="sd">        Dictionary of the optimal parameters.</span>
+<span class="sd">    algorithm : str, optional</span>
+<span class="sd">        The name of the imputation algorithm (default is &#39;cdrec&#39;).</span>
+<span class="sd">    dataset : str, optional</span>
+<span class="sd">        The name of the dataset (default is an empty string).</span>
+<span class="sd">    optimizer : str, optional</span>
+<span class="sd">        The name of the optimizer used (default is &#39;b&#39;).</span>
+<span class="sd">    file_name : str, optional</span>
+<span class="sd">        The name of the TOML file to save the results (default is None).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">file_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;../params/optimal_parameters_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="n">algorithm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="n">dir_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dir_name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">algorithm</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="s2">&quot;iterations&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">algorithm</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;window_size&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">algorithm</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;learning_neighbors&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">algorithm</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                <span class="s2">&quot;epsilon&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="s2">&quot;iteration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">toml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">params_to_save</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Optimization parameters successfully saved to </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">An error occurred while saving the file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 </pre></div>
 

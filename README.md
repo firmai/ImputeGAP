@@ -94,7 +94,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"))
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
@@ -123,7 +123,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"))
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR scenario
@@ -153,7 +153,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"))
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -198,7 +198,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"))
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -211,8 +211,12 @@ cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"g
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, cdrec.imputed_matrix)
 
-# [OPTIONAL] print the results
+# 6. [OPTIONAL] display the results
 ts_1.print_results(cdrec.metrics)
+ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.imputed_matrix, title="imputation", max_series=1, save_path="./assets", display=True)
+
+# 7. [OPTIONAL] save hyperparameters
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="test")
 ```
 
 
@@ -226,15 +230,17 @@ ts_1.print_results(cdrec.metrics)
 You can find this example in the file [`runner_explainer.py`](./imputegap/runner_explainer.py).
 
 ```python
-from imputegap.recovery.explainer import Explainer
 from imputegap.recovery.manager import TimeSeries
+from imputegap.recovery.explainer import Explainer
 from imputegap.tools import utils
 
-# load your data form ImputeGAP TimeSeries()
+# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
 ts_1 = TimeSeries()
-ts_1.load_timeseries(utils.search_path("eeg"))
 
-# call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
+# 2. load the timeseries from file or from the code
+ts_1.load_timeseries(utils.search_path("eeg-test"))
+
+# 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
 shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name="eeg", algorithm="cdrec")
 
 # [OPTIONAL] print the results with the impact of each feature.

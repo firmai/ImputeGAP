@@ -4,7 +4,8 @@ import toml
 import importlib.resources
 
 
-def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg - exascale infolab"):
+def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP",
+                  university="University Fribourg - exascale infolab"):
     """
     Display the title and author information.
 
@@ -74,7 +75,8 @@ def get_save_path_asset():
     return filepath
 
 
-def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str="b", path=None):
+def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b",
+                    path=None):
     """
     Load default or optimal parameters for algorithms from a TOML file.
 
@@ -107,7 +109,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     elif query == "optimal":
 
         if path is None:
-            filename = "./optimal_parameters_"+str(optimizer)+"_"+str(dataset)+"_"+str(algorithm)+".toml"
+            filename = "./optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
             filepath = importlib.resources.files('imputegap.params').joinpath(filename)
         else:
             filepath = path
@@ -175,7 +177,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     elif algorithm == "colors":
         colors = config['colors']['plot']
         return colors
-    else :
+    else:
         print("Default/Optimal config not found for this algorithm")
         return None
 
@@ -218,6 +220,7 @@ def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
     else:
         print("The percentage", percentage, "is out of the acceptable range", low_limit, "-", high_limit, ".")
         return percentage
+
 
 def format_selection(ts, selection):
     """
@@ -277,6 +280,7 @@ def format_selection(ts, selection):
     else:
         return selection
 
+
 def load_share_lib(name="lib_cdrec", lib=True):
     """
     Load the shared library based on the operating system.
@@ -305,3 +309,74 @@ def load_share_lib(name="lib_cdrec", lib=True):
         lib_path = os.path.join(local_path_lin)
 
     return ctypes.CDLL(lib_path)
+
+
+def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="b", file_name=None):
+    """
+    Save the optimization parameters to a TOML file for later use without recomputing.
+
+    Parameters
+    ----------
+    optimal_params : dict
+        Dictionary of the optimal parameters.
+    algorithm : str, optional
+        The name of the imputation algorithm (default is 'cdrec').
+    dataset : str, optional
+        The name of the dataset (default is an empty string).
+    optimizer : str, optional
+        The name of the optimizer used (default is 'b').
+    file_name : str, optional
+        The name of the TOML file to save the results (default is None).
+
+    Returns
+    -------
+    None
+    """
+    if file_name is None:
+        file_name = "../params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(
+            algorithm) + ".toml"
+
+    if not os.path.exists(file_name):
+        file_name = file_name[1:]
+
+    dir_name = os.path.dirname(file_name)
+    if dir_name and not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
+    if algorithm == "mrnn":
+        params_to_save = {
+            algorithm: {
+                "hidden_dim": int(optimal_params[0]),
+                "learning_rate": optimal_params[1],
+                "iterations": int(optimal_params[2])
+            }
+        }
+    elif algorithm == "stmvl":
+        params_to_save = {
+            algorithm: {
+                "window_size": int(optimal_params[0]),
+                "gamma": optimal_params[1],
+                "alpha": int(optimal_params[2])
+            }
+        }
+    elif algorithm == "iim":
+        params_to_save = {
+            algorithm: {
+                "learning_neighbors": int(optimal_params[0])
+            }
+        }
+    else:
+        params_to_save = {
+            algorithm: {
+                "rank": int(optimal_params[0]),
+                "epsilon": optimal_params[1],
+                "iteration": int(optimal_params[2])
+            }
+        }
+
+    try:
+        with open(file_name, 'w') as file:
+            toml.dump(params_to_save, file)
+        print(f"\nOptimization parameters successfully saved to {file_name}")
+    except Exception as e:
+        print(f"\nAn error occurred while saving the file: {e}")

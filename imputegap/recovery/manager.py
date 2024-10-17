@@ -14,7 +14,6 @@ if os.getenv('CI') is None:
 from matplotlib import pyplot as plt  # type: ignore
 
 
-
 class TimeSeries:
     """
     Class for managing and manipulating time series data.
@@ -119,7 +118,8 @@ class TimeSeries:
             if isinstance(data, str):
                 print("\nThe time series has been loaded from " + str(data) + "\n")
 
-                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-test.txt", "eeg.txt", "meteo.txt", "test.txt", "test-large.txt"] :
+                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-test.txt", "eeg.txt",
+                            "meteo.txt", "test.txt", "test-large.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values, skip_header=int(header))
@@ -267,7 +267,6 @@ class TimeSeries:
 
         print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-
     def plot(self, raw_data, infected_data=None, imputed_data=None, title="Time Series Data", max_series=None,
              max_values=None, size=(16, 8), save_path="", display=True):
         """
@@ -323,23 +322,24 @@ class TimeSeries:
                 if infected_data is not None and imputed_data is None:  # plot infected matrix
 
                     if np.isnan(infected_data[i, :]).any():
-                        plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5, color='r', linestyle='--', label=f'TS-MB {i + 1}')
+                        plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5,
+                                 color='r', linestyle='--', label=f'TS-MB {i + 1}')
 
-                    plt.plot(np.arange(min(infected_data.shape[1], max_values)), infected_data[i, :max_values], color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
-
-
+                    plt.plot(np.arange(min(infected_data.shape[1], max_values)), infected_data[i, :max_values],
+                             color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
 
                 if imputed_data is not None:  # plot imputed matrix
 
                     if np.isnan(infected_data[i, :]).any():
-                        plt.plot(np.arange(min(imputed_data.shape[1], max_values)), imputed_data[i, :max_values], linestyle='-', color="r", label=f'TS-IMP {i + 1}')
+                        plt.plot(np.arange(min(imputed_data.shape[1], max_values)), imputed_data[i, :max_values],
+                                 linestyle='-', color="r", label=f'TS-IMP {i + 1}')
 
                     if np.isnan(infected_data[i, :]).any():
-                        plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5, linestyle='--', color=color, label=f'TS-MB {i + 1}')
+                        plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5,
+                                 linestyle='--', color=color, label=f'TS-MB {i + 1}')
 
-                    plt.plot(np.arange(min(infected_data.shape[1], max_values)), infected_data[i, :max_values], color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
-
-
+                    plt.plot(np.arange(min(infected_data.shape[1], max_values)), infected_data[i, :max_values],
+                             color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
 
                 number_of_series += 1
                 if number_of_series == max_series:
@@ -360,10 +360,9 @@ class TimeSeries:
         if display:
             plt.show()
 
-        #plt.close()
+        # plt.close()
 
         return file_path
-
 
     class Contaminate:
         """

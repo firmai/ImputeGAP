@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.metrics import mutual_info_score
 from scipy.stats import pearsonr
 
+
 class Evaluation:
     """
     A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.

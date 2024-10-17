@@ -5,7 +5,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(data=utils.search_path("eeg"), header=True)
+ts_1.load_timeseries(data=utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information

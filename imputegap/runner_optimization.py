@@ -7,7 +7,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"), header=True)
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -21,8 +21,8 @@ cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"g
 cdrec.score(ts_1.data, cdrec.imputed_matrix)
 
 # 6. display the results
-ts_1.print_results(cdrec.metrics, algorithm="cdrec")
+ts_1.print_results(cdrec.metrics)
 ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.imputed_matrix, title="imputation", max_series=1, save_path="./assets", display=True)
 
 # 7. save hyperparameters
-Optimization.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="b")
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")
