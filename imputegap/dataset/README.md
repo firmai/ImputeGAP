@@ -4,6 +4,36 @@
 # ImputeGAP - Datasets
 ImputeGap uses several datasets containing different characteristics to test your implementations.
 
+
+
+## EEG-Test
+
+| Data info          |                                                                                                                                                                                                                                             |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dataset name       | eeg-test                                                                                                                                                                                                                                    |
+| Dataset codename   | co3a0000458.rd                                                                                                                                                                                                                              |
+| Dataset name       | EEG Database: Genetic Predisposition to Alcoholism                                                                                                                                                                                          |
+| Url                | https://kdd.ics.uci.edu/databases/eeg/eeg.data.html                                                                                                                                                                                         |
+ | Specific URL       | http://kdd.ics.uci.edu/databases/eeg/eeg_full.tar                                                                                                                                                                                           |                                            |
+| Source             | UCI KDD Archive                                                                                                                                                                                                                             |
+|              | Henri Begleiter                                                                                                                                                                                                                             |
+ |                    | Neurodynamics Laboratory,                                                                                                                                                                                                                   |
+|                    | State University of New York Health Center                                                                                                                                                                                                  |
+ |                    | Brooklyn, New York                                                                                                                                                                                                                          
+| Article            | L. Ingber. (1997). Statistical mechanics of neocortical interactions: Canonical momenta indicators of electroencephalography. Physical Review E. Volume 55. Number 4. Pages 4578-4593.                                                      |
+|                    | L. Ingber. (1998). Statistical mechanics of neocortical interactions: Training and testing canonical momenta indicators of EEG. Mathematical Computer Modelling. Volume 27. Number 3. Pages 33-64.                                          |
+|                    | J. G. Snodgrss and M. Vanderwart. (1980). "A standardized set of 260 pictures: norms for the naming agreement, familiarity, and visual complexity." Journal of Experimental Psychology: Human Learning and Memory. Volume 6. Pages 174-215. |
+| Time granularity   | 1 second per measurement (3.9 ms epoch)                                                                                                                                                                                                     |
+| Trials             | 120 trials                                                                                                                                                                                                                                  |
+| Channels           | 64 channels                                                                                                                                                                                                                                 |
+| Samples            | 416 samples (368 post-stim samples)                                                                                                                                                                                                         |
+| Time resolution    | 3.906 ms uV                                                                                                                                                                                                                                 |
+| Specific trial     | S2 match, trial 119                                                                                                                                                                                                                         |                                                                                                                                                                                                                                       |
+| Dataset dimensions | N=256 M=64 electrodes                                                                                                                                                                                                                       |
+
+<br /><hr /><br />
+
+
 ## EEG
 
 | Data info          |                                                                         |
@@ -23,6 +53,8 @@ ImputeGap uses several datasets containing different characteristics to test you
 | Dataset dimensions | N=1201 M=33                                                             |
 
 <br /><hr /><br />
+
+
 
 ## Chlorine
 

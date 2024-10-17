@@ -5,15 +5,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.algorithms.cdrec &mdash; imputegap 0.1.4 documentation</title>
+  <title>imputegap.algorithms.cdrec &mdash; imputegap 0.1.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
 
   
+    <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="../../../static/jquery.js?v=5d32c60e"></script>
       <script src="../../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../static/documentation_options.js?v=fd825880"></script>
+      <script src="../../../static/documentation_options.js?v=59fadc99"></script>
       <script src="../../../static/doctools.js?v=9bcbadda"></script>
       <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/js/theme.js"></script>
@@ -114,6 +115,7 @@
 
     <span class="k">return</span> <span class="n">__numpy_marshal</span><span class="p">;</span>
 
+
 <span class="k">def</span> <span class="nf">__marshal_as_native_column</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Marshal a numpy array as a ctypes flat container for passing to native code.</span>
@@ -132,7 +134,6 @@
     <span class="n">__ctype_marshal</span> <span class="o">=</span> <span class="n">__numpy_import</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">__py_input_flat</span><span class="p">);</span>
 
     <span class="k">return</span> <span class="n">__ctype_marshal</span><span class="p">;</span>
-
 
 
 <div class="viewcode-block" id="native_cdrec">

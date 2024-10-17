@@ -67,7 +67,7 @@ This installation method is recommended if you want to modify the source code or
 <br /><hr /><br />
 
 ## Datasets
-All preconfigured datasets available in this library can be accessed at the following location: [Link to datasets](https://github.com/eXascaleInfolab/ImputeGAP/tree/naterq_skeleton_refac_3/imputegap/dataset)
+All preconfigured datasets available in this library can be accessed at the following location: [Link to datasets](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
 
 
 <br /><hr /><br />
@@ -84,7 +84,7 @@ To check if your dataset is correctly formatted, please refer to the example dat
 
 
 ### Example Loading
-You can find this example in the file [`runner_contamination.py`](./imputegap/runner_contamination.py).
+You can find this example in the file [`runner_contamination.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_contamination.py).
 
 ```python
 from imputegap.recovery.manager import TimeSeries
@@ -94,7 +94,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"))
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
@@ -113,7 +113,7 @@ Please find the documentation in this page : <a href="https://github.com/eXascal
 
 
 ### Example Contamination
-You can find this example in the file [`runner_contamination.py`](./imputegap/runner_contamination.py).
+You can find this example in the file [`runner_contamination.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_contamination.py).
 
 ```python
 from imputegap.recovery.manager import TimeSeries
@@ -123,7 +123,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"))
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR scenario
@@ -142,7 +142,7 @@ ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_pa
 It is also possible to add your own custom imputation algorithm. To do this, simply follow the `min-impute` template and replace the logic with your own code.
 
 ### Example Imputation
-You can find this example in the file [`runner_imputation.py`](./imputegap/runner_imputation.py).
+You can find this example in the file [`runner_imputation.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_imputation.py).
 
 ```python
 from imputegap.recovery.imputation import Imputation
@@ -153,7 +153,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"))
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -187,7 +187,7 @@ ts_3.print_results(cdrec.metrics)
 The available optimizers include: **Greedy Optimizer**, **Bayesian Optimizer**, **Particle Swarm Optimizer**, and **Successive Halving**.
 
 ### Example Auto-ML
-You can find this example in the file [`runner_optimization.py`](./imputegap/runner_optimization.py).
+You can find this example in the file [`runner_optimization.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_optimization.py).
 
 ```python
 from imputegap.recovery.imputation import Imputation
@@ -198,7 +198,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg"))
+ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -211,8 +211,12 @@ cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"g
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, cdrec.imputed_matrix)
 
-# [OPTIONAL] print the results
+# 6. [OPTIONAL] display the results
 ts_1.print_results(cdrec.metrics)
+ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.imputed_matrix, title="imputation", max_series=1, save_path="./assets", display=True)
+
+# 7. [OPTIONAL] save hyperparameters
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="b")
 ```
 
 
@@ -223,19 +227,21 @@ ts_1.print_results(cdrec.metrics)
 **ImputeGAP** includes an algorithm based on the **SHAP** library, which explains the results of your imputations using features specific to your dataset.
 
 ### Example Explainer
-You can find this example in the file [`runner_explainer.py`](./imputegap/runner_explainer.py).
+You can find this example in the file [`runner_explainer.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_explainer.py).
 
 ```python
-from imputegap.recovery.explainer import Explainer
 from imputegap.recovery.manager import TimeSeries
+from imputegap.recovery.explainer import Explainer
 from imputegap.tools import utils
 
-# load your data form ImputeGAP TimeSeries()
+# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
 ts_1 = TimeSeries()
-ts_1.load_timeseries(utils.search_path("eeg"))
 
-# call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
-shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name="eeg", algorithm="cdrec")
+# 2. load the timeseries from file or from the code
+ts_1.load_timeseries(utils.search_path("eeg-test"))
+
+# 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
+shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name="eeg-test", algorithm="cdrec")
 
 # [OPTIONAL] print the results with the impact of each feature.
 Explainer.print(shap_values, shap_details)

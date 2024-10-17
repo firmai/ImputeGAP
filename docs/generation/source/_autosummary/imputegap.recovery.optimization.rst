@@ -1,4 +1,4 @@
-imputegap.recovery.optimization
+﻿imputegap.recovery.optimization
 ===============================
 
 .. automodule:: imputegap.recovery.optimization
@@ -8,5 +8,6 @@ imputegap.recovery.optimization
 
    .. autosummary::
    
+      BaseOptimizer
       Optimization
    

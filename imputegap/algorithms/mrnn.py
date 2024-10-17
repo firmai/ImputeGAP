@@ -43,7 +43,8 @@ def mrnn(contamination, hidden_dim, learning_rate, iterations, sequence_length, 
     """
     start_time = time.time()  # Record start time
 
-    imputed_matrix = mrnn_recov(matrix_in=contamination, hidden_dim=hidden_dim, learning_rate=learning_rate, iterations=iterations, seq_length=sequence_length)
+    imputed_matrix = mrnn_recov(matrix_in=contamination, hidden_dim=hidden_dim, learning_rate=learning_rate,
+                                iterations=iterations, seq_length=sequence_length)
 
     end_time = time.time()
     if logs:

@@ -9,7 +9,7 @@
 project = 'imputegap'
 copyright = '2024, Quentin Nater'
 author = 'Quentin Nater'
-release = '0.1.4'
+
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -25,12 +25,14 @@ extensions = [
 autosummary_generate = True  # Automatically generate summaries
 
 html_logo = "https://www.naterscreations.com/imputegap/logo_imputegab.png"
+html_favicon = "https://www.naterscreations.com/imputegap/favicon.png"
+
 html_static_path = ['static']
 html_css_files = ['custom.css']
 
 # Set the version and release info
-version = '0.1.4'
-release = '0.1.4'
+version = '0.1.6'
+release = '0.1.6'
 
 
 # You can also add links to edit the documentation on GitHub

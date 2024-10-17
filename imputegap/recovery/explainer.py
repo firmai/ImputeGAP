@@ -44,6 +44,7 @@ class Explainer:
         Handle parameters and set variables to launch the SHAP model.
 
     """
+
     def load_configuration(file_path=None):
         """
         Load categories and features from a TOML file.
@@ -117,7 +118,9 @@ class Explainer:
         """
 
         data = [[0 if num is None else num for num in sublist] for sublist in data]
-        data = [[0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num in sublist] for sublist in data]
+        data = [
+            [0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num
+             in sublist] for sublist in data]
 
         data = np.array(data)
 
@@ -154,7 +157,6 @@ class Explainer:
 
         return results, descriptions
 
-
     def print(shap_values, shap_details=None):
         """
         Convert SHAP raw results to a refined format for display.
@@ -183,7 +185,8 @@ class Explainer:
 
         print("\n\nSHAP Results details : ")
         for (x, algo, rate, description, feature, category, mean_features) in shap_values:
-            print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
+            print(
+                f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
 
     def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
@@ -219,18 +222,21 @@ class Explainer:
             if not math.isnan(rate):
                 rate = float(round(rate, 2))
 
-            result_display.append((x, algo, rate, descriptions[0][x], features[0][x], categories[0][x], mean_features[x]))
+            result_display.append(
+                (x, algo, rate, descriptions[0][x], features[0][x], categories[0][x], mean_features[x]))
 
         result_display = sorted(result_display, key=lambda tup: (tup[1], tup[2]), reverse=True)
 
         with open(to_save + "_results.txt", 'w') as file_output:
             for (x, algo, rate, description, feature, category, mean_features) in result_display:
-                file_output.write(f"Feature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<65} {feature}\n")
+                file_output.write(
+                    f"Feature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<65} {feature}\n")
                 result_shap.append([file, algo, rate, description, feature, category, mean_features])
 
         return result_shap
 
-    def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False):
+    def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False,
+                          verbose=False):
         """
         Launch the SHAP model for explaining the features of the dataset.
 
@@ -300,7 +306,8 @@ class Explainer:
             print("\t SHAP_MODEL >> descriptions shape:", x_descriptions.shape, "\n")
             print("\t SHAP_MODEL >> features OK:", np.all(np.all(x_features == x_features[0, :], axis=1)))
             print("\t SHAP_MODEL >> categories OK:", np.all(np.all(x_categories == x_categories[0, :], axis=1)))
-            print("\t SHAP_MODEL >> descriptions OK:", np.all(np.all(x_descriptions==x_descriptions[0, :], axis=1)), "\n\n")
+            print("\t SHAP_MODEL >> descriptions OK:", np.all(np.all(x_descriptions == x_descriptions[0, :], axis=1)),
+                  "\n\n")
 
         model = RandomForestRegressor()
         model.fit(x_train, y_train)
@@ -474,7 +481,9 @@ class Explainer:
 
         total_weights_for_all_algorithms = np.append(total_weights_for_all_algorithms, total_weights_percent)
 
-        results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions, x_features, x_categories, mean_features, to_save=path_file + file + "_" + algorithm)
+        results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions,
+                                                 x_features, x_categories, mean_features,
+                                                 to_save=path_file + file + "_" + algorithm)
 
         return results_shap
 
@@ -554,14 +563,15 @@ class Explainer:
 
         for current_series in range(0, limitation):
 
-            print("Generation ", current_series, "/", limitation, "(", int((current_series/limitation)*100),"%)________________________________________________________")
+            print("Generation ", current_series, "/", limitation, "(", int((current_series / limitation) * 100),
+                  "%)________________________________________________________")
             print("\tContamination ", current_series, "...")
 
             if contamination == "mcar":
                 obfuscated_matrix = TimeSeries().Contaminate.mcar(ts=raw_data, series_impacted=current_series,
-                                                       missing_rate=missing_rate, block_size=block_size,
-                                                       protection=protection, use_seed=use_seed, seed=seed,
-                                                       explainer=True)
+                                                                  missing_rate=missing_rate, block_size=block_size,
+                                                                  protection=protection, use_seed=use_seed, seed=seed,
+                                                                  explainer=True)
             else:
                 print("Contamination proposed not found : ", contamination, " >> BREAK")
                 return None
@@ -587,7 +597,8 @@ class Explainer:
             output_metrics.append(imputation_results)
             output_rmse.append(imputation_results["RMSE"])
 
-            catch_fct, descriptions = Explainer.extract_features(np.array(obfuscated_matrix), categories, features, False)
+            catch_fct, descriptions = Explainer.extract_features(np.array(obfuscated_matrix), categories, features,
+                                                                 False)
 
             extracted_features = np.array(list(catch_fct.values()))
 
@@ -598,8 +609,8 @@ class Explainer:
         for input, output in zip(input_params, output_metrics):
             shap_details.append((input, output["RMSE"]))
 
-        shap_values = Explainer.launch_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm, splitter, display, verbose)
-
+        shap_values = Explainer.launch_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
+                                                  splitter, display, verbose)
 
         print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
 

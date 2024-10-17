@@ -28,6 +28,7 @@ def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
 
     return __numpy_marshal;
 
+
 def __marshal_as_native_column(__py_matrix):
     """
     Convert a numpy array to a ctypes flat container for passing to native code.
@@ -144,5 +145,3 @@ def stmvl(contamination, window_size, gamma, alpha, logs=True):
         print(f"\n\t\t> logs, imputation stvml - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return imputed_matrix
-
-

@@ -28,6 +28,7 @@ def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
 
     return __numpy_marshal;
 
+
 def __marshal_as_native_column(__py_matrix):
     """
     Marshal a numpy array as a ctypes flat container for passing to native code.
@@ -46,7 +47,6 @@ def __marshal_as_native_column(__py_matrix):
     __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
 
     return __ctype_marshal;
-
 
 
 def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
