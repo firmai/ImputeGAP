@@ -6,6 +6,10 @@ ImputeGAP is a unified framework for imputation algorithms that provides a narro
 The interface provides advanced imputation algorithms, construction of various missing values patterns, and different evaluation metrics. In addition, the framework offers support for AutoML parameterization techniques, feature extraction, and, potentially, analysis of feature impact using SHAP. The framework should allow a straightforward integration of new algorithms, datasets, and metrics.
 
 
+- **Documentation**: [https://exascaleinfolab.github.io/ImputeGAP/](https://exascaleinfolab.github.io/ImputeGAP/)
+- **PyPI**: [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)
+
+
 
 <br /><hr /><br />
 
