@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imputegap.algorithms.cdrec &mdash; imputegap 0.1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
+
+  
+      <script src="../../../static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../static/documentation_options.js?v=fd825880"></script>
+      <script src="../../../static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imputegap
+              <img src="https://www.naterscreations.com/imputegap/logo_imputegab.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imputegap</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imputegap.algorithms.cdrec</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imputegap.algorithms.cdrec</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">__native_c_types_import</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">__numpy_import</span><span class="p">;</span>
+
+<span class="kn">from</span> <span class="nn">imputegap.tools</span> <span class="kn">import</span> <span class="n">utils</span>
+
+
+<span class="k">def</span> <span class="nf">__marshal_as_numpy_column</span><span class="p">(</span><span class="n">__ctype_container</span><span class="p">,</span> <span class="n">__py_sizen</span><span class="p">,</span> <span class="n">__py_sizem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Marshal a ctypes container as a numpy column-major array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    __ctype_container : ctypes.Array</span>
+<span class="sd">        The input ctypes container (flattened matrix).</span>
+<span class="sd">    __py_sizen : int</span>
+<span class="sd">        The number of rows in the numpy array.</span>
+<span class="sd">    __py_sizem : int</span>
+<span class="sd">        The number of columns in the numpy array.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        A numpy array reshaped to the original matrix dimensions (row-major order).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__numpy_marshal</span> <span class="o">=</span> <span class="n">__numpy_import</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">__ctype_container</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">__py_sizem</span><span class="p">,</span> <span class="n">__py_sizen</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">__numpy_marshal</span><span class="p">;</span>
+
+<span class="k">def</span> <span class="nf">__marshal_as_native_column</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Marshal a numpy array as a ctypes flat container for passing to native code.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    __py_matrix : numpy.ndarray</span>
+<span class="sd">        The input numpy matrix (2D array).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ctypes.Array</span>
+<span class="sd">        A ctypes array containing the flattened matrix (in column-major order).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__py_input_flat</span> <span class="o">=</span> <span class="n">__numpy_import</span><span class="o">.</span><span class="n">ndarray</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">__py_matrix</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+    <span class="n">__ctype_marshal</span> <span class="o">=</span> <span class="n">__numpy_import</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">__py_input_flat</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">__ctype_marshal</span><span class="p">;</span>
+
+
+
+<div class="viewcode-block" id="native_cdrec">
+<a class="viewcode-back" href="../../../imputegap.cdrec.html#imputegap.algorithms.cdrec.native_cdrec">[docs]</a>
+<span class="k">def</span> <span class="nf">native_cdrec</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">,</span> <span class="n">__py_rank</span><span class="p">,</span> <span class="n">__py_eps</span><span class="p">,</span> <span class="n">__py_iters</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform matrix imputation using the CDRec algorithm with native C++ support.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    __py_matrix : numpy.ndarray</span>
+<span class="sd">        The input matrix with missing values (NaNs).</span>
+<span class="sd">    __py_rank : int</span>
+<span class="sd">        The truncation rank for matrix decomposition (must be greater than 0 and less than the number of columns).</span>
+<span class="sd">    __py_eps : float</span>
+<span class="sd">        The epsilon value, used as the threshold for stopping iterations based on difference.</span>
+<span class="sd">    __py_iters : int</span>
+<span class="sd">        The maximum number of allowed iterations for the algorithm.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        The recovered matrix after imputation.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Khayati, M., Cudré-Mauroux, P. &amp; Böhlen, M.H. Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl Inf Syst 62, 2257–2280 (2020). https://doi.org/10.1007/s10115-019-01421-7</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">shared_lib</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_share_lib</span><span class="p">(</span><span class="s2">&quot;lib_cdrec.so&quot;</span><span class="p">)</span>
+
+    <span class="n">__py_sizen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">);</span>
+    <span class="n">__py_sizem</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">__py_rank</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">__py_rank</span> <span class="o">&lt;</span> <span class="n">__py_sizem</span><span class="p">);</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">__py_eps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">__py_iters</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">__ctype_sizen</span> <span class="o">=</span> <span class="n">__native_c_types_import</span><span class="o">.</span><span class="n">c_ulonglong</span><span class="p">(</span><span class="n">__py_sizen</span><span class="p">);</span>
+    <span class="n">__ctype_sizem</span> <span class="o">=</span> <span class="n">__native_c_types_import</span><span class="o">.</span><span class="n">c_ulonglong</span><span class="p">(</span><span class="n">__py_sizem</span><span class="p">);</span>
+
+    <span class="n">__ctype_rank</span> <span class="o">=</span> <span class="n">__native_c_types_import</span><span class="o">.</span><span class="n">c_ulonglong</span><span class="p">(</span><span class="n">__py_rank</span><span class="p">);</span>
+    <span class="n">__ctype_eps</span> <span class="o">=</span> <span class="n">__native_c_types_import</span><span class="o">.</span><span class="n">c_double</span><span class="p">(</span><span class="n">__py_eps</span><span class="p">);</span>
+    <span class="n">__ctype_iters</span> <span class="o">=</span> <span class="n">__native_c_types_import</span><span class="o">.</span><span class="n">c_ulonglong</span><span class="p">(</span><span class="n">__py_iters</span><span class="p">);</span>
+
+    <span class="c1"># Native code uses linear matrix layout, and also it&#39;s easier to pass it in like this</span>
+    <span class="n">__ctype_input_matrix</span> <span class="o">=</span> <span class="n">__marshal_as_native_column</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">);</span>
+
+    <span class="n">shared_lib</span><span class="o">.</span><span class="n">cdrec_imputation_parametrized</span><span class="p">(</span>
+        <span class="n">__ctype_input_matrix</span><span class="p">,</span> <span class="n">__ctype_sizen</span><span class="p">,</span> <span class="n">__ctype_sizem</span><span class="p">,</span>
+        <span class="n">__ctype_rank</span><span class="p">,</span> <span class="n">__ctype_eps</span><span class="p">,</span> <span class="n">__ctype_iters</span>
+    <span class="p">);</span>
+
+    <span class="n">__py_recovered</span> <span class="o">=</span> <span class="n">__marshal_as_numpy_column</span><span class="p">(</span><span class="n">__ctype_input_matrix</span><span class="p">,</span> <span class="n">__py_sizen</span><span class="p">,</span> <span class="n">__py_sizem</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">__py_recovered</span><span class="p">;</span></div>
+
+
+
+<div class="viewcode-block" id="cdrec">
+<a class="viewcode-back" href="../../../imputegap.cdrec.html#imputegap.algorithms.cdrec.cdrec">[docs]</a>
+<span class="k">def</span> <span class="nf">cdrec</span><span class="p">(</span><span class="n">contamination</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lib_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CDRec algorithm for matrix imputation of missing values using Centroid Decomposition.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    contamination : numpy.ndarray</span>
+<span class="sd">        The input matrix with contamination (missing values represented as NaNs).</span>
+<span class="sd">    truncation_rank : int</span>
+<span class="sd">        The truncation rank for matrix decomposition (must be greater than 1 and smaller than the number of series).</span>
+<span class="sd">    epsilon : float</span>
+<span class="sd">        The learning rate (stopping criterion threshold).</span>
+<span class="sd">    iterations : int</span>
+<span class="sd">        The maximum number of iterations allowed for the algorithm.</span>
+<span class="sd">    logs : bool, optional</span>
+<span class="sd">        Whether to log the execution time (default is True).</span>
+<span class="sd">    lib_path : str, optional</span>
+<span class="sd">        Custom path to the shared library file (default is None).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        The imputed matrix with missing values recovered.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; imputed_data = cdrec(contamination=contamination_matrix, truncation_rank=1, iterations=100, epsilon=0.000001, logs=True)</span>
+<span class="sd">    &gt;&gt;&gt; print(imputed_data)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
+
+    <span class="c1"># Call the C++ function to perform recovery</span>
+    <span class="n">imputed_matrix</span> <span class="o">=</span> <span class="n">native_cdrec</span><span class="p">(</span><span class="n">contamination</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">logs</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">&gt; logs, imputation cdrec - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">imputed_matrix</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quentin Nater.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
