@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imputegap.tools.utils &mdash; imputegap 0.1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=fd825880"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imputegap
+              <img src="https://www.naterscreations.com/imputegap/logo_imputegab.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imputegap</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imputegap.tools.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imputegap.tools.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">toml</span>
+<span class="kn">import</span> <span class="nn">importlib.resources</span>
+
+
+<div class="viewcode-block" id="display_title">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.display_title">[docs]</a>
+<span class="k">def</span> <span class="nf">display_title</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Master Thesis&quot;</span><span class="p">,</span> <span class="n">aut</span><span class="o">=</span><span class="s2">&quot;Quentin Nater&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="s2">&quot;ImputeGAP&quot;</span><span class="p">,</span> <span class="n">university</span><span class="o">=</span><span class="s2">&quot;University Fribourg - exascale infolab&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display the title and author information.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    title : str, optional</span>
+<span class="sd">        The title of the thesis (default is &quot;Master Thesis&quot;).</span>
+<span class="sd">    aut : str, optional</span>
+<span class="sd">        The author&#39;s name (default is &quot;Quentin Nater&quot;).</span>
+<span class="sd">    lib : str, optional</span>
+<span class="sd">        The library or project name (default is &quot;ImputeGAP&quot;).</span>
+<span class="sd">    university : str, optional</span>
+<span class="sd">        The university or institution (default is &quot;University Fribourg - exascale infolab&quot;).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> : </span><span class="si">{</span><span class="n">aut</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">lib</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">university</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="search_path">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.search_path">[docs]</a>
+<span class="k">def</span> <span class="nf">search_path</span><span class="p">(</span><span class="n">set_name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the accurate path for loading test files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    set_name : str, optional</span>
+<span class="sd">        Name of the dataset (default is &quot;test&quot;).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The correct file path for the dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">set_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bafu&quot;</span><span class="p">,</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span> <span class="s2">&quot;climate&quot;</span><span class="p">,</span> <span class="s2">&quot;drift&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-test&quot;</span><span class="p">,</span> <span class="s2">&quot;meteo&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;test-large&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">set_name</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;../imputegap/dataset/&quot;</span> <span class="o">+</span> <span class="n">set_name</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="k">return</span> <span class="n">filepath</span></div>
+
+
+
+<div class="viewcode-block" id="get_save_path_asset">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.get_save_path_asset">[docs]</a>
+<span class="k">def</span> <span class="nf">get_save_path_asset</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the accurate path for saving test files.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The correct file path for saving test files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;../tests/assets&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">return</span> <span class="n">filepath</span></div>
+
+
+
+<div class="viewcode-block" id="load_parameters">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.load_parameters">[docs]</a>
+<span class="k">def</span> <span class="nf">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load default or optimal parameters for algorithms from a TOML file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    query : str, optional</span>
+<span class="sd">        &#39;default&#39; or &#39;optimal&#39; to load default or optimal parameters (default is &quot;default&quot;).</span>
+<span class="sd">    algorithm : str, optional</span>
+<span class="sd">        Algorithm to load parameters for (default is &quot;cdrec&quot;).</span>
+<span class="sd">    dataset : str, optional</span>
+<span class="sd">        Name of the dataset (default is &quot;chlorine&quot;).</span>
+<span class="sd">    optimizer : str, optional</span>
+<span class="sd">        Optimizer type for optimal parameters (default is &quot;b&quot;).</span>
+<span class="sd">    path : str, optional</span>
+<span class="sd">        Custom file path for the TOML file (default is None).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the loaded parameters for the given algorithm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.env&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./default_values.toml&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">path</span>
+
+    <span class="k">elif</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;optimal&quot;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;./optimal_parameters_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.toml&quot;</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.params&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">path</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query not found for this function (&#39;optimal&#39; or &#39;default&#39;)&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">toml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
+        <span class="n">truncation_rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;cdrec&#39;</span><span class="p">][</span><span class="s1">&#39;rank&#39;</span><span class="p">])</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;cdrec&#39;</span><span class="p">][</span><span class="s1">&#39;epsilon&#39;</span><span class="p">]</span>
+        <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;cdrec&#39;</span><span class="p">][</span><span class="s1">&#39;iteration&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">truncation_rank</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">epsilon</span><span class="p">),</span> <span class="n">iterations</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
+        <span class="n">window_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;stmvl&#39;</span><span class="p">][</span><span class="s1">&#39;window_size&#39;</span><span class="p">])</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;stmvl&#39;</span><span class="p">][</span><span class="s1">&#39;gamma&#39;</span><span class="p">])</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;stmvl&#39;</span><span class="p">][</span><span class="s1">&#39;alpha&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
+        <span class="n">learning_neighbors</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;iim&#39;</span><span class="p">][</span><span class="s1">&#39;learning_neighbors&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+            <span class="n">algo_code</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;iim&#39;</span><span class="p">][</span><span class="s1">&#39;algorithm_code&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">learning_neighbors</span><span class="p">,</span> <span class="n">algo_code</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">learning_neighbors</span><span class="p">,)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+        <span class="n">hidden_dim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;mrnn&#39;</span><span class="p">][</span><span class="s1">&#39;hidden_dim&#39;</span><span class="p">])</span>
+        <span class="n">learning_rate</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;mrnn&#39;</span><span class="p">][</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">])</span>
+        <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;mrnn&#39;</span><span class="p">][</span><span class="s1">&#39;iterations&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+            <span class="n">sequence_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;mrnn&#39;</span><span class="p">][</span><span class="s1">&#39;sequence_length&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">sequence_length</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;greedy&quot;</span><span class="p">:</span>
+        <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;greedy&#39;</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
+        <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;greedy&#39;</span><span class="p">][</span><span class="s1">&#39;selected_metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_calls</span><span class="p">,</span> <span class="p">[</span><span class="n">selected_metrics</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">:</span>
+        <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
+        <span class="n">n_random_starts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;n_random_starts&#39;</span><span class="p">])</span>
+        <span class="n">acq_func</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;acq_func&#39;</span><span class="p">])</span>
+        <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;selected_metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_calls</span><span class="p">,</span> <span class="n">n_random_starts</span><span class="p">,</span> <span class="n">acq_func</span><span class="p">,</span> <span class="p">[</span><span class="n">selected_metrics</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pso&quot;</span><span class="p">:</span>
+        <span class="n">n_particles</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;n_particles&#39;</span><span class="p">])</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;c1&#39;</span><span class="p">])</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;c2&#39;</span><span class="p">])</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;w&#39;</span><span class="p">])</span>
+        <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;iterations&#39;</span><span class="p">])</span>
+        <span class="n">n_processes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;n_processes&#39;</span><span class="p">])</span>
+        <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;selected_metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">n_processes</span><span class="p">,</span> <span class="p">[</span><span class="n">selected_metrics</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sh&quot;</span><span class="p">:</span>
+        <span class="n">num_configs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;num_configs&#39;</span><span class="p">])</span>
+        <span class="n">num_iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;num_iterations&#39;</span><span class="p">])</span>
+        <span class="n">reduction_factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;reduction_factor&#39;</span><span class="p">])</span>
+        <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;selected_metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">num_configs</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">reduction_factor</span><span class="p">,</span> <span class="p">[</span><span class="n">selected_metrics</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;colors&quot;</span><span class="p">:</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;colors&#39;</span><span class="p">][</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">colors</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Default/Optimal config not found for this algorithm&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="verification_limitation">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.verification_limitation">[docs]</a>
+<span class="k">def</span> <span class="nf">verification_limitation</span><span class="p">(</span><span class="n">percentage</span><span class="p">,</span> <span class="n">low_limit</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">high_limit</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Format and verify that the percentage given by the user is within acceptable bounds.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    percentage : float</span>
+<span class="sd">        The percentage value to be checked and potentially adjusted.</span>
+<span class="sd">    low_limit : float, optional</span>
+<span class="sd">        The lower limit of the acceptable percentage range (default is 0.01).</span>
+<span class="sd">    high_limit : float, optional</span>
+<span class="sd">        The upper limit of the acceptable percentage range (default is 1.0).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Adjusted percentage based on the limits.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the percentage is outside the accepted limits.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - If the percentage is between 1 and 100, it will be divided by 100 to convert it to a decimal format.</span>
+<span class="sd">    - If the percentage is outside the low and high limits, the function will print a warning and return the original value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">low_limit</span> <span class="o">&lt;=</span> <span class="n">percentage</span> <span class="o">&lt;=</span> <span class="n">high_limit</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">percentage</span>  <span class="c1"># No modification needed</span>
+
+    <span class="k">elif</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">percentage</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The percentage </span><span class="si">{</span><span class="n">percentage</span><span class="si">}</span><span class="s2"> is between 1 and 100. Dividing by 100 to convert to a decimal.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">percentage</span> <span class="o">/</span> <span class="mi">100</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The percentage&quot;</span><span class="p">,</span> <span class="n">percentage</span><span class="p">,</span> <span class="s2">&quot;is out of the acceptable range&quot;</span><span class="p">,</span> <span class="n">low_limit</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">high_limit</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">percentage</span></div>
+
+
+<div class="viewcode-block" id="format_selection">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.format_selection">[docs]</a>
+<span class="k">def</span> <span class="nf">format_selection</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Format the selection of time series based on keywords provided by the user.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ts : numpy.ndarray</span>
+<span class="sd">        The dataset of time series to be contaminated.</span>
+<span class="sd">    selection : list</span>
+<span class="sd">        The list of selected series to be formatted. It can include:</span>
+<span class="sd">        - &quot;*&quot; to select all series.</span>
+<span class="sd">        - &quot;-&quot; followed by an integer to exclude that many series from the end.</span>
+<span class="sd">        - &quot;+&quot; followed by an integer to include series from that starting point onward.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list of formatted series indices.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the selection format is invalid.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - If selection is [&quot;*&quot;], all series in `ts` are selected.</span>
+<span class="sd">    - If selection is [&quot;-X&quot;], all but the last X series are selected.</span>
+<span class="sd">    - If selection is [&quot;+X&quot;], all series starting from index X are selected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">selection</span><span class="p">:</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">selection</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]:</span>
+        <span class="n">series_selected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">series_selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">series_selected</span>
+
+    <span class="k">elif</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">series_selected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ending</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ending</span><span class="p">):</span>
+            <span class="n">series_selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">series_selected</span>
+
+    <span class="k">elif</span> <span class="s2">&quot;+&quot;</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">series_selected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">starting</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">starting</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">series_selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">series_selected</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">selection</span></div>
+
+
+<div class="viewcode-block" id="load_share_lib">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.load_share_lib">[docs]</a>
+<span class="k">def</span> <span class="nf">load_share_lib</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;lib_cdrec&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load the shared library based on the operating system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        The name of the shared library (default is &quot;lib_cdrec&quot;).</span>
+<span class="sd">    lib : bool, optional</span>
+<span class="sd">        If True, the function loads the library from the default &#39;imputegap&#39; path; if False, it loads from a local path (default is True).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ctypes.CDLL</span>
+<span class="sd">        The loaded shared library object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">lib</span><span class="p">:</span>
+        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.algorithms.lib&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">local_path_lin</span> <span class="o">=</span> <span class="s1">&#39;./algorithms/lib/&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.so&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">):</span>
+            <span class="n">local_path_lin</span> <span class="o">=</span> <span class="s1">&#39;./imputegap/algorithms/lib/&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.so&#39;</span>
+
+        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="n">lib_path</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quentin Nater.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

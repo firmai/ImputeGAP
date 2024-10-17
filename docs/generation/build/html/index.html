@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imputegap documentation &mdash; imputegap 0.1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fd825880"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="imputegap.recovery.manager" href="_autosummary/imputegap.recovery.manager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            imputegap
+              <img src="https://www.naterscreations.com/imputegap/logo_imputegab.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="imputegap.html">imputegap package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">imputegap</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imputegap documentation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/qnater/https://github.com/eXascaleInfolab/ImputeGAP/blob/https://github.com/eXascaleInfolab/ImputeGAPindex.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="imputegap-documentation">
+<h1>imputegap documentation<a class="headerlink" href="#imputegap-documentation" title="Link to this heading"></a></h1>
+<p>ImputeGAP is a unified framework for imputation algorithms that provides a narrow-waist interface between algorithm evaluation and parameterization for datasets issued from various domains ranging from neuroscience, medicine, climate to energy.</p>
+<p>The interface provides advanced imputation algorithms, construction of various missing values patterns, and different evaluation metrics. In addition, the framework offers support for AutoML parameterization techniques, feature extraction, and, potentially, analysis of feature impact using SHAP. The framework should allow a straightforward integration of new algorithms, datasets, and metrics.</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.manager.html#module-imputegap.recovery.manager" title="imputegap.recovery.manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.manager</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="imputegap.imputation.html#module-imputegap.recovery.imputation" title="imputegap.recovery.imputation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.imputation</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.optimization.html#module-imputegap.recovery.optimization" title="imputegap.recovery.optimization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.optimization</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="imputegap.explainer.html#module-imputegap.recovery.explainer" title="imputegap.recovery.explainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.explainer</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.evaluation.html#module-0" title="imputegap.recovery.evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.evaluation</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="imputegap.cdrec.html#module-imputegap.algorithms.cdrec" title="imputegap.algorithms.cdrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.cdrec</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.stmvl.html#module-imputegap.algorithms.stmvl" title="imputegap.algorithms.stmvl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.stmvl</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="imputegap.iim.html#module-imputegap.algorithms.iim" title="imputegap.algorithms.iim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.iim</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.mrnn.html#module-imputegap.algorithms.mrnn" title="imputegap.algorithms.mrnn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.mrnn</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="imputegap.min_impute.html#module-imputegap.algorithms.min_impute" title="imputegap.algorithms.min_impute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.min_impute</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.zero_impute.html#module-imputegap.algorithms.zero_impute" title="imputegap.algorithms.zero_impute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.algorithms.zero_impute</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="imputegap.utils.html#module-imputegap.tools.utils" title="imputegap.tools.utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.tools.utils</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="imputegap">
+<h1>imputegap<a class="headerlink" href="#imputegap" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="imputegap.html">imputegap package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.manager.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.manager.html#module-imputegap.recovery.manager">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.imputation.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.imputation.html#module-imputegap.recovery.imputation">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.optimization.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.optimization.html#module-imputegap.recovery.optimization">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#module-imputegap.recovery.explainer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.cdrec.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.cdrec.html#module-imputegap.algorithms.cdrec">Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.stmvl.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.stmvl.html#module-imputegap.algorithms.stmvl">Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.iim.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.iim.html#module-imputegap.algorithms.iim">Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.mrnn.html">imputegap.algorithms.mrnn package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.mrnn.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.mrnn.html#module-imputegap.algorithms.mrnn">Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.min_impute.html">imputegap.algorithms.min_impute package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.min_impute.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.min_impute.html#module-imputegap.algorithms.min_impute">Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.zero_impute.html">imputegap.algorithms.zero_impute package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.zero_impute.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.zero_impute.html#module-imputegap.algorithms.zero_impute">Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.utils.html#module-imputegap.tools">Modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.utils.html#submodule-documentation">Submodule Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.utils.html#module-imputegap.tools.utils">imputegap.tools.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.evaluation.html">imputegap.recovery.evaluation package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#module-imputegap.recovery.evaluation">Modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#submodule-documentation">Submodule Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#module-0">imputegap.recovery.evaluation module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_contamination">imputegap.runner_contamination module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_display">imputegap.runner_display module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.html#imputegap.runner_display.display_title"><code class="docutils literal notranslate"><span class="pre">display_title()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_explainer">imputegap.runner_explainer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_imputation">imputegap.runner_imputation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_optimization">imputegap.runner_optimization module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_autosummary/imputegap.recovery.manager.html" class="btn btn-neutral float-right" title="imputegap.recovery.manager" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quentin Nater.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
