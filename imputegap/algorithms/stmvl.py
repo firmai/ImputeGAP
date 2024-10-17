@@ -1,9 +1,10 @@
 import ctypes
 import time
-import os
-import importlib.resources
 import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
+
+from imputegap.tools import utils
+
 
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
     """
@@ -47,38 +48,6 @@ def __marshal_as_native_column(__py_matrix):
     return __ctype_marshal;
 
 
-def load_share_lib(name = "lib_stmvl", lib=True):
-    """
-    Load the shared library based on the operating system.
-
-    Parameters
-    ----------
-    name : str, optional
-        The name of the shared library (default is "lib_stmvl").
-    lib : bool, optional
-        If True, the function loads the library from the default 'imputegap' path; if False, it loads from a local path (default is True).
-
-    Returns
-    -------
-    ctypes.CDLL
-        The loaded shared library object.
-    """
-
-    if lib:
-        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./lib_stmvl.so")
-    else:
-        local_path_lin = './algorithms/lib/'+name+'.so'
-
-        if not os.path.exists(local_path_lin):
-            local_path_lin = './imputegap/algorithms/lib/'+name+'.so'
-
-        lib_path = os.path.join(local_path_lin)
-
-    return ctypes.CDLL(lib_path)
-
-
-
-
 def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     """
     Perform matrix imputation using the STMVL algorithm with native C++ support.
@@ -109,9 +78,13 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     >>> imputed_data = stmvl(contamination=contamination_matrix, window_size=2, gamma=0.85, alpha=7)
     >>> print(imputed_data)
 
+    References
+    ----------
+    Yi, X., Zheng, Y., Zhang, J., & Li, T. ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data.
+    School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.
     """
 
-    shared_lib = load_share_lib()
+    shared_lib = utils.load_share_lib("lib_stmvl.so")
 
     __py_sizen = len(__py_matrix);
     __py_sizem = len(__py_matrix[0]);

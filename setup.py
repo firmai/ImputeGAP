@@ -11,7 +11,10 @@ setuptools.setup(
     url="https://github.com/eXascaleInfolab/ImputeGAP",
     author="Quentin Nater",
     author_email="quentin.nater@unifr.ch",
-    license="The Unlicense",
+    license="GNU General Public License v3.0",
+    classifiers=[
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+    ],
     project_urls = {
         "Documentation": "https://github.com/eXascaleInfolab/ImputeGAP/tree/main",
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"

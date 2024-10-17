@@ -1,4 +1,4 @@
-imputegap.algorithms.stmvl
+﻿imputegap.algorithms.stmvl
 ==========================
 
 .. automodule:: imputegap.algorithms.stmvl
@@ -8,7 +8,6 @@ imputegap.algorithms.stmvl
 
    .. autosummary::
    
-      load_share_lib
       native_stmvl
       stmvl
    

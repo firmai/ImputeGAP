@@ -1,4 +1,4 @@
-imputegap.algorithms.cdrec
+﻿imputegap.algorithms.cdrec
 ==========================
 
 .. automodule:: imputegap.algorithms.cdrec
@@ -9,6 +9,5 @@ imputegap.algorithms.cdrec
    .. autosummary::
    
       cdrec
-      load_share_lib
       native_cdrec
    

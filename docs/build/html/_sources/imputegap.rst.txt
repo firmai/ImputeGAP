@@ -4,17 +4,22 @@ imputegap package
 Subpackages
 -----------
 
-
 .. toctree::
    :maxdepth: 4
 
-   imputegap.algorithms
-   imputegap.explainer
+   imputegap.manager
    imputegap.imputation
    imputegap.optimization
-   imputegap.manager
-   imputegap.tools
-   imputegap.wrapper
+   imputegap.explainer
+   imputegap.cdrec
+   imputegap.stmvl
+   imputegap.iim
+   imputegap.mrnn
+   imputegap.min_impute
+   imputegap.zero_impute
+   imputegap.utils
+   imputegap.evaluation
+
 
 Submodules
 ----------
@@ -51,13 +56,6 @@ imputegap.runner\_imputation module
    :undoc-members:
    :show-inheritance:
 
-imputegap.runner\_normalization module
---------------------------------------
-
-.. automodule:: imputegap.runner_normalization
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 imputegap.runner\_optimization module
 -------------------------------------

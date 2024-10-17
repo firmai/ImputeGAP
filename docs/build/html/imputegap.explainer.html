@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.explainer.explainer package &mdash; imputegap 0.1.4 documentation</title>
+  <title>imputegap.recovery.explainer package &mdash; imputegap 0.1.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css" />
@@ -20,8 +20,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="imputegap.recovery.imputation package" href="imputegap.imputation.html" />
-    <link rel="prev" title="imputegap.algorithms.zero_impute" href="_autosummary/imputegap.algorithms.zero_impute.html" /> 
+    <link rel="next" title="imputegap.algorithms.cdrec package" href="imputegap.cdrec.html" />
+    <link rel="prev" title="imputegap.recovery.optimization package" href="imputegap.optimization.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,28 +45,38 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.html">imputegap.algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.explainer.explainer.html">imputegap.explainer.explainer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.tools.html">imputegap.tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.wrapper.html">imputegap.wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.tools.evaluation.html">imputegap.tools.evaluation</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="imputegap.html">imputegap package</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="imputegap.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="imputegap.algorithms.html">imputegap.algorithms package</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">imputegap.explainer.explainer package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.explainer.explainer">Module contents</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.tools.html">imputegap.tools package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.wrapper.html">imputegap.wrapper package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">imputegap.recovery.explainer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.recovery.explainer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.mrnn.html">imputegap.algorithms.mrnn package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.min_impute.html">imputegap.algorithms.min_impute package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.zero_impute.html">imputegap.algorithms.zero_impute package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.evaluation.html">imputegap.tools.evaluation package</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#submodules">Submodules</a></li>
@@ -74,12 +84,10 @@
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_display">imputegap.runner_display module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_explainer">imputegap.runner_explainer module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_imputation">imputegap.runner_imputation module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_normalization">imputegap.runner_normalization module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_optimization">imputegap.runner_optimization module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/imputegap.explainer.html">imputegap.explainer</a></li>
 </ul>
 
         </div>
@@ -97,7 +105,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="imputegap.html">imputegap package</a></li>
-      <li class="breadcrumb-item active">imputegap.explainer.explainer package</li>
+      <li class="breadcrumb-item active">imputegap.recovery.explainer package</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/qnater/https://github.com/eXascaleInfolab/ImputeGAP/blob/https://github.com/eXascaleInfolab/ImputeGAPimputegap.explainer.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -107,51 +115,51 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="imputegap-explainer-explainer-package">
-<h1>imputegap.explainer.explainer package<a class="headerlink" href="#imputegap-explainer-explainer-package" title="Link to this heading"></a></h1>
+  <section id="imputegap-recovery-explainer-package">
+<h1>imputegap.recovery.explainer package<a class="headerlink" href="#imputegap-recovery-explainer-package" title="Link to this heading"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="module-imputegap.explainer.explainer">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-imputegap.explainer.explainer" title="Link to this heading"></a></h2>
+<section id="module-imputegap.recovery.explainer">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-imputegap.recovery.explainer" title="Link to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="imputegap.explainer.explainer.Explainer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.explainer.explainer.</span></span><span class="sig-name descname"><span class="pre">Explainer</span></span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.explainer.explainer.Explainer" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.explainer.</span></span><span class="sig-name descname"><span class="pre">Explainer</span></span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to manage SHAP-based model explanations and feature extraction for time series datasets.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="imputegap.explainer.explainer.Explainer.load_configuration">
-<span class="sig-name descname"><span class="pre">load_configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.load_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.explainer.explainer.Explainer.load_configuration" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.load_configuration">
+<span class="sig-name descname"><span class="pre">load_configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.load_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.load_configuration" title="Link to this definition"></a></dt>
 <dd><p>Load categories and features from a TOML file.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="imputegap.explainer.explainer.Explainer.save_assets">
-<span class="sig-name descname"><span class="pre">save_assets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./assets/shap/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.save_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.explainer.explainer.Explainer.save_assets" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.save_assets">
+<span class="sig-name descname"><span class="pre">save_assets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./assets/shap/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.save_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.save_assets" title="Link to this definition"></a></dt>
 <dd><p>Load path to save SHAP-related assets.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="imputegap.explainer.explainer.Explainer.extract_features">
-<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_catch24</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.explainer.explainer.Explainer.extract_features" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.extract_features">
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_catch24</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.extract_features" title="Link to this definition"></a></dt>
 <dd><p>Extract features from time series data using pycatch22.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="imputegap.explainer.explainer.Explainer.print">
-<span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shap_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shap_details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.explainer.explainer.Explainer.print" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.print">
+<span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shap_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shap_details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.print" title="Link to this definition"></a></dt>
 <dd><p>Print SHAP values and details for display.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="imputegap.explainer.explainer.Explainer.convert_results">
-<span class="sig-name descname"><span class="pre">convert_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_save</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.convert_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.explainer.explainer.Explainer.convert_results" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.convert_results">
+<span class="sig-name descname"><span class="pre">convert_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_save</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.convert_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.convert_results" title="Link to this definition"></a></dt>
 <dd><p>Convert SHAP raw results into a refined format for display.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="imputegap.explainer.explainer.Explainer.launch_shap_model">
-<span class="sig-name descname"><span class="pre">launch_shap_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_information</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.launch_shap_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.explainer.explainer.Explainer.launch_shap_model" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.launch_shap_model">
+<span class="sig-name descname"><span class="pre">launch_shap_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_information</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.launch_shap_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.launch_shap_model" title="Link to this definition"></a></dt>
 <dd><p>Launch the SHAP model to explain the dataset features.</p>
 </dd></dl>
 
@@ -167,7 +175,7 @@ file_name=”ts”, display=False, verbose=False)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">convert_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_save</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.convert_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">convert_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_save</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.convert_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd><p>Convert SHAP raw results to a refined format for display.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -193,7 +201,7 @@ file_name=”ts”, display=False, verbose=False)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_catch24</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_catch24</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
 <dd><p>Extract features from time series data using pycatch22.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -217,7 +225,7 @@ file_name=”ts”, display=False, verbose=False)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">launch_shap_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_information</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.launch_shap_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">launch_shap_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_information</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.launch_shap_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
 <dd><p>Launch the SHAP model for explaining the features of the dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -243,7 +251,7 @@ file_name=”ts”, display=False, verbose=False)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">load_configuration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.load_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_configuration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.load_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
 <dd><p>Load categories and features from a TOML file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -260,7 +268,7 @@ file_name=”ts”, display=False, verbose=False)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shap_details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shap_details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
 <dd><p>Convert SHAP raw results to a refined format for display.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -277,7 +285,7 @@ file_name=”ts”, display=False, verbose=False)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">save_assets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.save_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">save_assets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.save_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
 <dd><p>Load path to save SHAP-related assets on GitHub and local.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -293,8 +301,8 @@ file_name=”ts”, display=False, verbose=False)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="imputegap.explainer.explainer.Explainer.shap_explainer">
-<span class="sig-name descname"><span class="pre">shap_explainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mcar'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/explainer/explainer.html#Explainer.shap_explainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.explainer.explainer.Explainer.shap_explainer" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.shap_explainer">
+<span class="sig-name descname"><span class="pre">shap_explainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mcar'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limitation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/explainer.html#Explainer.shap_explainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.shap_explainer" title="Link to this definition"></a></dt>
 <dd><p>Handle parameters and set variables to launch the SHAP model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -349,8 +357,8 @@ to generate explanations for the imputation results, which are logged in a local
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="_autosummary/imputegap.algorithms.zero_impute.html" class="btn btn-neutral float-left" title="imputegap.algorithms.zero_impute" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="imputegap.imputation.html" class="btn btn-neutral float-right" title="imputegap.recovery.imputation package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="imputegap.optimization.html" class="btn btn-neutral float-left" title="imputegap.recovery.optimization package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="imputegap.cdrec.html" class="btn btn-neutral float-right" title="imputegap.algorithms.cdrec package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

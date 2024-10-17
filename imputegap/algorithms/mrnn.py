@@ -37,7 +37,9 @@ def mrnn(contamination, hidden_dim, learning_rate, iterations, sequence_length, 
     >>> imputed_data = mrnn(contamination_matrix, hidden_dim=64, learning_rate=0.001, iterations=1000, sequence_length=7)
     >>> print(imputed_data)
 
-    :author: Quentin Nater
+    References
+    ----------
+    J. Yoon, W. R. Zame and M. van der Schaar, "Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks," in IEEE Transactions on Biomedical Engineering, vol. 66, no. 5, pp. 1477-1490, May 2019, doi: 10.1109/TBME.2018.2874712. keywords: {Time measurement;Interpolation;Estimation;Medical diagnostic imaging;Correlation;Recurrent neural networks;Biomedical measurement;Missing data;temporal data streams;imputation;recurrent neural nets}
     """
     start_time = time.time()  # Record start time
 

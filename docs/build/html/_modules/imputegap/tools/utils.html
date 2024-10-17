@@ -42,17 +42,21 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.html">imputegap.algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.explainer.explainer.html">imputegap.explainer.explainer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.html">imputegap.tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.wrapper.html">imputegap.wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.evaluation.html">imputegap.tools.evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.explainer.html">imputegap.explainer</a></li>
 </ul>
 
         </div>
@@ -80,13 +84,14 @@
            <div itemprop="articleBody">
              
   <h1>Source code for imputegap.tools.utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">toml</span>
 <span class="kn">import</span> <span class="nn">importlib.resources</span>
 
 
 <div class="viewcode-block" id="display_title">
-<a class="viewcode-back" href="../../../imputegap.tools.html#imputegap.tools.utils.display_title">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.display_title">[docs]</a>
 <span class="k">def</span> <span class="nf">display_title</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Master Thesis&quot;</span><span class="p">,</span> <span class="n">aut</span><span class="o">=</span><span class="s2">&quot;Quentin Nater&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="s2">&quot;ImputeGAP&quot;</span><span class="p">,</span> <span class="n">university</span><span class="o">=</span><span class="s2">&quot;University Fribourg - exascale infolab&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Display the title and author information.</span>
@@ -116,7 +121,7 @@
 
 
 <div class="viewcode-block" id="search_path">
-<a class="viewcode-back" href="../../../imputegap.tools.html#imputegap.tools.utils.search_path">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.search_path">[docs]</a>
 <span class="k">def</span> <span class="nf">search_path</span><span class="p">(</span><span class="n">set_name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the accurate path for loading test files.</span>
@@ -145,7 +150,7 @@
 
 
 <div class="viewcode-block" id="get_save_path_asset">
-<a class="viewcode-back" href="../../../imputegap.tools.html#imputegap.tools.utils.get_save_path_asset">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.get_save_path_asset">[docs]</a>
 <span class="k">def</span> <span class="nf">get_save_path_asset</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the accurate path for saving test files.</span>
@@ -165,7 +170,7 @@
 
 
 <div class="viewcode-block" id="load_parameters">
-<a class="viewcode-back" href="../../../imputegap.tools.html#imputegap.tools.utils.load_parameters">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.load_parameters">[docs]</a>
 <span class="k">def</span> <span class="nf">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load default or optimal parameters for algorithms from a TOML file.</span>
@@ -274,7 +279,7 @@
 
 
 <div class="viewcode-block" id="verification_limitation">
-<a class="viewcode-back" href="../../../imputegap.tools.html#imputegap.tools.utils.verification_limitation">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.verification_limitation">[docs]</a>
 <span class="k">def</span> <span class="nf">verification_limitation</span><span class="p">(</span><span class="n">percentage</span><span class="p">,</span> <span class="n">low_limit</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">high_limit</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Format and verify that the percentage given by the user is within acceptable bounds.</span>
@@ -316,7 +321,7 @@
 
 
 <div class="viewcode-block" id="format_selection">
-<a class="viewcode-back" href="../../../imputegap.tools.html#imputegap.tools.utils.format_selection">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.format_selection">[docs]</a>
 <span class="k">def</span> <span class="nf">format_selection</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Format the selection of time series based on keywords provided by the user.</span>
@@ -374,6 +379,38 @@
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">selection</span></div>
+
+
+<div class="viewcode-block" id="load_share_lib">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.load_share_lib">[docs]</a>
+<span class="k">def</span> <span class="nf">load_share_lib</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;lib_cdrec&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load the shared library based on the operating system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        The name of the shared library (default is &quot;lib_cdrec&quot;).</span>
+<span class="sd">    lib : bool, optional</span>
+<span class="sd">        If True, the function loads the library from the default &#39;imputegap&#39; path; if False, it loads from a local path (default is True).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ctypes.CDLL</span>
+<span class="sd">        The loaded shared library object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">lib</span><span class="p">:</span>
+        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.algorithms.lib&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">local_path_lin</span> <span class="o">=</span> <span class="s1">&#39;./algorithms/lib/&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.so&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">):</span>
+            <span class="n">local_path_lin</span> <span class="o">=</span> <span class="s1">&#39;./imputegap/algorithms/lib/&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.so&#39;</span>
+
+        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="n">lib_path</span><span class="p">)</span></div>
 
 </pre></div>
 

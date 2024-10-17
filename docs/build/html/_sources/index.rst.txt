@@ -12,13 +12,18 @@ The interface provides advanced imputation algorithms, construction of various m
 .. autosummary::
    :toctree: _autosummary
 
-   imputegap.algorithms
-   imputegap.explainer.explainer
-   imputegap.recovery.imputation
    imputegap.recovery.manager
+   imputegap.recovery.imputation
    imputegap.recovery.optimization
-   imputegap.tools
-   imputegap.wrapper
+   imputegap.recovery.explainer
+   imputegap.algorithms.cdrec
+   imputegap.algorithms.stmvl
+   imputegap.algorithms.iim
+   imputegap.algorithms.mrnn
+   imputegap.algorithms.min_impute
+   imputegap.algorithms.zero_impute
+   imputegap.tools.utils
+   imputegap.tools.evaluation
 
 imputegap
 =========

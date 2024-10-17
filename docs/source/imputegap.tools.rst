@@ -6,14 +6,6 @@ The `imputegap.tools` package provides various utility functions and tools for h
 Submodules
 ----------
 
-.. autosummary::
-   :toctree: _autosummary
-   :caption: Tools Submodules
-   :recursive:
-
-   imputegap.tools.algorithm_parameters
-   imputegap.tools.evaluation
-   imputegap.tools.utils
 
 Modules
 -------
@@ -25,27 +17,3 @@ Modules
 
 Submodule Documentation
 -----------------------
-
-imputegap.tools.algorithm_parameters module
--------------------------------------------
-
-.. automodule:: imputegap.tools.algorithm_parameters
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-imputegap.tools.evaluation module
----------------------------------
-
-.. automodule:: imputegap.tools.evaluation
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-imputegap.tools.utils module
-----------------------------
-
-.. automodule:: imputegap.tools.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:

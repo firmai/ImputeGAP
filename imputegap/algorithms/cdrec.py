@@ -1,9 +1,10 @@
 import ctypes
-import os
 import time
 import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
-import importlib.resources
+
+from imputegap.tools import utils
+
 
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
     """
@@ -47,35 +48,6 @@ def __marshal_as_native_column(__py_matrix):
     return __ctype_marshal;
 
 
-def load_share_lib(name="lib_cdrec", lib=True):
-    """
-    Load the shared library based on the operating system.
-
-    Parameters
-    ----------
-    name : str, optional
-        The name of the shared library (default is "lib_cdrec").
-    lib : bool, optional
-        If True, the function loads the library from the default 'imputegap' path; if False, it loads from a local path (default is True).
-
-    Returns
-    -------
-    ctypes.CDLL
-        The loaded shared library object.
-    """
-
-    if lib:
-        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./lib_cdrec.so")
-    else:
-        local_path_lin = './algorithms/lib/' + name + '.so'
-
-        if not os.path.exists(local_path_lin):
-            local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
-
-        lib_path = os.path.join(local_path_lin)
-
-    return ctypes.CDLL(lib_path)
-
 
 def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
     """
@@ -96,9 +68,13 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
     -------
     numpy.ndarray
         The recovered matrix after imputation.
+
+    References
+    ----------
+    Khayati, M., Cudré-Mauroux, P. & Böhlen, M.H. Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl Inf Syst 62, 2257–2280 (2020). https://doi.org/10.1007/s10115-019-01421-7
     """
 
-    shared_lib = load_share_lib()
+    shared_lib = utils.load_share_lib("lib_cdrec.so")
 
     __py_sizen = len(__py_matrix);
     __py_sizem = len(__py_matrix[0]);

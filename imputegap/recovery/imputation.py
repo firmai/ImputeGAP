@@ -463,7 +463,9 @@ class Imputation:
                 >>> cdrec_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
                 >>> imputed_data = cdrec_imputer.imputed_matrix
 
-                :author: Quentin Nater
+                References
+                ----------
+                Khayati, M., Cudré-Mauroux, P. & Böhlen, M.H. Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl Inf Syst 62, 2257–2280 (2020). https://doi.org/10.1007/s10115-019-01421-7
                 """
 
                 if params is not None:
@@ -493,7 +495,7 @@ class Imputation:
             -------
             impute(self, user_defined=True, params=None):
                 Perform imputation using the IIM algorithm.
-                    """
+            """
             algorithm = "iim"
 
             def impute(self, user_defined=True, params=None):
@@ -524,6 +526,11 @@ class Imputation:
                 >>> iim_imputer.impute(user_defined=True, params={'learning_neighbors': 10})  # user-defined  > or
                 >>> iim_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
                 >>> imputed_data = iim_imputer.imputed_matrix
+
+                References
+                ----------
+                A. Zhang, S. Song, Y. Sun and J. Wang, "Learning Individual Models for Imputation," 2019 IEEE 35th International Conference on Data Engineering (ICDE), Macao, China, 2019, pp. 160-171, doi: 10.1109/ICDE.2019.00023.
+                keywords: {Data models;Adaptation models;Computational modeling;Predictive models;Numerical models;Aggregates;Regression tree analysis;Missing values;Data imputation}
                 """
                 if params is not None:
                     learning_neighbours, algo_code = self._check_params(user_defined, params)
@@ -587,6 +594,10 @@ class Imputation:
                 >>> mrnn_imputer.impute(user_defined=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
                 >>> mrnn_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
                 >>> imputed_data = mrnn_imputer.imputed_matrix
+
+                References
+                ----------
+                J. Yoon, W. R. Zame and M. van der Schaar, "Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks," in IEEE Transactions on Biomedical Engineering, vol. 66, no. 5, pp. 1477-1490, May 2019, doi: 10.1109/TBME.2018.2874712. keywords: {Time measurement;Interpolation;Estimation;Medical diagnostic imaging;Correlation;Recurrent neural networks;Biomedical measurement;Missing data;temporal data streams;imputation;recurrent neural nets}
                 """
                 if params is not None:
                     hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_defined, params)
@@ -650,6 +661,11 @@ class Imputation:
                 >>> stmvl_imputer.impute(user_defined=True, params={'window_size': 7, 'learning_rate':0.01, 'gamma':0.85, 'alpha': 7})  # user-defined  > or
                 >>> stmvl_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
                 >>> imputed_data = stmvl_imputer.imputed_matrix
+
+                References
+                ----------
+                Yi, X., Zheng, Y., Zhang, J., & Li, T. ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data.
+                School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.
                 """
                 if params is not None:
                     window_size, gamma, alpha = self._check_params(user_defined, params)

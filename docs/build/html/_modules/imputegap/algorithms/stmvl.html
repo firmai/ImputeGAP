@@ -42,17 +42,21 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.html">imputegap.algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.explainer.explainer.html">imputegap.explainer.explainer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.html">imputegap.tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.wrapper.html">imputegap.wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.evaluation.html">imputegap.tools.evaluation</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.explainer.html">imputegap.explainer</a></li>
 </ul>
 
         </div>
@@ -82,10 +86,11 @@
   <h1>Source code for imputegap.algorithms.stmvl</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">ctypes</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">importlib.resources</span>
 <span class="kn">import</span> <span class="nn">ctypes</span> <span class="k">as</span> <span class="nn">__native_c_types_import</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">__numpy_import</span><span class="p">;</span>
+
+<span class="kn">from</span> <span class="nn">imputegap.tools</span> <span class="kn">import</span> <span class="n">utils</span>
+
 
 <span class="k">def</span> <span class="nf">__marshal_as_numpy_column</span><span class="p">(</span><span class="n">__ctype_container</span><span class="p">,</span> <span class="n">__py_sizen</span><span class="p">,</span> <span class="n">__py_sizem</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -129,43 +134,8 @@
     <span class="k">return</span> <span class="n">__ctype_marshal</span><span class="p">;</span>
 
 
-<div class="viewcode-block" id="load_share_lib">
-<a class="viewcode-back" href="../../../imputegap.algorithms.html#imputegap.algorithms.stmvl.load_share_lib">[docs]</a>
-<span class="k">def</span> <span class="nf">load_share_lib</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;lib_stmvl&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Load the shared library based on the operating system.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    name : str, optional</span>
-<span class="sd">        The name of the shared library (default is &quot;lib_stmvl&quot;).</span>
-<span class="sd">    lib : bool, optional</span>
-<span class="sd">        If True, the function loads the library from the default &#39;imputegap&#39; path; if False, it loads from a local path (default is True).</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    ctypes.CDLL</span>
-<span class="sd">        The loaded shared library object.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">lib</span><span class="p">:</span>
-        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.algorithms.lib&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./lib_stmvl.so&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">local_path_lin</span> <span class="o">=</span> <span class="s1">&#39;./algorithms/lib/&#39;</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;.so&#39;</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">):</span>
-            <span class="n">local_path_lin</span> <span class="o">=</span> <span class="s1">&#39;./imputegap/algorithms/lib/&#39;</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;.so&#39;</span>
-
-        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="n">lib_path</span><span class="p">)</span></div>
-
-
-
-
-
 <div class="viewcode-block" id="native_stmvl">
-<a class="viewcode-back" href="../../../imputegap.algorithms.html#imputegap.algorithms.stmvl.native_stmvl">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.stmvl.html#imputegap.algorithms.stmvl.native_stmvl">[docs]</a>
 <span class="k">def</span> <span class="nf">native_stmvl</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">,</span> <span class="n">__py_window</span><span class="p">,</span> <span class="n">__py_gamma</span><span class="p">,</span> <span class="n">__py_alpha</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform matrix imputation using the STMVL algorithm with native C++ support.</span>
@@ -196,9 +166,13 @@
 <span class="sd">    &gt;&gt;&gt; imputed_data = stmvl(contamination=contamination_matrix, window_size=2, gamma=0.85, alpha=7)</span>
 <span class="sd">    &gt;&gt;&gt; print(imputed_data)</span>
 
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Yi, X., Zheng, Y., Zhang, J., &amp; Li, T. ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data.</span>
+<span class="sd">    School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">shared_lib</span> <span class="o">=</span> <span class="n">load_share_lib</span><span class="p">()</span>
+    <span class="n">shared_lib</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_share_lib</span><span class="p">(</span><span class="s2">&quot;lib_stmvl.so&quot;</span><span class="p">)</span>
 
     <span class="n">__py_sizen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">);</span>
     <span class="n">__py_sizem</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
@@ -235,7 +209,7 @@
 
 
 <div class="viewcode-block" id="stmvl">
-<a class="viewcode-back" href="../../../imputegap.algorithms.html#imputegap.algorithms.stmvl.stmvl">[docs]</a>
+<a class="viewcode-back" href="../../../imputegap.stmvl.html#imputegap.algorithms.stmvl.stmvl">[docs]</a>
 <span class="k">def</span> <span class="nf">stmvl</span><span class="p">(</span><span class="n">contamination</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    CDREC algorithm for imputation of missing data</span>

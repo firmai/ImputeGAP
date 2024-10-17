@@ -1,3 +1,4 @@
+import ctypes
 import os
 import toml
 import importlib.resources
@@ -275,3 +276,32 @@ def format_selection(ts, selection):
 
     else:
         return selection
+
+def load_share_lib(name="lib_cdrec", lib=True):
+    """
+    Load the shared library based on the operating system.
+
+    Parameters
+    ----------
+    name : str, optional
+        The name of the shared library (default is "lib_cdrec").
+    lib : bool, optional
+        If True, the function loads the library from the default 'imputegap' path; if False, it loads from a local path (default is True).
+
+    Returns
+    -------
+    ctypes.CDLL
+        The loaded shared library object.
+    """
+
+    if lib:
+        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./" + str(name))
+    else:
+        local_path_lin = './algorithms/lib/' + name + '.so'
+
+        if not os.path.exists(local_path_lin):
+            local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
+
+        lib_path = os.path.join(local_path_lin)
+
+    return ctypes.CDLL(lib_path)

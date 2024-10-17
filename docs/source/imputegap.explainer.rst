@@ -1,4 +1,4 @@
-imputegap.explainer.explainer package
+imputegap.recovery.explainer package
 =======================================
 
 Submodules
@@ -8,7 +8,7 @@ Submodules
 Module contents
 ---------------
 
-.. automodule:: imputegap.explainer.explainer
+.. automodule:: imputegap.recovery.explainer
    :members:
    :undoc-members:
    :show-inheritance:

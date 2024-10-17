@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from imputegap.explainer.explainer import Explainer
+from imputegap.recovery.explainer import Explainer
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 

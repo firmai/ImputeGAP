@@ -34,7 +34,10 @@ def iim(contamination, number_neighbor, algo_code, logs=True):
     >>> imputed_data = iim(contamination_matrix, number_neighbor=10, algo_code="iim 2")
     >>> print(imputed_data)
 
-    :author: Quentin Nater
+    References
+    ----------
+    A. Zhang, S. Song, Y. Sun and J. Wang, "Learning Individual Models for Imputation," 2019 IEEE 35th International Conference on Data Engineering (ICDE), Macao, China, 2019, pp. 160-171, doi: 10.1109/ICDE.2019.00023.
+    keywords: {Data models;Adaptation models;Computational modeling;Predictive models;Numerical models;Aggregates;Regression tree analysis;Missing values;Data imputation}
     """
     start_time = time.time()  # Record start time
 

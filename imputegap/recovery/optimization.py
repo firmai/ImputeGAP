@@ -73,7 +73,36 @@ class Optimization:
         if dir_name and not os.path.exists(dir_name):
             os.makedirs(dir_name)
 
-        params_to_save = {algorithm: optimal_params}
+        if algorithm == "mrnn":
+            params_to_save = {
+                algorithm: {
+                    "hidden_dim": int(optimal_params[0]),
+                    "learning_rate": optimal_params[1],
+                    "iterations": int(optimal_params[2])
+                }
+            }
+        elif algorithm == "stmvl":
+            params_to_save = {
+                algorithm: {
+                    "window_size": int(optimal_params[0]),
+                    "gamma": optimal_params[1],
+                    "alpha": int(optimal_params[2])
+                }
+            }
+        elif algorithm == "iim":
+            params_to_save = {
+                algorithm: {
+                    "learning_neighbors": int(optimal_params[0])
+                }
+            }
+        else:
+            params_to_save = {
+                algorithm: {
+                    "rank": int(optimal_params[0]),
+                    "epsilon": optimal_params[1],
+                    "iteration": int(optimal_params[2])
+                }
+            }
 
         try:
             with open(file_name, 'w') as file:
