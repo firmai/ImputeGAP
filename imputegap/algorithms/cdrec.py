@@ -1,56 +1,80 @@
 import ctypes
-import os
 import time
 import ctypes as __native_c_types_import;
 import numpy as __numpy_import;
-import importlib.resources
 
+from imputegap.tools import utils
 
 
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
+    """
+    Marshal a ctypes container as a numpy column-major array.
+
+    Parameters
+    ----------
+    __ctype_container : ctypes.Array
+        The input ctypes container (flattened matrix).
+    __py_sizen : int
+        The number of rows in the numpy array.
+    __py_sizem : int
+        The number of columns in the numpy array.
+
+    Returns
+    -------
+    numpy.ndarray
+        A numpy array reshaped to the original matrix dimensions (row-major order).
+    """
     __numpy_marshal = __numpy_import.array(__ctype_container).reshape(__py_sizem, __py_sizen).T;
 
     return __numpy_marshal;
 
-
 def __marshal_as_native_column(__py_matrix):
+    """
+    Marshal a numpy array as a ctypes flat container for passing to native code.
+
+    Parameters
+    ----------
+    __py_matrix : numpy.ndarray
+        The input numpy matrix (2D array).
+
+    Returns
+    -------
+    ctypes.Array
+        A ctypes array containing the flattened matrix (in column-major order).
+    """
     __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
     __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
 
     return __ctype_marshal;
 
 
-def load_share_lib(name="lib_cdrec", lib=True):
-    """
-    Determine the OS and load the correct shared library
-    :param name: name of the library
-    :return: the correct path to the library
-    """
-
-    if lib:
-        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./lib_cdrec.so")
-    else:
-        local_path_lin = './algorithms/lib/' + name + '.so'
-
-        if not os.path.exists(local_path_lin):
-            local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
-
-        lib_path = os.path.join(local_path_lin)
-
-    return ctypes.CDLL(lib_path)
-
 
 def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
     """
-    Recovers missing values (designated as NaN) in a matrix. Supports additional parameters
-    :param __py_matrix: 2D array
-    :param __py_rank: truncation rank to be used (0 = detect truncation automatically)
-    :param __py_eps: threshold for difference during recovery
-    :param __py_iters: maximum number of allowed iterations for the algorithms
-    :return: 2D array recovered matrix
+    Perform matrix imputation using the CDRec algorithm with native C++ support.
+
+    Parameters
+    ----------
+    __py_matrix : numpy.ndarray
+        The input matrix with missing values (NaNs).
+    __py_rank : int
+        The truncation rank for matrix decomposition (must be greater than 0 and less than the number of columns).
+    __py_eps : float
+        The epsilon value, used as the threshold for stopping iterations based on difference.
+    __py_iters : int
+        The maximum number of allowed iterations for the algorithm.
+
+    Returns
+    -------
+    numpy.ndarray
+        The recovered matrix after imputation.
+
+    References
+    ----------
+    Khayati, M., Cudré-Mauroux, P. & Böhlen, M.H. Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl Inf Syst 62, 2257–2280 (2020). https://doi.org/10.1007/s10115-019-01421-7
     """
 
-    shared_lib = load_share_lib()
+    shared_lib = utils.load_share_lib("lib_cdrec.so")
 
     __py_sizen = len(__py_matrix);
     __py_sizem = len(__py_matrix[0]);
@@ -82,18 +106,32 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
 
 def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_path=None):
     """
-    CDREC algorithm for imputation of missing data
-    @author : Quentin Nater
+    CDRec algorithm for matrix imputation of missing values using Centroid Decomposition.
 
-    :param contamination: time series with contamination
-    :param truncation_rank: rank of reduction of the matrix (must be higher than 1 and smaller than the limit of series)
-    :param epsilon : learning rate
-    :param iterations : number of iterations
+    Parameters
+    ----------
+    contamination : numpy.ndarray
+        The input matrix with contamination (missing values represented as NaNs).
+    truncation_rank : int
+        The truncation rank for matrix decomposition (must be greater than 1 and smaller than the number of series).
+    epsilon : float
+        The learning rate (stopping criterion threshold).
+    iterations : int
+        The maximum number of iterations allowed for the algorithm.
+    logs : bool, optional
+        Whether to log the execution time (default is True).
+    lib_path : str, optional
+        Custom path to the shared library file (default is None).
 
-    :param logs: print logs of time execution
-    :param lib_path: file to library
+    Returns
+    -------
+    numpy.ndarray
+        The imputed matrix with missing values recovered.
 
-    :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+    Example
+    -------
+    >>> imputed_data = cdrec(contamination=contamination_matrix, truncation_rank=1, iterations=100, epsilon=0.000001, logs=True)
+    >>> print(imputed_data)
 
     """
     start_time = time.time()  # Record start time

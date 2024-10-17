@@ -1,9 +1,29 @@
+import ctypes
 import os
 import toml
 import importlib.resources
 
 
 def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg - exascale infolab"):
+    """
+    Display the title and author information.
+
+    Parameters
+    ----------
+    title : str, optional
+        The title of the thesis (default is "Master Thesis").
+    aut : str, optional
+        The author's name (default is "Quentin Nater").
+    lib : str, optional
+        The library or project name (default is "ImputeGAP").
+    university : str, optional
+        The university or institution (default is "University Fribourg - exascale infolab").
+
+    Returns
+    -------
+    None
+    """
+
     print("=" * 100)
     print(f"{title} : {aut}")
     print("=" * 100)
@@ -13,11 +33,20 @@ def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", u
 
 def search_path(set_name="test"):
     """
-    Find the accurate path for loading files of tests
-    :return: correct file paths
+    Find the accurate path for loading test files.
+
+    Parameters
+    ----------
+    set_name : str, optional
+        Name of the dataset (default is "test").
+
+    Returns
+    -------
+    str
+        The correct file path for the dataset.
     """
 
-    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg", "meteo", "test", "test-large"]:
+    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg", "eeg-test", "meteo", "test", "test-large"]:
         return set_name + ".txt"
     else:
         filepath = "../imputegap/dataset/" + set_name + ".txt"
@@ -30,8 +59,12 @@ def search_path(set_name="test"):
 
 def get_save_path_asset():
     """
-    Find the accurate path for saving files of tests
-    :return: correct file paths
+    Find the accurate path for saving test files.
+
+    Returns
+    -------
+    str
+        The correct file path for saving test files.
     """
     filepath = "../tests/assets"
 
@@ -43,15 +76,26 @@ def get_save_path_asset():
 
 def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str="b", path=None):
     """
-    Load default values of algorithms
+    Load default or optimal parameters for algorithms from a TOML file.
 
-    :param query : ('optimal' or 'default'), load default or optimal parameters for algorithms | default "default"
-    :param algorithm : algorithm parameters to load | default "cdrec"
+    Parameters
+    ----------
+    query : str, optional
+        'default' or 'optimal' to load default or optimal parameters (default is "default").
+    algorithm : str, optional
+        Algorithm to load parameters for (default is "cdrec").
+    dataset : str, optional
+        Name of the dataset (default is "chlorine").
+    optimizer : str, optional
+        Optimizer type for optimal parameters (default is "b").
+    path : str, optional
+        Custom file path for the TOML file (default is None).
 
-    :return: tuples of optimal parameters and the config of default values
+    Returns
+    -------
+    tuple
+        A tuple containing the loaded parameters for the given algorithm.
     """
-
-
     filepath = ""
     if query == "default":
 
@@ -138,11 +182,31 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
 
 def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
     """
-    Format the percentage given by the user.
-    :param percentage: The percentage to be checked.
-    :param low_limit: The lower limit of the acceptable percentage range.
-    :param high_limit: The upper limit of the acceptable percentage range.
-    :return: Adjusted percentage.
+    Format and verify that the percentage given by the user is within acceptable bounds.
+
+    Parameters
+    ----------
+    percentage : float
+        The percentage value to be checked and potentially adjusted.
+    low_limit : float, optional
+        The lower limit of the acceptable percentage range (default is 0.01).
+    high_limit : float, optional
+        The upper limit of the acceptable percentage range (default is 1.0).
+
+    Returns
+    -------
+    float
+        Adjusted percentage based on the limits.
+
+    Raises
+    ------
+    ValueError
+        If the percentage is outside the accepted limits.
+
+    Notes
+    -----
+    - If the percentage is between 1 and 100, it will be divided by 100 to convert it to a decimal format.
+    - If the percentage is outside the low and high limits, the function will print a warning and return the original value.
     """
     if low_limit <= percentage <= high_limit:
         return percentage  # No modification needed
@@ -157,12 +221,33 @@ def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
 
 def format_selection(ts, selection):
     """
-    Format the selection of series based on keywords
-    @author Quentin Nater
+    Format the selection of time series based on keywords provided by the user.
 
-    :param selection: current selection of series
-    :param ts: dataset to contaminate
-    :return series_selected : correct format of selection series
+    Parameters
+    ----------
+    ts : numpy.ndarray
+        The dataset of time series to be contaminated.
+    selection : list
+        The list of selected series to be formatted. It can include:
+        - "*" to select all series.
+        - "-" followed by an integer to exclude that many series from the end.
+        - "+" followed by an integer to include series from that starting point onward.
+
+    Returns
+    -------
+    list
+        A list of formatted series indices.
+
+    Raises
+    ------
+    ValueError
+        If the selection format is invalid.
+
+    Notes
+    -----
+    - If selection is ["*"], all series in `ts` are selected.
+    - If selection is ["-X"], all but the last X series are selected.
+    - If selection is ["+X"], all series starting from index X are selected.
     """
     if not selection:
         selection = ["*"]
@@ -191,3 +276,32 @@ def format_selection(ts, selection):
 
     else:
         return selection
+
+def load_share_lib(name="lib_cdrec", lib=True):
+    """
+    Load the shared library based on the operating system.
+
+    Parameters
+    ----------
+    name : str, optional
+        The name of the shared library (default is "lib_cdrec").
+    lib : bool, optional
+        If True, the function loads the library from the default 'imputegap' path; if False, it loads from a local path (default is True).
+
+    Returns
+    -------
+    ctypes.CDLL
+        The loaded shared library object.
+    """
+
+    if lib:
+        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./" + str(name))
+    else:
+        local_path_lin = './algorithms/lib/' + name + '.so'
+
+        if not os.path.exists(local_path_lin):
+            local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
+
+        lib_path = os.path.join(local_path_lin)
+
+    return ctypes.CDLL(lib_path)

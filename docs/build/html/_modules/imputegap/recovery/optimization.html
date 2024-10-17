@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imputegap.recovery.optimization &mdash; imputegap 0.1.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=fd825880"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imputegap
+              <img src="https://www.naterscreations.com/imputegap/logo_imputegab.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imputegap</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imputegap.recovery.optimization</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imputegap.recovery.optimization</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">toml</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">imputegap.recovery.imputation</span> <span class="kn">import</span> <span class="n">Imputation</span>
+<span class="kn">from</span> <span class="nn">imputegap.tools.algorithm_parameters</span> <span class="kn">import</span> <span class="n">SEARCH_SPACES</span><span class="p">,</span> <span class="n">ALL_ALGO_PARAMS</span><span class="p">,</span> <span class="n">PARAM_NAMES</span><span class="p">,</span> <span class="n">SEARCH_SPACES_PSO</span>
+<span class="kn">import</span> <span class="nn">imputegap.tools.algorithm_parameters</span> <span class="k">as</span> <span class="nn">sh_params</span>
+
+
+<span class="c1"># PSO IMPORT</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">pyswarms</span> <span class="k">as</span> <span class="nn">ps</span>
+
+<span class="c1"># BAYESIAN IMPORT</span>
+<span class="kn">import</span> <span class="nn">skopt</span>
+<span class="kn">from</span> <span class="nn">skopt.utils</span> <span class="kn">import</span> <span class="n">use_named_args</span>
+<span class="kn">from</span> <span class="nn">skopt.space</span> <span class="kn">import</span> <span class="n">Integer</span>
+
+<div class="viewcode-block" id="Optimization">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization">[docs]</a>
+<span class="k">class</span> <span class="nc">Optimization</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for performing optimization of imputation algorithm hyperparameters.</span>
+
+<span class="sd">    This class contains methods for various optimization strategies such as Greedy, Bayesian, Particle Swarm,</span>
+<span class="sd">    and Successive Halving, used to find the best parameters for different imputation algorithms.</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    save_optimization(optimal_params, algorithm=&quot;cdrec&quot;, dataset=&quot;&quot;, optimizer=&quot;b&quot;, file_name=None):</span>
+<span class="sd">        Save the optimization parameters to a TOML file for later use.</span>
+
+<span class="sd">    Greedy.optimize(ground_truth, contamination, selected_metrics=[&quot;RMSE&quot;], algorithm=&quot;cdrec&quot;, n_calls=250):</span>
+<span class="sd">        Perform greedy optimization for hyperparameters.</span>
+
+<span class="sd">    Bayesian.optimize(ground_truth, contamination, selected_metrics=[&quot;RMSE&quot;], algorithm=&quot;cdrec&quot;, n_calls=100, n_random_starts=50, acq_func=&#39;gp_hedge&#39;):</span>
+<span class="sd">        Perform Bayesian optimization for hyperparameters.</span>
+
+<span class="sd">    ParticleSwarm.optimize(ground_truth, contamination, selected_metrics, algorithm, n_particles, c1, c2, w, iterations, n_processes):</span>
+<span class="sd">        Perform Particle Swarm Optimization (PSO) for hyperparameters.</span>
+
+<span class="sd">    SuccessiveHalving.optimize(ground_truth, contamination, selected_metrics, algorithm, num_configs, num_iterations, reduction_factor):</span>
+<span class="sd">        Perform Successive Halving optimization for hyperparameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Optimization.save_optimization">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.save_optimization">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_optimization</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the optimization parameters to a TOML file for later use without recomputing.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        optimal_params : dict</span>
+<span class="sd">            Dictionary of the optimal parameters.</span>
+<span class="sd">        algorithm : str, optional</span>
+<span class="sd">            The name of the imputation algorithm (default is &#39;cdrec&#39;).</span>
+<span class="sd">        dataset : str, optional</span>
+<span class="sd">            The name of the dataset (default is an empty string).</span>
+<span class="sd">        optimizer : str, optional</span>
+<span class="sd">            The name of the optimizer used (default is &#39;b&#39;).</span>
+<span class="sd">        file_name : str, optional</span>
+<span class="sd">            The name of the TOML file to save the results (default is None).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">file_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;../params/optimal_parameters_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="n">dir_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dir_name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+            <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">algorithm</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                    <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="s2">&quot;iterations&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
+            <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">algorithm</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;window_size&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                    <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
+            <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">algorithm</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;learning_neighbors&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">algorithm</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                    <span class="s2">&quot;epsilon&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="s2">&quot;iteration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">toml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">params_to_save</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Optimization parameters successfully saved to </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">An error occurred while saving the file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Optimization.Greedy">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.Greedy">[docs]</a>
+    <span class="k">class</span> <span class="nc">Greedy</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Optimization.Greedy.optimize">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.Greedy.optimize">[docs]</a>
+        <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">selected_metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">],</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">n_calls</span><span class="o">=</span><span class="mi">250</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Perform greedy optimization for hyperparameters.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            ground_truth : numpy.ndarray</span>
+<span class="sd">                The ground truth time series dataset.</span>
+<span class="sd">            contamination : numpy.ndarray</span>
+<span class="sd">                The contaminated time series dataset to impute.</span>
+<span class="sd">            selected_metrics : list of str, optional</span>
+<span class="sd">                List of selected metrics for optimization (default is [&quot;RMSE&quot;]).</span>
+<span class="sd">            algorithm : str, optional</span>
+<span class="sd">                The imputation algorithm to optimize (default is &#39;cdrec&#39;).</span>
+<span class="sd">            n_calls : int, optional</span>
+<span class="sd">                Number of calls to the objective function (default is 250).</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            tuple</span>
+<span class="sd">                A tuple containing the best parameters and their corresponding score.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
+
+            <span class="c1"># Map the parameter ranges to the algorithm-specific search space</span>
+            <span class="n">param_ranges</span> <span class="o">=</span> <span class="n">ALL_ALGO_PARAMS</span><span class="p">[</span><span class="n">algorithm</span><span class="p">]</span>
+
+            <span class="c1"># Extract parameter names and their ranges for the selected algorithm</span>
+            <span class="n">param_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">param_ranges</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">param_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">param_ranges</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+            <span class="c1"># Generate all combinations of parameters in the search space</span>
+            <span class="n">param_combinations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">param_values</span><span class="p">))</span>  <span class="c1"># Cartesian product of all parameter values</span>
+
+            <span class="c1"># Placeholder for the best parameters and their score</span>
+            <span class="n">best_params</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">best_score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>  <span class="c1"># Assuming we are minimizing the objective function</span>
+
+            <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+                <span class="n">errors</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">evaluate_params</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">errors</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">selected_metrics</span><span class="p">])</span>
+
+            <span class="n">run_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># Conduct greedy optimization over parameter combinations</span>
+            <span class="k">for</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">param_combinations</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="n">n_calls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">run_count</span> <span class="o">&gt;=</span> <span class="n">n_calls</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="c1"># Convert params to a dictionary for compatibility</span>
+                <span class="n">params_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param_names</span><span class="p">,</span> <span class="n">params</span><span class="p">)}</span>
+
+                <span class="c1"># Calculate the score for the current set of parameters</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">objective</span><span class="p">(</span><span class="n">params_dict</span><span class="p">)</span>
+
+                <span class="c1"># Update the best parameters if the current score is better</span>
+                <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="n">best_score</span><span class="p">:</span>
+                    <span class="n">best_score</span> <span class="o">=</span> <span class="n">score</span>
+                    <span class="n">best_params</span> <span class="o">=</span> <span class="n">params_dict</span>
+
+                <span class="c1"># Increment the run counter</span>
+                <span class="n">run_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">&gt; logs, optimization greedy - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">best_score</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Optimization.Bayesian">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.Bayesian">[docs]</a>
+    <span class="k">class</span> <span class="nc">Bayesian</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Optimization.Bayesian.optimize">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.Bayesian.optimize">[docs]</a>
+        <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">selected_metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">],</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">n_calls</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_random_starts</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">acq_func</span><span class="o">=</span><span class="s1">&#39;gp_hedge&#39;</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Perform Bayesian optimization for hyperparameters.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            ground_truth : numpy.ndarray</span>
+<span class="sd">                The ground truth time series dataset.</span>
+<span class="sd">            contamination : numpy.ndarray</span>
+<span class="sd">                The contaminated time series dataset to impute.</span>
+<span class="sd">            selected_metrics : list of str, optional</span>
+<span class="sd">                List of selected metrics for optimization (default is [&quot;RMSE&quot;]).</span>
+<span class="sd">            algorithm : str, optional</span>
+<span class="sd">                The imputation algorithm to optimize (default is &#39;cdrec&#39;).</span>
+<span class="sd">            n_calls : int, optional</span>
+<span class="sd">                Number of calls to the objective function (default is 100).</span>
+<span class="sd">            n_random_starts : int, optional</span>
+<span class="sd">                Number of random initial points (default is 50).</span>
+<span class="sd">            acq_func : str, optional</span>
+<span class="sd">                Acquisition function for the Gaussian prior (default is &#39;gp_hedge&#39;).</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            tuple</span>
+<span class="sd">                A tuple containing the best parameters and their corresponding score.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
+
+            <span class="n">search_spaces</span> <span class="o">=</span> <span class="n">SEARCH_SPACES</span>
+
+            <span class="c1"># Adjust the search space for &#39;cdrec&#39; based on obfuscated_matrix</span>
+            <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;cdrec&#39;</span><span class="p">:</span>
+                <span class="n">max_rank</span> <span class="o">=</span> <span class="n">contamination</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">SEARCH_SPACES</span><span class="p">[</span><span class="s1">&#39;cdrec&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">max_rank</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;rank&#39;</span><span class="p">)</span>  <span class="c1"># Update the rank range</span>
+
+            <span class="c1"># Define the search space</span>
+            <span class="n">space</span> <span class="o">=</span> <span class="n">search_spaces</span><span class="p">[</span><span class="n">algorithm</span><span class="p">]</span>
+
+            <span class="c1"># Define the objective function (to minimize)</span>
+            <span class="nd">@use_named_args</span><span class="p">(</span><span class="n">space</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">):</span>
+                <span class="n">errors</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">evaluate_params</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">algorithm</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">errors</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">selected_metrics</span><span class="p">])</span>
+
+            <span class="c1"># Conduct Bayesian optimization</span>
+            <span class="n">optimizer</span> <span class="o">=</span> <span class="n">skopt</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">(</span><span class="n">dimensions</span><span class="o">=</span><span class="n">space</span><span class="p">,</span> <span class="n">n_initial_points</span><span class="o">=</span><span class="n">n_random_starts</span><span class="p">,</span> <span class="n">acq_func</span><span class="o">=</span><span class="n">acq_func</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_calls</span><span class="p">):</span>
+                <span class="n">suggested_params</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">ask</span><span class="p">()</span>
+                <span class="n">score</span> <span class="o">=</span> <span class="n">objective</span><span class="p">(</span><span class="n">suggested_params</span><span class="p">)</span>
+                <span class="n">optimizer</span><span class="o">.</span><span class="n">tell</span><span class="p">(</span><span class="n">suggested_params</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+
+            <span class="c1"># Optimal parameters</span>
+            <span class="n">optimal_params</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">Xi</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">optimizer</span><span class="o">.</span><span class="n">yi</span><span class="p">)]</span>
+            <span class="n">optimal_params_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">dim</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">space</span><span class="p">],</span> <span class="n">optimal_params</span><span class="p">)}</span>
+
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">&gt; logs, optimization bayesian - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">optimal_params_dict</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">optimizer</span><span class="o">.</span><span class="n">yi</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Optimization.ParticleSwarm">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.ParticleSwarm">[docs]</a>
+    <span class="k">class</span> <span class="nc">ParticleSwarm</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">_format_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_params</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Format parameters for the given algorithm.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            particle_params : list</span>
+<span class="sd">                List of particle parameters.</span>
+<span class="sd">            algorithm : str</span>
+<span class="sd">                The imputation algorithm name.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            list</span>
+<span class="sd">                Formatted list of parameters.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;cdrec&#39;</span><span class="p">:</span>
+                <span class="n">particle_params</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">particle_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">particle_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">particle_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span>
+            <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;iim&#39;</span><span class="p">:</span>
+                <span class="n">particle_params</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">particle_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;mrnn&#39;</span><span class="p">:</span>
+                <span class="n">particle_params</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">particle_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">particle_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">particle_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span>
+            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;stmvl&#39;</span><span class="p">:</span>
+                <span class="n">particle_params</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">particle_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">particle_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">particle_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span>
+
+            <span class="k">return</span> <span class="n">particle_params</span>
+
+        <span class="k">def</span> <span class="nf">_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">selected_metrics</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Objective function for Particle Swarm Optimization.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            ground_truth : numpy.ndarray</span>
+<span class="sd">                The ground truth time series dataset.</span>
+<span class="sd">            contamination : numpy.ndarray</span>
+<span class="sd">                The contaminated time series dataset to impute.</span>
+<span class="sd">            algorithm : str</span>
+<span class="sd">                The imputation algorithm name.</span>
+<span class="sd">            selected_metrics : list of str</span>
+<span class="sd">                List of selected metrics for optimization.</span>
+<span class="sd">            params : numpy.ndarray</span>
+<span class="sd">                Parameter values for the optimization.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            numpy.ndarray</span>
+<span class="sd">                Array of error values for each particle.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">n_particles</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Get the number of particles</span>
+            <span class="c1"># Initialize array to hold the errors for each particle</span>
+            <span class="n">errors_for_all_particles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_particles</span><span class="p">)</span>
+
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_particles</span><span class="p">):</span>  <span class="c1"># Iterate over each particle</span>
+                <span class="n">particle_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_params</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">algorithm</span><span class="p">)</span>  <span class="c1"># Get the parameters for this particle</span>
+                <span class="n">errors</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">evaluate_params</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">particle_params</span><span class="p">),</span> <span class="n">algorithm</span><span class="p">)</span>
+                <span class="n">errors_for_all_particles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">errors</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">selected_metrics</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">errors_for_all_particles</span>
+
+<div class="viewcode-block" id="Optimization.ParticleSwarm.optimize">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.ParticleSwarm.optimize">[docs]</a>
+        <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">selected_metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">n_particles</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">n_processes</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Perform Particle Swarm Optimization for hyperparameters.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            ground_truth : numpy.ndarray</span>
+<span class="sd">                The ground truth time series dataset.</span>
+<span class="sd">            contamination : numpy.ndarray</span>
+<span class="sd">                The contaminated time series dataset to impute.</span>
+<span class="sd">            selected_metrics : list of str, optional</span>
+<span class="sd">                List of selected metrics for optimization (default is [&quot;RMSE&quot;]).</span>
+<span class="sd">            algorithm : str, optional</span>
+<span class="sd">                The imputation algorithm to optimize (default is &#39;cdrec&#39;).</span>
+<span class="sd">            n_particles : int</span>
+<span class="sd">                Number of particles used in PSO.</span>
+<span class="sd">            c1 : float</span>
+<span class="sd">                PSO parameter, personal learning coefficient.</span>
+<span class="sd">            c2 : float</span>
+<span class="sd">                PSO parameter, global learning coefficient.</span>
+<span class="sd">            w : float</span>
+<span class="sd">                PSO parameter, inertia weight.</span>
+<span class="sd">            iterations : int</span>
+<span class="sd">                Number of iterations for the optimization.</span>
+<span class="sd">            n_processes : int</span>
+<span class="sd">                Number of processes during optimization.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            tuple</span>
+<span class="sd">                A tuple containing the best parameters and their corresponding score.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
+
+            <span class="c1"># Define the search space</span>
+            <span class="n">search_space</span> <span class="o">=</span> <span class="n">SEARCH_SPACES_PSO</span>
+
+
+            <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;cdrec&#39;</span><span class="p">:</span>
+                <span class="n">max_rank</span> <span class="o">=</span> <span class="n">contamination</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">search_space</span><span class="p">[</span><span class="s1">&#39;cdrec&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">search_space</span><span class="p">[</span><span class="s1">&#39;cdrec&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">min</span><span class="p">(</span><span class="n">search_space</span><span class="p">[</span><span class="s1">&#39;cdrec&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">max_rank</span><span class="p">))</span>
+
+            <span class="c1"># Select the correct search space based on the algorithm</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="n">search_space</span><span class="p">[</span><span class="n">algorithm</span><span class="p">]</span>
+
+            <span class="c1"># Convert search space to PSO-friendly format (two lists: one for min and one for max values for each parameter)</span>
+            <span class="n">lower_bounds</span><span class="p">,</span> <span class="n">upper_bounds</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">bounds</span><span class="p">)</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lower_bounds</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">upper_bounds</span><span class="p">))</span>
+
+            <span class="c1"># Call instance of PSO</span>
+            <span class="n">optimizer</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">single</span><span class="o">.</span><span class="n">GlobalBestPSO</span><span class="p">(</span><span class="n">n_particles</span><span class="o">=</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;c1&#39;</span><span class="p">:</span> <span class="n">c1</span><span class="p">,</span> <span class="s1">&#39;c2&#39;</span><span class="p">:</span> <span class="n">c2</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="n">w</span><span class="p">},</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+
+            <span class="c1"># Perform optimization</span>
+            <span class="n">objective_with_args</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_objective</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">selected_metrics</span><span class="p">)</span>
+            <span class="n">cost</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective_with_args</span><span class="p">,</span> <span class="n">iters</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span> <span class="n">n_processes</span><span class="o">=</span><span class="n">n_processes</span><span class="p">)</span>
+
+            <span class="n">param_names</span> <span class="o">=</span> <span class="n">PARAM_NAMES</span>
+
+            <span class="n">optimal_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_params</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">)</span>
+            <span class="n">optimal_params_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">param_name</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param_names</span><span class="p">[</span><span class="n">algorithm</span><span class="p">],</span> <span class="n">optimal_params</span><span class="p">)}</span>
+
+
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">&gt; logs, optimization pso - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">optimal_params_dict</span><span class="p">,</span> <span class="n">cost</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Optimization.SuccessiveHalving">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.SuccessiveHalving">[docs]</a>
+    <span class="k">class</span> <span class="nc">SuccessiveHalving</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">errors_dict</span><span class="p">,</span> <span class="n">selected_metrics</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Objective function for Successive Halving optimization.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            errors_dict : dict</span>
+<span class="sd">                Dictionary containing error metrics.</span>
+<span class="sd">            selected_metrics : list of str</span>
+<span class="sd">                List of selected metrics for optimization.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            float</span>
+<span class="sd">                Mean error for the selected metrics.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">selected_errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">errors_dict</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">selected_metrics</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">selected_errors</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Optimization.SuccessiveHalving.optimize">
+<a class="viewcode-back" href="../../../imputegap.optimization.html#imputegap.recovery.optimization.Optimization.SuccessiveHalving.optimize">[docs]</a>
+        <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">selected_metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">num_configs</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">reduction_factor</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Perform Successive Halving optimization for hyperparameters.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            ground_truth : numpy.ndarray</span>
+<span class="sd">                The ground truth time series dataset.</span>
+<span class="sd">            contamination : numpy.ndarray</span>
+<span class="sd">                The contaminated time series dataset to impute.</span>
+<span class="sd">            selected_metrics : list of str, optional</span>
+<span class="sd">                List of selected metrics for optimization (default is [&quot;RMSE&quot;]).</span>
+<span class="sd">            algorithm : str, optional</span>
+<span class="sd">                The imputation algorithm to optimize (default is &#39;cdrec&#39;).</span>
+<span class="sd">            num_configs : int</span>
+<span class="sd">                Number of configurations to try.</span>
+<span class="sd">            num_iterations : int</span>
+<span class="sd">                Number of iterations for the optimization.</span>
+<span class="sd">            reduction_factor : int</span>
+<span class="sd">                Reduction factor for the number of configurations kept after each iteration.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            tuple</span>
+<span class="sd">                A tuple containing the best parameters and their corresponding score.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
+
+            <span class="c1"># Define the parameter names for each algorithm</span>
+            <span class="n">param_names</span> <span class="o">=</span> <span class="n">PARAM_NAMES</span>
+
+            <span class="n">data_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span>
+            <span class="n">chunk_size</span> <span class="o">=</span> <span class="n">data_length</span> <span class="o">//</span> <span class="n">num_iterations</span>
+
+            <span class="c1"># prepare configurations for each algorithm separately</span>
+            <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;cdrec&#39;</span><span class="p">:</span>
+                <span class="n">max_rank</span> <span class="o">=</span> <span class="n">contamination</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">temp_rank_range</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sh_params</span><span class="o">.</span><span class="n">CDREC_RANK_RANGE</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">max_rank</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">temp_rank_range</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No suitable rank found within CDREC_RANK_RANGE for the given matrix shape!&quot;</span><span class="p">)</span>
+
+                <span class="n">configs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">temp_rank_range</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">CDREC_EPS_RANGE</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">CDREC_ITERS_RANGE</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_configs</span><span class="p">)]</span>
+            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;iim&#39;</span><span class="p">:</span>
+                <span class="n">configs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">IIM_LEARNING_NEIGHBOR_RANGE</span><span class="p">))</span>
+                           <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_configs</span><span class="p">)]</span>
+            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;mrnn&#39;</span><span class="p">:</span>
+                <span class="n">configs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">MRNN_HIDDEN_DIM_RANGE</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">MRNN_LEARNING_RATE_CHANGE</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">MRNN_NUM_ITER_RANGE</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_configs</span><span class="p">)]</span>
+            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;stmvl&#39;</span><span class="p">:</span>
+                <span class="n">configs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">STMVL_WINDOW_SIZE_RANGE</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">STMVL_GAMMA_RANGE</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sh_params</span><span class="o">.</span><span class="n">STMVL_ALPHA_RANGE</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_configs</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid algorithm: </span><span class="si">{</span><span class="n">algorithm</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
+                <span class="c1"># Calculate how much data to use in this iteration</span>
+                <span class="n">end_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">chunk_size</span>
+                <span class="n">partial_ground_truth</span> <span class="o">=</span> <span class="n">ground_truth</span><span class="p">[:</span><span class="n">end_idx</span><span class="p">]</span>
+                <span class="n">partial_obfuscated</span> <span class="o">=</span> <span class="n">contamination</span><span class="p">[:</span><span class="n">end_idx</span><span class="p">]</span>
+
+                <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_objective</span><span class="p">(</span><span class="n">Imputation</span><span class="o">.</span><span class="n">evaluate_params</span><span class="p">(</span><span class="n">partial_ground_truth</span><span class="p">,</span> <span class="n">partial_obfuscated</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">),</span> <span class="n">selected_metrics</span><span class="p">)</span> <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">configs</span><span class="p">]</span>
+
+                <span class="n">top_configs_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">scores</span><span class="p">)[:</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">configs</span><span class="p">)</span> <span class="o">//</span> <span class="n">reduction_factor</span><span class="p">)]</span>
+                <span class="n">configs</span> <span class="o">=</span> <span class="p">[</span><span class="n">configs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">top_configs_idx</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">configs</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">break</span>  <span class="c1"># Exit the loop if only 1 configuration remains</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">configs</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No configurations left after successive halving.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;iim&#39;</span><span class="p">:</span>
+                <span class="n">best_config</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">single_config</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective</span><span class="p">(</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">evaluate_params</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="p">[</span><span class="n">single_config</span><span class="p">],</span> <span class="n">algorithm</span><span class="p">),</span> <span class="n">selected_metrics</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">best_config</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">config</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective</span><span class="p">(</span><span class="n">Imputation</span><span class="o">.</span><span class="n">evaluate_params</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">),</span> <span class="n">selected_metrics</span><span class="p">))</span>
+
+            <span class="n">best_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objective</span><span class="p">(</span><span class="n">Imputation</span><span class="o">.</span><span class="n">evaluate_params</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="n">best_config</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">),</span> <span class="n">selected_metrics</span><span class="p">)</span>
+
+            <span class="n">best_config_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param_names</span><span class="p">[</span><span class="n">algorithm</span><span class="p">],</span> <span class="n">best_config</span><span class="p">)}</span>
+
+            <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">&gt; logs, optimization sh - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">best_config_dict</span><span class="p">,</span> <span class="n">best_score</span></div>
+</div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quentin Nater.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

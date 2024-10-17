@@ -11,14 +11,14 @@ The interface provides advanced imputation algorithms, construction of various m
 
 
 
-## Requirements
-In order to use **ImputeGAP**, you must have :
-* Python **3.12.0** or higher
-* Run your implementation on a **Unix-compatible environment**.
-<br><br>
+## System Requirements
 
-To install these two prerequisites, please refer to the following documentation: <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs/installation" >install requirements</a><br><br>
+To utilize **ImputeGAP**, the following prerequisites are necessary:
 
+- Python version **3.12.0** or higher
+- A **Unix-compatible environment** for execution
+
+For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs/installation).
 
 
 
@@ -28,46 +28,64 @@ To install these two prerequisites, please refer to the following documentation:
 
 
 ## Installation
-To install ImputeGAP locally, download the package from GitHub, move inside the folder.<br />
-<br />
+
+
 
 ### Pip installation
+
+To quickly install the latest version of **ImputeGAP** from the Python Package Index (PyPI), use the following command:
+
 ```bash
 $ pip install imputegap
 ``` 
+
+This will automatically install ImputeGAP along with its dependencies. Ensure that you are using Python 3.12.0 or higher in a Unix-compatible environment.
+
 <br />
 
+
 ### Local installation
+To install ImputeGAP from source, follow these steps:
+
+1) Initialize a Git repository and clone the project from GitHub:
+
 ```bash
 $ git init
 $ git clone https://github.com/eXascaleInfolab/ImputeGAP
 $ cd ./ImputeGAP
 ``` 
 
-Then, once inside, run the command : 
+2) Once inside the project directory, run the following command to install the package in editable mode:
+
 
 ```bash
 $ pip install -e .
 ``` 
 
-
+This installation method is recommended if you want to modify the source code or contribute to the development of ImputeGAP.
 
 <br /><hr /><br />
 
 ## Datasets
-All datasets preconfigured in this library can be found here : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/naterq_skeleton_refac_3/imputegap/dataset" >link to datasets</a>
-
+All preconfigured datasets available in this library can be accessed at the following location: [Link to datasets](https://github.com/eXascaleInfolab/ImputeGAP/tree/naterq_skeleton_refac_3/imputegap/dataset)
 
 
 <br /><hr /><br />
 
 
 
-## Loading and pre-process
-The model of management is able to load any kind of time series datasets in text format that respect this condition :<br /><br />
-<b>(Values,Series)</b> : *series are seperated by space et values by a carriage return \n.*<br><br>
+## Loading and Pre-processing
+
+The data management model is capable of loading any time series datasets in text format, provided they meet the following condition:
+
+**(Values, Series)**: *Series are separated by spaces (` `), and values are separated by a carriage return (`\n`).*
+
+To check if your dataset is correctly formatted, please refer to the example datasets provided [above](#datasets).<br />
+
 
 ### Example Loading
+You can find this example in the file [`runner_contamination.py`](./imputegap/runner_contamination.py).
+
 ```python
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
@@ -90,11 +108,13 @@ ts_1.print(limit=10)
 
 
 ## Contamination
-ImputeGAP allows to contaminate datasets with a specific scenario to reproduce a situation. Up to now, the scenarios are : <b>MCAR, MISSING POURCENTAGE, ...</b><br />
+ImputeGAP allows to contaminate datasets with a specific scenario to reproduce a real-world situation. Up to now, the scenarios are : <b>MCAR, MISSING POURCENTAGE, and BLACKOUT</b><br />
 Please find the documentation in this page : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >missing data scenarios</a><br><br>
 
 
 ### Example Contamination
+You can find this example in the file [`runner_contamination.py`](./imputegap/runner_contamination.py).
+
 ```python
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
@@ -117,12 +137,13 @@ ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_pa
 <br /><hr /><br />
 
 ## Imputation
-ImputeGAP proposes many algorithms of imputation categorized in families, such as : <b>Matrix Decomposition, Machine Learning, Regression, Pattern Recognition, Statistical metods, ...</b><br />
+**ImputeGAP** offers a wide range of imputation algorithms categorized into several families, including: **Matrix Decomposition**, **Machine Learning**, **Regression**, **Pattern Recognition**, and **Statistical Methods**.
 
-It is also possible de add your own algorithm. To do so, just follow the min-impute template and replace the logic by your code.<br /><br />
-
+It is also possible to add your own custom imputation algorithm. To do this, simply follow the `min-impute` template and replace the logic with your own code.
 
 ### Example Imputation
+You can find this example in the file [`runner_imputation.py`](./imputegap/runner_imputation.py).
+
 ```python
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
@@ -161,11 +182,13 @@ ts_3.print_results(cdrec.metrics)
 <br /><hr /><br />
 
 ## Auto-ML
-ImputeGAP provides optimization techniques that automatically find the right hyperparameters for a specific algorithm in relation to a certain dataset.
+**ImputeGAP** provides optimization techniques that automatically identify the optimal hyperparameters for a specific algorithm in relation to a given dataset.
 
-The optimizers available are : <b>Greedy Optimizer, Bayesian Optimizer, Particle Swarm Optimizer and Successive Halving</b>.<br /><br />
+The available optimizers include: **Greedy Optimizer**, **Bayesian Optimizer**, **Particle Swarm Optimizer**, and **Successive Halving**.
 
 ### Example Auto-ML
+You can find this example in the file [`runner_optimization.py`](./imputegap/runner_optimization.py).
+
 ```python
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
@@ -197,11 +220,13 @@ ts_1.print_results(cdrec.metrics)
 
 
 ## Explainer
-ImputeGap provides you with an algorithm based on the SHAP library, which explains the results of your Imputations using features specific to your dataset.<br /><br />
+**ImputeGAP** includes an algorithm based on the **SHAP** library, which explains the results of your imputations using features specific to your dataset.
 
 ### Example Explainer
+You can find this example in the file [`runner_explainer.py`](./imputegap/runner_explainer.py).
+
 ```python
-from imputegap.explainer.explainer import Explainer
+from imputegap.recovery.explainer import Explainer
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 

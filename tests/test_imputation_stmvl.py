@@ -5,7 +5,7 @@ from imputegap.recovery.manager import TimeSeries
 
 class TestSTMVL(unittest.TestCase):
 
-    def test_imputation_mrnn_chlorine(self):
+    def test_imputation_stmvl_chlorine(self):
         """
         the goal is to test if only the simple imputation with ST-MVL has the expected outcome
         """

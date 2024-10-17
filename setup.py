@@ -4,14 +4,17 @@ import setuptools
 
 setuptools.setup(
     name="imputegap",
-    version="0.1.3",
+    version="0.1.4",
     description="A Library of Imputation Techniques for Time Series Data",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     url="https://github.com/eXascaleInfolab/ImputeGAP",
     author="Quentin Nater",
     author_email="quentin.nater@unifr.ch",
-    license="The Unlicense",
+    license="GNU General Public License v3.0",
+    classifiers=[
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+    ],
     project_urls = {
         "Documentation": "https://github.com/eXascaleInfolab/ImputeGAP/tree/main",
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"

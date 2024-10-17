@@ -4,6 +4,24 @@
 # ImputeGAP - Datasets
 ImputeGap uses several datasets containing different characteristics to test your implementations.
 
+## EEG
+
+| Data info          |                                                                         |
+|--------------------|-------------------------------------------------------------------------|
+| Dataset codename   | eeg                                                                     |
+| Dataset name       | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG |
+| Url                | https://doi.org/10.17605/OSF.IO/RKQBU                                   |
+ | Specific URL       | https://osf.io/tu4zj                                                    |
+| Source             | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG |
+| Article            | https://www.nature.com/articles/s41597-024-03915-8                      |
+|                    | Boi Mai Quach, Cathal Gurrin & Graham Healy                             |
+|                    |                                                                         |
+| Time granularity   | 1000.0 Hz                                                               |
+| t                  | -200.00 ...    1000.00 ms                                                               |
+| Epoch              | 1 used on 564                                                           |
+|                    |                                                                         |
+| Dataset dimensions | N=1201 M=33                                                             |
+
 <br /><hr /><br />
 
 ## Chlorine

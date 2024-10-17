@@ -5,14 +5,14 @@ from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 
 
-class TestOptiCDRECGreedy(unittest.TestCase):
+class TestOptiCDRECSH(unittest.TestCase):
 
-    def test_optimization_greedy_cdrec(self):
+    def test_optimization_sh_cdrec(self):
         """
         the goal is to test if only the simple optimization with cdrec has the expected outcome
         """
         algorithm = "cdrec"
-        dataset = "eeg"
+        dataset = "eeg-test"
 
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path(dataset), max_series=50, max_values=100)
