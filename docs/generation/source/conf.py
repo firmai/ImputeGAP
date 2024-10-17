@@ -25,7 +25,7 @@ extensions = [
 autosummary_generate = True  # Automatically generate summaries
 
 html_logo = "https://www.naterscreations.com/imputegap/logo_imputegab.png"
-html_static_path = ['_static']
+html_static_path = ['static']
 html_css_files = ['custom.css']
 
 # Set the version and release info
@@ -51,7 +51,7 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_rtd_theme"
-html_static_path = ['_static']
+html_static_path = ['static']
 
 
 import os
