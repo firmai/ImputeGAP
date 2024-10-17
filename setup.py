@@ -16,7 +16,7 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
     ],
     project_urls = {
-        "Documentation": "https://github.com/eXascaleInfolab/ImputeGAP/tree/main",
+        "Documentation": "https://exascaleinfolab.github.io/ImputeGAP/",
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"
     },
     classifiers=[

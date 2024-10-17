@@ -18,7 +18,7 @@ To utilize **ImputeGAP**, the following prerequisites are necessary:
 - Python version **3.12.0** or higher
 - A **Unix-compatible environment** for execution
 
-For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/docs/installation).
+For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
 
 
 
