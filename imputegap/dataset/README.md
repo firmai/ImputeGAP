@@ -18,11 +18,10 @@ This dataset is primarily used for the analysis of medical and brain-related dat
 
 ### Plots
 
-![EEG-Test dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/eeg-test/01_eeg-test-rawdata-NxM_graph.jpg)
-![EEG-Test dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/eeg-test/02_eeg-test-rawdata20x400_graph.jpg)
-![EEG-Test dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/eeg-test/03_eeg-test-rawdata01x400_graph.jpg)
-![EEG-Test - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/eeg-test/04_eeg-test-normmin_maxdata01x400_graph.jpg)
-
+![EEG-Test dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/01_eeg-test-rawdata-NxM_graph.jpg)
+![EEG-Test dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/02_eeg-test-rawdata20x400_graph.jpg)
+![EEG-Test dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/03_eeg-test-rawdata01x400_graph.jpg)
+![EEG-Test - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/04_eeg-test-normmin_maxdata01x400_graph.jpg)
 ### Features
 
 | Category       | Feature                                                            | Value                |
@@ -252,7 +251,7 @@ This makes it particularly well-suited for time series imputation methods that a
 
 <br /><hr /><br />
 
-## Climate data
+## Climate
 
 The Climate dataset is an aggregated and processed collection used for climate change attribution studies.
 It contains observations data for 18 climate agents across 125 locations in North America [USC Melady Lab](https://viterbi-web.usc.edu/~liu32/data.html).
