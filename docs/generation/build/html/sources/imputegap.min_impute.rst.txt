@@ -1,7 +1,7 @@
 imputegap.algorithms.min_impute package
 =======================================
 
-The `imputegap.algorithms.min_impute` package contains various imputation algorithms used for handling missing values in time series data. This package supports multiple imputation techniques like CDRec, MRNN, IIM, and more.
+The `imputegap.algorithms.min_impute` package contains various imputation algorithms used for handling missing values in time series data.
 
 Submodules
 ----------

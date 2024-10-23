@@ -15,6 +15,7 @@ Subpackages
    imputegap.stmvl
    imputegap.iim
    imputegap.mrnn
+   imputegap.mean_impute
    imputegap.min_impute
    imputegap.zero_impute
    imputegap.utils

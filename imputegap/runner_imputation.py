@@ -10,7 +10,7 @@ ts_1.load_timeseries(utils.search_path("eeg-test"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-infected_data = ts_1.Contaminate.missing_percentage(ts_1.data)
+infected_data = ts_1.Contaminate.mcar(ts_1.data)
 
 # [OPTIONAL] save your results in a new Time Series object
 ts_2 = TimeSeries().import_matrix(infected_data)

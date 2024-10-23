@@ -56,7 +56,7 @@ This scenario uses random number generator with fixed seed and will produce the 
 <br />
 
 ### MISSING PERCENTAGE
-MISSING PERCENTAGE selects of percent of series to contaminate from the first to the last with a desired percentage of missing value to remove.
+**MISSING PERCENTAGE** selects of percent of series to contaminate from the first to the last with a desired percentage of missing value to remove.
 
 <table>
     <tbody>Definition</tbody>
@@ -71,6 +71,33 @@ MISSING PERCENTAGE selects of percent of series to contaminate from the first to
     </tr>
     <tr>
         <td>S</td><td>1 - 100%</td>
+    </tr>
+    <tr>
+        <td>W</td><td>(N-P) * R</td>
+    </tr>
+    <tr>
+        <td>B</td><td>R</td>
+    </tr>
+ </table><br />
+
+
+### BLACKOUT
+The **BLACKOUT** scenario selects all time series to introduce missing values. It removes a set percentage of data points from all series, creating gaps for further analysis.
+
+
+<table>
+    <tbody>Definition</tbody>
+    <tr>
+        <td>N</td><td>MAX</td>
+    </tr>
+    <tr>
+        <td>M</td><td>MAX</td>
+    </tr>
+    <tr>
+        <td>R</td><td>1 - 100%</td>
+    </tr>
+    <tr>
+        <td>S</td><td>100%</td>
     </tr>
     <tr>
         <td>W</td><td>(N-P) * R</td>

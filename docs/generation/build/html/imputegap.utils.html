@@ -55,6 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mean_impute.html">imputegap.algorithms.mean_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
@@ -70,6 +71,7 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.mrnn.html">imputegap.algorithms.mrnn package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.mean_impute.html">imputegap.algorithms.mean_impute package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.min_impute.html">imputegap.algorithms.min_impute package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.zero_impute.html">imputegap.algorithms.zero_impute package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">imputegap.tools.utils package</a><ul>
@@ -138,7 +140,7 @@
 <span id="imputegap-tools-utils-module"></span><h2>imputegap.tools.utils module<a class="headerlink" href="#module-imputegap.tools.utils" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.tools.utils.display_title">
-<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">display_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Master</span> <span class="pre">Thesis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Quentin</span> <span class="pre">Nater'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ImputeGAP'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">university</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'University</span> <span class="pre">Fribourg</span> <span class="pre">-</span> <span class="pre">exascale</span> <span class="pre">infolab'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#display_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.display_title" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">display_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Master</span> <span class="pre">Thesis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Quentin</span> <span class="pre">Nater'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ImputeGAP'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">university</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'University</span> <span class="pre">Fribourg'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#display_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.display_title" title="Link to this definition"></a></dt>
 <dd><p>Display the title and author information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -146,57 +148,11 @@
 <li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – The title of the thesis (default is “Master Thesis”).</p></li>
 <li><p><strong>aut</strong> (<em>str</em><em>, </em><em>optional</em>) – The author’s name (default is “Quentin Nater”).</p></li>
 <li><p><strong>lib</strong> (<em>str</em><em>, </em><em>optional</em>) – The library or project name (default is “ImputeGAP”).</p></li>
-<li><p><strong>university</strong> (<em>str</em><em>, </em><em>optional</em>) – The university or institution (default is “University Fribourg - exascale infolab”).</p></li>
+<li><p><strong>university</strong> (<em>str</em><em>, </em><em>optional</em>) – The university or institution (default is “University Fribourg”).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="imputegap.tools.utils.format_selection">
-<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">format_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#format_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.format_selection" title="Link to this definition"></a></dt>
-<dd><p>Format the selection of time series based on keywords provided by the user.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ts</strong> (<em>numpy.ndarray</em>) – The dataset of time series to be contaminated.</p></li>
-<li><p><strong>selection</strong> (<em>list</em>) – The list of selected series to be formatted. It can include:
-- “*” to select all series.
-- “-” followed by an integer to exclude that many series from the end.
-- “+” followed by an integer to include series from that starting point onward.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of formatted series indices.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If the selection format is invalid.</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<ul class="simple">
-<li><p>If selection is [“*”], all series in <cite>ts</cite> are selected.</p></li>
-<li><p>If selection is [“-X”], all but the last X series are selected.</p></li>
-<li><p>If selection is [“+X”], all series starting from index X are selected.</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="imputegap.tools.utils.get_save_path_asset">
-<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">get_save_path_asset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#get_save_path_asset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.get_save_path_asset" title="Link to this definition"></a></dt>
-<dd><p>Find the accurate path for saving test files.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The correct file path for saving test files.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>

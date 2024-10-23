@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.mean_impute.html">imputegap.algorithms.mean_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
@@ -93,8 +94,7 @@
 
 <div class="viewcode-block" id="display_title">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.display_title">[docs]</a>
-<span class="k">def</span> <span class="nf">display_title</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Master Thesis&quot;</span><span class="p">,</span> <span class="n">aut</span><span class="o">=</span><span class="s2">&quot;Quentin Nater&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="s2">&quot;ImputeGAP&quot;</span><span class="p">,</span>
-                  <span class="n">university</span><span class="o">=</span><span class="s2">&quot;University Fribourg - exascale infolab&quot;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">display_title</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Master Thesis&quot;</span><span class="p">,</span> <span class="n">aut</span><span class="o">=</span><span class="s2">&quot;Quentin Nater&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="s2">&quot;ImputeGAP&quot;</span><span class="p">,</span> <span class="n">university</span><span class="o">=</span><span class="s2">&quot;University Fribourg&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Display the title and author information.</span>
 
@@ -107,7 +107,7 @@
 <span class="sd">    lib : str, optional</span>
 <span class="sd">        The library or project name (default is &quot;ImputeGAP&quot;).</span>
 <span class="sd">    university : str, optional</span>
-<span class="sd">        The university or institution (default is &quot;University Fribourg - exascale infolab&quot;).</span>
+<span class="sd">        The university or institution (default is &quot;University Fribourg&quot;).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -148,26 +148,6 @@
             <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
         <span class="k">return</span> <span class="n">filepath</span></div>
-
-
-
-<div class="viewcode-block" id="get_save_path_asset">
-<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.get_save_path_asset">[docs]</a>
-<span class="k">def</span> <span class="nf">get_save_path_asset</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Find the accurate path for saving test files.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    str</span>
-<span class="sd">        The correct file path for saving test files.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;../tests/assets&quot;</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-        <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-
-    <span class="k">return</span> <span class="n">filepath</span></div>
 
 
 
@@ -319,70 +299,7 @@
         <span class="k">return</span> <span class="n">percentage</span> <span class="o">/</span> <span class="mi">100</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The percentage&quot;</span><span class="p">,</span> <span class="n">percentage</span><span class="p">,</span> <span class="s2">&quot;is out of the acceptable range&quot;</span><span class="p">,</span> <span class="n">low_limit</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">high_limit</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">percentage</span></div>
-
-
-
-<div class="viewcode-block" id="format_selection">
-<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.format_selection">[docs]</a>
-<span class="k">def</span> <span class="nf">format_selection</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Format the selection of time series based on keywords provided by the user.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    ts : numpy.ndarray</span>
-<span class="sd">        The dataset of time series to be contaminated.</span>
-<span class="sd">    selection : list</span>
-<span class="sd">        The list of selected series to be formatted. It can include:</span>
-<span class="sd">        - &quot;*&quot; to select all series.</span>
-<span class="sd">        - &quot;-&quot; followed by an integer to exclude that many series from the end.</span>
-<span class="sd">        - &quot;+&quot; followed by an integer to include series from that starting point onward.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    list</span>
-<span class="sd">        A list of formatted series indices.</span>
-
-<span class="sd">    Raises</span>
-<span class="sd">    ------</span>
-<span class="sd">    ValueError</span>
-<span class="sd">        If the selection format is invalid.</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    - If selection is [&quot;*&quot;], all series in `ts` are selected.</span>
-<span class="sd">    - If selection is [&quot;-X&quot;], all but the last X series are selected.</span>
-<span class="sd">    - If selection is [&quot;+X&quot;], all series starting from index X are selected.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">selection</span><span class="p">:</span>
-        <span class="n">selection</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
-
-    <span class="k">if</span> <span class="n">selection</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]:</span>
-        <span class="n">series_selected</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">series_selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">series_selected</span>
-
-    <span class="k">elif</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-        <span class="n">series_selected</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">ending</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ending</span><span class="p">):</span>
-            <span class="n">series_selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">series_selected</span>
-
-    <span class="k">elif</span> <span class="s2">&quot;+&quot;</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-        <span class="n">series_selected</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">starting</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">starting</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">series_selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">series_selected</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">selection</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The percentage is out of the acceptable range.&quot;</span><span class="p">)</span></div>
 
 
 

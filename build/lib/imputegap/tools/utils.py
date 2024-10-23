@@ -4,8 +4,7 @@ import toml
 import importlib.resources
 
 
-def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP",
-                  university="University Fribourg - exascale infolab"):
+def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg"):
     """
     Display the title and author information.
 
@@ -18,7 +17,7 @@ def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP",
     lib : str, optional
         The library or project name (default is "ImputeGAP").
     university : str, optional
-        The university or institution (default is "University Fribourg - exascale infolab").
+        The university or institution (default is "University Fribourg").
 
     Returns
     -------
@@ -56,23 +55,6 @@ def search_path(set_name="test"):
             filepath = filepath[1:]
 
         return filepath
-
-
-def get_save_path_asset():
-    """
-    Find the accurate path for saving test files.
-
-    Returns
-    -------
-    str
-        The correct file path for saving test files.
-    """
-    filepath = "../tests/assets"
-
-    if not os.path.exists(filepath):
-        filepath = filepath[1:]
-
-    return filepath
 
 
 def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b",
@@ -218,67 +200,7 @@ def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
         return percentage / 100
 
     else:
-        print("The percentage", percentage, "is out of the acceptable range", low_limit, "-", high_limit, ".")
-        return percentage
-
-
-def format_selection(ts, selection):
-    """
-    Format the selection of time series based on keywords provided by the user.
-
-    Parameters
-    ----------
-    ts : numpy.ndarray
-        The dataset of time series to be contaminated.
-    selection : list
-        The list of selected series to be formatted. It can include:
-        - "*" to select all series.
-        - "-" followed by an integer to exclude that many series from the end.
-        - "+" followed by an integer to include series from that starting point onward.
-
-    Returns
-    -------
-    list
-        A list of formatted series indices.
-
-    Raises
-    ------
-    ValueError
-        If the selection format is invalid.
-
-    Notes
-    -----
-    - If selection is ["*"], all series in `ts` are selected.
-    - If selection is ["-X"], all but the last X series are selected.
-    - If selection is ["+X"], all series starting from index X are selected.
-    """
-    if not selection:
-        selection = ["*"]
-
-    if selection == ["*"]:
-        series_selected = []
-        for i in range(0, ts.shape[0]):
-            series_selected.append(str(i))
-        return series_selected
-
-    elif "-" in selection[0]:
-        series_selected = []
-        value = selection[0]
-        ending = int(value[1:])
-        for i in range(0, ts.shape[0] - ending):
-            series_selected.append(str(i))
-        return series_selected
-
-    elif "+" in selection[0]:
-        series_selected = []
-        value = selection[0]
-        starting = int(value[1:])
-        for i in range(starting, ts.shape[0]):
-            series_selected.append(str(i))
-        return series_selected
-
-    else:
-        return selection
+        raise ValueError("The percentage is out of the acceptable range.")
 
 
 def load_share_lib(name="lib_cdrec", lib=True):

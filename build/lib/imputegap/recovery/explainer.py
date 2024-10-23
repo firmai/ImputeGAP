@@ -23,9 +23,6 @@ class Explainer:
     load_configuration(file_path=None)
         Load categories and features from a TOML file.
 
-    save_assets(file_path="./assets/shap/")
-        Load path to save SHAP-related assets.
-
     extract_features(data, features_categories, features_list, do_catch24=True)
         Extract features from time series data using pycatch22.
 
@@ -74,25 +71,6 @@ class Explainer:
 
         return categories, features
 
-    def save_assets(file_path="./assets/shap/"):
-        """
-        Load path to save SHAP-related assets on GitHub and local.
-
-        Parameters
-        ----------
-        file_path : str, optional
-            The path to save the SHAP assets (default is './assets/shap/').
-
-        Returns
-        -------
-        str
-            The file path where assets are saved.
-        """
-
-        if not os.path.exists(file_path):
-            file_path = "./imputegap" + file_path[1:]
-
-        return file_path
 
     def extract_features(data, features_categories, features_list, do_catch24=True):
         """
@@ -267,7 +245,9 @@ class Explainer:
 
         print("\n\nInitilization of the SHAP model with ", np.array(x_information).shape)
 
-        path_file = Explainer.save_assets()
+        path_file = "./assets/shap/"
+        if not os.path.exists(path_file):
+            path_file = "./imputegap" + path_file[1:]
 
         x_features, x_categories, x_descriptions = [], [], []
         x_fs, x_cs, x_ds = [], [], []
@@ -563,8 +543,7 @@ class Explainer:
 
         for current_series in range(0, limitation):
 
-            print("Generation ", current_series, "/", limitation, "(", int((current_series / limitation) * 100),
-                  "%)________________________________________________________")
+            print("Generation ", current_series, "/", limitation, "(", int((current_series / limitation) * 100), "%)________________________________________________________")
             print("\tContamination ", current_series, "...")
 
             if contamination == "mcar":
