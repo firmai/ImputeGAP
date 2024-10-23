@@ -15,7 +15,7 @@ infected_data = ts_1.Contaminate.missing_percentage(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "greedy", "options": {"n_calls": 2}})
+cdrec = Imputation.MatrixCompletion.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "greedy", "options": {"n_calls": 2}})
 
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, cdrec.imputed_matrix)

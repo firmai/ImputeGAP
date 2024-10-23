@@ -17,7 +17,7 @@ ts_2 = TimeSeries().import_matrix(infected_data)
 
 # 4. imputation of the contaminated data
 # choice of the algorithm, and their parameters (default, automl, or defined by the user)
-cdrec = Imputation.MD.CDRec(ts_2.data)
+cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
 
 # imputation with default values
 cdrec.impute()

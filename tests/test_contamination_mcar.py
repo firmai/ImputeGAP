@@ -15,7 +15,7 @@ class TestContamination(unittest.TestCase):
         ts_1.load_timeseries(utils.search_path("test"))
 
         series_impacted = [0.4]
-        missing_rates = [0.4]
+        missing_rates = [40]
         seeds_start, seeds_end = 42, 43
         series_check = ["8", "1", "5", "0"]
         protection = 0.1
@@ -159,5 +159,5 @@ class TestContamination(unittest.TestCase):
                                                        block_size=10, protection=0.1, use_seed=True, seed=42))
 
         ts_1.print()
-        filepath = ts_1.plot(raw_data=ts_1.data, infected_data=ts_2.data, max_series=10, max_values=100, save_path=utils.get_save_path_asset(), display=False)
+        filepath = ts_1.plot(raw_data=ts_1.data, infected_data=ts_2.data, max_series=10, max_values=100, save_path="./assets/", display=False)
         self.assertTrue(os.path.exists(filepath))

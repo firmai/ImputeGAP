@@ -1,0 +1,100 @@
+import unittest
+
+import numpy as np
+import pytest
+
+from imputegap.recovery.imputation import Imputation
+from imputegap.recovery.manager import TimeSeries
+from imputegap.tools import utils
+
+
+class TestException(unittest.TestCase):
+
+    def test_algorithm_exc(self):
+        """
+        the goal is to test the exception to algorithms
+        """
+        algorithm = "invalid_algo"
+        with pytest.raises(ValueError, match=f"Invalid algorithm: {algorithm}"):
+            Imputation.evaluate_params(ground_truth=None, contamination=None, configuration=tuple(), algorithm=algorithm)
+
+    def test_data_exc(self):
+        """
+        The goal is to test the exception raised when ground_truth (raw_data) is None
+        """
+        raw_data = None  # Simulate a scenario where raw_data is None
+        with pytest.raises(ValueError, match=f"Need ground_truth to be able to adapt the hyper-parameters: {raw_data}"):
+            opti = Imputation.MatrixCompletion.CDRec(None).impute(user_defined=False, params={"ground_truth":raw_data, "optimizer": "bayesian", "options":{"n_calls": 2}})
+
+
+    def test_import_exc(self):
+        """
+        The goal is to test the exception raised when import is wrong
+        """
+        ts_01 = TimeSeries()
+
+        with pytest.raises(ValueError, match="Invalid input for import_matrix"):
+            ts_01.import_matrix("wrong")
+
+        with pytest.raises(ValueError, match="Invalid input for load_timeseries"):
+            ts_01.load_timeseries(0.1)
+
+
+    def test_mcar_exc(self):
+        """
+        The goal is to test the exception mcar is not configured correctly
+        """
+        ts_01 = TimeSeries()
+
+        with pytest.raises(ValueError, match="The number of block to remove must be greater than 0. "
+                                             "The dataset or the number of blocks may not be appropriate."):
+            # Call the function or method that raises the ValueError
+            ts_01.Contaminate.mcar(ts=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), block_size=5)
+
+    def test_percentage_exc(self):
+        """
+        The goal is to test the exception raised when percentage given is wrong
+        """
+        ts_01 = TimeSeries()
+        percentage = 120
+
+        with pytest.raises(ValueError, match=f"The percentage is out of the acceptable range."):
+            ts_01.Contaminate.mcar(ts=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), missing_rate=percentage)
+
+
+    def test_load_exc(self):
+        """
+        The goal is to test the exception raised with loading of default values
+        """
+        default_mrnn = utils.load_parameters(query="default", algorithm="mrnn")
+        default_cdrec = utils.load_parameters(query="default", algorithm="cdrec")
+        default_iim = utils.load_parameters(query="default", algorithm="iim")
+        default_stmvl = utils.load_parameters(query="default", algorithm="stmvl")
+        default_greedy = utils.load_parameters(query="default", algorithm="greedy")
+        default_bayesian = utils.load_parameters(query="default", algorithm="bayesian")
+        default_pso = utils.load_parameters(query="default", algorithm="pso")
+        default_color = utils.load_parameters(query="default", algorithm="colors")
+        default_false = utils.load_parameters(query="default", algorithm="test-wrong")
+
+        assert default_cdrec is not None
+        assert default_mrnn is not None
+        assert default_iim is not None
+        assert default_stmvl is not None
+        assert default_greedy is not None
+        assert default_bayesian is not None
+        assert default_pso is not None
+        assert default_color is not None
+        assert default_false is None
+
+
+    def test_export_exc(self):
+        """
+        The goal is to test the exception raised with loading of default values
+        """
+        test = None
+        utils.save_optimization(optimal_params=(1,0.1,10), algorithm="cdrec", dataset="eeg", optimizer="b")
+        utils.save_optimization(optimal_params=(1,0.1,10,10), algorithm="mrnn", dataset="eeg", optimizer="b")
+        utils.save_optimization(optimal_params=(1,0.1,10), algorithm="stmvl", dataset="eeg", optimizer="b")
+        utils.save_optimization(optimal_params=(1, ""), algorithm="iim", dataset="eeg", optimizer="b")
+        test = True
+        assert test is not None

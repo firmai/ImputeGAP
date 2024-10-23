@@ -1,4 +1,6 @@
 import re
+
+from imputegap.algorithms.mean_impute import mean_impute
 from imputegap.recovery.evaluation import Evaluation
 from imputegap.algorithms.cdrec import cdrec
 from imputegap.algorithms.iim import iim
@@ -258,7 +260,7 @@ class Imputation:
 
         if algorithm == 'cdrec':
             rank, epsilon, iterations = configuration
-            algo = Imputation.MD.CDRec(contamination)
+            algo = Imputation.MatrixCompletion.CDRec(contamination)
             algo.logs = False
             algo.impute(user_defined=True, params={"rank": rank, "epsilon": epsilon, "iterations": iterations})
 
@@ -266,14 +268,14 @@ class Imputation:
             learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
 
-            algo = Imputation.Regression.IIM(contamination)
+            algo = Imputation.Statistics.IIM(contamination)
             algo.logs = False
             algo.impute(user_defined=True, params={"learning_neighbours": learning_neighbours, "alg_code": alg_code})
 
         elif algorithm == 'mrnn':
             hidden_dim, learning_rate, iterations = configuration
 
-            algo = Imputation.ML.MRNN(contamination)
+            algo = Imputation.DeepLearning.MRNN(contamination)
             algo.logs = False
             algo.impute(user_defined=True,
                         params={"hidden_dim": hidden_dim, "learning_rate": learning_rate, "iterations": iterations,
@@ -282,7 +284,7 @@ class Imputation:
         elif algorithm == 'stmvl':
             window_size, gamma, alpha = configuration
 
-            algo = Imputation.Pattern.STMVL(contamination)
+            algo = Imputation.PatternSearch.STMVL(contamination)
             algo.logs = False
             algo.impute(user_defined=True, params={"window_size": window_size, "gamma": gamma, "alpha": alpha})
 
@@ -294,7 +296,7 @@ class Imputation:
 
         return error_measures
 
-    class Stats:
+    class Statistics:
         """
         A class containing specific imputation algorithms for statistical methods.
 
@@ -366,7 +368,92 @@ class Imputation:
 
                 return self
 
-    class MD:
+        class MeanImpute(BaseImputer):
+            """
+            MeanImpute class to impute missing values with the mean value of the ground truth.
+
+            Methods
+            -------
+            impute(self, params=None):
+                Perform imputation by replacing missing values with the mean value of the ground truth.
+            """
+            algorithm = "mean_impute"
+
+            def impute(self, params=None):
+                """
+                Impute missing values by replacing them with the mean value of the ground truth.
+                Template for adding external new algorithm
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Dictionary of algorithm parameters (default is None).
+
+                Returns
+                -------
+                self : MinImpute
+                    The object with `imputed_matrix` set.
+                """
+                self.imputed_matrix = mean_impute(self.infected_matrix, params)
+
+                return self
+
+        class IIM(BaseImputer):
+            """
+            IIM class to impute missing values using Iterative Imputation with Metric Learning (IIM).
+
+            Methods
+            -------
+            impute(self, user_defined=True, params=None):
+                Perform imputation using the IIM algorithm.
+            """
+            algorithm = "iim"
+
+            def impute(self, user_defined=True, params=None):
+                """
+                Perform imputation using the IIM algorithm.
+
+                Parameters
+                ----------
+                user_defined : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the IIM algorithm, if None, default ones are loaded.
+
+                    - learning_neighbours : int
+                        Number of nearest neighbors for learning.
+                    - algo_code : str
+                        Unique code for the algorithm configuration.
+
+                Returns
+                -------
+                self : IIM
+                    The object with `imputed_matrix` set.
+
+                Example
+                -------
+                >>> iim_imputer = Imputation.Statistics.IIM(infected_matrix)
+                >>> iim_imputer.impute()  # default parameters for imputation > or
+                >>> iim_imputer.impute(user_defined=True, params={'learning_neighbors': 10})  # user-defined  > or
+                >>> iim_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> imputed_data = iim_imputer.imputed_matrix
+
+                References
+                ----------
+                A. Zhang, S. Song, Y. Sun and J. Wang, "Learning Individual Models for Imputation," 2019 IEEE 35th International Conference on Data Engineering (ICDE), Macao, China, 2019, pp. 160-171, doi: 10.1109/ICDE.2019.00023.
+                keywords: {Data models;Adaptation models;Computational modeling;Predictive models;Numerical models;Aggregates;Regression tree analysis;Missing values;Data imputation}
+                """
+                if params is not None:
+                    learning_neighbours, algo_code = self._check_params(user_defined, params)
+                else:
+                    learning_neighbours, algo_code = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.imputed_matrix = iim(contamination=self.infected_matrix, number_neighbor=learning_neighbours,
+                                          algo_code=algo_code, logs=self.logs)
+
+                return self
+
+    class MatrixCompletion:
         """
         A class containing imputation algorithms for matrix decomposition methods.
 
@@ -466,7 +553,7 @@ class Imputation:
 
                 Example
                 -------
-                >>> cdrec_imputer = Imputation.MD.CDRec(infected_matrix)
+                >>> cdrec_imputer = Imputation.MatrixCompletion.CDRec(infected_matrix)
                 >>> cdrec_imputer.impute()  # default parameters for imputation > or
                 >>> cdrec_imputer.impute(user_defined=True, params={'rank': 5, 'epsilon': 0.01, 'iterations': 100})  # user-defined > or
                 >>> cdrec_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
@@ -487,74 +574,10 @@ class Imputation:
 
                 return self
 
-    class Regression:
+
+    class DeepLearning:
         """
-        A class containing imputation algorithms for regression-based methods.
-
-        Subclasses
-        ----------
-        IIM :
-            Imputation method using Iterative Imputation with Metric learning (IIM).
-        """
-
-        class IIM(BaseImputer):
-            """
-            IIM class to impute missing values using Iterative Imputation with Metric Learning (IIM).
-
-            Methods
-            -------
-            impute(self, user_defined=True, params=None):
-                Perform imputation using the IIM algorithm.
-            """
-            algorithm = "iim"
-
-            def impute(self, user_defined=True, params=None):
-                """
-                Perform imputation using the IIM algorithm.
-
-                Parameters
-                ----------
-                user_defined : bool, optional
-                    Whether to use user-defined or default parameters (default is True).
-                params : dict, optional
-                    Parameters of the IIM algorithm, if None, default ones are loaded.
-
-                    - learning_neighbours : int
-                        Number of nearest neighbors for learning.
-                    - algo_code : str
-                        Unique code for the algorithm configuration.
-
-                Returns
-                -------
-                self : IIM
-                    The object with `imputed_matrix` set.
-
-                Example
-                -------
-                >>> iim_imputer = Imputation.Regression.IIM(infected_matrix)
-                >>> iim_imputer.impute()  # default parameters for imputation > or
-                >>> iim_imputer.impute(user_defined=True, params={'learning_neighbors': 10})  # user-defined  > or
-                >>> iim_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
-                >>> imputed_data = iim_imputer.imputed_matrix
-
-                References
-                ----------
-                A. Zhang, S. Song, Y. Sun and J. Wang, "Learning Individual Models for Imputation," 2019 IEEE 35th International Conference on Data Engineering (ICDE), Macao, China, 2019, pp. 160-171, doi: 10.1109/ICDE.2019.00023.
-                keywords: {Data models;Adaptation models;Computational modeling;Predictive models;Numerical models;Aggregates;Regression tree analysis;Missing values;Data imputation}
-                """
-                if params is not None:
-                    learning_neighbours, algo_code = self._check_params(user_defined, params)
-                else:
-                    learning_neighbours, algo_code = utils.load_parameters(query="default", algorithm=self.algorithm)
-
-                self.imputed_matrix = iim(contamination=self.infected_matrix, number_neighbor=learning_neighbours,
-                                          algo_code=algo_code, logs=self.logs)
-
-                return self
-
-    class ML:
-        """
-        A class containing imputation algorithms for machine learning-based methods.
+        A class containing imputation algorithms for deep learning-based methods.
 
         Subclasses
         ----------
@@ -600,7 +623,7 @@ class Imputation:
 
                 Example
                 -------
-                >>> mrnn_imputer = Imputation.ML.MRNN(infected_matrix)
+                >>> mrnn_imputer = Imputation.DeepLearning.MRNN(infected_matrix)
                 >>> mrnn_imputer.impute()  # default parameters for imputation > or
                 >>> mrnn_imputer.impute(user_defined=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
                 >>> mrnn_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
@@ -622,7 +645,7 @@ class Imputation:
 
                 return self
 
-    class Pattern:
+    class PatternSearch:
         """
         A class containing imputation algorithms for pattern-based methods.
 
@@ -668,7 +691,7 @@ class Imputation:
 
                 Example
                 -------
-                >>> stmvl_imputer = Imputation.Pattern.STMVL(infected_matrix)
+                >>> stmvl_imputer = Imputation.PatternSearch.STMVL(infected_matrix)
                 >>> stmvl_imputer.impute()  # default parameters for imputation > or
                 >>> stmvl_imputer.impute(user_defined=True, params={'window_size': 7, 'learning_rate':0.01, 'gamma':0.85, 'alpha': 7})  # user-defined  > or
                 >>> stmvl_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
@@ -688,3 +711,12 @@ class Imputation:
                                             alpha=alpha, logs=self.logs)
 
                 return self
+
+    class GraphLearning:
+        """
+        A class containing imputation algorithms for graph-learning-based methods.
+
+        Subclasses
+        ----------
+        """
+

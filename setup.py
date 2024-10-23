@@ -20,7 +20,7 @@ setuptools.setup(
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3.12",
-        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Information Analysis",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
     ],
     python_requires=">= 3.12.0,<3.12.8",

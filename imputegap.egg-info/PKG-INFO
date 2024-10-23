@@ -170,7 +170,7 @@ ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_pa
 <br /><hr /><br />
 
 ## Imputation
-**ImputeGAP** offers a wide range of imputation algorithms categorized into several families, including: **Matrix Decomposition**, **Machine Learning**, **Regression**, **Pattern Recognition**, and **Statistical Methods**.
+**ImputeGAP** offers a wide range of imputation algorithms categorized into several families, including: **Matrix Completion**, **Deep Learning**, **Statistics**, **Pattern Search**, and **Graphs Learning**.
 
 It is also possible to add your own custom imputation algorithm. To do this, simply follow the `min-impute` template and replace the logic with your own code.
 
@@ -284,6 +284,6 @@ Explainer.print(shap_values, shap_details)
 <br /><hr /><br />
 
 ## Contributors
-Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>) and Dr. Mourad Khayati (<a href="mailto:mkhayati@exascale.info">mkhayati@exascale.info</a>)
+Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>) and Dr. Mourad Khayati (<a href="mailto:mourad.khayati@unifr.ch">mourad.khayati@unifr.ch</a>)
 
 <br /><br />
