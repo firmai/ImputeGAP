@@ -15,7 +15,7 @@ class TestSTMVL(unittest.TestCase):
         infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, series_impacted=0.4, missing_rate=0.4, block_size=10,
                                              protection=0.1, use_seed=True, seed=42)
 
-        algo = Imputation.Pattern.STMVL(infected_matrix)
+        algo = Imputation.PatternSearch.STMVL(infected_matrix)
         algo.impute()
         algo.score(ts_1.data)
         imputation, metrics = algo.imputed_matrix, algo.metrics

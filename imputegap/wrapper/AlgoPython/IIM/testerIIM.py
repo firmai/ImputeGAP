@@ -264,51 +264,6 @@ def adaptive(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
     return lr_models
 
 
-def compute_cost_for_tuple(args):
-    complete_tuple, log, complete_tuples, incomplete_tuples, nn, number_of_models, phi_list = args
-    # if (log % 50) == 0: print("Algorithm 3 'adaptive', processing tuple {}".format(str(log)))
-    neighbors = nn.kneighbors(complete_tuple.reshape(1, -1), return_distance=False)[0]
-    costs = np.zeros((len(incomplete_tuples), number_of_models))
-    for incomplete_tuple_idx, incomplete_tuple in enumerate(incomplete_tuples):
-        nan_indicator = np.isnan(incomplete_tuple)
-        neighbors_filtered = np.delete(complete_tuples[neighbors], nan_indicator, axis=1)
-        for my_list in range(0, number_of_models):
-            # TODO Find a way to do this with expanded coef better if adaptive is of interest
-            expanded_coef = np.array([coef for coef, _ in phi_list[my_list][incomplete_tuple_idx]])
-            phi_models = (expanded_coef @ neighbors_filtered[:, :, None]).squeeze() + np.array(
-                [intercept for _, intercept in phi_list[my_list][incomplete_tuple_idx]])
-            errors = np.abs(complete_tuple[nan_indicator] - phi_models)
-            costs[incomplete_tuple_idx, my_list] += np.sum(np.power(errors, 2)) / len(
-                phi_list[my_list][incomplete_tuple_idx])
-    return costs
-
-
-def adaptive_multi(complete_tuples: np.ndarray, incomplete_tuples: np.ndarray, k: int,
-                   max_learning_neighbors: int = 100, step_size: int = 4):
-    # print("Starting Algorithm 3 'adaptive'")
-    all_entries = min(int(complete_tuples.shape[0]), max_learning_neighbors)
-    phi_list = [learning(complete_tuples, incomplete_tuples, l_learning)
-                for l_learning in
-                range(1, all_entries + 1, step_size)]
-    nn = NearestNeighbors(n_neighbors=k, metric='euclidean').fit(complete_tuples)
-    number_of_models = len(phi_list) - 1
-    number_of_incomplete_tuples = len(incomplete_tuples)
-    # print("Finished learning; Starting main loop of Algorithm 3 'adaptive'")
-
-    # Create a pool of worker processes
-    with Pool() as p:
-        # Create an iterable of arguments to pass to the worker function
-        args = ((complete_tuple, log, complete_tuples, incomplete_tuples, nn, number_of_models, phi_list)
-                for log, complete_tuple in enumerate(complete_tuples, 1))
-        # Map the function to the pool of processes
-        costs = p.map(compute_cost_for_tuple, args)
-    costs = np.sum(costs, axis=0)
-
-    best_models_indices = np.argmin(costs, axis=1)
-
-    phi = [phi_list[best_models_indices[i]][i] for i in range(number_of_incomplete_tuples)]
-    return phi
-
 
 def compute_distances(candidate_suggestions: np.ndarray):
     """ Calculate the sum of distances to all other candidates (Manhattan) for each candidate
@@ -356,22 +311,6 @@ def compute_weights(distances: List[float]):
         weights = np.ones(distances_n.shape) / len(distances_n)
 
     return weights
-
-
-def count_nans(list_of_arrays: List[np.ndarray]):
-    """ Counts the number of NaNs in a list of arrays.
-
-    Parameters
-    ----------
-    list_of_arrays : list[np.ndarray]
-        The list of arrays to count the NaNs in.
-
-    Returns
-    -------
-    int
-        The number of NaNs in the list of arrays.
-    """
-    return sum(np.isnan(arr).sum() for arr in list_of_arrays)
 
 
 def impute_with_algorithm(alg_code: str, matrix: np.ndarray, neighbors=None):

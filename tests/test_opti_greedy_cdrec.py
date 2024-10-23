@@ -22,17 +22,17 @@ class TestOptiCDRECGreedy(unittest.TestCase):
         params = utils.load_parameters(query="default", algorithm=algorithm)
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="g")
 
-        algo_opti = Imputation.MD.CDRec(infected_matrix)
+        algo_opti = Imputation.MatrixCompletion.CDRec(infected_matrix)
         algo_opti.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "greedy"})
         algo_opti.score(raw_matrix=ts_1.data)
         metrics_optimal = algo_opti.metrics
 
-        algo_default = Imputation.MD.CDRec(infected_matrix)
+        algo_default = Imputation.MatrixCompletion.CDRec(infected_matrix)
         algo_default.impute(params=params)
         algo_default.score(raw_matrix=ts_1.data)
         metrics_default = algo_default.metrics
 
-        algo_load = Imputation.MD.CDRec(infected_matrix)
+        algo_load = Imputation.MatrixCompletion.CDRec(infected_matrix)
         algo_load.impute(params=params_optimal_load)
         algo_load.score(raw_matrix=ts_1.data)
         metrics_optimal_load = algo_load.metrics

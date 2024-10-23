@@ -266,7 +266,7 @@ class Imputation:
             learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
 
-            algo = Imputation.Regression.IIM(contamination)
+            algo = Imputation.Stats.IIM(contamination)
             algo.logs = False
             algo.impute(user_defined=True, params={"learning_neighbours": learning_neighbours, "alg_code": alg_code})
 
@@ -466,7 +466,7 @@ class Imputation:
 
                 Example
                 -------
-                >>> cdrec_imputer = Imputation.MD.CDRec(infected_matrix)
+                >>> cdrec_imputer = Imputation.MatrixCompletion.CDRec(infected_matrix)
                 >>> cdrec_imputer.impute()  # default parameters for imputation > or
                 >>> cdrec_imputer.impute(user_defined=True, params={'rank': 5, 'epsilon': 0.01, 'iterations': 100})  # user-defined > or
                 >>> cdrec_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
@@ -600,7 +600,7 @@ class Imputation:
 
                 Example
                 -------
-                >>> mrnn_imputer = Imputation.ML.MRNN(infected_matrix)
+                >>> mrnn_imputer = Imputation.DeepLearning.MRNN(infected_matrix)
                 >>> mrnn_imputer.impute()  # default parameters for imputation > or
                 >>> mrnn_imputer.impute(user_defined=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
                 >>> mrnn_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
@@ -668,7 +668,7 @@ class Imputation:
 
                 Example
                 -------
-                >>> stmvl_imputer = Imputation.Pattern.STMVL(infected_matrix)
+                >>> stmvl_imputer = Imputation.PatternSearch.STMVL(infected_matrix)
                 >>> stmvl_imputer.impute()  # default parameters for imputation > or
                 >>> stmvl_imputer.impute(user_defined=True, params={'window_size': 7, 'learning_rate':0.01, 'gamma':0.85, 'alpha': 7})  # user-defined  > or
                 >>> stmvl_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian

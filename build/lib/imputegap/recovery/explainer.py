@@ -581,13 +581,13 @@ class Explainer:
 
             print("\tImputation ", current_series, "...")
             if algorithm == "cdrec":
-                algo = Imputation.MD.CDRec(obfuscated_matrix)
+                algo = Imputation.MatrixCompletion.CDRec(obfuscated_matrix)
             elif algorithm == "stmvl":
-                algo = Imputation.Pattern.STMVL(obfuscated_matrix)
+                algo = Imputation.PatternSearch.STMVL(obfuscated_matrix)
             elif algorithm == "iim":
-                algo = Imputation.Regression.IIM(obfuscated_matrix)
+                algo = Imputation.Statistics.IIM(obfuscated_matrix)
             elif algorithm == "mrnn":
-                algo = Imputation.ML.MRNN(obfuscated_matrix)
+                algo = Imputation.DeepLearning.MRNN(obfuscated_matrix)
 
             algo.logs = False
             algo.impute(user_defined=True, params=params)

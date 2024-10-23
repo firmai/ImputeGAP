@@ -87,6 +87,7 @@ class TimeSeries:
             else:
                 print("\nThe time series has not been loaded, format unknown\n")
                 self.data = None
+                raise ValueError("Invalid input for import_matrix")
 
             return self
 
@@ -129,6 +130,7 @@ class TimeSeries:
             else:
                 print("\nThe time series has not been loaded, format unknown\n")
                 self.data = None
+                raise ValueError("Invalid input for load_timeseries")
 
             self.data = self.data.T
 
@@ -348,12 +350,20 @@ class TimeSeries:
         plt.xlabel('Timestamp')
         plt.ylabel('Values')
         plt.title(title)
-        plt.legend(loc='upper right', fontsize=12, frameon=True, fancybox=True, shadow=True, borderpad=1.5)
+        plt.legend(
+            loc='upper left',
+            fontsize=12,
+            frameon=True,
+            fancybox=True,
+            shadow=True,
+            borderpad=1.5,
+            bbox_to_anchor=(1.02, 1),  # Adjusted to keep the legend inside the window
+        )
 
         file_path = None
         if save_path:
             os.makedirs(save_path, exist_ok=True)
-            file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_graph.png")
+            file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_graph.jpg")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)
 
@@ -422,12 +432,10 @@ class TimeSeries:
                 protection = utils.verification_limitation(protection)
 
                 nbr_series_impacted = int(np.ceil(M * series_impacted))
-                series_indices = [str(idx) for idx in np.random.choice(M, nbr_series_impacted, replace=False)]
+                series_selected = [str(idx) for idx in np.random.choice(M, nbr_series_impacted, replace=False)]
 
             else:  # use fix series
-                series_indices = [str(series_impacted)]
-
-            series_selected = utils.format_selection(ts_contaminated, series_indices)
+                series_selected = [str(series_impacted)]
 
             if not explainer:
                 print("\n\nMCAR contamination has been called with :"

@@ -25,17 +25,17 @@ class TestOptiIMM(unittest.TestCase):
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")
 
 
-        algo_opti = Imputation.Regression.IIM(infected_matrix)
+        algo_opti = Imputation.Statistics.IIM(infected_matrix)
         algo_opti.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})
         algo_opti.score(raw_matrix=ts_1.data)
         metrics_optimal = algo_opti.metrics
 
-        algo_default = Imputation.Regression.IIM(infected_matrix)
+        algo_default = Imputation.Statistics.IIM(infected_matrix)
         algo_default.impute(params=params)
         algo_default.score(raw_matrix=ts_1.data)
         metrics_default = algo_default.metrics
 
-        algo_load = Imputation.Regression.IIM(infected_matrix)
+        algo_load = Imputation.Statistics.IIM(infected_matrix)
         algo_load.impute(params=params_optimal_load)
         algo_load.score(raw_matrix=ts_1.data)
         metrics_optimal_load = algo_load.metrics

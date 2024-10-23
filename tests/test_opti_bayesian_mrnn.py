@@ -22,18 +22,18 @@ class TestOptiMRNN(unittest.TestCase):
         params = utils.load_parameters(query="default", algorithm=algorithm)
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")
 
-        algo_opti = Imputation.ML.MRNN(infected_matrix)
+        algo_opti = Imputation.DeepLearning.MRNN(infected_matrix)
         algo_opti.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})
 
         algo_opti.score(raw_matrix=ts_1.data)
         metrics_optimal = algo_opti.metrics
 
-        algo_default = Imputation.ML.MRNN(infected_matrix)
+        algo_default = Imputation.DeepLearning.MRNN(infected_matrix)
         algo_default.impute(params=params)
         algo_default.score(raw_matrix=ts_1.data)
         metrics_default = algo_default.metrics
 
-        algo_load = Imputation.Pattern.STMVL(infected_matrix)
+        algo_load = Imputation.PatternSearch.STMVL(infected_matrix)
         algo_load.impute(params=params_optimal_load)
         algo_load.score(raw_matrix=ts_1.data)
         metrics_optimal_load = algo_load.metrics

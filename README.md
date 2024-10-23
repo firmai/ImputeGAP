@@ -141,7 +141,7 @@ ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_pa
 <br /><hr /><br />
 
 ## Imputation
-**ImputeGAP** offers a wide range of imputation algorithms categorized into several families, including: **Matrix Decomposition**, **Machine Learning**, **Regression**, **Pattern Recognition**, and **Statistical Methods**.
+**ImputeGAP** offers a wide range of imputation algorithms categorized into several families, including: **Matrix Completion**, **Deep Learning**, **Statistics**, **Pattern Search**, and **Graphs Learning**.
 
 It is also possible to add your own custom imputation algorithm. To do this, simply follow the `min-impute` template and replace the logic with your own code.
 
@@ -165,7 +165,7 @@ infected_data = ts_1.Contaminate.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
 # choice of the algorithm, and their parameters (default, automl, or defined by the user)
-cdrec = Imputation.MD.CDRec(infected_data)
+cdrec = Imputation.MatrixCompletion.CDRec(infected_data)
 
 # imputation with default values
 cdrec.impute()
@@ -210,14 +210,17 @@ infected_data = ts_1.Contaminate.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec = Imputation.MD.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 5}})
+cdrec = Imputation.MatrixCompletion.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data,
+                                                                                            "optimizer": "bayesian",
+                                                                                            "options": {"n_calls": 5}})
 
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, cdrec.imputed_matrix)
 
 # 6. [OPTIONAL] display the results
 ts_1.print_results(cdrec.metrics)
-ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.imputed_matrix, title="imputation", max_series=1, save_path="./assets", display=True)
+ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.imputed_matrix, title="imputation",
+          max_series=1, save_path="./assets", display=True)
 
 # 7. [OPTIONAL] save hyperparameters
 utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="b")
@@ -255,6 +258,6 @@ Explainer.print(shap_values, shap_details)
 <br /><hr /><br />
 
 ## Contributors
-Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>) and Dr. Mourad Khayati (<a href="mailto:mkhayati@exascale.info">mkhayati@exascale.info</a>)
+Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>) and Dr. Mourad Khayati (<a href="mailto:mourad.khayati@unifr.ch">mourad.khayati@unifr.ch</a>)
 
 <br /><br />
