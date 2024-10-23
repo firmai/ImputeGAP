@@ -55,6 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mean_impute.html">imputegap.algorithms.mean_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
@@ -74,6 +75,7 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.mrnn.html">imputegap.algorithms.mrnn package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.mean_impute.html">imputegap.algorithms.mean_impute package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.min_impute.html">imputegap.algorithms.min_impute package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.zero_impute.html">imputegap.algorithms.zero_impute package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
@@ -132,12 +134,6 @@
 <dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.load_configuration">
 <span class="sig-name descname"><span class="pre">load_configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/explainer.html#Explainer.load_configuration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.load_configuration" title="Link to this definition"></a></dt>
 <dd><p>Load categories and features from a TOML file.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.save_assets">
-<span class="sig-name descname"><span class="pre">save_assets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./assets/shap/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/explainer.html#Explainer.save_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.save_assets" title="Link to this definition"></a></dt>
-<dd><p>Load path to save SHAP-related assets.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -280,23 +276,6 @@ file_name=”ts”, display=False, verbose=False)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">save_assets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/explainer.html#Explainer.save_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
-<dd><p>Load path to save SHAP-related assets on GitHub and local.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to save the SHAP assets (default is ‘./assets/shap/’).</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The file path where assets are saved.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>

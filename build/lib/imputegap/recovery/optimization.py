@@ -1,5 +1,3 @@
-import os
-import toml
 import time
 from itertools import product
 import numpy as np
@@ -13,7 +11,6 @@ import pyswarms as ps
 
 # BAYESIAN IMPORT
 import skopt
-from skopt.utils import use_named_args
 from skopt.space import Integer
 
 

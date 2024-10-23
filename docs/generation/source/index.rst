@@ -21,6 +21,7 @@ The interface provides advanced imputation algorithms, construction of various m
    imputegap.algorithms.stmvl
    imputegap.algorithms.iim
    imputegap.algorithms.mrnn
+   imputegap.algorithms.mean_impute
    imputegap.algorithms.min_impute
    imputegap.algorithms.zero_impute
    imputegap.tools.utils

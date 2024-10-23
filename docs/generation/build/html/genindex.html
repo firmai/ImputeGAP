@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mean_impute.html">imputegap.algorithms.mean_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
@@ -94,8 +95,6 @@
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
- | <a href="#F"><strong>F</strong></a>
- | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
@@ -114,17 +113,19 @@
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.__init__">__init__() (imputegap.recovery.imputation.BaseImputer method)</a>
 
       <ul>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MD.CDRec.__init__">(imputegap.recovery.imputation.Imputation.MD.CDRec method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.__init__">(imputegap.recovery.imputation.Imputation.DeepLearning.MRNN method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.ML.MRNN.__init__">(imputegap.recovery.imputation.Imputation.ML.MRNN method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.__init__">(imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Pattern.STMVL.__init__">(imputegap.recovery.imputation.Imputation.Pattern.STMVL method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.__init__">(imputegap.recovery.imputation.Imputation.PatternSearch.STMVL method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Regression.IIM.__init__">(imputegap.recovery.imputation.Imputation.Regression.IIM method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.IIM.__init__">(imputegap.recovery.imputation.Imputation.Statistics.IIM method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.MinImpute.__init__">(imputegap.recovery.imputation.Imputation.Stats.MinImpute method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.__init__">(imputegap.recovery.imputation.Imputation.Statistics.MeanImpute method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.ZeroImpute.__init__">(imputegap.recovery.imputation.Imputation.Stats.ZeroImpute method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.__init__">(imputegap.recovery.imputation.Imputation.Statistics.MinImpute method)</a>
+</li>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.__init__">(imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -136,17 +137,19 @@
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.algorithm">algorithm (imputegap.recovery.imputation.BaseImputer attribute)</a>
 
       <ul>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MD.CDRec.algorithm">(imputegap.recovery.imputation.Imputation.MD.CDRec attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.algorithm">(imputegap.recovery.imputation.Imputation.DeepLearning.MRNN attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.ML.MRNN.algorithm">(imputegap.recovery.imputation.Imputation.ML.MRNN attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.algorithm">(imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Pattern.STMVL.algorithm">(imputegap.recovery.imputation.Imputation.Pattern.STMVL attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.algorithm">(imputegap.recovery.imputation.Imputation.PatternSearch.STMVL attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Regression.IIM.algorithm">(imputegap.recovery.imputation.Imputation.Regression.IIM attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.IIM.algorithm">(imputegap.recovery.imputation.Imputation.Statistics.IIM attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.MinImpute.algorithm">(imputegap.recovery.imputation.Imputation.Stats.MinImpute attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.algorithm">(imputegap.recovery.imputation.Imputation.Statistics.MeanImpute attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.ZeroImpute.algorithm">(imputegap.recovery.imputation.Imputation.Stats.ZeroImpute attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.algorithm">(imputegap.recovery.imputation.Imputation.Statistics.MinImpute attribute)</a>
+</li>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.algorithm">(imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -214,22 +217,6 @@
   </ul></td>
 </tr></table>
 
-<h2 id="F">F</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.utils.html#imputegap.tools.utils.format_selection">format_selection() (in module imputegap.tools.utils)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="G">G</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.utils.html#imputegap.tools.utils.get_save_path_asset">get_save_path_asset() (in module imputegap.tools.utils)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -239,42 +226,46 @@
 </li>
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation">Imputation (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MD">Imputation.MD (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning">Imputation.DeepLearning (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MD.CDRec">Imputation.MD.CDRec (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN">Imputation.DeepLearning.MRNN (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.ML">Imputation.ML (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.GraphLearning">Imputation.GraphLearning (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.ML.MRNN">Imputation.ML.MRNN (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion">Imputation.MatrixCompletion (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Pattern">Imputation.Pattern (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec">Imputation.MatrixCompletion.CDRec (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Pattern.STMVL">Imputation.Pattern.STMVL (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch">Imputation.PatternSearch (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Regression">Imputation.Regression (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL">Imputation.PatternSearch.STMVL (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Regression.IIM">Imputation.Regression.IIM (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics">Imputation.Statistics (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats">Imputation.Stats (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.IIM">Imputation.Statistics.IIM (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.MinImpute">Imputation.Stats.MinImpute (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute">Imputation.Statistics.MeanImpute (class in imputegap.recovery.imputation)</a>
 </li>
-      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.ZeroImpute">Imputation.Stats.ZeroImpute (class in imputegap.recovery.imputation)</a>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MinImpute">Imputation.Statistics.MinImpute (class in imputegap.recovery.imputation)</a>
+</li>
+      <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute">Imputation.Statistics.ZeroImpute (class in imputegap.recovery.imputation)</a>
 </li>
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.impute">impute() (imputegap.recovery.imputation.BaseImputer method)</a>
 
       <ul>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MD.CDRec.impute">(imputegap.recovery.imputation.Imputation.MD.CDRec method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute">(imputegap.recovery.imputation.Imputation.DeepLearning.MRNN method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.ML.MRNN.impute">(imputegap.recovery.imputation.Imputation.ML.MRNN method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.impute">(imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Pattern.STMVL.impute">(imputegap.recovery.imputation.Imputation.Pattern.STMVL method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.impute">(imputegap.recovery.imputation.Imputation.PatternSearch.STMVL method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Regression.IIM.impute">(imputegap.recovery.imputation.Imputation.Regression.IIM method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.IIM.impute">(imputegap.recovery.imputation.Imputation.Statistics.IIM method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.MinImpute.impute">(imputegap.recovery.imputation.Imputation.Stats.MinImpute method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.impute">(imputegap.recovery.imputation.Imputation.Statistics.MeanImpute method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.ZeroImpute.impute">(imputegap.recovery.imputation.Imputation.Stats.ZeroImpute method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.impute">(imputegap.recovery.imputation.Imputation.Statistics.MinImpute method)</a>
+</li>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.impute">(imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute method)</a>
 </li>
       </ul></li>
       <li>
@@ -306,12 +297,21 @@
 </li>
       </ul></li>
       <li>
+    imputegap.algorithms.mean_impute
+
+      <ul>
+        <li><a href="autosummary/imputegap.algorithms.mean_impute.html#module-imputegap.algorithms.mean_impute">module</a>, <a href="imputegap.mean_impute.html#module-imputegap.algorithms.mean_impute">[1]</a>
+</li>
+      </ul></li>
+      <li>
     imputegap.algorithms.min_impute
 
       <ul>
         <li><a href="autosummary/imputegap.algorithms.min_impute.html#module-imputegap.algorithms.min_impute">module</a>, <a href="imputegap.min_impute.html#module-imputegap.algorithms.min_impute">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     imputegap.algorithms.mrnn
 
@@ -319,8 +319,6 @@
         <li><a href="autosummary/imputegap.algorithms.mrnn.html#module-imputegap.algorithms.mrnn">module</a>, <a href="imputegap.mrnn.html#module-imputegap.algorithms.mrnn">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     imputegap.algorithms.stmvl
 
@@ -452,17 +450,19 @@
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.logs">logs (imputegap.recovery.imputation.BaseImputer attribute)</a>
 
       <ul>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MD.CDRec.logs">(imputegap.recovery.imputation.Imputation.MD.CDRec attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.logs">(imputegap.recovery.imputation.Imputation.DeepLearning.MRNN attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.ML.MRNN.logs">(imputegap.recovery.imputation.Imputation.ML.MRNN attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.logs">(imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Pattern.STMVL.logs">(imputegap.recovery.imputation.Imputation.Pattern.STMVL attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.logs">(imputegap.recovery.imputation.Imputation.PatternSearch.STMVL attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Regression.IIM.logs">(imputegap.recovery.imputation.Imputation.Regression.IIM attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.IIM.logs">(imputegap.recovery.imputation.Imputation.Statistics.IIM attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.MinImpute.logs">(imputegap.recovery.imputation.Imputation.Stats.MinImpute attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.logs">(imputegap.recovery.imputation.Imputation.Statistics.MeanImpute attribute)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.ZeroImpute.logs">(imputegap.recovery.imputation.Imputation.Stats.ZeroImpute attribute)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.logs">(imputegap.recovery.imputation.Imputation.Statistics.MinImpute attribute)</a>
+</li>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.logs">(imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -472,6 +472,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contaminate.mcar">mcar() (imputegap.recovery.manager.TimeSeries.Contaminate method)</a>
+</li>
+      <li><a href="imputegap.mean_impute.html#imputegap.algorithms.mean_impute.mean_impute">mean_impute() (in module imputegap.algorithms.mean_impute)</a>
 </li>
       <li><a href="imputegap.evaluation.html#id5">metrics_computation() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.metrics_computation">[1]</a>
 </li>
@@ -490,6 +492,8 @@
         <li><a href="autosummary/imputegap.algorithms.cdrec.html#module-imputegap.algorithms.cdrec">imputegap.algorithms.cdrec</a>, <a href="imputegap.cdrec.html#module-imputegap.algorithms.cdrec">[1]</a>
 </li>
         <li><a href="autosummary/imputegap.algorithms.iim.html#module-imputegap.algorithms.iim">imputegap.algorithms.iim</a>, <a href="imputegap.iim.html#module-imputegap.algorithms.iim">[1]</a>
+</li>
+        <li><a href="autosummary/imputegap.algorithms.mean_impute.html#module-imputegap.algorithms.mean_impute">imputegap.algorithms.mean_impute</a>, <a href="imputegap.mean_impute.html#module-imputegap.algorithms.mean_impute">[1]</a>
 </li>
         <li><a href="autosummary/imputegap.algorithms.min_impute.html#module-imputegap.algorithms.min_impute">imputegap.algorithms.min_impute</a>, <a href="imputegap.min_impute.html#module-imputegap.algorithms.min_impute">[1]</a>
 </li>
@@ -600,24 +604,24 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.explainer.html#id5">save_assets() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.save_assets">[1]</a>
-</li>
       <li><a href="imputegap.utils.html#imputegap.tools.utils.save_optimization">save_optimization() (in module imputegap.tools.utils)</a>
 </li>
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.score">score() (imputegap.recovery.imputation.BaseImputer method)</a>
 
       <ul>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MD.CDRec.score">(imputegap.recovery.imputation.Imputation.MD.CDRec method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score">(imputegap.recovery.imputation.Imputation.DeepLearning.MRNN method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.ML.MRNN.score">(imputegap.recovery.imputation.Imputation.ML.MRNN method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score">(imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Pattern.STMVL.score">(imputegap.recovery.imputation.Imputation.Pattern.STMVL method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score">(imputegap.recovery.imputation.Imputation.PatternSearch.STMVL method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Regression.IIM.score">(imputegap.recovery.imputation.Imputation.Regression.IIM method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.IIM.score">(imputegap.recovery.imputation.Imputation.Statistics.IIM method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.MinImpute.score">(imputegap.recovery.imputation.Imputation.Stats.MinImpute method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score">(imputegap.recovery.imputation.Imputation.Statistics.MeanImpute method)</a>
 </li>
-        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Stats.ZeroImpute.score">(imputegap.recovery.imputation.Imputation.Stats.ZeroImpute method)</a>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score">(imputegap.recovery.imputation.Imputation.Statistics.MinImpute method)</a>
+</li>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score">(imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute method)</a>
 </li>
       </ul></li>
   </ul></td>

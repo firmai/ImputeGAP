@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.mean_impute.html">imputegap.algorithms.mean_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
@@ -112,9 +113,6 @@
 <span class="sd">    load_configuration(file_path=None)</span>
 <span class="sd">        Load categories and features from a TOML file.</span>
 
-<span class="sd">    save_assets(file_path=&quot;./assets/shap/&quot;)</span>
-<span class="sd">        Load path to save SHAP-related assets.</span>
-
 <span class="sd">    extract_features(data, features_categories, features_list, do_catch24=True)</span>
 <span class="sd">        Extract features from time series data using pycatch22.</span>
 
@@ -165,28 +163,6 @@
 
         <span class="k">return</span> <span class="n">categories</span><span class="p">,</span> <span class="n">features</span></div>
 
-
-<div class="viewcode-block" id="Explainer.save_assets">
-<a class="viewcode-back" href="../../../imputegap.explainer.html#imputegap.recovery.explainer.Explainer.save_assets">[docs]</a>
-    <span class="k">def</span> <span class="nf">save_assets</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./assets/shap/&quot;</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load path to save SHAP-related assets on GitHub and local.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        file_path : str, optional</span>
-<span class="sd">            The path to save the SHAP assets (default is &#39;./assets/shap/&#39;).</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        str</span>
-<span class="sd">            The file path where assets are saved.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-            <span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;./imputegap&quot;</span> <span class="o">+</span> <span class="n">file_path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-
-        <span class="k">return</span> <span class="n">file_path</span></div>
 
 
 <div class="viewcode-block" id="Explainer.extract_features">
@@ -373,7 +349,9 @@
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Initilization of the SHAP model with &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_information</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-        <span class="n">path_file</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">save_assets</span><span class="p">()</span>
+        <span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;./assets/shap/&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_file</span><span class="p">):</span>
+            <span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;./imputegap&quot;</span> <span class="o">+</span> <span class="n">path_file</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
         <span class="n">x_features</span><span class="p">,</span> <span class="n">x_categories</span><span class="p">,</span> <span class="n">x_descriptions</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="n">x_fs</span><span class="p">,</span> <span class="n">x_cs</span><span class="p">,</span> <span class="n">x_ds</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -672,8 +650,7 @@
 
         <span class="k">for</span> <span class="n">current_series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">limitation</span><span class="p">):</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generation &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">limitation</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">current_series</span> <span class="o">/</span> <span class="n">limitation</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span>
-                  <span class="s2">&quot;%)________________________________________________________&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generation &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">limitation</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">current_series</span> <span class="o">/</span> <span class="n">limitation</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;%)________________________________________________________&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Contamination &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">contamination</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span><span class="p">:</span>
@@ -690,13 +667,13 @@
 
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Imputation &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
-                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MD</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
-                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Pattern</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
-                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Regression</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
-                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">ML</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
 
             <span class="n">algo</span><span class="o">.</span><span class="n">logs</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="n">algo</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
