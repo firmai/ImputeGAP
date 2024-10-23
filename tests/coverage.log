@@ -17,8 +17,8 @@ imputegap/recovery/manager.py                        186     10    95%
 imputegap/recovery/optimization.py                   145     23    84%
 imputegap/tools/__init__.py                            0      0   100%
 imputegap/tools/algorithm_parameters.py               22      0   100%
-imputegap/tools/utils.py                             146     56    62%
-imputegap/wrapper/AlgoPython/IIM/testerIIM.py        161     77    52%
+imputegap/tools/utils.py                             123     14    89%
+imputegap/wrapper/AlgoPython/IIM/testerIIM.py        133     52    61%
 imputegap/wrapper/AlgoPython/MRNN/Data_Loader.py      50      0   100%
 imputegap/wrapper/AlgoPython/MRNN/M_RNN.py           184      2    99%
 imputegap/wrapper/AlgoPython/MRNN/testerMRNN.py       40      4    90%
@@ -26,7 +26,7 @@ imputegap/wrapper/__init__.py                          0      0   100%
 tests/test_contamination_blackout.py                  29      1    97%
 tests/test_contamination_mcar.py                      95      4    96%
 tests/test_contamination_mp.py                        34      1    97%
-tests/test_exception.py                               29      0   100%
+tests/test_exception.py                               57      0   100%
 tests/test_explainer.py                               38      1    97%
 tests/test_imputation.py                              36      0   100%
 tests/test_imputation_cdrec.py                        34      0   100%
@@ -43,4 +43,4 @@ tests/test_opti_greedy_cdrec.py                       27      0   100%
 tests/test_opti_pso_cdrec.py                          21      0   100%
 tests/test_opti_sh_cdrec.py                           21      0   100%
 ----------------------------------------------------------------------
-TOTAL                                               2138    205    90%
+TOTAL                                               2115    138    93%
