@@ -17,11 +17,17 @@ The dataset's dimensions are 64 series, each containing 256 values.
 This dataset is primarily used for the analysis of medical and brain-related data, with a focus on detecting predictable patterns in brain wave activity.
 
 ### Plots
+The plots present a series of plots derived from the EEG-TEST dataset, illustrating various aspects of the data and preprocessing steps.
+EEG-Test dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+EEG-Test dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while EEG-Test dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, EEG-Test - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
 ![EEG-Test dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/01_eeg-test-rawdata-NxM_graph.jpg)
 ![EEG-Test dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/02_eeg-test-rawdata20x400_graph.jpg)
 ![EEG-Test dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/03_eeg-test-rawdata01x400_graph.jpg)
 ![EEG-Test - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/04_eeg-test-normmin_maxdata01x400_graph.jpg)
+
+
 ### Features
 
 | Category       | Feature                                                            | Value                |
@@ -84,11 +90,16 @@ The extracted dataset contains 1201 values across 33 series.
 The goal of this dataset is to provide an alternative perspective on neuroscience-related datasets and to enable comparisons of results from different research studies utilizing the same technology.
 
 ### Plots
+The plots present a series of plots derived from the EEG dataset, illustrating various aspects of the data and preprocessing steps.
+EEG dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+EEG dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while EEG dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, EEG - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![EEG dataset - raw data 33x1201](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/eeg/01_eeg-rawdata-NxM_graph.jpg)
-![EEG dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/eeg/02_eeg-rawdata20x400_graph.jpg)
-![EEG dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/eeg/03_eeg-rawdata01x400_graph.jpg)
-![EEG - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/eeg/04_eeg-normmin_maxdata01x400_graph.jpg)
+![EEG dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/01_eeg-rawdata-NxM_graph.jpg)
+![EEG dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/02_eeg-rawdata20x400_graph.jpg)
+![EEG dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/03_eeg-rawdata01x400_graph.jpg)
+![EEG - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/04_eeg-normmin_maxdata01x400_graph.jpg)
+
 
 ### Features
 
@@ -144,11 +155,15 @@ Data was collected over a 36-month period, from January 2008 to February 2011, a
 The dataset has a time granularity of 6 hours and consists of 100 time series, each containing 1,000 data points. This dataset is particularly valuable for testing algorithms designed to handle drift and outliers.
 
 ### Plots
+The plots present a series of plots derived from the Drift dataset, illustrating various aspects of the data and preprocessing steps.
+Drift dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+Drift dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Drift dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, Drift - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![Drift dataset - raw data 33x1201](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/drift/01_drift-rawdata-NxM_graph.jpg)
-![Drift dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/drift/02_drift-rawdata20x400_graph.jpg)
-![Drift dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/drift/03_drift-rawdata01x400_graph.jpg)
-![Drift - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/drift/04_drift-normmin_maxdata01x400_graph.jpg)
+![Drift dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/01_drift-rawdata-NxM_graph.jpg)
+![Drift dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/02_drift-rawdata20x400_graph.jpg)
+![Drift dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/03_drift-rawdata01x400_graph.jpg)
+![Drift - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/04_drift-normmin_maxdata01x400_graph.jpg)
 
 ### Features
 
@@ -203,11 +218,15 @@ The dataset exhibits a cyclic pattern with recurring peaks, suggesting the prese
 This makes it particularly well-suited for time series imputation methods that are designed to detect and leverage seasonality in data.
 
 ### Plots
+The plots present a series of plots derived from the Chlorine dataset, illustrating various aspects of the data and preprocessing steps.
+Chlorine dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+Chlorine dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Chlorine dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, Chlorine - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![Chlorine dataset - raw data 33x1201](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/chlorine/01_chlorine-rawdata-NxM_graph.jpg)
-![Chlorine dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/chlorine/02_chlorine-rawdata20x400_graph.jpg)
-![Chlorine dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/chlorine/03_chlorine-rawdata01x400_graph.jpg)
-![Chlorine - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/chlorine/04_chlorine-normmin_maxdata01x400_graph.jpg)
+![Chlorine dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/01_chlorine-rawdata-NxM_graph.jpg)
+![Chlorine dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/02_chlorine-rawdata20x400_graph.jpg)
+![Chlorine dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/03_chlorine-rawdata01x400_graph.jpg)
+![Chlorine - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/04_chlorine-normmin_maxdata01x400_graph.jpg)
 
 ### Features
 
@@ -260,11 +279,15 @@ This structure is particularly valuable for spatio-temporal modeling [Spatial-te
 The dataset exhibits high variability, along with periodic or trend-like behavior and noise, making it suitable for advanced analytical techniques.
 
 ### Plots
+The plots present a series of plots derived from the Climate dataset, illustrating various aspects of the data and preprocessing steps.
+Climate dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+Climate dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Climate dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, Climate - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![Climate dataset - raw data 33x1201](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/climate/01_climate-rawdata-NxM_graph.jpg)
-![Climate dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/climate/02_climate-rawdata20x400_graph.jpg)
-![Climate dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/climate/03_climate-rawdata01x400_graph.jpg)
-![Climate - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/climate/04_climate-normmin_maxdata01x400_graph.jpg)
+![Climate dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/01_climate-rawdata-NxM_graph.jpg)
+![Climate dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/02_climate-rawdata20x400_graph.jpg)
+![Climate dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/03_climate-rawdata01x400_graph.jpg)
+![Climate - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/04_climate-normmin_maxdata01x400_graph.jpg)
 
 ### Features
 
@@ -312,11 +335,15 @@ The dataset exhibits high variability, along with periodic or trend-like behavio
 ## Meteo
 
 ### Plots
+The plots present a series of plots derived from the Meteo dataset, illustrating various aspects of the data and preprocessing steps.
+Meteo dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+Meteo dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Meteo dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, Meteo - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![Meteo dataset - raw data 33x1201](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/meteo/01_meteo-rawdata-NxM_graph.jpg)
-![Meteo dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/meteo/02_meteo-rawdata20x400_graph.jpg)
-![Meteo dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/meteo/03_meteo-rawdata01x400_graph.jpg)
-![Meteo - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/meteo/04_meteo-normmin_maxdata01x400_graph.jpg)
+![Meteo dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/01_meteo-rawdata-NxM_graph.jpg)
+![Meteo dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/02_meteo-rawdata20x400_graph.jpg)
+![Meteo dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/03_meteo-rawdata01x400_graph.jpg)
+![Meteo - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/04_meteo-normmin_maxdata01x400_graph.jpg)
 
 ### Features
 
@@ -379,11 +406,15 @@ Example: 13 = observation period 12:41 to 13:40
 ## BAFU
 
 ### Plots
+The plots present a series of plots derived from the BAFU dataset, illustrating various aspects of the data and preprocessing steps.
+BAFU dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+BAFU dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while BAFU dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, BAFU - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![Bafu dataset - raw data 33x1201](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/bafu/01_bafu-rawdata-NxM_graph.jpg)
-![Bafu dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/bafu/02_bafu-rawdata20x400_graph.jpg)
-![Bafu dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/bafu/03_bafu-rawdata01x400_graph.jpg)
-![Bafu - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset/docs/bafu/04_bafu-normmin_maxdata01x400_graph.jpg)
+![BAFU dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/01_bafu-rawdata-NxM_graph.jpg)
+![BAFU dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/02_bafu-rawdata20x400_graph.jpg)
+![BAFU dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/03_bafu-rawdata01x400_graph.jpg)
+![BAFU - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/04_bafu-normmin_maxdata01x400_graph.jpg)
 
 ### Features
 
@@ -417,7 +448,7 @@ Example: 13 = observation period 12:41 to 13:40
 
 | Data info          |                                             |
 |--------------------|---------------------------------------------|
-| Dataset codename   | BAFU/bafu                                   |
+| Dataset codename   | BAFU<br/>bafu                                   |
 | Dataset name       | Hydrological data across multiple stations  |
 | Url/source         | https://www.bafu.admin.ch/bafu/en/home.html |
 | Granularity        | 30 minutes                                  |
