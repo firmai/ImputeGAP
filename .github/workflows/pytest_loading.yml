@@ -28,5 +28,8 @@ jobs:
         pip install mypy
         pip install pytest
 
+
     - name: Run pytest
-      run: python -m pytest ./tests/test_loading.py
+      run: |
+        python -m pytest ./tests/test_loading.py
+        python -m pytest ./tests/test_exception.py

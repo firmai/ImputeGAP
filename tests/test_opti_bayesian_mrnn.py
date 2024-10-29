@@ -36,6 +36,5 @@ class TestOptiMRNN(unittest.TestCase):
         algo_load = Imputation.PatternSearch.STMVL(infected_matrix)
         algo_load.impute(params=params_optimal_load)
         algo_load.score(raw_matrix=ts_1.data)
-        metrics_optimal_load = algo_load.metrics
 
         self.assertTrue(abs(metrics_optimal["RMSE"] - metrics_default["RMSE"]) < 0.1, f"Expected {metrics_optimal['RMSE']} > {metrics_default['RMSE']}")

@@ -21,7 +21,7 @@ class TestImputation(unittest.TestCase):
 
         result = np.array([[1, 2, 1], [4, 1, 6]])
 
-        imputation, metrics = algo.imputed_matrix, algo.metrics
+        imputation, _ = algo.imputed_matrix, algo.metrics
 
         assert np.all(np.isclose(imputation, result)), f"imputation: expected {result}, got {imputation}"
 
@@ -40,7 +40,7 @@ class TestImputation(unittest.TestCase):
 
         result = np.array([[1, 2, 0], [4, 0, 6]])
 
-        imputation, metrics = algo.imputed_matrix, algo.metrics
+        imputation, _ = algo.imputed_matrix, algo.metrics
 
         assert np.all(np.isclose(imputation, result)), f"imputation: expected {result}, got {imputation}"
 
@@ -59,6 +59,6 @@ class TestImputation(unittest.TestCase):
 
         result = np.array([[4, 2, 4], [4, 4, 6]])
 
-        imputation, metrics = algo.imputed_matrix, algo.metrics
+        imputation, _ = algo.imputed_matrix, algo.metrics
 
         assert np.all(np.isclose(imputation, result)), f"imputation: expected {result}, got {imputation}"

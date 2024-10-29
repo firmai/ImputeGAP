@@ -18,7 +18,7 @@ class TestSTMVL(unittest.TestCase):
         algo = Imputation.PatternSearch.STMVL(infected_matrix)
         algo.impute()
         algo.score(ts_1.data)
-        imputation, metrics = algo.imputed_matrix, algo.metrics
+        _, metrics = algo.imputed_matrix, algo.metrics
 
         expected_metrics = {
             "RMSE": 0.05795429338869703,

@@ -32,6 +32,7 @@ jobs:
     - name: Run pytest
       run: |
         python -m pytest ./tests/test_opti_bayesian_cdrec.py
+        python -m pytest ./tests/test_opti_bayesian_cdrec_eeg.py
         python -m pytest ./tests/test_opti_bayesian_iim.py
         python -m pytest ./tests/test_opti_bayesian_mrnn.py
         python -m pytest ./tests/test_opti_bayesian_stmvl.py

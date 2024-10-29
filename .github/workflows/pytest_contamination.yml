@@ -32,3 +32,4 @@ jobs:
       run:  |
         python -m pytest ./tests/test_contamination_mcar.py
         python -m pytest ./tests/test_contamination_mp.py
+        python -m pytest ./tests/test_contamination_blackout.py
