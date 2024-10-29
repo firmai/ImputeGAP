@@ -558,6 +558,12 @@ class Explainer:
             ground_truth_matrices.append(raw_data)
             obfuscated_matrices.append(obfuscated_matrix)
 
+            catch_fct, descriptions = Explainer.extract_features(np.array(obfuscated_matrix), categories, features, False)
+            extracted_features = np.array(list(catch_fct.values()))
+
+            input_params.append(extracted_features)
+            input_params_full.append(descriptions)
+
             print("\tImputation ", current_series, "...")
             if algorithm == "cdrec":
                 algo = Imputation.MatrixCompletion.CDRec(obfuscated_matrix)
@@ -575,14 +581,6 @@ class Explainer:
 
             output_metrics.append(imputation_results)
             output_rmse.append(imputation_results["RMSE"])
-
-            catch_fct, descriptions = Explainer.extract_features(np.array(obfuscated_matrix), categories, features,
-                                                                 False)
-
-            extracted_features = np.array(list(catch_fct.values()))
-
-            input_params.append(extracted_features)
-            input_params_full.append(descriptions)
 
         shap_details = []
         for input, output in zip(input_params, output_metrics):

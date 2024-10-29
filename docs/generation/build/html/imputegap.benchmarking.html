@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imputegap.recovery.benchmarking package &mdash; imputegap 0.1.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="static/custom.css" />
+
+  
+    <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
+      <script src="static/jquery.js?v=5d32c60e"></script>
+      <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="static/documentation_options.js?v=22607128"></script>
+      <script src="static/doctools.js?v=9bcbadda"></script>
+      <script src="static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="imputegap.algorithms.cdrec package" href="imputegap.cdrec.html" />
+    <link rel="prev" title="imputegap.recovery.explainer package" href="imputegap.explainer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            imputegap
+              <img src="https://www.naterscreations.com/imputegap/logo_imputegab.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mean_impute.html">imputegap.algorithms.mean_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="imputegap.html">imputegap package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="imputegap.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">imputegap.recovery.benchmarking package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-imputegap.recovery.benchmarking">Modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodule-documentation">Submodule Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-0">imputegap.recovery.evaluation module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.mrnn.html">imputegap.algorithms.mrnn package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.mean_impute.html">imputegap.algorithms.mean_impute package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.min_impute.html">imputegap.algorithms.min_impute package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.zero_impute.html">imputegap.algorithms.zero_impute package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.evaluation.html">imputegap.recovery.evaluation package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">imputegap</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="imputegap.html">imputegap package</a></li>
+      <li class="breadcrumb-item active">imputegap.recovery.benchmarking package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/qnater/https://github.com/eXascaleInfolab/ImputeGAP/blob/https://github.com/eXascaleInfolab/ImputeGAPimputegap.benchmarking.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="imputegap-recovery-benchmarking-package">
+<h1>imputegap.recovery.benchmarking package<a class="headerlink" href="#imputegap-recovery-benchmarking-package" title="Link to this heading"></a></h1>
+<p>The <cite>imputegap.recovery.benchmarking</cite> package provides various utility functions and tools for test the library</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+<section id="module-imputegap.recovery.benchmarking">
+<span id="modules"></span><h2>Modules<a class="headerlink" href="#module-imputegap.recovery.benchmarking" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmarking.Benchmarking">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.benchmarking.</span></span><span class="sig-name descname"><span class="pre">Benchmarking</span></span><a class="reference internal" href="modules/imputegap/recovery/benchmarking.html#Benchmarking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmarking.Benchmarking" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmarking.Benchmarking.comprehensive_evaluation">
+<span class="sig-name descname"><span class="pre">comprehensive_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenarios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./report'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">already_optimized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmarking.html#Benchmarking.comprehensive_evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmarking.Benchmarking.comprehensive_evaluation" title="Link to this definition"></a></dt>
+<dd><p>Execute a comprehensive evaluation of imputation algorithms over multiple datasets and scenarios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datasets</strong> (<em>list</em><em> of </em><em>str</em>) – List of dataset names to evaluate.</p></li>
+<li><p><strong>optimizers</strong> (<em>list</em><em> of </em><em>dict</em>) – List of optimizers with their configurations.</p></li>
+<li><p><strong>algorithms</strong> (<em>list</em><em> of </em><em>str</em>) – List of imputation algorithms to test.</p></li>
+<li><p><strong>scenarios</strong> (<em>list</em><em> of </em><em>str</em>) – List of contamination scenarios to apply.</p></li>
+<li><p><strong>x_axis</strong> (<em>list</em><em> of </em><em>float</em>) – List of missing rates for contamination.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save reports and plots (default is “./report”).</p></li>
+<li><p><strong>already_optimized</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, skip parameter optimization (default is False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Runs contamination, imputation, and evaluation, then generates plots and a summary report.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmarking.Benchmarking.generate_plots">
+<span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./report'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmarking.html#Benchmarking.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmarking.Benchmarking.generate_plots" title="Link to this definition"></a></dt>
+<dd><p>Generate and save plots for each metric and scenario based on provided scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, scenario, and algorithm.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save generated plots (default is “./report”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Saves generated plots in <cite>save_dir</cite>, categorized by dataset, scenario, and metric.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmarking.Benchmarking.generate_reports">
+<span class="sig-name descname"><span class="pre">generate_reports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./report'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmarking.html#Benchmarking.generate_reports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmarking.Benchmarking.generate_reports" title="Link to this definition"></a></dt>
+<dd><p>Generate and save a text report of metrics and timing for each dataset, algorithm, and scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, scenario, and algorithm.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the report file (default is “./report”).</p></li>
+<li><p><strong>dataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the data for the report name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The report is saved in a “report.txt” file in <cite>save_dir</cite>, organized in tabular format.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="submodule-documentation">
+<h2>Submodule Documentation<a class="headerlink" href="#submodule-documentation" title="Link to this heading"></a></h2>
+</section>
+<section id="module-0">
+<span id="imputegap-recovery-evaluation-module"></span><h2>imputegap.recovery.evaluation module<a class="headerlink" href="#module-0" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.benchmarking.</span></span><span class="sig-name descname"><span class="pre">Benchmarking</span></span><a class="reference internal" href="modules/imputegap/recovery/benchmarking.html#Benchmarking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">comprehensive_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenarios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./report'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">already_optimized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmarking.html#Benchmarking.comprehensive_evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Execute a comprehensive evaluation of imputation algorithms over multiple datasets and scenarios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datasets</strong> (<em>list</em><em> of </em><em>str</em>) – List of dataset names to evaluate.</p></li>
+<li><p><strong>optimizers</strong> (<em>list</em><em> of </em><em>dict</em>) – List of optimizers with their configurations.</p></li>
+<li><p><strong>algorithms</strong> (<em>list</em><em> of </em><em>str</em>) – List of imputation algorithms to test.</p></li>
+<li><p><strong>scenarios</strong> (<em>list</em><em> of </em><em>str</em>) – List of contamination scenarios to apply.</p></li>
+<li><p><strong>x_axis</strong> (<em>list</em><em> of </em><em>float</em>) – List of missing rates for contamination.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save reports and plots (default is “./report”).</p></li>
+<li><p><strong>already_optimized</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, skip parameter optimization (default is False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Runs contamination, imputation, and evaluation, then generates plots and a summary report.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./report'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmarking.html#Benchmarking.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Generate and save plots for each metric and scenario based on provided scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, scenario, and algorithm.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save generated plots (default is “./report”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Saves generated plots in <cite>save_dir</cite>, categorized by dataset, scenario, and metric.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">generate_reports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./report'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmarking.html#Benchmarking.generate_reports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Generate and save a text report of metrics and timing for each dataset, algorithm, and scenario.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, scenario, and algorithm.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the report file (default is “./report”).</p></li>
+<li><p><strong>dataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the data for the report name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The report is saved in a “report.txt” file in <cite>save_dir</cite>, organized in tabular format.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="imputegap.explainer.html" class="btn btn-neutral float-left" title="imputegap.recovery.explainer package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="imputegap.cdrec.html" class="btn btn-neutral float-right" title="imputegap.algorithms.cdrec package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Quentin Nater.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

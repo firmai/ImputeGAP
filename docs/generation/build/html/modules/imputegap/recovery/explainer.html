@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.recovery.explainer &mdash; imputegap 0.1.6 documentation</title>
+  <title>imputegap.recovery.explainer &mdash; imputegap 0.1.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="../../../static/jquery.js?v=5d32c60e"></script>
       <script src="../../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../../../static/documentation_options.js?v=22607128"></script>
       <script src="../../../static/doctools.js?v=9bcbadda"></script>
       <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/js/theme.js"></script>
@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -665,6 +666,12 @@
             <span class="n">ground_truth_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
             <span class="n">obfuscated_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
 
+            <span class="n">catch_fct</span><span class="p">,</span> <span class="n">descriptions</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">),</span> <span class="n">categories</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">extracted_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">catch_fct</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+            <span class="n">input_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extracted_features</span><span class="p">)</span>
+            <span class="n">input_params_full</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span>
+
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Imputation &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
                 <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
@@ -682,14 +689,6 @@
 
             <span class="n">output_metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imputation_results</span><span class="p">)</span>
             <span class="n">output_rmse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imputation_results</span><span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">])</span>
-
-            <span class="n">catch_fct</span><span class="p">,</span> <span class="n">descriptions</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">),</span> <span class="n">categories</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span>
-                                                                 <span class="kc">False</span><span class="p">)</span>
-
-            <span class="n">extracted_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">catch_fct</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
-
-            <span class="n">input_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extracted_features</span><span class="p">)</span>
-            <span class="n">input_params_full</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span>
 
         <span class="n">shap_details</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">input_params</span><span class="p">,</span> <span class="n">output_metrics</span><span class="p">):</span>

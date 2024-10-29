@@ -91,7 +91,7 @@ class TimeSeries:
 
             return self
 
-    def load_timeseries(self, data=None, max_series=None, max_values=None, header=False):
+    def load_timeseries(self, data, max_series=None, max_values=None, header=False):
         """
         Loads time series data from a file or predefined dataset.
 
@@ -100,7 +100,7 @@ class TimeSeries:
 
         Parameters
         ----------
-        data : str, optional
+        data : str
             The file path or name of a predefined dataset (e.g., 'bafu.txt').
         max_series : int, optional
             The maximum number of series to load.
@@ -119,6 +119,7 @@ class TimeSeries:
             if isinstance(data, str):
                 print("\nThe time series has been loaded from " + str(data) + "\n")
 
+                #  update path form inner library datasets
                 if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-test.txt", "eeg.txt",
                             "meteo.txt", "test.txt", "test-large.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
@@ -270,7 +271,7 @@ class TimeSeries:
         print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     def plot(self, raw_data, infected_data=None, imputed_data=None, title="Time Series Data", max_series=None,
-             max_values=None, size=(16, 8), save_path="", display=True):
+             max_values=None, series_x=None, size=(16, 8), save_path="", display=True):
         """
         Plot the time series data, including raw, contaminated, or imputed data.
 
@@ -288,6 +289,8 @@ class TimeSeries:
             The maximum number of series to plot.
         max_values : int, optional
             The maximum number of values per series to plot.
+        series_x : int, optional
+            The index of a specific series to plot. If set, only this series will be plotted.
         size : tuple, optional
             Size of the plot in inches. Default is (16, 8).
         save_path : str, optional
@@ -313,16 +316,17 @@ class TimeSeries:
 
             colors = utils.load_parameters("default", algorithm="colors")
 
-            for i in range(raw_data.shape[0]):
+            # Determine range of series to plot
+            series_indices = [series_x] if series_x is not None else range(raw_data.shape[0])
+
+            for i in series_indices:
                 color = colors[i % len(colors)]
 
                 if infected_data is None and imputed_data is None:  # plot only raw matrix
                     plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=2.5,
-                             color=color,
-                             linestyle='-', label=f'TS {i + 1}')
+                             color=color, linestyle='-', label=f'TS {i + 1}')
 
                 if infected_data is not None and imputed_data is None:  # plot infected matrix
-
                     if np.isnan(infected_data[i, :]).any():
                         plt.plot(np.arange(min(raw_data.shape[1], max_values)), raw_data[i, :max_values], linewidth=1.5,
                                  color='r', linestyle='--', label=f'TS-MB {i + 1}')
@@ -331,7 +335,6 @@ class TimeSeries:
                              color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
 
                 if imputed_data is not None:  # plot imputed matrix
-
                     if np.isnan(infected_data[i, :]).any():
                         plt.plot(np.arange(min(imputed_data.shape[1], max_values)), imputed_data[i, :max_values],
                                  linestyle='-', color="r", label=f'TS-IMP {i + 1}')

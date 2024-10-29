@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.recovery.manager package &mdash; imputegap 0.1.6 documentation</title>
+  <title>imputegap.recovery.manager package &mdash; imputegap 0.1.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=6e0256f3"></script>
+      <script src="static/documentation_options.js?v=22607128"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -71,6 +72,7 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
@@ -83,11 +85,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_contamination">imputegap.runner_contamination module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_display">imputegap.runner_display module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_explainer">imputegap.runner_explainer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_imputation">imputegap.runner_imputation module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_optimization">imputegap.runner_optimization module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap">Module contents</a></li>
 </ul>
 </li>
@@ -299,14 +296,14 @@ where series are separated by space, and values are separated by newline charact
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.load_timeseries">
-<span class="sig-name descname"><span class="pre">load_timeseries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.load_timeseries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.load_timeseries" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">load_timeseries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.load_timeseries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.load_timeseries" title="Link to this definition"></a></dt>
 <dd><p>Loads time series data from a file or predefined dataset.</p>
 <p>The data is loaded as a matrix of shape (Values, Series). You can limit the number of series
 or values per series for computational efficiency.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>str</em><em>, </em><em>optional</em>) – The file path or name of a predefined dataset (e.g., ‘bafu.txt’).</p></li>
+<li><p><strong>data</strong> (<em>str</em>) – The file path or name of a predefined dataset (e.g., ‘bafu.txt’).</p></li>
 <li><p><strong>max_series</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of series to load.</p></li>
 <li><p><strong>max_values</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of values per series.</p></li>
 <li><p><strong>header</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether the dataset has a header. Default is False.</p></li>
@@ -342,7 +339,7 @@ the execution time for the normalization process.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infected_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Time</span> <span class="pre">Series</span> <span class="pre">Data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(16,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.plot" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infected_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Time</span> <span class="pre">Series</span> <span class="pre">Data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">series_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(16,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.plot" title="Link to this definition"></a></dt>
 <dd><p>Plot the time series data, including raw, contaminated, or imputed data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -353,6 +350,7 @@ the execution time for the normalization process.</p>
 <li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – Title of the plot. Default is “Time Series Data”.</p></li>
 <li><p><strong>max_series</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of series to plot.</p></li>
 <li><p><strong>max_values</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of values per series to plot.</p></li>
+<li><p><strong>series_x</strong> (<em>int</em><em>, </em><em>optional</em>) – The index of a specific series to plot. If set, only this series will be plotted.</p></li>
 <li><p><strong>size</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Size of the plot in inches. Default is (16, 8).</p></li>
 <li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to save the plot locally.</p></li>
 <li><p><strong>display</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to display the plot. Default is True.</p></li>

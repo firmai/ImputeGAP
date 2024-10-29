@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.algorithms.cdrec package &mdash; imputegap 0.1.6 documentation</title>
+  <title>imputegap.algorithms.cdrec package &mdash; imputegap 0.1.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -15,14 +15,14 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=6e0256f3"></script>
+      <script src="static/documentation_options.js?v=22607128"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="imputegap.algorithms.stmvl package" href="imputegap.stmvl.html" />
-    <link rel="prev" title="imputegap.recovery.explainer package" href="imputegap.explainer.html" /> 
+    <link rel="prev" title="imputegap.recovery.benchmarking package" href="imputegap.benchmarking.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -67,6 +68,7 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">imputegap.algorithms.cdrec package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-imputegap.algorithms.cdrec">Modules</a></li>
@@ -83,11 +85,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_contamination">imputegap.runner_contamination module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_display">imputegap.runner_display module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_explainer">imputegap.runner_explainer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_imputation">imputegap.runner_imputation module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap.runner_optimization">imputegap.runner_optimization module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap">Module contents</a></li>
 </ul>
 </li>
@@ -157,15 +154,15 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.cdrec.native_cdrec">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">native_cdrec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_iters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/cdrec.html#native_cdrec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.cdrec.native_cdrec" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">native_cdrec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_iterations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/cdrec.html#native_cdrec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.cdrec.native_cdrec" title="Link to this definition"></a></dt>
 <dd><p>Perform matrix imputation using the CDRec algorithm with native C++ support.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>__py_matrix</strong> (<em>numpy.ndarray</em>) – The input matrix with missing values (NaNs).</p></li>
 <li><p><strong>__py_rank</strong> (<em>int</em>) – The truncation rank for matrix decomposition (must be greater than 0 and less than the number of columns).</p></li>
-<li><p><strong>__py_eps</strong> (<em>float</em>) – The epsilon value, used as the threshold for stopping iterations based on difference.</p></li>
-<li><p><strong>__py_iters</strong> (<em>int</em>) – The maximum number of allowed iterations for the algorithm.</p></li>
+<li><p><strong>__py_epsilon</strong> (<em>float</em>) – The epsilon value, used as the threshold for stopping iterations based on difference.</p></li>
+<li><p><strong>__py_iterations</strong> (<em>int</em>) – The maximum number of allowed iterations for the algorithm.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -186,7 +183,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="imputegap.explainer.html" class="btn btn-neutral float-left" title="imputegap.recovery.explainer package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="imputegap.benchmarking.html" class="btn btn-neutral float-left" title="imputegap.recovery.benchmarking package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="imputegap.stmvl.html" class="btn btn-neutral float-right" title="imputegap.algorithms.stmvl package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -144,6 +144,10 @@ class Optimization:
                 Mean error for the selected metrics.
             """
             errors = Imputation.evaluate_params(ground_truth, contamination, params, algorithm)
+
+            if not isinstance(selected_metrics, list):
+                selected_metrics = [selected_metrics]
+
             return np.mean([errors[metric] for metric in selected_metrics])
 
         def optimize(self, ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=250):
@@ -242,6 +246,10 @@ class Optimization:
                 param_values = tuple(params.values())  # Convert dictionary to tuple of values
             else:
                 param_values = tuple(params)
+
+            if not isinstance(selected_metrics, list):
+                selected_metrics = [selected_metrics]
+
             errors = Imputation.evaluate_params(ground_truth, contamination, param_values, algorithm)
             return np.mean([errors[metric] for metric in selected_metrics])
 
