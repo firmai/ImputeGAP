@@ -13,7 +13,7 @@ ts_1.print(view_by_series=True)
 ts_1.plot(raw_data=ts_1.data, title="EEG - Raw Data", max_series=3)
 
 # 3. contamination of the data with MCAR scenario
-infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, series_impacted=0.2, missing_rate=0.2, use_seed=True, seed=42)
+infected_matrix = ts_1.Contaminate.missing_percentage(ts=ts_1.data, series_impacted=0.4, missing_rate=0.4)
 
 # [OPTIONAL] you can plot your raw data / print the contamination
 ts_1.print(limit=10)

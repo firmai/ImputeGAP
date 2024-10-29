@@ -49,7 +49,7 @@ def __marshal_as_native_column(__py_matrix):
     return __ctype_marshal;
 
 
-def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
+def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
     """
     Perform matrix imputation using the CDRec algorithm with native C++ support.
 
@@ -59,9 +59,9 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
         The input matrix with missing values (NaNs).
     __py_rank : int
         The truncation rank for matrix decomposition (must be greater than 0 and less than the number of columns).
-    __py_eps : float
+    __py_epsilon : float
         The epsilon value, used as the threshold for stopping iterations based on difference.
-    __py_iters : int
+    __py_iterations : int
         The maximum number of allowed iterations for the algorithm.
 
     Returns
@@ -76,32 +76,29 @@ def native_cdrec(__py_matrix, __py_rank, __py_eps, __py_iters):
 
     shared_lib = utils.load_share_lib("lib_cdrec.so")
 
-    __py_sizen = len(__py_matrix);
-    __py_sizem = len(__py_matrix[0]);
+    __py_n = len(__py_matrix);
+    __py_m = len(__py_matrix[0]);
 
     assert (__py_rank >= 0);
-    assert (__py_rank < __py_sizem);
-    assert (__py_eps > 0);
-    assert (__py_iters > 0);
+    assert (__py_rank < __py_m);
+    assert (__py_epsilon > 0);
+    assert (__py_iterations > 0);
 
-    __ctype_sizen = __native_c_types_import.c_ulonglong(__py_sizen);
-    __ctype_sizem = __native_c_types_import.c_ulonglong(__py_sizem);
+    __ctype_size_n = __native_c_types_import.c_ulonglong(__py_n);
+    __ctype_size_m = __native_c_types_import.c_ulonglong(__py_m);
 
     __ctype_rank = __native_c_types_import.c_ulonglong(__py_rank);
-    __ctype_eps = __native_c_types_import.c_double(__py_eps);
-    __ctype_iters = __native_c_types_import.c_ulonglong(__py_iters);
+    __ctype_epsilon = __native_c_types_import.c_double(__py_epsilon);
+    __ctype_iterations = __native_c_types_import.c_ulonglong(__py_iterations);
 
     # Native code uses linear matrix layout, and also it's easier to pass it in like this
-    __ctype_input_matrix = __marshal_as_native_column(__py_matrix);
+    __ctype_matrix = __marshal_as_native_column(__py_matrix);
 
-    shared_lib.cdrec_imputation_parametrized(
-        __ctype_input_matrix, __ctype_sizen, __ctype_sizem,
-        __ctype_rank, __ctype_eps, __ctype_iters
-    );
+    shared_lib.cdrec_imputation_parametrized(__ctype_matrix, __ctype_size_n, __ctype_size_m, __ctype_rank, __ctype_epsilon, __ctype_iterations);
 
-    __py_recovered = __marshal_as_numpy_column(__ctype_input_matrix, __py_sizen, __py_sizem);
+    __py_imputed_matrix = __marshal_as_numpy_column(__ctype_matrix, __py_n, __py_m);
 
-    return __py_recovered;
+    return __py_imputed_matrix;
 
 
 def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_path=None):

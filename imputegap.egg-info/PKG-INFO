@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: imputegap
-Version: 0.1.6
+Version: 0.1.8
 Summary: A Library of Imputation Techniques for Time Series Data
 Home-page: https://github.com/eXascaleInfolab/ImputeGAP
 Author: Quentin Nater

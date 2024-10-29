@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; imputegap 0.1.6 documentation</title>
+  <title>Index &mdash; imputegap 0.1.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=6e0256f3"></script>
+      <script src="static/documentation_options.js?v=22607128"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -48,6 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -95,6 +96,7 @@
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
+ | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
@@ -160,9 +162,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer">BaseImputer (class in imputegap.recovery.imputation)</a>
 </li>
+      <li><a href="imputegap.optimization.html#imputegap.recovery.optimization.BaseOptimizer">BaseOptimizer (class in imputegap.recovery.optimization)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.optimization.html#imputegap.recovery.optimization.BaseOptimizer">BaseOptimizer (class in imputegap.recovery.optimization)</a>
+      <li><a href="imputegap.benchmarking.html#id0">Benchmarking (class in imputegap.recovery.benchmarking)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking">[1]</a>
 </li>
       <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contaminate.blackout">blackout() (imputegap.recovery.manager.TimeSeries.Contaminate method)</a>
 </li>
@@ -174,12 +178,14 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imputegap.cdrec.html#imputegap.algorithms.cdrec.cdrec">cdrec() (in module imputegap.algorithms.cdrec)</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id1">compute_correlation() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_correlation">[1]</a>
+      <li><a href="imputegap.benchmarking.html#id1">comprehensive_evaluation() (imputegap.recovery.benchmarking.Benchmarking method)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.comprehensive_evaluation">[1]</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id2">compute_mae() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mae">[1]</a>
+      <li><a href="imputegap.evaluation.html#id1">compute_correlation() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_correlation">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="imputegap.evaluation.html#id2">compute_mae() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mae">[1]</a>
+</li>
       <li><a href="imputegap.evaluation.html#id3">compute_mi() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mi">[1]</a>
 </li>
       <li><a href="imputegap.evaluation.html#id4">compute_rmse() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_rmse">[1]</a>
@@ -192,12 +198,8 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.html#imputegap.runner_display.display_title">display_title() (in module imputegap.runner_display)</a>
-
-      <ul>
-        <li><a href="imputegap.utils.html#imputegap.tools.utils.display_title">(in module imputegap.tools.utils)</a>
+      <li><a href="imputegap.utils.html#imputegap.tools.utils.display_title">display_title() (in module imputegap.tools.utils)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -213,6 +215,18 @@
       <li><a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer">Explainer (class in imputegap.recovery.explainer)</a>
 </li>
       <li><a href="imputegap.explainer.html#id1">extract_features() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.extract_features">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="imputegap.benchmarking.html#id2">generate_plots() (imputegap.recovery.benchmarking.Benchmarking method)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_plots">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="imputegap.benchmarking.html#id3">generate_reports() (imputegap.recovery.benchmarking.Benchmarking method)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_reports">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -296,6 +310,8 @@
         <li><a href="autosummary/imputegap.algorithms.iim.html#module-imputegap.algorithms.iim">module</a>, <a href="imputegap.iim.html#module-imputegap.algorithms.iim">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     imputegap.algorithms.mean_impute
 
@@ -310,8 +326,6 @@
         <li><a href="autosummary/imputegap.algorithms.min_impute.html#module-imputegap.algorithms.min_impute">module</a>, <a href="imputegap.min_impute.html#module-imputegap.algorithms.min_impute">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     imputegap.algorithms.mrnn
 
@@ -331,6 +345,13 @@
 
       <ul>
         <li><a href="autosummary/imputegap.algorithms.zero_impute.html#module-imputegap.algorithms.zero_impute">module</a>, <a href="imputegap.zero_impute.html#module-imputegap.algorithms.zero_impute">[1]</a>
+</li>
+      </ul></li>
+      <li>
+    imputegap.recovery.benchmarking
+
+      <ul>
+        <li><a href="autosummary/imputegap.recovery.benchmarking.html#module-imputegap.recovery.benchmarking">module</a>, <a href="imputegap.benchmarking.html#module-0">[1]</a>, <a href="imputegap.benchmarking.html#module-imputegap.recovery.benchmarking">[2]</a>
 </li>
       </ul></li>
       <li>
@@ -366,41 +387,6 @@
 
       <ul>
         <li><a href="autosummary/imputegap.recovery.optimization.html#module-imputegap.recovery.optimization">module</a>, <a href="imputegap.optimization.html#module-imputegap.recovery.optimization">[1]</a>
-</li>
-      </ul></li>
-      <li>
-    imputegap.runner_contamination
-
-      <ul>
-        <li><a href="imputegap.html#module-imputegap.runner_contamination">module</a>
-</li>
-      </ul></li>
-      <li>
-    imputegap.runner_display
-
-      <ul>
-        <li><a href="imputegap.html#module-imputegap.runner_display">module</a>
-</li>
-      </ul></li>
-      <li>
-    imputegap.runner_explainer
-
-      <ul>
-        <li><a href="imputegap.html#module-imputegap.runner_explainer">module</a>
-</li>
-      </ul></li>
-      <li>
-    imputegap.runner_imputation
-
-      <ul>
-        <li><a href="imputegap.html#module-imputegap.runner_imputation">module</a>
-</li>
-      </ul></li>
-      <li>
-    imputegap.runner_optimization
-
-      <ul>
-        <li><a href="imputegap.html#module-imputegap.runner_optimization">module</a>
 </li>
       </ul></li>
       <li>
@@ -503,6 +489,8 @@
 </li>
         <li><a href="autosummary/imputegap.algorithms.zero_impute.html#module-imputegap.algorithms.zero_impute">imputegap.algorithms.zero_impute</a>, <a href="imputegap.zero_impute.html#module-imputegap.algorithms.zero_impute">[1]</a>
 </li>
+        <li><a href="autosummary/imputegap.recovery.benchmarking.html#module-imputegap.recovery.benchmarking">imputegap.recovery.benchmarking</a>, <a href="imputegap.benchmarking.html#module-0">[1]</a>, <a href="imputegap.benchmarking.html#module-imputegap.recovery.benchmarking">[2]</a>
+</li>
         <li><a href="autosummary/imputegap.recovery.evaluation.html#module-imputegap.recovery.evaluation">imputegap.recovery.evaluation</a>, <a href="imputegap.evaluation.html#module-0">[1]</a>, <a href="imputegap.evaluation.html#module-imputegap.recovery.evaluation">[2]</a>
 </li>
         <li><a href="autosummary/imputegap.recovery.explainer.html#module-imputegap.recovery.explainer">imputegap.recovery.explainer</a>, <a href="imputegap.explainer.html#module-imputegap.recovery.explainer">[1]</a>
@@ -512,16 +500,6 @@
         <li><a href="autosummary/imputegap.recovery.manager.html#module-imputegap.recovery.manager">imputegap.recovery.manager</a>, <a href="imputegap.manager.html#module-imputegap.recovery.manager">[1]</a>
 </li>
         <li><a href="autosummary/imputegap.recovery.optimization.html#module-imputegap.recovery.optimization">imputegap.recovery.optimization</a>, <a href="imputegap.optimization.html#module-imputegap.recovery.optimization">[1]</a>
-</li>
-        <li><a href="imputegap.html#module-imputegap.runner_contamination">imputegap.runner_contamination</a>
-</li>
-        <li><a href="imputegap.html#module-imputegap.runner_display">imputegap.runner_display</a>
-</li>
-        <li><a href="imputegap.html#module-imputegap.runner_explainer">imputegap.runner_explainer</a>
-</li>
-        <li><a href="imputegap.html#module-imputegap.runner_imputation">imputegap.runner_imputation</a>
-</li>
-        <li><a href="imputegap.html#module-imputegap.runner_optimization">imputegap.runner_optimization</a>
 </li>
         <li><a href="autosummary/imputegap.tools.html#module-imputegap.tools">imputegap.tools</a>, <a href="imputegap.algorithm_parameters.html#module-imputegap.tools">[1]</a>, <a href="imputegap.tools.html#module-imputegap.tools">[2]</a>, <a href="imputegap.utils.html#module-imputegap.tools">[3]</a>
 </li>

@@ -82,7 +82,7 @@ class Evaluation:
         nan_locations = np.isnan(self.contamination)
 
         mse = np.mean((self.ground_truth[nan_locations] - self.imputation[nan_locations]) ** 2)
-        rmse = np.sqrt(np.mean(mse))
+        rmse = np.sqrt(mse)
 
         return float(rmse)
 
@@ -142,6 +142,13 @@ class Evaluation:
             The Pearson correlation coefficient for NaN positions in the contamination dataset.
         """
         nan_locations = np.isnan(self.contamination)
-        correlation, _ = pearsonr(self.ground_truth[nan_locations], self.imputation[nan_locations])
+        ground_truth_values = self.ground_truth[nan_locations]
+        imputed_values = self.imputation[nan_locations]
+
+        if np.std(ground_truth_values) == 0 or np.std(imputed_values) == 0:
+            correlation = 0
+        else:
+            correlation, _ = pearsonr(ground_truth_values, imputed_values)
 
         return correlation
+

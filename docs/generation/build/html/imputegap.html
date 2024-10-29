@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap package &mdash; imputegap 0.1.6 documentation</title>
+  <title>imputegap package &mdash; imputegap 0.1.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=6e0256f3"></script>
+      <script src="static/documentation_options.js?v=22607128"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -67,6 +68,7 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
@@ -79,14 +81,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-imputegap.runner_contamination">imputegap.runner_contamination module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-imputegap.runner_display">imputegap.runner_display module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#imputegap.runner_display.display_title"><code class="docutils literal notranslate"><span class="pre">display_title()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#module-imputegap.runner_explainer">imputegap.runner_explainer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-imputegap.runner_imputation">imputegap.runner_imputation module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-imputegap.runner_optimization">imputegap.runner_optimization module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-imputegap">Module contents</a></li>
 </ul>
 </li>
@@ -202,6 +196,29 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmarking.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmarking.html#module-imputegap.recovery.benchmarking">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking"><code class="docutils literal notranslate"><span class="pre">Benchmarking</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.comprehensive_evaluation"><code class="docutils literal notranslate"><span class="pre">Benchmarking.comprehensive_evaluation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_plots"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_plots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_reports"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_reports()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmarking.html#submodule-documentation">Submodule Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmarking.html#module-0">imputegap.recovery.evaluation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html#id0"><code class="docutils literal notranslate"><span class="pre">Benchmarking</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#id1"><code class="docutils literal notranslate"><span class="pre">Benchmarking.comprehensive_evaluation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#id2"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_plots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#id3"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_reports()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.cdrec.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.cdrec.html#module-imputegap.algorithms.cdrec">Modules</a><ul>
@@ -307,26 +324,6 @@
 </section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
-</section>
-<section id="module-imputegap.runner_contamination">
-<span id="imputegap-runner-contamination-module"></span><h2>imputegap.runner_contamination module<a class="headerlink" href="#module-imputegap.runner_contamination" title="Link to this heading"></a></h2>
-</section>
-<section id="module-imputegap.runner_display">
-<span id="imputegap-runner-display-module"></span><h2>imputegap.runner_display module<a class="headerlink" href="#module-imputegap.runner_display" title="Link to this heading"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="imputegap.runner_display.display_title">
-<span class="sig-prename descclassname"><span class="pre">imputegap.runner_display.</span></span><span class="sig-name descname"><span class="pre">display_title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/runner_display.html#display_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.runner_display.display_title" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-imputegap.runner_explainer">
-<span id="imputegap-runner-explainer-module"></span><h2>imputegap.runner_explainer module<a class="headerlink" href="#module-imputegap.runner_explainer" title="Link to this heading"></a></h2>
-</section>
-<section id="module-imputegap.runner_imputation">
-<span id="imputegap-runner-imputation-module"></span><h2>imputegap.runner_imputation module<a class="headerlink" href="#module-imputegap.runner_imputation" title="Link to this heading"></a></h2>
-</section>
-<section id="module-imputegap.runner_optimization">
-<span id="imputegap-runner-optimization-module"></span><h2>imputegap.runner_optimization module<a class="headerlink" href="#module-imputegap.runner_optimization" title="Link to this heading"></a></h2>
 </section>
 <section id="module-imputegap">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-imputegap" title="Link to this heading"></a></h2>

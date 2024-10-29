@@ -57,8 +57,7 @@ def search_path(set_name="test"):
         return filepath
 
 
-def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b",
-                    path=None):
+def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None):
     """
     Load default or optimal parameters for algorithms from a TOML file.
 
@@ -88,6 +87,9 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         else:
             filepath = path
 
+        if not os.path.exists(filepath):
+            filepath = "./env/default_values.toml"
+
     elif query == "optimal":
 
         if path is None:
@@ -95,6 +97,9 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
             filepath = importlib.resources.files('imputegap.params').joinpath(filename)
         else:
             filepath = path
+
+        if not os.path.exists(filepath):
+            filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
 
     else:
         print("Query not found for this function ('optimal' or 'default')")

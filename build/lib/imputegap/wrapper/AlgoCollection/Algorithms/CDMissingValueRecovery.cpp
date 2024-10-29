@@ -295,10 +295,10 @@ void CDMissingValueRecovery::determineReduction()
         contributionSum += relContribution[red];
     }
     
-    std::cout << "Auto-reduction [entropy] detected as: "
-              << red << " in [1..." << rank - 1 << "]," << std::endl
-              << "with  sum(contrib)=" << contributionSum
-              << " entropy=" << entropy << std::endl << std::endl;
+    //std::cout << "Auto-reduction [entropy] detected as: "
+    //          << red << " in [1..." << rank - 1 << "]," << std::endl
+    //          << "with  sum(contrib)=" << contributionSum
+    //         << " entropy=" << entropy << std::endl << std::endl;
     
     // cleanup - we will have less dimensions later
     cd.destroyDecomposition();

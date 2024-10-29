@@ -17,6 +17,7 @@ The interface provides advanced imputation algorithms, construction of various m
    imputegap.recovery.optimization
    imputegap.recovery.explainer
    imputegap.recovery.evaluation
+   imputegap.recovery.benchmarking
    imputegap.algorithms.cdrec
    imputegap.algorithms.stmvl
    imputegap.algorithms.iim
