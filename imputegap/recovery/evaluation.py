@@ -145,10 +145,10 @@ class Evaluation:
         ground_truth_values = self.ground_truth[nan_locations]
         imputed_values = self.imputation[nan_locations]
 
-        if np.std(ground_truth_values) == 0 or np.std(imputed_values) == 0:
+        correlation, _ = pearsonr(ground_truth_values, imputed_values)
+
+        if np.isnan(correlation):
             correlation = 0
-        else:
-            correlation, _ = pearsonr(ground_truth_values, imputed_values)
 
         return correlation
 

@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_datasets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/report.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/report.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +114,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in test_opti_bayesian_cdrec.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_exception.TestException.test_data_exc" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -126,8 +125,8 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_opti_bayesian_cdrec.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <option name="_new_target" value="&quot;test_exception.TestException.test_data_exc&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="Python tests in test_opti_greedy_cdrec.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
@@ -163,7 +162,7 @@
     <list>
       <item itemvalue="Python.runner_benchmarking (1)" />
       <item itemvalue="Python.runner_explainer" />
-      <item itemvalue="Python tests.Python tests in test_opti_bayesian_cdrec.py" />
+      <item itemvalue="Python tests.Python tests for test_exception.TestException.test_data_exc" />
       <item itemvalue="Python tests.Python tests in test_opti_greedy_cdrec.py" />
       <item itemvalue="Python tests.Python tests in tests" />
     </list>
@@ -171,9 +170,9 @@
       <list>
         <item itemvalue="Python tests.Python tests in tests" />
         <item itemvalue="Python.runner_benchmarking (1)" />
+        <item itemvalue="Python tests.Python tests for test_exception.TestException.test_data_exc" />
         <item itemvalue="Python tests.Python tests in test_opti_greedy_cdrec.py" />
         <item itemvalue="Python.runner_explainer" />
-        <item itemvalue="Python tests.Python tests in test_opti_bayesian_cdrec.py" />
       </list>
     </recent_temporary>
   </component>
@@ -242,7 +241,8 @@
       <workItem from="1729852362759" duration="21226000" />
       <workItem from="1730117670247" duration="10114000" />
       <workItem from="1730190843829" duration="11000" />
-      <workItem from="1730194875732" duration="20932000" />
+      <workItem from="1730194875732" duration="23450000" />
+      <workItem from="1730225201053" duration="1353000" />
     </task>
     <servers />
   </component>
@@ -269,7 +269,7 @@
     <SUITE FILE_PATH="coverage/imputegap$runner_normalization__1_.coverage" NAME="runner_normalization (1) Coverage Results" MODIFIED="1728577391674" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$_loading.coverage" NAME="_loading Coverage Results" MODIFIED="1726134442146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/loading" />
     <SUITE FILE_PATH="coverage/imputegap$runner_evaluation.coverage" NAME="runner_benchmarking Coverage Results" MODIFIED="1730131561217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1730219793183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1730225901661" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$runner_normalization.coverage" NAME="runner_normalization Coverage Results" MODIFIED="1729163198085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_optimization.coverage" NAME="runner_optimization Coverage Results" MODIFIED="1730215750692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner.coverage" NAME="runner Coverage Results" MODIFIED="1727264924849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
@@ -277,7 +277,7 @@
     <SUITE FILE_PATH="coverage/imputegap$runner_contamination.coverage" NAME="runner_contamination Coverage Results" MODIFIED="1729694687833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_datasets.coverage" NAME="runner_datasets Coverage Results" MODIFIED="1730198473384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_benchmarking.coverage" NAME="runner_benchmarking Coverage Results" MODIFIED="1730197082955" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$runner_benchmarking__1_.coverage" NAME="runner_benchmarking (1) Coverage Results" MODIFIED="1730219034839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$runner_benchmarking__1_.coverage" NAME="runner_benchmarking (1) Coverage Results" MODIFIED="1730225469165" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_t_normalization.coverage" NAME="runner_t_normalization Coverage Results" MODIFIED="1729161558589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_greedy.coverage" NAME="runner_greedy Coverage Results" MODIFIED="1728055245493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$demo.coverage" NAME="demo Coverage Results" MODIFIED="1727770278863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />

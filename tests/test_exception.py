@@ -24,7 +24,7 @@ class TestException(unittest.TestCase):
         """
         raw_data = None  # Simulate a scenario where raw_data is None
         with pytest.raises(ValueError, match=f"Need ground_truth to be able to adapt the hyper-parameters: {raw_data}"):
-            opti = Imputation.MatrixCompletion.CDRec(None).impute(user_defined=False, params={"ground_truth":raw_data, "optimizer": "bayesian", "options":{"n_calls": 2}})
+            _ = Imputation.MatrixCompletion.CDRec(None).impute(user_defined=False, params={"ground_truth":raw_data, "optimizer": "bayesian", "options":{"n_calls": 2}})
 
 
     def test_import_exc(self):

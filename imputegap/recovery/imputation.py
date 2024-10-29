@@ -29,7 +29,7 @@ class BaseImputer:
     _optimize(parameters={}):
         Optimize hyperparameters for the imputation algorithm.
     """
-    algorithm = None  # Class variable to hold the algorithm name
+    algorithm = ""  # Class variable to hold the algorithm name
     logs = True
 
     def __init__(self, infected_matrix):
@@ -292,7 +292,7 @@ class Imputation:
             raise ValueError(f"Invalid algorithm: {algorithm}")
 
         algo.score(ground_truth)
-        imputation, error_measures = algo.imputed_matrix, algo.metrics
+        error_measures = algo.metrics
 
         return error_measures
 

@@ -20,7 +20,7 @@ class TestMRNN(unittest.TestCase):
         algo.impute()
         algo.score(ts_1.data)
 
-        imputation, metrics = algo.imputed_matrix, algo.metrics
+        _, metrics = algo.imputed_matrix, algo.metrics
 
         expected_metrics = {
             "RMSE": 0.24304439492433505,

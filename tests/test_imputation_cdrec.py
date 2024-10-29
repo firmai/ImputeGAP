@@ -19,7 +19,7 @@ class TestCDREC(unittest.TestCase):
         algo.impute()
         algo.score(ts_1.data)
 
-        imputation, metrics = algo.imputed_matrix, algo.metrics
+        _, metrics = algo.imputed_matrix, algo.metrics
 
         expected_metrics = {
             "RMSE": 0.5993259196563864,
@@ -48,7 +48,7 @@ class TestCDREC(unittest.TestCase):
         algo.impute()
         algo.score(ts_1.data)
 
-        imputation, metrics = algo.imputed_matrix, algo.metrics
+        _, metrics = algo.imputed_matrix, algo.metrics
 
         expected_metrics = {
             "RMSE": 0.10329523970909142,

@@ -2,6 +2,7 @@ import ctypes
 import os
 import toml
 import importlib.resources
+from pathlib import Path
 
 
 def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg"):
@@ -79,29 +80,29 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     tuple
         A tuple containing the loaded parameters for the given algorithm.
     """
-    filepath = ""
     if query == "default":
-
         if path is None:
             filepath = importlib.resources.files('imputegap.env').joinpath("./default_values.toml")
+            if not filepath.is_file():
+                filepath = "./env/default_values.toml"
         else:
             filepath = path
-
-        if not os.path.exists(filepath):
-            filepath = "./env/default_values.toml"
+            if not os.path.exists(filepath):
+                filepath = "./env/default_values.toml"
 
     elif query == "optimal":
-
         if path is None:
             filename = "./optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
             filepath = importlib.resources.files('imputegap.params').joinpath(filename)
+            if not filepath.is_file():
+                filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
         else:
             filepath = path
-
-        if not os.path.exists(filepath):
-            filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+            if not os.path.exists(filepath):
+                filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
 
     else:
+        filepath = None
         print("Query not found for this function ('optimal' or 'default')")
 
     if not os.path.exists(filepath):

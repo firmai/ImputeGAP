@@ -292,7 +292,7 @@ class Imputation:
             raise ValueError(f"Invalid algorithm: {algorithm}")
 
         algo.score(ground_truth)
-        imputation, error_measures = algo.imputed_matrix, algo.metrics
+        error_measures = algo.metrics
 
         return error_measures
 
