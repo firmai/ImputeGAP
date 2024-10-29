@@ -29,7 +29,7 @@ class BaseImputer:
     _optimize(parameters={}):
         Optimize hyperparameters for the imputation algorithm.
     """
-    algorithm = None  # Class variable to hold the algorithm name
+    algorithm = ""  # Class variable to hold the algorithm name
     logs = True
 
     def __init__(self, infected_matrix):
