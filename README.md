@@ -1,4 +1,10 @@
+
+<img img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+
+<!--
+
 ![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
+-->
 
 # Welcome to ImputeGAP
 
@@ -12,7 +18,7 @@ The framework includes advanced imputation algorithms, supports various patterns
 - **Datasets**: [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
 
 
- [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterizationL) | [**Explainer**](#explainer) | [**Contributions**](#contributions)
+ [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Contributors**](#core-contributors)
 
 
 ---
@@ -92,8 +98,6 @@ ts_1.plot(raw_data=ts_1.data, title="raw data", max_series=10, max_values=100, s
 ts_1.print(limit=10)
 
 ```
-
-<br /><hr /><br />
 
 ---
 
@@ -238,7 +242,7 @@ Explainer.print(shap_values, shap_details)
 ```
 
 ---
-## Contributors
+## Core Contributors
 - Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>)
 - Dr. Mourad Khayati (<a href="mailto:mourad.khayati@unifr.ch">mourad.khayati@unifr.ch</a>)
 
