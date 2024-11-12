@@ -1,9 +1,10 @@
 ![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
 
 # Welcome to ImputeGAP
-ImputeGAP is a unified framework for imputation algorithms. It provides a narrow-waist interface between algorithm evaluation and parameterization using datasets from various including neuroscience, medicine, climate, and energy.
 
-The interface provides advanced imputation algorithms, allows injecting different missing values patterns, and implements different evaluation metrics. In addition, the framework offers support for AutoML parameterization techniques, feature extraction, and analysis of feature impact using SHAP. The framework allows a straightforward integration of new algorithms, datasets, and metrics.
+ImputeGAP is a comprehensive framework designed for imputation algorithms. It offers a streamlined interface that bridges algorithm evaluation and parameter tuning, utilizing datasets from diverse fields such as neuroscience, medicine, climate science, and energy.
+
+The framework includes advanced imputation algorithms, supports various patterns of missing data, and provides multiple evaluation metrics. Additionally, ImputeGAP enables AutoML-based parameter optimization, feature extraction, and feature impact analysis with SHAP. The framework is built for easy integration of new algorithms, datasets, and evaluation metrics, enhancing its flexibility and adaptability.
 
 
 - **Documentation**: [https://exascaleinfolab.github.io/ImputeGAP/](https://exascaleinfolab.github.io/ImputeGAP/)
