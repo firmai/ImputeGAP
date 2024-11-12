@@ -9,11 +9,13 @@ The framework includes advanced imputation algorithms, supports various patterns
 
 - **Documentation**: [https://exascaleinfolab.github.io/ImputeGAP/](https://exascaleinfolab.github.io/ImputeGAP/)
 - **PyPI**: [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)
+- **Datasets**: [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
 
 
+ [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterizationL) | [**Explainer**](#explainer) | [**Contributions**](#contributions)
 
-<br /><hr /><br />
 
+---
 
 
 ## System Requirements
@@ -27,10 +29,7 @@ For instructions on installing these dependencies, please refer to the [installa
 
 
 
-<br /><hr /><br />
-
-
-
+---
 
 ## Installation
 
@@ -43,9 +42,6 @@ To quickly install the latest version of ImputeGAP along with its dependencies f
 ```bash
 $ pip install imputegap
 ``` 
-
-
-<br />
 
 
 ### Local installation
@@ -68,21 +64,13 @@ $ pip install -e .
 ``` 
 
 
-<br /><hr /><br />
-
-## Datasets
-All preconfigured datasets available in this library can be accessed at the following location: [Link to datasets](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
+---
 
 
-<br /><hr /><br />
+## Loading and Preprocessing
 
+The data management module allows to load any time series datasets in text format, given they follow this format: *(values, series)* with column separator: empty space, row separator: newline.
 
-
-## Loading and Pre-processing
-
-The data management module allows to load any time series datasets in text format, given they follow this format: *(values, series)* with column separator: empty space, row separator: newline
-
-To check if your dataset is correctly formatted, please refer to the example datasets provided [above](#datasets).<br />
 
 
 ### Example Loading
@@ -107,7 +95,7 @@ ts_1.print(limit=10)
 
 <br /><hr /><br />
 
-
+---
 
 ## Contamination
 ImputeGAP allows to contaminate datasets with a specific scenario to reproduce a real-world situation. Up to now, the scenarios are : <b>MCAR, MISSING POURCENTAGE, and BLACKOUT</b><br />
@@ -136,10 +124,10 @@ ts_1.print(limit=10)
 ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_path="./imputegap/assets")
 ```
 
-<br /><hr /><br />
+---
 
 ## Imputation
-**ImputeGAP** offers a wide range of imputation algorithms categorized into several families, including: **Matrix Completion**, **Deep Learning**, **Statistics**, **Pattern Search**, and **Graphs Learning**.
+ImputeGAP offers a wide range of imputation algorithms categorized into several families, including: **Matrix Completion**, **Deep Learning**, **Statistics**, **Pattern Search**, and **Graphs Learning**.
 
 It is also possible to add your own custom imputation algorithm. To do this, simply follow the `min-impute` template and replace the logic with your own code.
 
@@ -181,11 +169,9 @@ ts_3.print_results(cdrec.metrics)
 ```
 
 
-<br /><hr /><br />
-
-## Auto-ML
-**ImputeGAP** provides optimization techniques that automatically identify the optimal hyperparameters for a specific algorithm in relation to a given dataset.
-
+---
+## Parameterization
+ImputeGAP provides optimization techniques that automatically identify the optimal hyperparameters for a specific algorithm in relation to a given dataset.
 The available optimizers include: **Greedy Optimizer**, **Bayesian Optimizer**, **Particle Swarm Optimizer**, and **Successive Halving**.
 
 ### Example Auto-ML
@@ -225,11 +211,10 @@ utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", data
 ```
 
 
-<br /><hr /><br />
-
+---
 
 ## Explainer
-**ImputeGAP** includes an algorithm based on the **SHAP** library, which explains the results of your imputations using features specific to your dataset.
+ImputeGAP includes an algorithm based on the **SHAP** library, which explains the results of your imputations using features specific to your dataset.
 
 ### Example Explainer
 You can find this example in the file [`runner_explainer.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_explainer.py).
@@ -252,10 +237,8 @@ shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_na
 Explainer.print(shap_values, shap_details)
 ```
 
-
-<br /><hr /><br />
-
+---
 ## Contributors
-Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>) and Dr. Mourad Khayati (<a href="mailto:mourad.khayati@unifr.ch">mourad.khayati@unifr.ch</a>)
+- Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>)
+- Dr. Mourad Khayati (<a href="mailto:mourad.khayati@unifr.ch">mourad.khayati@unifr.ch</a>)
 
-<br /><br />
