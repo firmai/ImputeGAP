@@ -49,7 +49,8 @@ $ pip install imputegap
 
 
 ### Local installation
-To install ImputeGAP from source, follow these steps:
+
+To modify the code of ImputeGAP or contribute to is development, you can install the library from source:
 
 1) Initialize a Git repository and clone the project from GitHub:
 
@@ -66,7 +67,6 @@ $ cd ./ImputeGAP
 $ pip install -e .
 ``` 
 
-This installation method is recommended if you want to modify the source code or contribute to the development of ImputeGAP.
 
 <br /><hr /><br />
 
