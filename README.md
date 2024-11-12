@@ -80,7 +80,7 @@ All preconfigured datasets available in this library can be accessed at the foll
 
 ## Loading and Pre-processing
 
-The data management module allows to load any time series datasets in text format, given they follow this format: **(Values, Series)**: *Series are separated by spaces (` `), and values are separated by a carriage return (`\n`).*
+The data management module allows to load any time series datasets in text format, given they follow this format: *(values, series)* with column separator: empty space, row separator: newline
 
 To check if your dataset is correctly formatted, please refer to the example datasets provided [above](#datasets).<br />
 
