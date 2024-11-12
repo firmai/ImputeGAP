@@ -1,99 +1,13 @@
 ![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
 
 
-# Installation for ImputeGAP
+# ImputeGAP Integration Module
 
-## System Requirements
+## Getting Started
 
-To utilize **ImputeGAP**, the following prerequisites are necessary:
+### Initializing a Git Repository
 
-- Python version **3.12.0** or higher
-- A **Unix-compatible environment** for execution
-
-<br />
-
-
-### Install WSL for Windows
-To run your implementation in a Unix-compatible environment on Windows, we recommend installing **WSL (Windows Subsystem for Linux)**.
-
-1. Check if **WSL** is already installed by typing `WSL` in the search menu.
-2. If it is not installed, open **PowerShell** as Administrator (right-click the Start menu and select **Windows PowerShell (Admin)**).
-3. Run the following command to install WSL:
-   ```powershell
-   wsl --install
-   
-3. This will install the latest version of WSL and a default Linux distribution (usually Ubuntu). After the installation is complete, you'll need to restart your computer.
-<br><br>
-*WSL can be selected in the IDE under the interpreter parameters.*
-
-<br><br>
-
-### Install Python 3.12.0
-
-To use **ImputeGAP** effectively, ensure that your environment has **Python** version **3.12.0** or higher installed. Follow these steps to install or update Python in your Unix-compatible environment:
-
-##### Step 1: Check Existing Python Version
-
-Open your terminal and check the currently installed version of Python by running:
-
-```bash
-python3 --version
-```
-<br>
-
-##### Step 2: Install Python
-Update your package list and install the necessary dependencies for building Python:
-```bash
-sudo apt update
-sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev python3-tk libopenblas0
-```
-<br>
-Download Python 3.12.0 source code from the official Python website and extract it :
-
-```bash
-cd /usr/src
-sudo wget https://www.python.org/ftp/python/3.12.0/Python-3.12.0.tgz
-sudo tar xzf Python-3.12.0.tgz
-```
-<br>
-Compile and install Python 12:
-
-```bash
-cd Python-3.12.0
-sudo ./configure --enable-optimizations
-sudo make altinstall
-```
-<br>
-Verify the installation:
-
-```bash
-python3.12 --version
-```
-
-
-<br /><hr /><br />
-
-## Installation
-
-
-
-### Pip installation
-
-To quickly install the latest version of **ImputeGAP** from the Python Package Index (PyPI), use the following command:
-
-```bash
-$ pip install imputegap
-``` 
-
-This will automatically install ImputeGAP along with its dependencies. Ensure that you are using Python 3.12.0 or higher in a Unix-compatible environment.
-
-<br />
-
-
-### Local installation
-To install ImputeGAP from source, follow these steps:
-
-1) Initialize a Git repository and clone the project from GitHub:
+To begin using the ImputeGAP library, initialize a Git repository and clone the project from GitHub:
 
 ```bash
 $ git init
@@ -101,13 +15,147 @@ $ git clone https://github.com/eXascaleInfolab/ImputeGAP
 $ cd ./ImputeGAP
 ``` 
 
-2) Once inside the project directory, run the following command to install the package in editable mode:
+### Python Integration Steps
+
+1) Navigate to the ```./imputegap/algorithms``` directory.
+2) Create a new file by copying ```mean_inpute.py``` and rename it to reflect your algorithm.
+3) Replace the logic section under ```# logic``` with your algorithm’s implementation.
+4) Adapt the parameters as needed, ensuring to follow the ```TimeSeries``` object structure for input and return a ```numpy.ndarray``` matrix. Refer to the docstring of the template for detailed guidance.
+5) Update  ```./imputegap/recovery/imputation.py```:
+   1) Add a function to call your new algorithm by copying the ```class MeanImpute(BaseImputer)```and modifying it to suit your requirements.
+   2) You can add it into the corresponding category of algorithms.
+6) Perform imputation as needed.
+
+<br />
+
+### C++ Integration
+1) Navigate to the ```./imputegap/algorithms``` directory.
+2) If not already done, convert your CPP/H files into a shared object format  (```.so```) and place them in the  ```imputegap/algorithms/lib``` folder.
+   1) Go to ```./imputegap/wrapper/AlgoCollection```  and update the Makefile. Copy commands from ```libSTMVL.so``` or modify them as needed.
+   2) Optionally, copy your C++ project files into the directory.
+   3) Generate the ```.so``` file using the ```make``` command:
+      ```
+      make your_lib_name
+      ```
+
+3) Rename ```cpp_integration.py```  to reflect your algorithm’s name.
+4) Modify the ```native_algo()``` function: 
+   1) Update the shared object parameter to match your shared library.
+   2) Convert input parameters to the appropriate C++ types and pass them to your shared object methods.
+   3) Convert the imputed matrix back to a numpy format.
+5) Adapt the template method ```your_algo.py``` with the appropriate parameters, ensuring compatibility with the ```TimeSeries``` object and a ```numpy.ndarray``` return type.
+6) Adapt the  ```./imputegap/recovery/imputation.py```:
+   1) Add a function to call your new algorithm by copying and modifying ```class MeanImpute(BaseImputer)``` as needed. You can copy-paste the class into the corresponding category of algorithms.
+7) Perform imputation as needed.
+ 
+<br /><br />
 
 
-```bash
-$ pip install -e .
-``` 
+#### Example: CDRec Integration
 
-This installation method is recommended if you want to modify the source code or contribute to the development of ImputeGAP.
+<br />
 
-<br /><hr /><br />
+######  Shared Object Generation
+
+1) Modify the Makefile:
+```
+libCDREC.so: 
+    g++ -O3 -D ARMA_DONT_USE_WRAPPER -fPIC -rdynamic -shared -o lib_cdrec.so -Wall -Werror -Wextra -pedantic \
+	-Wconversion -Wsign-conversion -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -fopenmp -std=gnu++14 \
+	Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp  Algebra/Auxiliary.cpp \
+	Algebra/CentroidDecomposition.cpp  shared/SharedLibCDREC.cpp \
+	-lopenblas -larpack -lmlpack
+```
+
+2) Generate the shared library:
+
+```
+make libCDREC.so
+```
+
+3) Place the generated ```.so``` file in ```imputegap/algorithms/lib```
+
+<br />
+
+######  Wrapper 
+
+1) In ```imputegap/algorithms/cpp_integration.py```, update the function name and parameter count, and ensure the ```.so``` file matches:
+```
+def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
+
+    shared_lib = utils.load_share_lib("lib_cdrec.so")
+```
+
+2) Convert variables to corresponding C++ types:
+```
+    __py_n = len(__py_matrix);
+    __py_m = len(__py_matrix[0]);
+
+    assert (__py_rank >= 0);
+    assert (__py_rank < __py_m);
+    assert (__py_epsilon > 0);
+    assert (__py_iterations > 0);
+
+    __ctype_size_n = __native_c_types_import.c_ulonglong(__py_n);
+    __ctype_size_m = __native_c_types_import.c_ulonglong(__py_m);
+
+    __ctype_rank = __native_c_types_import.c_ulonglong(__py_rank);
+    __ctype_epsilon = __native_c_types_import.c_double(__py_epsilon);
+    __ctype_iterations = __native_c_types_import.c_ulonglong(__py_iterations);
+    
+    # Native code uses linear matrix layout, and also it's easier to pass it in like this
+    __ctype_matrix = __marshal_as_native_column(__py_matrix);
+```
+3) Call the C++ algorithm with the required parameters:
+```
+    shared_lib.cdrec_imputation_parametrized(__ctype_matrix, __ctype_size_n, __ctype_size_m, __ctype_rank, __ctype_epsilon, __ctype_iterations);
+```
+
+4) Convert the imputed matrix back to ```numpy```:
+```
+    __py_imputed_matrix = __marshal_as_numpy_column(__ctype_matrix, __py_n, __py_m);
+
+    return __py_imputed_matrix;
+```
+
+<br />
+
+
+######  Method Implementation
+
+1) In ```imputegap/algorithms/cpp_integration.py```, create or adapt a generic method for your needs:
+
+```
+def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_path=None):
+   
+    start_time = time.time()  # Record start time
+
+    # Call the C++ function to perform recovery
+    imputed_matrix = native_cdrec(contamination, truncation_rank, epsilon, iterations)
+
+    end_time = time.time()
+
+    if logs:
+        print(f"\n\t\t> logs, imputation cdrec - Execution Time: {(end_time - start_time):.4f} seconds\n")
+
+    return imputed_matrix
+```
+
+######  Imputer Class
+
+1) Add your algorithm to the catalog in```./imputegap/recovery/imputation.py```
+2) Copy and modify ```class MeanImpute(BaseImputer)```  to fit your requirements:
+   1) You can copy-paste the class into the corresponding category of algorithm.
+
+```
+class MatrixCompletion:
+    class CDRec(BaseImputer):
+        algorithm = "cdrec"
+
+        def impute(self, user_defined=True, params=None):
+            
+            self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=rank, iterations=iterations, epsilon=epsilon, logs=self.logs)
+            
+            return self
+```
+

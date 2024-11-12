@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: imputegap
-Version: 0.1.8
+Version: 0.1.9
 Summary: A Library of Imputation Techniques for Time Series Data
 Home-page: https://github.com/eXascaleInfolab/ImputeGAP
 Author: Quentin Nater
@@ -13,7 +13,7 @@ Classifier: Intended Audience :: Developers
 Classifier: Programming Language :: Python :: 3.12
 Classifier: Topic :: Scientific/Engineering :: Information Analysis
 Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
-Requires-Python: >= 3.12.0,<3.12.8
+Requires-Python: >= 3.12.0
 Description-Content-Type: text/markdown
 Requires-Dist: numpy==1.26.4
 Requires-Dist: pandas==2.0.3
@@ -131,7 +131,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
@@ -160,7 +160,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR scenario
@@ -190,7 +190,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -235,7 +235,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -256,7 +256,7 @@ ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.im
           max_series=1, save_path="./assets", display=True)
 
 # 7. [OPTIONAL] save hyperparameters
-utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="b")
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg-alcohol", optimizer="b")
 ```
 
 
@@ -278,7 +278,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 
 # 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
 shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name="eeg-test", algorithm="cdrec")

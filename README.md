@@ -19,7 +19,7 @@ The interface provides advanced imputation algorithms, construction of various m
 
 To utilize **ImputeGAP**, the following prerequisites are necessary:
 
-- Python version **3.12.0** or higher
+- Python version with **3.12.0** and **3.12.6** 
 - A **Unix-compatible environment** for execution
 
 For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
@@ -80,7 +80,7 @@ All preconfigured datasets available in this library can be accessed at the foll
 
 ## Loading and Pre-processing
 
-The data management model is capable of loading any time series datasets in text format, provided they meet the following condition:
+The data management module allows to load any time series datasets in text format, given they follow this format: *(values, series)* with column separator: empty space, row separator: newline
 
 **(Values, Series)**: *Series are separated by spaces (` `), and values are separated by a carriage return (`\n`).*
 
@@ -98,7 +98,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
@@ -127,7 +127,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR scenario
@@ -157,7 +157,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -202,7 +202,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
@@ -223,7 +223,7 @@ ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.im
           max_series=1, save_path="./assets", display=True)
 
 # 7. [OPTIONAL] save hyperparameters
-utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="b")
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg-alcohol", optimizer="b")
 ```
 
 
@@ -245,7 +245,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-test"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 
 # 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
 shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name="eeg-test", algorithm="cdrec")
@@ -254,6 +254,10 @@ shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_na
 Explainer.print(shap_values, shap_details)
 ```
 
+<br /><hr /><br />
+
+## Integration / Extensions
+To add your own imputation algorithm in Python or C++, please refer to the detailed [integration guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/integration).
 
 <br /><hr /><br />
 

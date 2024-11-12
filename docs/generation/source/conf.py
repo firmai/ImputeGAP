@@ -33,8 +33,8 @@ html_static_path = ['static']
 html_css_files = ['custom.css']
 
 # Set the version and release info
-version = '0.1.8'
-release = '0.1.8'
+version = '0.1.9'
+release = '0.1.9'
 
 
 # You can also add links to edit the documentation on GitHub

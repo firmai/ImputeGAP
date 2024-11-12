@@ -22,10 +22,10 @@ EEG-ALCOHOL dataset - raw data 64x256 shows the full raw dataset, consisting of 
 EEG-ALCOHOL dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while EEG-ALCOHOL dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
 Finally, EEG-ALCOHOL - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![EEG-ALCOHOL dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/01_eeg-test-rawdata-NxM_graph.jpg)
-![EEG-ALCOHOL dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/02_eeg-test-rawdata20x400_graph.jpg)
-![EEG-ALCOHOL dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/03_eeg-test-rawdata01x400_graph.jpg)
-![EEG-ALCOHOL - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/04_eeg-test-normmin_maxdata01x400_graph.jpg)
+![EEG-ALCOHOL dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/01_eeg-alcohol-rawdata-NxM_graph.jpg)
+![EEG-ALCOHOL dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/02_eeg-alcohol-rawdata20x400_graph.jpg)
+![EEG-ALCOHOL dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/03_eeg-alcohol-rawdata01x400_graph.jpg)
+![EEG-ALCOHOL - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/04_eeg-alcohol-normmin_maxdata01x400_graph.jpg)
 
 
 ### Features
@@ -95,10 +95,10 @@ EEG-READING dataset - raw data 64x256 shows the full raw dataset, consisting of 
 EEG-READING dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while EEG-READING dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
 Finally, EEG-READING - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![EEG-READING dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/01_eeg-rawdata-NxM_graph.jpg)
-![EEG-READING dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/02_eeg-rawdata20x400_graph.jpg)
-![EEG-READING dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/03_eeg-rawdata01x400_graph.jpg)
-![EEG-READING - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/04_eeg-normmin_maxdata01x400_graph.jpg)
+![EEG-READING dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/01_eeg-reading-rawdata-NxM_graph.jpg)
+![EEG-READING dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/02_eeg-reading-rawdata20x400_graph.jpg)
+![EEG-READING dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/03_eeg-reading-rawdata01x400_graph.jpg)
+![EEG-READING - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/04_eeg-reading-normmin_maxdata01x400_graph.jpg)
 
 
 ### Features

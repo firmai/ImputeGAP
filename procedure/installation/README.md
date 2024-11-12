@@ -45,7 +45,7 @@ python3 --version
 Update your package list and install the necessary dependencies for building Python:
 ```bash
 sudo apt update
-sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev
+sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev python3-tk libopenblas0
 ```
 <br>
 Download Python 3.12.0 source code from the official Python website and extract it :
@@ -71,12 +71,7 @@ python3.12 --version
 ```
 
 
-
-
 <br /><hr /><br />
-
-
-
 
 ## Installation
 

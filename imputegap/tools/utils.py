@@ -47,7 +47,7 @@ def search_path(set_name="test"):
         The correct file path for the dataset.
     """
 
-    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg", "eeg-test", "meteo", "test", "test-large"]:
+    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg-reading", "eeg-alcohol", "meteo", "test", "test-large"]:
         return set_name + ".txt"
     else:
         filepath = "../imputegap/dataset/" + set_name + ".txt"
@@ -106,7 +106,9 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         print("Query not found for this function ('optimal' or 'default')")
 
     if not os.path.exists(filepath):
-        filepath = filepath[1:]
+        filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+        if not os.path.exists(filepath):
+            filepath = filepath[1:]
 
     with open(filepath, "r") as _:
         config = toml.load(filepath)

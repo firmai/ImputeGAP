@@ -1,4 +1,4 @@
 [stmvl]
-window_size = 98
-gamma = 0.01545147632912832
-alpha = 5
+window_size = 80
+gamma = 0.00011930078308845949
+alpha = 2

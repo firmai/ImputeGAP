@@ -1,4 +1,4 @@
 [cdrec]
-rank = 6
-epsilon = 0.00100987019561668
-iteration = 680
+rank = 9
+epsilon = 1.0426180233353332e-6
+iteration = 323

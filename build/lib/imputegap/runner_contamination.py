@@ -5,7 +5,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(data=utils.search_path("eeg-test"), max_series=100, max_values=1000, header=False)
+ts_1.load_timeseries(data=utils.search_path("eeg-alcohol"), max_series=100, max_values=1000, header=False)
 ts_1.normalize(normalizer="min_max")
 
 # [OPTIONAL] you can plot your raw data / print the information
