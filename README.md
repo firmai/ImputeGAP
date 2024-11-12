@@ -38,13 +38,12 @@ For instructions on installing these dependencies, please refer to the [installa
 
 ### Pip installation
 
-To quickly install the latest version of **ImputeGAP** from the Python Package Index (PyPI), use the following command:
+To quickly install the latest version of ImputeGAP along with its dependencies from the Python Package Index (PyPI), run the following command:
 
 ```bash
 $ pip install imputegap
 ``` 
 
-This will automatically install ImputeGAP along with its dependencies. Ensure that you are using Python 3.12.0 or higher in a Unix-compatible environment.
 
 <br />
 
