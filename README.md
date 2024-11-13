@@ -28,7 +28,7 @@ The framework includes advanced imputation algorithms, supports various patterns
 
 To use ImputeGAP, the following prerequisites are necessary:
 
-- Python version 3.12.0 or higher
+- Python version 3.12.6 or lower
 - Unix-compatible environment for execution
 
 For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
