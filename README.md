@@ -10,7 +10,6 @@ The framework includes advanced imputation algorithms, supports various patterns
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
 ![Release](https://img.shields.io/badge/Release-v0.1.9-brightgreen) 
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
-![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
 ![Language](https://img.shields.io/badge/Language-English-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
@@ -30,6 +29,7 @@ The framework includes advanced imputation algorithms, supports various patterns
 
 ---
 
+<br>
 
 ## System Requirements
 
@@ -43,6 +43,9 @@ For instructions on installing these dependencies, please refer to the [installa
 
 
 ---
+
+<br>
+
 
 ## Installation
 
@@ -122,6 +125,8 @@ $ pip install -e .
 
 ---
 
+<br>
+
 
 ## Loading and Preprocessing
 
@@ -154,6 +159,8 @@ ts_1.print(limit=10)
 
 ---
 
+<br>
+
 ## Contamination
 ImputeGAP allows to contaminate a complete datasets with missing data patterns that mimics real-world scenarios. The available patterns are : <b>MCAR, MISSING POURCENTAGE, and BLACKOUT</b>. 
 For more details, please refer to the documentation in this page : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >missing data patterns</a>.
@@ -184,6 +191,9 @@ ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_pa
 <br>
 
 ---
+
+<br>
+
 
 ## Imputation
 
@@ -232,6 +242,8 @@ ts_3.print_results(cdrec.metrics)
 
 ---
 
+<br>
+
 
 ## Parameterization
 ImputeGAP provides optimization techniques that automatically identify the optimal hyperparameters for a specific algorithm in relation to a given dataset.
@@ -278,6 +290,9 @@ utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", data
 
 ---
 
+<br>
+
+
 ## Explainer
 ImputeGAP allows users to explore the features in the data that impact the imputation results
 through Shapely Additive exPlanations (SHAP). To attribute a meaningful interpretation of the SHAP results, ImputeGAP groups the extracted features into four categories: 
@@ -309,6 +324,8 @@ Explainer.print(shap_values, shap_details)
 
 ---
 
+<br>
+
 ## Integration
 To add your own imputation algorithm in Python or C++, please refer to the detailed [integration guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/integration).
 
@@ -316,6 +333,8 @@ To add your own imputation algorithm in Python or C++, please refer to the detai
 <br>
 
 ---
+
+<br>
 
 ## References
 
@@ -327,6 +346,8 @@ Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudré-Mauroux. *
 
 
 ---
+
+<br>
 
 ## Core Contributors
 - Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>)
