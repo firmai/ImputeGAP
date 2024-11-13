@@ -16,14 +16,17 @@ The framework includes advanced imputation algorithms, supports various patterns
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
 [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://exascaleinfolab.github.io/ImputeGAP/generation/build/html/index.html)
 
+<br>
+
 - **Documentation**: [https://exascaleinfolab.github.io/ImputeGAP/](https://exascaleinfolab.github.io/ImputeGAP/)
 - **PyPI**: [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)
 - **Datasets**: [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
 
-<br />
+<br>
 
- [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Integration**](#integration) | [**Contributors**](#core-contributors)
+ [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Integration**](#integration) | [**References**](#references) | [**Contributors**](#core-contributors)
 
+<br>
 
 ---
 
@@ -114,7 +117,11 @@ $ cd ./ImputeGAP
 ```bash
 $ pip install -e .
 ``` 
+
+<br>
+
 ---
+
 
 ## Loading and Preprocessing
 
@@ -142,6 +149,8 @@ ts_1.plot(raw_data=ts_1.data, title="raw data", max_series=10, max_values=100, s
 ts_1.print(limit=10)
 
 ```
+
+<br>
 
 ---
 
@@ -171,6 +180,8 @@ infected_data = ts_1.Contaminate.mcar(ts_1.data, series_impacted=0.4, missing_ra
 ts_1.print(limit=10)
 ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_path="./imputegap/assets")
 ```
+
+<br>
 
 ---
 
@@ -217,7 +228,11 @@ ts_3.print_results(cdrec.metrics)
 ```
 
 
+<br>
+
 ---
+
+
 ## Parameterization
 ImputeGAP provides optimization techniques that automatically identify the optimal hyperparameters for a specific algorithm in relation to a given dataset.
 The available optimizers are: Greedy Optimizer (GO), Bayesian Optimizer (BO), Particle Swarm Optimizer (PSO), and Successive Halving (SH.
@@ -259,6 +274,8 @@ utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", data
 ```
 
 
+<br>
+
 ---
 
 ## Explainer
@@ -288,10 +305,25 @@ shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_na
 Explainer.print(shap_values, shap_details)
 ```
 
+<br>
+
 ---
 
 ## Integration
 To add your own imputation algorithm in Python or C++, please refer to the detailed [integration guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/integration).
+
+
+<br>
+
+---
+
+## References
+
+Mourad Khayati, Quentin Nater, and Jacques Pasquier. **“ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data.”** Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024): 4329–32. [PDF](https://www.vldb.org/pvldb/vol17/p4329-khayati.pdf) [Code](https://github.com/eXascaleInfolab/ImputeVIS)
+
+Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudré-Mauroux. **“Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series.”** In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020. [PDF](https://www.vldb.org/pvldb/vol13/p768-khayati.pdf) [Code](https://github.com/eXascaleInfolab/bench-vldb20) [Award](https://vldb2020.org/vldb-2020-awards.html#most-reproducible-paper-award)
+
+<br>
 
 
 ---
