@@ -9,14 +9,12 @@ import imputegap.tools.algorithm_parameters as sh_params
 from functools import partial
 import pyswarms as ps
 
-from pyswarms.utils.reporter import Reporter
-reporter = Reporter()
-
-
-
 # BAYESIAN IMPORT
 import skopt
 from skopt.space import Integer
+
+from pyswarms.utils.reporter import Reporter
+reporter = Reporter()
 
 
 class BaseOptimizer:

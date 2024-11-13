@@ -17,7 +17,10 @@ else:
     try:
         # Attempt to use TkAgg if a display is available and we're not in CI
         matplotlib.use("TkAgg")
-        import tkinter as tk  # Check if tkinter is available
+        if importlib.util.find_spec("tkinter") is not None:
+            print("tkinter is available.")
+        else:
+            print("tkinter is not available.")
         print("Using TkAgg backend with tkinter support.")
     except (ImportError, RuntimeError):
         # Fallback to Agg if TkAgg is unavailable
