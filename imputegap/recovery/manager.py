@@ -95,7 +95,7 @@ class TimeSeries:
             elif isinstance(data, np.ndarray):
                 self.data = data
             else:
-                print("\nThe time series has not been loaded, format unknown\n")
+                print("\nThe time series have not been loaded, format unknown\n")
                 self.data = None
                 raise ValueError("Invalid input for import_matrix")
 
@@ -127,7 +127,7 @@ class TimeSeries:
 
         if data is not None:
             if isinstance(data, str):
-                print("\nThe time series has been loaded from " + str(data) + "\n")
+                print("\nThe time series have been loaded from " + str(data) + "\n")
 
                 #  update path form inner library datasets
                 if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt", "eeg-reading.txt",
@@ -139,7 +139,7 @@ class TimeSeries:
                 if max_series is not None:
                     self.data = self.data[:, :max_series]
             else:
-                print("\nThe time series has not been loaded, format unknown\n")
+                print("\nThe time series have not been loaded, format unknown\n")
                 self.data = None
                 raise ValueError("Invalid input for load_timeseries")
 
@@ -376,7 +376,7 @@ class TimeSeries:
         file_path = None
         if save_path:
             os.makedirs(save_path, exist_ok=True)
-            file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_graph.jpg")
+            file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_plot.jpg")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)
 

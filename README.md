@@ -36,10 +36,10 @@ The framework includes advanced imputation algorithms, supports various patterns
 
 The following prerequisites are required to use ImputeGAP:
 
-- Python version **3.12.0** to **3.12.6**
+- Python version **3.12**
 - Unix-compatible environment for execution
 
-For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
+To create and set up an environment with Python 3.12, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
 
 <br>
 
@@ -50,48 +50,7 @@ For instructions on installing these dependencies, please refer to the [installa
 
 ## Installation
 
-### Python 3.12 installation
 
-To install Python 3.12 on a Unix system, you can follow these steps before creating a virtual environment:
-
-1) Update your package list and install prerequisites:
-
-```
-sudo apt-get update
-sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev python3-tk libopenblas0 software-properties-common python3-pip
-```
-
-2) Add the deadsnakes PPA (for Ubuntu): This PPA provides newer Python versions for Ubuntu.
-
-```
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-```
-
-3) Install Python 3.12:
-
-```
-sudo apt-get install python3.12 python3.12-venv python3.12-dev
-```
-
-4) Verify the installation:
-```
-python3.12 --version
-```
-
-5) Create a virtual environment using Python 3.12:
-```
-python3.12 -m venv myenv
-```
-
-6) Activate the virtual environment:
-```
-source myenv/bin/activate
-```
-
-Now, you are ready to install your project or any dependencies within the Python 3.12 virtual environment.
-
-<br />
 
 ### Pip installation
 
@@ -137,7 +96,7 @@ format: *(values, series)* with column separator: empty space, row separator: ne
 
 
 ### Example Loading
-You can find this example in the file [`runner_contamination.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_contamination.py).
+You can find this example in the file [`runner_loading.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_loading.py).
 
 ```python
 from imputegap.recovery.manager import TimeSeries
@@ -147,7 +106,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
+ts_1.load_timeseries(utils.search_path("eeg-alcohol"), max_series=5, max_values=15)
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
@@ -296,7 +255,7 @@ utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", data
 
 ## Explainer
 ImputeGAP allows users to explore the features in the data that impact the imputation results
-through Shapely Additive exPlanations (SHAP). To attribute a meaningful interpretation of the SHAP results, ImputeGAP groups the extracted features into four categories: 
+through Shapely Additive exPlanations ([**SHAP**](https://shap.readthedocs.io/en/latest/)). To attribute a meaningful interpretation of the SHAP results, ImputeGAP groups the extracted features into four categories: 
 geometry, transformation, correlation, and trend.
 
 
@@ -339,9 +298,9 @@ To add your own imputation algorithm in Python or C++, please refer to the detai
 
 ## References
 
-Mourad Khayati, Quentin Nater, and Jacques Pasquier. **“ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data.”** Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024): 4329–32. [PDF](https://www.vldb.org/pvldb/vol17/p4329-khayati.pdf) [Code](https://github.com/eXascaleInfolab/ImputeVIS)
+Mourad Khayati, Quentin Nater, and Jacques Pasquier. **“ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data.”** Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024): 4329–32.
 
-Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudré-Mauroux. **“Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series.”** In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020. [PDF](https://www.vldb.org/pvldb/vol13/p768-khayati.pdf) [Code](https://github.com/eXascaleInfolab/bench-vldb20) [Award](https://vldb2020.org/vldb-2020-awards.html#most-reproducible-paper-award)
+Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudré-Mauroux. **“Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series.”** In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020.
 
 <br>
 
