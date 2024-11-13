@@ -1,5 +1,5 @@
-<img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
-<br />
+<img align="right" width="140" height="140" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+<br /> <br />
 
 
 # Installation for ImputeGAP
