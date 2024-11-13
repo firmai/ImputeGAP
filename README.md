@@ -43,7 +43,7 @@ To install Python 3.12 on a Unix system, you can follow these steps before creat
 
 ```
 sudo apt-get update
-sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev python3-tk libopenblas0 software-properties-common
+sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev python3-tk libopenblas0 software-properties-common python3-pip
 ```
 
 2) Add the deadsnakes PPA (for Ubuntu): This PPA provides newer Python versions for Ubuntu.
