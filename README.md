@@ -10,6 +10,7 @@ The framework includes advanced imputation algorithms, supports various patterns
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
 ![Release](https://img.shields.io/badge/Release-v0.1.9-brightgreen) 
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
+![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
 ![Language](https://img.shields.io/badge/Language-English-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
@@ -40,7 +41,7 @@ The following prerequisites are required to use ImputeGAP:
 
 For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
 
-
+<br>
 
 ---
 
