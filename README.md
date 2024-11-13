@@ -12,7 +12,6 @@ The framework includes advanced imputation algorithms, supports various patterns
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
 ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
-![PyPI Downloads](https://img.shields.io/pypi/dm/imputegap?label=PyPI%20downloads&color=blue)
 ![Language](https://img.shields.io/badge/Language-English-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
 [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://exascaleinfolab.github.io/ImputeGAP/generation/build/html/index.html)

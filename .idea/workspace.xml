@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/dataset/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/dataset/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/procedure/about/about.md" beforeDir="false" afterPath="$PROJECT_DIR$/procedure/about/about.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/procedure/installation/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/procedure/installation/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,7 +272,7 @@
       <workItem from="1731415394202" duration="9632000" />
       <workItem from="1731492969096" duration="1884000" />
       <workItem from="1731496977912" duration="41000" />
-      <workItem from="1731499278920" duration="1354000" />
+      <workItem from="1731499278920" duration="1707000" />
     </task>
     <servers />
   </component>
