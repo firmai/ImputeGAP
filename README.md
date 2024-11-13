@@ -26,10 +26,10 @@ The framework includes advanced imputation algorithms, supports various patterns
 
 ## System Requirements
 
-To use **ImputeGAP**, the following prerequisites are necessary:
+To use ImputeGAP, the following prerequisites are necessary:
 
-- Python version **3.12.0** or higher
-- A **Unix-compatible environment** for execution
+- Python version 3.12.0 or higher
+- Unix-compatible environment for execution
 
 For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
 
@@ -68,14 +68,12 @@ $ cd ./ImputeGAP
 ```bash
 $ pip install -e .
 ``` 
-
-
 ---
-
 
 ## Loading and Preprocessing
 
-The data management module allows to load any time series datasets in text format, given they follow this format: *(values, series)* with column separator: empty space, row separator: newline.
+The data management module allows to load any time series datasets in text format, given they follow this
+format: *(values, series)* with column separator: empty space, row separator: newline.
 
 
 
@@ -102,8 +100,8 @@ ts_1.print(limit=10)
 ---
 
 ## Contamination
-ImputeGAP allows to contaminate datasets with a specific scenario to reproduce a real-world situation. Up to now, the scenarios are : <b>MCAR, MISSING POURCENTAGE, and BLACKOUT</b><br />
-Please find the documentation in this page : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >missing data scenarios</a><br><br>
+ImputeGAP allows to contaminate a complete datasets with missing data patterns that mimics real-world scenarios. The available patterns are : <b>MCAR, MISSING POURCENTAGE, and BLACKOUT</b>. 
+For more details, please refer to the documentation in this page : <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >missing data patterns</a>.
 
 
 ### Example Contamination
@@ -131,9 +129,9 @@ ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_pa
 ---
 
 ## Imputation
-ImputeGAP offers a wide range of imputation algorithms categorized into several families, including: **Matrix Completion**, **Deep Learning**, **Statistics**, **Pattern Search**, and **Graphs Learning**.
 
-It is also possible to add your own custom imputation algorithm. To do this, simply follow the `min-impute` template and replace the logic with your own code.
+
+ImputeGAP provides a diverse selection of imputation algorithms, organized into five main categories: Matrix Completion, Deep Learning, Statistical Methods, Pattern Search, and Graph Learning. You can also add your own custom imputation algorithm by following the `min-impute` template and substituting your code to implement your logic.
 
 ### Example Imputation
 You can find this example in the file [`runner_imputation.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_imputation.py).
@@ -176,7 +174,7 @@ ts_3.print_results(cdrec.metrics)
 ---
 ## Parameterization
 ImputeGAP provides optimization techniques that automatically identify the optimal hyperparameters for a specific algorithm in relation to a given dataset.
-The available optimizers include: **Greedy Optimizer**, **Bayesian Optimizer**, **Particle Swarm Optimizer**, and **Successive Halving**.
+The available optimizers are: Greedy Optimizer (GO), Bayesian Optimizer (BO), Particle Swarm Optimizer (PSO), and Successive Halving (SH.
 
 ### Example Auto-ML
 You can find this example in the file [`runner_optimization.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_optimization.py).
@@ -218,7 +216,10 @@ utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", data
 ---
 
 ## Explainer
-ImputeGAP includes an algorithm based on the **SHAP** library, which explains the results of your imputations using features specific to your dataset.
+ImputeGAP allows users to explore the features in the data that impact the imputation results
+through Shapely Additive exPlanations (SHAP). To attribute a meaningful interpretation of the SHAP results, ImputeGAP groups the extracted features into four categories: 
+geometry, transformation, correlation, and trend.
+
 
 ### Example Explainer
 You can find this example in the file [`runner_explainer.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_explainer.py).
