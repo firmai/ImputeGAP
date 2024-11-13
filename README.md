@@ -1,5 +1,5 @@
-<img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
-<br />
+<img align="right" width="140" height="140" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+<br /> <br />
 
 # Welcome to ImputeGAP
 
@@ -7,6 +7,15 @@ ImputeGAP is a comprehensive framework designed for imputation algorithms. It of
 
 The framework includes advanced imputation algorithms, supports various patterns of missing data, and provides multiple evaluation metrics. Additionally, ImputeGAP enables AutoML-based parameter optimization, feature extraction, and feature impact analysis with SHAP. The framework is built for easy integration of new algorithms, datasets, and evaluation metrics, enhancing its flexibility and adaptability.
 
+![Python](https://img.shields.io/badge/Python-v3.12-blue) 
+![Release](https://img.shields.io/badge/Release-v0.1.9-brightgreen) 
+![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
+![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
+![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
+![PyPI Downloads](https://img.shields.io/pypi/dm/imputegap?label=PyPI%20downloads&color=blue)
+![Language](https://img.shields.io/badge/Language-English-blue)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
+[![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://exascaleinfolab.github.io/ImputeGAP/generation/build/html/index.html)
 
 - **Documentation**: [https://exascaleinfolab.github.io/ImputeGAP/](https://exascaleinfolab.github.io/ImputeGAP/)
 - **PyPI**: [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)
@@ -22,7 +31,7 @@ The framework includes advanced imputation algorithms, supports various patterns
 
 ## System Requirements
 
-To use ImputeGAP, the following prerequisites are necessary:
+The following prerequisites are required to use ImputeGAP:
 
 - Python version **3.12.0** to **3.12.6**
 - Unix-compatible environment for execution

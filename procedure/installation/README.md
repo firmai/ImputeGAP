@@ -6,7 +6,7 @@
 
 ## System Requirements
 
-To utilize **ImputeGAP**, the following prerequisites are necessary:
+The following prerequisites are required to use ImputeGAP:
 
 - Python version **3.12.0** or higher
 - A **Unix-compatible environment** for execution
