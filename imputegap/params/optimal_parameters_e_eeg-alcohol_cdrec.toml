@@ -1,0 +1,4 @@
+[cdrec]
+rank = 3
+epsilon = "1e-06"
+iteration = 100

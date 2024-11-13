@@ -1,10 +1,5 @@
-
-<img img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
-
-<!--
-
-![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
--->
+<img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+<br />
 
 # Welcome to ImputeGAP
 
@@ -17,8 +12,9 @@ The framework includes advanced imputation algorithms, supports various patterns
 - **PyPI**: [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)
 - **Datasets**: [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
 
+<br />
 
- [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Contributors**](#core-contributors)
+ [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Integration**](#integration) | [**Contributors**](#core-contributors)
 
 
 ---
@@ -28,7 +24,7 @@ The framework includes advanced imputation algorithms, supports various patterns
 
 To use ImputeGAP, the following prerequisites are necessary:
 
-- Python version 3.12.6 or lower
+- Python version **3.12.0** to **3.12.6**
 - Unix-compatible environment for execution
 
 For instructions on installing these dependencies, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
@@ -39,7 +35,48 @@ For instructions on installing these dependencies, please refer to the [installa
 
 ## Installation
 
+### Python 3.12 installation
 
+To install Python 3.12 on a Unix system, you can follow these steps before creating a virtual environment:
+
+1) Update your package list and install prerequisites:
+
+```
+sudo apt-get update
+sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev python3-tk libopenblas0 software-properties-common python3-pip
+```
+
+2) Add the deadsnakes PPA (for Ubuntu): This PPA provides newer Python versions for Ubuntu.
+
+```
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+```
+
+3) Install Python 3.12:
+
+```
+sudo apt-get install python3.12 python3.12-venv python3.12-dev
+```
+
+4) Verify the installation:
+```
+python3.12 --version
+```
+
+5) Create a virtual environment using Python 3.12:
+```
+python3.12 -m venv myenv
+```
+
+6) Activate the virtual environment:
+```
+source myenv/bin/activate
+```
+
+Now, you are ready to install your project or any dependencies within the Python 3.12 virtual environment.
+
+<br />
 
 ### Pip installation
 
@@ -49,6 +86,7 @@ To quickly install the latest version of ImputeGAP along with its dependencies f
 $ pip install imputegap
 ``` 
 
+<br />
 
 ### Local installation
 
@@ -243,6 +281,13 @@ Explainer.print(shap_values, shap_details)
 ```
 
 ---
+
+## Integration
+To add your own imputation algorithm in Python or C++, please refer to the detailed [integration guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/integration).
+
+
+---
+
 ## Core Contributors
 - Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>)
 - Dr. Mourad Khayati (<a href="mailto:mourad.khayati@unifr.ch">mourad.khayati@unifr.ch</a>)

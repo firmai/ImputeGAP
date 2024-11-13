@@ -265,6 +265,8 @@ class Imputation:
             algo.impute(user_defined=True, params={"rank": rank, "epsilon": epsilon, "iterations": iterations})
 
         elif algorithm == 'iim':
+            if not isinstance(configuration, list):
+                configuration = [configuration]
             learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
 

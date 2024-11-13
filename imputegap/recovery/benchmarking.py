@@ -55,18 +55,18 @@ class Benchmarking:
 
 
 
-    def generate_reports(self, runs_plots_scores, save_dir="./report", dataset=""):
+    def generate_reports(self, runs_plots_scores, save_dir="./reports", dataset=""):
         """
-        Generate and save a text report of metrics and timing for each dataset, algorithm, and scenario.
+        Generate and save a text reports of metrics and timing for each dataset, algorithm, and scenario.
 
         Parameters
         ----------
         runs_plots_scores : dict
             Dictionary containing scores and timing information for each dataset, scenario, and algorithm.
         save_dir : str, optional
-            Directory to save the report file (default is "./report").
+            Directory to save the reports file (default is "./reports").
         dataset : str, optional
-            Name of the data for the report name.
+            Name of the data for the reports name.
 
         Returns
         -------
@@ -74,7 +74,7 @@ class Benchmarking:
 
         Notes
         -----
-        The report is saved in a "report.txt" file in `save_dir`, organized in tabular format.
+        The reports is saved in a "reports.txt" file in `save_dir`, organized in tabular format.
         """
 
         os.makedirs(save_dir, exist_ok=True)
@@ -99,7 +99,7 @@ class Benchmarking:
                                 optimization_time = times.get("optimization", None)
                                 imputation_time = times.get("imputation", None)
 
-                                # Create a report line with timing details
+                                # Create a reports line with timing details
                                 line = (
                                     f"| {dataset} | {algorithm} | {optimizer} | {scenario} | {x} "
                                     f"| {metrics.get('RMSE')} | {metrics.get('MAE')} | {metrics.get('MI')} "
@@ -110,7 +110,7 @@ class Benchmarking:
 
         print("\nReport recorded in", save_path)
 
-    def generate_plots(self, runs_plots_scores, save_dir="./report"):
+    def generate_plots(self, runs_plots_scores, s="M", v="N", save_dir="./reports"):
         """
         Generate and save plots for each metric and scenario based on provided scores.
 
@@ -118,8 +118,12 @@ class Benchmarking:
         ----------
         runs_plots_scores : dict
             Dictionary containing scores and timing information for each dataset, scenario, and algorithm.
+        s : str
+            display the number of series in graphs
+        v : sts
+            display the number of values in graphs
         save_dir : str, optional
-            Directory to save generated plots (default is "./report").
+            Directory to save generated plots (default is "./reports").
 
         Returns
         -------
@@ -184,36 +188,24 @@ class Benchmarking:
                             "contamination_time": "Contamination Time (seconds)"
                         }.get(metric, metric)
 
-                        plt.title(f"{dataset} | {scenario} | {title_metric}")
+                        plt.title(f"{dataset} | {scenario} | {title_metric} | ({s}x{v})")
                         plt.xlabel(f"{scenario} rate of missing values and missing series")
                         plt.ylabel(ylabel_metric)
                         plt.xlim(0.0, 0.85)
 
                         # Set y-axis limits with padding below 0 for visibility
                         if metric == "imputation_time":
-                            plt.ylim(-10, 110)
+                            plt.ylim(-10, 90)
                         elif metric == "contamination_time":
-                            plt.ylim(-0.01, 0.61)
+                            plt.ylim(-0.01, 0.59)
                         elif metric == "MAE":
-                            plt.ylim(-1, 11)
+                            plt.ylim(-0.1, 2.4)
                         elif metric == "MI":
-                            plt.ylim(-0.1, 2.1)
+                            plt.ylim(-0.1, 1.85)
                         elif metric == "RMSE":
-                            plt.ylim(-0.5, 12.5)
+                            plt.ylim(-0.1, 2.6)
                         elif metric == "CORRELATION":
-                            plt.ylim(-1.1, 1.1)
-
-                        if dataset == "chlorine":
-                            if metric == "MAE":
-                                plt.ylim(-0.1, 0.9)
-                            elif metric == "RMSE":
-                                plt.ylim(-0.1, 1.1)
-
-                        if dataset == "eeg":
-                            if metric == "MAE":
-                                plt.ylim(-0.00001, 0.0001)
-                            elif metric == "RMSE":
-                                plt.ylim(-0.00001, 0.0003)
+                            plt.ylim(-0.75, 1.1)
 
                         # Customize x-axis ticks
                         x_points = [0.0, 0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
@@ -232,8 +224,7 @@ class Benchmarking:
         print("\nAll plots recorded in", save_dir)
 
 
-    def comprehensive_evaluation(self, datasets=[], optimizers=[], algorithms=[], scenarios=[], x_axis=[],
-                                 save_dir="./report", already_optimized=False):
+    def comprehensive_evaluation(self, datasets=[], optimizers=[], algorithms=[], scenarios=[], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], save_dir="./reports", already_optimized=False):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and scenarios.
 
@@ -250,7 +241,7 @@ class Benchmarking:
         x_axis : list of float
             List of missing rates for contamination.
         save_dir : str, optional
-            Directory to save reports and plots (default is "./report").
+            Directory to save reports and plots (default is "./reports").
         already_optimized : bool, optional
             If True, skip parameter optimization (default is False).
 
@@ -260,7 +251,7 @@ class Benchmarking:
 
         Notes
         -----
-        Runs contamination, imputation, and evaluation, then generates plots and a summary report.
+        Runs contamination, imputation, and evaluation, then generates plots and a summary reports.
         """
 
         print("initialization of the comprehensive evaluation. It can take time...\n")
@@ -269,16 +260,22 @@ class Benchmarking:
 
             runs_plots_scores = {}
 
+            limitation_series = 100
+
             print("1. evaluation launch for", dataset, "========================================================\n\n\n")
             ts_test = TimeSeries()
 
             header = False
-            if dataset == "eeg":
+            if dataset == "eeg-reading":
                 header = True
+            elif dataset == "drift":
+                limitation_series = 50
 
-            ts_test.load_timeseries(data=utils.search_path(dataset), header=header)
+            ts_test.load_timeseries(data=utils.search_path(dataset), max_series=limitation_series, header=header)
             start_time_opti = 0
             end_time_opti = 0
+
+            M, N = ts_test.data.shape
 
             print("1. normalization of ", dataset, "\n")
             ts_test.normalize()
@@ -295,11 +292,9 @@ class Benchmarking:
 
                         start_time_contamination = time.time()  # Record start time
                         if scenario == "mcar":
-                            infected_matrix = ts_test.Contaminate.mcar(ts=ts_test.data, series_impacted=x,
-                                                                       missing_rate=x, use_seed=True, seed=42)
+                            infected_matrix = ts_test.Contaminate.mcar(ts=ts_test.data, series_impacted=x, missing_rate=x, use_seed=True, seed=42)
                         elif scenario == "mp":
-                            infected_matrix = ts_test.Contaminate.missing_percentage(ts=ts_test.data, series_impacted=x,
-                                                                                     missing_rate=x)
+                            infected_matrix = ts_test.Contaminate.missing_percentage(ts=ts_test.data, series_impacted=x, missing_rate=x)
                         else:
                             infected_matrix = ts_test.Contaminate.blackout(ts=ts_test.data, missing_rate=x)
                         end_time_contamination = time.time()
@@ -362,7 +357,7 @@ class Benchmarking:
                             print("\t\truns_plots_scores", runs_plots_scores)
 
             print("\truns_plots_scores : ", runs_plots_scores)
-            self.generate_plots(runs_plots_scores, save_dir)
+            self.generate_plots(runs_plots_scores=runs_plots_scores, s=str(M), v=str(N), save_dir=save_dir)
             self.generate_reports(runs_plots_scores, save_dir, dataset)
 
             print("======================================================================================\n\n\n\n\n\n")

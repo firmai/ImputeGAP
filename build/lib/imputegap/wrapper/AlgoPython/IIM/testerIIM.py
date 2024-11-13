@@ -37,10 +37,11 @@ def iim_recovery(matrix_nan: np.ndarray, adaptive_flag: bool = False, learning_n
         incomplete_tuples = matrix_nan[tuples_with_nan]
         complete_tuples = matrix_nan[~tuples_with_nan]  # Rows that do not contain a NaN value
 
+        if not isinstance(learning_neighbors, int):
+            learning_neighbors = learning_neighbors[0]
+
         if learning_neighbors > len(complete_tuples):
-            #print("Warning: More learning neighbors than complete tuples, setting learning neighbors to number of complete tuples")
-            learning_neighbors = min(len(complete_tuples),
-                                     learning_neighbors)  # Make sure we don't have more neighbors than tuples
+            learning_neighbors = min(len(complete_tuples), learning_neighbors)
         if len(complete_tuples) == 0:
             #print("No complete tuples found, unable to proceed, returning original matrix")
             return matrix_nan

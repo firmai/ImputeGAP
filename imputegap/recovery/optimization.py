@@ -13,6 +13,9 @@ import pyswarms as ps
 import skopt
 from skopt.space import Integer
 
+from pyswarms.utils.reporter import Reporter
+reporter = Reporter()
+
 
 class BaseOptimizer:
     """
@@ -409,6 +412,9 @@ class Optimization:
             """
             start_time = time.time()  # Record start time
 
+            if not isinstance(selected_metrics, list):
+                selected_metrics = [selected_metrics]
+
             # Define the search space
             search_space = SEARCH_SPACES_PSO
 
@@ -492,6 +498,9 @@ class Optimization:
             """
             start_time = time.time()  # Record start time
 
+            if not isinstance(selected_metrics, list):
+                selected_metrics = [selected_metrics]
+
             # Define the parameter names for each algorithm
             param_names = PARAM_NAMES
 
@@ -552,6 +561,12 @@ class Optimization:
             best_score = self._objective(
                 Imputation.evaluate_params(ground_truth, contamination, best_config, algorithm), selected_metrics)
 
+            # Check the size of param_names[algorithm]
+            if len(param_names[algorithm]) == 1:
+                # If only one parameter name, wrap best_config in a list if it's not already
+                best_config = [best_config] if not isinstance(best_config, list) else best_config
+
+            # Create the dictionary using zip
             best_config_dict = {name: value for name, value in zip(param_names[algorithm], best_config)}
 
             end_time = time.time()

@@ -6,9 +6,9 @@ ImputeGap uses several datasets containing different characteristics to test you
 
 
 
-## EEG-Test
+## EEG-ALCOHOL
 
-The **EEG-Test** dataset, owned by Henri Begleiter [EEG dataset](https://kdd.ics.uci.edu/databases/eeg/eeg.data.html), is utilized in various studies such as [Statistical mechanics of neocortical interactions: Canonical momenta indicatorsof electroencephalography](https://link.aps.org/doi/10.1103/PhysRevE.55.4578).
+The **EEG-ALCOHOL** dataset, owned by Henri Begleiter [EEG dataset](https://kdd.ics.uci.edu/databases/eeg/eeg.data.html), is utilized in various studies such as [Statistical mechanics of neocortical interactions: Canonical momenta indicatorsof electroencephalography](https://link.aps.org/doi/10.1103/PhysRevE.55.4578).
 It describes an EEG database composed of individuals with a genetic predisposition to alcoholism.
 The dataset contains measurements from 64 electrodes placed on subject's scalps which were sampled at 256 Hz (3.9-msec epoch) for 1 second.
 The dataset contains a total of 416 samples.
@@ -17,15 +17,15 @@ The dataset's dimensions are 64 series, each containing 256 values.
 This dataset is primarily used for the analysis of medical and brain-related data, with a focus on detecting predictable patterns in brain wave activity.
 
 ### Plots
-The plots present a series of plots derived from the EEG-TEST dataset, illustrating various aspects of the data and preprocessing steps.
-EEG-Test dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
-EEG-Test dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while EEG-Test dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
-Finally, EEG-Test - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
+The plots present a series of plots derived from the EEG-ALCOHOL dataset, illustrating various aspects of the data and preprocessing steps.
+EEG-ALCOHOL dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+EEG-ALCOHOL dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while EEG-ALCOHOL dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, EEG-ALCOHOL - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![EEG-Test dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/01_eeg-test-rawdata-NxM_graph.jpg)
-![EEG-Test dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/02_eeg-test-rawdata20x400_graph.jpg)
-![EEG-Test dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/03_eeg-test-rawdata01x400_graph.jpg)
-![EEG-Test - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-test/04_eeg-test-normmin_maxdata01x400_graph.jpg)
+![EEG-ALCOHOL dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/01_eeg-alcohol-rawdata-NxM_graph.jpg)
+![EEG-ALCOHOL dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/02_eeg-alcohol-rawdata20x400_graph.jpg)
+![EEG-ALCOHOL dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/03_eeg-alcohol-rawdata01x400_graph.jpg)
+![EEG-ALCOHOL - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/04_eeg-alcohol-normmin_maxdata01x400_graph.jpg)
 
 
 ### Features
@@ -62,7 +62,7 @@ Finally, EEG-Test - normalized 20x400 demonstrates the impact of "MIN-MAX" norma
 
 | Data info          | Values                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 |--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Dataset name       | eeg-test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Dataset name       | eeg-alcohol                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | Dataset codename   | co3a0000458.rd                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | Dataset name       | EEG Database: Genetic Predisposition to Alcoholism                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | Url                | https://kdd.ics.uci.edu/databases/eeg/eeg.data.html                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
@@ -80,9 +80,9 @@ Finally, EEG-Test - normalized 20x400 demonstrates the impact of "MIN-MAX" norma
 <br /><hr /><br />
 
 
-## EEG
+## EEG-READING
 
-The **EEG** dataset, created by the DERCo, is a collection of EEG recordings obtained from participants engaged in text reading tasks [A Dataset for Human Behaviour in Reading Comprehension Using {EEG}](https://www.nature.com/articles/s41597-024-03915-8).
+The **EEG-READING** dataset, created by the DERCo, is a collection of EEG recordings obtained from participants engaged in text reading tasks [A Dataset for Human Behaviour in Reading Comprehension Using {EEG}](https://www.nature.com/articles/s41597-024-03915-8).
 This corpus includes behavioral data from 500 participants, as well as EEG recordings from 22 healthy adult native English speakers.
 The dataset features a time resolution of 1000 Hz, with time-locked recordings from -200 ms to 1000 ms relative to the stimulus onset.
 The dataset consists of 564 epochs, although only one was selected for this specific EEG subset.
@@ -90,15 +90,15 @@ The extracted dataset contains 1201 values across 33 series.
 The goal of this dataset is to provide an alternative perspective on neuroscience-related datasets and to enable comparisons of results from different research studies utilizing the same technology.
 
 ### Plots
-The plots present a series of plots derived from the EEG dataset, illustrating various aspects of the data and preprocessing steps.
-EEG dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
-EEG dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while EEG dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
-Finally, EEG - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
+The plots present a series of plots derived from the EEG-READING dataset, illustrating various aspects of the data and preprocessing steps.
+EEG-READING dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+EEG-READING dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while EEG-READING dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, EEG-READING - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![EEG dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/01_eeg-rawdata-NxM_graph.jpg)
-![EEG dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/02_eeg-rawdata20x400_graph.jpg)
-![EEG dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/03_eeg-rawdata01x400_graph.jpg)
-![EEG - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg/04_eeg-normmin_maxdata01x400_graph.jpg)
+![EEG-READING dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/01_eeg-reading-rawdata-NxM_graph.jpg)
+![EEG-READING dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/02_eeg-reading-rawdata20x400_graph.jpg)
+![EEG-READING dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/03_eeg-reading-rawdata01x400_graph.jpg)
+![EEG-READING - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/04_eeg-reading-normmin_maxdata01x400_graph.jpg)
 
 
 ### Features
@@ -132,18 +132,18 @@ Finally, EEG - normalized 20x400 demonstrates the impact of "MIN-MAX" normalizat
 
 ### Summary
 
-| Data info          |                                                                         |
-|--------------------|-------------------------------------------------------------------------|
-| Dataset codename   | eeg                                                                     |
-| Dataset name       | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG |
-| Url                | https://doi.org/10.17605/OSF.IO/RKQBU                                   |
- | Specific URL       | https://osf.io/tu4zj                                                    |
-| Source             | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG |
-| Article            | https://www.nature.com/articles/s41597-024-03915-8<br/>Boi Mai Quach, Cathal Gurrin & Graham Healy                      |
-| Time granularity   | 1000.0 Hz                                                               |
-| t                  | -200.00 ...    1000.00 ms                                                               |
-| Epoch              | 1 used on 564                                                           |
-| Dataset dimensions | N=1201 M=33                                                             |
+| Data info          |                                                                                                    |
+|--------------------|----------------------------------------------------------------------------------------------------|
+| Dataset codename   | eeg-reading                                                                                        |
+| Dataset name       | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG                            |
+| Url                | https://doi.org/10.17605/OSF.IO/RKQBU                                                              |
+ | Specific URL       | https://osf.io/tu4zj                                                                               |
+| Source             | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG                            |
+| Article            | https://www.nature.com/articles/s41597-024-03915-8<br/>Boi Mai Quach, Cathal Gurrin & Graham Healy |
+| Time granularity   | 1000.0 Hz                                                                                          |
+| t                  | -200.00 ...    1000.00 ms                                                                          |
+| Epoch              | 1 used on 564                                                                                      |
+| Dataset dimensions | N=1201 M=33                                                                                        |
 
 <br /><hr /><br />
 

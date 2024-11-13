@@ -1,5 +1,6 @@
 import os
 import time
+import math
 import numpy as np
 import matplotlib
 from scipy.stats import zscore
@@ -8,8 +9,23 @@ import importlib.resources
 
 from imputegap.tools import utils
 
-if os.getenv('CI') is None:
-    matplotlib.use('TkAgg')
+# Use Agg backend if in a headless or CI environment
+if os.getenv('DISPLAY') is None or os.getenv('CI') is not None:
+    matplotlib.use("Agg")
+    print("Running in a headless environment or CI. Using Agg backend.")
+else:
+    try:
+        # Attempt to use TkAgg if a display is available and we're not in CI
+        matplotlib.use("TkAgg")
+        if importlib.util.find_spec("tkinter") is not None:
+            print("tkinter is available.")
+        else:
+            print("tkinter is not available.")
+        print("Using TkAgg backend with tkinter support.")
+    except (ImportError, RuntimeError):
+        # Fallback to Agg if TkAgg is unavailable
+        matplotlib.use("Agg")
+        print("TkAgg is unavailable. Using Agg backend.")
 
 from matplotlib import pyplot as plt  # type: ignore
 
@@ -120,7 +136,7 @@ class TimeSeries:
                 print("\nThe time series has been loaded from " + str(data) + "\n")
 
                 #  update path form inner library datasets
-                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-test.txt", "eeg.txt",
+                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt", "eeg-reading.txt",
                             "meteo.txt", "test.txt", "test-large.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 

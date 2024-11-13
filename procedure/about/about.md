@@ -1,3 +1,6 @@
+<img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+<br />
+
 # About Us
 
 **ImputeVIS** is a master's thesis project by Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>), supervised by Dr. Mourad Khayati (<a href="mailto:mourad.khayati@unifr.ch">mourad.khayati@unifr.ch</a>) and Prof. Jacques Pasquier-Rocha (<a href="mailto:jacques.pasquier@unifr.ch">jacques.pasquier@unifr.ch</a>).

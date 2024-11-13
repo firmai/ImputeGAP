@@ -1,4 +1,5 @@
-![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
+<img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+<br />
 
 
 # Installation for ImputeGAP
@@ -28,9 +29,9 @@ To run your implementation in a Unix-compatible environment on Windows, we recom
 
 <br><br>
 
-### Install Python 3.12.0
+### Install Python 3.12
 
-To use **ImputeGAP** effectively, ensure that your environment has **Python** version **3.12.0** or higher installed. Follow these steps to install or update Python in your Unix-compatible environment:
+To use **ImputeGAP** effectively, ensure that your environment has **Python** version **3.12.0** to **3.12.6** installed. Follow these steps to install or update Python in your Unix-compatible environment:
 
 ##### Step 1: Check Existing Python Version
 
@@ -41,42 +42,51 @@ python3 --version
 ```
 <br>
 
-##### Step 2: Install Python
-Update your package list and install the necessary dependencies for building Python:
-```bash
-sudo apt update
-sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev
-```
-<br>
-Download Python 3.12.0 source code from the official Python website and extract it :
+##### Step 2: Install Python 12
 
-```bash
-cd /usr/src
-sudo wget https://www.python.org/ftp/python/3.12.0/Python-3.12.0.tgz
-sudo tar xzf Python-3.12.0.tgz
-```
-<br>
-Compile and install Python 12:
+To install Python 3.12 on a Unix system, you can follow these steps before creating a virtual environment:
 
-```bash
-cd Python-3.12.0
-sudo ./configure --enable-optimizations
-sudo make altinstall
-```
-<br>
-Verify the installation:
+1) Update your package list and install prerequisites:
 
-```bash
+```
+sudo apt-get update
+sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev python3-tk libopenblas0 software-properties-common
+```
+
+2) Add the deadsnakes PPA (for Ubuntu): This PPA provides newer Python versions for Ubuntu.
+
+```
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+```
+
+3) Install Python 3.12:
+
+```
+sudo apt-get install python3.12 python3.12-venv python3.12-dev
+```
+
+4) Verify the installation:
+```
 python3.12 --version
 ```
 
+5) Create a virtual environment using Python 3.12:
+```
+python3.12 -m venv myenv
+```
 
+6) Activate the virtual environment:
+```
+source myenv/bin/activate
+```
+
+Now, you are ready to install your project or any dependencies within the Python 3.12 virtual environment.
+
+<br />
 
 
 <br /><hr /><br />
-
-
-
 
 ## Installation
 

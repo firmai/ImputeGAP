@@ -12,7 +12,7 @@ class TestOptiCDRECGreedy(unittest.TestCase):
         the goal is to test if only the simple optimization with cdrec has the expected outcome
         """
         algorithm = "cdrec"
-        dataset = "eeg-test"
+        dataset = "eeg-alcohol"
 
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path(dataset), max_series=50, max_values=100)

@@ -29,7 +29,7 @@ class BaseImputer:
     _optimize(parameters={}):
         Optimize hyperparameters for the imputation algorithm.
     """
-    algorithm = None  # Class variable to hold the algorithm name
+    algorithm = ""  # Class variable to hold the algorithm name
     logs = True
 
     def __init__(self, infected_matrix):
@@ -265,6 +265,8 @@ class Imputation:
             algo.impute(user_defined=True, params={"rank": rank, "epsilon": epsilon, "iterations": iterations})
 
         elif algorithm == 'iim':
+            if not isinstance(configuration, list):
+                configuration = [configuration]
             learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
 
