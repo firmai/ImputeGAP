@@ -8,7 +8,7 @@
 
 The following prerequisites are required to use ImputeGAP:
 
-- Python version **3.12.0** or higher
+- Python version **3.12.0** to **3.12.6**
 - A **Unix-compatible environment** for execution
 
 <br />
@@ -18,12 +18,17 @@ The following prerequisites are required to use ImputeGAP:
 To run your implementation in a Unix-compatible environment on Windows, we recommend installing **WSL (Windows Subsystem for Linux)**.
 
 1. Check if **WSL** is already installed by typing `WSL` in the search menu.
+
+
 2. If it is not installed, open **PowerShell** as Administrator (right-click the Start menu and select **Windows PowerShell (Admin)**).
+
+
 3. Run the following command to install WSL:
    ```powershell
    wsl --install
    
-3. This will install the latest version of WSL and a default Linux distribution (usually Ubuntu). After the installation is complete, you'll need to restart your computer.
+
+4. This will install the latest version of WSL and a default Linux distribution (usually Ubuntu). After the installation is complete, you'll need to restart your computer.
 <br><br>
 *WSL can be selected in the IDE under the interpreter parameters.*
 
