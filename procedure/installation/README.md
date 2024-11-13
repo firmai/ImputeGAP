@@ -1,12 +1,12 @@
-<img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
-<br />
+<img align="right" width="140" height="140" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+<br /> <br />
 
 
 # Installation for ImputeGAP
 
 ## System Requirements
 
-To utilize **ImputeGAP**, the following prerequisites are necessary:
+The following prerequisites are required to use ImputeGAP:
 
 - Python version **3.12.0** or higher
 - A **Unix-compatible environment** for execution

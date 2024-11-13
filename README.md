@@ -1,5 +1,5 @@
-<img align="right" width="70" height="70" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
-<br />
+<img align="right" width="140" height="140" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+<br /> <br />
 
 # Welcome to ImputeGAP
 
@@ -7,22 +7,33 @@ ImputeGAP is a comprehensive framework designed for imputation algorithms. It of
 
 The framework includes advanced imputation algorithms, supports various patterns of missing data, and provides multiple evaluation metrics. Additionally, ImputeGAP enables AutoML-based parameter optimization, feature extraction, and feature impact analysis with SHAP. The framework is built for easy integration of new algorithms, datasets, and evaluation metrics, enhancing its flexibility and adaptability.
 
+![Python](https://img.shields.io/badge/Python-v3.12-blue) 
+![Release](https://img.shields.io/badge/Release-v0.1.9-brightgreen) 
+![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
+![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
+![Language](https://img.shields.io/badge/Language-English-blue)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
+[![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://exascaleinfolab.github.io/ImputeGAP/generation/build/html/index.html)
+
+<br>
 
 - **Documentation**: [https://exascaleinfolab.github.io/ImputeGAP/](https://exascaleinfolab.github.io/ImputeGAP/)
 - **PyPI**: [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)
 - **Datasets**: [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
 
-<br />
+<br>
 
- [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Integration**](#integration) | [**Contributors**](#core-contributors)
+ [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Integration**](#integration) | [**References**](#references) | [**Contributors**](#core-contributors)
 
+<br>
 
 ---
 
+<br>
 
 ## System Requirements
 
-To use ImputeGAP, the following prerequisites are necessary:
+The following prerequisites are required to use ImputeGAP:
 
 - Python version **3.12.0** to **3.12.6**
 - Unix-compatible environment for execution
@@ -32,6 +43,9 @@ For instructions on installing these dependencies, please refer to the [installa
 
 
 ---
+
+<br>
+
 
 ## Installation
 
@@ -106,7 +120,13 @@ $ cd ./ImputeGAP
 ```bash
 $ pip install -e .
 ``` 
+
+<br>
+
 ---
+
+<br>
+
 
 ## Loading and Preprocessing
 
@@ -135,7 +155,11 @@ ts_1.print(limit=10)
 
 ```
 
+<br>
+
 ---
+
+<br>
 
 ## Contamination
 ImputeGAP allows to contaminate a complete datasets with missing data patterns that mimics real-world scenarios. The available patterns are : <b>MCAR, MISSING POURCENTAGE, and BLACKOUT</b>. 
@@ -164,7 +188,12 @@ ts_1.print(limit=10)
 ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_path="./imputegap/assets")
 ```
 
+<br>
+
 ---
+
+<br>
+
 
 ## Imputation
 
@@ -209,7 +238,13 @@ ts_3.print_results(cdrec.metrics)
 ```
 
 
+<br>
+
 ---
+
+<br>
+
+
 ## Parameterization
 ImputeGAP provides optimization techniques that automatically identify the optimal hyperparameters for a specific algorithm in relation to a given dataset.
 The available optimizers are: Greedy Optimizer (GO), Bayesian Optimizer (BO), Particle Swarm Optimizer (PSO), and Successive Halving (SH.
@@ -251,7 +286,12 @@ utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", data
 ```
 
 
+<br>
+
 ---
+
+<br>
+
 
 ## Explainer
 ImputeGAP allows users to explore the features in the data that impact the imputation results
@@ -280,13 +320,34 @@ shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_na
 Explainer.print(shap_values, shap_details)
 ```
 
+<br>
+
 ---
+
+<br>
 
 ## Integration
 To add your own imputation algorithm in Python or C++, please refer to the detailed [integration guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/integration).
 
 
+<br>
+
 ---
+
+<br>
+
+## References
+
+Mourad Khayati, Quentin Nater, and Jacques Pasquier. **“ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data.”** Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024): 4329–32. [PDF](https://www.vldb.org/pvldb/vol17/p4329-khayati.pdf) [Code](https://github.com/eXascaleInfolab/ImputeVIS)
+
+Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudré-Mauroux. **“Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series.”** In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020. [PDF](https://www.vldb.org/pvldb/vol13/p768-khayati.pdf) [Code](https://github.com/eXascaleInfolab/bench-vldb20) [Award](https://vldb2020.org/vldb-2020-awards.html#most-reproducible-paper-award)
+
+<br>
+
+
+---
+
+<br>
 
 ## Core Contributors
 - Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>)
