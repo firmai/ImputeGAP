@@ -1,5 +1,5 @@
-![My Logo](https://www.naterscreations.com/imputegap/logo_imputegab.png)
-
+<img align="right" width="140" height="140" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
+<br /> <br />
 
 # CONTAMINATION
 ## Scenarios

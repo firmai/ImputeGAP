@@ -1,7 +1,7 @@
 from imputegap.recovery.benchmarking import Benchmarking
 
 reconstruction = False
-datasets_full = ["eeg-alcohol", "eeg-reading", "chlorine", "climate", "drift"]
+datasets_full = ["eeg-alcohol", "eeg-reading", "chlorine", "drift"]
 
 opti_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 15, "n_random_starts": 50, "acq_func": "gp_hedge", "selected_metrics": "RMSE"}}
 opti_greedy = {"optimizer": "greedy", "options": {"n_calls": 250, "selected_metrics": "RMSE"}}

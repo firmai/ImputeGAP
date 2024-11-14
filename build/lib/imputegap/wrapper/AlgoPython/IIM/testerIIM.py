@@ -1,9 +1,8 @@
-import sys
-import time
 import re
+
+import numpy
 import numpy as np
 from typing import List
-from multiprocessing import Pool
 from sklearn.neighbors import NearestNeighbors
 from sklearn.linear_model import Ridge
 
@@ -37,7 +36,7 @@ def iim_recovery(matrix_nan: np.ndarray, adaptive_flag: bool = False, learning_n
         incomplete_tuples = matrix_nan[tuples_with_nan]
         complete_tuples = matrix_nan[~tuples_with_nan]  # Rows that do not contain a NaN value
 
-        if not isinstance(learning_neighbors, int):
+        if not isinstance(learning_neighbors, (int, numpy.int64)):
             learning_neighbors = learning_neighbors[0]
 
         if learning_neighbors > len(complete_tuples):

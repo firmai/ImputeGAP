@@ -1,5 +1,6 @@
 import os
 import time
+import math
 import numpy as np
 import matplotlib
 from scipy.stats import zscore
@@ -14,17 +15,11 @@ if os.getenv('DISPLAY') is None or os.getenv('CI') is not None:
     print("Running in a headless environment or CI. Using Agg backend.")
 else:
     try:
-        # Attempt to use TkAgg if a display is available and we're not in CI
         matplotlib.use("TkAgg")
-        if importlib.util.find_spec("tkinter") is not None:
-            print("tkinter is available.")
-        else:
+        if importlib.util.find_spec("tkinter") is None:
             print("tkinter is not available.")
-        print("Using TkAgg backend with tkinter support.")
     except (ImportError, RuntimeError):
-        # Fallback to Agg if TkAgg is unavailable
         matplotlib.use("Agg")
-        print("TkAgg is unavailable. Using Agg backend.")
 
 from matplotlib import pyplot as plt  # type: ignore
 
@@ -100,7 +95,7 @@ class TimeSeries:
             elif isinstance(data, np.ndarray):
                 self.data = data
             else:
-                print("\nThe time series has not been loaded, format unknown\n")
+                print("\nThe time series have not been loaded, format unknown\n")
                 self.data = None
                 raise ValueError("Invalid input for import_matrix")
 
@@ -132,19 +127,26 @@ class TimeSeries:
 
         if data is not None:
             if isinstance(data, str):
-                print("\nThe time series has been loaded from " + str(data) + "\n")
-
+                saved_data = data
                 #  update path form inner library datasets
                 if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt", "eeg-reading.txt",
-                            "meteo.txt", "test.txt", "test-large.txt"]:
+                            "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt", "fmri-stoptask.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
+
+                if not os.path.exists(data):
+                    data = ".." + saved_data
+                    if not os.path.exists(data):
+                        data = data[1:]
 
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values, skip_header=int(header))
 
+                print("\nThe time series have been loaded from " + str(data) + "\n")
+
                 if max_series is not None:
                     self.data = self.data[:, :max_series]
+
             else:
-                print("\nThe time series has not been loaded, format unknown\n")
+                print("\nThe time series have not been loaded, format unknown\n")
                 self.data = None
                 raise ValueError("Invalid input for load_timeseries")
 
@@ -381,7 +383,7 @@ class TimeSeries:
         file_path = None
         if save_path:
             os.makedirs(save_path, exist_ok=True)
-            file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_graph.jpg")
+            file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_plot.jpg")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)
 

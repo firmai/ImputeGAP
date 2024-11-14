@@ -1,4 +1,4 @@
 [stmvl]
-window_size = 70
-gamma = 1.0621347452712664e-6
-alpha = 2
+window_size = 4
+gamma = "0.01584893192461114"
+alpha = 1
