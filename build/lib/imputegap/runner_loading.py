@@ -5,7 +5,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("fmri-stoptask"), max_values=50, max_series=1000)
+ts_1.load_timeseries(utils.search_path("fmri-objectviewing"), max_values=50, max_series=1000)
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
