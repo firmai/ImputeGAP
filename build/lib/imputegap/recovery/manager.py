@@ -1,5 +1,6 @@
 import os
 import time
+import math
 import numpy as np
 import matplotlib
 from scipy.stats import zscore
@@ -14,17 +15,11 @@ if os.getenv('DISPLAY') is None or os.getenv('CI') is not None:
     print("Running in a headless environment or CI. Using Agg backend.")
 else:
     try:
-        # Attempt to use TkAgg if a display is available and we're not in CI
         matplotlib.use("TkAgg")
-        if importlib.util.find_spec("tkinter") is not None:
-            print("tkinter is available.")
-        else:
+        if importlib.util.find_spec("tkinter") is None:
             print("tkinter is not available.")
-        print("Using TkAgg backend with tkinter support.")
     except (ImportError, RuntimeError):
-        # Fallback to Agg if TkAgg is unavailable
         matplotlib.use("Agg")
-        print("TkAgg is unavailable. Using Agg backend.")
 
 from matplotlib import pyplot as plt  # type: ignore
 
@@ -381,7 +376,7 @@ class TimeSeries:
         file_path = None
         if save_path:
             os.makedirs(save_path, exist_ok=True)
-            file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_graph.jpg")
+            file_path = os.path.join(save_path + "/" + title.replace(" ", "") + "_plot.jpg")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)
 
