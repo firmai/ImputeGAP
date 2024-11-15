@@ -1,5 +1,6 @@
 import os
 import time
+import math
 import numpy as np
 import matplotlib
 from scipy.stats import zscore
@@ -126,24 +127,17 @@ class TimeSeries:
 
         if data is not None:
             if isinstance(data, str):
-                saved_data = data
+                print("\nThe time series have been loaded from " + str(data) + "\n")
+
                 #  update path form inner library datasets
                 if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt", "eeg-reading.txt",
-                            "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt", "fmri-stoptask.txt"]:
+                            "meteo.txt", "test.txt", "test-large.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
-
-                if not os.path.exists(data):
-                    data = ".." + saved_data
-                    if not os.path.exists(data):
-                        data = data[1:]
 
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values, skip_header=int(header))
 
-                print("\nThe time series have been loaded from " + str(data) + "\n")
-
                 if max_series is not None:
                     self.data = self.data[:, :max_series]
-
             else:
                 print("\nThe time series have not been loaded, format unknown\n")
                 self.data = None
@@ -475,8 +469,7 @@ class TimeSeries:
 
                 if B <= 0:
                     raise ValueError("The number of block to remove must be greater than 0. "
-                                     "The dataset or the number of blocks may not be appropriate."
-                                     "One series has", str(N), "population is ", str((N - P)), "the number to remove", str(W), "and block site", str(block_size),"")
+                                     "The dataset or the number of blocks may not be appropriate.")
 
                 data_to_remove = np.random.choice(range(P, N), B, replace=False)
 
