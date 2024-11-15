@@ -147,6 +147,129 @@ Finally, EEG-READING - normalized 20x400 demonstrates the impact of "MIN-MAX" no
 
 <br /><hr /><br />
 
+## fMRI-OBJECTVIEWING
+
+The **fMRI-OBJECTVIEWING** dataset was obtained from the OpenfMRI database, with the accession number ds000105. this dataset is an extraction of a fMRI scan of Visual object recognition. This scan measures neural responses, as reflected in hemodynamic changes, in six subjects (five female and one male). The stimuli consisted of gray-scale images depicting faces, houses, cats, bottles, scissors, shoes, chairs, and abstract (nonsense) patterns. Twelve time series datasets were collected for each subject. Each time series began and ended with 12 seconds of rest and included eight stimulus blocks, each lasting 24 seconds and corresponding to one of the stimulus categories. These blocks were separated by 12-second rest intervals. Stimuli were presented for 500 milliseconds with an interstimulus interval of 1500 milliseconds.
+
+One hypothesis for converting this data into a two-dimensional time series involved using voxels as individual series, with their corresponding values serving as the data points. Based on this approach, the **fMRI-OBJECTVIEWING** dataset was extracted from the first run of subject 1. Voxels with values of 0 were removed, and the total number of voxels was reduced to 10,000 after dimensional flattening, resulting in a dataset consisting of 10,000 series, each containing 121 values.
+
+The **fMRI-OBJECTVIEWING** dataset will showcase brain activity in regions such as the inferior temporal cortex and the occipital lobe, illustrating distinct neural activation patterns associated with visual object recognition. 
+
+### Plots
+The plots present a series of plots derived from the fMRI-OBJECTVIEWING dataset, illustrating various aspects of the data and preprocessing steps.
+fMRI-OBJECTVIEWING dataset - raw data 360x121 shows the full raw dataset, consisting of NxM time series.
+fMRI-OBJECTVIEWING dataset - raw data 20x121 provides a subset of the data, limited to 20 time series over 121 time steps, while fMRI-OBJECTVIEWING dataset - raw data 01x121 focuses on a single time series extracted from the dataset.
+Finally, fMRI-OBJECTVIEWING - normalized 20x121 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x121 subset.
+
+![fMRI-OBJECTVIEWING dataset - raw data 360x121](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-objectviewing/01_fmri-objectviewing-rawdata-NxM_plot.jpg)
+![fMRI-OBJECTVIEWING dataset - raw data 20x121](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-objectviewing/02_fmri-objectviewing-rawdata20x121_plot.jpg)
+![fMRI-OBJECTVIEWING dataset - raw data 01x121](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-objectviewing/03_fmri-objectviewing-rawdata01x121_plot.jpg)
+![fMRI-OBJECTVIEWING - normalized 20x121](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-objectviewing/04_fmri-objectviewing-normmin_maxdata01x121_plot.jpg)
+
+
+### Features
+| Category       | Feature                                                            | Value                    |
+|----------------|--------------------------------------------------------------------|--------------------------|
+| Correlation    | First 1/e crossing of the ACF                                      | 690.0367168745234        |
+| Correlation    | First minimum of the ACF                                           | 1                        |
+| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 0.5218313413315354       |
+| Correlation    | Time reversibility                                                 | -0.0002451758280741301   |
+| Correlation    | First minimum of the AMI function                                  | 3.0                      |
+| Correlation    | Change in autocorrelation timescale after incremental differencing | 0.0005353319057815846    |
+| Geometry       | 5-bin histogram mode                                               | -0.12774354563568313     |
+| Geometry       | 10-bin histogram mode                                              | -0.45252300323190653     |
+| Geometry       | Proportion of high incremental changes in the series               | 0.6172318005463854       |
+| Geometry       | Longest stretch of above-mean values                               | 1711.0                   |
+| Geometry       | Transition matrix column variance                                  | 0.017013232514177693     |
+| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.235589448407061        |
+| Geometry       | Positive outlier timing                                            | 0.018067033976124858     |
+| Geometry       | Negative outlier timing                                            | -0.07835169880624426     |
+| Geometry       | Longest stretch of decreasing values                               | 8.0                      |
+| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.88                     |
+| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.8                      |
+| Transformation | Power in the lowest 20% of frequencies                             | 0.9776606094833528       |
+| Transformation | Centroid frequency                                                 | 0.00086286419318573      |
+| Trend          | Wangs periodicity metric                                           | 120                      |
+| Trend          | Entropy of successive pairs in symbolized series                   | 1.6230003735065441       |
+| Trend          | Error of 3-point rolling mean forecast                             | 0.19307148327953894      |
+
+
+### Summary
+
+| Data info          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dataset codename   | fmri-objectviewing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Dataset name       | Visual object recognition                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Url                | https://www.openfmri.org/                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+ | Specific URL       | https://www.openfmri.org/dataset/ds000105/                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Source             | OpenfMRI                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Article            | Haxby, J.V., Gobbini, M.I., Furey, M.L., Ishai, A., Schouten, J.L., Pietrini, P. (2001). Distributed and overlapping representations of faces and objects in ventral temporal cortex. Science, 293(5539):2425-30<br/>Hanson, S.J., Matsuka, T., Haxby, J.V. (2004). Combinatorial codes in ventral temporal lobe for object recognition: Haxby (2001) revisited: is there a "face" area? Neuroimage. 23(1):156-66<br/>O'Toole, A.J., Jiang, F., Abdi, H., Haxby, J.V. (2005). Partially distributed representations of objects and faces in ventral temporal cortex. J Cogn Neurosci, 17(4):580-90 |
+| Time granularity   | 500ms                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Epoch              | 1 used on 36                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Dataset dimensions | N=121 M=10000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+
+<br /><hr /><br />
+
+## fMRI-STOPTASK
+
+The **fMRI-STOPTASK** dataset was obtained from the OpenfMRI database, with the accession number ds000007. This dataset is an extraction of a fMRI scan of Visual where subjects performed a stop-signal task with one of three response types: manual response, spoken letter naming, and spoken pseudo word naming.
+Following the same conversion hypothesis as used for the object recognition dataset, the **fMRI-STOPTASK** dataset was extracted from the first run of subject 1. Voxels with values of 0 were removed, and the total number of voxels was reduced to 10,000 after flattening the dimensions. This resulted in a dataset comprising 10,000 series, each containing 182 values.
+The **fMRI-STOPTASK** dataset will emphasize brain activity in regions such as the right inferior frontal gyrus and the basal ganglia, illustrating neural mechanisms of inhibition commonly associated with stop-signal tasks.
+
+### Plots
+The plots present a series of plots derived from the fMRI-STOPTASK dataset, illustrating various aspects of the data and preprocessing steps.
+fMRI-STOPTASK dataset - raw data 360x182 shows the full raw dataset, consisting of NxM time series.
+fMRI-STOPTASK dataset - raw data 20x182 provides a subset of the data, limited to 20 time series over 182 time steps, while fMRI-STOPTASK dataset - raw data 01x182 focuses on a single time series extracted from the dataset.
+Finally, fMRI-STOPTASK - normalized 20x182 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x182 subset.
+
+![fMRI-STOPTASK dataset - raw data 360x182](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-stoptask/01_fmri-stoptask-rawdata-NxM_plot.jpg)
+![fMRI-STOPTASK dataset - raw data 20x182](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-stoptask/02_fmri-stoptask-rawdata20x182_plot.jpg)
+![fMRI-STOPTASK dataset - raw data 01x182](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-stoptask/03_fmri-stoptask-rawdata01x182_plot.jpg)
+![fMRI-STOPTASK - normalized 20x182](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-stoptask/04_fmri-stoptask-normmin_maxdata01x182_plot.jpg)
+
+
+### Features
+| Category       | Feature                                                            | Value                    |
+|----------------|--------------------------------------------------------------------|--------------------------|
+| Correlation    | First 1/e crossing of the ACF                                      | 0.7309996478226994       |
+| Correlation    | First minimum of the ACF                                           | 3                        |
+| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 0.006610621171669942     |
+| Correlation    | Time reversibility                                                 | -0.002092377602975993    |
+| Correlation    | First minimum of the AMI function                                  | 2.0                      |
+| Correlation    | Change in autocorrelation timescale after incremental differencing | 0.0001343724805159903    |
+| Geometry       | 5-bin histogram mode                                               | -0.9444773627468062      |
+| Geometry       | 10-bin histogram mode                                              | -0.5643072060839007      |
+| Geometry       | Proportion of high incremental changes in the series               | 0.948808742502175        |
+| Geometry       | Longest stretch of above-mean values                               | 31.0                     |
+| Geometry       | Transition matrix column variance                                  | 0.036458333333333336     |
+| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.13675364536909898      |
+| Geometry       | Positive outlier timing                                            | 0.22446581196581206      |
+| Geometry       | Negative outlier timing                                            | -0.11759768009768012     |
+| Geometry       | Longest stretch of decreasing values                               | 8.0                      |
+| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.42                     |
+| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.86                     |
+| Transformation | Power in the lowest 20% of frequencies                             | 0.305435624949023        |
+| Transformation | Centroid frequency                                                 | 1.3206615845703813       |
+| Trend          | Wangs periodicity metric                                           | 15                       |
+| Trend          | Entropy of successive pairs in symbolized series                   | 2.182136704207034        |
+| Trend          | Error of 3-point rolling mean forecast                             | 1.0768460198485337       |
+
+
+### Summary
+
+| Data info          |                                                                                                                                                                             |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dataset codename   | fmri-objectviewing                                                                                                                                                          |
+| Dataset name       | Visual object recognition                                                                                                                                                   |
+| Url                | https://www.openfmri.org/                                                                                                                                                   |
+ | Specific URL       | https://www.openfmri.org/dataset/ds000007/                                                                                                                                  |
+| Source             | OpenfMRI                                                                                                                                                                    |
+| Article            | Xue, G., Aron, A.R., Poldrack, R.A. (2008). Common neural substrates for inhibition of spoken and manual responses. Cereb Cortex, 18(8):1923-32. doi: 10.1093/cercor/bhm220 |
+| Epoch              | 1 used on 120                                                                                                                                                               |
+| Dataset dimensions | N=182 M=10000                                                                                                                                                               |
+
+<br /><hr /><br />
+
 
 ## Drift
 The Drift dataset comprises 13,910 measurements collected from 16 chemical sensors exposed to six different gases, with only batch 10 utilized for this dataset [Gas Sensor Array Drift at Different Concentrations](https://archive.ics.uci.edu/dataset/270).

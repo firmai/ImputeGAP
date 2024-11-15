@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: imputegap
-Version: 0.1.9
+Version: 0.2.1
 Summary: A Library of Imputation Techniques for Time Series Data
 Home-page: https://github.com/eXascaleInfolab/ImputeGAP
 Author: Quentin Nater
@@ -41,7 +41,7 @@ ImputeGAP is a comprehensive framework designed for imputation algorithms. It of
 The framework includes advanced imputation algorithms, supports various patterns of missing data, and provides multiple evaluation metrics. Additionally, ImputeGAP enables AutoML-based parameter optimization, feature extraction, and feature impact analysis with SHAP. The framework is built for easy integration of new algorithms, datasets, and evaluation metrics, enhancing its flexibility and adaptability.
 
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
-![Release](https://img.shields.io/badge/Release-v0.1.9-brightgreen) 
+![Release](https://img.shields.io/badge/Release-v0.2.1-brightgreen)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
 ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
