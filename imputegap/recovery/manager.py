@@ -127,14 +127,21 @@ class TimeSeries:
 
         if data is not None:
             if isinstance(data, str):
-                print("\nThe time series have been loaded from " + str(data) + "\n")
+                saved_data = data
 
                 #  update path form inner library datasets
                 if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt", "eeg-reading.txt",
-                            "meteo.txt", "test.txt", "test-large.txt"]:
+                            "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt", "fmri-stoptask.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 
+                if not os.path.exists(data):
+                    data = ".." + saved_data
+                    if not os.path.exists(data):
+                        data = data[1:]
+
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values, skip_header=int(header))
+
+                print("\nThe time series have been loaded from " + str(data) + "\n")
 
                 if max_series is not None:
                     self.data = self.data[:, :max_series]
@@ -469,7 +476,9 @@ class TimeSeries:
 
                 if B <= 0:
                     raise ValueError("The number of block to remove must be greater than 0. "
-                                     "The dataset or the number of blocks may not be appropriate.")
+                                     "The dataset or the number of blocks may not be appropriate."
+                                     "One series has", str(N), "population is ", str((N - P)), "the number to remove",
+                                     str(W), "and block site", str(block_size), "")
 
                 data_to_remove = np.random.choice(range(P, N), B, replace=False)
 
