@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 class Benchmarking:
 
 
-    def _config_optimization(self, opti_mean, ts_test, scenario, algorithm):
+    def _config_optimization(self, opti_mean, ts_test, scenario, algorithm, block_size_mcar):
         """
         Configure and execute optimization for selected imputation algorithm and scenario.
 
@@ -23,6 +23,8 @@ class Benchmarking:
             Type of contamination scenario (e.g., "mcar", "mp", "blackout").
         algorithm : str
             Imputation algorithm to use.
+        block_size_mcar : int
+            Size of blocks removed in MCAR
 
         Returns
         -------
@@ -31,8 +33,7 @@ class Benchmarking:
         """
 
         if scenario == "mcar":
-            infected_matrix_opti = ts_test.Contaminate.mcar(ts=ts_test.data, series_impacted=opti_mean,
-                                                            missing_rate=opti_mean, use_seed=True, seed=42)
+            infected_matrix_opti = ts_test.Contaminate.mcar(ts=ts_test.data, series_impacted=opti_mean, missing_rate=opti_mean, block_size=block_size_mcar, use_seed=True, seed=42)
         elif scenario == "mp":
             infected_matrix_opti = ts_test.Contaminate.missing_percentage(ts=ts_test.data, series_impacted=opti_mean,
                                                                           missing_rate=opti_mean)
@@ -224,7 +225,7 @@ class Benchmarking:
         print("\nAll plots recorded in", save_dir)
 
 
-    def comprehensive_evaluation(self, datasets=[], optimizers=[], algorithms=[], scenarios=[], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], save_dir="./reports", already_optimized=False):
+    def comprehensive_evaluation(self, datasets=[], optimizers=[], algorithms=[], scenarios=[], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], save_dir="./reports", already_optimized=False, reports=1):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and scenarios.
 
@@ -244,6 +245,8 @@ class Benchmarking:
             Directory to save reports and plots (default is "./reports").
         already_optimized : bool, optional
             If True, skip parameter optimization (default is False).
+        reports : int, optional
+            Number of executions with a view to averaging them
 
         Returns
         -------
@@ -256,110 +259,121 @@ class Benchmarking:
 
         print("initialization of the comprehensive evaluation. It can take time...\n")
 
-        for dataset in datasets:
+        for runs in range(0, reports):
+            for dataset in datasets:
 
-            runs_plots_scores = {}
+                runs_plots_scores = {}
 
-            limitation_series = 100
+                limitation_series = 100
+                limitation_values = 1000
+                block_size_mcar = 10
 
-            print("1. evaluation launch for", dataset, "========================================================\n\n\n")
-            ts_test = TimeSeries()
+                print("1. evaluation launch for", dataset, "========================================================\n\n\n")
+                ts_test = TimeSeries()
 
-            header = False
-            if dataset == "eeg-reading":
-                header = True
-            elif dataset == "drift":
-                limitation_series = 50
+                header = False
+                if dataset == "eeg-reading":
+                    header = True
+                elif dataset == "drift":
+                    limitation_series = 50
+                elif dataset == "fmri-objectviewing":
+                    limitation_series = 360
+                elif dataset == "fmri-stoptask":
+                    limitation_series = 360
 
-            ts_test.load_timeseries(data=utils.search_path(dataset), max_series=limitation_series, header=header)
-            start_time_opti = 0
-            end_time_opti = 0
+                ts_test.load_timeseries(data=utils.search_path(dataset), max_series=limitation_series, max_values=limitation_values, header=header)
+                start_time_opti = 0
+                end_time_opti = 0
 
-            M, N = ts_test.data.shape
+                M, N = ts_test.data.shape
+                if N < 250:
+                    block_size_mcar = 2
 
-            print("1. normalization of ", dataset, "\n")
-            ts_test.normalize()
+                print("1. normalization of ", dataset, "\n")
+                ts_test.normalize()
 
-            for scenario in scenarios:
-                print("\t2. contamination of", dataset, "with scenario", scenario, "\n")
+                for scenario in scenarios:
+                    print("\t2. contamination of", dataset, "with scenario", scenario, "\n")
 
-                for algorithm in algorithms:
-                    has_been_optimized = False
-                    print("\t3. algorithm selected", algorithm, "\n")
+                    for algorithm in algorithms:
+                        has_been_optimized = False
+                        print("\t3. algorithm selected", algorithm, "\n")
 
-                    for x in x_axis:
-                        print("\t\t4. missing values (series&values) set to", x, "for x_axis\n")
+                        for x in x_axis:
+                            print("\t\t4. missing values (series&values) set to", x, "for x_axis\n")
 
-                        start_time_contamination = time.time()  # Record start time
-                        if scenario == "mcar":
-                            infected_matrix = ts_test.Contaminate.mcar(ts=ts_test.data, series_impacted=x, missing_rate=x, use_seed=True, seed=42)
-                        elif scenario == "mp":
-                            infected_matrix = ts_test.Contaminate.missing_percentage(ts=ts_test.data, series_impacted=x, missing_rate=x)
-                        else:
-                            infected_matrix = ts_test.Contaminate.blackout(ts=ts_test.data, missing_rate=x)
-                        end_time_contamination = time.time()
-
-                        for optimizer in optimizers:
-                            optimizer_gt = {"ground_truth": ts_test.data, **optimizer}
-
-                            if algorithm == "cdrec":
-                                algo = Imputation.MatrixCompletion.CDRec(infected_matrix)
-                            elif algorithm == "stmvl":
-                                algo = Imputation.PatternSearch.STMVL(infected_matrix)
-                            elif algorithm == "iim":
-                                algo = Imputation.Statistics.IIM(infected_matrix)
-                            elif algorithm == "mrnn":
-                                algo = Imputation.DeepLearning.MRNN(infected_matrix)
-                            elif algorithm == "mean":
-                                algo = Imputation.Statistics.MeanImpute(infected_matrix)
-
-                            if not has_been_optimized and not already_optimized and algorithm != "mean":
-                                print("\t\t5. AutoML to set the parameters", optimizer, "\n")
-                                start_time_opti = time.time()  # Record start time
-                                i_opti = self._config_optimization(0.25, ts_test, scenario, algorithm)
-                                i_opti.impute(user_defined=False, params=optimizer_gt)
-                                utils.save_optimization(optimal_params=i_opti.parameters, algorithm=algorithm, dataset=dataset, optimizer="e")
-                                has_been_optimized = True
-                                end_time_opti = time.time()
-
-                            if algorithm != "mean":
-                                opti_params = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="e")
-                                print("\t\t6. imputation", algorithm, "with optimal parameters", *opti_params)
-
+                            start_time_contamination = time.time()  # Record start time
+                            if scenario == "mcar":
+                                infected_matrix = ts_test.Contaminate.mcar(ts=ts_test.data, series_impacted=x, missing_rate=x, block_size=block_size_mcar, use_seed=True, seed=42)
+                            elif scenario == "mp":
+                                infected_matrix = ts_test.Contaminate.missing_percentage(ts=ts_test.data, series_impacted=x, missing_rate=x)
                             else:
-                                opti_params = None
+                                infected_matrix = ts_test.Contaminate.blackout(ts=ts_test.data, missing_rate=x)
+                            end_time_contamination = time.time()
 
-                            start_time_imputation = time.time()  # Record start time
-                            algo.impute(params=opti_params)
-                            end_time_imputation = time.time()
+                            for optimizer in optimizers:
+                                optimizer_gt = {"ground_truth": ts_test.data, **optimizer}
 
-                            algo.score(raw_matrix=ts_test.data, imputed_matrix=algo.imputed_matrix)
+                                if algorithm == "cdrec":
+                                    algo = Imputation.MatrixCompletion.CDRec(infected_matrix)
+                                elif algorithm == "stmvl":
+                                    algo = Imputation.PatternSearch.STMVL(infected_matrix)
+                                elif algorithm == "iim":
+                                    algo = Imputation.Statistics.IIM(infected_matrix)
+                                elif algorithm == "mrnn":
+                                    algo = Imputation.DeepLearning.MRNN(infected_matrix)
+                                elif algorithm == "mean":
+                                    algo = Imputation.Statistics.MeanImpute(infected_matrix)
 
-                            time_contamination = end_time_contamination - start_time_contamination
-                            time_opti = end_time_opti - start_time_opti
-                            time_imputation = end_time_imputation - start_time_imputation
+                                if not has_been_optimized and not already_optimized and algorithm != "mean":
+                                    print("\t\t5. AutoML to set the parameters", optimizer, "\n")
+                                    start_time_opti = time.time()  # Record start time
+                                    i_opti = self._config_optimization(0.25, ts_test, scenario, algorithm, block_size_mcar)
+                                    i_opti.impute(user_defined=False, params=optimizer_gt)
+                                    utils.save_optimization(optimal_params=i_opti.parameters, algorithm=algorithm, dataset=dataset, optimizer="e")
+                                    has_been_optimized = True
+                                    end_time_opti = time.time()
 
-                            dic_timing = {"contamination": time_contamination, "optimization": time_opti,
-                                          "imputation": time_imputation}
+                                if algorithm != "mean":
+                                    opti_params = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="e")
+                                    print("\t\t6. imputation", algorithm, "with optimal parameters", *opti_params)
 
-                            dataset_s = dataset
-                            if "-" in dataset:
-                                dataset_s = dataset.replace("-", "")
+                                else:
+                                    opti_params = None
 
-                            optimizer_value = optimizer.get('optimizer')  # or optimizer['optimizer']
+                                start_time_imputation = time.time()  # Record start time
+                                algo.impute(params=opti_params)
+                                end_time_imputation = time.time()
 
-                            runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(scenario), {}).setdefault(
-                                str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {
-                                "scores": algo.metrics,
-                                "times": dic_timing
-                            }
+                                algo.score(raw_matrix=ts_test.data, imputed_matrix=algo.imputed_matrix)
 
-                            print("\t\truns_plots_scores", runs_plots_scores)
+                                time_contamination = end_time_contamination - start_time_contamination
+                                time_opti = end_time_opti - start_time_opti
+                                time_imputation = end_time_imputation - start_time_imputation
 
-            print("\truns_plots_scores : ", runs_plots_scores)
-            self.generate_plots(runs_plots_scores=runs_plots_scores, s=str(M), v=str(N), save_dir=save_dir)
-            self.generate_reports(runs_plots_scores, save_dir, dataset)
+                                dic_timing = {"contamination": time_contamination, "optimization": time_opti,
+                                              "imputation": time_imputation}
 
-            print("======================================================================================\n\n\n\n\n\n")
+                                dataset_s = dataset
+                                if "-" in dataset:
+                                    dataset_s = dataset.replace("-", "")
+
+                                optimizer_value = optimizer.get('optimizer')  # or optimizer['optimizer']
+
+                                runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(scenario), {}).setdefault(
+                                    str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {
+                                    "scores": algo.metrics,
+                                    "times": dic_timing
+                                }
+
+                                print("\t\truns_plots_scores", runs_plots_scores)
+
+                print("\truns_plots_scores : ", runs_plots_scores)
+                save_dir_runs = save_dir + "/report_" + str(runs)
+                print("\truns saved in : ", save_dir_runs)
+                self.generate_plots(runs_plots_scores=runs_plots_scores, s=str(M), v=str(N), save_dir=save_dir_runs)
+                self.generate_reports(runs_plots_scores, save_dir_runs, dataset)
+
+                print("======================================================================================\n\n\n\n\n\n")
 
         return runs_plots_scores

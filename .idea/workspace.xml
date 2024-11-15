@@ -178,10 +178,10 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.runner_loading" />
-      <item itemvalue="Python.runner_test" />
       <item itemvalue="Python.convert_avg" />
       <item itemvalue="Python.runner_contamination" />
+      <item itemvalue="Python.runner_test" />
+      <item itemvalue="Python.runner_loading" />
       <item itemvalue="Python tests.Python tests in tests" />
     </list>
     <recent_temporary>

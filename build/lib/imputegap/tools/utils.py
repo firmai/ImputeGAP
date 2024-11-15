@@ -47,14 +47,13 @@ def search_path(set_name="test"):
         The correct file path for the dataset.
     """
 
-    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg-reading", "eeg-alcohol", "meteo", "test", "test-large"]:
+    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg-reading", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask", "meteo", "test", "test-large"]:
         return set_name + ".txt"
     else:
         filepath = "../imputegap/dataset/" + set_name + ".txt"
 
         if not os.path.exists(filepath):
             filepath = filepath[1:]
-
         return filepath
 
 

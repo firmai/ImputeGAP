@@ -1,4 +1,3 @@
-import time
 import numpy as np
 
 from imputegap.wrapper.AlgoPython.MRNN import Data_Loader
@@ -49,6 +48,7 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
                 for sj in range(0, si + 1):
                     val += Recover_testX[ri + sj][seq_length - sj - 1][j]
                 x[i][j] = val / (si + 1)  # average
+
 
     # reverse changes introduced to data
     denominator = dmax - dmin

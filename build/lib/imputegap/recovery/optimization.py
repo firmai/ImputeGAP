@@ -13,10 +13,8 @@ import pyswarms as ps
 import skopt
 from skopt.space import Integer
 
-
 from pyswarms.utils.reporter import Reporter
 reporter = Reporter()
-
 
 
 class BaseOptimizer:
