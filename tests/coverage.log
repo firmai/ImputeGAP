@@ -10,18 +10,18 @@ imputegap/algorithms/mrnn.py                           9      0   100%
 imputegap/algorithms/stmvl.py                         36      0   100%
 imputegap/algorithms/zero_impute.py                    4      0   100%
 imputegap/recovery/__init__.py                         0      0   100%
-imputegap/recovery/evaluation.py                      35      0   100%
+imputegap/recovery/evaluation.py                      39      1    97%
 imputegap/recovery/explainer.py                      290     24    92%
-imputegap/recovery/imputation.py                     170      2    99%
-imputegap/recovery/manager.py                        186     10    95%
-imputegap/recovery/optimization.py                   145     23    84%
+imputegap/recovery/imputation.py                     172      2    99%
+imputegap/recovery/manager.py                        200     18    91%
+imputegap/recovery/optimization.py                   157     28    82%
 imputegap/tools/__init__.py                            0      0   100%
 imputegap/tools/algorithm_parameters.py               22      0   100%
-imputegap/tools/utils.py                             123     14    89%
+imputegap/tools/utils.py                             134     23    83%
 imputegap/wrapper/AlgoPython/IIM/testerIIM.py        133     52    61%
 imputegap/wrapper/AlgoPython/MRNN/Data_Loader.py      50      0   100%
 imputegap/wrapper/AlgoPython/MRNN/M_RNN.py           184      2    99%
-imputegap/wrapper/AlgoPython/MRNN/testerMRNN.py       40      4    90%
+imputegap/wrapper/AlgoPython/MRNN/testerMRNN.py       36      4    89%
 imputegap/wrapper/__init__.py                          0      0   100%
 tests/test_contamination_blackout.py                  29      1    97%
 tests/test_contamination_mcar.py                      95      4    96%
@@ -37,10 +37,10 @@ tests/test_loading.py                                 55      0   100%
 tests/test_opti_bayesian_cdrec.py                     27      0   100%
 tests/test_opti_bayesian_cdrec_eeg.py                 21      0   100%
 tests/test_opti_bayesian_iim.py                       27      0   100%
-tests/test_opti_bayesian_mrnn.py                      25      0   100%
+tests/test_opti_bayesian_mrnn.py                      24      0   100%
 tests/test_opti_bayesian_stmvl.py                     27      0   100%
 tests/test_opti_greedy_cdrec.py                       27      0   100%
 tests/test_opti_pso_cdrec.py                          21      0   100%
 tests/test_opti_sh_cdrec.py                           21      0   100%
 ----------------------------------------------------------------------
-TOTAL                                               2115    138    93%
+TOTAL                                               2153    161    93%
