@@ -33,3 +33,4 @@ jobs:
       run: |
         python -m pytest ./tests/test_loading.py
         python -m pytest ./tests/test_exception.py
+        python -m pytest ./tests/runner_benchmarking.py
