@@ -1,4 +1,3 @@
-from imputegap.recovery.optimization import Optimization
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils

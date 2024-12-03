@@ -1,4 +1,4 @@
-name: Pytest - ImputeGAP - Contamination - MCAR - 12
+name: Pytest - ImputeGAP - Contamination - 12
 
 on:
   push:

@@ -65,6 +65,7 @@ class Benchmarking:
         else:
             infected_matrix_opti = ts_test.Contaminate.blackout(ts=ts_test.data, missing_rate=opti_mean)
 
+        i_opti = None
         if algorithm == "cdrec":
             i_opti = Imputation.MatrixCompletion.CDRec(infected_matrix_opti)
         elif algorithm == "stmvl":
@@ -469,6 +470,7 @@ class Benchmarking:
                             end_time_contamination = time.time()
 
                             for optimizer in optimizers:
+                                algo = None
                                 optimizer_gt = {"ground_truth": ts_test.data, **optimizer}
                                 if algorithm == "cdrec":
                                     algo = Imputation.MatrixCompletion.CDRec(infected_matrix)

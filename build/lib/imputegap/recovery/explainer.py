@@ -294,7 +294,7 @@ class Explainer:
 
         exp = shap.KernelExplainer(model.predict, x_test)
         shval = exp.shap_values(x_test)
-        shap_values = exp(x_train)
+        shval_x = exp(x_train)
 
         optimal_display = []
         for desc, group in zip(x_descriptions[0], x_categories[0]):
@@ -319,14 +319,14 @@ class Explainer:
         plt.close()
         print("\t\t\tGRAPH has benn computed : ", alpha)
 
-        shap.plots.waterfall(shap_values[0], show=display)
+        shap.plots.waterfall(shval_x[0], show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Waterfall.png")
         plt.title("SHAP Waterfall Results")
         plt.savefig(alpha)
         plt.close()
         print("\t\t\tGRAPH has benn computed : ", alpha)
 
-        shap.plots.beeswarm(shap_values, show=display)
+        shap.plots.beeswarm(shval_x, show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Beeswarm.png")
         plt.title("SHAP Beeswarm Results")
         plt.savefig(alpha)

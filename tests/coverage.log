@@ -10,21 +10,23 @@ imputegap/algorithms/mrnn.py                           9      0   100%
 imputegap/algorithms/stmvl.py                         36      0   100%
 imputegap/algorithms/zero_impute.py                    4      0   100%
 imputegap/recovery/__init__.py                         0      0   100%
-imputegap/recovery/evaluation.py                      39      1    97%
+imputegap/recovery/benchmarking.py                   250     16    94%
+imputegap/recovery/evaluation.py                      39      0   100%
 imputegap/recovery/explainer.py                      290     24    92%
 imputegap/recovery/imputation.py                     172      2    99%
 imputegap/recovery/manager.py                        200     18    91%
-imputegap/recovery/optimization.py                   157     28    82%
+imputegap/recovery/optimization.py                   157     27    83%
 imputegap/tools/__init__.py                            0      0   100%
 imputegap/tools/algorithm_parameters.py               22      0   100%
-imputegap/tools/utils.py                             134     23    83%
-imputegap/wrapper/AlgoPython/IIM/testerIIM.py        133     52    61%
+imputegap/tools/utils.py                             134     24    82%
+imputegap/wrapper/AlgoPython/IIM/testerIIM.py        133     51    62%
 imputegap/wrapper/AlgoPython/MRNN/Data_Loader.py      50      0   100%
 imputegap/wrapper/AlgoPython/MRNN/M_RNN.py           184      2    99%
 imputegap/wrapper/AlgoPython/MRNN/testerMRNN.py       36      4    89%
 imputegap/wrapper/__init__.py                          0      0   100%
+tests/test_benchmarking.py                            57      1    98%
 tests/test_contamination_blackout.py                  29      1    97%
-tests/test_contamination_mcar.py                      95      4    96%
+tests/test_contamination_mcar.py                     128      4    97%
 tests/test_contamination_mp.py                        34      1    97%
 tests/test_exception.py                               57      0   100%
 tests/test_explainer.py                               38      1    97%
@@ -43,4 +45,4 @@ tests/test_opti_greedy_cdrec.py                       27      0   100%
 tests/test_opti_pso_cdrec.py                          21      0   100%
 tests/test_opti_sh_cdrec.py                           21      0   100%
 ----------------------------------------------------------------------
-TOTAL                                               2153    161    93%
+TOTAL                                               2493    176    93%

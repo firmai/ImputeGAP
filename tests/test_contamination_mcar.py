@@ -161,3 +161,54 @@ class TestContamination(unittest.TestCase):
         ts_1.print()
         filepath = ts_1.plot(raw_data=ts_1.data, infected_data=ts_2.data, max_series=10, max_values=100, save_path="./assets/", display=False)
         self.assertTrue(os.path.exists(filepath))
+
+    def test_mcar_size_of_block(self):
+        """
+        test if the size of the block is at least the number defined my the user
+        """
+        datasets = ["drift", "chlorine", "eeg-reading", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
+        series_impacted = [0.4, 1]
+        missing_rates = [0.2, 0.6]
+        seeds_start, seeds_end = 42, 43
+        protection = 0.1
+        block_size = 10
+
+        for dataset in datasets:
+            ts_1 = TimeSeries()
+            ts_1.load_timeseries(utils.search_path(dataset))
+
+            for seed_value in range(seeds_start, seeds_end):
+                for series_sel in series_impacted:
+                    for missing_rate in missing_rates:
+                        ts_contaminate = ts_1.Contaminate.mcar(ts=ts_1.data,
+                                                            missing_rate=missing_rate,
+                                                            series_impacted=series_sel,
+                                                            block_size=block_size, protection=protection,
+                                                            use_seed=True, seed=seed_value)
+
+                        for i, series in enumerate(ts_contaminate):
+                            nan_blocks = []
+                            block_indices = []
+                            current_block_size = 0
+                            series_size = len(series)
+                            lower_bound = int(protection * series_size) + block_size
+                            upper_bound = series_size - lower_bound - block_size
+                            protected_indices = set(range(0, lower_bound)) | set(range(upper_bound, series_size))
+
+                            # Find NaN blocks and their indices
+                            for index, value in enumerate(series):
+                                if np.isnan(value):
+                                    current_block_size += 1
+                                    block_indices.append(index)
+                                else:
+                                    if current_block_size > 0:
+                                        if not any(i in protected_indices for i in block_indices):
+                                            nan_blocks.append(current_block_size)
+                                        current_block_size = 0
+                                        block_indices = []
+
+                            for block in nan_blocks:
+                                assert block >= block_size, (
+                                    f"Dataset: {dataset}, Series: {i}, Seed: {seed_value}, "
+                                    f"Block size {block} found, expected at least {block_size}."
+                                )
