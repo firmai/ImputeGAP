@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.recovery.benchmarking &mdash; imputegap 0.1.8 documentation</title>
+  <title>imputegap.recovery.benchmarking &mdash; imputegap 1.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="../../../static/jquery.js?v=5d32c60e"></script>
       <script src="../../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../static/documentation_options.js?v=22607128"></script>
+      <script src="../../../static/documentation_options.js?v=292eb321"></script>
       <script src="../../../static/doctools.js?v=9bcbadda"></script>
       <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/js/theme.js"></script>
@@ -87,20 +87,43 @@
            <div itemprop="articleBody">
              
   <h1>Source code for imputegap.recovery.benchmarking</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">time</span>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
 <span class="kn">from</span> <span class="nn">imputegap.tools</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="kn">from</span> <span class="nn">imputegap.recovery.imputation</span> <span class="kn">import</span> <span class="n">Imputation</span>
 <span class="kn">from</span> <span class="nn">imputegap.recovery.manager</span> <span class="kn">import</span> <span class="n">TimeSeries</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <div class="viewcode-block" id="Benchmarking">
 <a class="viewcode-back" href="../../../imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking">[docs]</a>
 <span class="k">class</span> <span class="nc">Benchmarking</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to evaluate the performance of imputation algorithms through benchmarking across datasets and scenarios.</span>
 
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    _config_optimization():</span>
+<span class="sd">        Configure and execute optimization for a selected imputation algorithm and contamination scenario.</span>
+<span class="sd">    avg_results():</span>
+<span class="sd">        Calculate average metrics (e.g., RMSE) across multiple datasets and algorithm runs.</span>
+<span class="sd">    generate_matrix():</span>
+<span class="sd">        Generate and save a heatmap visualization of RMSE scores for datasets and algorithms.</span>
+<span class="sd">    generate_reports():</span>
+<span class="sd">        Create detailed text-based reports summarizing metrics and timing results for all evaluations.</span>
+<span class="sd">    generate_plots():</span>
+<span class="sd">        Visualize metrics (e.g., RMSE, MAE) and timing (e.g., imputation, optimization) across scenarios and datasets.</span>
+<span class="sd">    comprehensive_evaluation():</span>
+<span class="sd">        Perform a complete benchmarking pipeline, including contamination, imputation, evaluation, and reporting.</span>
 
-    <span class="k">def</span> <span class="nf">_config_optimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opti_mean</span><span class="p">,</span> <span class="n">ts_test</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">):</span>
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    output : {&#39;drift&#39;: {&#39;mcar&#39;: {&#39;mean&#39;: {&#39;bayesian&#39;: {&#39;0.05&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.9234927128429051, &#39;MAE&#39;: 0.7219362152785619, &#39;MI&#39;: 0.0, &#39;CORRELATION&#39;: 0}, &#39;times&#39;: {&#39;contamination&#39;: 0.0010309219360351562, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.0005755424499511719}}, &#39;0.1&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.9699990038879407, &#39;MAE&#39;: 0.7774057495176013, &#39;MI&#39;: 0.0, &#39;CORRELATION&#39;: 0}, &#39;times&#39;: {&#39;contamination&#39;: 0.0020699501037597656, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.00048422813415527344}}, &#39;0.2&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.9914069853975623, &#39;MAE&#39;: 0.8134840739732964, &#39;MI&#39;: 0.0, &#39;CORRELATION&#39;: 0}, &#39;times&#39;: {&#39;contamination&#39;: 0.007096290588378906, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.000461578369140625}}, &#39;0.4&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.0552448338389784, &#39;MAE&#39;: 0.7426695186604741, &#39;MI&#39;: 0.0, &#39;CORRELATION&#39;: 0}, &#39;times&#39;: {&#39;contamination&#39;: 0.043192148208618164, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.0005095005035400391}}, &#39;0.6&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.0143105930114702, &#39;MAE&#39;: 0.7610548321723654, &#39;MI&#39;: 0.0, &#39;CORRELATION&#39;: 0}, &#39;times&#39;: {&#39;contamination&#39;: 0.17184901237487793, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.0005536079406738281}}, &#39;0.8&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.010712060535523, &#39;MAE&#39;: 0.7641520748788702, &#39;MI&#39;: 0.0, &#39;CORRELATION&#39;: 0}, &#39;times&#39;: {&#39;contamination&#39;: 0.6064670085906982, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.0005743503570556641}}}}, &#39;cdrec&#39;: {&#39;bayesian&#39;: {&#39;0.05&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.23303624184873978, &#39;MAE&#39;: 0.13619797235197734, &#39;MI&#39;: 1.2739817718416822, &#39;CORRELATION&#39;: 0.968435455112644}, &#39;times&#39;: {&#39;contamination&#39;: 0.0009615421295166016, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.09218788146972656}}, &#39;0.1&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.18152059329152104, &#39;MAE&#39;: 0.09925566629402761, &#39;MI&#39;: 1.1516089897042538, &#39;CORRELATION&#39;: 0.9829398352220718}, &#39;times&#39;: {&#39;contamination&#39;: 0.00482487678527832, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.09549617767333984}}, &#39;0.2&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.13894771223733138, &#39;MAE&#39;: 0.08459032692102293, &#39;MI&#39;: 1.186191167936035, &#39;CORRELATION&#39;: 0.9901338133811375}, &#39;times&#39;: {&#39;contamination&#39;: 0.01713728904724121, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.1129295825958252}}, &#39;0.4&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.7544523683503829, &#39;MAE&#39;: 0.11218049973594252, &#39;MI&#39;: 0.021165172206064526, &#39;CORRELATION&#39;: 0.814120507570725}, &#39;times&#39;: {&#39;contamination&#39;: 0.10881781578063965, &#39;optimization&#39;: 0, &#39;imputation&#39;: 1.9378046989440918}}, &#39;0.6&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.4355197572001326, &#39;MAE&#39;: 0.1380846624733049, &#39;MI&#39;: 0.10781252370591506, &#39;CORRELATION&#39;: 0.9166777087122915}, &#39;times&#39;: {&#39;contamination&#39;: 0.2380077838897705, &#39;optimization&#39;: 0, &#39;imputation&#39;: 1.8785057067871094}}, &#39;0.8&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.7672558930795506, &#39;MAE&#39;: 0.32988968428439397, &#39;MI&#39;: 0.013509125598802707, &#39;CORRELATION&#39;: 0.7312998041323675}, &#39;times&#39;: {&#39;contamination&#39;: 0.6805167198181152, &#39;optimization&#39;: 0, &#39;imputation&#39;: 1.9562773704528809}}}}, &#39;stmvl&#39;: {&#39;bayesian&#39;: {&#39;0.05&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.5434405584289141, &#39;MAE&#39;: 0.346560495723809, &#39;MI&#39;: 0.7328867182584357, &#39;CORRELATION&#39;: 0.8519431955571422}, &#39;times&#39;: {&#39;contamination&#39;: 0.0022056102752685547, &#39;optimization&#39;: 0, &#39;imputation&#39;: 52.07010293006897}}, &#39;0.1&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.39007056542870916, &#39;MAE&#39;: 0.2753022759369617, &#39;MI&#39;: 0.8280959876205578, &#39;CORRELATION&#39;: 0.9180937736429735}, &#39;times&#39;: {&#39;contamination&#39;: 0.002231597900390625, &#39;optimization&#39;: 0, &#39;imputation&#39;: 52.543020248413086}}, &#39;0.2&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.37254427425455994, &#39;MAE&#39;: 0.2730547993858495, &#39;MI&#39;: 0.7425412593844177, &#39;CORRELATION&#39;: 0.9293322959355041}, &#39;times&#39;: {&#39;contamination&#39;: 0.0072672367095947266, &#39;optimization&#39;: 0, &#39;imputation&#39;: 52.88247036933899}}, &#39;0.4&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.6027573766269363, &#39;MAE&#39;: 0.34494332493982044, &#39;MI&#39;: 0.11876685901414151, &#39;CORRELATION&#39;: 0.8390532279447225}, &#39;times&#39;: {&#39;contamination&#39;: 0.04321551322937012, &#39;optimization&#39;: 0, &#39;imputation&#39;: 54.10793352127075}}, &#39;0.6&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.9004526656857551, &#39;MAE&#39;: 0.4924048353228427, &#39;MI&#39;: 0.011590260996247858, &#39;CORRELATION&#39;: 0.5650541301828254}, &#39;times&#39;: {&#39;contamination&#39;: 0.1728806495666504, &#39;optimization&#39;: 0, &#39;imputation&#39;: 40.53373336791992}}, &#39;0.8&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.0112488396023014, &#39;MAE&#39;: 0.7646823531588104, &#39;MI&#39;: 0.00040669209664367576, &#39;CORRELATION&#39;: 0.0183962968474991}, &#39;times&#39;: {&#39;contamination&#39;: 0.6077785491943359, &#39;optimization&#39;: 0, &#39;imputation&#39;: 35.151907444000244}}}}, &#39;iim&#39;: {&#39;bayesian&#39;: {&#39;0.05&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.4445625930776235, &#39;MAE&#39;: 0.2696133927362288, &#39;MI&#39;: 1.1167751522591498, &#39;CORRELATION&#39;: 0.8944975075266335}, &#39;times&#39;: {&#39;contamination&#39;: 0.0010058879852294922, &#39;optimization&#39;: 0, &#39;imputation&#39;: 0.7380530834197998}}, &#39;0.1&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.2939506418814281, &#39;MAE&#39;: 0.16953644212278182, &#39;MI&#39;: 1.0160968166750064, &#39;CORRELATION&#39;: 0.9531900627237018}, &#39;times&#39;: {&#39;contamination&#39;: 0.0019745826721191406, &#39;optimization&#39;: 0, &#39;imputation&#39;: 4.7826457023620605}}, &#39;0.2&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.2366529609250008, &#39;MAE&#39;: 0.14709529129218185, &#39;MI&#39;: 1.064299483512458, &#39;CORRELATION&#39;: 0.9711348247027318}, &#39;times&#39;: {&#39;contamination&#39;: 0.00801849365234375, &#39;optimization&#39;: 0, &#39;imputation&#39;: 33.94813060760498}}, &#39;0.4&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.4155649406397416, &#39;MAE&#39;: 0.22056702659999994, &#39;MI&#39;: 0.06616526470761779, &#39;CORRELATION&#39;: 0.919934494058292}, &#39;times&#39;: {&#39;contamination&#39;: 0.04391813278198242, &#39;optimization&#39;: 0, &#39;imputation&#39;: 255.31524085998535}}, &#39;0.6&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.38695094864012947, &#39;MAE&#39;: 0.24340565131372927, &#39;MI&#39;: 0.06361822797740405, &#39;CORRELATION&#39;: 0.9249744935121553}, &#39;times&#39;: {&#39;contamination&#39;: 0.17044353485107422, &#39;optimization&#39;: 0, &#39;imputation&#39;: 840.7470128536224}}, &#39;0.8&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.5862696375344495, &#39;MAE&#39;: 0.3968159514130716, &#39;MI&#39;: 0.13422239939628303, &#39;CORRELATION&#39;: 0.8178796825899766}, &#39;times&#39;: {&#39;contamination&#39;: 0.5999574661254883, &#39;optimization&#39;: 0, &#39;imputation&#39;: 1974.6101157665253}}}}, &#39;mrnn&#39;: {&#39;bayesian&#39;: {&#39;0.05&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 0.9458508648057621, &#39;MAE&#39;: 0.7019459696903068, &#39;MI&#39;: 0.11924522547609226, &#39;CORRELATION&#39;: 0.02915935932568557}, &#39;times&#39;: {&#39;contamination&#39;: 0.001056671142578125, &#39;optimization&#39;: 0, &#39;imputation&#39;: 49.42237901687622}}, &#39;0.1&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.0125309431502871, &#39;MAE&#39;: 0.761136543268339, &#39;MI&#39;: 0.12567590499764303, &#39;CORRELATION&#39;: -0.037161060882302754}, &#39;times&#39;: {&#39;contamination&#39;: 0.003415822982788086, &#39;optimization&#39;: 0, &#39;imputation&#39;: 49.04829454421997}}, &#39;0.2&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.0317754516097355, &#39;MAE&#39;: 0.7952869439926, &#39;MI&#39;: 0.10908095436833125, &#39;CORRELATION&#39;: -0.04155403791391449}, &#39;times&#39;: {&#39;contamination&#39;: 0.007429599761962891, &#39;optimization&#39;: 0, &#39;imputation&#39;: 49.42568325996399}}, &#39;0.4&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.0807965786089415, &#39;MAE&#39;: 0.7326965517264863, &#39;MI&#39;: 0.006171770470542263, &#39;CORRELATION&#39;: -0.020630168509677818}, &#39;times&#39;: {&#39;contamination&#39;: 0.042899370193481445, &#39;optimization&#39;: 0, &#39;imputation&#39;: 49.479795694351196}}, &#39;0.6&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.0441472017887297, &#39;MAE&#39;: 0.7599852461729673, &#39;MI&#39;: 0.01121013333181846, &#39;CORRELATION&#39;: -0.007513931343350665}, &#39;times&#39;: {&#39;contamination&#39;: 0.17329692840576172, &#39;optimization&#39;: 0, &#39;imputation&#39;: 50.439927101135254}}, &#39;0.8&#39;: {&#39;scores&#39;: {&#39;RMSE&#39;: 1.0379347892718205, &#39;MAE&#39;: 0.757440007226372, &#39;MI&#39;: 0.0035880775657246428, &#39;CORRELATION&#39;: -0.0014975078469404196}, &#39;times&#39;: {&#39;contamination&#39;: 0.6166613101959229, &#39;optimization&#39;: 0, &#39;imputation&#39;: 50.66455388069153}}}}}}}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_config_optimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opti_mean</span><span class="p">,</span> <span class="n">ts_test</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">block_size_mcar</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Configure and execute optimization for selected imputation algorithm and scenario.</span>
 
@@ -114,6 +137,8 @@
 <span class="sd">            Type of contamination scenario (e.g., &quot;mcar&quot;, &quot;mp&quot;, &quot;blackout&quot;).</span>
 <span class="sd">        algorithm : str</span>
 <span class="sd">            Imputation algorithm to use.</span>
+<span class="sd">        block_size_mcar : int</span>
+<span class="sd">            Size of blocks removed in MCAR</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -123,13 +148,15 @@
 
         <span class="k">if</span> <span class="n">scenario</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span><span class="p">:</span>
             <span class="n">infected_matrix_opti</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">series_impacted</span><span class="o">=</span><span class="n">opti_mean</span><span class="p">,</span>
-                                                            <span class="n">missing_rate</span><span class="o">=</span><span class="n">opti_mean</span><span class="p">,</span> <span class="n">use_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+                                                            <span class="n">missing_rate</span><span class="o">=</span><span class="n">opti_mean</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size_mcar</span><span class="p">,</span>
+                                                            <span class="n">use_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="s2">&quot;mp&quot;</span><span class="p">:</span>
             <span class="n">infected_matrix_opti</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">series_impacted</span><span class="o">=</span><span class="n">opti_mean</span><span class="p">,</span>
                                                                           <span class="n">missing_rate</span><span class="o">=</span><span class="n">opti_mean</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">infected_matrix_opti</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">blackout</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">missing_rate</span><span class="o">=</span><span class="n">opti_mean</span><span class="p">)</span>
 
+        <span class="n">i_opti</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
             <span class="n">i_opti</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">infected_matrix_opti</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
@@ -143,23 +170,152 @@
 
         <span class="k">return</span> <span class="n">i_opti</span>
 
+<div class="viewcode-block" id="Benchmarking.avg_results">
+<a class="viewcode-back" href="../../../imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.avg_results">[docs]</a>
+    <span class="k">def</span> <span class="nf">avg_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">datasets</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the average of all metrics and times across multiple datasets.</span>
 
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        datasets : dict</span>
+<span class="sd">            Multiple dataset dictionaries to be averaged.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary with averaged scores and times for all levels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Step 1: Compute average RMSE across runs for each dataset and algorithm</span>
+        <span class="n">aggregated_data</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">runs</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dataset_items</span> <span class="ow">in</span> <span class="n">runs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">dataset</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">aggregated_data</span><span class="p">:</span>
+                    <span class="n">aggregated_data</span><span class="p">[</span><span class="n">dataset</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+                <span class="k">for</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">scenario_items</span> <span class="ow">in</span> <span class="n">dataset_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">algo</span><span class="p">,</span> <span class="n">algo_data</span> <span class="ow">in</span> <span class="n">scenario_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">algo</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">aggregated_data</span><span class="p">[</span><span class="n">dataset</span><span class="p">]:</span>
+                            <span class="n">aggregated_data</span><span class="p">[</span><span class="n">dataset</span><span class="p">][</span><span class="n">algo</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+                        <span class="k">for</span> <span class="n">missing_values</span><span class="p">,</span> <span class="n">missing_values_item</span> <span class="ow">in</span> <span class="n">algo_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">param_data</span> <span class="ow">in</span> <span class="n">missing_values_item</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                                <span class="n">rmse</span> <span class="o">=</span> <span class="n">param_data</span><span class="p">[</span><span class="s2">&quot;scores&quot;</span><span class="p">][</span><span class="s2">&quot;RMSE&quot;</span><span class="p">]</span>
+                                <span class="n">aggregated_data</span><span class="p">[</span><span class="n">dataset</span><span class="p">][</span><span class="n">algo</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rmse</span><span class="p">)</span>
+
+        <span class="c1"># Step 2: Compute averages using NumPy</span>
+        <span class="n">average_rmse_matrix</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">algos</span> <span class="ow">in</span> <span class="n">aggregated_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">average_rmse_matrix</span><span class="p">[</span><span class="n">dataset</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">algo</span><span class="p">,</span> <span class="n">rmse_values</span> <span class="ow">in</span> <span class="n">algos</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">rmse_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rmse_values</span><span class="p">)</span>
+                <span class="n">avg_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rmse_array</span><span class="p">)</span>
+                <span class="n">average_rmse_matrix</span><span class="p">[</span><span class="n">dataset</span><span class="p">][</span><span class="n">algo</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_rmse</span>
+
+        <span class="c1"># Step 3: Create a matrix representation of datasets and algorithms</span>
+        <span class="n">datasets_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">average_rmse_matrix</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">algorithms</span> <span class="o">=</span> <span class="p">{</span><span class="n">algo</span> <span class="k">for</span> <span class="n">algos</span> <span class="ow">in</span> <span class="n">average_rmse_matrix</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algos</span><span class="p">}</span>
+        <span class="n">algorithms_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">algorithms</span><span class="p">)</span>
+
+        <span class="c1"># Prepare a NumPy matrix</span>
+        <span class="n">comprehensive_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">datasets_list</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">algorithms_list</span><span class="p">)))</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">datasets_list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">algo</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">algorithms_list</span><span class="p">):</span>
+                <span class="n">comprehensive_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">average_rmse_matrix</span><span class="p">[</span><span class="n">dataset</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Visualization of datasets:&quot;</span><span class="p">,</span> <span class="n">datasets_list</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Visualization of algorithms:&quot;</span><span class="p">,</span> <span class="n">algorithms_list</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Visualization of matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">comprehensive_matrix</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">comprehensive_matrix</span><span class="p">,</span> <span class="n">algorithms_list</span><span class="p">,</span> <span class="n">datasets_list</span></div>
+
+
+<div class="viewcode-block" id="Benchmarking.generate_matrix">
+<a class="viewcode-back" href="../../../imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_matrix">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores_list</span><span class="p">,</span> <span class="n">algos</span><span class="p">,</span> <span class="n">sets</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;./reports&quot;</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate and save RMSE matrix in HD quality.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        scores_list : np.ndarray</span>
+<span class="sd">            2D numpy array containing RMSE values.</span>
+<span class="sd">        algos : list of str</span>
+<span class="sd">            List of algorithm names (columns of the heatmap).</span>
+<span class="sd">        sets : list of str</span>
+<span class="sd">            List of dataset names (rows of the heatmap).</span>
+<span class="sd">        save_dir : str, optional</span>
+<span class="sd">            Directory to save the generated plot (default is &quot;./reports&quot;).</span>
+<span class="sd">        display : bool, optional</span>
+<span class="sd">            Display or not the plot</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Bool</span>
+<span class="sd">            True if the matrix has been generated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_dir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Greys</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Normalizing values between 0 and 2 (RMSE)</span>
+
+        <span class="c1"># Create the heatmap</span>
+        <span class="n">heatmap</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">scores_list</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Add color bar for reference</span>
+        <span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">heatmap</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+        <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">270</span><span class="p">,</span> <span class="n">labelpad</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+        <span class="c1"># Set the tick labels</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">algos</span><span class="p">)))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">algos</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sets</span><span class="p">)))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">sets</span><span class="p">)</span>
+
+        <span class="c1"># Add titles and labels</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ImputeGAP Algorithms Comparison&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Algorithms&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Datasets&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Show values on the heatmap</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sets</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">algos</span><span class="p">)):</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_list</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span> <span class="k">if</span> <span class="n">scores_list</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;white&quot;</span><span class="p">)</span>  <span class="c1"># for visibility</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;benchmarking_rmse.jpg&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>  <span class="c1"># Save in HD with tight layout</span>
+
+        <span class="c1"># Show the plot</span>
+        <span class="k">if</span> <span class="n">display</span> <span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="Benchmarking.generate_reports">
 <a class="viewcode-back" href="../../../imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_reports">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate_reports</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runs_plots_scores</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;./report&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">generate_reports</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runs_plots_scores</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;./reports&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generate and save a text report of metrics and timing for each dataset, algorithm, and scenario.</span>
+<span class="sd">        Generate and save a text reports of metrics and timing for each dataset, algorithm, and scenario.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        runs_plots_scores : dict</span>
 <span class="sd">            Dictionary containing scores and timing information for each dataset, scenario, and algorithm.</span>
 <span class="sd">        save_dir : str, optional</span>
-<span class="sd">            Directory to save the report file (default is &quot;./report&quot;).</span>
+<span class="sd">            Directory to save the reports file (default is &quot;./reports&quot;).</span>
 <span class="sd">        dataset : str, optional</span>
-<span class="sd">            Name of the data for the report name.</span>
+<span class="sd">            Name of the data for the reports name.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -167,11 +323,11 @@
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        The report is saved in a &quot;report.txt&quot; file in `save_dir`, organized in tabular format.</span>
+<span class="sd">        The reports is saved in a &quot;reports.txt&quot; file in `save_dir`, organized in tabular format.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s2">&quot;report_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+        <span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s2">&quot;report_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;dictionary of results : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">runs_plots_scores</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -179,11 +335,11 @@
             <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;| dataset_value | algorithm_value | optimizer_value | scenario_value | x_value | RMSE | MAE | MI | CORRELATION | time_contamination | time_optimization | time_imputation |</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
 
-            <span class="k">for</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">algo_data</span> <span class="ow">in</span> <span class="n">runs_plots_scores</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">for</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">opt_data</span> <span class="ow">in</span> <span class="n">algo_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="k">for</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scenario_data</span> <span class="ow">in</span> <span class="n">opt_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                        <span class="k">for</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">x_data</span> <span class="ow">in</span> <span class="n">scenario_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                            <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">x_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">algo_items</span> <span class="ow">in</span> <span class="n">runs_plots_scores</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">optimizer_items</span> <span class="ow">in</span> <span class="n">algo_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scenario_data</span> <span class="ow">in</span> <span class="n">optimizer_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="k">for</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">x_data_items</span> <span class="ow">in</span> <span class="n">scenario_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">x_data_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                                 <span class="n">metrics</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;scores&quot;</span><span class="p">]</span>
                                 <span class="n">times</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;times&quot;</span><span class="p">]</span>
 
@@ -192,7 +348,7 @@
                                 <span class="n">optimization_time</span> <span class="o">=</span> <span class="n">times</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;optimization&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                                 <span class="n">imputation_time</span> <span class="o">=</span> <span class="n">times</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;imputation&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-                                <span class="c1"># Create a report line with timing details</span>
+                                <span class="c1"># Create a reports line with timing details</span>
                                 <span class="n">line</span> <span class="o">=</span> <span class="p">(</span>
                                     <span class="sa">f</span><span class="s2">&quot;| </span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">algorithm</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">optimizer</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">scenario</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> &quot;</span>
                                     <span class="sa">f</span><span class="s2">&quot;| </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;RMSE&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;MAE&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;MI&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
@@ -206,7 +362,7 @@
 
 <div class="viewcode-block" id="Benchmarking.generate_plots">
 <a class="viewcode-back" href="../../../imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_plots">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runs_plots_scores</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;./report&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">generate_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runs_plots_scores</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;./reports&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate and save plots for each metric and scenario based on provided scores.</span>
 
@@ -214,8 +370,12 @@
 <span class="sd">        ----------</span>
 <span class="sd">        runs_plots_scores : dict</span>
 <span class="sd">            Dictionary containing scores and timing information for each dataset, scenario, and algorithm.</span>
+<span class="sd">        s : str</span>
+<span class="sd">            display the number of series in graphs</span>
+<span class="sd">        v : sts</span>
+<span class="sd">            display the number of values in graphs</span>
 <span class="sd">        save_dir : str, optional</span>
-<span class="sd">            Directory to save generated plots (default is &quot;./report&quot;).</span>
+<span class="sd">            Directory to save generated plots (default is &quot;./reports&quot;).</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -227,8 +387,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">scenario_data</span> <span class="ow">in</span> <span class="n">runs_plots_scores</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">algo_data</span> <span class="ow">in</span> <span class="n">scenario_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">scenario_items</span> <span class="ow">in</span> <span class="n">runs_plots_scores</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">algo_items</span> <span class="ow">in</span> <span class="n">scenario_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="c1"># Iterate over each metric, generating separate plots, including new timing metrics</span>
                 <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">,</span> <span class="s2">&quot;MI&quot;</span><span class="p">,</span> <span class="s2">&quot;CORRELATION&quot;</span><span class="p">,</span> <span class="s2">&quot;imputation_time&quot;</span><span class="p">,</span> <span class="s2">&quot;optimization_time&quot;</span><span class="p">,</span>
                                <span class="s2">&quot;contamination_time&quot;</span><span class="p">]:</span>
@@ -236,10 +396,10 @@
                     <span class="n">has_data</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Flag to check if any data is added to the plot</span>
 
                     <span class="c1"># Iterate over each algorithm and plot them in the same figure</span>
-                    <span class="k">for</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">optimizer_data</span> <span class="ow">in</span> <span class="n">algo_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">optimizer_items</span> <span class="ow">in</span> <span class="n">algo_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                         <span class="n">x_vals</span> <span class="o">=</span> <span class="p">[]</span>
                         <span class="n">y_vals</span> <span class="o">=</span> <span class="p">[]</span>
-                        <span class="k">for</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">x_data</span> <span class="ow">in</span> <span class="n">optimizer_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="k">for</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">x_data</span> <span class="ow">in</span> <span class="n">optimizer_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                             <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">x_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                                 <span class="c1"># Differentiate between score metrics and timing metrics</span>
                                 <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;imputation_time&quot;</span> <span class="ow">and</span> <span class="s2">&quot;imputation&quot;</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[</span><span class="s2">&quot;times&quot;</span><span class="p">]:</span>
@@ -280,36 +440,24 @@
                             <span class="s2">&quot;contamination_time&quot;</span><span class="p">:</span> <span class="s2">&quot;Contamination Time (seconds)&quot;</span>
                         <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span>
 
-                        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">scenario</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">title_metric</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">scenario</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">title_metric</span><span class="si">}</span><span class="s2"> | (</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
                         <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scenario</span><span class="si">}</span><span class="s2"> rate of missing values and missing series&quot;</span><span class="p">)</span>
                         <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel_metric</span><span class="p">)</span>
                         <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">)</span>
 
                         <span class="c1"># Set y-axis limits with padding below 0 for visibility</span>
                         <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;imputation_time&quot;</span><span class="p">:</span>
-                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">110</span><span class="p">)</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
                         <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;contamination_time&quot;</span><span class="p">:</span>
-                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.61</span><span class="p">)</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.59</span><span class="p">)</span>
                         <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;MAE&quot;</span><span class="p">:</span>
-                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">)</span>
                         <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;MI&quot;</span><span class="p">:</span>
-                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">)</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.85</span><span class="p">)</span>
                         <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span>
-                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">12.5</span><span class="p">)</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">)</span>
                         <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;CORRELATION&quot;</span><span class="p">:</span>
-                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
-
-                        <span class="k">if</span> <span class="n">dataset</span> <span class="o">==</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;MAE&quot;</span><span class="p">:</span>
-                                <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span>
-                                <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
-
-                        <span class="k">if</span> <span class="n">dataset</span> <span class="o">==</span> <span class="s2">&quot;eeg&quot;</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;MAE&quot;</span><span class="p">:</span>
-                                <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.00001</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span>
-                                <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.00001</span><span class="p">,</span> <span class="mf">0.0003</span><span class="p">)</span>
+                            <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
 
                         <span class="c1"># Customize x-axis ticks</span>
                         <span class="n">x_points</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
@@ -328,11 +476,11 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">All plots recorded in&quot;</span><span class="p">,</span> <span class="n">save_dir</span><span class="p">)</span></div>
 
 
-
 <div class="viewcode-block" id="Benchmarking.comprehensive_evaluation">
 <a class="viewcode-back" href="../../../imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.comprehensive_evaluation">[docs]</a>
-    <span class="k">def</span> <span class="nf">comprehensive_evaluation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="p">[],</span> <span class="n">optimizers</span><span class="o">=</span><span class="p">[],</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[],</span> <span class="n">scenarios</span><span class="o">=</span><span class="p">[],</span> <span class="n">x_axis</span><span class="o">=</span><span class="p">[],</span>
-                                 <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;./report&quot;</span><span class="p">,</span> <span class="n">already_optimized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">comprehensive_evaluation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="p">[],</span> <span class="n">optimizers</span><span class="o">=</span><span class="p">[],</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[],</span> <span class="n">scenarios</span><span class="o">=</span><span class="p">[],</span>
+                                 <span class="n">x_axis</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;./reports&quot;</span><span class="p">,</span> <span class="n">already_optimized</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                 <span class="n">reports</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Execute a comprehensive evaluation of imputation algorithms over multiple datasets and scenarios.</span>
 
@@ -349,9 +497,11 @@
 <span class="sd">        x_axis : list of float</span>
 <span class="sd">            List of missing rates for contamination.</span>
 <span class="sd">        save_dir : str, optional</span>
-<span class="sd">            Directory to save reports and plots (default is &quot;./report&quot;).</span>
+<span class="sd">            Directory to save reports and plots (default is &quot;./reports&quot;).</span>
 <span class="sd">        already_optimized : bool, optional</span>
 <span class="sd">            If True, skip parameter optimization (default is False).</span>
+<span class="sd">        reports : int, optional</span>
+<span class="sd">            Number of executions with a view to averaging them</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -359,114 +509,140 @@
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        Runs contamination, imputation, and evaluation, then generates plots and a summary report.</span>
+<span class="sd">        Runs contamination, imputation, and evaluation, then generates plots and a summary reports.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;initialization of the comprehensive evaluation. It can take time...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">runs</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">reports</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+                <span class="n">runs_plots_scores</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">limitation_series</span><span class="p">,</span> <span class="n">limitation_values</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span>
+                <span class="n">block_size_mcar</span> <span class="o">=</span> <span class="mi">10</span>
 
-            <span class="n">runs_plots_scores</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. evaluation launch for&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span>
+                      <span class="s2">&quot;========================================================</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">ts_test</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. evaluation launch for&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;========================================================</span><span class="se">\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">ts_test</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+                <span class="n">header</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="n">dataset</span> <span class="o">==</span> <span class="s2">&quot;eeg-reading&quot;</span><span class="p">:</span>
+                    <span class="n">header</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">elif</span> <span class="n">dataset</span> <span class="o">==</span> <span class="s2">&quot;drift&quot;</span><span class="p">:</span>
+                    <span class="n">limitation_series</span> <span class="o">=</span> <span class="mi">50</span>
+                <span class="k">elif</span> <span class="n">dataset</span> <span class="o">==</span> <span class="s2">&quot;fmri-objectviewing&quot;</span><span class="p">:</span>
+                    <span class="n">limitation_series</span> <span class="o">=</span> <span class="mi">360</span>
+                <span class="k">elif</span> <span class="n">dataset</span> <span class="o">==</span> <span class="s2">&quot;fmri-stoptask&quot;</span><span class="p">:</span>
+                    <span class="n">limitation_series</span> <span class="o">=</span> <span class="mi">360</span>
 
-            <span class="n">header</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">dataset</span> <span class="o">==</span> <span class="s2">&quot;eeg&quot;</span><span class="p">:</span>
-                <span class="n">header</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">reports</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">limitation_series</span> <span class="o">=</span> <span class="mi">10</span>
+                    <span class="n">limitation_values</span> <span class="o">=</span> <span class="mi">110</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TEST LOADED...&quot;</span><span class="p">)</span>
 
-            <span class="n">ts_test</span><span class="o">.</span><span class="n">load_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
-            <span class="n">start_time_opti</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">end_time_opti</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">ts_test</span><span class="o">.</span><span class="n">load_timeseries</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span> <span class="n">max_series</span><span class="o">=</span><span class="n">limitation_series</span><span class="p">,</span>
+                                        <span class="n">max_values</span><span class="o">=</span><span class="n">limitation_values</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. normalization of &quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">ts_test</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+                <span class="n">start_time_opti</span><span class="p">,</span> <span class="n">end_time_opti</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="n">M</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
-            <span class="k">for</span> <span class="n">scenario</span> <span class="ow">in</span> <span class="n">scenarios</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">2. contamination of&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;with scenario&quot;</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="mi">250</span><span class="p">:</span>
+                    <span class="n">block_size_mcar</span> <span class="o">=</span> <span class="mi">2</span>
 
-                <span class="k">for</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">algorithms</span><span class="p">:</span>
-                    <span class="n">has_been_optimized</span> <span class="o">=</span> <span class="kc">False</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">3. algorithm selected&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. normalization of &quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">ts_test</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
 
-                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_axis</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">4. missing values (series&amp;values) set to&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;for x_axis</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">scenario</span> <span class="ow">in</span> <span class="n">scenarios</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">2. contamination of&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;with scenario&quot;</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-                        <span class="n">start_time_contamination</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
-                        <span class="k">if</span> <span class="n">scenario</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span><span class="p">:</span>
-                            <span class="n">infected_matrix</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">series_impacted</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
-                                                                       <span class="n">missing_rate</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">use_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-                        <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="s2">&quot;mp&quot;</span><span class="p">:</span>
-                            <span class="n">infected_matrix</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">series_impacted</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
-                                                                                     <span class="n">missing_rate</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="n">infected_matrix</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">blackout</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">missing_rate</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
-                        <span class="n">end_time_contamination</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="n">algorithms</span><span class="p">:</span>
+                        <span class="n">has_been_optimized</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">3. algorithm selected&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-                        <span class="k">for</span> <span class="n">optimizer</span> <span class="ow">in</span> <span class="n">optimizers</span><span class="p">:</span>
-                            <span class="n">optimizer_gt</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">:</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">optimizer</span><span class="p">}</span>
+                        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_axis</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">4. missing values (series&amp;values) set to&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s2">&quot;for x_axis</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-                            <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
-                                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
-                                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
-                                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
-                                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
-                                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">MeanImpute</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
-
-                            <span class="k">if</span> <span class="ow">not</span> <span class="n">has_been_optimized</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">already_optimized</span> <span class="ow">and</span> <span class="n">algorithm</span> <span class="o">!=</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
-                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">5. AutoML to set the parameters&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-                                <span class="n">start_time_opti</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
-                                <span class="n">i_opti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_optimization</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">ts_test</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">)</span>
-                                <span class="n">i_opti</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">optimizer_gt</span><span class="p">)</span>
-                                <span class="n">utils</span><span class="o">.</span><span class="n">save_optimization</span><span class="p">(</span><span class="n">optimal_params</span><span class="o">=</span><span class="n">i_opti</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span>
-                                                        <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;e&quot;</span><span class="p">)</span>
-                                <span class="n">has_been_optimized</span> <span class="o">=</span> <span class="kc">True</span>
-                                <span class="n">end_time_opti</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-                            <span class="k">if</span> <span class="n">algorithm</span> <span class="o">!=</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
-                                <span class="n">opti_params</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;optimal&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span>
-                                                                    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;e&quot;</span><span class="p">)</span>
-                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">6. imputation&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="s2">&quot;with optimal parameters&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">opti_params</span><span class="p">)</span>
-
+                            <span class="n">start_time_contamination</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
+                            <span class="k">if</span> <span class="n">scenario</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span><span class="p">:</span>
+                                <span class="n">infected_matrix</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">series_impacted</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                                                                           <span class="n">missing_rate</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size_mcar</span><span class="p">,</span>
+                                                                           <span class="n">use_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+                            <span class="k">elif</span> <span class="n">scenario</span> <span class="o">==</span> <span class="s2">&quot;mp&quot;</span><span class="p">:</span>
+                                <span class="n">infected_matrix</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                                                                                         <span class="n">series_impacted</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                                                                                         <span class="n">missing_rate</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
                             <span class="k">else</span><span class="p">:</span>
-                                <span class="n">opti_params</span> <span class="o">=</span> <span class="kc">None</span>
+                                <span class="n">infected_matrix</span> <span class="o">=</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">blackout</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">missing_rate</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
+                            <span class="n">end_time_contamination</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-                            <span class="n">start_time_imputation</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
-                            <span class="n">algo</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">opti_params</span><span class="p">)</span>
-                            <span class="n">end_time_imputation</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                            <span class="k">for</span> <span class="n">optimizer</span> <span class="ow">in</span> <span class="n">optimizers</span><span class="p">:</span>
+                                <span class="n">algo</span> <span class="o">=</span> <span class="kc">None</span>
+                                <span class="n">optimizer_gt</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">:</span> <span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">optimizer</span><span class="p">}</span>
+                                <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
+                                    <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
+                                <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
+                                    <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
+                                <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
+                                    <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
+                                <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+                                    <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
+                                <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
+                                    <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">MeanImpute</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
 
-                            <span class="n">algo</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">raw_matrix</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">imputed_matrix</span><span class="o">=</span><span class="n">algo</span><span class="o">.</span><span class="n">imputed_matrix</span><span class="p">)</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">has_been_optimized</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">already_optimized</span> <span class="ow">and</span> <span class="n">algorithm</span> <span class="o">!=</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
+                                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">5. AutoML to set the parameters&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                                    <span class="n">start_time_opti</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
+                                    <span class="n">i_opti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_optimization</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">ts_test</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span>
+                                                                       <span class="n">block_size_mcar</span><span class="p">)</span>
+                                    <span class="n">i_opti</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">optimizer_gt</span><span class="p">)</span>
+                                    <span class="n">utils</span><span class="o">.</span><span class="n">save_optimization</span><span class="p">(</span><span class="n">optimal_params</span><span class="o">=</span><span class="n">i_opti</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span>
+                                                            <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;e&quot;</span><span class="p">)</span>
+                                    <span class="n">has_been_optimized</span> <span class="o">=</span> <span class="kc">True</span>
+                                    <span class="n">end_time_opti</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-                            <span class="n">time_contamination</span> <span class="o">=</span> <span class="n">end_time_contamination</span> <span class="o">-</span> <span class="n">start_time_contamination</span>
-                            <span class="n">time_opti</span> <span class="o">=</span> <span class="n">end_time_opti</span> <span class="o">-</span> <span class="n">start_time_opti</span>
-                            <span class="n">time_imputation</span> <span class="o">=</span> <span class="n">end_time_imputation</span> <span class="o">-</span> <span class="n">start_time_imputation</span>
+                                <span class="k">if</span> <span class="n">algorithm</span> <span class="o">!=</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
+                                    <span class="n">opti_params</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;optimal&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span>
+                                                                        <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;e&quot;</span><span class="p">)</span>
+                                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">6. imputation&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="s2">&quot;with optimal parameters&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">opti_params</span><span class="p">)</span>
 
-                            <span class="n">dic_timing</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;contamination&quot;</span><span class="p">:</span> <span class="n">time_contamination</span><span class="p">,</span> <span class="s2">&quot;optimization&quot;</span><span class="p">:</span> <span class="n">time_opti</span><span class="p">,</span>
-                                          <span class="s2">&quot;imputation&quot;</span><span class="p">:</span> <span class="n">time_imputation</span><span class="p">}</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="n">opti_params</span> <span class="o">=</span> <span class="kc">None</span>
 
-                            <span class="n">dataset_s</span> <span class="o">=</span> <span class="n">dataset</span>
-                            <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
-                                <span class="n">dataset_s</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                                <span class="n">start_time_imputation</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                                <span class="n">algo</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">opti_params</span><span class="p">)</span>
+                                <span class="n">end_time_imputation</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-                            <span class="n">optimizer_value</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;optimizer&#39;</span><span class="p">)</span>  <span class="c1"># or optimizer[&#39;optimizer&#39;]</span>
+                                <span class="n">algo</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">raw_matrix</span><span class="o">=</span><span class="n">ts_test</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">imputed_matrix</span><span class="o">=</span><span class="n">algo</span><span class="o">.</span><span class="n">imputed_matrix</span><span class="p">)</span>
 
-                            <span class="n">runs_plots_scores</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dataset_s</span><span class="p">),</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">scenario</span><span class="p">),</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
-                                <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">),</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">optimizer_value</span><span class="p">),</span> <span class="p">{})[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{</span>
-                                <span class="s2">&quot;scores&quot;</span><span class="p">:</span> <span class="n">algo</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span>
-                                <span class="s2">&quot;times&quot;</span><span class="p">:</span> <span class="n">dic_timing</span>
-                            <span class="p">}</span>
+                                <span class="n">time_contamination</span> <span class="o">=</span> <span class="n">end_time_contamination</span> <span class="o">-</span> <span class="n">start_time_contamination</span>
+                                <span class="n">time_opti</span> <span class="o">=</span> <span class="n">end_time_opti</span> <span class="o">-</span> <span class="n">start_time_opti</span>
+                                <span class="n">time_imputation</span> <span class="o">=</span> <span class="n">end_time_imputation</span> <span class="o">-</span> <span class="n">start_time_imputation</span>
 
-                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">runs_plots_scores&quot;</span><span class="p">,</span> <span class="n">runs_plots_scores</span><span class="p">)</span>
+                                <span class="n">dic_timing</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;contamination&quot;</span><span class="p">:</span> <span class="n">time_contamination</span><span class="p">,</span> <span class="s2">&quot;optimization&quot;</span><span class="p">:</span> <span class="n">time_opti</span><span class="p">,</span>
+                                              <span class="s2">&quot;imputation&quot;</span><span class="p">:</span> <span class="n">time_imputation</span><span class="p">}</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">runs_plots_scores : &quot;</span><span class="p">,</span> <span class="n">runs_plots_scores</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">generate_plots</span><span class="p">(</span><span class="n">runs_plots_scores</span><span class="p">,</span> <span class="n">save_dir</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">generate_reports</span><span class="p">(</span><span class="n">runs_plots_scores</span><span class="p">,</span> <span class="n">save_dir</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+                                <span class="n">dataset_s</span> <span class="o">=</span> <span class="n">dataset</span>
+                                <span class="k">if</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+                                    <span class="n">dataset_s</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;======================================================================================</span><span class="se">\n\n\n\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                                <span class="n">optimizer_value</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;optimizer&#39;</span><span class="p">)</span>  <span class="c1"># or optimizer[&#39;optimizer&#39;]</span>
+
+                                <span class="n">runs_plots_scores</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dataset_s</span><span class="p">),</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">scenario</span><span class="p">),</span>
+                                                                                            <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
+                                    <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">),</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">optimizer_value</span><span class="p">),</span> <span class="p">{})[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{</span>
+                                    <span class="s2">&quot;scores&quot;</span><span class="p">:</span> <span class="n">algo</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span>
+                                    <span class="s2">&quot;times&quot;</span><span class="p">:</span> <span class="n">dic_timing</span>
+                                <span class="p">}</span>
+
+                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">runs_plots_scores&quot;</span><span class="p">,</span> <span class="n">runs_plots_scores</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">runs_plots_scores : &quot;</span><span class="p">,</span> <span class="n">runs_plots_scores</span><span class="p">)</span>
+                <span class="n">save_dir_runs</span> <span class="o">=</span> <span class="n">save_dir</span> <span class="o">+</span> <span class="s2">&quot;/report_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">runs saved in : &quot;</span><span class="p">,</span> <span class="n">save_dir_runs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">generate_plots</span><span class="p">(</span><span class="n">runs_plots_scores</span><span class="o">=</span><span class="n">runs_plots_scores</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">v</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir_runs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">generate_reports</span><span class="p">(</span><span class="n">runs_plots_scores</span><span class="p">,</span> <span class="n">save_dir_runs</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;======================================================================================</span><span class="se">\n\n\n\n\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">runs_plots_scores</span></div>
 </div>

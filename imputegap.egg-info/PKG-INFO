@@ -1,20 +1,21 @@
 Metadata-Version: 2.1
 Name: imputegap
-Version: 1.0.1
+Version: 1.0.2
 Summary: A Library of Imputation Techniques for Time Series Data
 Home-page: https://github.com/eXascaleInfolab/ImputeGAP
 Author: Quentin Nater
 Author-email: quentin.nater@unifr.ch
-License: GNU General Public License v3.0
+License: MIT License
 Project-URL: Documentation, https://exascaleinfolab.github.io/ImputeGAP/
 Project-URL: Source, https://github.com/eXascaleInfolab/ImputeGAP
-Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Development Status :: 4 - Beta
 Classifier: Intended Audience :: Developers
 Classifier: Programming Language :: Python :: 3.12
 Classifier: Topic :: Scientific/Engineering :: Information Analysis
-Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: License :: OSI Approved :: MIT License
 Requires-Python: >= 3.12.0,<3.12.8
 Description-Content-Type: text/markdown
+License-File: LICENSE.txt
 Requires-Dist: numpy==1.26.4
 Requires-Dist: matplotlib==3.7.5
 Requires-Dist: toml==0.10.2
@@ -36,7 +37,7 @@ Requires-Dist: wheel
 
 # Welcome to ImputeGAP
 
-ImputeGAP is a comprehensive framework designed for time series imputation algorithms. It offers a streamlined interface that bridges algorithm evaluation and parameter tuning, utilizing datasets from diverse fields such as neuroscience, medicine, and energy. The framework includes advanced imputation algorithms from five different families, supports various patterns of missing data, and provides multiple evaluation metrics. Additionally, ImputeGAP enables AutoML optimization, feature extraction, and feature analysis with SHAP. The framework is built for easy integration of new algorithms, datasets, and evaluation metrics, enhancing its flexibility and adaptability.
+ImputeGAP is a comprehensive framework designed for time series imputation algorithms. It offers a streamlined interface that bridges algorithm evaluation and parameter tuning, utilizing datasets from diverse fields such as neuroscience, medicine, and energy. The framework includes advanced imputation algorithms from five different families, supports various patterns of missing data, and provides multiple evaluation metrics. Additionally, ImputeGAP enables AutoML optimization, feature extraction, and feature analysis. The framework enables easy integration of new algorithms, datasets, and evaluation metrics.
 
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
 ![Release](https://img.shields.io/badge/Release-v0.2.2-brightgreen) 
@@ -284,9 +285,9 @@ To add your own imputation algorithm in Python or C++, please refer to the detai
 
 ## References
 
-Mourad Khayati, Quentin Nater, and Jacques Pasquier. <b>“ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data.”</b> Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024): 4329–32.
+Mourad Khayati, Quentin Nater, and Jacques Pasquier. “ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data.” Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024): 4329–32.
 
-Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudre-Mauroux. <b>“Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series.”</b> In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020.
+Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudre-Mauroux. “Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series.” In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020.
 
 
 ---

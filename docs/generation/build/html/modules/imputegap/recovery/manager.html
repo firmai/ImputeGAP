@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.recovery.manager &mdash; imputegap 0.1.8 documentation</title>
+  <title>imputegap.recovery.manager &mdash; imputegap 1.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="../../../static/jquery.js?v=5d32c60e"></script>
       <script src="../../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../static/documentation_options.js?v=22607128"></script>
+      <script src="../../../static/documentation_options.js?v=292eb321"></script>
       <script src="../../../static/doctools.js?v=9bcbadda"></script>
       <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/js/theme.js"></script>
@@ -97,8 +97,17 @@
 
 <span class="kn">from</span> <span class="nn">imputegap.tools</span> <span class="kn">import</span> <span class="n">utils</span>
 
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;CI&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;TkAgg&#39;</span><span class="p">)</span>
+<span class="c1"># Use Agg backend if in a headless or CI environment</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;DISPLAY&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;CI&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running in a headless environment or CI. Using Agg backend.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;TkAgg&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;tkinter&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tkinter is not available.&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
+        <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>  <span class="c1"># type: ignore</span>
 
@@ -155,7 +164,7 @@
 <div class="viewcode-block" id="TimeSeries.import_matrix">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.import_matrix">[docs]</a>
     <span class="k">def</span> <span class="nf">import_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Imports a matrix of time series data.</span>
 
 <span class="sd">        The data can be provided as a list or a NumPy array. The format is (Series, Values),</span>
@@ -178,7 +187,7 @@
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The time series has not been loaded, format unknown</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The time series have not been loaded, format unknown</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input for import_matrix&quot;</span><span class="p">)</span>
 
@@ -213,19 +222,26 @@
 
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The time series has been loaded from &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">saved_data</span> <span class="o">=</span> <span class="n">data</span>
 
                 <span class="c1">#  update path form inner library datasets</span>
-                <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bafu.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;chlorine.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;climate.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;drift.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-test.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg.txt&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;meteo.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;test.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;test-large.txt&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bafu.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;chlorine.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;climate.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;drift.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-alcohol.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-reading.txt&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;meteo.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;test.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;test-large.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;fmri-objectviewing.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;fmri-stoptask.txt&quot;</span><span class="p">]:</span>
                     <span class="n">data</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.dataset&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;..&quot;</span> <span class="o">+</span> <span class="n">saved_data</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">max_rows</span><span class="o">=</span><span class="n">max_values</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">))</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The time series have been loaded from &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">max_series</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">max_series</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The time series has not been loaded, format unknown</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The time series have not been loaded, format unknown</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input for load_timeseries&quot;</span><span class="p">)</span>
 
@@ -474,7 +490,7 @@
         <span class="n">file_path</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">save_path</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">title</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_graph.jpg&quot;</span><span class="p">)</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">title</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_plot.jpg&quot;</span><span class="p">)</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;plots saved in &quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
@@ -572,7 +588,9 @@
 
                 <span class="k">if</span> <span class="n">B</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of block to remove must be greater than 0. &quot;</span>
-                                     <span class="s2">&quot;The dataset or the number of blocks may not be appropriate.&quot;</span><span class="p">)</span>
+                                     <span class="s2">&quot;The dataset or the number of blocks may not be appropriate.&quot;</span>
+                                     <span class="s2">&quot;One series has&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="s2">&quot;population is &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">((</span><span class="n">N</span> <span class="o">-</span> <span class="n">P</span><span class="p">)),</span> <span class="s2">&quot;the number to remove&quot;</span><span class="p">,</span>
+                                     <span class="nb">str</span><span class="p">(</span><span class="n">W</span><span class="p">),</span> <span class="s2">&quot;and block site&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">block_size</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
                 <span class="n">data_to_remove</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">B</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 

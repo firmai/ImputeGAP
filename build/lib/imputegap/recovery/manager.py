@@ -1,6 +1,5 @@
 import os
 import time
-import math
 import numpy as np
 import matplotlib
 from scipy.stats import zscore
@@ -72,7 +71,7 @@ class TimeSeries:
         self.data = None
 
     def import_matrix(self, data=None):
-        """"
+        """
         Imports a matrix of time series data.
 
         The data can be provided as a list or a NumPy array. The format is (Series, Values),
