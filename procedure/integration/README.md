@@ -51,6 +51,11 @@ $ cd ./ImputeGAP
       ```
       make your_lib_name
       ```
+   4) Optional: To include the .so file in the "in-built" directory, open a command line, navigate to the root directory, and execute the library build process:
+      ```
+      rm -rf dist/
+      python setup.py sdist bdist_wheel
+      ```
 
 
 3) Rename ```cpp_integration.py```  to reflect your algorithm’s name.
@@ -98,6 +103,14 @@ make libCDREC.so
 
 3) Place the generated ```.so``` file in ```imputegap/algorithms/lib```
 
+
+
+4) Optional: To include the .so file in the "in-built" directory, open a command line, navigate to the root directory, and execute the library build process:
+```
+rm -rf dist/
+python setup.py sdist bdist_wheel
+```
+   
 <br> 
 
 ######  Wrapper 
@@ -106,7 +119,8 @@ make libCDREC.so
 ```
 def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
 
-    shared_lib = utils.load_share_lib("lib_cdrec.so")
+    shared_lib = utils.load_share_lib("lib_cdrec.so") # in-build files
+    # shared_lib = utils.load_share_lib("./your_path/lib_cdrec.so") # external files
 ```
 <br> 
 

@@ -1,4 +1,3 @@
-
 name: Pytest - ImputeGAP - IMPUTATION - 12
 
 on:
@@ -8,27 +7,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
       with:
         lfs: true
-
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.12'
-
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install libmlpack-dev
-        sudo apt-get install libopenblas-dev
-        sudo apt-get install python3-dev build-essential
+        sudo apt-get install -y libmlpack-dev libopenblas-dev python3-dev build-essential
         pip install -r requirements.txt
-        pip install mypy
-        pip install pytest
-
+        pip install mypy pytest
     - name: Run pytest
       run: |
         python -m pytest ./tests/test_imputation_cdrec.py

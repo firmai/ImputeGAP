@@ -6,7 +6,7 @@ from imputegap.recovery.manager import TimeSeries
 
 class TestContamination(unittest.TestCase):
 
-    def test_mp_selection(self):
+    def test_blackout_selection(self):
         """
         the goal is to test if only the selected values are contaminated
         """
@@ -27,7 +27,7 @@ class TestContamination(unittest.TestCase):
 
             self.assertEqual(n_nan, expected, f"Expected {expected} contaminated series but found {n_nan}")
 
-    def test_mp_position(self):
+    def test_blackout_position(self):
         """
         the goal is to test if the starting position is always guaranteed
         """

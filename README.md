@@ -8,7 +8,7 @@ ImputeGAP is a comprehensive framework designed for time series imputation algor
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
 ![Release](https://img.shields.io/badge/Release-v0.2.2-brightgreen) 
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
-![Coverage](https://img.shields.io/badge/Coverage-91%25-brightgreen)
+![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
 ![Language](https://img.shields.io/badge/Language-English-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
