@@ -9,7 +9,7 @@ class Evaluation:
 
     Methods
     -------
-    metrics_computation():
+    compute_all_metrics():
         Compute various evaluation metrics (RMSE, MAE, MI, CORRELATION) for the imputation.
     compute_rmse():
         Compute the Root Mean Squared Error (RMSE) between the ground truth and the imputed values.
@@ -22,28 +22,28 @@ class Evaluation:
 
     """
 
-    def __init__(self, ground_truth, imputation, contamination):
+    def __init__(self, input_data, recov_data, incomp_data):
         """
-        Initialize the Evaluation class with ground truth, imputation, and contamination time series.
+        Initialize the Evaluation class with ground truth, imputation, and incomp_data time series.
 
         Parameters
         ----------
-        ground_truth : numpy.ndarray
+        input_data : numpy.ndarray
             The original time series without contamination.
-        imputation : numpy.ndarray
+        recov_data : numpy.ndarray
             The imputed time series.
-        contamination : numpy.ndarray
+        incomp_data : numpy.ndarray
             The time series with contamination (NaN values).
 
         Returns
         -------
         None
         """
-        self.ground_truth = ground_truth
-        self.imputation = imputation
-        self.contamination = contamination
+        self.input_data = input_data
+        self.recov_data = recov_data
+        self.incomp_data = incomp_data
 
-    def metrics_computation(self):
+    def compute_all_metrics(self):
         """
         Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.
 
@@ -79,9 +79,9 @@ class Evaluation:
         float
             The RMSE value for NaN positions in the contamination dataset.
         """
-        nan_locations = np.isnan(self.contamination)
+        nan_locations = np.isnan(self.incomp_data)
 
-        mse = np.mean((self.ground_truth[nan_locations] - self.imputation[nan_locations]) ** 2)
+        mse = np.mean((self.input_data[nan_locations] - self.recov_data[nan_locations]) ** 2)
         rmse = np.sqrt(mse)
 
         return float(rmse)
@@ -97,9 +97,9 @@ class Evaluation:
         float
             The MAE value for NaN positions in the contamination dataset.
         """
-        nan_locations = np.isnan(self.contamination)
+        nan_locations = np.isnan(self.incomp_data)
 
-        absolute_error = np.abs(self.ground_truth[nan_locations] - self.imputation[nan_locations])
+        absolute_error = np.abs(self.input_data[nan_locations] - self.recov_data[nan_locations])
         mean_absolute_error = np.mean(absolute_error)
 
         return mean_absolute_error
@@ -116,16 +116,16 @@ class Evaluation:
         float
             The mutual information (MI) score for NaN positions in the contamination dataset.
         """
-        nan_locations = np.isnan(self.contamination)
+        nan_locations = np.isnan(self.incomp_data)
 
         # Discretize the continuous data into bins
-        ground_truth_binned = np.digitize(self.ground_truth[nan_locations],
-                                          bins=np.histogram_bin_edges(self.ground_truth[nan_locations], bins=10))
-        imputation_binned = np.digitize(self.imputation[nan_locations],
-                                        bins=np.histogram_bin_edges(self.imputation[nan_locations], bins=10))
+        input_data_binned = np.digitize(self.input_data[nan_locations],
+                                          bins=np.histogram_bin_edges(self.input_data[nan_locations], bins=10))
+        imputation_binned = np.digitize(self.recov_data[nan_locations],
+                                        bins=np.histogram_bin_edges(self.recov_data[nan_locations], bins=10))
 
-        mi_discrete = mutual_info_score(ground_truth_binned, imputation_binned)
-        # mi_continuous = mutual_info_score(self.ground_truth[nan_locations], self.ground_truth[nan_locations])
+        mi_discrete = mutual_info_score(input_data_binned, imputation_binned)
+        # mi_continuous = mutual_info_score(self.input_data[nan_locations], self.input_data[nan_locations])
 
         return mi_discrete
 
@@ -141,11 +141,11 @@ class Evaluation:
         float
             The Pearson correlation coefficient for NaN positions in the contamination dataset.
         """
-        nan_locations = np.isnan(self.contamination)
-        ground_truth_values = self.ground_truth[nan_locations]
-        imputed_values = self.imputation[nan_locations]
+        nan_locations = np.isnan(self.incomp_data)
+        input_data_values = self.input_data[nan_locations]
+        imputed_values = self.recov_data[nan_locations]
 
-        correlation, _ = pearsonr(ground_truth_values, imputed_values)
+        correlation, _ = pearsonr(input_data_values, imputed_values)
 
         if np.isnan(correlation):
             correlation = 0

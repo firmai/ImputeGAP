@@ -101,13 +101,13 @@ def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
     return __py_imputed_matrix;
 
 
-def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_path=None):
+def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, lib_path=None):
     """
     CDRec algorithm for matrix imputation of missing values using Centroid Decomposition.
 
     Parameters
     ----------
-    contamination : numpy.ndarray
+    incomp_data : numpy.ndarray
         The input matrix with contamination (missing values represented as NaNs).
     truncation_rank : int
         The truncation rank for matrix decomposition (must be greater than 1 and smaller than the number of series).
@@ -127,18 +127,18 @@ def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_pa
 
     Example
     -------
-    >>> imputed_data = cdrec(contamination=contamination_matrix, truncation_rank=1, iterations=100, epsilon=0.000001, logs=True)
-    >>> print(imputed_data)
+    >>> recov_data = cdrec(incomp_data=incomp_data, truncation_rank=1, iterations=100, epsilon=0.000001, logs=True)
+    >>> print(recov_data)
 
     """
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    imputed_matrix = native_cdrec(contamination, truncation_rank, epsilon, iterations)
+    recov_data = native_cdrec(incomp_data, truncation_rank, epsilon, iterations)
 
     end_time = time.time()
 
     if logs:
         print(f"\n\t\t> logs, imputation cdrec - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    return imputed_matrix
+    return recov_data

@@ -21,13 +21,13 @@ sequence_length = 7
 
 [greedy]
 n_calls = 250
-selected_metrics='RMSE'
+metrics='RMSE'
 
 [bayesian]
 n_calls = 2
 n_random_starts = 50
 acq_func = 'gp_hedge'
-selected_metrics='RMSE'
+metrics='RMSE'
 
 [pso]
 n_particles = 50
@@ -36,13 +36,13 @@ c2 = 0.3
 w = 0.9
 iterations=10
 n_processes=1
-selected_metrics='RMSE'
+metrics='RMSE'
 
 [sh]
 num_configs = 10
 num_iterations = 2
 reduction_factor = 10
-selected_metrics="RMSE"
+metrics="RMSE"
 
 
 [explainer]

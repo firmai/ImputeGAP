@@ -56,14 +56,14 @@ class Benchmarking:
         """
 
         if scenario == "mcar":
-            infected_matrix_opti = ts_test.Contaminate.mcar(ts=ts_test.data, series_impacted=opti_mean,
-                                                            missing_rate=opti_mean, block_size=block_size_mcar,
-                                                            use_seed=True, seed=42)
+            infected_matrix_opti = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=opti_mean,
+                                                              missing_rate=opti_mean, block_size=block_size_mcar,
+                                                              use_seed=True, seed=42)
         elif scenario == "mp":
-            infected_matrix_opti = ts_test.Contaminate.missing_percentage(ts=ts_test.data, series_impacted=opti_mean,
-                                                                          missing_rate=opti_mean)
+            infected_matrix_opti = ts_test.Contamination.missing_percentage(input_data=ts_test.data, series_rate=opti_mean,
+                                                                            missing_rate=opti_mean)
         else:
-            infected_matrix_opti = ts_test.Contaminate.blackout(ts=ts_test.data, missing_rate=opti_mean)
+            infected_matrix_opti = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=opti_mean)
 
         i_opti = None
         if algorithm == "cdrec":
@@ -458,15 +458,15 @@ class Benchmarking:
 
                             start_time_contamination = time.time()  # Record start time
                             if scenario == "mcar":
-                                infected_matrix = ts_test.Contaminate.mcar(ts=ts_test.data, series_impacted=x,
-                                                                           missing_rate=x, block_size=block_size_mcar,
-                                                                           use_seed=True, seed=42)
+                                infected_matrix = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=x,
+                                                                             missing_rate=x, block_size=block_size_mcar,
+                                                                             use_seed=True, seed=42)
                             elif scenario == "mp":
-                                infected_matrix = ts_test.Contaminate.missing_percentage(ts=ts_test.data,
-                                                                                         series_impacted=x,
-                                                                                         missing_rate=x)
+                                infected_matrix = ts_test.Contamination.missing_percentage(input_data=ts_test.data,
+                                                                                           series_rate=x,
+                                                                                           missing_rate=x)
                             else:
-                                infected_matrix = ts_test.Contaminate.blackout(ts=ts_test.data, missing_rate=x)
+                                infected_matrix = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=x)
                             end_time_contamination = time.time()
 
                             for optimizer in optimizers:
@@ -488,7 +488,7 @@ class Benchmarking:
                                     start_time_opti = time.time()  # Record start time
                                     i_opti = self._config_optimization(0.25, ts_test, scenario, algorithm,
                                                                        block_size_mcar)
-                                    i_opti.impute(user_defined=False, params=optimizer_gt)
+                                    i_opti.impute(user_def=False, params=optimizer_gt)
                                     utils.save_optimization(optimal_params=i_opti.parameters, algorithm=algorithm,
                                                             dataset=dataset, optimizer="e")
                                     has_been_optimized = True
@@ -506,7 +506,7 @@ class Benchmarking:
                                 algo.impute(params=opti_params)
                                 end_time_imputation = time.time()
 
-                                algo.score(raw_matrix=ts_test.data, imputed_matrix=algo.imputed_matrix)
+                                algo.score(input_data=ts_test.data, recov_data=algo.imputed_matrix)
 
                                 time_contamination = end_time_contamination - start_time_contamination
                                 time_opti = end_time_opti - start_time_opti

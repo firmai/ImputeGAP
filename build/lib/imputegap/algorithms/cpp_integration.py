@@ -119,11 +119,11 @@ def your_algo(contamination, param, logs=True):
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    imputed_matrix = native_algo(contamination, param)
+    recov_data = native_algo(contamination, param)
 
     end_time = time.time()
 
     if logs:
         print(f"\n\t\t> logs, imputation algo - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    return imputed_matrix
+    return recov_data

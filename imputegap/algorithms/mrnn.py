@@ -2,13 +2,13 @@ import time
 from imputegap.wrapper.AlgoPython.MRNN.testerMRNN import mrnn_recov
 
 
-def mrnn(contamination, hidden_dim, learning_rate, iterations, sequence_length, logs=True):
+def mrnn(incomp_data, hidden_dim, learning_rate, iterations, sequence_length, logs=True):
     """
     Perform imputation using the Multivariate Recurrent Neural Network (MRNN) algorithm.
 
     Parameters
     ----------
-    contamination : numpy.ndarray
+    incomp_data : numpy.ndarray
         The input matrix with contamination (missing values represented as NaNs).
     hidden_dim : int
         The number of hidden dimensions in the MRNN model.
@@ -34,8 +34,8 @@ def mrnn(contamination, hidden_dim, learning_rate, iterations, sequence_length, 
 
     Example
     -------
-    >>> imputed_data = mrnn(contamination_matrix, hidden_dim=64, learning_rate=0.001, iterations=1000, sequence_length=7)
-    >>> print(imputed_data)
+    >>> recov_data = mrnn(incomp_data, hidden_dim=64, learning_rate=0.001, iterations=1000, sequence_length=7)
+    >>> print(recov_data)
 
     References
     ----------
@@ -43,11 +43,11 @@ def mrnn(contamination, hidden_dim, learning_rate, iterations, sequence_length, 
     """
     start_time = time.time()  # Record start time
 
-    imputed_matrix = mrnn_recov(matrix_in=contamination, hidden_dim=hidden_dim, learning_rate=learning_rate,
-                                iterations=iterations, seq_length=sequence_length)
+    recov_data = mrnn_recov(matrix_in=incomp_data, hidden_dim=hidden_dim, learning_rate=learning_rate,
+                            iterations=iterations, seq_length=sequence_length)
 
     end_time = time.time()
     if logs:
         print(f"\n\t\t> logs, imputation mrnn - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    return imputed_matrix
+    return recov_data

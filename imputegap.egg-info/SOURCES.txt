@@ -6,7 +6,7 @@ requirements.txt
 setup.py
 imputegap/__init__.py
 imputegap/report.log
-imputegap/runner_benchmarking.py
+imputegap/runner_benchmark.py
 imputegap/runner_contamination.py
 imputegap/runner_datasets.py
 imputegap/runner_display.py
@@ -33,16 +33,8 @@ imputegap/algorithms/lib/lib_algo.dll
 imputegap/algorithms/lib/lib_algo.so
 imputegap/algorithms/lib/lib_cdrec.so
 imputegap/algorithms/lib/lib_stmvl.so
-imputegap/assets/BLACKOUTContamination_graph.jpg
-imputegap/assets/EEG-MCARContamination_graph.jpg
-imputegap/assets/MCARContamination_graph.jpg
-imputegap/assets/MISSINGPERCENTANGEContamination_graph.jpg
-imputegap/assets/contamination_graph.jpg
-imputegap/assets/contamination_plot.jpg
-imputegap/assets/imputation_graph.jpg
-imputegap/assets/imputation_plot.jpg
-imputegap/assets/raw_data_plot.jpg
-imputegap/assets/rawdata_plot.jpg
+imputegap/assets/25_01_06_14_32_52_plot.jpg
+imputegap/assets/logo_imputegab.png
 imputegap/assets/shap/.gitkeep
 imputegap/assets/shap/chlorine_cdrec_DTL_Beeswarm.png
 imputegap/assets/shap/chlorine_cdrec_DTL_Waterfall.png
@@ -173,6 +165,7 @@ imputegap/dataset/docs/meteo/2_meteo-normminmax3x500_graph.jpg
 imputegap/dataset/docs/meteo/features_meteo.txt
 imputegap/env/default_explainer.toml
 imputegap/env/default_values.toml
+imputegap/imputegap/assets/rawdata_plot.jpg
 imputegap/params/optimal_parameters_b_bafu_iim.toml
 imputegap/params/optimal_parameters_b_bafu_mrnn.toml
 imputegap/params/optimal_parameters_b_bafu_stmvl.toml
@@ -213,9 +206,10 @@ imputegap/params/optimal_parameters_e_fmri-stoptask_cdrec.toml
 imputegap/params/optimal_parameters_e_fmri-stoptask_stmvl.toml
 imputegap/params/optimal_parameters_g_eeg-alcohol_cdrec.toml
 imputegap/params/optimal_parameters_sh_eeg-reading_cdrec.toml
+imputegap/params/optimal_parameters_t_eeg_cdrec.toml
 imputegap/recovery/README.md
 imputegap/recovery/__init__.py
-imputegap/recovery/benchmarking.py
+imputegap/recovery/benchmark.py
 imputegap/recovery/evaluation.py
 imputegap/recovery/explainer.py
 imputegap/recovery/imputation.py
@@ -368,6 +362,9 @@ imputegap/reports/report_03/report_eeg-alcohol.txt
 imputegap/reports/report_03/report_eeg-reading.txt
 imputegap/reports/report_03/report_fmri-objectviewing.txt
 imputegap/reports/report_03/report_fmri-stoptask.txt
+imputegap/test_naterq/chlorine_mcar_metrics_subplot.jpg
+imputegap/test_naterq/report_chlorine.txt
+imputegap/test_naterq/report_chlorine.xlsx
 imputegap/tools/__init__.py
 imputegap/tools/algorithm_parameters.py
 imputegap/tools/evaluator.py

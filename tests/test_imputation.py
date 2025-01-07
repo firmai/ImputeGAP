@@ -13,17 +13,17 @@ class TestImputation(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.import_matrix(np.array([[1, 2, 1], [4, 2, 6]]))
 
-        contamination = np.array([[1, 2, np.nan], [4, np.nan, 6]])
+        incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])
 
-        algo = Imputation.Statistics.MinImpute(contamination)
+        algo = Imputation.Statistics.MinImpute(incomp_data)
         algo.impute()
         algo.score(ts_1.data)
 
         result = np.array([[1, 2, 1], [4, 1, 6]])
 
-        imputation, _ = algo.imputed_matrix, algo.metrics
+        recov_data, _ = algo.recov_data, algo.metrics
 
-        assert np.all(np.isclose(imputation, result)), f"imputation: expected {result}, got {imputation}"
+        assert np.all(np.isclose(recov_data, result)), f"imputation: expected {result}, got {recov_data}"
 
     def test_imputation_zero(self):
         """
@@ -32,17 +32,17 @@ class TestImputation(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.import_matrix(np.array([[1, 2, 1], [4, 2, 6]]))
 
-        contamination = np.array([[1, 2, np.nan], [4, np.nan, 6]])
+        incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])
 
-        algo = Imputation.Statistics.ZeroImpute(contamination)
+        algo = Imputation.Statistics.ZeroImpute(incomp_data)
         algo.impute()
         algo.score(ts_1.data)
 
         result = np.array([[1, 2, 0], [4, 0, 6]])
 
-        imputation, _ = algo.imputed_matrix, algo.metrics
+        recov_data, _ = algo.recov_data, algo.metrics
 
-        assert np.all(np.isclose(imputation, result)), f"imputation: expected {result}, got {imputation}"
+        assert np.all(np.isclose(recov_data, result)), f"imputation: expected {result}, got {recov_data}"
 
     def test_imputation_mean(self):
         """
@@ -51,14 +51,14 @@ class TestImputation(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.import_matrix(np.array([[4, 2, 1], [4, 2, 6]]))
 
-        contamination = np.array([[4, 2, np.nan], [4, np.nan, 6]])
+        incomp_data = np.array([[4, 2, np.nan], [4, np.nan, 6]])
 
-        algo = Imputation.Statistics.MeanImpute(contamination)
+        algo = Imputation.Statistics.MeanImpute(incomp_data)
         algo.impute()
         algo.score(ts_1.data)
 
         result = np.array([[4, 2, 4], [4, 4, 6]])
 
-        imputation, _ = algo.imputed_matrix, algo.metrics
+        recov_data, _ = algo.recov_data, algo.metrics
 
-        assert np.all(np.isclose(imputation, result)), f"imputation: expected {result}, got {imputation}"
+        assert np.all(np.isclose(recov_data, result)), f"imputation: expected {result}, got {recov_data}"

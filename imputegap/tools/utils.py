@@ -140,14 +140,14 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
             return (hidden_dim, learning_rate, iterations)
     elif algorithm == "greedy":
         n_calls = int(config['greedy']['n_calls'])
-        selected_metrics = config['greedy']['selected_metrics']
-        return (n_calls, [selected_metrics])
+        metrics = config['greedy']['metrics']
+        return (n_calls, [metrics])
     elif algorithm == "bayesian":
         n_calls = int(config['bayesian']['n_calls'])
         n_random_starts = int(config['bayesian']['n_random_starts'])
         acq_func = str(config['bayesian']['acq_func'])
-        selected_metrics = config['bayesian']['selected_metrics']
-        return (n_calls, n_random_starts, acq_func, [selected_metrics])
+        metrics = config['bayesian']['metrics']
+        return (n_calls, n_random_starts, acq_func, [metrics])
     elif algorithm == "pso":
         n_particles = int(config['pso']['n_particles'])
         c1 = float(config['pso']['c1'])
@@ -155,14 +155,14 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         w = float(config['pso']['w'])
         iterations = int(config['pso']['iterations'])
         n_processes = int(config['pso']['n_processes'])
-        selected_metrics = config['pso']['selected_metrics']
-        return (n_particles, c1, c2, w, iterations, n_processes, [selected_metrics])
+        metrics = config['pso']['metrics']
+        return (n_particles, c1, c2, w, iterations, n_processes, [metrics])
     elif algorithm == "sh":
         num_configs = int(config['sh']['num_configs'])
         num_iterations = int(config['sh']['num_iterations'])
         reduction_factor = int(config['sh']['reduction_factor'])
-        selected_metrics = config['sh']['selected_metrics']
-        return (num_configs, num_iterations, reduction_factor, [selected_metrics])
+        metrics = config['sh']['metrics']
+        return (num_configs, num_iterations, reduction_factor, [metrics])
     elif algorithm == "colors":
         colors = config['colors']['plot']
         return colors

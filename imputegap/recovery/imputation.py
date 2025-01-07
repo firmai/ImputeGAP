@@ -22,9 +22,9 @@ class BaseImputer:
     -------
     impute(params=None):
         Abstract method to perform the imputation.
-    score(raw_matrix, imputed_matrix=None):
+    score(input_data, recov_data=None):
         Compute metrics for the imputed time series.
-    _check_params(user_defined, params):
+    _check_params(user_def, params):
         Check and format parameters for imputation.
     _optimize(parameters={}):
         Optimize hyperparameters for the imputation algorithm.
@@ -32,17 +32,17 @@ class BaseImputer:
     algorithm = ""  # Class variable to hold the algorithm name
     logs = True
 
-    def __init__(self, infected_matrix):
+    def __init__(self, incomp_data):
         """
         Initialize the BaseImputer with an infected time series matrix.
 
         Parameters
         ----------
-        infected_matrix : numpy.ndarray
+        incomp_data : numpy.ndarray
             Matrix used during the imputation of the time series.
         """
-        self.infected_matrix = infected_matrix
-        self.imputed_matrix = None
+        self.incomp_data = incomp_data
+        self.recov_data = None
         self.metrics = None
         self.parameters = None
 
@@ -62,33 +62,33 @@ class BaseImputer:
         """
         raise NotImplementedError("This method should be overridden by subclasses")
 
-    def score(self, raw_matrix, imputed_matrix=None):
+    def score(self, input_data, recov_data=None):
         """
         Compute evaluation metrics for the imputed time series.
 
         Parameters
         ----------
-        raw_matrix : numpy.ndarray
+        input_data : numpy.ndarray
             The original time series without contamination.
-        imputed_matrix : numpy.ndarray, optional
+        recov_data : numpy.ndarray, optional
             The imputed time series (default is None).
 
         Returns
         -------
         None
         """
-        if self.imputed_matrix is None:
-            self.imputed_matrix = imputed_matrix
+        if self.recov_data is None:
+            self.recov_data = recov_data
 
-        self.metrics = Evaluation(raw_matrix, self.imputed_matrix, self.infected_matrix).metrics_computation()
+        self.metrics = Evaluation(input_data, self.recov_data, self.incomp_data).compute_all_metrics()
 
-    def _check_params(self, user_defined, params):
+    def _check_params(self, user_def, params):
         """
         Format the parameters for optimization or imputation.
 
         Parameters
         ----------
-        user_defined : bool
+        user_def : bool
             Whether the parameters are user-defined or not.
         params : dict or list
             List or dictionary of parameters.
@@ -100,7 +100,7 @@ class BaseImputer:
         """
 
         if params is not None:
-            if not user_defined:
+            if not user_def:
                 self._optimize(params)
 
                 if isinstance(self.parameters, dict):
@@ -133,7 +133,7 @@ class BaseImputer:
         Parameters
         ----------
         parameters : dict
-            Dictionary containing optimization configurations such as ground_truth, optimizer, and options.
+            Dictionary containing optimization configurations such as input_data, optimizer, and options.
 
         Returns
         -------
@@ -141,9 +141,9 @@ class BaseImputer:
         """
         from imputegap.recovery.optimization import Optimization
 
-        raw_data = parameters.get('ground_truth')
-        if raw_data is None:
-            raise ValueError(f"Need ground_truth to be able to adapt the hyper-parameters: {raw_data}")
+        input_data = parameters.get('input_data')
+        if input_data is None:
+            raise ValueError(f"Need input_data to be able to adapt the hyper-parameters: {input_data}")
 
         optimizer = parameters.get('optimizer', "bayesian")
         defaults = utils.load_parameters(query="default", algorithm=optimizer)
@@ -157,13 +157,13 @@ class BaseImputer:
             n_calls = options.get('n_calls', n_calls_d)
             random_starts = options.get('n_random_starts', n_random_starts_d)
             func = options.get('acq_func', acq_func_d)
-            metrics = options.get('selected_metrics', selected_metrics_d)
+            metrics = options.get('metrics', selected_metrics_d)
 
             bo_optimizer = Optimization.Bayesian()
 
-            optimal_params, _ = bo_optimizer.optimize(ground_truth=raw_data,
-                                                      contamination=self.infected_matrix,
-                                                      selected_metrics=metrics,
+            optimal_params, _ = bo_optimizer.optimize(input_data=input_data,
+                                                      incomp_data=self.incomp_data,
+                                                      metrics=metrics,
                                                       algorithm=self.algorithm,
                                                       n_calls=n_calls,
                                                       n_random_starts=random_starts,
@@ -179,13 +179,13 @@ class BaseImputer:
             w = options.get('w', w_d)
             iterations = options.get('iterations', iterations_d)
             n_processes = options.get('n_processes', n_processes_d)
-            metrics = options.get('selected_metrics', selected_metrics_d)
+            metrics = options.get('metrics', selected_metrics_d)
 
             swarm_optimizer = Optimization.ParticleSwarm()
 
-            optimal_params, _ = swarm_optimizer.optimize(ground_truth=raw_data,
-                                                         contamination=self.infected_matrix,
-                                                         selected_metrics=metrics, algorithm=self.algorithm,
+            optimal_params, _ = swarm_optimizer.optimize(input_data=input_data,
+                                                         incomp_data=self.incomp_data,
+                                                         metrics=metrics, algorithm=self.algorithm,
                                                          n_particles=n_particles, c1=c1, c2=c2, w=w,
                                                          iterations=iterations, n_processes=n_processes)
 
@@ -197,13 +197,13 @@ class BaseImputer:
             num_configs = options.get('num_configs', num_configs_d)
             num_iterations = options.get('num_iterations', num_iterations_d)
             reduction_factor = options.get('reduction_factor', reduction_factor_d)
-            metrics = options.get('selected_metrics', selected_metrics_d)
+            metrics = options.get('metrics', selected_metrics_d)
 
             sh_optimizer = Optimization.SuccessiveHalving()
 
-            optimal_params, _ = sh_optimizer.optimize(ground_truth=raw_data,
-                                                      contamination=self.infected_matrix,
-                                                      selected_metrics=metrics, algorithm=self.algorithm,
+            optimal_params, _ = sh_optimizer.optimize(input_data=input_data,
+                                                      incomp_data=self.incomp_data,
+                                                      metrics=metrics, algorithm=self.algorithm,
                                                       num_configs=num_configs, num_iterations=num_iterations,
                                                       reduction_factor=reduction_factor)
 
@@ -212,13 +212,13 @@ class BaseImputer:
             options = parameters.get('options', {})
 
             n_calls = options.get('n_calls', n_calls_d)
-            metrics = options.get('selected_metrics', selected_metrics_d)
+            metrics = options.get('metrics', selected_metrics_d)
 
             go_optimizer = Optimization.Greedy()
 
-            optimal_params, _ = go_optimizer.optimize(ground_truth=raw_data,
-                                                      contamination=self.infected_matrix,
-                                                      selected_metrics=metrics, algorithm=self.algorithm,
+            optimal_params, _ = go_optimizer.optimize(input_data=input_data,
+                                                      incomp_data=self.incomp_data,
+                                                      metrics=metrics, algorithm=self.algorithm,
                                                       n_calls=n_calls)
 
         self.parameters = optimal_params
@@ -230,19 +230,19 @@ class Imputation:
 
     Methods
     -------
-    evaluate_params(ground_truth, contamination, configuration, algorithm="cdrec"):
+    evaluate_params(input_data, incomp_data, configuration, algorithm="cdrec"):
         Evaluate imputation performance using given parameters and algorithm.
     """
 
-    def evaluate_params(ground_truth, contamination, configuration, algorithm="cdrec"):
+    def evaluate_params(input_data, incomp_data, configuration, algorithm="cdrec"):
         """
         Evaluate various metrics for given parameters and imputation algorithm.
 
         Parameters
         ----------
-        ground_truth : numpy.ndarray
+        input_data : numpy.ndarray
             The original time series without contamination.
-        contamination : numpy.ndarray
+        incomp_data : numpy.ndarray
             The time series with contamination.
         configuration : tuple
             Tuple of the configuration of the algorithm.
@@ -260,9 +260,9 @@ class Imputation:
 
         if algorithm == 'cdrec':
             rank, epsilon, iterations = configuration
-            algo = Imputation.MatrixCompletion.CDRec(contamination)
+            algo = Imputation.MatrixCompletion.CDRec(incomp_data)
             algo.logs = False
-            algo.impute(user_defined=True, params={"rank": rank, "epsilon": epsilon, "iterations": iterations})
+            algo.impute(user_def=True, params={"rank": rank, "epsilon": epsilon, "iterations": iterations})
 
         elif algorithm == 'iim':
             if not isinstance(configuration, list):
@@ -270,30 +270,30 @@ class Imputation:
             learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
 
-            algo = Imputation.Statistics.IIM(contamination)
+            algo = Imputation.Statistics.IIM(incomp_data)
             algo.logs = False
-            algo.impute(user_defined=True, params={"learning_neighbours": learning_neighbours, "alg_code": alg_code})
+            algo.impute(user_def=True, params={"learning_neighbours": learning_neighbours, "alg_code": alg_code})
 
         elif algorithm == 'mrnn':
             hidden_dim, learning_rate, iterations = configuration
 
-            algo = Imputation.DeepLearning.MRNN(contamination)
+            algo = Imputation.DeepLearning.MRNN(incomp_data)
             algo.logs = False
-            algo.impute(user_defined=True,
+            algo.impute(user_def=True,
                         params={"hidden_dim": hidden_dim, "learning_rate": learning_rate, "iterations": iterations,
                                 "seq_length": 7})
 
         elif algorithm == 'stmvl':
             window_size, gamma, alpha = configuration
 
-            algo = Imputation.PatternSearch.STMVL(contamination)
+            algo = Imputation.PatternSearch.STMVL(incomp_data)
             algo.logs = False
-            algo.impute(user_defined=True, params={"window_size": window_size, "gamma": gamma, "alpha": alpha})
+            algo.impute(user_def=True, params={"window_size": window_size, "gamma": gamma, "alpha": alpha})
 
         else:
             raise ValueError(f"Invalid algorithm: {algorithm}")
 
-        algo.score(ground_truth)
+        algo.score(input_data)
         error_measures = algo.metrics
 
         return error_measures
@@ -334,9 +334,9 @@ class Imputation:
                 Returns
                 -------
                 self : ZeroImpute
-                    The object with `imputed_matrix` set.
+                    The object with `recov_data` set.
                 """
-                self.imputed_matrix = zero_impute(self.infected_matrix, params)
+                self.recov_data = zero_impute(self.incomp_data, params)
 
                 return self
 
@@ -364,9 +364,9 @@ class Imputation:
                 Returns
                 -------
                 self : MinImpute
-                    The object with `imputed_matrix` set.
+                    The object with `recov_data` set.
                 """
-                self.imputed_matrix = min_impute(self.infected_matrix, params)
+                self.recov_data = min_impute(self.incomp_data, params)
 
                 return self
 
@@ -394,9 +394,9 @@ class Imputation:
                 Returns
                 -------
                 self : MinImpute
-                    The object with `imputed_matrix` set.
+                    The object with `recov_data` set.
                 """
-                self.imputed_matrix = mean_impute(self.infected_matrix, params)
+                self.recov_data = mean_impute(self.incomp_data, params)
 
                 return self
 
@@ -406,18 +406,18 @@ class Imputation:
 
             Methods
             -------
-            impute(self, user_defined=True, params=None):
+            impute(self, user_def=True, params=None):
                 Perform imputation using the IIM algorithm.
             """
             algorithm = "iim"
 
-            def impute(self, user_defined=True, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the IIM algorithm.
 
                 Parameters
                 ----------
-                user_defined : bool, optional
+                user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the IIM algorithm, if None, default ones are loaded.
@@ -430,15 +430,15 @@ class Imputation:
                 Returns
                 -------
                 self : IIM
-                    The object with `imputed_matrix` set.
+                    The object with `recov_data` set.
 
                 Example
                 -------
-                >>> iim_imputer = Imputation.Statistics.IIM(infected_matrix)
+                >>> iim_imputer = Imputation.Statistics.IIM(incomp_data)
                 >>> iim_imputer.impute()  # default parameters for imputation > or
-                >>> iim_imputer.impute(user_defined=True, params={'learning_neighbors': 10})  # user-defined  > or
-                >>> iim_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
-                >>> imputed_data = iim_imputer.imputed_matrix
+                >>> iim_imputer.impute(user_def=True, params={'learning_neighbors': 10})  # user-defined  > or
+                >>> iim_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> recov_data = iim_imputer.recov_data
 
                 References
                 ----------
@@ -446,12 +446,12 @@ class Imputation:
                 keywords: {Data models;Adaptation models;Computational modeling;Predictive models;Numerical models;Aggregates;Regression tree analysis;Missing values;Data imputation}
                 """
                 if params is not None:
-                    learning_neighbours, algo_code = self._check_params(user_defined, params)
+                    learning_neighbours, algo_code = self._check_params(user_def, params)
                 else:
                     learning_neighbours, algo_code = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.imputed_matrix = iim(contamination=self.infected_matrix, number_neighbor=learning_neighbours,
-                                          algo_code=algo_code, logs=self.logs)
+                self.recov_data = iim(incomp_data=self.incomp_data, number_neighbor=learning_neighbours,
+                                      algo_code=algo_code, logs=self.logs)
 
                 return self
 
@@ -471,19 +471,19 @@ class Imputation:
 
             Methods
             -------
-            impute(self, user_defined=True, params=None):
+            impute(self, user_def=True, params=None):
                 Perform imputation using the CDRec algorithm.
             """
 
             algorithm = "cdrec"
 
-            def impute(self, user_defined=True, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the CDRec algorithm.
 
                 Parameters
                 ----------
-                user_defined : bool, optional
+                user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the CDRec algorithm or Auto-ML configuration, if None, default ones are loaded.
@@ -499,7 +499,7 @@ class Imputation:
 
                     **Auto-ML parameters:**
 
-                    - ground_truth : numpy.ndarray
+                    - input_data : numpy.ndarray
                         The original time series dataset without contamination.
                     - optimizer : str
                         The optimizer to use for parameter optimization. Valid values are "bayesian", "greedy", "pso", or "sh".
@@ -510,7 +510,7 @@ class Imputation:
 
                         - n_calls : int, optional
                             Number of calls to the objective function. Default is 3.
-                        - selected_metrics : list, optional
+                        - metrics : list, optional
                             List of selected metrics to consider for optimization. Default is ["RMSE"].
                         - n_random_starts : int, optional
                             Number of initial calls to the objective function, from random points. Default is 50.
@@ -521,7 +521,7 @@ class Imputation:
 
                         - n_calls : int, optional
                             Number of calls to the objective function. Default is 3.
-                        - selected_metrics : list, optional
+                        - metrics : list, optional
                             List of selected metrics to consider for optimization. Default is ["RMSE"].
 
                         **PSO:**
@@ -551,15 +551,15 @@ class Imputation:
                 Returns
                 -------
                 self : CDRec
-                    CDRec object with `imputed_matrix` set.
+                    CDRec object with `recov_data` set.
 
                 Example
                 -------
-                >>> cdrec_imputer = Imputation.MatrixCompletion.CDRec(infected_matrix)
+                >>> cdrec_imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
                 >>> cdrec_imputer.impute()  # default parameters for imputation > or
-                >>> cdrec_imputer.impute(user_defined=True, params={'rank': 5, 'epsilon': 0.01, 'iterations': 100})  # user-defined > or
-                >>> cdrec_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
-                >>> imputed_data = cdrec_imputer.imputed_matrix
+                >>> cdrec_imputer.impute(user_def=True, params={'rank': 5, 'epsilon': 0.01, 'iterations': 100})  # user-defined > or
+                >>> cdrec_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> recov_data = cdrec_imputer.recov_data
 
                 References
                 ----------
@@ -567,12 +567,12 @@ class Imputation:
                 """
 
                 if params is not None:
-                    rank, epsilon, iterations = self._check_params(user_defined, params)
+                    rank, epsilon, iterations = self._check_params(user_def, params)
                 else:
                     rank, epsilon, iterations = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=rank,
-                                            iterations=iterations, epsilon=epsilon, logs=self.logs)
+                self.recov_data = cdrec(incomp_data=self.incomp_data, truncation_rank=rank,
+                                        iterations=iterations, epsilon=epsilon, logs=self.logs)
 
                 return self
 
@@ -593,18 +593,18 @@ class Imputation:
 
             Methods
             -------
-            impute(self, user_defined=True, params=None):
+            impute(self, user_def=True, params=None):
                 Perform imputation using the MRNN algorithm.
             """
             algorithm = "mrnn"
 
-            def impute(self, user_defined=True, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the MRNN algorithm.
 
                 Parameters
                 ----------
-                user_defined : bool, optional
+                user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the MRNN algorithm, if None, default ones are loaded.
@@ -621,29 +621,29 @@ class Imputation:
                 Returns
                 -------
                 self : MRNN
-                    The object with `imputed_matrix` set.
+                    The object with `recov_data` set.
 
                 Example
                 -------
-                >>> mrnn_imputer = Imputation.DeepLearning.MRNN(infected_matrix)
+                >>> mrnn_imputer = Imputation.DeepLearning.MRNN(incomp_data)
                 >>> mrnn_imputer.impute()  # default parameters for imputation > or
-                >>> mrnn_imputer.impute(user_defined=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
-                >>> mrnn_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
-                >>> imputed_data = mrnn_imputer.imputed_matrix
+                >>> mrnn_imputer.impute(user_def=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
+                >>> mrnn_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> recov_data = mrnn_imputer.recov_data
 
                 References
                 ----------
                 J. Yoon, W. R. Zame and M. van der Schaar, "Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks," in IEEE Transactions on Biomedical Engineering, vol. 66, no. 5, pp. 1477-1490, May 2019, doi: 10.1109/TBME.2018.2874712. keywords: {Time measurement;Interpolation;Estimation;Medical diagnostic imaging;Correlation;Recurrent neural networks;Biomedical measurement;Missing data;temporal data streams;imputation;recurrent neural nets}
                 """
                 if params is not None:
-                    hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_defined, params)
+                    hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_def, params)
                 else:
                     hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default",
                                                                                                    algorithm="mrnn")
 
-                self.imputed_matrix = mrnn(contamination=self.infected_matrix, hidden_dim=hidden_dim,
-                                           learning_rate=learning_rate, iterations=iterations,
-                                           sequence_length=sequence_length, logs=self.logs)
+                self.recov_data = mrnn(incomp_data=self.incomp_data, hidden_dim=hidden_dim,
+                                       learning_rate=learning_rate, iterations=iterations,
+                                       sequence_length=sequence_length, logs=self.logs)
 
                 return self
 
@@ -663,18 +663,18 @@ class Imputation:
 
             Methods
             -------
-            impute(self, user_defined=True, params=None):
+            impute(self, user_def=True, params=None):
                 Perform imputation using the STMVL algorithm.
             """
             algorithm = "stmvl"
 
-            def impute(self, user_defined=True, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the STMVL algorithm.
 
                 Parameters
                 ----------
-                user_defined : bool, optional
+                user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the STMVL algorithm, if None, default ones are loaded.
@@ -689,15 +689,15 @@ class Imputation:
                 Returns
                 -------
                 self : STMVL
-                    The object with `imputed_matrix` set.
+                    The object with `recov_data` set.
 
                 Example
                 -------
-                >>> stmvl_imputer = Imputation.PatternSearch.STMVL(infected_matrix)
+                >>> stmvl_imputer = Imputation.PatternSearch.STMVL(incomp_data)
                 >>> stmvl_imputer.impute()  # default parameters for imputation > or
-                >>> stmvl_imputer.impute(user_defined=True, params={'window_size': 7, 'learning_rate':0.01, 'gamma':0.85, 'alpha': 7})  # user-defined  > or
-                >>> stmvl_imputer.impute(user_defined=False, params={"ground_truth": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
-                >>> imputed_data = stmvl_imputer.imputed_matrix
+                >>> stmvl_imputer.impute(user_def=True, params={'window_size': 7, 'learning_rate':0.01, 'gamma':0.85, 'alpha': 7})  # user-defined  > or
+                >>> stmvl_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> recov_data = stmvl_imputer.recov_data
 
                 References
                 ----------
@@ -705,12 +705,12 @@ class Imputation:
                 School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.
                 """
                 if params is not None:
-                    window_size, gamma, alpha = self._check_params(user_defined, params)
+                    window_size, gamma, alpha = self._check_params(user_def, params)
                 else:
                     window_size, gamma, alpha = utils.load_parameters(query="default", algorithm="stmvl")
 
-                self.imputed_matrix = stmvl(contamination=self.infected_matrix, window_size=window_size, gamma=gamma,
-                                            alpha=alpha, logs=self.logs)
+                self.recov_data = stmvl(incomp_data=self.incomp_data, window_size=window_size, gamma=gamma,
+                                        alpha=alpha, logs=self.logs)
 
                 return self
 

@@ -28,7 +28,7 @@ class BaseOptimizer:
     _objective(**kwargs):
         Abstract method to evaluate the imputation algorithm with the provided parameters. Must be implemented by subclasses.
 
-    optimize(ground_truth, contamination, selected_metrics, algorithm, **kwargs):
+    optimize(input_data, incomp_data, metrics, algorithm, **kwargs):
         Abstract method for the main optimization process. Must be implemented by subclasses.
     """
 
@@ -50,13 +50,13 @@ class BaseOptimizer:
         ----------
         **kwargs : dict
             Parameters needed to evaluate the imputation algorithm, such as:
-            - ground_truth : numpy.ndarray
+            - input_data : numpy.ndarray
                 The ground truth time series dataset.
             - contamination : numpy.ndarray
                 The contaminated time series dataset to impute.
             - algorithm : str
                 The imputation algorithm name.
-            - selected_metrics : list of str
+            - metrics : list of str
                 List of selected metrics for optimization.
             - params : dict or list
                 Parameter values for the optimization.
@@ -68,7 +68,7 @@ class BaseOptimizer:
         """
         raise NotImplementedError("Subclasses must implement the _objective method")
 
-    def optimize(self, ground_truth, contamination, selected_metrics, algorithm, **kwargs):
+    def optimize(self, input_data, incomp_data, metrics, algorithm, **kwargs):
         """
         Abstract method for optimization. Must be implemented in subclasses.
 
@@ -78,11 +78,11 @@ class BaseOptimizer:
 
         Parameters
         ----------
-        ground_truth : numpy.ndarray
+        input_data : numpy.ndarray
             The ground truth time series dataset.
-        contamination : numpy.ndarray
+        incomp_data : numpy.ndarray
             The contaminated time series dataset to impute.
-        selected_metrics : list of str
+        metrics : list of str
             List of selected metrics for optimization.
         algorithm : str
             The imputation algorithm to optimize.
@@ -106,16 +106,16 @@ class Optimization:
 
     Methods
     -------
-    Greedy.optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=250):
+    Greedy.optimize(input_data, incomp_data, metrics=["RMSE"], algorithm="cdrec", n_calls=250):
         Perform greedy optimization for hyperparameters.
 
-    Bayesian.optimize(ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
+    Bayesian.optimize(input_data, incomp_data, metrics=["RMSE"], algorithm="cdrec", n_calls=100, n_random_starts=50, acq_func='gp_hedge'):
         Perform Bayesian optimization for hyperparameters.
 
-    ParticleSwarm.optimize(ground_truth, contamination, selected_metrics, algorithm, n_particles, c1, c2, w, iterations, n_processes):
+    ParticleSwarm.optimize(input_data, incomp_data, metrics, algorithm, n_particles, c1, c2, w, iterations, n_processes):
         Perform Particle Swarm Optimization (PSO) for hyperparameters.
 
-    SuccessiveHalving.optimize(ground_truth, contamination, selected_metrics, algorithm, num_configs, num_iterations, reduction_factor):
+    SuccessiveHalving.optimize(input_data, incomp_data, metrics, algorithm, num_configs, num_iterations, reduction_factor):
         Perform Successive Halving optimization for hyperparameters.
     """
 
@@ -124,19 +124,19 @@ class Optimization:
         Greedy optimization strategy for hyperparameters.
         """
 
-        def _objective(self, ground_truth, contamination, algorithm, selected_metrics, params):
+        def _objective(self, input_data, incomp_data, algorithm, metrics, params):
             """
             Objective function for Greedy optimization.
 
             Parameters
             ----------
-            ground_truth : numpy.ndarray
+            input_data : numpy.ndarray
                 The ground truth time series dataset.
-            contamination : numpy.ndarray
+            incomp_data : numpy.ndarray
                 The contaminated time series dataset to impute.
             algorithm : str
                 The imputation algorithm name.
-            selected_metrics : list of str
+            metrics : list of str
                 List of selected metrics for optimization.
             params : dict
                 The parameters for the imputation algorithm.
@@ -146,24 +146,24 @@ class Optimization:
             float
                 Mean error for the selected metrics.
             """
-            errors = Imputation.evaluate_params(ground_truth, contamination, params, algorithm)
+            errors = Imputation.evaluate_params(input_data, incomp_data, params, algorithm)
 
-            if not isinstance(selected_metrics, list):
-                selected_metrics = [selected_metrics]
+            if not isinstance(metrics, list):
+                metrics = [metrics]
 
-            return np.mean([errors[metric] for metric in selected_metrics])
+            return np.mean([errors[metric] for metric in metrics])
 
-        def optimize(self, ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=250):
+        def optimize(self, input_data, incomp_data, metrics=["RMSE"], algorithm="cdrec", n_calls=250):
             """
             Perform greedy optimization for hyperparameters.
 
             Parameters
             ----------
-            ground_truth : numpy.ndarray
+            input_data : numpy.ndarray
                 The ground truth time series dataset.
-            contamination : numpy.ndarray
+            incomp_data : numpy.ndarray
                 The contaminated time series dataset to impute.
-            selected_metrics : list of str, optional
+            metrics : list of str, optional
                 List of selected metrics for optimization (default is ["RMSE"]).
             algorithm : str, optional
                 The imputation algorithm to optimize (default is 'cdrec').
@@ -202,7 +202,7 @@ class Optimization:
                 params_dict = {name: value for name, value in zip(param_names, params)}
 
                 # Calculate the score for the current set of parameters
-                score = self._objective(ground_truth, contamination, algorithm, selected_metrics, params_dict)
+                score = self._objective(input_data, incomp_data, algorithm, metrics, params_dict)
 
                 # Update the best parameters if the current score is better
                 if score < best_score:
@@ -222,19 +222,19 @@ class Optimization:
         Bayesian optimization strategy for hyperparameters.
         """
 
-        def _objective(self, ground_truth, contamination, algorithm, selected_metrics, params):
+        def _objective(self, input_data, incomp_data, algorithm, metrics, params):
             """
             Objective function for Bayesian optimization.
 
             Parameters
             ----------
-            ground_truth : numpy.ndarray
+            input_data : numpy.ndarray
                 The ground truth time series dataset.
-            contamination : numpy.ndarray
+            incomp_data : numpy.ndarray
                 The contaminated time series dataset to impute.
             algorithm : str
                 The imputation algorithm name.
-            selected_metrics : list of str
+            metrics : list of str
                 List of selected metrics for optimization.
             params : dict
                 Parameter values for the optimization.
@@ -250,24 +250,24 @@ class Optimization:
             else:
                 param_values = tuple(params)
 
-            if not isinstance(selected_metrics, list):
-                selected_metrics = [selected_metrics]
+            if not isinstance(metrics, list):
+                metrics = [metrics]
 
-            errors = Imputation.evaluate_params(ground_truth, contamination, param_values, algorithm)
-            return np.mean([errors[metric] for metric in selected_metrics])
+            errors = Imputation.evaluate_params(input_data, incomp_data, param_values, algorithm)
+            return np.mean([errors[metric] for metric in metrics])
 
-        def optimize(self, ground_truth, contamination, selected_metrics=["RMSE"], algorithm="cdrec", n_calls=100,
+        def optimize(self, input_data, incomp_data, metrics=["RMSE"], algorithm="cdrec", n_calls=100,
                      n_random_starts=50, acq_func='gp_hedge'):
             """
             Perform Bayesian optimization for hyperparameters.
 
             Parameters
             ----------
-            ground_truth : numpy.ndarray
+            input_data : numpy.ndarray
                 The ground truth time series dataset.
-            contamination : numpy.ndarray
+            incomp_data : numpy.ndarray
                 The contaminated time series dataset to impute.
-            selected_metrics : list of str, optional
+            metrics : list of str, optional
                 List of selected metrics for optimization (default is ["RMSE"]).
             algorithm : str, optional
                 The imputation algorithm to optimize (default is 'cdrec').
@@ -287,9 +287,9 @@ class Optimization:
 
             search_spaces = SEARCH_SPACES
 
-            # Adjust the search space for 'cdrec' based on obfuscated_matrix
+            # Adjust the search space for 'cdrec' based on incomp_data
             if algorithm == 'cdrec':
-                max_rank = contamination.shape[1] - 1
+                max_rank = incomp_data.shape[1] - 1
                 SEARCH_SPACES['cdrec'][0] = Integer(0, min(9, max_rank), name='rank')  # Update the rank range
 
             # Define the search space
@@ -299,7 +299,7 @@ class Optimization:
             optimizer = skopt.Optimizer(dimensions=space, n_initial_points=n_random_starts, acq_func=acq_func)
             for i in range(n_calls):
                 suggested_params = optimizer.ask()
-                score = self._objective(ground_truth, contamination, algorithm, selected_metrics, suggested_params)
+                score = self._objective(input_data, incomp_data, algorithm, metrics, suggested_params)
                 optimizer.tell(suggested_params, score)
 
             # Optimal parameters
@@ -343,19 +343,19 @@ class Optimization:
 
             return particle_params
 
-        def _objective(self, ground_truth, contamination, algorithm, selected_metrics, params):
+        def _objective(self, input_data, incomp_data, algorithm, metrics, params):
             """
             Objective function for Particle Swarm Optimization.
 
             Parameters
             ----------
-            ground_truth : numpy.ndarray
+            input_data : numpy.ndarray
                 The ground truth time series dataset.
-            contamination : numpy.ndarray
+            incomp_data : numpy.ndarray
                 The contaminated time series dataset to impute.
             algorithm : str
                 The imputation algorithm name.
-            selected_metrics : list of str
+            metrics : list of str
                 List of selected metrics for optimization.
             params : numpy.ndarray
                 Parameter values for the optimization.
@@ -373,22 +373,22 @@ class Optimization:
 
             for i in range(n_particles):  # Iterate over each particle
                 particle_params = self._format_params(params[i], algorithm)  # Get the parameters for this particle
-                errors = Imputation.evaluate_params(ground_truth, contamination, tuple(particle_params), algorithm)
-                errors_for_all_particles[i] = np.mean([errors[metric] for metric in selected_metrics])
+                errors = Imputation.evaluate_params(input_data, incomp_data, tuple(particle_params), algorithm)
+                errors_for_all_particles[i] = np.mean([errors[metric] for metric in metrics])
             return errors_for_all_particles
 
-        def optimize(self, ground_truth, contamination, selected_metrics, algorithm, n_particles, c1, c2, w, iterations,
+        def optimize(self, input_data, incomp_data, metrics, algorithm, n_particles, c1, c2, w, iterations,
                      n_processes):
             """
             Perform Particle Swarm Optimization for hyperparameters.
 
             Parameters
             ----------
-            ground_truth : numpy.ndarray
+            input_data : numpy.ndarray
                 The ground truth time series dataset.
-            contamination : numpy.ndarray
+            incomp_data : numpy.ndarray
                 The contaminated time series dataset to impute.
-            selected_metrics : list of str, optional
+            metrics : list of str, optional
                 List of selected metrics for optimization (default is ["RMSE"]).
             algorithm : str, optional
                 The imputation algorithm to optimize (default is 'cdrec').
@@ -412,14 +412,14 @@ class Optimization:
             """
             start_time = time.time()  # Record start time
 
-            if not isinstance(selected_metrics, list):
-                selected_metrics = [selected_metrics]
+            if not isinstance(metrics, list):
+                metrics = [metrics]
 
             # Define the search space
             search_space = SEARCH_SPACES_PSO
 
             if algorithm == 'cdrec':
-                max_rank = contamination.shape[1] - 1
+                max_rank = incomp_data.shape[1] - 1
                 search_space['cdrec'][0] = (search_space['cdrec'][0][0], min(search_space['cdrec'][0][1], max_rank))
 
             # Select the correct search space based on the algorithm
@@ -434,7 +434,7 @@ class Optimization:
                                                 options={'c1': c1, 'c2': c2, 'w': w}, bounds=bounds)
 
             # Perform optimization
-            objective_with_args = partial(self._objective, ground_truth, contamination, algorithm, selected_metrics)
+            objective_with_args = partial(self._objective, input_data, incomp_data, algorithm, metrics)
             cost, pos = optimizer.optimize(objective_with_args, iters=iterations, n_processes=n_processes)
 
             param_names = PARAM_NAMES
@@ -450,7 +450,7 @@ class Optimization:
 
     class SuccessiveHalving(BaseOptimizer):
 
-        def _objective(self, errors_dict, selected_metrics):
+        def _objective(self, errors_dict, metrics):
             """
             Objective function for Successive Halving optimization.
 
@@ -458,7 +458,7 @@ class Optimization:
             ----------
             errors_dict : dict
                 Dictionary containing error metrics.
-            selected_metrics : list of str
+            metrics : list of str
                 List of selected metrics for optimization.
 
             Returns
@@ -466,21 +466,21 @@ class Optimization:
             float
                 Mean error for the selected metrics.
             """
-            selected_errors = [errors_dict[metric] for metric in selected_metrics]
+            selected_errors = [errors_dict[metric] for metric in metrics]
             return np.mean(selected_errors)
 
-        def optimize(self, ground_truth, contamination, selected_metrics, algorithm, num_configs, num_iterations,
+        def optimize(self, input_data, incomp_data, metrics, algorithm, num_configs, num_iterations,
                      reduction_factor):
             """
             Perform Successive Halving optimization for hyperparameters.
 
             Parameters
             ----------
-            ground_truth : numpy.ndarray
+            input_data : numpy.ndarray
                 The ground truth time series dataset.
-            contamination : numpy.ndarray
+            incomp_data : numpy.ndarray
                 The contaminated time series dataset to impute.
-            selected_metrics : list of str, optional
+            metrics : list of str, optional
                 List of selected metrics for optimization (default is ["RMSE"]).
             algorithm : str, optional
                 The imputation algorithm to optimize (default is 'cdrec').
@@ -498,18 +498,18 @@ class Optimization:
             """
             start_time = time.time()  # Record start time
 
-            if not isinstance(selected_metrics, list):
-                selected_metrics = [selected_metrics]
+            if not isinstance(metrics, list):
+                metrics = [metrics]
 
             # Define the parameter names for each algorithm
             param_names = PARAM_NAMES
 
-            data_length = len(ground_truth)
+            data_length = len(input_data)
             chunk_size = data_length // num_iterations
 
             # prepare configurations for each algorithm separately
             if algorithm == 'cdrec':
-                max_rank = contamination.shape[1] - 1
+                max_rank = incomp_data.shape[1] - 1
                 temp_rank_range = [i for i in sh_params.CDREC_RANK_RANGE if i < max_rank]
 
                 if not temp_rank_range:
@@ -535,12 +535,12 @@ class Optimization:
             for i in range(num_iterations):
                 # Calculate how much data to use in this iteration
                 end_idx = (i + 1) * chunk_size
-                partial_ground_truth = ground_truth[:end_idx]
-                partial_obfuscated = contamination[:end_idx]
+                partial_input_data = input_data[:end_idx]
+                partial_obfuscated = incomp_data[:end_idx]
 
                 scores = [self._objective(
-                    Imputation.evaluate_params(partial_ground_truth, partial_obfuscated, config, algorithm),
-                    selected_metrics) for config in configs]
+                    Imputation.evaluate_params(partial_input_data, partial_obfuscated, config, algorithm),
+                    metrics) for config in configs]
 
                 top_configs_idx = np.argsort(scores)[:max(1, len(configs) // reduction_factor)]
                 configs = [configs[i] for i in top_configs_idx]
@@ -552,14 +552,14 @@ class Optimization:
 
             if algorithm == 'iim':
                 best_config = min(configs, key=lambda single_config: self._objective(
-                    Imputation.evaluate_params(ground_truth, contamination, [single_config], algorithm),
-                    selected_metrics))
+                    Imputation.evaluate_params(input_data, incomp_data, [single_config], algorithm),
+                    metrics))
             else:
                 best_config = min(configs, key=lambda config: self._objective(
-                    Imputation.evaluate_params(ground_truth, contamination, config, algorithm), selected_metrics))
+                    Imputation.evaluate_params(input_data, incomp_data, config, algorithm), metrics))
 
             best_score = self._objective(
-                Imputation.evaluate_params(ground_truth, contamination, best_config, algorithm), selected_metrics)
+                Imputation.evaluate_params(input_data, incomp_data, best_config, algorithm), metrics)
 
             # Check the size of param_names[algorithm]
             if len(param_names[algorithm]) == 1:

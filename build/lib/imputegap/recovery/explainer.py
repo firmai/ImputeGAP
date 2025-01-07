@@ -547,10 +547,10 @@ class Explainer:
             print("\tContamination ", current_series, "...")
 
             if contamination == "mcar":
-                obfuscated_matrix = TimeSeries().Contaminate.mcar(ts=raw_data, series_impacted=current_series,
-                                                                  missing_rate=missing_rate, block_size=block_size,
-                                                                  protection=protection, use_seed=use_seed, seed=seed,
-                                                                  explainer=True)
+                obfuscated_matrix = TimeSeries().Contamination.mcar(input_data=raw_data, series_rate=current_series,
+                                                                    missing_rate=missing_rate, block_size=block_size,
+                                                                    offset=protection, use_seed=use_seed, seed=seed,
+                                                                    explainer=True)
             else:
                 print("Contamination proposed not found : ", contamination, " >> BREAK")
                 return None
@@ -575,7 +575,7 @@ class Explainer:
                 algo = Imputation.DeepLearning.MRNN(obfuscated_matrix)
 
             algo.logs = False
-            algo.impute(user_defined=True, params=params)
+            algo.impute(user_def=True, params=params)
             algo.score(raw_data)
             imputation_results = algo.metrics
 

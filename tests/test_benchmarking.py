@@ -1,5 +1,5 @@
 import unittest
-from imputegap.recovery.benchmarking import Benchmarking
+from imputegap.recovery.benchmark import Benchmark
 
 class TestBenchmarking(unittest.TestCase):
 
@@ -9,16 +9,16 @@ class TestBenchmarking(unittest.TestCase):
         """
         expected_datasets = ["eeg-alcohol"]
 
-        opti_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 2, "n_random_starts": 50, "acq_func": "gp_hedge", "selected_metrics": "RMSE"}}
+        opti_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 2, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
         optimizers = [opti_bayesian]
 
         algorithms_full = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
 
-        scenarios_small = ["mcar"]
+        patterns_small = ["mcar"]
 
         x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
-        results_benchmarking = Benchmarking().comprehensive_evaluation(datasets=expected_datasets, optimizers=optimizers, algorithms=algorithms_full, scenarios=scenarios_small, x_axis=x_axis, already_optimized=False, reports=-1)
+        results_benchmarking = Benchmark().eval(datasets=expected_datasets, optimizers=optimizers, algorithms=algorithms_full, patterns=patterns_small, x_axis=x_axis, already_optimized=False, runs=-1)
 
         expected_datasets = ["eegalcohol"]
 
@@ -34,7 +34,7 @@ class TestBenchmarking(unittest.TestCase):
             if not dataset_data:  # If dataset is empty, skip validation
                 continue
 
-            # Check that scenarios exist (e.g., 'mcar')
+            # Check that patterns exist (e.g., 'mcar')
             self.assertIn(
                 "mcar", dataset_data,
                 f"Dataset '{dataset}' is missing 'mcar' scenario."
@@ -156,7 +156,7 @@ class TestBenchmarking(unittest.TestCase):
                     "iim": {"bayesian": { "0.05": {"scores": {"RMSE": -100, "MAE": 1, "MI": 2, "CORRELATION": 3}, "times": {"contamination": 4, "optimization": 5, "imputation": 6}}, "0.2": {"scores": {"RMSE": 1, "MAE": 2, "MI": 3, "CORRELATION": 4}, "times": {"contamination": 5, "optimization": 6, "imputation": 7}}, "0.4": {"scores": {"RMSE": 0.5, "MAE": 1.5, "MI": 2.5, "CORRELATION": 3.5}, "times": {"contamination": 4.5, "optimization": 5.5, "imputation": 6.5}}, "0.6": {"scores": {"RMSE": 0.5, "MAE": 1.5, "MI": 2.5, "CORRELATION": 3.5}, "times": {"contamination": 4.5, "optimization": 5.5, "imputation": 6.5}}, "0.8": {"scores": {"RMSE": 0.5, "MAE": 1.5, "MI": 2.5, "CORRELATION": 3.5}, "times": {"contamination": 4.5, "optimization": 5.5, "imputation": 6.5}}}},
         }}}
 
-        scores_list, algos, sets = Benchmarking().avg_results(alpha_1, alpha_2, beta_1, beta_2, delta_1, delta_2, epsilon_1, epsilon_2, gamma_1, gamma_2)
+        scores_list, algos, sets = Benchmark().avg_results(alpha_1, alpha_2, beta_1, beta_2, delta_1, delta_2, epsilon_1, epsilon_2, gamma_1, gamma_2)
 
         print(scores_list)
 
@@ -195,6 +195,6 @@ class TestBenchmarking(unittest.TestCase):
                     f"Unexpected RMSE for algorithm '{algo}' at dataset index {i}."
                 )
 
-        validation = Benchmarking().generate_matrix(scores_list, algos, sets, "./reports", False)
+        validation = Benchmark().generate_heatmap(scores_list, algos, sets, "./reports", False)
 
         self.assertTrue(validation)

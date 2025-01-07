@@ -89,8 +89,8 @@ ts_1.load_timeseries(utils.search_path("eeg-alcohol"), max_series=5, max_values=
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
-ts_1.plot(raw_data=ts_1.data, title="raw data", max_series=10, max_values=100, save_path="./imputegap/assets")
-ts_1.print(limit=10)
+ts_1.plot(input_data=ts_1.data, title="raw data", max_series=10, max_values=100, save_path="./imputegap/assets")
+ts_1.print(limit_series=10)
 
 ```
 
@@ -116,10 +116,10 @@ ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR scenario
-infected_data = ts_1.Contaminate.mcar(ts_1.data, series_impacted=0.4, missing_rate=0.2, use_seed=True)
+infected_data = ts_1.Contamination.mcar(ts_1.data, series_rate=0.4, missing_rate=0.2, use_seed=True)
 
 # [OPTIONAL] you can plot your raw data / print the contamination
-ts_1.print(limit=10)
+ts_1.print(limit_series=10)
 ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_path="./imputegap/assets")
 ```
 
@@ -146,7 +146,7 @@ ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-infected_data = ts_1.Contaminate.mcar(ts_1.data)
+infected_data = ts_1.Contamination.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
 # choice of the algorithm, and their parameters (default, automl, or defined by the user)
@@ -190,20 +190,20 @@ ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-infected_data = ts_1.Contaminate.mcar(ts_1.data)
+infected_data = ts_1.Contamination.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec = Imputation.MatrixCompletion.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data,
-                                                                                            "optimizer": "bayesian",
-                                                                                            "options": {"n_calls": 5}})
+cdrec = Imputation.MatrixCompletion.CDRec(infected_data).impute(user_def=False, params={"ground_truth": ts_1.data,
+                                                                                        "optimizer": "bayesian",
+                                                                                        "options": {"n_calls": 5}})
 
 # 5. score the imputation with the raw_data
-cdrec.score(ts_1.data, cdrec.imputed_matrix)
+cdrec.score(ts_1.data, cdrec.recov_data)
 
 # 6. [OPTIONAL] display the results
 ts_1.print_results(cdrec.metrics)
-ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.imputed_matrix, title="imputation",
+ts_1.plot(input_data=ts_1.data, incomp_data=infected_data, imputed_data=cdrec.recov_data, title="imputation",
           max_series=1, save_path="./imputegap/assets", display=True)
 
 # 7. [OPTIONAL] save hyperparameters
@@ -234,7 +234,7 @@ ts_1 = TimeSeries()
 ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 
 # 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
-shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name="eeg-alcohol", algorithm="cdrec")
+shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name="eeg-alcohol", algorithm="cdrec")
 
 # [OPTIONAL] print the results with the impact of each feature.
 Explainer.print(shap_values, shap_details)

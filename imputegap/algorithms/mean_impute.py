@@ -1,13 +1,13 @@
 import numpy as np
 
 
-def mean_impute(contamination, params=None):
+def mean_impute(incomp_data, params=None):
     """
     Impute NaN values with the mean value of the time series.
 
     Parameters
     ----------
-    contamination : numpy.ndarray
+    incomp_data : numpy.ndarray
         The input time series with contamination (missing values represented as NaNs).
     params : dict, optional
         Optional parameters for the algorithm. If None, the minimum value from the contamination is used (default is None).
@@ -24,18 +24,18 @@ def mean_impute(contamination, params=None):
 
     Example
     -------
-    >>> contamination = np.array([[5, 2, np.nan], [3, np.nan, 6]])
-    >>> imputed_matrix = mean_impute(contamination)
-    >>> print(imputed_matrix)
+    >>> incomp_data = np.array([[5, 2, np.nan], [3, np.nan, 6]])
+    >>> recov_data = mean_impute(incomp_data)
+    >>> print(recov_data)
     array([[5., 2., 4.],
            [3., 4., 6.]])
 
     """
 
     # logic
-    mean_value = np.nanmean(contamination)
+    mean_value = np.nanmean(incomp_data)
 
     # Imputation
-    imputed_matrix = np.nan_to_num(contamination, nan=mean_value)
+    recov_data = np.nan_to_num(incomp_data, nan=mean_value)
 
-    return imputed_matrix
+    return recov_data

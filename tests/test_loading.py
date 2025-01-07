@@ -38,7 +38,7 @@ class TestLoading(unittest.TestCase):
         ts_1.load_timeseries(utils.search_path("test"))
 
         to_save = "./assets"
-        file_path = ts_1.plot(raw_data=ts_1.data, title="test", max_series=5, max_values=100, size=(16, 8), save_path=to_save, display=False)
+        file_path = ts_1.plot(input_data=ts_1.data, max_series=5, max_values=100, size=(16, 8), save_path=to_save, display=False)
 
         self.assertTrue(os.path.exists(file_path))
 

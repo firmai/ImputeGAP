@@ -32,11 +32,11 @@ class Explainer:
     convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save)
         Convert SHAP raw results into a refined format for display.
 
-    launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)
+    execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)
         Launch the SHAP model to explain the dataset features.
 
-    shap_explainer(raw_data, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
-                   block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
+    shap_explainer(input_data, algorithm="cdrec", params=None, incomp_data="mcar", missing_rate=0.4,
+                   block_size=10, offset=0.1, seed=True, limitation=15, splitter=0,
                    file_name="ts", display=False, verbose=False)
         Handle parameters and set variables to launch the SHAP model.
 
@@ -213,8 +213,8 @@ class Explainer:
 
         return result_shap
 
-    def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False,
-                          verbose=False):
+    def execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False,
+                           verbose=False):
         """
         Launch the SHAP model for explaining the features of the dataset.
 
@@ -467,36 +467,34 @@ class Explainer:
 
         return results_shap
 
-    def shap_explainer(raw_data, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
-                       block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
+    def shap_explainer(input_data, algorithm="cdrec", params=None, pattern="mcar", missing_rate=0.4,
+                       block_size=10, offset=0.1, seed=True, limit_ratio=1, split_ratio=0.6,
                        file_name="ts", display=False, verbose=False):
         """
         Handle parameters and set variables to launch the SHAP model.
 
         Parameters
         ----------
-        raw_data : numpy.ndarray
+        input_data : numpy.ndarray
             The original time series dataset.
         algorithm : str, optional
             The algorithm used for imputation (default is 'cdrec'). Valid values: 'cdrec', 'stmvl', 'iim', 'mrnn'.
         params : dict, optional
             Parameters for the algorithm.
-        contamination : str, optional
-            Contamination scenario to apply (default is 'mcar').
+        pattern : str, optional
+            Contamination pattern to apply (default is 'mcar').
         missing_rate : float, optional
             Percentage of missing values per series (default is 0.4).
         block_size : int, optional
             Size of the block to remove at each random position selected (default is 10).
-        protection : float, optional
+        offset : float, optional
             Size of the uncontaminated section at the beginning of the time series (default is 0.1).
-        use_seed : bool, optional
+        seed : bool, optional
             Whether to use a seed for reproducibility (default is True).
-        seed : int, optional
-            Seed value for reproducibility (default is 42).
-        limitation : int, optional
-            Limitation on the number of series for the model (default is 15).
-        splitter : int, optional
-            Limitation on the training series for the model (default is 0).
+        limit_ratio : flaot, optional
+            Limitation on the number of series for the model (default is 1).
+        split_ratio : flaot, optional
+            Limitation on the training series for the model (default is 0.6).
         file_name : str, optional
             Name of the dataset file (default is 'ts').
         display : bool, optional
@@ -522,43 +520,52 @@ class Explainer:
 
         start_time = time.time()  # Record start time
 
-        if limitation > raw_data.shape[0]:
-            limitation = int(raw_data.shape[0] * 0.75)
+        if limit_ratio < 0.05 or limit_ratio > 1:
+            print("\nlimit percentage higher than 100%, reduce to 100% of the dataset")
+            limit_ratio = 1
 
-        if splitter == 0 or splitter >= limitation - 1:
-            splitter = int(limitation * 0.60)
+        M = input_data.shape[0]
+        limit = math.ceil(M * limit_ratio)
+
+        if split_ratio < 0.05 or split_ratio > 0.95:
+            print("\nsplit ratio to small or to high, reduce to 60% of the dataset")
+            split_ratio = 0.6
+
+        training_ratio = int(limit * split_ratio)
+
+        print("\nFrom", limit, "/", M, "elements, the training dataset has been set with", training_ratio,"elements and the testing dataset with", (limit-training_ratio), "elements")
 
         if verbose:
             print("SHAP Explainer has been called\n\t",
                   "missing_values (", missing_rate * 100, "%)\n\t",
-                  "for a contamination (", contamination, "), \n\t",
+                  "for a contamination (", pattern, "), \n\t",
                   "imputated by (", algorithm, ") with params (", params, ")\n\t",
-                  "with limitation and splitter after verification of (", limitation, ") and (", splitter, ") for ",
-                  raw_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
+                  "with limitation and splitter after verification of (", limit, ") and (", training_ratio, ") for ",
+                  input_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
 
-        ground_truth_matrices, obfuscated_matrices = [], []
+        input_data_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
 
         categories, features = Explainer.load_configuration()
 
-        for current_series in range(0, limitation):
+        for current_series in range(0, limit):
 
-            print("Generation ", current_series, "/", limitation, "(", int((current_series / limitation) * 100), "%)________________________________________________________")
+            print("Generation ", current_series, "/", limit, "(", int((current_series / limit) * 100), "%)________________________________________________________")
             print("\tContamination ", current_series, "...")
 
-            if contamination == "mcar":
-                obfuscated_matrix = TimeSeries().Contaminate.mcar(ts=raw_data, series_impacted=current_series,
-                                                                  missing_rate=missing_rate, block_size=block_size,
-                                                                  protection=protection, use_seed=use_seed, seed=seed,
-                                                                  explainer=True)
+            if pattern == "mcar":
+                incomp_data = TimeSeries().Contamination.mcar(input_data=input_data, series_rate=current_series,
+                                                                    missing_rate=missing_rate, block_size=block_size,
+                                                                    offset=offset, seed=seed,
+                                                                    explainer=True)
             else:
-                print("Contamination proposed not found : ", contamination, " >> BREAK")
+                print("Contamination proposed not found : ", pattern, " >> BREAK")
                 return None
 
-            ground_truth_matrices.append(raw_data)
-            obfuscated_matrices.append(obfuscated_matrix)
+            input_data_matrices.append(input_data)
+            obfuscated_matrices.append(incomp_data)
 
-            catch_fct, descriptions = Explainer.extract_features(np.array(obfuscated_matrix), categories, features, False)
+            catch_fct, descriptions = Explainer.extract_features(np.array(incomp_data), categories, features, False)
             extracted_features = np.array(list(catch_fct.values()))
 
             input_params.append(extracted_features)
@@ -566,17 +573,17 @@ class Explainer:
 
             print("\tImputation ", current_series, "...")
             if algorithm == "cdrec":
-                algo = Imputation.MatrixCompletion.CDRec(obfuscated_matrix)
+                algo = Imputation.MatrixCompletion.CDRec(incomp_data)
             elif algorithm == "stmvl":
-                algo = Imputation.PatternSearch.STMVL(obfuscated_matrix)
+                algo = Imputation.PatternSearch.STMVL(incomp_data)
             elif algorithm == "iim":
-                algo = Imputation.Statistics.IIM(obfuscated_matrix)
+                algo = Imputation.Statistics.IIM(incomp_data)
             elif algorithm == "mrnn":
-                algo = Imputation.DeepLearning.MRNN(obfuscated_matrix)
+                algo = Imputation.DeepLearning.MRNN(incomp_data)
 
             algo.logs = False
-            algo.impute(user_defined=True, params=params)
-            algo.score(raw_data)
+            algo.impute(user_def=True, params=params)
+            algo.score(input_data)
             imputation_results = algo.metrics
 
             output_metrics.append(imputation_results)
@@ -586,8 +593,8 @@ class Explainer:
         for input, output in zip(input_params, output_metrics):
             shap_details.append((input, output["RMSE"]))
 
-        shap_values = Explainer.launch_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
-                                                  splitter, display, verbose)
+        shap_values = Explainer.execute_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
+                                                   training_ratio, display, verbose)
 
         print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
 

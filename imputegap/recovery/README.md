@@ -2,7 +2,7 @@
 <br /> <br />
 
 # CONTAMINATION
-## Scenarios
+## Patterns
 <table>
     <tr>
         <td>M</td><td>Number of time series</td>
@@ -14,7 +14,7 @@
         <td>P</td><td>Starting position (protection)</td>
     </tr>
     <tr>
-        <td>R</td><td>Missing rate of the scenario</td>
+        <td>R</td><td>Missing rate of the pattern</td>
     </tr>
     <tr>
         <td>S</td><td>percentage of series selected</td>
@@ -29,7 +29,7 @@
 
 ### MCAR
 MCAR selects random series and remove block at random positions until a total of W of all points of time series are missing.
-This scenario uses random number generator with fixed seed and will produce the same blocks every run.
+This pattern uses random number generator with fixed seed and will produce the same blocks every run.
 
 <table>
     <tbody>Definition</tbody>
@@ -82,7 +82,7 @@ This scenario uses random number generator with fixed seed and will produce the 
 
 
 ### BLACKOUT
-The **BLACKOUT** scenario selects all time series to introduce missing values. It removes a set percentage of data points from all series, creating gaps for further analysis.
+The **BLACKOUT** pattern selects all time series to introduce missing values. It removes a set percentage of data points from all series, creating gaps for further analysis.
 
 
 <table>

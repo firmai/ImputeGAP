@@ -17,18 +17,18 @@ class TestOptiCDRECEEG(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path(dataset), header=True)
 
-        infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.4, missing_rate=0.4, block_size=2, offset=0.1, seed=True)
 
         params = utils.load_parameters(query="default", algorithm=algorithm)
 
-        algo_opti = Imputation.MatrixCompletion.CDRec(infected_matrix)
-        algo_opti.impute(user_defined=False, params={"ground_truth":ts_1.data, "optimizer":"bayesian", "options":{"n_calls": 8}})
-        algo_opti.score(raw_matrix=ts_1.data)
+        algo_opti = Imputation.MatrixCompletion.CDRec(incomp_data)
+        algo_opti.impute(user_def=False, params={"input_data":ts_1.data, "optimizer": "bayesian", "options":{"n_calls": 8}})
+        algo_opti.score(input_data=ts_1.data)
         metrics_optimal = algo_opti.metrics
 
-        algo_default = Imputation.MatrixCompletion.CDRec(infected_matrix)
+        algo_default = Imputation.MatrixCompletion.CDRec(incomp_data)
         algo_default.impute(params=params)
-        algo_default.score(raw_matrix=ts_1.data)
+        algo_default.score(input_data=ts_1.data)
         metrics_default = algo_default.metrics
 
         self.assertTrue(metrics_optimal["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal['RMSE']} < {metrics_default['RMSE']} ")

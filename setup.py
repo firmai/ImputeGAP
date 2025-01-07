@@ -29,6 +29,7 @@ setuptools.setup(
     include_package_data=True,
     package_data={
         'imputegap': [
+            'assets/*.png',  # Include logo
             'env/*.toml',  # Include TOML files from env
             'params/*.toml',  # Include TOML files from params
             'dataset/*.txt',  # Include TXT files from dataset

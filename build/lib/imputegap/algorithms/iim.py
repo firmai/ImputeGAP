@@ -2,13 +2,13 @@ import time
 from imputegap.wrapper.AlgoPython.IIM.testerIIM import impute_with_algorithm
 
 
-def iim(contamination, number_neighbor, algo_code, logs=True):
+def iim(incomp_data, number_neighbor, algo_code, logs=True):
     """
     Perform imputation using the Iterative Imputation Method (IIM) algorithm.
 
     Parameters
     ----------
-    contamination : numpy.ndarray
+    incomp_data : numpy.ndarray
         The input matrix with contamination (missing values represented as NaNs).
     number_neighbor : int
         The number of neighbors to use for the K-Nearest Neighbors (KNN) classifier (default is 10).
@@ -31,8 +31,8 @@ def iim(contamination, number_neighbor, algo_code, logs=True):
 
     Example
     -------
-    >>> imputed_data = iim(contamination_matrix, number_neighbor=10, algo_code="iim 2")
-    >>> print(imputed_data)
+    >>> recov_data = iim(incomp_data, number_neighbor=10, algo_code="iim 2")
+    >>> print(recov_data)
 
     References
     ----------
@@ -41,10 +41,10 @@ def iim(contamination, number_neighbor, algo_code, logs=True):
     """
     start_time = time.time()  # Record start time
 
-    imputed_matrix = impute_with_algorithm(algo_code, contamination.copy(), number_neighbor)
+    recov_data = impute_with_algorithm(algo_code, incomp_data.copy(), number_neighbor)
 
     end_time = time.time()
     if logs:
         print(f"\n\t\t> logs, imputation iim - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    return imputed_matrix
+    return recov_data

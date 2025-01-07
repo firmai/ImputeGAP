@@ -577,3 +577,5 @@ Finally, BAFU - normalized 20x400 demonstrates the impact of "MIN-MAX" normaliza
 | Granularity        | 30 minutes                                  |
 | Observations       | spans years 1974 to 2015                    |
 | Dataset dimensions | N=50000 M=10                                |
+
+
