@@ -200,6 +200,6 @@ class TestContamination(unittest.TestCase):
 
                         for block in nan_blocks:
                             assert block >= block_size, (
-                                f"Dataset: {dataset}, Series: {i}, Seed: {seed_value}, "
+                                f"Dataset: {dataset}, Series: {i}, "
                                 f"Block size {block} found, expected at least {block_size}."
                             )

@@ -29,6 +29,9 @@ class TestExplainer(unittest.TestCase):
         self.assertTrue(shap_values is not None)
         self.assertTrue(shap_details is not None)
 
+        print("shap_details", np.array(shap_details).shape)
+        print("RMSE", np.array(RMSE).shape)
+
         for i, (_, output) in enumerate(shap_details):
             assert np.isclose(RMSE[i], output, atol=0.01)
 
@@ -41,8 +44,7 @@ class TestExplainer(unittest.TestCase):
             self.assertTrue(description is not None)
             self.assertTrue(feature is not None)
             self.assertTrue(category is not None)
-            self.assertTrue(
-                mean_features is not None and not (isinstance(mean_features, (int, float)) and np.isnan(mean_features)))
+            self.assertTrue(mean_features is not None and not (isinstance(mean_features, (int, float)) and np.isnan(mean_features)))
 
             # Check relation feature/category
             feature_found_in_category = False

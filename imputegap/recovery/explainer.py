@@ -533,6 +533,9 @@ class Explainer:
 
         training_ratio = int(limit * split_ratio)
 
+        if limit > M:
+            limit = M
+
         print("\nFrom", limit, "/", M, "elements, the training dataset has been set with", training_ratio,"elements and the testing dataset with", (limit-training_ratio), "elements")
 
         if verbose:
