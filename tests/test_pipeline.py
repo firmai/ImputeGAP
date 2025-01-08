@@ -30,6 +30,15 @@ class TestPipeline(unittest.TestCase):
         ts_1.print_results(cdrec.metrics)
         utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")
 
+        cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "greedy","options": { "n_calls": 2}})
+        cdrec.score(ts_1.data, cdrec.recov_data)
+
+        cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "sh", "options": {"num_configs": 2}})
+        cdrec.score(ts_1.data, cdrec.recov_data)
+
+        cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "pso", "options": {"n_particles": 2}})
+        cdrec.score(ts_1.data, cdrec.recov_data)
+
         # explainer
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path("chlorine"))
