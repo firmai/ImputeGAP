@@ -6,6 +6,7 @@ import matplotlib
 from scipy.stats import zscore
 from sklearn.preprocessing import MinMaxScaler
 import importlib.resources
+from scipy.stats import norm
 
 from imputegap.tools import utils
 
@@ -617,3 +618,79 @@ class TimeSeries:
             """
             return TimeSeries.Contamination.missing_percentage(input_data, series_rate=1, missing_rate=missing_rate,
                                                                offset=offset)
+
+        def gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):
+            """
+            Apply contamination with a Gaussian distribution to the time series data.
+
+            Parameters
+            ----------
+            input_data : numpy.ndarray
+                The time series dataset to contaminate.
+            series_rate : float, optional
+                Percentage of series to contaminate (default is 0.2).
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.2).
+            std_dev : float, optional
+                Standard deviation of the Gaussian distribution for missing values (default is 0.2).
+            offset : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+            seed : bool, optional
+                Whether to use a seed for reproducibility (default is True).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
+            """
+
+            ts_contaminated = input_data.copy()
+            M, _ = ts_contaminated.shape
+
+            if seed:
+                seed_value = 42
+                np.random.seed(seed_value)
+
+            # Validation and limitation of input parameters
+            missing_rate = utils.verification_limitation(missing_rate)
+            series_rate = utils.verification_limitation(series_rate)
+            offset = utils.verification_limitation(offset)
+
+            nbr_series_impacted = int(np.ceil(M * series_rate))
+
+            print("\n\nGAUSSIAN contamination has been called with :"
+                  "\n\ta number of series impacted ", series_rate * 100, "%",
+                  "\n\ta missing rate of ", missing_rate * 100, "%",
+                  "\n\ta starting position at ", offset,
+                  "\n\tGaussian std_dev ", std_dev,
+                  "\n\tshape of the set ", ts_contaminated.shape,
+                  "\n\tthis selection of series 0 to ", nbr_series_impacted, "\n\n")
+
+            for series in range(0, nbr_series_impacted):
+                S = int(series)
+                N = len(ts_contaminated[S])  # number of values in the series
+                P = int(N * offset)  # values to protect in the beginning of the series
+                W = int((N - P) * missing_rate)  # number of data points to remove
+                I = np.arange(P, N)
+
+                # probability density function
+                mean = np.mean(ts_contaminated[S])
+                mean = max(min(mean, 1), -1)
+
+                probabilities = norm.pdf(I, loc=P + mean * (N - P), scale=std_dev * (N - P))
+
+                print("\n\nmean = ", mean)
+                print("P + mean * (N - P) = ", P + mean * (N - P))
+                print("std_dev * (N - P) = ", std_dev * (N - P))
+                print("probabilities.sum() = ", probabilities.sum())
+
+                # normalizes the probabilities so that their sum equals 1
+                probabilities /= probabilities.sum()
+
+                # select the values based on the probability
+                missing_indices = np.random.choice(I, size=W, replace=False, p=probabilities)
+
+                # apply missing values
+                ts_contaminated[S, missing_indices] = np.nan
+
+            return ts_contaminated
