@@ -1,4 +1,4 @@
-name: VERSIONING 3.9 - Pipeline
+name: VERSIONING 3.11.5 - Pipeline
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.11.5'
 
     - name: Install dependencies
       run: |

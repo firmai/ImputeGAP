@@ -129,7 +129,8 @@ class TimeSeries:
                 saved_data = data
 
                 #  update path form inner library datasets
-                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt", "eeg-reading.txt",
+                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt",
+                            "eeg-reading.txt",
                             "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt", "fmri-stoptask.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 
@@ -293,7 +294,8 @@ class TimeSeries:
 
         print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    def plot(self, input_data, incomp_data=None, recov_data=None, max_series=None, max_values=None, series_range=None, subplot=True, size=(16, 8), save_path="", display=True):
+    def plot(self, input_data, incomp_data=None, recov_data=None, max_series=None, max_values=None, series_range=None,
+             subplot=False, size=(16, 8), save_path="", display=True):
         """
         Plot the time series data, including raw, contaminated, or imputed data.
 
@@ -327,19 +329,28 @@ class TimeSeries:
         """
         number_of_series = 0
 
-
-        if max_series is None:
+        if max_series is None or max_series == -1:
             max_series = input_data.shape[0]
-        if max_values is None:
+        if max_values is None or max_values == -1:
             max_values = input_data.shape[1]
 
-        series_indices = [series_range] if series_range is not None else range(min(input_data.shape[0], max_series))
-        n_series_to_plot = len(series_indices)
+        if subplot:
+            series_indices = [i for i in range(incomp_data.shape[0]) if np.isnan(incomp_data[i]).any()]
+            nbr_series = [series_range] if series_range is not None else range(min(len(series_indices), max_series))
+            n_series_to_plot = len(nbr_series)
+        else:
+            series_indices = [series_range] if series_range is not None else range(min(input_data.shape[0], max_series))
+            n_series_to_plot = len(series_indices)
 
         if subplot:
             n_cols = min(3, n_series_to_plot)
             n_rows = (n_series_to_plot + n_cols - 1) // n_cols
-            fig, axes = plt.subplots(n_rows, n_cols, figsize=size, squeeze=False)
+
+            x_size, y_size = size
+            y_size = y_size * n_rows
+            x_size = x_size * n_cols
+
+            fig, axes = plt.subplots(n_rows, n_cols, figsize=(x_size, y_size), squeeze=False)
             axes = axes.flatten()
         else:
             plt.figure(figsize=size)
@@ -366,27 +377,28 @@ class TimeSeries:
 
                 if incomp_data is None and recov_data is None:  # plot only raw matrix
                     ax.plot(timestamps, input_data[i, :max_values], linewidth=2.5,
-                             color=color, linestyle='-', label=f'TS {i + 1}')
+                            color=color, linestyle='-', label=f'TS {i + 1}')
 
                 if incomp_data is not None and recov_data is None:  # plot infected matrix
                     if np.isnan(incomp_data[i, :]).any():
                         ax.plot(timestamps, input_data[i, :max_values], linewidth=1.5,
-                                 color='r', linestyle='--', label=f'TS-MB {i + 1}')
+                                color='r', linestyle='--', label=f'TS-MB {i + 1}')
 
-                    ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
-                             color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+                    if np.isnan(incomp_data[i, :]).any() or not subplot:
+                        ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
+                            color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
 
                 if recov_data is not None:  # plot imputed matrix
                     if np.isnan(incomp_data[i, :]).any():
                         ax.plot(np.arange(min(recov_data.shape[1], max_values)), recov_data[i, :max_values],
-                                 linestyle='-', color="r", label=f'TS-IMP {i + 1}')
+                                linestyle='-', color="r", label=f'TS-IMP {i + 1}')
 
-                    if np.isnan(incomp_data[i, :]).any():
                         ax.plot(timestamps, input_data[i, :max_values], linewidth=1.5,
-                                 linestyle='--', color=color, label=f'TS-MB {i + 1}')
+                                linestyle='--', color=color, label=f'TS-MB {i + 1}')
 
-                    ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
-                             color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+                    if np.isnan(incomp_data[i, :]).any() or not subplot:
+                        ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
+                                color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
 
                 # Label and legend for subplot
                 if subplot:
@@ -408,7 +420,7 @@ class TimeSeries:
             plt.ylabel('Values')
             plt.legend(
                 loc='upper left',
-                fontsize=12,
+                fontsize=10,
                 frameon=True,
                 fancybox=True,
                 shadow=True,

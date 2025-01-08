@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name="imputegap",
-    version="1.0.2",
+    version="1.0.3",
     description="A Library of Imputation Techniques for Time Series Data",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
@@ -23,7 +23,7 @@ setuptools.setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "License :: OSI Approved :: MIT License",
     ],
-    python_requires=">= 3.12.0,<3.12.8",
+    python_requires=">=3.10, <3.13",
     install_requires=open('requirements.txt').read().splitlines(),
     packages=setuptools.find_packages(),
     include_package_data=True,
