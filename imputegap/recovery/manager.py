@@ -671,24 +671,19 @@ class TimeSeries:
                 N = len(ts_contaminated[S])  # number of values in the series
                 P = int(N * offset)  # values to protect in the beginning of the series
                 W = int((N - P) * missing_rate)  # number of data points to remove
-                I = np.arange(P, N)
+                R = np.arange(P, N)
 
                 # probability density function
                 mean = np.mean(ts_contaminated[S])
                 mean = max(min(mean, 1), -1)
 
-                probabilities = norm.pdf(I, loc=P + mean * (N - P), scale=std_dev * (N - P))
-
-                print("\n\nmean = ", mean)
-                print("P + mean * (N - P) = ", P + mean * (N - P))
-                print("std_dev * (N - P) = ", std_dev * (N - P))
-                print("probabilities.sum() = ", probabilities.sum())
+                probabilities = norm.pdf(R, loc=P + mean * (N - P), scale=std_dev * (N - P))
 
                 # normalizes the probabilities so that their sum equals 1
                 probabilities /= probabilities.sum()
 
                 # select the values based on the probability
-                missing_indices = np.random.choice(I, size=W, replace=False, p=probabilities)
+                missing_indices = np.random.choice(R, size=W, replace=False, p=probabilities)
 
                 # apply missing values
                 ts_contaminated[S, missing_indices] = np.nan

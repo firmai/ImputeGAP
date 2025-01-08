@@ -2,97 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_DTL_Beeswarm.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_DTL_Waterfall.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_shap_aggregate_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_shap_aggregate_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_shap_correlation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_shap_geometry_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_shap_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_shap_transformation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/chlorine_cdrec_shap_trend_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_DTL_Beeswarm.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_DTL_Waterfall.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_aggregate_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_aggregate_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_aggregate_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_correlation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_geometry_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_transformation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg-test_cdrec_shap_trend_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/eeg_cdrec_shap_aggregate_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_DTL_Beeswarm.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_DTL_Waterfall.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_shap_aggregate_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_shap_aggregate_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_shap_correlation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_shap_geometry_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_shap_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_shap_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_shap_transformation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_cdrec_shap_trend_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_DTL_Beeswarm.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_DTL_Waterfall.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_shap_aggregate_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_shap_aggregate_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_shap_correlation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_shap_geometry_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_shap_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_shap_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_shap_transformation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/assets/shap/fmri-objectviewing_iim_shap_trend_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/25_01_07_16_44_36_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/25_01_07_16_52_29_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/25_01_08_12_51_41_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/25_01_08_12_54_30_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/25_01_08_12_57_38_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/25_01_08_12_59_55_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/TimeSeriesData_graph.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/TimeSeriesData_graph.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/TimeSeriesData_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_DTL_Beeswarm.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_DTL_Waterfall.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_results.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_shap_aggregate_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_shap_aggregate_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_shap_correlation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_shap_geometry_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_shap_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_shap_reverse_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_shap_transformation_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/shap/chlorine_cdrec_shap_trend_plot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/test_graph.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/test_graph.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/assets/test_plot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/benchmarking_rmse.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegalcohol_mcar_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegalcohol_mcar_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegalcohol_mcar_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegalcohol_mcar_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegalcohol_mcar_contamination_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegalcohol_mcar_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegalcohol_mcar_optimization_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegreading_mcar_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegreading_mcar_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/eegreading_mcar_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/report_0/report_eeg-alcohol.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/eegalcohol_mcar_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/eegalcohol_mcar_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/eegalcohol_mcar_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/eegalcohol_mcar_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/eegalcohol_mcar_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/eegalcohol_mcar_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/eegalcohol_mcar_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/report_eeg-alcohol.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/reports/run_0/report_eeg-alcohol.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/recovery/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/params/optimal_parameters_e_eeg-alcohol_cdrec.toml" beforeDir="false" afterPath="$PROJECT_DIR$/params/optimal_parameters_e_eeg-alcohol_cdrec.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/params/optimal_parameters_e_eeg-alcohol_stmvl.toml" beforeDir="false" afterPath="$PROJECT_DIR$/params/optimal_parameters_e_eeg-alcohol_stmvl.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/report.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/report.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +75,7 @@
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\recovery" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in test_contamination_gaussian.py">
+  <component name="RunManager" selected="Python tests.Python tests in tests">
     <configuration name="r" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -267,11 +181,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests in tests" />
         <item itemvalue="Python tests.Python tests in test_contamination_gaussian.py" />
         <item itemvalue="Python.runner_contamination" />
         <item itemvalue="Python.runner_benchmark" />
         <item itemvalue="Python.r" />
-        <item itemvalue="Python tests.Python tests in tests" />
       </list>
     </recent_temporary>
   </component>
@@ -384,7 +298,7 @@
       <workItem from="1734436818269" duration="7862000" />
       <workItem from="1736163367809" duration="17794000" />
       <workItem from="1736254761790" duration="6021000" />
-      <workItem from="1736331141815" duration="20302000" />
+      <workItem from="1736331141815" duration="21088000" />
     </task>
     <servers />
   </component>
@@ -428,7 +342,7 @@
     <SUITE FILE_PATH="coverage/imputegap$test.coverage" NAME="test Coverage Results" MODIFIED="1730904269695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1727099954120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_evaluation.coverage" NAME="runner_benchmarking Coverage Results" MODIFIED="1730131561217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1736352559195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$.coverage" NAME=" Coverage Results" MODIFIED="1736353085105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$runner_optimization.coverage" NAME="runner_optimization Coverage Results" MODIFIED="1736166351403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$benchmark.coverage" NAME="benchmark Coverage Results" MODIFIED="1736174068706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/recovery" />
     <SUITE FILE_PATH="coverage/imputegap$runner_load.coverage" NAME="runner_load Coverage Results" MODIFIED="1728574239749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
