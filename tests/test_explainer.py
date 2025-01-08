@@ -24,13 +24,10 @@ class TestExplainer(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path(filename))
 
-        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, seed=True, verbose=True)
+        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, limit_ratio=0.3, seed=True, verbose=True)
 
         self.assertTrue(shap_values is not None)
         self.assertTrue(shap_details is not None)
-
-        print("shap_details", np.array(shap_details).shape)
-        print("RMSE", np.array(RMSE).shape)
 
         for i, (_, output) in enumerate(shap_details):
             assert np.isclose(RMSE[i], output, atol=0.01)
@@ -60,4 +57,4 @@ class TestExplainer(unittest.TestCase):
                 expected_description = expected_features[feature]
                 assert description == expected_description, f"Feature '{feature}' has wrong description. Expected '{expected_description}', got '{description}' "
             else:
-                assert False, f"Feature '{feature}' not found in the FEATURES dictionary"
+                assert False, f"Feature '{feature}'not found in the FEATURES dictionary"

@@ -1,0 +1,155 @@
+Report for Dataset: eeg-alcohol
+Generated on: 2025-01-08 11:54:14
+Run number: 0
+========================================================================================================================
+
+RMSE: Root Mean Square Error - Measures the average magnitude of error.
+
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|     Dataset     |    Algorithm    |    Optimizer    |     Pattern     |   X Value    |           RMSE            |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.05     |       0.5197922283        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.1      |       1.0659202646        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.2      |       1.1400386000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.4      |       1.0333061850        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.6      |       1.0938413270        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.8      |       1.0743695634        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.05     |       0.3748345232        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.1      |       1.3799678230        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.2      |       0.5279485899        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.4      |       0.6529812631        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.6      |       0.6798826891        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.8      |       0.7608485588        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.05     |       0.3251125775        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.1      |       0.2994924515        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.2      |       0.3285254326        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.4      |       0.4508488006        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.6      |       18.7975399911       |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.8      |       3.1451455567        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.05     |       0.2311363556        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.1      |       0.2173457196        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.2      |       0.2763681624        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.4      |       0.3247053266        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.6      |       0.4569385971        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.8      |       0.7301676007        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.05     |       2.6563684178        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.1      |       2.0457666419        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.2      |       1.4866964745        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.4      |       1.2317696109        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.6      |       1.2430465650        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.8      |       1.2027168128        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+
+MAE: Mean Absolute Error - Measures the average absolute error.
+
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|     Dataset     |    Algorithm    |    Optimizer    |     Pattern     |   X Value    |            MAE            |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.05     |       0.4543356517        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.1      |       0.9085417731        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.2      |       0.9394950730        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.4      |       0.8171607201        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.6      |       0.8545290214        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.8      |       0.8291370179        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.05     |       0.3375262694        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.1      |       1.1003322285        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.2      |       0.4243158190        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.4      |       0.4285805648        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.6      |       0.4713512210        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.8      |       0.5479154582        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.05     |       0.2679767364        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.1      |       0.2643287172        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.2      |       0.2720257302        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.4      |       0.3494143354        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.6      |       7.8125837963        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.8      |       1.1637520657        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.05     |       0.2280931715        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.1      |       0.2014218356        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.2      |       0.2120589986        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.4      |       0.2483618478        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.6      |       0.3350566242        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.8      |       0.5391664380        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.05     |       2.6289027948        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.1      |       1.7992291555        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.2      |       1.2498535799        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.4      |       0.9707474883        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.6      |       1.0234584507        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.8      |       0.9781521987        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+
+MI: Mutual Information - Indicates dependency between variables.
+
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|     Dataset     |    Algorithm    |    Optimizer    |     Pattern     |   X Value    |            MI             |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.05     |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.1      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.2      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.4      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.6      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.8      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.05     |       1.0397207708        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.1      |       1.7328679514        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.2      |       1.3424094266        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.4      |       0.8905639333        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.6      |       0.6001676422        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.8      |       0.4272156489        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.05     |       1.0397207708        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.1      |       1.9061547465        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.2      |       1.5996631162        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.4      |       0.8543113556        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.6      |       0.3624477302        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.8      |       0.0643204354        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.05     |       0.6931471806        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.1      |       1.4941751383        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.2      |       1.6928286540        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.4      |       1.0631520030        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.6      |       0.8367245186        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.8      |       0.4319878361        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.05     |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.1      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.2      |       0.3976407866        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.4      |       0.1548337123        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.6      |       0.1447519035        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.8      |       0.0614813991        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+
+CORRELATION: Correlation Coefficient - Indicates linear relationship between variables.
+
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|     Dataset     |    Algorithm    |    Optimizer    |     Pattern     |   X Value    |        CORRELATION        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.05     |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.1      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.2      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.4      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.6      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mean       |    bayesian     |     0.8      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.05     |       0.7365655690        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.1      |       -0.5001006442       |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.2      |       0.9071070625        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.4      |       0.7722811146        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.6      |       0.7742382236        |
+|   eegalcohol    |      mcar       |      cdrec      |    bayesian     |     0.8      |       0.7017141157        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.05     |       0.6142581896        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.1      |       0.9678965756        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.2      |       0.9558373872        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.4      |       0.8959297472        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.6      |       0.6210142191        |
+|   eegalcohol    |      mcar       |      stmvl      |    bayesian     |     0.8      |       0.2273708872        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.05     |       0.8754093901        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.1      |       0.9836625389        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.2      |       0.9663556239        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.4      |       0.9435024216        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.6      |       0.9015668976        |
+|   eegalcohol    |      mcar       |       iim       |    bayesian     |     0.8      |       0.7329833768        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.05     |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.1      |       0.0000000000        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.2      |       -0.0827696480       |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.4      |       -0.0105275589       |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.6      |       0.0179078995        |
+|   eegalcohol    |      mcar       |      mrnn       |    bayesian     |     0.8      |       0.0357243155        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+
+Dictionary of Results:
+{'eegalcohol': {'mcar': {'mean': {'bayesian': {'0.05': {'scores': {'RMSE': 0.5197922283008971, 'MAE': 0.4543356516868202, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.00040984153747558594, 'optimization': 0, 'imputation': 0.00028395652770996094, 'log_imputation': -8.166689402963497}}, '0.1': {'scores': {'RMSE': 1.0659202645786816, 'MAE': 0.9085417731383956, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.00040984153747558594, 'optimization': 0, 'imputation': 0.00022745132446289062, 'log_imputation': -8.388574300870511}}, '0.2': {'scores': {'RMSE': 1.1400385999631493, 'MAE': 0.9394950730289477, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.00033783912658691406, 'optimization': 0, 'imputation': 0.00013971328735351562, 'log_imputation': -8.875918182741785}}, '0.4': {'scores': {'RMSE': 1.0333061850175014, 'MAE': 0.817160720129779, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.0006093978881835938, 'optimization': 0, 'imputation': 0.0001430511474609375, 'log_imputation': -8.85230831710265}}, '0.6': {'scores': {'RMSE': 1.0938413270459857, 'MAE': 0.8545290213993658, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.0013480186462402344, 'optimization': 0, 'imputation': 0.00017070770263671875, 'log_imputation': -8.675557805358151}}, '0.8': {'scores': {'RMSE': 1.07436956341757, 'MAE': 0.8291370178635111, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.0029239654541015625, 'optimization': 0, 'imputation': 0.0002067089080810547, 'log_imputation': -8.484198995538256}}}}, 'cdrec': {'bayesian': {'0.05': {'scores': {'RMSE': 0.37483452324301586, 'MAE': 0.3375262694281006, 'MI': 1.0397207708399179, 'CORRELATION': 0.7365655689896633}, 'times': {'contamination': 0.00023937225341796875, 'optimization': 0.6537201404571533, 'imputation': 0.0063037872314453125, 'log_imputation': -5.066604678353174}}, '0.1': {'scores': {'RMSE': 1.3799678230195285, 'MAE': 1.1003322284844623, 'MI': 1.732867951399863, 'CORRELATION': -0.500100644242659}, 'times': {'contamination': 0.0003256797790527344, 'optimization': 0.6537201404571533, 'imputation': 0.006911754608154297, 'log_imputation': -4.974531750403096}}, '0.2': {'scores': {'RMSE': 0.5279485898506157, 'MAE': 0.42431581904234256, 'MI': 1.342409426595628, 'CORRELATION': 0.9071070625126642}, 'times': {'contamination': 0.00028443336486816406, 'optimization': 0.6537201404571533, 'imputation': 0.017868995666503906, 'log_imputation': -4.024688153600394}}, '0.4': {'scores': {'RMSE': 0.6529812630837011, 'MAE': 0.42858056477338186, 'MI': 0.8905639332827393, 'CORRELATION': 0.7722811146383882}, 'times': {'contamination': 0.00045752525329589844, 'optimization': 0.6537201404571533, 'imputation': 0.007945537567138672, 'log_imputation': -4.835144820220228}}, '0.6': {'scores': {'RMSE': 0.6798826891423311, 'MAE': 0.47135122101632737, 'MI': 0.6001676421795947, 'CORRELATION': 0.7742382236368857}, 'times': {'contamination': 0.0024785995483398438, 'optimization': 0.6537201404571533, 'imputation': 0.0069272518157958984, 'log_imputation': -4.972292107809591}}, '0.8': {'scores': {'RMSE': 0.7608485588056992, 'MAE': 0.5479154581689161, 'MI': 0.42721564894947844, 'CORRELATION': 0.7017141157422242}, 'times': {'contamination': 0.00587916374206543, 'optimization': 0.6537201404571533, 'imputation': 0.006249427795410156, 'log_imputation': -5.075265372159409}}}}, 'stmvl': {'bayesian': {'0.05': {'scores': {'RMSE': 0.3251125774837754, 'MAE': 0.26797673641099284, 'MI': 1.0397207708399179, 'CORRELATION': 0.6142581896031455}, 'times': {'contamination': 0.00025272369384765625, 'optimization': 0.3357059955596924, 'imputation': 0.061218976974487305, 'log_imputation': -2.793298056246649}}, '0.1': {'scores': {'RMSE': 0.299492451492057, 'MAE': 0.26432871720074347, 'MI': 1.9061547465398494, 'CORRELATION': 0.967896575643492}, 'times': {'contamination': 0.00018143653869628906, 'optimization': 0.3357059955596924, 'imputation': 0.1323375701904297, 'log_imputation': -2.0223992709232097}}, '0.2': {'scores': {'RMSE': 0.32852543256899075, 'MAE': 0.27202573018354975, 'MI': 1.5996631161656454, 'CORRELATION': 0.9558373872353643}, 'times': {'contamination': 0.00032901763916015625, 'optimization': 0.3357059955596924, 'imputation': 0.06464266777038574, 'log_imputation': -2.7388805944206553}}, '0.4': {'scores': {'RMSE': 0.4508488005700101, 'MAE': 0.34941433537269606, 'MI': 0.8543113555966528, 'CORRELATION': 0.8959297471926679}, 'times': {'contamination': 0.00046896934509277344, 'optimization': 0.3357059955596924, 'imputation': 0.05494332313537598, 'log_imputation': -2.901453113515639}}, '0.6': {'scores': {'RMSE': 18.797539991079297, 'MAE': 7.812583796335101, 'MI': 0.36244773022350796, 'CORRELATION': 0.6210142190959098}, 'times': {'contamination': 0.0008962154388427734, 'optimization': 0.3357059955596924, 'imputation': 0.02575063705444336, 'log_imputation': -3.659295912200037}}, '0.8': {'scores': {'RMSE': 3.1451455567216193, 'MAE': 1.1637520656636082, 'MI': 0.0643204354315137, 'CORRELATION': 0.22737088719870605}, 'times': {'contamination': 0.0013713836669921875, 'optimization': 0.3357059955596924, 'imputation': 0.028316020965576172, 'log_imputation': -3.564327522655997}}}}, 'iim': {'bayesian': {'0.05': {'scores': {'RMSE': 0.2311363556202525, 'MAE': 0.22809317150257158, 'MI': 0.6931471805599452, 'CORRELATION': 0.8754093900930757}, 'times': {'contamination': 0.00015234947204589844, 'optimization': 0.8339252471923828, 'imputation': 0.0036537647247314453, 'log_imputation': -5.611997211514384}}, '0.1': {'scores': {'RMSE': 0.21734571962767568, 'MAE': 0.20142183555276616, 'MI': 1.4941751382893083, 'CORRELATION': 0.9836625389334559}, 'times': {'contamination': 0.0002493858337402344, 'optimization': 0.8339252471923828, 'imputation': 0.005974531173706055, 'log_imputation': -5.120249648894781}}, '0.2': {'scores': {'RMSE': 0.2763681623559098, 'MAE': 0.21205899863451294, 'MI': 1.692828654044598, 'CORRELATION': 0.9663556239228223}, 'times': {'contamination': 0.00022602081298828125, 'optimization': 0.8339252471923828, 'imputation': 0.08778023719787598, 'log_imputation': -2.4329188925398264}}, '0.4': {'scores': {'RMSE': 0.32470532661816204, 'MAE': 0.24836184775095202, 'MI': 1.0631520030142667, 'CORRELATION': 0.9435024215665483}, 'times': {'contamination': 0.0006368160247802734, 'optimization': 0.8339252471923828, 'imputation': 0.5580401420593262, 'log_imputation': -0.5833243800139047}}, '0.6': {'scores': {'RMSE': 0.45693859713260937, 'MAE': 0.3350566242376081, 'MI': 0.836724518636222, 'CORRELATION': 0.9015668975756113}, 'times': {'contamination': 0.0013523101806640625, 'optimization': 0.8339252471923828, 'imputation': 1.4875962734222412, 'log_imputation': 0.397161577971691}}, '0.8': {'scores': {'RMSE': 0.7301676007328138, 'MAE': 0.5391664379693699, 'MI': 0.43198783605819785, 'CORRELATION': 0.7329833767632488}, 'times': {'contamination': 0.0027031898498535156, 'optimization': 0.8339252471923828, 'imputation': 2.8330087661743164, 'log_imputation': 1.0413393151515047}}}}, 'mrnn': {'bayesian': {'0.05': {'scores': {'RMSE': 2.6563684177670233, 'MAE': 2.6289027948372983, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.0003285408020019531, 'optimization': 37.21349549293518, 'imputation': 9.313198566436768, 'log_imputation': 2.231432594737839}}, '0.1': {'scores': {'RMSE': 2.045766641879113, 'MAE': 1.7992291555274402, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.000408172607421875, 'optimization': 37.21349549293518, 'imputation': 9.40095329284668, 'log_imputation': 2.2408110982665184}}, '0.2': {'scores': {'RMSE': 1.4866964744519828, 'MAE': 1.2498535799157215, 'MI': 0.397640786553919, 'CORRELATION': -0.08276964804710889}, 'times': {'contamination': 0.00039958953857421875, 'optimization': 37.21349549293518, 'imputation': 9.726991415023804, 'log_imputation': 2.2749046412945217}}, '0.4': {'scores': {'RMSE': 1.2317696108511034, 'MAE': 0.9707474883456586, 'MI': 0.15483371229197251, 'CORRELATION': -0.010527558860360244}, 'times': {'contamination': 0.0005564689636230469, 'optimization': 37.21349549293518, 'imputation': 11.057928085327148, 'log_imputation': 2.4031476444877526}}, '0.6': {'scores': {'RMSE': 1.2430465649730325, 'MAE': 1.0234584506854825, 'MI': 0.1447519034646143, 'CORRELATION': 0.017907899469012542}, 'times': {'contamination': 0.001611948013305664, 'optimization': 37.21349549293518, 'imputation': 7.627377986907959, 'log_imputation': 2.031744141008499}}, '0.8': {'scores': {'RMSE': 1.2027168127539818, 'MAE': 0.97815219871441, 'MI': 0.0614813991074497, 'CORRELATION': 0.035724315549045045}, 'times': {'contamination': 0.0026082992553710938, 'optimization': 37.21349549293518, 'imputation': 10.785835981369019, 'log_imputation': 2.3782337901768487}}}}}}}

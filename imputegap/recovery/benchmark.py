@@ -203,7 +203,7 @@ class Benchmark:
         plt.savefig(filepath, dpi=300, bbox_inches='tight')  # Save in HD with tight layout
 
         # Show the plot
-        if display :
+        if display:
             plt.tight_layout()
             plt.show()
             plt.close()
@@ -692,6 +692,6 @@ class Benchmark:
                 print("============================================================================\n\n\n\n\n\n")
 
         scores_list, algos, sets = self.avg_results(*run_storage)
-        _ = Benchmark().generate_heatmap(scores_list, algos, sets, save_dir=save_dir)
+        _ = Benchmark().generate_heatmap(scores_list, algos, sets, save_dir=save_dir, display=False)
 
         return run_storage, scores_list

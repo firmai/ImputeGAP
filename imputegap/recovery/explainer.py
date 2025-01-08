@@ -151,20 +151,17 @@ class Explainer:
         None
         """
 
-        if shap_details is not None:
-            print("\n\nx_data (with", len(shap_details), "elements) : ")
-            for i, (input, _) in enumerate(shap_details):
-                print("\tFEATURES VALUES", i, "(", len(input), ") : ", *input)
-
-            print("\ny_data (with", len(shap_details), "elements) : ")
-
-            for i, (_, output) in enumerate(shap_details):
-                print(f"\tRMSE SERIES {i:<5} : {output:<15}")
+        #if shap_details is not None:
+            #print("\n\nx_data (with", len(shap_details), "elements) : ")
+            #for i, (input, _) in enumerate(shap_details):
+            #    print("\tFEATURES VALUES", i, "(", len(input), ") : ", *input)
+            #print("\ny_data (with", len(shap_details), "elements) : ")
+            #for i, (_, output) in enumerate(shap_details):
+            #    print(f"\tRMSE SERIES {i:<5} : {output:<15}")
 
         print("\n\nSHAP Results details : ")
         for (x, algo, rate, description, feature, category, mean_features) in shap_values:
-            print(
-                f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
+            print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
 
     def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
@@ -243,14 +240,14 @@ class Explainer:
             Results of the SHAP explainer model.
         """
 
-        print("\n\nInitilization of the SHAP model with ", np.array(x_information).shape)
+        print("\n\nInitialization of the SHAP model with dimension", np.array(x_information).shape)
 
         path_file = "./assets/shap/"
         if not os.path.exists(path_file):
             path_file = "./imputegap" + path_file[1:]
 
         x_features, x_categories, x_descriptions = [], [], []
-        x_fs, x_cs, x_ds = [], [], []
+        x_fs, x_cs, x_ds, alphas = [], [], [], []
 
         for current_time_series in x_information:
             x_fs.clear()
@@ -310,28 +307,28 @@ class Explainer:
         os.makedirs(path_file, exist_ok=True)
         plt.savefig(alpha)
         plt.close()
-        print("\n\n\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(shval).T, np.array(x_test).T, feature_names=series_names, show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_reverse_plot.png")
         plt.title("SHAP Features by Series")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.plots.waterfall(shval_x[0], show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Waterfall.png")
         plt.title("SHAP Waterfall Results")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.plots.beeswarm(shval_x, show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Beeswarm.png")
         plt.title("SHAP Beeswarm Results")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         total_weights_for_all_algorithms = []
 
@@ -388,7 +385,7 @@ class Explainer:
         plt.title("SHAP details of geometry")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(transformation).T, np.array(transformationT).T, plot_size=(20, 10),
                           feature_names=transformationDesc, show=display)
@@ -396,7 +393,7 @@ class Explainer:
         plt.title("SHAP details of transformation")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(correlation).T, np.array(correlationT).T, plot_size=(20, 10),
                           feature_names=correlationDesc, show=display)
@@ -404,7 +401,7 @@ class Explainer:
         plt.title("SHAP details of correlation")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(trend).T, np.array(trendT).T, plot_size=(20, 8), feature_names=trendDesc,
                           show=display)
@@ -412,7 +409,7 @@ class Explainer:
         plt.title("SHAP details of Trend")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         aggregation_features.append(np.mean(geometry, axis=0))
         aggregation_features.append(np.mean(correlation, axis=0))
@@ -434,7 +431,7 @@ class Explainer:
         plt.gca().axes.get_xaxis().set_visible(False)
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names,
                           show=display)
@@ -442,7 +439,7 @@ class Explainer:
         plt.title("SHAP Aggregation Features by Series")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha, "\n\n")
+        alphas.append(alpha)
 
         if verbose:
             print("\t\tSHAP Families details :")
@@ -460,6 +457,9 @@ class Explainer:
         total_weights_percent = [(weight / total_sum * 100) for weight in total_weights]
 
         total_weights_for_all_algorithms = np.append(total_weights_for_all_algorithms, total_weights_percent)
+
+        for alpha in alphas:
+            print("\n\n\t\t\tplot has been saved : ", alpha)
 
         results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions,
                                                  x_features, x_categories, mean_features,

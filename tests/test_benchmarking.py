@@ -13,13 +13,12 @@ class TestBenchmarking(unittest.TestCase):
         optimizers = [opti_bayesian]
 
         algorithms_full = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
-
         patterns_small = ["mcar"]
 
         x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
-        results_benchmarking = Benchmark().eval(datasets=expected_datasets, optimizers=optimizers, algorithms=algorithms_full, patterns=patterns_small, x_axis=x_axis, already_optimized=False, runs=-1)
-
+        results_benchmarking, _ = Benchmark().eval(datasets=expected_datasets, optimizers=optimizers, algorithms=algorithms_full, patterns=patterns_small, x_axis=x_axis, runs=-1)
+        results_benchmarking = results_benchmarking[0]
         expected_datasets = ["eegalcohol"]
 
         # Check that all datasets exist
@@ -69,7 +68,7 @@ class TestBenchmarking(unittest.TestCase):
                         self.assertIsInstance(
                             time_value,
                             (float, int),  # Correct usage
-                            f"Time '{time_key}' in dataset '{dataset}', algorithm '{algorithm}', key '{key}' is not a float."
+                            f"Time '{time_key}' in dataset '{dataset}', algorithm '{algorithm}', key '{key}'is not a float."
                         )
 
     def test_benchmarking_matrix(self):
