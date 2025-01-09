@@ -13,14 +13,14 @@ from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 
 
+
+
 class Benchmark:
     """
     A class to evaluate the performance of imputation algorithms through benchmarking across datasets and patterns.
 
     Methods
     -------
-    _config_optimization():
-        Configure and execute optimization for a selected imputation algorithm and contamination pattern.
     average_runs_by_names(self, data):
         Average the results of all runs depending on the dataset.
     avg_results():
@@ -41,6 +41,70 @@ class Benchmark:
     output : {'drift': {'mcar': {'mean': {'bayesian': {'0.05': {'scores': {'RMSE': 0.9234927128429051, 'MAE': 0.7219362152785619, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.0010309219360351562, 'optimization': 0, 'imputation': 0.0005755424499511719}}, '0.1': {'scores': {'RMSE': 0.9699990038879407, 'MAE': 0.7774057495176013, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.0020699501037597656, 'optimization': 0, 'imputation': 0.00048422813415527344}}, '0.2': {'scores': {'RMSE': 0.9914069853975623, 'MAE': 0.8134840739732964, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.007096290588378906, 'optimization': 0, 'imputation': 0.000461578369140625}}, '0.4': {'scores': {'RMSE': 1.0552448338389784, 'MAE': 0.7426695186604741, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.043192148208618164, 'optimization': 0, 'imputation': 0.0005095005035400391}}, '0.6': {'scores': {'RMSE': 1.0143105930114702, 'MAE': 0.7610548321723654, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.17184901237487793, 'optimization': 0, 'imputation': 0.0005536079406738281}}, '0.8': {'scores': {'RMSE': 1.010712060535523, 'MAE': 0.7641520748788702, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.6064670085906982, 'optimization': 0, 'imputation': 0.0005743503570556641}}}}, 'cdrec': {'bayesian': {'0.05': {'scores': {'RMSE': 0.23303624184873978, 'MAE': 0.13619797235197734, 'MI': 1.2739817718416822, 'CORRELATION': 0.968435455112644}, 'times': {'contamination': 0.0009615421295166016, 'optimization': 0, 'imputation': 0.09218788146972656}}, '0.1': {'scores': {'RMSE': 0.18152059329152104, 'MAE': 0.09925566629402761, 'MI': 1.1516089897042538, 'CORRELATION': 0.9829398352220718}, 'times': {'contamination': 0.00482487678527832, 'optimization': 0, 'imputation': 0.09549617767333984}}, '0.2': {'scores': {'RMSE': 0.13894771223733138, 'MAE': 0.08459032692102293, 'MI': 1.186191167936035, 'CORRELATION': 0.9901338133811375}, 'times': {'contamination': 0.01713728904724121, 'optimization': 0, 'imputation': 0.1129295825958252}}, '0.4': {'scores': {'RMSE': 0.7544523683503829, 'MAE': 0.11218049973594252, 'MI': 0.021165172206064526, 'CORRELATION': 0.814120507570725}, 'times': {'contamination': 0.10881781578063965, 'optimization': 0, 'imputation': 1.9378046989440918}}, '0.6': {'scores': {'RMSE': 0.4355197572001326, 'MAE': 0.1380846624733049, 'MI': 0.10781252370591506, 'CORRELATION': 0.9166777087122915}, 'times': {'contamination': 0.2380077838897705, 'optimization': 0, 'imputation': 1.8785057067871094}}, '0.8': {'scores': {'RMSE': 0.7672558930795506, 'MAE': 0.32988968428439397, 'MI': 0.013509125598802707, 'CORRELATION': 0.7312998041323675}, 'times': {'contamination': 0.6805167198181152, 'optimization': 0, 'imputation': 1.9562773704528809}}}}, 'stmvl': {'bayesian': {'0.05': {'scores': {'RMSE': 0.5434405584289141, 'MAE': 0.346560495723809, 'MI': 0.7328867182584357, 'CORRELATION': 0.8519431955571422}, 'times': {'contamination': 0.0022056102752685547, 'optimization': 0, 'imputation': 52.07010293006897}}, '0.1': {'scores': {'RMSE': 0.39007056542870916, 'MAE': 0.2753022759369617, 'MI': 0.8280959876205578, 'CORRELATION': 0.9180937736429735}, 'times': {'contamination': 0.002231597900390625, 'optimization': 0, 'imputation': 52.543020248413086}}, '0.2': {'scores': {'RMSE': 0.37254427425455994, 'MAE': 0.2730547993858495, 'MI': 0.7425412593844177, 'CORRELATION': 0.9293322959355041}, 'times': {'contamination': 0.0072672367095947266, 'optimization': 0, 'imputation': 52.88247036933899}}, '0.4': {'scores': {'RMSE': 0.6027573766269363, 'MAE': 0.34494332493982044, 'MI': 0.11876685901414151, 'CORRELATION': 0.8390532279447225}, 'times': {'contamination': 0.04321551322937012, 'optimization': 0, 'imputation': 54.10793352127075}}, '0.6': {'scores': {'RMSE': 0.9004526656857551, 'MAE': 0.4924048353228427, 'MI': 0.011590260996247858, 'CORRELATION': 0.5650541301828254}, 'times': {'contamination': 0.1728806495666504, 'optimization': 0, 'imputation': 40.53373336791992}}, '0.8': {'scores': {'RMSE': 1.0112488396023014, 'MAE': 0.7646823531588104, 'MI': 0.00040669209664367576, 'CORRELATION': 0.0183962968474991}, 'times': {'contamination': 0.6077785491943359, 'optimization': 0, 'imputation': 35.151907444000244}}}}, 'iim': {'bayesian': {'0.05': {'scores': {'RMSE': 0.4445625930776235, 'MAE': 0.2696133927362288, 'MI': 1.1167751522591498, 'CORRELATION': 0.8944975075266335}, 'times': {'contamination': 0.0010058879852294922, 'optimization': 0, 'imputation': 0.7380530834197998}}, '0.1': {'scores': {'RMSE': 0.2939506418814281, 'MAE': 0.16953644212278182, 'MI': 1.0160968166750064, 'CORRELATION': 0.9531900627237018}, 'times': {'contamination': 0.0019745826721191406, 'optimization': 0, 'imputation': 4.7826457023620605}}, '0.2': {'scores': {'RMSE': 0.2366529609250008, 'MAE': 0.14709529129218185, 'MI': 1.064299483512458, 'CORRELATION': 0.9711348247027318}, 'times': {'contamination': 0.00801849365234375, 'optimization': 0, 'imputation': 33.94813060760498}}, '0.4': {'scores': {'RMSE': 0.4155649406397416, 'MAE': 0.22056702659999994, 'MI': 0.06616526470761779, 'CORRELATION': 0.919934494058292}, 'times': {'contamination': 0.04391813278198242, 'optimization': 0, 'imputation': 255.31524085998535}}, '0.6': {'scores': {'RMSE': 0.38695094864012947, 'MAE': 0.24340565131372927, 'MI': 0.06361822797740405, 'CORRELATION': 0.9249744935121553}, 'times': {'contamination': 0.17044353485107422, 'optimization': 0, 'imputation': 840.7470128536224}}, '0.8': {'scores': {'RMSE': 0.5862696375344495, 'MAE': 0.3968159514130716, 'MI': 0.13422239939628303, 'CORRELATION': 0.8178796825899766}, 'times': {'contamination': 0.5999574661254883, 'optimization': 0, 'imputation': 1974.6101157665253}}}}, 'mrnn': {'bayesian': {'0.05': {'scores': {'RMSE': 0.9458508648057621, 'MAE': 0.7019459696903068, 'MI': 0.11924522547609226, 'CORRELATION': 0.02915935932568557}, 'times': {'contamination': 0.001056671142578125, 'optimization': 0, 'imputation': 49.42237901687622}}, '0.1': {'scores': {'RMSE': 1.0125309431502871, 'MAE': 0.761136543268339, 'MI': 0.12567590499764303, 'CORRELATION': -0.037161060882302754}, 'times': {'contamination': 0.003415822982788086, 'optimization': 0, 'imputation': 49.04829454421997}}, '0.2': {'scores': {'RMSE': 1.0317754516097355, 'MAE': 0.7952869439926, 'MI': 0.10908095436833125, 'CORRELATION': -0.04155403791391449}, 'times': {'contamination': 0.007429599761962891, 'optimization': 0, 'imputation': 49.42568325996399}}, '0.4': {'scores': {'RMSE': 1.0807965786089415, 'MAE': 0.7326965517264863, 'MI': 0.006171770470542263, 'CORRELATION': -0.020630168509677818}, 'times': {'contamination': 0.042899370193481445, 'optimization': 0, 'imputation': 49.479795694351196}}, '0.6': {'scores': {'RMSE': 1.0441472017887297, 'MAE': 0.7599852461729673, 'MI': 0.01121013333181846, 'CORRELATION': -0.007513931343350665}, 'times': {'contamination': 0.17329692840576172, 'optimization': 0, 'imputation': 50.439927101135254}}, '0.8': {'scores': {'RMSE': 1.0379347892718205, 'MAE': 0.757440007226372, 'MI': 0.0035880775657246428, 'CORRELATION': -0.0014975078469404196}, 'times': {'contamination': 0.6166613101959229, 'optimization': 0, 'imputation': 50.66455388069153}}}}}}}
     """
 
+    def _config_algorithm(self, incomp_data, algorithm):
+        """
+        Configure and execute algorithm for selected imputation imputer and pattern.
+
+        Parameters
+        ----------
+        incomp_data : TimeSeries
+            TimeSeries object containing dataset.
+        algorithm : str
+            Name of algorithm
+
+        Returns
+        -------
+        BaseImputer
+            Configured imputer instance with optimal parameters.
+        """
+        if algorithm == "cdrec":
+            imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
+        elif algorithm == "stmvl":
+            imputer = Imputation.PatternSearch.STMVL(incomp_data)
+        elif algorithm == "iim":
+            imputer = Imputation.Statistics.IIM(incomp_data)
+        elif algorithm == "mrnn":
+            imputer = Imputation.DeepLearning.MRNN(incomp_data)
+        else:
+            imputer = Imputation.Statistics.MeanImpute(incomp_data)
+
+        return imputer
+
+    def _config_contamination(self, rate, ts_test, pattern, block_size_mcar):
+        """
+        Configure and execute contamination for selected imputation algorithm and pattern.
+
+        Parameters
+        ----------
+        rate : float
+            Mean parameter for contamination missing percentage rate.
+        ts_test : TimeSeries
+            TimeSeries object containing dataset.
+        pattern : str
+            Type of contamination pattern (e.g., "mcar", "mp", "blackout", "disjoint", "overlap", "gaussian").
+        block_size_mcar : int
+            Size of blocks removed in MCAR
+
+        Returns
+        -------
+        TimeSeries
+            TimeSeries object containing contaminated data.
+        """
+        if pattern == "mcar":
+            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=rate, missing_rate=rate, block_size=block_size_mcar, seed=True)
+        elif pattern == "mp":
+            incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, series_rate=rate, missing_rate=rate)
+        elif pattern == "disjoint":
+            incomp_data = ts_test.Contamination.disjoint(input_data=ts_test.data, missing_rate=rate)
+        elif pattern == "overlap":
+            incomp_data = ts_test.Contamination.overlap(input_data=ts_test.data, missing_rate=rate)
+        elif pattern == "gaussian":
+            incomp_data = ts_test.Contamination.gaussian(input_data=ts_test.data, series_rate=rate, missing_rate=rate, seed=True)
+        else:
+            incomp_data = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=rate)
+
+        return incomp_data
+
     def _config_optimization(self, opti_mean, ts_test, pattern, algorithm, block_size_mcar):
         """
         Configure and execute optimization for selected imputation algorithm and pattern.
@@ -52,7 +116,7 @@ class Benchmark:
         ts_test : TimeSeries
             TimeSeries object containing dataset.
         pattern : str
-            Type of contamination pattern (e.g., "mcar", "mp", "blackout").
+            Type of contamination pattern (e.g., "mcar", "mp", "blackout", "disjoint", "overlap", "gaussian").
         algorithm : str
             Imputation algorithm to use.
         block_size_mcar : int
@@ -64,29 +128,10 @@ class Benchmark:
             Configured imputer instance with optimal parameters.
         """
 
-        if pattern == "mcar":
-            incomp_data_opti = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=opti_mean,
-                                                          missing_rate=opti_mean, block_size=block_size_mcar,
-                                                          seed=True)
-        elif pattern == "mp":
-            incomp_data_opti = ts_test.Contamination.missing_percentage(input_data=ts_test.data, series_rate=opti_mean,
-                                                                        missing_rate=opti_mean)
-        else:
-            incomp_data_opti = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=opti_mean)
+        incomp_data = self._config_contamination(opti_mean, ts_test, pattern, block_size_mcar)
+        imputer = self._config_algorithm(incomp_data=incomp_data, algorithm=algorithm)
 
-        i_opti = None
-        if algorithm == "cdrec":
-            i_opti = Imputation.MatrixCompletion.CDRec(incomp_data_opti)
-        elif algorithm == "stmvl":
-            i_opti = Imputation.PatternSearch.STMVL(incomp_data_opti)
-        elif algorithm == "iim":
-            i_opti = Imputation.Statistics.IIM(incomp_data_opti)
-        elif algorithm == "mrnn":
-            i_opti = Imputation.DeepLearning.MRNN(incomp_data_opti)
-        elif algorithm == "mean":
-            i_opti = Imputation.Statistics.MeanImpute(incomp_data_opti)
-
-        return i_opti
+        return imputer
 
     def average_runs_by_names(self, data):
         """
@@ -112,8 +157,6 @@ class Benchmark:
 
         # Get unique dataset names
         unique_names = sorted(set(all_names))
-        print("All dataset names:", *all_names, "\n")
-        print("Unique dataset names:", *unique_names)
 
         # Initialize and populate the split matrix
         split = [[0 for _ in range(all_names.count(name))] for name in unique_names]
@@ -208,9 +251,9 @@ class Benchmark:
             for j, algo in enumerate(algorithms_list):
                 comprehensive_matrix[i, j] = average_rmse_matrix[dataset].get(algo, np.nan)
 
-        print("Visualization of datasets:", datasets_list)
+        print("\nVisualization of datasets:", datasets_list)
         print("Visualization of algorithms:", algorithms_list)
-        print("Visualization of matrix:\n", comprehensive_matrix)
+        print("Visualization of matrix:\n", comprehensive_matrix, "\n\n")
 
         return comprehensive_matrix, algorithms_list, datasets_list
 
@@ -303,7 +346,6 @@ class Benchmark:
         -----
         The report is saved in a "report.txt" file in `save_dir`, organized in sections with headers and results.
         """
-        print("run", run)
         os.makedirs(save_dir, exist_ok=True)
         save_path = os.path.join(save_dir, f"report_{dataset}.txt")
         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -386,22 +428,18 @@ class Benchmark:
         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         summary_sheet.set_column(0, 1, 50)
 
-        # Add the logo using importlib.resources
-        logo_path = importlib.resources.files("imputegap.assets").joinpath("logo_imputegap.png")
-        summary_sheet.insert_image("A1", str(logo_path), {"x_scale": 0.5, "y_scale": 0.5})
-
         # Title and header
-        summary_sheet.write(5, 0, "IMPUTEGAP")  # Title below the logo
-        summary_sheet.write(7, 0, "Report for Dataset")
-        summary_sheet.write(7, 1, dataset)
-        summary_sheet.write(8, 0, "Generated on")
-        summary_sheet.write(8, 1, current_time)
+        summary_sheet.write(0, 0, "ImputeGAP, A library of Imputation Techniques for Time Series Data")
+        summary_sheet.write(2, 0, "Report for Dataset")
+        summary_sheet.write(2, 1, dataset)
+        summary_sheet.write(3, 0, "Generated on")
+        summary_sheet.write(3, 1, current_time)
         if run >= 0:
-            summary_sheet.write(9, 0, "Run Number")
-            summary_sheet.write(9, 1, run)
+            summary_sheet.write(4, 0, "Run Number")
+            summary_sheet.write(4, 1, run)
 
         # Add links to metric sheets
-        row = 12
+        row = 6
         summary_sheet.write(row, 0, "Metric Sheets:")
         row += 1
         metrics = {
@@ -427,12 +465,9 @@ class Benchmark:
             # Create a worksheet for each metric
             worksheet = workbook.add_worksheet(metric)
 
-            # Add the logo to each metric sheet
-            worksheet.insert_image("A1", str(logo_path), {"x_scale": 0.5, "y_scale": 0.5})
-
             # Write the metric description at the top and add IMPUTEGAP header
-            worksheet.write(5, 0, "IMPUTEGAP")
-            worksheet.write(7, 0, f"{metric}: {description}")
+            worksheet.write(0, 0, "ImputeGAP, A library of Imputation Techniques for Time Series Data")
+            worksheet.write(2, 0, f"{metric}: {description}")
 
             # Define consistent column headers and widths
             headers = ["Dataset", "Algorithm", "Optimizer", "Pattern", "X Value", metric]
@@ -441,10 +476,10 @@ class Benchmark:
             # Write the headers
             for col, (header, width) in enumerate(zip(headers, column_widths)):
                 worksheet.set_column(col, col, width)
-                worksheet.write(8, col, header)
+                worksheet.write(3, col, header)
 
             # Populate the data
-            row = 9
+            row = 4
             for dataset, algo_items in runs_plots_scores.items():
                 for algorithm, optimizer_items in algo_items.items():
                     for optimizer, pattern_data in optimizer_items.items():
@@ -554,7 +589,7 @@ class Benchmark:
                         if metric == "imputation_time":
                             ax.set_ylim(-10, 90)
                         elif metric == "log_imputation":
-                            ax.set_ylim(-10, 90)
+                            ax.set_ylim(-4.5, 2)
                         elif metric == "MAE":
                             ax.set_ylim(-0.1, 2.4)
                         elif metric == "MI":
@@ -571,7 +606,7 @@ class Benchmark:
                         ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
                     if not subplot:
-                        filename = f"{dataset}_{pattern}_{metric}.jpg"
+                        filename = f"{dataset}_{pattern}_{optimizer}_{metric}.jpg"
                         filepath = os.path.join(save_dir, filename)
                         plt.savefig(filepath)
                         plt.close()
@@ -616,9 +651,8 @@ class Benchmark:
         Runs contamination, imputation, and evaluation, then generates plots and a summary reports.
         """
 
-        print("initialization of the comprehensive evaluation. It can take time...\n")
+        print("Initialization of the comprehensive evaluation. It can take time...\n")
         run_storage = []
-        scores_list, algos, sets = None, None, None
 
         for i_run in range(0, abs(runs)):
             for dataset in datasets:
@@ -626,7 +660,7 @@ class Benchmark:
                 limitation_series, limitation_values = 100, 1000
                 block_size_mcar = 10
 
-                print("1. evaluation launch for", dataset,
+                print("\n1. evaluation launch for", dataset,
                       "========================================================\n\n\n")
                 ts_test = TimeSeries()
 
@@ -643,7 +677,6 @@ class Benchmark:
                 if runs == -1:
                     limitation_series = 10
                     limitation_values = 110
-                    print("TEST LOADED...")
 
                 ts_test.load_timeseries(data=utils.search_path(dataset), max_series=limitation_series,
                                         max_values=limitation_values, header=header)
@@ -654,73 +687,51 @@ class Benchmark:
                 if N < 250:
                     block_size_mcar = 2
 
-                print("1. normalization of ", dataset, "\n")
+                print("\n1. normalization of ", dataset, "\n")
                 ts_test.normalize()
 
                 for pattern in patterns:
-                    print("\t2. contamination of", dataset, "with pattern", pattern, "\n")
+                    print("\n\t2. contamination of", dataset, "with pattern", pattern, "\n")
 
                     for algorithm in algorithms:
                         has_been_optimized = False
-                        print("\t3. algorithm selected", algorithm, "\n")
+                        print("\n\t3. algorithm selected", algorithm, "\n")
 
                         for x in x_axis:
-                            print("\t\t4. missing values (series&values) set to", x, "for x_axis\n")
+                            print("\n\t\t4. missing values (series&values) set to", x, "for x_axis\n")
 
                             start_time_contamination = time.time()  # Record start time
-                            if pattern == "mcar":
-                                incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=x,
-                                                                         missing_rate=x, block_size=block_size_mcar,
-                                                                         seed=True)
-                            elif pattern == "mp":
-                                incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data,
-                                                                                       series_rate=x,
-                                                                                       missing_rate=x)
-                            else:
-                                incomp_data = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=x)
+                            incomp_data = self._config_contamination(rate=x, ts_test=ts_test, pattern=pattern, block_size_mcar=block_size_mcar)
                             end_time_contamination = time.time()
 
                             for optimizer in optimizers:
-                                algo = None
-                                if algorithm == "cdrec":
-                                    algo = Imputation.MatrixCompletion.CDRec(incomp_data)
-                                elif algorithm == "stmvl":
-                                    algo = Imputation.PatternSearch.STMVL(incomp_data)
-                                elif algorithm == "iim":
-                                    algo = Imputation.Statistics.IIM(incomp_data)
-                                elif algorithm == "mrnn":
-                                    algo = Imputation.DeepLearning.MRNN(incomp_data)
-                                elif algorithm == "mean":
-                                    algo = Imputation.Statistics.MeanImpute(incomp_data)
+                                algo = self._config_algorithm(incomp_data=incomp_data, algorithm=algorithm)
 
                                 if isinstance(optimizer, dict):
                                     optimizer_gt = {"input_data": ts_test.data, **optimizer}
                                     optimizer_value = optimizer.get('optimizer')  # or optimizer['optimizer']
 
                                     if not has_been_optimized and algorithm != "mean":
-                                        print("\t\t5. AutoML to set the parameters", optimizer, "\n")
+                                        print("\n\t\t5. AutoML to set the parameters", optimizer, "\n")
                                         start_time_opti = time.time()  # Record start time
-                                        i_opti = self._config_optimization(0.25, ts_test, pattern, algorithm,
-                                                                           block_size_mcar)
+                                        i_opti = self._config_optimization(0.25, ts_test, pattern, algorithm, block_size_mcar)
                                         i_opti.impute(user_def=False, params=optimizer_gt)
-                                        utils.save_optimization(optimal_params=i_opti.parameters, algorithm=algorithm,
-                                                                dataset=dataset, optimizer="e")
+                                        utils.save_optimization(optimal_params=i_opti.parameters, algorithm=algorithm, dataset=dataset, optimizer="e")
 
                                         has_been_optimized = True
                                         end_time_opti = time.time()
                                     else:
-                                        print("\t\t5. AutoML already optimized : ", optimizer, "\n")
+                                        print("\n\t\t5. AutoML already optimized : ", optimizer, "\n")
 
                                     if algorithm != "mean":
-                                        opti_params = utils.load_parameters(query="optimal", algorithm=algorithm,
-                                                                            dataset=dataset, optimizer="e")
-                                        print("\t\t6. imputation", algorithm, "with optimal parameters", *opti_params)
+                                        opti_params = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="e")
+                                        print("\n\t\t6. imputation", algorithm, "with optimal parameters", *opti_params)
 
                                     else:
-                                        print("\t\t5. MeanImpute launches without optimal params", optimizer, "for", algorithm, "\n")
+                                        print("\n\t\t5. MeanImpute launches without optimal params", optimizer, "for", algorithm, "\n")
                                         opti_params = None
                                 else:
-                                    print("\t\t5. Default parameters have been set the parameters", optimizer, "for", algorithm, "\n")
+                                    print("\n\t\t5. Default parameters have been set the parameters", optimizer, "for", algorithm, "\n")
                                     optimizer_value = optimizer
                                     opti_params = None
 
@@ -733,7 +744,7 @@ class Benchmark:
                                 time_contamination = end_time_contamination - start_time_contamination
                                 time_opti = end_time_opti - start_time_opti
                                 time_imputation = end_time_imputation - start_time_imputation
-                                log_time_imputation = math.log(time_imputation) if time_imputation > 0 else None
+                                log_time_imputation = math.log10(time_imputation) if time_imputation > 0 else None
 
                                 dic_timing = {"contamination": time_contamination, "optimization": time_opti, "imputation": time_imputation, "log_imputation": log_time_imputation}
 
@@ -748,11 +759,8 @@ class Benchmark:
                                     "times": dic_timing
                                 }
 
-                                print("\t\truns_plots_scores", runs_plots_scores)
-
-                print("\truns_plots_scores : ", runs_plots_scores)
                 save_dir_runs = save_dir + "/run_" + str(i_run) + "/" + dataset
-                print("\truns saved in : ", save_dir_runs)
+                print("\n\truns saved in : ", save_dir_runs)
                 self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=True, save_dir=save_dir_runs)
                 self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=False, save_dir=save_dir_runs)
                 self.generate_reports_txt(runs_plots_scores, save_dir_runs, dataset, i_run)
@@ -767,7 +775,7 @@ class Benchmark:
         run_averaged = self.average_runs_by_names(run_storage)
 
         save_dir_agg = save_dir + "/aggregation"
-        print("\taggragation of results saved in : ", save_dir_agg)
+        print("\n\n\taggragation of results saved in : ", save_dir_agg)
 
         for scores in run_averaged:
             all_keys = list(scores.keys())

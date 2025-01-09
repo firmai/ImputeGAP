@@ -724,7 +724,7 @@ class TimeSeries:
             missing_rate = utils.verification_limitation(missing_rate)
             offset = utils.verification_limitation(offset)
 
-            print("\n\nMISSING PERCENTAGE contamination has been called with :"
+            print("\n\nDISJOINT contamination has been called with :"
                   "\n\ta missing rate of ", missing_rate * 100, "%",
                   "\n\ta starting position at ", offset,
                   "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
@@ -779,7 +779,7 @@ class TimeSeries:
             missing_rate = utils.verification_limitation(missing_rate)
             offset = utils.verification_limitation(offset)
 
-            print("\n\nMISSING PERCENTAGE contamination has been called with :"
+            print("\n\nOVERLAP contamination has been called with :"
                   "\n\ta missing rate of ", missing_rate * 100, "%",
                   "\n\ta starting position at ", offset,
                   "\n\ta shift overlap of ", shift * 100, "%",

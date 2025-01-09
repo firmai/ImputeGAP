@@ -129,6 +129,9 @@ imputegap/dataset/docs/meteo/2_meteo-normminmax3x500_graph.jpg
 imputegap/dataset/docs/meteo/features_meteo.txt
 imputegap/env/default_explainer.toml
 imputegap/env/default_values.toml
+imputegap/imputegap/assets/25_01_09_15_00_30_plot.jpg
+imputegap/imputegap/assets/25_01_09_15_19_27_plot.jpg
+imputegap/imputegap/assets/25_01_09_15_21_08_plot.jpg
 imputegap/params/optimal_parameters_b_bafu_iim.toml
 imputegap/params/optimal_parameters_b_bafu_mrnn.toml
 imputegap/params/optimal_parameters_b_bafu_stmvl.toml
