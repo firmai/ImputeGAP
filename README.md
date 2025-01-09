@@ -242,6 +242,43 @@ Explainer.print(shap_values, shap_details)
 
 ---
 
+
+## Benchmark
+ImputeGAP enables users to comprehensively evaluate the efficiency of algorithms across various datasets.
+
+
+### Example Benchmark
+You can find this example in the file [`runner_benchmark.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_benchmark.py).
+
+```python
+from imputegap.recovery.benchmark import Benchmark
+
+# VARIABLES
+save_dir = "./analysis"
+nbr_run = 2
+
+# SELECT YOUR DATASET(S) :
+datasets_demo = ["eeg-alcohol", "eeg-reading"]
+
+# SELECT YOUR OPTIMIZER :
+optimiser_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 15, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
+optimizers_demo = [optimiser_bayesian]  # add optimizer you want to test
+
+# SELECT YOUR ALGORITHM(S) :
+algorithms_demo = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
+
+# SELECT YOUR CONTAMINATION PATTERN(S) :
+patterns_demo = ["mcar"]
+
+# SELECT YOUR MISSING RATE(S) :
+x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
+
+# START THE ANALYSIS
+list_results, sum_scores = Benchmark().eval(algorithms=algorithms_demo, datasets=datasets_demo, patterns=patterns_demo, x_axis=x_axis, optimizers=optimizers_demo, save_dir=save_dir, runs=nbr_run)
+```
+
+---
+
 ## Integration
 To add your own imputation algorithm in Python or C++, please refer to the detailed [integration guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/integration).
 
@@ -251,7 +288,7 @@ To add your own imputation algorithm in Python or C++, please refer to the detai
 
 ## References
 
-Mourad Khayati, Quentin Nater, and Jacques Pasquier. ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024): 4329–32.
+Mourad Khayati, Quentin Nater, and Jacques Pasquier. ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024), 4329–32.
 
 Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudre-Mauroux. Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020.
 

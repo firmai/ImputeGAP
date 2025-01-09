@@ -21,15 +21,19 @@ class Benchmark:
     -------
     _config_optimization():
         Configure and execute optimization for a selected imputation algorithm and contamination pattern.
+    average_runs_by_names(self, data):
+        Average the results of all runs depending on the dataset.
     avg_results():
         Calculate average metrics (e.g., RMSE) across multiple datasets and algorithm runs.
-    generate_matrix():
+    generate_heatmap():
         Generate and save a heatmap visualization of RMSE scores for datasets and algorithms.
-    generate_reports():
+    generate_reports_txt():
         Create detailed text-based reports summarizing metrics and timing results for all evaluations.
+    generate_reports_excel():
+        Create detailed excel-based reports summarizing metrics and timing results for all evaluations.
     generate_plots():
         Visualize metrics (e.g., RMSE, MAE) and timing (e.g., imputation, optimization) across patterns and datasets.
-    comprehensive_evaluation():
+    eval():
         Perform a complete benchmarking pipeline, including contamination, imputation, evaluation, and reporting.
 
     Example
@@ -83,6 +87,72 @@ class Benchmark:
             i_opti = Imputation.Statistics.MeanImpute(incomp_data_opti)
 
         return i_opti
+
+    def average_runs_by_names(self, data):
+        """
+        Average the results of all runs depending on the dataset
+
+        Parameters
+        ----------
+        data : list
+            list of dictionary containing the results of the benchmark runs.
+
+        Returns
+        -------
+        list
+            list of dictionary containing the results of the benchmark runs averaged by datasets.
+        """
+        results_avg, all_names = [], []
+
+        # Extract dataset names
+        for dictionary in data:
+            all_keys = list(dictionary.keys())
+            dataset_name = all_keys[0]
+            all_names.append(dataset_name)
+
+        # Get unique dataset names
+        unique_names = sorted(set(all_names))
+        print("All dataset names:", *all_names, "\n")
+        print("Unique dataset names:", *unique_names)
+
+        # Initialize and populate the split matrix
+        split = [[0 for _ in range(all_names.count(name))] for name in unique_names]
+        for i, name in enumerate(unique_names):
+            x = 0
+            for y, match in enumerate(all_names):
+                if name == match:
+                    split[i][x] = data[y]
+                    x += 1
+
+        # Iterate over the split matrix to calculate averages
+        for datasets in split:
+            tmp = [dataset for dataset in datasets if dataset != 0]
+            merged_dict = {}
+            count = len(tmp)
+
+            # Process and calculate averages
+            for dataset in tmp:
+                for outer_key, outer_value in dataset.items():
+                    for middle_key, middle_value in outer_value.items():
+                        for mean_key, mean_value in middle_value.items():
+                            for method_key, method_value in mean_value.items():
+                                for level_key, level_value in method_value.items():
+                                    # Initialize scores and times if not already initialized
+                                    merger = merged_dict.setdefault(outer_key, {}
+                                                                    ).setdefault(middle_key, {}).setdefault(mean_key, {}
+                                                                                                            ).setdefault(
+                                        method_key, {}).setdefault(level_key, {"scores": {}, "times": {}})
+
+                                    # Add scores and times
+                                    for score_key, v in level_value["scores"].items():
+                                        merger["scores"][score_key] = (merger["scores"].get(score_key, 0) + v / count)
+                                    for time_key, time_value in level_value["times"].items():
+                                        merger["times"][time_key] = (
+                                                    merger["times"].get(time_key, 0) + time_value / count)
+
+            results_avg.append(merged_dict)
+
+        return results_avg
 
     def avg_results(self, *datasets):
         """
@@ -203,7 +273,7 @@ class Benchmark:
         plt.savefig(filepath, dpi=300, bbox_inches='tight')  # Save in HD with tight layout
 
         # Show the plot
-        if display :
+        if display:
             plt.tight_layout()
             plt.show()
             plt.close()
@@ -681,7 +751,7 @@ class Benchmark:
                                 print("\t\truns_plots_scores", runs_plots_scores)
 
                 print("\truns_plots_scores : ", runs_plots_scores)
-                save_dir_runs = save_dir + "/run_" + str(i_run)
+                save_dir_runs = save_dir + "/run_" + str(i_run) + "/" + dataset
                 print("\truns saved in : ", save_dir_runs)
                 self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=True, save_dir=save_dir_runs)
                 self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=False, save_dir=save_dir_runs)
@@ -692,6 +762,24 @@ class Benchmark:
                 print("============================================================================\n\n\n\n\n\n")
 
         scores_list, algos, sets = self.avg_results(*run_storage)
-        _ = Benchmark().generate_heatmap(scores_list, algos, sets, save_dir=save_dir)
+        _ = self.generate_heatmap(scores_list, algos, sets, save_dir=save_dir, display=False)
 
-        return run_storage, scores_list
+        run_averaged = self.average_runs_by_names(run_storage)
+
+        save_dir_agg = save_dir + "/aggregation"
+        print("\taggragation of results saved in : ", save_dir_agg)
+
+        for scores in run_averaged:
+            all_keys = list(scores.keys())
+            dataset_name = str(all_keys[0])
+
+            save_dir_agg_set = save_dir_agg + "/" + dataset_name
+
+            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=True, save_dir=save_dir_agg_set)
+            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=False, save_dir=save_dir_agg_set)
+            self.generate_reports_txt(scores, save_dir_agg_set, dataset_name, -1)
+            self.generate_reports_excel(scores, save_dir_agg_set, dataset_name, -1)
+
+
+        return run_averaged, scores_list
+

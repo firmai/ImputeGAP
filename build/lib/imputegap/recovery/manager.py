@@ -6,6 +6,7 @@ import matplotlib
 from scipy.stats import zscore
 from sklearn.preprocessing import MinMaxScaler
 import importlib.resources
+from scipy.stats import norm
 
 from imputegap.tools import utils
 
@@ -129,7 +130,8 @@ class TimeSeries:
                 saved_data = data
 
                 #  update path form inner library datasets
-                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt", "eeg-reading.txt",
+                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt",
+                            "eeg-reading.txt",
                             "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt", "fmri-stoptask.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 
@@ -153,46 +155,53 @@ class TimeSeries:
 
             return self
 
-    def print(self, limit=10, view_by_series=False):
+    def print(self, limit_timestamps=10, limit_series=7, view_by_series=False):
         """
         Prints a limited number of time series from the dataset.
 
         Parameters
         ----------
-        limit : int, optional
-            The number of series to print. Default is 10.
+        limit_timestamps : int, optional
+        The number of timestamps to print. Default is 15. Use -1 for no restriction.
+        limit_series : int, optional
+        The number of series to print. Default is 10. Use -1 for no restriction.
         view_by_series : bool, optional
-            Whether to view by series (True) or by values (False).
+        Whether to view by series (True) or by values (False).
 
         Returns
         -------
         None
         """
-
         print("\nTime Series set :")
 
         to_print = self.data
         nbr_series, nbr_values = to_print.shape
-        print_col, print_row = "Values", "Series"
+        print_col, print_row = "Timestamp", "Series"
+
+        if limit_timestamps == -1:
+            limit_timestamps = to_print.shape[1]
+        if limit_series == -1:
+            limit_series = to_print.shape[0]
+        to_print = to_print[:limit_series, :limit_timestamps]
 
         if not view_by_series:
             to_print = to_print.T
-            print_col, print_row = "Series", "Values"
+            print_col, print_row = "Series", "Timestamp"
 
-        print(f"{' ':19}", end="")
-        for i, _ in enumerate(to_print[1]):
-            if i < 10:
-                print(f"{print_col} {i}", end=" " * 8)
-            elif i < 100:
-                print(f"{print_col} {i}", end=" " * 7)
-            else:
-                print(f"{print_col} {i}", end=" " * 6)
+        header_format = "{:<15}"  # Fixed size for headers
+        value_format = "{:>15.10f}"  # Fixed size for values
+        # Print the header
+        print(f"{'':<18}", end="")  # Empty space for the row labels
+        for i in range(to_print.shape[1]):
+            print(header_format.format(f"{print_col}_{i + 1}"), end="")
         print()
 
-        for i, series in enumerate(to_print[:limit]):
-            print(f"{print_row} {i} \t\t" + " ".join([f"{elem:15.10f}" for elem in series]))
+        # Print each limited series with fixed size
+        for i, series in enumerate(to_print):
+            print(header_format.format(f"{print_row} {i + 1}"), end="")
+            print("".join([value_format.format(elem) for elem in series]))
 
-        if limit < to_print.shape[0]:
+        if limit_series < nbr_series:
             print("...")
 
         print("\nshape of the time series :", to_print.shape, "\n\tnumber of series =", nbr_series,
@@ -214,7 +223,7 @@ class TimeSeries:
         None
         """
 
-        print("\n\nResults of the imputation ", algorithm, " :")
+        print("\n\nImputation Results of", algorithm, ":")
         for key, value in metrics.items():
             print(f"{key:<20} = {value}")
         print("\n")
@@ -286,7 +295,8 @@ class TimeSeries:
 
         print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    def plot(self, input_data, incomp_data=None, recov_data=None, max_series=None, max_values=None, series_range=None, size=(16, 8), save_path="", display=True):
+    def plot(self, input_data, incomp_data=None, recov_data=None, max_series=None, max_values=None, series_range=None,
+             subplot=False, size=(16, 8), save_path="", display=True):
         """
         Plot the time series data, including raw, contaminated, or imputed data.
 
@@ -304,6 +314,8 @@ class TimeSeries:
             The maximum number of values per series to plot.
         series_range : int, optional
             The index of a specific series to plot. If set, only this series will be plotted.
+        subplot : bool, optional
+            Print one time series by subplot or all in the same plot.
         size : tuple, optional
             Size of the plot in inches. Default is (16, 8).
         save_path : str, optional
@@ -317,65 +329,108 @@ class TimeSeries:
             The file path of the saved plot, if applicable.
         """
         number_of_series = 0
-        plt.figure(figsize=size)
-        plt.grid(True, linestyle='--', color='#d3d3d3', linewidth=0.6)
 
-        if max_series is None:
-            max_series, _ = input_data.shape
-        if max_values is None:
-            _, max_values = input_data.shape
+        if max_series is None or max_series == -1:
+            max_series = input_data.shape[0]
+        if max_values is None or max_values == -1:
+            max_values = input_data.shape[1]
+
+        if subplot:
+            series_indices = [i for i in range(incomp_data.shape[0]) if np.isnan(incomp_data[i]).any()]
+            nbr_series = [series_range] if series_range is not None else range(min(len(series_indices), max_series))
+            n_series_to_plot = len(nbr_series)
+        else:
+            series_indices = [series_range] if series_range is not None else range(min(input_data.shape[0], max_series))
+            n_series_to_plot = len(series_indices)
+
+        if subplot:
+            n_cols = min(3, n_series_to_plot)
+            n_rows = (n_series_to_plot + n_cols - 1) // n_cols
+
+            x_size, y_size = size
+            y_size = y_size * n_rows
+            x_size = x_size * n_cols
+
+            fig, axes = plt.subplots(n_rows, n_cols, figsize=(x_size, y_size), squeeze=False)
+            axes = axes.flatten()
+        else:
+            plt.figure(figsize=size)
+            plt.grid(True, linestyle='--', color='#d3d3d3', linewidth=0.6)
 
         if input_data is not None:
-
             colors = utils.load_parameters("default", algorithm="colors")
 
-            # Determine range of series to plot
-            series_indices = [series_range] if series_range is not None else range(input_data.shape[0])
+            for idx, i in enumerate(series_indices):
 
-            for i in series_indices:
-                color = colors[i % len(colors)]
+                if subplot:
+                    color = colors[0]
+                else:
+                    color = colors[i % len(colors)]
+
+                timestamps = np.arange(min(input_data.shape[1], max_values))
+
+                # Select the current axes if using subplots
+                if subplot:
+                    ax = axes[idx]
+                    ax.grid(True, linestyle='--', color='#d3d3d3', linewidth=0.6)
+                else:
+                    ax = plt
 
                 if incomp_data is None and recov_data is None:  # plot only raw matrix
-                    plt.plot(np.arange(min(input_data.shape[1], max_values)), input_data[i, :max_values], linewidth=2.5,
-                             color=color, linestyle='-', label=f'TS {i + 1}')
+                    ax.plot(timestamps, input_data[i, :max_values], linewidth=2.5,
+                            color=color, linestyle='-', label=f'TS {i + 1}')
 
                 if incomp_data is not None and recov_data is None:  # plot infected matrix
                     if np.isnan(incomp_data[i, :]).any():
-                        plt.plot(np.arange(min(input_data.shape[1], max_values)), input_data[i, :max_values], linewidth=1.5,
-                                 color='r', linestyle='--', label=f'TS-MB {i + 1}')
+                        ax.plot(timestamps, input_data[i, :max_values], linewidth=1.5,
+                                color='r', linestyle='--', label=f'TS-MB {i + 1}')
 
-                    plt.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
-                             color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+                    if np.isnan(incomp_data[i, :]).any() or not subplot:
+                        ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
+                            color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
 
                 if recov_data is not None:  # plot imputed matrix
                     if np.isnan(incomp_data[i, :]).any():
-                        plt.plot(np.arange(min(recov_data.shape[1], max_values)), recov_data[i, :max_values],
-                                 linestyle='-', color="r", label=f'TS-IMP {i + 1}')
+                        ax.plot(np.arange(min(recov_data.shape[1], max_values)), recov_data[i, :max_values],
+                                linestyle='-', color="r", label=f'TS-IMP {i + 1}')
 
-                    if np.isnan(incomp_data[i, :]).any():
-                        plt.plot(np.arange(min(input_data.shape[1], max_values)), input_data[i, :max_values], linewidth=1.5,
-                                 linestyle='--', color=color, label=f'TS-MB {i + 1}')
+                        ax.plot(timestamps, input_data[i, :max_values], linewidth=1.5,
+                                linestyle='--', color=color, label=f'TS-MB {i + 1}')
 
-                    plt.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
-                             color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+                    if np.isnan(incomp_data[i, :]).any() or not subplot:
+                        ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
+                                color=color, linewidth=2.5, linestyle='-', label=f'TS-RAW {i + 1}')
+
+                # Label and legend for subplot
+                if subplot:
+                    ax.set_xlabel('Timestamp')
+                    ax.set_ylabel('Values')
+                    ax.legend(loc='upper left', fontsize=8)
+                    ax.set_title(f'Time Series {i + 1}')
 
                 number_of_series += 1
                 if number_of_series == max_series:
                     break
 
-        plt.xlabel('Timestamp')
-        plt.ylabel('Values')
-        plt.legend(
-            loc='upper left',
-            fontsize=12,
-            frameon=True,
-            fancybox=True,
-            shadow=True,
-            borderpad=1.5,
-            bbox_to_anchor=(1.02, 1),  # Adjusted to keep the legend inside the window
-        )
+        if subplot:
+            for idx in range(len(series_indices), len(axes)):
+                axes[idx].axis('off')
+
+        if not subplot:
+            plt.xlabel('Timestamp')
+            plt.ylabel('Values')
+            plt.legend(
+                loc='upper left',
+                fontsize=10,
+                frameon=True,
+                fancybox=True,
+                shadow=True,
+                borderpad=1.5,
+                bbox_to_anchor=(1.02, 1),  # Adjusted to keep the legend inside the window
+            )
 
         file_path = None
+
         if save_path:
             os.makedirs(save_path, exist_ok=True)
 
@@ -405,6 +460,15 @@ class TimeSeries:
 
         blackout(ts, missing_rate=0.2, offset=0.1) :
             Apply blackout contamination to the time series data.
+
+        gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):
+            Apply Gaussian contamination to the time series data.
+
+        def disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):
+            Apply Disjoint contamination to the time series data.
+
+        def overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):
+            Apply Overlapping contamination to the time series data.
         """
 
         def mcar(input_data, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False):
@@ -561,5 +625,186 @@ class TimeSeries:
             numpy.ndarray
                 The contaminated time series data.
             """
-            return TimeSeries.Contamination.missing_percentage(input_data, series_rate=1, missing_rate=missing_rate,
-                                                               offset=offset)
+            return TimeSeries.Contamination.missing_percentage(input_data, series_rate=1, missing_rate=missing_rate, offset=offset)
+
+        def gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):
+            """
+            Apply contamination with a Gaussian distribution to the time series data.
+
+            Parameters
+            ----------
+            input_data : numpy.ndarray
+                The time series dataset to contaminate.
+            series_rate : float, optional
+                Percentage of series to contaminate (default is 0.2).
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.2).
+            std_dev : float, optional
+                Standard deviation of the Gaussian distribution for missing values (default is 0.2).
+            offset : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+            seed : bool, optional
+                Whether to use a seed for reproducibility (default is True).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
+            """
+
+            ts_contaminated = input_data.copy()
+            M, _ = ts_contaminated.shape
+
+            if seed:
+                seed_value = 42
+                np.random.seed(seed_value)
+
+            # Validation and limitation of input parameters
+            missing_rate = utils.verification_limitation(missing_rate)
+            series_rate = utils.verification_limitation(series_rate)
+            offset = utils.verification_limitation(offset)
+
+            nbr_series_impacted = int(np.ceil(M * series_rate))
+
+            print("\n\nGAUSSIAN contamination has been called with :"
+                  "\n\ta number of series impacted ", series_rate * 100, "%",
+                  "\n\ta missing rate of ", missing_rate * 100, "%",
+                  "\n\ta starting position at ", offset,
+                  "\n\tGaussian std_dev ", std_dev,
+                  "\n\tshape of the set ", ts_contaminated.shape,
+                  "\n\tthis selection of series 0 to ", nbr_series_impacted, "\n\n")
+
+            for series in range(0, nbr_series_impacted):
+                S = int(series)
+                N = len(ts_contaminated[S])  # number of values in the series
+                P = int(N * offset)  # values to protect in the beginning of the series
+                W = int((N - P) * missing_rate)  # number of data points to remove
+                R = np.arange(P, N)
+
+                # probability density function
+                mean = np.mean(ts_contaminated[S])
+                mean = max(min(mean, 1), -1)
+
+                probabilities = norm.pdf(R, loc=P + mean * (N - P), scale=std_dev * (N - P))
+
+                # normalizes the probabilities so that their sum equals 1
+                probabilities /= probabilities.sum()
+
+                # select the values based on the probability
+                missing_indices = np.random.choice(R, size=W, replace=False, p=probabilities)
+
+                # apply missing values
+                ts_contaminated[S, missing_indices] = np.nan
+
+            return ts_contaminated
+
+        def disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):
+            """
+            Apply disjoint contamination to the time series data.
+
+            Parameters
+            ----------
+            input_data : numpy.ndarray
+                The time series dataset to contaminate.
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.1).
+            limit : float, optional
+                Percentage expressing the limit index of the end of the contamination (default is 1: all length).
+            offset : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
+            """
+            ts_contaminated = input_data.copy()
+            M, N = ts_contaminated.shape
+
+            missing_rate = utils.verification_limitation(missing_rate)
+            offset = utils.verification_limitation(offset)
+
+            print("\n\nMISSING PERCENTAGE contamination has been called with :"
+                  "\n\ta missing rate of ", missing_rate * 100, "%",
+                  "\n\ta starting position at ", offset,
+                  "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
+
+            S = 0
+            X = int(len(ts_contaminated[0]) * offset) # current index with offset
+            final_limit = int(N*limit)-1
+
+            while S < M:
+                N = len(ts_contaminated[S])  # number of values in the series
+                P = int(N * offset)  # values to protect in the beginning of the series
+                W = int((N - P) * missing_rate)  # number of data to remove
+                L = X + W  # new limit
+
+                for to_remove in range(X, L):
+                    index = P + to_remove
+                    ts_contaminated[S, index] = np.nan
+
+                    if index >= final_limit:  # reach the limitation
+                        return ts_contaminated
+
+                X = L + 1
+                S = S + 1
+
+            return ts_contaminated
+
+        def overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):
+            """
+            Apply overlap contamination to the time series data.
+
+            Parameters
+            ----------
+            input_data : numpy.ndarray
+                The time series dataset to contaminate.
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.2).
+            limit : float, optional
+                Percentage expressing the limit index of the end of the contamination (default is 1: all length).
+            shift : float, optional
+                Percentage of shift inside each the last disjoint contamination.
+            offset : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
+            """
+            ts_contaminated = input_data.copy()
+            M, N = ts_contaminated.shape
+
+            missing_rate = utils.verification_limitation(missing_rate)
+            offset = utils.verification_limitation(offset)
+
+            print("\n\nMISSING PERCENTAGE contamination has been called with :"
+                  "\n\ta missing rate of ", missing_rate * 100, "%",
+                  "\n\ta starting position at ", offset,
+                  "\n\ta shift overlap of ", shift * 100, "%",
+                  "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
+
+            S = 0
+            X = int(len(ts_contaminated[0]) * offset)  # current index with offset
+            X = X + int(X * shift)  # counter first shift
+            final_limit = int(N * limit) - 1
+
+            while S < M:
+                N = len(ts_contaminated[S])  # number of values in the series
+                P = int(N * offset)  # values to protect in the beginning of the series
+                W = int((N - P) * missing_rate)  # number of data to remove
+                X = X - int(X * shift)
+                L = X + W  # new limit
+
+                for to_remove in range(X, L):
+                    index = P + to_remove
+                    ts_contaminated[S, index] = np.nan
+
+                    if index >= final_limit:  # reach the limitation
+                        return ts_contaminated
+
+                X = L + 1
+                S = S + 1
+
+            return ts_contaminated

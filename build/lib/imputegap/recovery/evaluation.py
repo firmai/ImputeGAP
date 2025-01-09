@@ -9,7 +9,7 @@ class Evaluation:
 
     Methods
     -------
-    metrics_computation():
+    compute_all_metrics():
         Compute various evaluation metrics (RMSE, MAE, MI, CORRELATION) for the imputation.
     compute_rmse():
         Compute the Root Mean Squared Error (RMSE) between the ground truth and the imputed values.
@@ -43,7 +43,7 @@ class Evaluation:
         self.recov_data = recov_data
         self.incomp_data = incomp_data
 
-    def metrics_computation(self):
+    def compute_all_metrics(self):
         """
         Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.
 
