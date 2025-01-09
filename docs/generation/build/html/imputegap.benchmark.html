@@ -1,0 +1,543 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imputegap.recovery.benchmark package &mdash; imputegap 1.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="static/custom.css" />
+
+  
+    <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
+      <script src="static/jquery.js?v=5d32c60e"></script>
+      <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="static/documentation_options.js?v=baaebd52"></script>
+      <script src="static/doctools.js?v=9bcbadda"></script>
+      <script src="static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            imputegap
+              <img src="https://www.naterscreations.com/imputegap/logo_imputegab.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.manager.html">imputegap.recovery.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.imputation.html">imputegap.recovery.imputation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mrnn.html">imputegap.algorithms.mrnn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.mean_impute.html">imputegap.algorithms.mean_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.min_impute.html">imputegap.algorithms.min_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.zero_impute.html">imputegap.algorithms.zero_impute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.tools.utils.html">imputegap.tools.utils</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="imputegap.html">imputegap package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">imputegap</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imputegap.recovery.benchmark package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/qnater/https://github.com/eXascaleInfolab/ImputeGAP/blob/https://github.com/eXascaleInfolab/ImputeGAPimputegap.benchmark.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="imputegap-recovery-benchmark-package">
+<h1>imputegap.recovery.benchmark package<a class="headerlink" href="#imputegap-recovery-benchmark-package" title="Link to this heading"></a></h1>
+<p>The <cite>imputegap.recovery.benchmark</cite> package provides various utility functions and tools for test the library</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</section>
+<section id="module-imputegap.recovery.benchmark">
+<span id="modules"></span><h2>Modules<a class="headerlink" href="#module-imputegap.recovery.benchmark" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.benchmark.</span></span><span class="sig-name descname"><span class="pre">Benchmark</span></span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to evaluate the performance of imputation algorithms through benchmarking across datasets and patterns.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_config_optimization():</span></span></dt>
+<dd><p>Configure and execute optimization for a selected imputation algorithm and contamination pattern.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">average_runs_by_names(self,</span> <span class="pre">data):</span></span></dt>
+<dd><p>Average the results of all runs depending on the dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">avg_results():</span></span></dt>
+<dd><p>Calculate average metrics (e.g., RMSE) across multiple datasets and algorithm runs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_heatmap():</span></span></dt>
+<dd><p>Generate and save a heatmap visualization of RMSE scores for datasets and algorithms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_reports_txt():</span></span></dt>
+<dd><p>Create detailed text-based reports summarizing metrics and timing results for all evaluations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_reports_excel():</span></span></dt>
+<dd><p>Create detailed excel-based reports summarizing metrics and timing results for all evaluations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_plots():</span></span></dt>
+<dd><p>Visualize metrics (e.g., RMSE, MAE) and timing (e.g., imputation, optimization) across patterns and datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval():</span></span></dt>
+<dd><p>Perform a complete benchmarking pipeline, including contamination, imputation, evaluation, and reporting.</p>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<p>output : {‘drift’: {‘mcar’: {‘mean’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.9234927128429051, ‘MAE’: 0.7219362152785619, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.0010309219360351562, ‘optimization’: 0, ‘imputation’: 0.0005755424499511719}}, ‘0.1’: {‘scores’: {‘RMSE’: 0.9699990038879407, ‘MAE’: 0.7774057495176013, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.0020699501037597656, ‘optimization’: 0, ‘imputation’: 0.00048422813415527344}}, ‘0.2’: {‘scores’: {‘RMSE’: 0.9914069853975623, ‘MAE’: 0.8134840739732964, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.007096290588378906, ‘optimization’: 0, ‘imputation’: 0.000461578369140625}}, ‘0.4’: {‘scores’: {‘RMSE’: 1.0552448338389784, ‘MAE’: 0.7426695186604741, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.043192148208618164, ‘optimization’: 0, ‘imputation’: 0.0005095005035400391}}, ‘0.6’: {‘scores’: {‘RMSE’: 1.0143105930114702, ‘MAE’: 0.7610548321723654, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.17184901237487793, ‘optimization’: 0, ‘imputation’: 0.0005536079406738281}}, ‘0.8’: {‘scores’: {‘RMSE’: 1.010712060535523, ‘MAE’: 0.7641520748788702, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.6064670085906982, ‘optimization’: 0, ‘imputation’: 0.0005743503570556641}}}}, ‘cdrec’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.23303624184873978, ‘MAE’: 0.13619797235197734, ‘MI’: 1.2739817718416822, ‘CORRELATION’: 0.968435455112644}, ‘times’: {‘contamination’: 0.0009615421295166016, ‘optimization’: 0, ‘imputation’: 0.09218788146972656}}, ‘0.1’: {‘scores’: {‘RMSE’: 0.18152059329152104, ‘MAE’: 0.09925566629402761, ‘MI’: 1.1516089897042538, ‘CORRELATION’: 0.9829398352220718}, ‘times’: {‘contamination’: 0.00482487678527832, ‘optimization’: 0, ‘imputation’: 0.09549617767333984}}, ‘0.2’: {‘scores’: {‘RMSE’: 0.13894771223733138, ‘MAE’: 0.08459032692102293, ‘MI’: 1.186191167936035, ‘CORRELATION’: 0.9901338133811375}, ‘times’: {‘contamination’: 0.01713728904724121, ‘optimization’: 0, ‘imputation’: 0.1129295825958252}}, ‘0.4’: {‘scores’: {‘RMSE’: 0.7544523683503829, ‘MAE’: 0.11218049973594252, ‘MI’: 0.021165172206064526, ‘CORRELATION’: 0.814120507570725}, ‘times’: {‘contamination’: 0.10881781578063965, ‘optimization’: 0, ‘imputation’: 1.9378046989440918}}, ‘0.6’: {‘scores’: {‘RMSE’: 0.4355197572001326, ‘MAE’: 0.1380846624733049, ‘MI’: 0.10781252370591506, ‘CORRELATION’: 0.9166777087122915}, ‘times’: {‘contamination’: 0.2380077838897705, ‘optimization’: 0, ‘imputation’: 1.8785057067871094}}, ‘0.8’: {‘scores’: {‘RMSE’: 0.7672558930795506, ‘MAE’: 0.32988968428439397, ‘MI’: 0.013509125598802707, ‘CORRELATION’: 0.7312998041323675}, ‘times’: {‘contamination’: 0.6805167198181152, ‘optimization’: 0, ‘imputation’: 1.9562773704528809}}}}, ‘stmvl’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.5434405584289141, ‘MAE’: 0.346560495723809, ‘MI’: 0.7328867182584357, ‘CORRELATION’: 0.8519431955571422}, ‘times’: {‘contamination’: 0.0022056102752685547, ‘optimization’: 0, ‘imputation’: 52.07010293006897}}, ‘0.1’: {‘scores’: {‘RMSE’: 0.39007056542870916, ‘MAE’: 0.2753022759369617, ‘MI’: 0.8280959876205578, ‘CORRELATION’: 0.9180937736429735}, ‘times’: {‘contamination’: 0.002231597900390625, ‘optimization’: 0, ‘imputation’: 52.543020248413086}}, ‘0.2’: {‘scores’: {‘RMSE’: 0.37254427425455994, ‘MAE’: 0.2730547993858495, ‘MI’: 0.7425412593844177, ‘CORRELATION’: 0.9293322959355041}, ‘times’: {‘contamination’: 0.0072672367095947266, ‘optimization’: 0, ‘imputation’: 52.88247036933899}}, ‘0.4’: {‘scores’: {‘RMSE’: 0.6027573766269363, ‘MAE’: 0.34494332493982044, ‘MI’: 0.11876685901414151, ‘CORRELATION’: 0.8390532279447225}, ‘times’: {‘contamination’: 0.04321551322937012, ‘optimization’: 0, ‘imputation’: 54.10793352127075}}, ‘0.6’: {‘scores’: {‘RMSE’: 0.9004526656857551, ‘MAE’: 0.4924048353228427, ‘MI’: 0.011590260996247858, ‘CORRELATION’: 0.5650541301828254}, ‘times’: {‘contamination’: 0.1728806495666504, ‘optimization’: 0, ‘imputation’: 40.53373336791992}}, ‘0.8’: {‘scores’: {‘RMSE’: 1.0112488396023014, ‘MAE’: 0.7646823531588104, ‘MI’: 0.00040669209664367576, ‘CORRELATION’: 0.0183962968474991}, ‘times’: {‘contamination’: 0.6077785491943359, ‘optimization’: 0, ‘imputation’: 35.151907444000244}}}}, ‘iim’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.4445625930776235, ‘MAE’: 0.2696133927362288, ‘MI’: 1.1167751522591498, ‘CORRELATION’: 0.8944975075266335}, ‘times’: {‘contamination’: 0.0010058879852294922, ‘optimization’: 0, ‘imputation’: 0.7380530834197998}}, ‘0.1’: {‘scores’: {‘RMSE’: 0.2939506418814281, ‘MAE’: 0.16953644212278182, ‘MI’: 1.0160968166750064, ‘CORRELATION’: 0.9531900627237018}, ‘times’: {‘contamination’: 0.0019745826721191406, ‘optimization’: 0, ‘imputation’: 4.7826457023620605}}, ‘0.2’: {‘scores’: {‘RMSE’: 0.2366529609250008, ‘MAE’: 0.14709529129218185, ‘MI’: 1.064299483512458, ‘CORRELATION’: 0.9711348247027318}, ‘times’: {‘contamination’: 0.00801849365234375, ‘optimization’: 0, ‘imputation’: 33.94813060760498}}, ‘0.4’: {‘scores’: {‘RMSE’: 0.4155649406397416, ‘MAE’: 0.22056702659999994, ‘MI’: 0.06616526470761779, ‘CORRELATION’: 0.919934494058292}, ‘times’: {‘contamination’: 0.04391813278198242, ‘optimization’: 0, ‘imputation’: 255.31524085998535}}, ‘0.6’: {‘scores’: {‘RMSE’: 0.38695094864012947, ‘MAE’: 0.24340565131372927, ‘MI’: 0.06361822797740405, ‘CORRELATION’: 0.9249744935121553}, ‘times’: {‘contamination’: 0.17044353485107422, ‘optimization’: 0, ‘imputation’: 840.7470128536224}}, ‘0.8’: {‘scores’: {‘RMSE’: 0.5862696375344495, ‘MAE’: 0.3968159514130716, ‘MI’: 0.13422239939628303, ‘CORRELATION’: 0.8178796825899766}, ‘times’: {‘contamination’: 0.5999574661254883, ‘optimization’: 0, ‘imputation’: 1974.6101157665253}}}}, ‘mrnn’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.9458508648057621, ‘MAE’: 0.7019459696903068, ‘MI’: 0.11924522547609226, ‘CORRELATION’: 0.02915935932568557}, ‘times’: {‘contamination’: 0.001056671142578125, ‘optimization’: 0, ‘imputation’: 49.42237901687622}}, ‘0.1’: {‘scores’: {‘RMSE’: 1.0125309431502871, ‘MAE’: 0.761136543268339, ‘MI’: 0.12567590499764303, ‘CORRELATION’: -0.037161060882302754}, ‘times’: {‘contamination’: 0.003415822982788086, ‘optimization’: 0, ‘imputation’: 49.04829454421997}}, ‘0.2’: {‘scores’: {‘RMSE’: 1.0317754516097355, ‘MAE’: 0.7952869439926, ‘MI’: 0.10908095436833125, ‘CORRELATION’: -0.04155403791391449}, ‘times’: {‘contamination’: 0.007429599761962891, ‘optimization’: 0, ‘imputation’: 49.42568325996399}}, ‘0.4’: {‘scores’: {‘RMSE’: 1.0807965786089415, ‘MAE’: 0.7326965517264863, ‘MI’: 0.006171770470542263, ‘CORRELATION’: -0.020630168509677818}, ‘times’: {‘contamination’: 0.042899370193481445, ‘optimization’: 0, ‘imputation’: 49.479795694351196}}, ‘0.6’: {‘scores’: {‘RMSE’: 1.0441472017887297, ‘MAE’: 0.7599852461729673, ‘MI’: 0.01121013333181846, ‘CORRELATION’: -0.007513931343350665}, ‘times’: {‘contamination’: 0.17329692840576172, ‘optimization’: 0, ‘imputation’: 50.439927101135254}}, ‘0.8’: {‘scores’: {‘RMSE’: 1.0379347892718205, ‘MAE’: 0.757440007226372, ‘MI’: 0.0035880775657246428, ‘CORRELATION’: -0.0014975078469404196}, ‘times’: {‘contamination’: 0.6166613101959229, ‘optimization’: 0, ‘imputation’: 50.66455388069153}}}}}}}</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.average_runs_by_names">
+<span class="sig-name descname"><span class="pre">average_runs_by_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.average_runs_by_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.average_runs_by_names" title="Link to this definition"></a></dt>
+<dd><p>Average the results of all runs depending on the dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em>) – list of dictionary containing the results of the benchmark runs.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of dictionary containing the results of the benchmark runs averaged by datasets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.avg_results">
+<span class="sig-name descname"><span class="pre">avg_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">datasets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.avg_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.avg_results" title="Link to this definition"></a></dt>
+<dd><p>Calculate the average of all metrics and times across multiple datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>datasets</strong> (<em>dict</em>) – Multiple dataset dictionaries to be averaged.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matrix with averaged scores and times for all levels, list of algorithms, list of datasets</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.eval">
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cdrec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['eeg-alcohol']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['mcar']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.05,</span> <span class="pre">0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6,</span> <span class="pre">0.8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['user_def']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.eval" title="Link to this definition"></a></dt>
+<dd><p>Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algorithms</strong> (<em>list</em><em> of </em><em>str</em>) – List of imputation algorithms to test.</p></li>
+<li><p><strong>datasets</strong> (<em>list</em><em> of </em><em>str</em>) – List of dataset names to evaluate.</p></li>
+<li><p><strong>patterns</strong> (<em>list</em><em> of </em><em>str</em>) – List of contamination patterns to apply.</p></li>
+<li><p><strong>x_axis</strong> (<em>list</em><em> of </em><em>float</em>) – List of missing rates for contamination.</p></li>
+<li><p><strong>optimizers</strong> (<em>list</em><em> of </em><em>dict</em>) – List of optimizers with their configurations.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save reports and plots (default is “./reports”).</p></li>
+<li><p><strong>runs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of executions with a view to averaging them</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of all runs results, matrix with averaged scores and times for all levels</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Runs contamination, imputation, and evaluation, then generates plots and a summary reports.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.generate_heatmap">
+<span class="sig-name descname"><span class="pre">generate_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_heatmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_heatmap" title="Link to this definition"></a></dt>
+<dd><p>Generate and save RMSE matrix in HD quality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scores_list</strong> (<em>np.ndarray</em>) – 2D numpy array containing RMSE values.</p></li>
+<li><p><strong>algos</strong> (<em>list</em><em> of </em><em>str</em>) – List of algorithm names (columns of the heatmap).</p></li>
+<li><p><strong>sets</strong> (<em>list</em><em> of </em><em>str</em>) – List of dataset names (rows of the heatmap).</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the generated plot (default is “./reports”).</p></li>
+<li><p><strong>display</strong> (<em>bool</em><em>, </em><em>optional</em>) – Display or not the plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the matrix has been generated</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.generate_plots">
+<span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subplot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_plots" title="Link to this definition"></a></dt>
+<dd><p>Generate and save plots for each metric and pattern based on provided scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, pattern, and algorithm.</p></li>
+<li><p><strong>ticks</strong> (<em>list</em><em> of </em><em>float</em>) – List of missing rates for contamination.</p></li>
+<li><p><strong>subplot</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, generates a single figure with subplots for all metrics (default is False).</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save generated plots (default is “./reports”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Saves generated plots in <cite>save_dir</cite>, categorized by dataset, pattern, and metric.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.generate_reports_excel">
+<span class="sig-name descname"><span class="pre">generate_reports_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_excel" title="Link to this definition"></a></dt>
+<dd><p>Generate and save an Excel-like text report of metrics and timing for each dataset, algorithm, and pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, pattern, and algorithm.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the Excel-like file (default is “./reports”).</p></li>
+<li><p><strong>dataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the data for the Excel-like file name.</p></li>
+<li><p><strong>run</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of the run</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.generate_reports_txt">
+<span class="sig-name descname"><span class="pre">generate_reports_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_txt" title="Link to this definition"></a></dt>
+<dd><p>Generate and save a text report of metrics and timing for each dataset, algorithm, and pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, pattern, and algorithm.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the reports file (default is “./reports”).</p></li>
+<li><p><strong>dataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the data for the report name.</p></li>
+<li><p><strong>run</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of the run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The report is saved in a “report.txt” file in <cite>save_dir</cite>, organized in sections with headers and results.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="submodule-documentation">
+<h2>Submodule Documentation<a class="headerlink" href="#submodule-documentation" title="Link to this heading"></a></h2>
+</section>
+<section id="module-0">
+<span id="imputegap-recovery-evaluation-module"></span><h2>imputegap.recovery.evaluation module<a class="headerlink" href="#module-0" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.benchmark.</span></span><span class="sig-name descname"><span class="pre">Benchmark</span></span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to evaluate the performance of imputation algorithms through benchmarking across datasets and patterns.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_config_optimization():</span></span></dt>
+<dd><p>Configure and execute optimization for a selected imputation algorithm and contamination pattern.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">average_runs_by_names(self,</span> <span class="pre">data):</span></span></dt>
+<dd><p>Average the results of all runs depending on the dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">avg_results():</span></span></dt>
+<dd><p>Calculate average metrics (e.g., RMSE) across multiple datasets and algorithm runs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_heatmap():</span></span></dt>
+<dd><p>Generate and save a heatmap visualization of RMSE scores for datasets and algorithms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_reports_txt():</span></span></dt>
+<dd><p>Create detailed text-based reports summarizing metrics and timing results for all evaluations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_reports_excel():</span></span></dt>
+<dd><p>Create detailed excel-based reports summarizing metrics and timing results for all evaluations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_plots():</span></span></dt>
+<dd><p>Visualize metrics (e.g., RMSE, MAE) and timing (e.g., imputation, optimization) across patterns and datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval():</span></span></dt>
+<dd><p>Perform a complete benchmarking pipeline, including contamination, imputation, evaluation, and reporting.</p>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<p>output : {‘drift’: {‘mcar’: {‘mean’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.9234927128429051, ‘MAE’: 0.7219362152785619, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.0010309219360351562, ‘optimization’: 0, ‘imputation’: 0.0005755424499511719}}, ‘0.1’: {‘scores’: {‘RMSE’: 0.9699990038879407, ‘MAE’: 0.7774057495176013, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.0020699501037597656, ‘optimization’: 0, ‘imputation’: 0.00048422813415527344}}, ‘0.2’: {‘scores’: {‘RMSE’: 0.9914069853975623, ‘MAE’: 0.8134840739732964, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.007096290588378906, ‘optimization’: 0, ‘imputation’: 0.000461578369140625}}, ‘0.4’: {‘scores’: {‘RMSE’: 1.0552448338389784, ‘MAE’: 0.7426695186604741, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.043192148208618164, ‘optimization’: 0, ‘imputation’: 0.0005095005035400391}}, ‘0.6’: {‘scores’: {‘RMSE’: 1.0143105930114702, ‘MAE’: 0.7610548321723654, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.17184901237487793, ‘optimization’: 0, ‘imputation’: 0.0005536079406738281}}, ‘0.8’: {‘scores’: {‘RMSE’: 1.010712060535523, ‘MAE’: 0.7641520748788702, ‘MI’: 0.0, ‘CORRELATION’: 0}, ‘times’: {‘contamination’: 0.6064670085906982, ‘optimization’: 0, ‘imputation’: 0.0005743503570556641}}}}, ‘cdrec’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.23303624184873978, ‘MAE’: 0.13619797235197734, ‘MI’: 1.2739817718416822, ‘CORRELATION’: 0.968435455112644}, ‘times’: {‘contamination’: 0.0009615421295166016, ‘optimization’: 0, ‘imputation’: 0.09218788146972656}}, ‘0.1’: {‘scores’: {‘RMSE’: 0.18152059329152104, ‘MAE’: 0.09925566629402761, ‘MI’: 1.1516089897042538, ‘CORRELATION’: 0.9829398352220718}, ‘times’: {‘contamination’: 0.00482487678527832, ‘optimization’: 0, ‘imputation’: 0.09549617767333984}}, ‘0.2’: {‘scores’: {‘RMSE’: 0.13894771223733138, ‘MAE’: 0.08459032692102293, ‘MI’: 1.186191167936035, ‘CORRELATION’: 0.9901338133811375}, ‘times’: {‘contamination’: 0.01713728904724121, ‘optimization’: 0, ‘imputation’: 0.1129295825958252}}, ‘0.4’: {‘scores’: {‘RMSE’: 0.7544523683503829, ‘MAE’: 0.11218049973594252, ‘MI’: 0.021165172206064526, ‘CORRELATION’: 0.814120507570725}, ‘times’: {‘contamination’: 0.10881781578063965, ‘optimization’: 0, ‘imputation’: 1.9378046989440918}}, ‘0.6’: {‘scores’: {‘RMSE’: 0.4355197572001326, ‘MAE’: 0.1380846624733049, ‘MI’: 0.10781252370591506, ‘CORRELATION’: 0.9166777087122915}, ‘times’: {‘contamination’: 0.2380077838897705, ‘optimization’: 0, ‘imputation’: 1.8785057067871094}}, ‘0.8’: {‘scores’: {‘RMSE’: 0.7672558930795506, ‘MAE’: 0.32988968428439397, ‘MI’: 0.013509125598802707, ‘CORRELATION’: 0.7312998041323675}, ‘times’: {‘contamination’: 0.6805167198181152, ‘optimization’: 0, ‘imputation’: 1.9562773704528809}}}}, ‘stmvl’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.5434405584289141, ‘MAE’: 0.346560495723809, ‘MI’: 0.7328867182584357, ‘CORRELATION’: 0.8519431955571422}, ‘times’: {‘contamination’: 0.0022056102752685547, ‘optimization’: 0, ‘imputation’: 52.07010293006897}}, ‘0.1’: {‘scores’: {‘RMSE’: 0.39007056542870916, ‘MAE’: 0.2753022759369617, ‘MI’: 0.8280959876205578, ‘CORRELATION’: 0.9180937736429735}, ‘times’: {‘contamination’: 0.002231597900390625, ‘optimization’: 0, ‘imputation’: 52.543020248413086}}, ‘0.2’: {‘scores’: {‘RMSE’: 0.37254427425455994, ‘MAE’: 0.2730547993858495, ‘MI’: 0.7425412593844177, ‘CORRELATION’: 0.9293322959355041}, ‘times’: {‘contamination’: 0.0072672367095947266, ‘optimization’: 0, ‘imputation’: 52.88247036933899}}, ‘0.4’: {‘scores’: {‘RMSE’: 0.6027573766269363, ‘MAE’: 0.34494332493982044, ‘MI’: 0.11876685901414151, ‘CORRELATION’: 0.8390532279447225}, ‘times’: {‘contamination’: 0.04321551322937012, ‘optimization’: 0, ‘imputation’: 54.10793352127075}}, ‘0.6’: {‘scores’: {‘RMSE’: 0.9004526656857551, ‘MAE’: 0.4924048353228427, ‘MI’: 0.011590260996247858, ‘CORRELATION’: 0.5650541301828254}, ‘times’: {‘contamination’: 0.1728806495666504, ‘optimization’: 0, ‘imputation’: 40.53373336791992}}, ‘0.8’: {‘scores’: {‘RMSE’: 1.0112488396023014, ‘MAE’: 0.7646823531588104, ‘MI’: 0.00040669209664367576, ‘CORRELATION’: 0.0183962968474991}, ‘times’: {‘contamination’: 0.6077785491943359, ‘optimization’: 0, ‘imputation’: 35.151907444000244}}}}, ‘iim’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.4445625930776235, ‘MAE’: 0.2696133927362288, ‘MI’: 1.1167751522591498, ‘CORRELATION’: 0.8944975075266335}, ‘times’: {‘contamination’: 0.0010058879852294922, ‘optimization’: 0, ‘imputation’: 0.7380530834197998}}, ‘0.1’: {‘scores’: {‘RMSE’: 0.2939506418814281, ‘MAE’: 0.16953644212278182, ‘MI’: 1.0160968166750064, ‘CORRELATION’: 0.9531900627237018}, ‘times’: {‘contamination’: 0.0019745826721191406, ‘optimization’: 0, ‘imputation’: 4.7826457023620605}}, ‘0.2’: {‘scores’: {‘RMSE’: 0.2366529609250008, ‘MAE’: 0.14709529129218185, ‘MI’: 1.064299483512458, ‘CORRELATION’: 0.9711348247027318}, ‘times’: {‘contamination’: 0.00801849365234375, ‘optimization’: 0, ‘imputation’: 33.94813060760498}}, ‘0.4’: {‘scores’: {‘RMSE’: 0.4155649406397416, ‘MAE’: 0.22056702659999994, ‘MI’: 0.06616526470761779, ‘CORRELATION’: 0.919934494058292}, ‘times’: {‘contamination’: 0.04391813278198242, ‘optimization’: 0, ‘imputation’: 255.31524085998535}}, ‘0.6’: {‘scores’: {‘RMSE’: 0.38695094864012947, ‘MAE’: 0.24340565131372927, ‘MI’: 0.06361822797740405, ‘CORRELATION’: 0.9249744935121553}, ‘times’: {‘contamination’: 0.17044353485107422, ‘optimization’: 0, ‘imputation’: 840.7470128536224}}, ‘0.8’: {‘scores’: {‘RMSE’: 0.5862696375344495, ‘MAE’: 0.3968159514130716, ‘MI’: 0.13422239939628303, ‘CORRELATION’: 0.8178796825899766}, ‘times’: {‘contamination’: 0.5999574661254883, ‘optimization’: 0, ‘imputation’: 1974.6101157665253}}}}, ‘mrnn’: {‘bayesian’: {‘0.05’: {‘scores’: {‘RMSE’: 0.9458508648057621, ‘MAE’: 0.7019459696903068, ‘MI’: 0.11924522547609226, ‘CORRELATION’: 0.02915935932568557}, ‘times’: {‘contamination’: 0.001056671142578125, ‘optimization’: 0, ‘imputation’: 49.42237901687622}}, ‘0.1’: {‘scores’: {‘RMSE’: 1.0125309431502871, ‘MAE’: 0.761136543268339, ‘MI’: 0.12567590499764303, ‘CORRELATION’: -0.037161060882302754}, ‘times’: {‘contamination’: 0.003415822982788086, ‘optimization’: 0, ‘imputation’: 49.04829454421997}}, ‘0.2’: {‘scores’: {‘RMSE’: 1.0317754516097355, ‘MAE’: 0.7952869439926, ‘MI’: 0.10908095436833125, ‘CORRELATION’: -0.04155403791391449}, ‘times’: {‘contamination’: 0.007429599761962891, ‘optimization’: 0, ‘imputation’: 49.42568325996399}}, ‘0.4’: {‘scores’: {‘RMSE’: 1.0807965786089415, ‘MAE’: 0.7326965517264863, ‘MI’: 0.006171770470542263, ‘CORRELATION’: -0.020630168509677818}, ‘times’: {‘contamination’: 0.042899370193481445, ‘optimization’: 0, ‘imputation’: 49.479795694351196}}, ‘0.6’: {‘scores’: {‘RMSE’: 1.0441472017887297, ‘MAE’: 0.7599852461729673, ‘MI’: 0.01121013333181846, ‘CORRELATION’: -0.007513931343350665}, ‘times’: {‘contamination’: 0.17329692840576172, ‘optimization’: 0, ‘imputation’: 50.439927101135254}}, ‘0.8’: {‘scores’: {‘RMSE’: 1.0379347892718205, ‘MAE’: 0.757440007226372, ‘MI’: 0.0035880775657246428, ‘CORRELATION’: -0.0014975078469404196}, ‘times’: {‘contamination’: 0.6166613101959229, ‘optimization’: 0, ‘imputation’: 50.66455388069153}}}}}}}</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">average_runs_by_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.average_runs_by_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Average the results of all runs depending on the dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>list</em>) – list of dictionary containing the results of the benchmark runs.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of dictionary containing the results of the benchmark runs averaged by datasets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">avg_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">datasets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.avg_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Calculate the average of all metrics and times across multiple datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>datasets</strong> (<em>dict</em>) – Multiple dataset dictionaries to be averaged.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matrix with averaged scores and times for all levels, list of algorithms, list of datasets</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cdrec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['eeg-alcohol']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['mcar']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.05,</span> <span class="pre">0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6,</span> <span class="pre">0.8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['user_def']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algorithms</strong> (<em>list</em><em> of </em><em>str</em>) – List of imputation algorithms to test.</p></li>
+<li><p><strong>datasets</strong> (<em>list</em><em> of </em><em>str</em>) – List of dataset names to evaluate.</p></li>
+<li><p><strong>patterns</strong> (<em>list</em><em> of </em><em>str</em>) – List of contamination patterns to apply.</p></li>
+<li><p><strong>x_axis</strong> (<em>list</em><em> of </em><em>float</em>) – List of missing rates for contamination.</p></li>
+<li><p><strong>optimizers</strong> (<em>list</em><em> of </em><em>dict</em>) – List of optimizers with their configurations.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save reports and plots (default is “./reports”).</p></li>
+<li><p><strong>runs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of executions with a view to averaging them</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of all runs results, matrix with averaged scores and times for all levels</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Runs contamination, imputation, and evaluation, then generates plots and a summary reports.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">generate_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_heatmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Generate and save RMSE matrix in HD quality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scores_list</strong> (<em>np.ndarray</em>) – 2D numpy array containing RMSE values.</p></li>
+<li><p><strong>algos</strong> (<em>list</em><em> of </em><em>str</em>) – List of algorithm names (columns of the heatmap).</p></li>
+<li><p><strong>sets</strong> (<em>list</em><em> of </em><em>str</em>) – List of dataset names (rows of the heatmap).</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the generated plot (default is “./reports”).</p></li>
+<li><p><strong>display</strong> (<em>bool</em><em>, </em><em>optional</em>) – Display or not the plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the matrix has been generated</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subplot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Generate and save plots for each metric and pattern based on provided scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, pattern, and algorithm.</p></li>
+<li><p><strong>ticks</strong> (<em>list</em><em> of </em><em>float</em>) – List of missing rates for contamination.</p></li>
+<li><p><strong>subplot</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, generates a single figure with subplots for all metrics (default is False).</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save generated plots (default is “./reports”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Saves generated plots in <cite>save_dir</cite>, categorized by dataset, pattern, and metric.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">generate_reports_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd><p>Generate and save an Excel-like text report of metrics and timing for each dataset, algorithm, and pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, pattern, and algorithm.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the Excel-like file (default is “./reports”).</p></li>
+<li><p><strong>dataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the data for the Excel-like file name.</p></li>
+<li><p><strong>run</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of the run</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">generate_reports_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd><p>Generate and save a text report of metrics and timing for each dataset, algorithm, and pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs_plots_scores</strong> (<em>dict</em>) – Dictionary containing scores and timing information for each dataset, pattern, and algorithm.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the reports file (default is “./reports”).</p></li>
+<li><p><strong>dataset</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the data for the report name.</p></li>
+<li><p><strong>run</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of the run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The report is saved in a “report.txt” file in <cite>save_dir</cite>, organized in sections with headers and results.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

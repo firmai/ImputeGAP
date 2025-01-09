@@ -6,7 +6,7 @@
 ImputeGAP is a comprehensive framework designed for time series imputation algorithms. It offers a streamlined interface that bridges algorithm evaluation and parameter tuning, utilizing datasets from diverse fields such as neuroscience, medicine, and energy. The framework includes advanced imputation algorithms from five different families, supports various patterns of missing data, and provides multiple evaluation metrics. Additionally, ImputeGAP enables AutoML optimization, feature extraction, and feature analysis. The framework enables easy integration of new algorithms, datasets, and evaluation metrics.
 
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
-![Release](https://img.shields.io/badge/Release-v1.0.2-brightgreen) 
+![Release](https://img.shields.io/badge/Release-v1.0.4-brightgreen) 
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
 ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
@@ -29,7 +29,7 @@ ImputeGAP is a comprehensive framework designed for time series imputation algor
 
 The following prerequisites are required to use ImputeGAP:
 
-- Python version 3.12
+- Python version 3.10 / 3.11 / 3.12 (recommended)
 - Unix-compatible environment for execution
 
 To create and set up an environment with Python 3.12, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
@@ -89,9 +89,8 @@ ts_1.load_timeseries(utils.search_path("eeg-alcohol"), max_series=5, max_values=
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
-ts_1.plot(raw_data=ts_1.data, title="raw data", max_series=10, max_values=100, save_path="./imputegap/assets")
-ts_1.print(limit=10)
-
+ts_1.plot(input_data=ts_1.data, max_series=10, max_values=100, save_path="./imputegap/assets")
+ts_1.print(limit_series=10)
 ```
 
 ---
@@ -115,12 +114,12 @@ ts_1 = TimeSeries()
 ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
-# 3. contamination of the data with MCAR scenario
-infected_data = ts_1.Contaminate.mcar(ts_1.data, series_impacted=0.4, missing_rate=0.2, use_seed=True)
+# 3. contamination of the data with MCAR pattern
+incomp_data = ts_1.Contamination.mcar(ts_1.data, series_rate=0.2, missing_rate=0.2, seed=True)
 
 # [OPTIONAL] you can plot your raw data / print the contamination
-ts_1.print(limit=10)
-ts_1.plot(ts_1.data, infected_data, title="contamination", max_series=1, save_path="./imputegap/assets")
+ts_1.print(limit_timestamps=12, limit_series=7)
+ts_1.plot(ts_1.data, incomp_data, max_series=9, subplot=True, save_path="./imputegap/assets")
 ```
 
 ---
@@ -146,25 +145,29 @@ ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-infected_data = ts_1.Contaminate.mcar(ts_1.data)
+incomp_data = ts_1.Contamination.mcar(ts_1.data)
+
+# [OPTIONAL] save your results in a new Time Series object
+ts_2 = TimeSeries().import_matrix(incomp_data)
 
 # 4. imputation of the contaminated data
 # choice of the algorithm, and their parameters (default, automl, or defined by the user)
-cdrec = Imputation.MatrixCompletion.CDRec(infected_data)
+cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
 
 # imputation with default values
 cdrec.impute()
 # OR imputation with user defined values
-cdrec.impute(params={"rank": 5, "epsilon": 0.01, "iterations": 100})
+# >>> cdrec.impute(params={"rank": 5, "epsilon": 0.01, "iterations": 100})
 
 # [OPTIONAL] save your results in a new Time Series object
-ts_3 = TimeSeries().import_matrix(cdrec.imputed_matrix)
+ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
 
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, ts_3.data)
 
-# [OPTIONAL] print the results
-ts_3.print_results(cdrec.metrics)
+# 6. display the results
+ts_3.print_results(cdrec.metrics, algorithm="cdrec")
+ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True, save_path="./imputegap/assets")
 ```
 
 ---
@@ -190,24 +193,21 @@ ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-infected_data = ts_1.Contaminate.mcar(ts_1.data)
+miss_matrix = ts_1.Contamination.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec = Imputation.MatrixCompletion.CDRec(infected_data).impute(user_defined=False, params={"ground_truth": ts_1.data,
-                                                                                            "optimizer": "bayesian",
-                                                                                            "options": {"n_calls": 5}})
+cdrec = Imputation.MatrixCompletion.CDRec(miss_matrix).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 3}})
 
 # 5. score the imputation with the raw_data
-cdrec.score(ts_1.data, cdrec.imputed_matrix)
+cdrec.score(ts_1.data, cdrec.recov_data)
 
-# 6. [OPTIONAL] display the results
+# 6. display the results
 ts_1.print_results(cdrec.metrics)
-ts_1.plot(raw_data=ts_1.data, infected_data=infected_data, imputed_data=cdrec.imputed_matrix, title="imputation",
-          max_series=1, save_path="./imputegap/assets", display=True)
+ts_1.plot(input_data=ts_1.data, incomp_data=miss_matrix, recov_data=cdrec.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
-# 7. [OPTIONAL] save hyperparameters
-utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="b")
+# 7. save hyperparameters
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")
 ```
 
 ---
@@ -234,10 +234,47 @@ ts_1 = TimeSeries()
 ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
 
 # 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
-shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name="eeg-alcohol", algorithm="cdrec")
+shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, extractor="pycatch22", pattern="mcar", missing_rate=0.25, limit_ratio=1, split_ratio=0.7, file_name="eeg-alcohol", algorithm="cdrec")
 
 # [OPTIONAL] print the results with the impact of each feature.
 Explainer.print(shap_values, shap_details)
+```
+
+---
+
+
+## Benchmark
+ImputeGAP enables users to comprehensively evaluate the efficiency of algorithms across various datasets.
+
+
+### Example Benchmark
+You can find this example in the file [`runner_benchmark.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_benchmark.py).
+
+```python
+from imputegap.recovery.benchmark import Benchmark
+
+# VARIABLES
+save_dir = "./analysis"
+nbr_run = 2
+
+# SELECT YOUR DATASET(S) :
+datasets_demo = ["eeg-alcohol", "eeg-reading"]
+
+# SELECT YOUR OPTIMIZER :
+optimiser_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 15, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
+optimizers_demo = [optimiser_bayesian]  # add optimizer you want to test
+
+# SELECT YOUR ALGORITHM(S) :
+algorithms_demo = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
+
+# SELECT YOUR CONTAMINATION PATTERN(S) :
+patterns_demo = ["mcar"]
+
+# SELECT YOUR MISSING RATE(S) :
+x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
+
+# START THE ANALYSIS
+list_results, sum_scores = Benchmark().eval(algorithms=algorithms_demo, datasets=datasets_demo, patterns=patterns_demo, x_axis=x_axis, optimizers=optimizers_demo, save_dir=save_dir, runs=nbr_run)
 ```
 
 ---
@@ -251,7 +288,7 @@ To add your own imputation algorithm in Python or C++, please refer to the detai
 
 ## References
 
-Mourad Khayati, Quentin Nater, and Jacques Pasquier. ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024): 4329–32.
+Mourad Khayati, Quentin Nater, and Jacques Pasquier. ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024), 4329–32.
 
 Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudre-Mauroux. Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020.
 

@@ -23,7 +23,7 @@ class Explainer:
     load_configuration(file_path=None)
         Load categories and features from a TOML file.
 
-    extract_features(data, features_categories, features_list, do_catch24=True)
+    extractor_pycatch(data, features_categories, features_list, do_catch24=True)
         Extract features from time series data using pycatch22.
 
     print(shap_values, shap_details=None)
@@ -32,11 +32,11 @@ class Explainer:
     convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save)
         Convert SHAP raw results into a refined format for display.
 
-    launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)
+    execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)
         Launch the SHAP model to explain the dataset features.
 
-    shap_explainer(raw_data, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
-                   block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
+    shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch22", incomp_data="mcar",
+                   missing_rate=0.4, block_size=10, offset=0.1, seed=True, limitation=15, splitter=0,
                    file_name="ts", display=False, verbose=False)
         Handle parameters and set variables to launch the SHAP model.
 
@@ -72,7 +72,7 @@ class Explainer:
         return categories, features
 
 
-    def extract_features(data, features_categories, features_list, do_catch24=True):
+    def extractor_pycatch(data, features_categories, features_list, do_catch24=True):
         """
         Extract features from time series data using pycatch22.
 
@@ -150,21 +150,9 @@ class Explainer:
         -------
         None
         """
-
-        if shap_details is not None:
-            print("\n\nx_data (with", len(shap_details), "elements) : ")
-            for i, (input, _) in enumerate(shap_details):
-                print("\tFEATURES VALUES", i, "(", len(input), ") : ", *input)
-
-            print("\ny_data (with", len(shap_details), "elements) : ")
-
-            for i, (_, output) in enumerate(shap_details):
-                print(f"\tRMSE SERIES {i:<5} : {output:<15}")
-
         print("\n\nSHAP Results details : ")
         for (x, algo, rate, description, feature, category, mean_features) in shap_values:
-            print(
-                f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
+            print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
 
     def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
@@ -213,8 +201,8 @@ class Explainer:
 
         return result_shap
 
-    def launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False,
-                          verbose=False):
+    def execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False,
+                           verbose=False):
         """
         Launch the SHAP model for explaining the features of the dataset.
 
@@ -243,14 +231,14 @@ class Explainer:
             Results of the SHAP explainer model.
         """
 
-        print("\n\nInitilization of the SHAP model with ", np.array(x_information).shape)
+        print("\n\nInitialization of the SHAP model with dimension", np.array(x_information).shape)
 
         path_file = "./assets/shap/"
         if not os.path.exists(path_file):
             path_file = "./imputegap" + path_file[1:]
 
         x_features, x_categories, x_descriptions = [], [], []
-        x_fs, x_cs, x_ds = [], [], []
+        x_fs, x_cs, x_ds, alphas = [], [], [], []
 
         for current_time_series in x_information:
             x_fs.clear()
@@ -310,28 +298,30 @@ class Explainer:
         os.makedirs(path_file, exist_ok=True)
         plt.savefig(alpha)
         plt.close()
-        print("\n\n\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(shval).T, np.array(x_test).T, feature_names=series_names, show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_reverse_plot.png")
         plt.title("SHAP Features by Series")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.plots.waterfall(shval_x[0], show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Waterfall.png")
         plt.title("SHAP Waterfall Results")
+        fig = plt.gcf()  # Get the current figure created by SHAP
+        fig.set_size_inches(20, 10)  # Ensure the size is correct
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
-        shap.plots.beeswarm(shval_x, show=display)
+        shap.plots.beeswarm(shval_x, show=display, plot_size=(22, 10))
         alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Beeswarm.png")
         plt.title("SHAP Beeswarm Results")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         total_weights_for_all_algorithms = []
 
@@ -388,7 +378,7 @@ class Explainer:
         plt.title("SHAP details of geometry")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(transformation).T, np.array(transformationT).T, plot_size=(20, 10),
                           feature_names=transformationDesc, show=display)
@@ -396,7 +386,7 @@ class Explainer:
         plt.title("SHAP details of transformation")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(correlation).T, np.array(correlationT).T, plot_size=(20, 10),
                           feature_names=correlationDesc, show=display)
@@ -404,7 +394,7 @@ class Explainer:
         plt.title("SHAP details of correlation")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(trend).T, np.array(trendT).T, plot_size=(20, 8), feature_names=trendDesc,
                           show=display)
@@ -412,7 +402,7 @@ class Explainer:
         plt.title("SHAP details of Trend")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         aggregation_features.append(np.mean(geometry, axis=0))
         aggregation_features.append(np.mean(correlation, axis=0))
@@ -434,7 +424,7 @@ class Explainer:
         plt.gca().axes.get_xaxis().set_visible(False)
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha)
+        alphas.append(alpha)
 
         shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names,
                           show=display)
@@ -442,7 +432,7 @@ class Explainer:
         plt.title("SHAP Aggregation Features by Series")
         plt.savefig(alpha)
         plt.close()
-        print("\t\t\tGRAPH has benn computed : ", alpha, "\n\n")
+        alphas.append(alpha)
 
         if verbose:
             print("\t\tSHAP Families details :")
@@ -461,42 +451,45 @@ class Explainer:
 
         total_weights_for_all_algorithms = np.append(total_weights_for_all_algorithms, total_weights_percent)
 
+        for alpha in alphas:
+            print("\n\n\tplot has been saved : ", alpha)
+
         results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions,
                                                  x_features, x_categories, mean_features,
                                                  to_save=path_file + file + "_" + algorithm)
 
         return results_shap
 
-    def shap_explainer(raw_data, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
-                       block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
+    def shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch22", pattern="mcar", missing_rate=0.4,
+                       block_size=10, offset=0.1, seed=True, limit_ratio=1, split_ratio=0.6,
                        file_name="ts", display=False, verbose=False):
         """
         Handle parameters and set variables to launch the SHAP model.
 
         Parameters
         ----------
-        raw_data : numpy.ndarray
+        input_data : numpy.ndarray
             The original time series dataset.
         algorithm : str, optional
             The algorithm used for imputation (default is 'cdrec'). Valid values: 'cdrec', 'stmvl', 'iim', 'mrnn'.
         params : dict, optional
             Parameters for the algorithm.
-        contamination : str, optional
-            Contamination scenario to apply (default is 'mcar').
+        pattern : str, optional
+            Contamination pattern to apply (default is 'mcar').
+        extractor : str, optional
+            Extractor use to get the features of the data (default is 'pycatch22').
         missing_rate : float, optional
             Percentage of missing values per series (default is 0.4).
         block_size : int, optional
             Size of the block to remove at each random position selected (default is 10).
-        protection : float, optional
+        offset : float, optional
             Size of the uncontaminated section at the beginning of the time series (default is 0.1).
-        use_seed : bool, optional
+        seed : bool, optional
             Whether to use a seed for reproducibility (default is True).
-        seed : int, optional
-            Seed value for reproducibility (default is 42).
-        limitation : int, optional
-            Limitation on the number of series for the model (default is 15).
-        splitter : int, optional
-            Limitation on the training series for the model (default is 0).
+        limit_ratio : flaot, optional
+            Limitation on the number of series for the model (default is 1).
+        split_ratio : flaot, optional
+            Limitation on the training series for the model (default is 0.6).
         file_name : str, optional
             Name of the dataset file (default is 'ts').
         display : bool, optional
@@ -522,61 +515,76 @@ class Explainer:
 
         start_time = time.time()  # Record start time
 
-        if limitation > raw_data.shape[0]:
-            limitation = int(raw_data.shape[0] * 0.75)
+        if limit_ratio < 0.05 or limit_ratio > 1:
+            print("\nlimit percentage higher than 100%, reduce to 100% of the dataset")
+            limit_ratio = 1
 
-        if splitter == 0 or splitter >= limitation - 1:
-            splitter = int(limitation * 0.60)
+        M = input_data.shape[0]
+        limit = math.ceil(M * limit_ratio)
+
+        if split_ratio < 0.05 or split_ratio > 0.95:
+            print("\nsplit ratio to small or to high, reduce to 60% of the dataset")
+            split_ratio = 0.6
+
+        training_ratio = int(limit * split_ratio)
+
+        if limit > M:
+            limit = M
+
+        print("\nFrom", limit, "/", M, "elements, the training dataset has been set with", training_ratio,"elements and the testing dataset with", (limit-training_ratio), "elements")
 
         if verbose:
             print("SHAP Explainer has been called\n\t",
                   "missing_values (", missing_rate * 100, "%)\n\t",
-                  "for a contamination (", contamination, "), \n\t",
+                  "for a contamination (", pattern, "), \n\t",
                   "imputated by (", algorithm, ") with params (", params, ")\n\t",
-                  "with limitation and splitter after verification of (", limitation, ") and (", splitter, ") for ",
-                  raw_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
+                  "with limitation and splitter after verification of (", limit, ") and (", training_ratio, ") for ",
+                  input_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
 
-        ground_truth_matrices, obfuscated_matrices = [], []
+        input_data_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
 
         categories, features = Explainer.load_configuration()
 
-        for current_series in range(0, limitation):
+        for current_series in range(0, limit):
 
-            print("Generation ", current_series, "/", limitation, "(", int((current_series / limitation) * 100), "%)________________________________________________________")
+            print("Generation ", current_series, "/", limit, "(", int((current_series / limit) * 100), "%)________________________________________________________")
             print("\tContamination ", current_series, "...")
 
-            if contamination == "mcar":
-                obfuscated_matrix = TimeSeries().Contaminate.mcar(ts=raw_data, series_impacted=current_series,
-                                                                  missing_rate=missing_rate, block_size=block_size,
-                                                                  protection=protection, use_seed=use_seed, seed=seed,
-                                                                  explainer=True)
+            if pattern == "mcar":
+                incomp_data = TimeSeries().Contamination.mcar(input_data=input_data, series_rate=current_series,
+                                                                    missing_rate=missing_rate, block_size=block_size,
+                                                                    offset=offset, seed=seed,
+                                                                    explainer=True)
             else:
-                print("Contamination proposed not found : ", contamination, " >> BREAK")
+                print("Contamination proposed not found : ", pattern, " >> BREAK")
                 return None
 
-            ground_truth_matrices.append(raw_data)
-            obfuscated_matrices.append(obfuscated_matrix)
+            input_data_matrices.append(input_data)
+            obfuscated_matrices.append(incomp_data)
 
-            catch_fct, descriptions = Explainer.extract_features(np.array(obfuscated_matrix), categories, features, False)
-            extracted_features = np.array(list(catch_fct.values()))
+            if extractor == "pycatch22":
+                catch_fct, descriptions = Explainer.extractor_pycatch(np.array(incomp_data), categories, features, False)
+                extracted_features = np.array(list(catch_fct.values()))
+            else:
+                catch_fct, descriptions, extracted_features = None, None, None
 
             input_params.append(extracted_features)
             input_params_full.append(descriptions)
 
             print("\tImputation ", current_series, "...")
             if algorithm == "cdrec":
-                algo = Imputation.MatrixCompletion.CDRec(obfuscated_matrix)
+                algo = Imputation.MatrixCompletion.CDRec(incomp_data)
             elif algorithm == "stmvl":
-                algo = Imputation.PatternSearch.STMVL(obfuscated_matrix)
+                algo = Imputation.PatternSearch.STMVL(incomp_data)
             elif algorithm == "iim":
-                algo = Imputation.Statistics.IIM(obfuscated_matrix)
+                algo = Imputation.Statistics.IIM(incomp_data)
             elif algorithm == "mrnn":
-                algo = Imputation.DeepLearning.MRNN(obfuscated_matrix)
+                algo = Imputation.DeepLearning.MRNN(incomp_data)
 
             algo.logs = False
-            algo.impute(user_defined=True, params=params)
-            algo.score(raw_data)
+            algo.impute(user_def=True, params=params)
+            algo.score(input_data)
             imputation_results = algo.metrics
 
             output_metrics.append(imputation_results)
@@ -586,8 +594,8 @@ class Explainer:
         for input, output in zip(input_params, output_metrics):
             shap_details.append((input, output["RMSE"]))
 
-        shap_values = Explainer.launch_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
-                                                  splitter, display, verbose)
+        shap_values = Explainer.execute_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
+                                                   training_ratio, display, verbose)
 
         print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
 

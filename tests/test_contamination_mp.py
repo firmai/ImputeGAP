@@ -15,7 +15,7 @@ class TestContamination(unittest.TestCase):
         datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
         series_impacted = [0.1, 0.5, 1]  # percentage of series impacted
         missing_rates = [0.1, 0.5, 1]  # percentage of missing values with NaN
-        P = 0.1  # protection zone
+        P = 0.1  # offset zone
 
         for dataset in datasets:
             ts = TimeSeries()
@@ -24,9 +24,9 @@ class TestContamination(unittest.TestCase):
 
             for S in series_impacted:
                 for R in missing_rates:
-                    contamination = ts.Contaminate.missing_percentage(ts=ts.data, series_impacted=S, missing_rate=R, protection=P)
+                    incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, series_rate=S, missing_rate=R, offset=P)
 
-                    n_nan = np.isnan(contamination).sum()
+                    n_nan = np.isnan(incomp_data).sum()
                     expected_nan_series = math.ceil(S * M)
                     expected_nan_values = int((N - int(N * P)) * R)
                     expected_nan = expected_nan_series * expected_nan_values
@@ -47,9 +47,9 @@ class TestContamination(unittest.TestCase):
         for series_sel in series_impacted:
             for missing_rate in missing_rates:
 
-                ts_contaminate = ts_1.Contaminate.missing_percentage(ts=ts_1.data,
-                                                                  series_impacted=series_sel,
-                                                                  missing_rate=missing_rate, protection=0.1)
+                ts_contaminate = ts_1.Contamination.missing_percentage(input_data=ts_1.data,
+                                                                       series_rate=series_sel,
+                                                                       missing_rate=missing_rate, offset=0.1)
 
                 if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                     check_position = False

@@ -1,7 +1,7 @@
-﻿imputegap.recovery.benchmarking
-===============================
+﻿imputegap.recovery.benchmark
+============================
 
-.. automodule:: imputegap.recovery.benchmarking
+.. automodule:: imputegap.recovery.benchmark
 
    
    .. rubric:: Classes

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.algorithms.mean_impute package &mdash; imputegap 1.0.2 documentation</title>
+  <title>imputegap.algorithms.mean_impute package &mdash; imputegap 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=292eb321"></script>
+      <script src="static/documentation_options.js?v=baaebd52"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -68,7 +68,6 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
@@ -125,12 +124,12 @@
 <span id="modules"></span><h2>Modules<a class="headerlink" href="#module-imputegap.algorithms.mean_impute" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.mean_impute.mean_impute">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.mean_impute.</span></span><span class="sig-name descname"><span class="pre">mean_impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/mean_impute.html#mean_impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.mean_impute.mean_impute" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.mean_impute.</span></span><span class="sig-name descname"><span class="pre">mean_impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/mean_impute.html#mean_impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.mean_impute.mean_impute" title="Link to this definition"></a></dt>
 <dd><p>Impute NaN values with the mean value of the time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The input time series with contamination (missing values represented as NaNs).</p></li>
+<li><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – The input time series with contamination (missing values represented as NaNs).</p></li>
 <li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Optional parameters for the algorithm. If None, the minimum value from the contamination is used (default is None).</p></li>
 </ul>
 </dd>
@@ -145,9 +144,9 @@
 <p>This function finds the non-NaN value in the time series and replaces all NaN values with this mean value.
 It is a simple imputation technique for filling missing data points in a dataset.</p>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">contamination</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_matrix</span> <span class="o">=</span> <span class="n">mean_impute</span><span class="p">(</span><span class="n">contamination</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">imputed_matrix</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">incomp_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">mean_impute</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">recov_data</span><span class="p">)</span>
 <span class="go">array([[5., 2., 4.],</span>
 <span class="go">       [3., 4., 6.]])</span>
 </pre></div>
@@ -168,7 +167,7 @@ It is a simple imputation technique for filling missing data points in a dataset
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Quentin Nater.</p>
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.tools.utils &mdash; imputegap 1.0.2 documentation</title>
+  <title>imputegap.tools.utils &mdash; imputegap 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="../../../static/jquery.js?v=5d32c60e"></script>
       <script src="../../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../static/documentation_options.js?v=292eb321"></script>
+      <script src="../../../static/documentation_options.js?v=baaebd52"></script>
       <script src="../../../static/doctools.js?v=9bcbadda"></script>
       <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/js/theme.js"></script>
@@ -48,7 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -237,14 +237,14 @@
             <span class="k">return</span> <span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;greedy&quot;</span><span class="p">:</span>
         <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;greedy&#39;</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
-        <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;greedy&#39;</span><span class="p">][</span><span class="s1">&#39;selected_metrics&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">n_calls</span><span class="p">,</span> <span class="p">[</span><span class="n">selected_metrics</span><span class="p">])</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;greedy&#39;</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_calls</span><span class="p">,</span> <span class="p">[</span><span class="n">metrics</span><span class="p">])</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">:</span>
         <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
         <span class="n">n_random_starts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;n_random_starts&#39;</span><span class="p">])</span>
         <span class="n">acq_func</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;acq_func&#39;</span><span class="p">])</span>
-        <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;selected_metrics&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">n_calls</span><span class="p">,</span> <span class="n">n_random_starts</span><span class="p">,</span> <span class="n">acq_func</span><span class="p">,</span> <span class="p">[</span><span class="n">selected_metrics</span><span class="p">])</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_calls</span><span class="p">,</span> <span class="n">n_random_starts</span><span class="p">,</span> <span class="n">acq_func</span><span class="p">,</span> <span class="p">[</span><span class="n">metrics</span><span class="p">])</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pso&quot;</span><span class="p">:</span>
         <span class="n">n_particles</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;n_particles&#39;</span><span class="p">])</span>
         <span class="n">c1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;c1&#39;</span><span class="p">])</span>
@@ -252,14 +252,14 @@
         <span class="n">w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;w&#39;</span><span class="p">])</span>
         <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;iterations&#39;</span><span class="p">])</span>
         <span class="n">n_processes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;n_processes&#39;</span><span class="p">])</span>
-        <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;selected_metrics&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">n_processes</span><span class="p">,</span> <span class="p">[</span><span class="n">selected_metrics</span><span class="p">])</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;pso&#39;</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">n_processes</span><span class="p">,</span> <span class="p">[</span><span class="n">metrics</span><span class="p">])</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sh&quot;</span><span class="p">:</span>
         <span class="n">num_configs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;num_configs&#39;</span><span class="p">])</span>
         <span class="n">num_iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;num_iterations&#39;</span><span class="p">])</span>
         <span class="n">reduction_factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;reduction_factor&#39;</span><span class="p">])</span>
-        <span class="n">selected_metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;selected_metrics&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">num_configs</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">reduction_factor</span><span class="p">,</span> <span class="p">[</span><span class="n">selected_metrics</span><span class="p">])</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;sh&#39;</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">num_configs</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">reduction_factor</span><span class="p">,</span> <span class="p">[</span><span class="n">metrics</span><span class="p">])</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;colors&quot;</span><span class="p">:</span>
         <span class="n">colors</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;colors&#39;</span><span class="p">][</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">colors</span>
@@ -425,7 +425,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Quentin Nater.</p>
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,13 +1,13 @@
 import numpy as np
 
 
-def zero_impute(contamination, params=None):
+def zero_impute(incomp_data, params=None):
     """
     Impute missing values (NaNs) with zeros in the time series.
 
     Parameters
     ----------
-    contamination : numpy.ndarray
+    incomp_data : numpy.ndarray
         The input time series matrix with missing values represented as NaNs.
     params : dict, optional
         Optional parameters for the algorithm. This is not used in the current implementation but can be passed for future extensions (default is None).
@@ -23,14 +23,14 @@ def zero_impute(contamination, params=None):
 
     Example
     -------
-    >>> contamination = np.array([[1, 2, np.nan], [4, np.nan, 6]])
-    >>> imputed_matrix = zero_impute(contamination)
-    >>> print(imputed_matrix)
+    >>> incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])
+    >>> recov_data = zero_impute(incomp_data)
+    >>> print(recov_data)
     array([[1., 2., 0.],
            [4., 0., 6.]])
 
     :author: Quentin Nater
     """
-    imputed_matrix = np.nan_to_num(contamination, nan=0)
+    recov_data = np.nan_to_num(incomp_data, nan=0)
 
-    return imputed_matrix
+    return recov_data

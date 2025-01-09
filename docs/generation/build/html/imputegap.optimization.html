@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.recovery.optimization package &mdash; imputegap 1.0.2 documentation</title>
+  <title>imputegap.recovery.optimization package &mdash; imputegap 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=292eb321"></script>
+      <script src="static/documentation_options.js?v=baaebd52"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -72,7 +72,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
@@ -136,13 +135,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">optimize(ground_truth,</span> <span class="pre">contamination,</span> <span class="pre">selected_metrics,</span> <span class="pre">algorithm,</span> <span class="pre">\*\*kwargs):</span></span></dt>
+<span class="sig-name descname"><span class="pre">optimize(input_data,</span> <span class="pre">incomp_data,</span> <span class="pre">metrics,</span> <span class="pre">algorithm,</span> <span class="pre">\*\*kwargs):</span></span></dt>
 <dd><p>Abstract method for the main optimization process. Must be implemented by subclasses.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.optimization.BaseOptimizer.optimize">
-<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#BaseOptimizer.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.BaseOptimizer.optimize" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#BaseOptimizer.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.BaseOptimizer.optimize" title="Link to this definition"></a></dt>
 <dd><p>Abstract method for optimization. Must be implemented in subclasses.</p>
 <p>This method performs the optimization of hyperparameters for a given imputation algorithm. Each subclass
 implements a different optimization strategy (e.g., Greedy, Bayesian, Particle Swarm) and uses the
@@ -150,9 +149,9 @@ implements a different optimization strategy (e.g., Greedy, Bayesian, Particle S
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ground_truth</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
-<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
-<li><p><strong>selected_metrics</strong> (<em>list</em><em> of </em><em>str</em>) – List of selected metrics for optimization.</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
+<li><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
+<li><p><strong>metrics</strong> (<em>list</em><em> of </em><em>str</em>) – List of selected metrics for optimization.</p></li>
 <li><p><strong>algorithm</strong> (<em>str</em>) – The imputation algorithm to optimize.</p></li>
 <li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional parameters specific to the optimization strategy (e.g., number of iterations, particles, etc.).</p></li>
 </ul>
@@ -177,25 +176,25 @@ implements a different optimization strategy (e.g., Greedy, Bayesian, Particle S
 and Successive Halving, used to find the best parameters for different imputation algorithms.</p>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">Greedy.optimize(ground_truth,</span> <span class="pre">contamination,</span> <span class="pre">selected_metrics=[&quot;RMSE&quot;],</span> <span class="pre">algorithm=&quot;cdrec&quot;,</span> <span class="pre">n_calls=250):</span></span></dt>
+<span class="sig-name descname"><span class="pre">Greedy.optimize(input_data,</span> <span class="pre">incomp_data,</span> <span class="pre">metrics=[&quot;RMSE&quot;],</span> <span class="pre">algorithm=&quot;cdrec&quot;,</span> <span class="pre">n_calls=250):</span></span></dt>
 <dd><p>Perform greedy optimization for hyperparameters.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">Bayesian.optimize(ground_truth,</span> <span class="pre">contamination,</span> <span class="pre">selected_metrics=[&quot;RMSE&quot;],</span> <span class="pre">algorithm=&quot;cdrec&quot;,</span> <span class="pre">n_calls=100,</span> <span class="pre">n_random_starts=50,</span> <span class="pre">acq_func='gp_hedge'):</span></span></dt>
+<span class="sig-name descname"><span class="pre">Bayesian.optimize(input_data,</span> <span class="pre">incomp_data,</span> <span class="pre">metrics=[&quot;RMSE&quot;],</span> <span class="pre">algorithm=&quot;cdrec&quot;,</span> <span class="pre">n_calls=100,</span> <span class="pre">n_random_starts=50,</span> <span class="pre">acq_func='gp_hedge'):</span></span></dt>
 <dd><p>Perform Bayesian optimization for hyperparameters.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">ParticleSwarm.optimize(ground_truth,</span> <span class="pre">contamination,</span> <span class="pre">selected_metrics,</span> <span class="pre">algorithm,</span> <span class="pre">n_particles,</span> <span class="pre">c1,</span> <span class="pre">c2,</span> <span class="pre">w,</span> <span class="pre">iterations,</span> <span class="pre">n_processes):</span></span></dt>
+<span class="sig-name descname"><span class="pre">ParticleSwarm.optimize(input_data,</span> <span class="pre">incomp_data,</span> <span class="pre">metrics,</span> <span class="pre">algorithm,</span> <span class="pre">n_particles,</span> <span class="pre">c1,</span> <span class="pre">c2,</span> <span class="pre">w,</span> <span class="pre">iterations,</span> <span class="pre">n_processes):</span></span></dt>
 <dd><p>Perform Particle Swarm Optimization (PSO) for hyperparameters.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">SuccessiveHalving.optimize(ground_truth,</span> <span class="pre">contamination,</span> <span class="pre">selected_metrics,</span> <span class="pre">algorithm,</span> <span class="pre">num_configs,</span> <span class="pre">num_iterations,</span> <span class="pre">reduction_factor):</span></span></dt>
+<span class="sig-name descname"><span class="pre">SuccessiveHalving.optimize(input_data,</span> <span class="pre">incomp_data,</span> <span class="pre">metrics,</span> <span class="pre">algorithm,</span> <span class="pre">num_configs,</span> <span class="pre">num_iterations,</span> <span class="pre">reduction_factor):</span></span></dt>
 <dd><p>Perform Successive Halving optimization for hyperparameters.</p>
 </dd></dl>
 
@@ -206,14 +205,14 @@ and Successive Halving, used to find the best parameters for different imputatio
 <p>Bayesian optimization strategy for hyperparameters.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.optimization.Optimization.Bayesian.optimize">
-<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['RMSE']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_calls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_random_starts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acq_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gp_hedge'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#Optimization.Bayesian.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.Optimization.Bayesian.optimize" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['RMSE']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_calls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_random_starts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acq_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gp_hedge'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#Optimization.Bayesian.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.Optimization.Bayesian.optimize" title="Link to this definition"></a></dt>
 <dd><p>Perform Bayesian optimization for hyperparameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ground_truth</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
-<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
-<li><p><strong>selected_metrics</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of selected metrics for optimization (default is [“RMSE”]).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
+<li><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
+<li><p><strong>metrics</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of selected metrics for optimization (default is [“RMSE”]).</p></li>
 <li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – The imputation algorithm to optimize (default is ‘cdrec’).</p></li>
 <li><p><strong>n_calls</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of calls to the objective function (default is 100).</p></li>
 <li><p><strong>n_random_starts</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of random initial points (default is 50).</p></li>
@@ -238,14 +237,14 @@ and Successive Halving, used to find the best parameters for different imputatio
 <p>Greedy optimization strategy for hyperparameters.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.optimization.Optimization.Greedy.optimize">
-<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['RMSE']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_calls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">250</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#Optimization.Greedy.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.Optimization.Greedy.optimize" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['RMSE']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_calls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">250</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#Optimization.Greedy.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.Optimization.Greedy.optimize" title="Link to this definition"></a></dt>
 <dd><p>Perform greedy optimization for hyperparameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ground_truth</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
-<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
-<li><p><strong>selected_metrics</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of selected metrics for optimization (default is [“RMSE”]).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
+<li><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
+<li><p><strong>metrics</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of selected metrics for optimization (default is [“RMSE”]).</p></li>
 <li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – The imputation algorithm to optimize (default is ‘cdrec’).</p></li>
 <li><p><strong>n_calls</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of calls to the objective function (default is 250).</p></li>
 </ul>
@@ -268,14 +267,14 @@ and Successive Halving, used to find the best parameters for different imputatio
 <p>Particle Swarm Optimization (PSO) strategy for hyperparameters.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.optimization.Optimization.ParticleSwarm.optimize">
-<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_processes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#Optimization.ParticleSwarm.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.Optimization.ParticleSwarm.optimize" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_processes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#Optimization.ParticleSwarm.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.Optimization.ParticleSwarm.optimize" title="Link to this definition"></a></dt>
 <dd><p>Perform Particle Swarm Optimization for hyperparameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ground_truth</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
-<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
-<li><p><strong>selected_metrics</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of selected metrics for optimization (default is [“RMSE”]).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
+<li><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
+<li><p><strong>metrics</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of selected metrics for optimization (default is [“RMSE”]).</p></li>
 <li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – The imputation algorithm to optimize (default is ‘cdrec’).</p></li>
 <li><p><strong>n_particles</strong> (<em>int</em>) – Number of particles used in PSO.</p></li>
 <li><p><strong>c1</strong> (<em>float</em>) – PSO parameter, personal learning coefficient.</p></li>
@@ -302,14 +301,14 @@ and Successive Halving, used to find the best parameters for different imputatio
 <dd><p>Bases: <a class="reference internal" href="#imputegap.recovery.optimization.BaseOptimizer" title="imputegap.recovery.optimization.BaseOptimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseOptimizer</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.optimization.Optimization.SuccessiveHalving.optimize">
-<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction_factor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#Optimization.SuccessiveHalving.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.Optimization.SuccessiveHalving.optimize" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction_factor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/optimization.html#Optimization.SuccessiveHalving.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.optimization.Optimization.SuccessiveHalving.optimize" title="Link to this definition"></a></dt>
 <dd><p>Perform Successive Halving optimization for hyperparameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ground_truth</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
-<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
-<li><p><strong>selected_metrics</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of selected metrics for optimization (default is [“RMSE”]).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The ground truth time series dataset.</p></li>
+<li><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – The contaminated time series dataset to impute.</p></li>
+<li><p><strong>metrics</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – List of selected metrics for optimization (default is [“RMSE”]).</p></li>
 <li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – The imputation algorithm to optimize (default is ‘cdrec’).</p></li>
 <li><p><strong>num_configs</strong> (<em>int</em>) – Number of configurations to try.</p></li>
 <li><p><strong>num_iterations</strong> (<em>int</em>) – Number of iterations for the optimization.</p></li>
@@ -343,7 +342,7 @@ and Successive Halving, used to find the best parameters for different imputatio
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Quentin Nater.</p>
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

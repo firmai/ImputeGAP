@@ -16,35 +16,33 @@ class TestContamination(unittest.TestCase):
 
         series_impacted = [0.4]
         missing_rates = [40]
-        seeds_start, seeds_end = 42, 43
         series_check = ["8", "1", "5", "0"]
-        protection = 0.1
+        offset = 0.1
         block_size = 2
 
-        for seed_value in range(seeds_start, seeds_end):
-            for series_sel in series_impacted:
-                for missing_rate in missing_rates:
 
-                    ts_contaminate = ts_1.Contaminate.mcar(ts=ts_1.data,
-                                                        series_impacted=series_sel,
-                                                        missing_rate=missing_rate, block_size=block_size,
-                                                        protection=protection, use_seed=True,
-                                                        seed=seed_value)
+        for series_sel in series_impacted:
+            for missing_rate in missing_rates:
 
-                    check_nan_series = False
+                ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
+                                                         series_rate=series_sel,
+                                                         missing_rate=missing_rate, block_size=block_size,
+                                                         offset=offset, seed=True)
 
-                    for series, data in enumerate(ts_contaminate):
-                        if str(series) in series_check:
-                            if np.isnan(data).any():
-                                check_nan_series = True
+                check_nan_series = False
+
+                for series, data in enumerate(ts_contaminate):
+                    if str(series) in series_check:
+                        if np.isnan(data).any():
+                            check_nan_series = True
+                    else:
+                        if np.isnan(data).any():
+                            check_nan_series = False
+                            break
                         else:
-                            if np.isnan(data).any():
-                                check_nan_series = False
-                                break
-                            else:
-                                check_nan_series = True
+                            check_nan_series = True
 
-                    self.assertTrue(check_nan_series, True)
+                self.assertTrue(check_nan_series, True)
 
     def test_mcar_position(self):
         """
@@ -56,24 +54,22 @@ class TestContamination(unittest.TestCase):
         series_impacted = [0.4, 1]
         missing_rates = [0.1, 0.4, 0.6]
         ten_percent_index = int(ts_1.data.shape[1] * 0.1)
-        seeds_start, seeds_end = 42, 43
 
-        for seed_value in range(seeds_start, seeds_end):
-            for series_sel in series_impacted:
-                for missing_rate in missing_rates:
+        for series_sel in series_impacted:
+            for missing_rate in missing_rates:
 
-                    ts_contaminate = ts_1.Contaminate.mcar(ts=ts_1.data,
-                                                        series_impacted=series_sel,
-                                                        missing_rate=missing_rate,
-                                                        block_size=2, protection=0.1,
-                                                        use_seed=True, seed=seed_value)
+                ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
+                                                         series_rate=series_sel,
+                                                         missing_rate=missing_rate,
+                                                         block_size=2, offset=0.1,
+                                                         seed=True)
 
-                    if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
-                        check_position = False
-                    else:
-                        check_position = True
+                if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
+                    check_position = False
+                else:
+                    check_position = True
 
-                    self.assertTrue(check_position, True)
+                self.assertTrue(check_position, True)
 
     def test_mcar_selection_datasets(self):
         """
@@ -82,37 +78,36 @@ class TestContamination(unittest.TestCase):
         datasets = ["bafu", "chlorine", "climate", "drift", "meteo"]
         series_impacted = [0.4, 1]
         missing_rates = [0.2, 0.6]
-        seeds_start, seeds_end = 42, 43
-        protection = 0.1
+        offset = 0.1
         block_size = 10
 
         for dataset in datasets:
             ts_1 = TimeSeries()
             ts_1.load_timeseries(utils.search_path(dataset))
 
-            for seed_value in range(seeds_start, seeds_end):
-                for series_sel in series_impacted:
-                    for missing_rate in missing_rates:
-                        ts_contaminate = ts_1.Contaminate.mcar(ts=ts_1.data,
-                                                            missing_rate=missing_rate,
-                                                            series_impacted=series_sel,
-                                                            block_size=block_size, protection=protection,
-                                                            use_seed=True, seed=seed_value)
 
-                        # 1) Check if the number of NaN values is correct
-                        M, N = ts_contaminate.shape
-                        P = int(N * protection)
-                        W = int((N - P) * missing_rate)
-                        expected_contaminated_series = int(np.ceil(M * series_sel))
-                        B = int(W / block_size)
-                        total_expected = (B * block_size) * expected_contaminated_series
-                        total_nan = np.isnan(ts_contaminate).sum()
+            for series_sel in series_impacted:
+                for missing_rate in missing_rates:
+                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
+                                                             missing_rate=missing_rate,
+                                                             series_rate=series_sel,
+                                                             block_size=block_size, offset=offset,
+                                                             seed=True)
 
-                        self.assertEqual(total_nan, total_expected)
+                    # 1) Check if the number of NaN values is correct
+                    M, N = ts_contaminate.shape
+                    P = int(N * offset)
+                    W = int((N - P) * missing_rate)
+                    expected_contaminated_series = int(np.ceil(M * series_sel))
+                    B = int(W / block_size)
+                    total_expected = (B * block_size) * expected_contaminated_series
+                    total_nan = np.isnan(ts_contaminate).sum()
 
-                        # 2) Check if the correct percentage of series are contaminated
-                        contaminated_series = np.isnan(ts_contaminate).any(axis=1).sum()
-                        self.assertEqual(contaminated_series, expected_contaminated_series, f"Expected {expected_contaminated_series} contaminated series but found {contaminated_series}")
+                    self.assertEqual(total_nan, total_expected)
+
+                    # 2) Check if the correct percentage of series are contaminated
+                    contaminated_series = np.isnan(ts_contaminate).any(axis=1).sum()
+                    self.assertEqual(contaminated_series, expected_contaminated_series, f"Expected {expected_contaminated_series} contaminated series but found {contaminated_series}")
 
     def test_mcar_position_datasets(self):
         """
@@ -121,8 +116,7 @@ class TestContamination(unittest.TestCase):
         datasets = ["bafu", "chlorine", "climate", "drift", "meteo"]
         series_impacted = [0.4, 1]
         missing_rates = [0.2, 0.6]
-        seeds_start, seeds_end = 42, 43
-        protection = 0.1
+        offset = 0.1
         block_size = 10
 
         for dataset in datasets:
@@ -130,22 +124,21 @@ class TestContamination(unittest.TestCase):
             ts_1.load_timeseries(utils.search_path(dataset))
             ten_percent_index = int(ts_1.data.shape[1] * 0.1)
 
-            for seed_value in range(seeds_start, seeds_end):
-                for series_sel in series_impacted:
-                    for missing_rate in missing_rates:
+            for series_sel in series_impacted:
+                for missing_rate in missing_rates:
 
-                        ts_contaminate = ts_1.Contaminate.mcar(ts=ts_1.data,
-                                                            series_impacted=series_sel,
-                                                            missing_rate=missing_rate,
-                                                            block_size=block_size, protection=protection,
-                                                            use_seed=True, seed=seed_value)
+                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
+                                                             series_rate=series_sel,
+                                                             missing_rate=missing_rate,
+                                                             block_size=block_size, offset=offset,
+                                                             seed=True)
 
-                        if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
-                            check_position = False
-                        else:
-                            check_position = True
+                    if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
+                        check_position = False
+                    else:
+                        check_position = True
 
-                        self.assertTrue(check_position, True)
+                    self.assertTrue(check_position, True)
 
     def test_contaminate_plot(self):
         """
@@ -155,11 +148,11 @@ class TestContamination(unittest.TestCase):
         ts_1.load_timeseries(utils.search_path("chlorine"))
 
         ts_2 = TimeSeries()
-        ts_2.import_matrix(ts_1.Contaminate.mcar(ts=ts_1.data, series_impacted=0.4, missing_rate=0.1,
-                                                       block_size=10, protection=0.1, use_seed=True, seed=42))
+        ts_2.import_matrix(ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.4, missing_rate=0.1,
+                                                   block_size=10, offset=0.1, seed=True))
 
         ts_1.print()
-        filepath = ts_1.plot(raw_data=ts_1.data, infected_data=ts_2.data, max_series=10, max_values=100, save_path="./assets/", display=False)
+        filepath = ts_1.plot(input_data=ts_1.data, incomp_data=ts_2.data, max_series=10, max_values=100, save_path="./assets/", display=False)
         self.assertTrue(os.path.exists(filepath))
 
     def test_mcar_size_of_block(self):
@@ -169,46 +162,44 @@ class TestContamination(unittest.TestCase):
         datasets = ["drift", "chlorine", "eeg-reading", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
         series_impacted = [0.4, 1]
         missing_rates = [0.2, 0.6]
-        seeds_start, seeds_end = 42, 43
-        protection = 0.1
+        offset = 0.1
         block_size = 10
 
         for dataset in datasets:
             ts_1 = TimeSeries()
             ts_1.load_timeseries(utils.search_path(dataset))
 
-            for seed_value in range(seeds_start, seeds_end):
-                for series_sel in series_impacted:
-                    for missing_rate in missing_rates:
-                        ts_contaminate = ts_1.Contaminate.mcar(ts=ts_1.data,
-                                                            missing_rate=missing_rate,
-                                                            series_impacted=series_sel,
-                                                            block_size=block_size, protection=protection,
-                                                            use_seed=True, seed=seed_value)
+            for series_sel in series_impacted:
+                for missing_rate in missing_rates:
+                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
+                                                             missing_rate=missing_rate,
+                                                             series_rate=series_sel,
+                                                             block_size=block_size, offset=offset,
+                                                             seed=True)
 
-                        for i, series in enumerate(ts_contaminate):
-                            nan_blocks = []
-                            block_indices = []
-                            current_block_size = 0
-                            series_size = len(series)
-                            lower_bound = int(protection * series_size) + block_size
-                            upper_bound = series_size - lower_bound - block_size
-                            protected_indices = set(range(0, lower_bound)) | set(range(upper_bound, series_size))
+                    for i, series in enumerate(ts_contaminate):
+                        nan_blocks = []
+                        block_indices = []
+                        current_block_size = 0
+                        series_size = len(series)
+                        lower_bound = int(offset * series_size) + block_size
+                        upper_bound = series_size - lower_bound - block_size
+                        protected_indices = set(range(0, lower_bound)) | set(range(upper_bound, series_size))
 
-                            # Find NaN blocks and their indices
-                            for index, value in enumerate(series):
-                                if np.isnan(value):
-                                    current_block_size += 1
-                                    block_indices.append(index)
-                                else:
-                                    if current_block_size > 0:
-                                        if not any(i in protected_indices for i in block_indices):
-                                            nan_blocks.append(current_block_size)
-                                        current_block_size = 0
-                                        block_indices = []
+                        # Find NaN blocks and their indices
+                        for index, value in enumerate(series):
+                            if np.isnan(value):
+                                current_block_size += 1
+                                block_indices.append(index)
+                            else:
+                                if current_block_size > 0:
+                                    if not any(i in protected_indices for i in block_indices):
+                                        nan_blocks.append(current_block_size)
+                                    current_block_size = 0
+                                    block_indices = []
 
-                            for block in nan_blocks:
-                                assert block >= block_size, (
-                                    f"Dataset: {dataset}, Series: {i}, Seed: {seed_value}, "
-                                    f"Block size {block} found, expected at least {block_size}."
-                                )
+                        for block in nan_blocks:
+                            assert block >= block_size, (
+                                f"Dataset: {dataset}, Series: {i}, "
+                                f"Block size {block} found, expected at least {block_size}."
+                            )

@@ -9,7 +9,7 @@ import os
 import sys
 
 project = 'imputegap'
-copyright = '2024, Quentin Nater'
+copyright = '2025, Quentin Nater'
 author = 'Quentin Nater'
 
 
@@ -33,8 +33,8 @@ html_static_path = ['static']
 html_css_files = ['custom.css']
 
 # Set the version and release info
-version = '1.0.2'
-release = '1.0.2'
+version = '1.0.4'
+release = '1.0.4'
 
 
 # You can also add links to edit the documentation on GitHub

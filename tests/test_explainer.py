@@ -24,7 +24,7 @@ class TestExplainer(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path(filename))
 
-        shap_values, shap_details = Explainer.shap_explainer(raw_data=ts_1.data, file_name=filename, use_seed=True, seed=42, verbose=True)
+        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, limit_ratio=0.3, seed=True, verbose=True)
 
         self.assertTrue(shap_values is not None)
         self.assertTrue(shap_details is not None)
@@ -41,8 +41,7 @@ class TestExplainer(unittest.TestCase):
             self.assertTrue(description is not None)
             self.assertTrue(feature is not None)
             self.assertTrue(category is not None)
-            self.assertTrue(
-                mean_features is not None and not (isinstance(mean_features, (int, float)) and np.isnan(mean_features)))
+            self.assertTrue(mean_features is not None and not (isinstance(mean_features, (int, float)) and np.isnan(mean_features)))
 
             # Check relation feature/category
             feature_found_in_category = False
@@ -58,4 +57,4 @@ class TestExplainer(unittest.TestCase):
                 expected_description = expected_features[feature]
                 assert description == expected_description, f"Feature '{feature}' has wrong description. Expected '{expected_description}', got '{description}' "
             else:
-                assert False, f"Feature '{feature}' not found in the FEATURES dictionary"
+                assert False, f"Feature '{feature}'not found in the FEATURES dictionary"

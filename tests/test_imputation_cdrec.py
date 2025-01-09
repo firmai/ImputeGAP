@@ -13,13 +13,13 @@ class TestCDREC(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path("test"))
 
-        infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, series_impacted=0.4, missing_rate=0.4, block_size=2, protection=0.1, use_seed=True, seed=42)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.4, missing_rate=0.4, block_size=2, offset=0.1, seed=True)
 
-        algo = Imputation.MatrixCompletion.CDRec(infected_matrix)
+        algo = Imputation.MatrixCompletion.CDRec(incomp_data)
         algo.impute()
         algo.score(ts_1.data)
 
-        _, metrics = algo.imputed_matrix, algo.metrics
+        _, metrics = algo.recov_data, algo.metrics
 
         expected_metrics = {
             "RMSE": 0.5993259196563864,
@@ -42,13 +42,13 @@ class TestCDREC(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_timeseries(utils.search_path("chlorine"), max_values=200)
 
-        infected_matrix = ts_1.Contaminate.mcar(ts=ts_1.data, series_impacted=0.4, missing_rate=0.4, block_size=10, protection=0.1, use_seed=True, seed=42)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.4, missing_rate=0.4, block_size=10, offset=0.1, seed=True)
 
-        algo = Imputation.MatrixCompletion.CDRec(infected_matrix)
+        algo = Imputation.MatrixCompletion.CDRec(incomp_data)
         algo.impute()
         algo.score(ts_1.data)
 
-        _, metrics = algo.imputed_matrix, algo.metrics
+        _, metrics = algo.recov_data, algo.metrics
 
         expected_metrics = {
             "RMSE": 0.10329523970909142,

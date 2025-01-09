@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; imputegap 1.0.2 documentation</title>
+  <title>Index &mdash; imputegap 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=292eb321"></script>
+      <script src="static/documentation_options.js?v=baaebd52"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -48,7 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -156,7 +156,9 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.benchmarking.html#id1">avg_results() (imputegap.recovery.benchmarking.Benchmarking method)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.avg_results">[1]</a>
+      <li><a href="imputegap.benchmark.html#id1">average_runs_by_names() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.average_runs_by_names">[1]</a>
+</li>
+      <li><a href="imputegap.benchmark.html#id2">avg_results() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.avg_results">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -170,9 +172,9 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.benchmarking.html#id0">Benchmarking (class in imputegap.recovery.benchmarking)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking">[1]</a>
+      <li><a href="imputegap.benchmark.html#id0">Benchmark (class in imputegap.recovery.benchmark)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark">[1]</a>
 </li>
-      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contaminate.blackout">blackout() (imputegap.recovery.manager.TimeSeries.Contaminate method)</a>
+      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.blackout">blackout() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -182,17 +184,17 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imputegap.cdrec.html#imputegap.algorithms.cdrec.cdrec">cdrec() (in module imputegap.algorithms.cdrec)</a>
 </li>
-      <li><a href="imputegap.benchmarking.html#id2">comprehensive_evaluation() (imputegap.recovery.benchmarking.Benchmarking method)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.comprehensive_evaluation">[1]</a>
+      <li><a href="imputegap.evaluation.html#id1">compute_all_metrics() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_all_metrics">[1]</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id1">compute_correlation() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_correlation">[1]</a>
+      <li><a href="imputegap.evaluation.html#id2">compute_correlation() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_correlation">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.evaluation.html#id2">compute_mae() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mae">[1]</a>
+      <li><a href="imputegap.evaluation.html#id3">compute_mae() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mae">[1]</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id3">compute_mi() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mi">[1]</a>
+      <li><a href="imputegap.evaluation.html#id4">compute_mi() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mi">[1]</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id4">compute_rmse() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_rmse">[1]</a>
+      <li><a href="imputegap.evaluation.html#id5">compute_rmse() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_rmse">[1]</a>
 </li>
       <li><a href="imputegap.explainer.html#id0">convert_results() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.convert_results">[1]</a>
 </li>
@@ -202,6 +204,10 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.disjoint">disjoint() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="imputegap.utils.html#imputegap.tools.utils.display_title">display_title() (in module imputegap.tools.utils)</a>
 </li>
   </ul></td>
@@ -210,15 +216,19 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="imputegap.benchmark.html#id3">eval() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.eval">[1]</a>
+</li>
       <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.evaluate_params">evaluate_params() (imputegap.recovery.imputation.Imputation method)</a>
 </li>
       <li><a href="imputegap.evaluation.html#id0">Evaluation (class in imputegap.recovery.evaluation)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="imputegap.explainer.html#id1">execute_shap_model() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.execute_shap_model">[1]</a>
+</li>
       <li><a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer">Explainer (class in imputegap.recovery.explainer)</a>
 </li>
-      <li><a href="imputegap.explainer.html#id1">extract_features() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.extract_features">[1]</a>
+      <li><a href="imputegap.explainer.html#id2">extractor_pycatch() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.extractor_pycatch">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -226,13 +236,17 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.benchmarking.html#id3">generate_matrix() (imputegap.recovery.benchmarking.Benchmarking method)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_matrix">[1]</a>
+      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.gaussian">gaussian() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
+</li>
+      <li><a href="imputegap.benchmark.html#id4">generate_heatmap() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_heatmap">[1]</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.benchmarking.html#id4">generate_plots() (imputegap.recovery.benchmarking.Benchmarking method)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_plots">[1]</a>
+      <li><a href="imputegap.benchmark.html#id5">generate_plots() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_plots">[1]</a>
 </li>
-      <li><a href="imputegap.benchmarking.html#id5">generate_reports() (imputegap.recovery.benchmarking.Benchmarking method)</a>, <a href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_reports">[1]</a>
+      <li><a href="imputegap.benchmark.html#id6">generate_reports_excel() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_reports_excel">[1]</a>
+</li>
+      <li><a href="imputegap.benchmark.html#id7">generate_reports_txt() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_reports_txt">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -354,10 +368,10 @@
 </li>
       </ul></li>
       <li>
-    imputegap.recovery.benchmarking
+    imputegap.recovery.benchmark
 
       <ul>
-        <li><a href="autosummary/imputegap.recovery.benchmarking.html#module-imputegap.recovery.benchmarking">module</a>, <a href="imputegap.benchmarking.html#module-0">[1]</a>, <a href="imputegap.benchmarking.html#module-imputegap.recovery.benchmarking">[2]</a>
+        <li><a href="autosummary/imputegap.recovery.benchmark.html#module-imputegap.recovery.benchmark">module</a>, <a href="autosummary/imputegap.recovery.benchmarking.html#module-imputegap.recovery.benchmark">[1]</a>, <a href="imputegap.benchmark.html#module-0">[2]</a>, <a href="imputegap.benchmark.html#module-imputegap.recovery.benchmark">[3]</a>
 </li>
       </ul></li>
       <li>
@@ -429,8 +443,6 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.explainer.html#id2">launch_shap_model() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.launch_shap_model">[1]</a>
-</li>
       <li><a href="imputegap.explainer.html#id3">load_configuration() (imputegap.recovery.explainer.Explainer method)</a>, <a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.load_configuration">[1]</a>
 </li>
       <li><a href="imputegap.utils.html#imputegap.tools.utils.load_parameters">load_parameters() (in module imputegap.tools.utils)</a>
@@ -463,15 +475,13 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contaminate.mcar">mcar() (imputegap.recovery.manager.TimeSeries.Contaminate method)</a>
+      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.mcar">mcar() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
 </li>
       <li><a href="imputegap.mean_impute.html#imputegap.algorithms.mean_impute.mean_impute">mean_impute() (in module imputegap.algorithms.mean_impute)</a>
 </li>
-      <li><a href="imputegap.evaluation.html#id5">metrics_computation() (imputegap.recovery.evaluation.Evaluation method)</a>, <a href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.metrics_computation">[1]</a>
-</li>
       <li><a href="imputegap.min_impute.html#imputegap.algorithms.min_impute.min_impute">min_impute() (in module imputegap.algorithms.min_impute)</a>
 </li>
-      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contaminate.missing_percentage">missing_percentage() (imputegap.recovery.manager.TimeSeries.Contaminate method)</a>
+      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage">missing_percentage() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
 </li>
       <li>
     module
@@ -495,7 +505,7 @@
 </li>
         <li><a href="autosummary/imputegap.algorithms.zero_impute.html#module-imputegap.algorithms.zero_impute">imputegap.algorithms.zero_impute</a>, <a href="imputegap.zero_impute.html#module-imputegap.algorithms.zero_impute">[1]</a>
 </li>
-        <li><a href="autosummary/imputegap.recovery.benchmarking.html#module-imputegap.recovery.benchmarking">imputegap.recovery.benchmarking</a>, <a href="imputegap.benchmarking.html#module-0">[1]</a>, <a href="imputegap.benchmarking.html#module-imputegap.recovery.benchmarking">[2]</a>
+        <li><a href="autosummary/imputegap.recovery.benchmark.html#module-imputegap.recovery.benchmark">imputegap.recovery.benchmark</a>, <a href="autosummary/imputegap.recovery.benchmarking.html#module-imputegap.recovery.benchmark">[1]</a>, <a href="imputegap.benchmark.html#module-0">[2]</a>, <a href="imputegap.benchmark.html#module-imputegap.recovery.benchmark">[3]</a>
 </li>
         <li><a href="autosummary/imputegap.recovery.evaluation.html#module-imputegap.recovery.evaluation">imputegap.recovery.evaluation</a>, <a href="imputegap.evaluation.html#module-0">[1]</a>, <a href="imputegap.evaluation.html#module-imputegap.recovery.evaluation">[2]</a>
 </li>
@@ -564,6 +574,8 @@
         <li><a href="imputegap.optimization.html#imputegap.recovery.optimization.Optimization.SuccessiveHalving.optimize">(imputegap.recovery.optimization.Optimization.SuccessiveHalving method)</a>
 </li>
       </ul></li>
+      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.overlap">overlap() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -626,7 +638,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contaminate">TimeSeries.Contaminate (class in imputegap.recovery.manager)</a>
+      <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination">TimeSeries.Contamination (class in imputegap.recovery.manager)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -656,7 +668,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Quentin Nater.</p>
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

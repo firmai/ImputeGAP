@@ -1,0 +1,61 @@
+import os
+import unittest
+import numpy as np
+from imputegap.tools import utils
+
+from imputegap.recovery.imputation import Imputation
+from imputegap.recovery.manager import TimeSeries
+from imputegap.recovery.explainer import Explainer
+from imputegap.recovery.benchmark import Benchmark
+
+
+class TestPipeline(unittest.TestCase):
+
+    def test_pipeline(self):
+        """
+        Verify if the manager of a dataset is working
+        """
+        x = False
+
+        # automl
+        ts_1 = TimeSeries()
+        ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
+        ts_1.normalize(normalizer="min_max")
+        incomp_data = ts_1.Contamination.mcar(ts_1.data)
+
+        cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute()
+        cdrec.score(ts_1.data, cdrec.recov_data)
+        cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": { "n_calls": 3}})
+        cdrec.score(ts_1.data, cdrec.recov_data)
+        ts_1.print_results(cdrec.metrics)
+        utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")
+
+        cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "greedy","options": { "n_calls": 2}})
+        cdrec.score(ts_1.data, cdrec.recov_data)
+
+        cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "sh", "options": {"num_configs": 2}})
+        cdrec.score(ts_1.data, cdrec.recov_data)
+
+        cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "pso", "options": {"n_particles": 2}})
+        cdrec.score(ts_1.data, cdrec.recov_data)
+
+        # explainer
+        ts_1 = TimeSeries()
+        ts_1.load_timeseries(utils.search_path("chlorine"))
+        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, missing_rate=0.25, limit_ratio=0.4, split_ratio=0.6, file_name="chlorine", algorithm="cdrec")
+        Explainer.print(shap_values, shap_details)
+
+        # benchmark
+        dataset_test = ["eeg-alcohol"]
+        opti_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 3, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
+        optimizers = [opti_bayesian]
+        algorithms_test = ["mean", "cdrec"]
+        patterns_small = ["mcar"]
+        x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
+        Benchmark().eval(algorithms=algorithms_test, datasets=dataset_test, patterns=patterns_small, x_axis=x_axis, optimizers=optimizers, save_dir="test_naterq", runs=2)
+
+        x = not x
+        self.assertTrue(x)
+
+
+

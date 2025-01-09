@@ -76,8 +76,8 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
 
     Example
     -------
-    >>> imputed_data = stmvl(contamination=contamination_matrix, window_size=2, gamma=0.85, alpha=7)
-    >>> print(imputed_data)
+    >>> recov_data = stmvl(incomp_data=incomp_data, window_size=2, gamma=0.85, alpha=7)
+    >>> print(recov_data)
 
     References
     ----------
@@ -120,28 +120,28 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     return __py_recovered;
 
 
-def stmvl(contamination, window_size, gamma, alpha, logs=True):
+def stmvl(incomp_data, window_size, gamma, alpha, logs=True):
     """
     CDREC algorithm for imputation of missing data
     :author: Quentin Nater
 
-    :param contamination: time series with contamination
+    :param incomp_data: time series with contamination
     :param window_size: window size for temporal component
     :param gamma: smoothing parameter for temporal weight
     :param alpha: power for spatial weight
 
     :param logs: print logs of time execution
 
-    :return: imputed_matrix, metrics : all time series with imputation data and their metrics
+    :return: recov_data, metrics : all time series with imputation data and their metrics
 
     """
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    imputed_matrix = native_stmvl(contamination, window_size, gamma, alpha)
+    recov_data = native_stmvl(incomp_data, window_size, gamma, alpha)
 
     end_time = time.time()
     if logs:
         print(f"\n\t\t> logs, imputation stvml - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    return imputed_matrix
+    return recov_data

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.recovery.imputation package &mdash; imputegap 1.0.2 documentation</title>
+  <title>imputegap.recovery.imputation package &mdash; imputegap 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=292eb321"></script>
+      <script src="static/documentation_options.js?v=baaebd52"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -72,7 +72,6 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
@@ -124,7 +123,7 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-imputegap.recovery.imputation" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.BaseImputer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.imputation.</span></span><span class="sig-name descname"><span class="pre">BaseImputer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.imputation.</span></span><span class="sig-name descname"><span class="pre">BaseImputer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base class for imputation algorithms.</p>
 <p>This class provides common methods for imputation tasks such as scoring, parameter checking,
@@ -137,13 +136,13 @@ and optimization. Specific algorithms should inherit from this class and impleme
 
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">score(raw_matrix,</span> <span class="pre">imputed_matrix=None):</span></span></dt>
+<span class="sig-name descname"><span class="pre">score(input_data,</span> <span class="pre">recov_data=None):</span></span></dt>
 <dd><p>Compute metrics for the imputed time series.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">_check_params(user_defined,</span> <span class="pre">params):</span></span></dt>
+<span class="sig-name descname"><span class="pre">_check_params(user_def,</span> <span class="pre">params):</span></span></dt>
 <dd><p>Check and format parameters for imputation.</p>
 </dd></dl>
 
@@ -155,11 +154,11 @@ and optimization. Specific algorithms should inherit from this class and impleme
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.BaseImputer.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the BaseImputer with an infected time series matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>infected_matrix</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
+<dd class="field-odd"><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -190,13 +189,13 @@ and optimization. Specific algorithms should inherit from this class and impleme
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.BaseImputer.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer.score" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer.score" title="Link to this definition"></a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_matrix</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>imputed_matrix</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>recov_data</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -214,7 +213,7 @@ and optimization. Specific algorithms should inherit from this class and impleme
 <p>A class containing static methods for evaluating and running imputation algorithms on time series data.</p>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">evaluate_params(ground_truth,</span> <span class="pre">contamination,</span> <span class="pre">configuration,</span> <span class="pre">algorithm=&quot;cdrec&quot;):</span></span></dt>
+<span class="sig-name descname"><span class="pre">evaluate_params(input_data,</span> <span class="pre">incomp_data,</span> <span class="pre">configuration,</span> <span class="pre">algorithm=&quot;cdrec&quot;):</span></span></dt>
 <dd><p>Evaluate imputation performance using given parameters and algorithm.</p>
 </dd></dl>
 
@@ -231,22 +230,22 @@ and optimization. Specific algorithms should inherit from this class and impleme
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MRNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MRNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MRNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MRNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer" title="imputegap.recovery.imputation.BaseImputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseImputer</span></code></a></p>
 <p>MRNN class to impute missing values using Multi-directional Recurrent Neural Networks (MRNN).</p>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">impute(self,</span> <span class="pre">user_defined=True,</span> <span class="pre">params=None):</span></span></dt>
+<span class="sig-name descname"><span class="pre">impute(self,</span> <span class="pre">user_def=True,</span> <span class="pre">params=None):</span></span></dt>
 <dd><p>Perform imputation using the MRNN algorithm.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the BaseImputer with an infected time series matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>infected_matrix</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
+<dd class="field-odd"><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -258,12 +257,12 @@ and optimization. Specific algorithms should inherit from this class and impleme
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_defined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MRNN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MRNN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute" title="Link to this definition"></a></dt>
 <dd><p>Perform imputation using the MRNN algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>user_defined</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use user-defined or default parameters (default is True).</p></li>
+<li><p><strong>user_def</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use user-defined or default parameters (default is True).</p></li>
 <li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Parameters of the MRNN algorithm, if None, default ones are loaded.</p>
 <ul>
 <li><dl class="simple">
@@ -291,18 +290,18 @@ and optimization. Specific algorithms should inherit from this class and impleme
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>self</strong> – The object with <cite>imputed_matrix</cite> set.</p>
+<dd class="field-even"><p><strong>self</strong> – The object with <cite>recov_data</cite> set.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN" title="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN">MRNN</a></p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mrnn_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mrnn_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mrnn_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>  <span class="c1"># default parameters for imputation &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mrnn_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;hidden_dim&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;iterations&#39;</span><span class="p">:</span><span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;sequence_length&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">})</span>  <span class="c1"># user-defined &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mrnn_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>  <span class="c1"># auto-ml with bayesian</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">mrnn_imputer</span><span class="o">.</span><span class="n">imputed_matrix</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mrnn_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;hidden_dim&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;iterations&#39;</span><span class="p">:</span><span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;sequence_length&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">})</span>  <span class="c1"># user-defined &gt; or</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mrnn_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;input_data&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>  <span class="c1"># auto-ml with bayesian</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">mrnn_imputer</span><span class="o">.</span><span class="n">recov_data</span>
 </pre></div>
 </div>
 <p class="rubric">References</p>
@@ -318,13 +317,13 @@ and optimization. Specific algorithms should inherit from this class and impleme
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score" title="Link to this definition"></a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_matrix</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>imputed_matrix</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>recov_data</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -362,22 +361,22 @@ TO COME SOON…</p>
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CDRec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.MatrixCompletion.CDRec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CDRec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.MatrixCompletion.CDRec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer" title="imputegap.recovery.imputation.BaseImputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseImputer</span></code></a></p>
 <p>CDRec class to impute missing values using Centroid Decomposition (CDRec).</p>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">impute(self,</span> <span class="pre">user_defined=True,</span> <span class="pre">params=None):</span></span></dt>
+<span class="sig-name descname"><span class="pre">impute(self,</span> <span class="pre">user_def=True,</span> <span class="pre">params=None):</span></span></dt>
 <dd><p>Perform imputation using the CDRec algorithm.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the BaseImputer with an infected time series matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>infected_matrix</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
+<dd class="field-odd"><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -389,12 +388,12 @@ TO COME SOON…</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_defined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.MatrixCompletion.CDRec.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.impute" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.MatrixCompletion.CDRec.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.impute" title="Link to this definition"></a></dt>
 <dd><p>Perform imputation using the CDRec algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>user_defined</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use user-defined or default parameters (default is True).</p></li>
+<li><p><strong>user_def</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use user-defined or default parameters (default is True).</p></li>
 <li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Parameters of the CDRec algorithm or Auto-ML configuration, if None, default ones are loaded.</p>
 <p><strong>Algorithm parameters:</strong></p>
 <ul>
@@ -417,7 +416,7 @@ TO COME SOON…</p>
 <p><strong>Auto-ML parameters:</strong></p>
 <ul>
 <li><dl class="simple">
-<dt>ground_truth<span class="classifier">numpy.ndarray</span></dt><dd><p>The original time series dataset without contamination.</p>
+<dt>input_data<span class="classifier">numpy.ndarray</span></dt><dd><p>The original time series dataset without contamination.</p>
 </dd>
 </dl>
 </li>
@@ -436,7 +435,7 @@ TO COME SOON…</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>selected_metrics<span class="classifier">list, optional</span></dt><dd><p>List of selected metrics to consider for optimization. Default is [“RMSE”].</p>
+<dt>metrics<span class="classifier">list, optional</span></dt><dd><p>List of selected metrics to consider for optimization. Default is [“RMSE”].</p>
 </dd>
 </dl>
 </li>
@@ -459,7 +458,7 @@ TO COME SOON…</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt>selected_metrics<span class="classifier">list, optional</span></dt><dd><p>List of selected metrics to consider for optimization. Default is [“RMSE”].</p>
+<dt>metrics<span class="classifier">list, optional</span></dt><dd><p>List of selected metrics to consider for optimization. Default is [“RMSE”].</p>
 </dd>
 </dl>
 </li>
@@ -523,18 +522,18 @@ TO COME SOON…</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>self</strong> – CDRec object with <cite>imputed_matrix</cite> set.</p>
+<dd class="field-even"><p><strong>self</strong> – CDRec object with <cite>recov_data</cite> set.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec" title="imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec">CDRec</a></p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdrec_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cdrec_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cdrec_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>  <span class="c1"># default parameters for imputation &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cdrec_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;iterations&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">})</span>  <span class="c1"># user-defined &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cdrec_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>  <span class="c1"># auto-ml with bayesian</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">cdrec_imputer</span><span class="o">.</span><span class="n">imputed_matrix</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdrec_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;iterations&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">})</span>  <span class="c1"># user-defined &gt; or</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdrec_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;input_data&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>  <span class="c1"># auto-ml with bayesian</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">cdrec_imputer</span><span class="o">.</span><span class="n">recov_data</span>
 </pre></div>
 </div>
 <p class="rubric">References</p>
@@ -548,13 +547,13 @@ TO COME SOON…</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score" title="Link to this definition"></a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_matrix</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>imputed_matrix</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>recov_data</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -581,22 +580,22 @@ TO COME SOON…</p>
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.STMVL">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">STMVL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.PatternSearch.STMVL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">STMVL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.PatternSearch.STMVL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer" title="imputegap.recovery.imputation.BaseImputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseImputer</span></code></a></p>
 <p>STMVL class to impute missing values using Spatio-Temporal Matrix Variational Learning (STMVL).</p>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">impute(self,</span> <span class="pre">user_defined=True,</span> <span class="pre">params=None):</span></span></dt>
+<span class="sig-name descname"><span class="pre">impute(self,</span> <span class="pre">user_def=True,</span> <span class="pre">params=None):</span></span></dt>
 <dd><p>Perform imputation using the STMVL algorithm.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the BaseImputer with an infected time series matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>infected_matrix</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
+<dd class="field-odd"><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -608,12 +607,12 @@ TO COME SOON…</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_defined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.PatternSearch.STMVL.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.impute" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.PatternSearch.STMVL.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.impute" title="Link to this definition"></a></dt>
 <dd><p>Perform imputation using the STMVL algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>user_defined</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use user-defined or default parameters (default is True).</p></li>
+<li><p><strong>user_def</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use user-defined or default parameters (default is True).</p></li>
 <li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Parameters of the STMVL algorithm, if None, default ones are loaded.</p>
 <ul>
 <li><dl class="simple">
@@ -636,18 +635,18 @@ TO COME SOON…</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>self</strong> – The object with <cite>imputed_matrix</cite> set.</p>
+<dd class="field-even"><p><strong>self</strong> – The object with <cite>recov_data</cite> set.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL" title="imputegap.recovery.imputation.Imputation.PatternSearch.STMVL">STMVL</a></p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmvl_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmvl_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmvl_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>  <span class="c1"># default parameters for imputation &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stmvl_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;window_size&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span><span class="mf">0.85</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">})</span>  <span class="c1"># user-defined  &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stmvl_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>  <span class="c1"># auto-ml with bayesian</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">stmvl_imputer</span><span class="o">.</span><span class="n">imputed_matrix</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmvl_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;window_size&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span><span class="mf">0.85</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">})</span>  <span class="c1"># user-defined  &gt; or</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmvl_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;input_data&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>  <span class="c1"># auto-ml with bayesian</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">stmvl_imputer</span><span class="o">.</span><span class="n">recov_data</span>
 </pre></div>
 </div>
 <p class="rubric">References</p>
@@ -662,13 +661,13 @@ School of Information Science and Technology, Southwest Jiaotong University; Mic
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score" title="Link to this definition"></a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_matrix</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>imputed_matrix</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>recov_data</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -697,22 +696,22 @@ School of Information Science and Technology, Southwest Jiaotong University; Mic
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.IIM">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IIM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.IIM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IIM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.IIM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer" title="imputegap.recovery.imputation.BaseImputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseImputer</span></code></a></p>
 <p>IIM class to impute missing values using Iterative Imputation with Metric Learning (IIM).</p>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">impute(self,</span> <span class="pre">user_defined=True,</span> <span class="pre">params=None):</span></span></dt>
+<span class="sig-name descname"><span class="pre">impute(self,</span> <span class="pre">user_def=True,</span> <span class="pre">params=None):</span></span></dt>
 <dd><p>Perform imputation using the IIM algorithm.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.IIM.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the BaseImputer with an infected time series matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>infected_matrix</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
+<dd class="field-odd"><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -724,12 +723,12 @@ School of Information Science and Technology, Southwest Jiaotong University; Mic
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.IIM.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_defined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.IIM.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM.impute" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.IIM.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM.impute" title="Link to this definition"></a></dt>
 <dd><p>Perform imputation using the IIM algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>user_defined</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use user-defined or default parameters (default is True).</p></li>
+<li><p><strong>user_def</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use user-defined or default parameters (default is True).</p></li>
 <li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Parameters of the IIM algorithm, if None, default ones are loaded.</p>
 <ul>
 <li><dl class="simple">
@@ -747,18 +746,18 @@ School of Information Science and Technology, Southwest Jiaotong University; Mic
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>self</strong> – The object with <cite>imputed_matrix</cite> set.</p>
+<dd class="field-even"><p><strong>self</strong> – The object with <cite>recov_data</cite> set.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM" title="imputegap.recovery.imputation.Imputation.Statistics.IIM">IIM</a></p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iim_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">infected_matrix</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">iim_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">iim_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>  <span class="c1"># default parameters for imputation &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">iim_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;learning_neighbors&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>  <span class="c1"># user-defined  &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">iim_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ground_truth&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>  <span class="c1"># auto-ml with bayesian</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">imputed_data</span> <span class="o">=</span> <span class="n">iim_imputer</span><span class="o">.</span><span class="n">imputed_matrix</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iim_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;learning_neighbors&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>  <span class="c1"># user-defined  &gt; or</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iim_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;input_data&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}})</span>  <span class="c1"># auto-ml with bayesian</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">iim_imputer</span><span class="o">.</span><span class="n">recov_data</span>
 </pre></div>
 </div>
 <p class="rubric">References</p>
@@ -773,13 +772,13 @@ keywords: {Data models;Adaptation models;Computational modeling;Predictive model
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.IIM.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM.score" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.IIM.score" title="Link to this definition"></a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_matrix</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>imputed_matrix</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>recov_data</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -792,7 +791,7 @@ keywords: {Data models;Adaptation models;Computational modeling;Predictive model
 
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImpute">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MeanImpute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.MeanImpute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MeanImpute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.MeanImpute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer" title="imputegap.recovery.imputation.BaseImputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseImputer</span></code></a></p>
 <p>MeanImpute class to impute missing values with the mean value of the ground truth.</p>
 <dl class="py method">
@@ -803,11 +802,11 @@ keywords: {Data models;Adaptation models;Computational modeling;Predictive model
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the BaseImputer with an infected time series matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>infected_matrix</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
+<dd class="field-odd"><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -827,7 +826,7 @@ Template for adding external new algorithm</p>
 <dd class="field-odd"><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of algorithm parameters (default is None).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>self</strong> – The object with <cite>imputed_matrix</cite> set.</p>
+<dd class="field-even"><p><strong>self</strong> – The object with <cite>recov_data</cite> set.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute" title="imputegap.recovery.imputation.Imputation.Statistics.MinImpute">MinImpute</a></p>
@@ -842,13 +841,13 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score" title="Link to this definition"></a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_matrix</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>imputed_matrix</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>recov_data</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -861,7 +860,7 @@ Template for adding external new algorithm</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MinImpute">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MinImpute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.MinImpute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MinImpute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.MinImpute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer" title="imputegap.recovery.imputation.BaseImputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseImputer</span></code></a></p>
 <p>MinImpute class to impute missing values with the minimum value of the ground truth.</p>
 <dl class="py method">
@@ -872,11 +871,11 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MinImpute.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the BaseImputer with an infected time series matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>infected_matrix</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
+<dd class="field-odd"><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -896,7 +895,7 @@ Template for adding external new algorithm</p>
 <dd class="field-odd"><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of algorithm parameters (default is None).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>self</strong> – The object with <cite>imputed_matrix</cite> set.</p>
+<dd class="field-even"><p><strong>self</strong> – The object with <cite>recov_data</cite> set.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute" title="imputegap.recovery.imputation.Imputation.Statistics.MinImpute">MinImpute</a></p>
@@ -911,13 +910,13 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score" title="Link to this definition"></a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_matrix</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>imputed_matrix</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>recov_data</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -930,7 +929,7 @@ Template for adding external new algorithm</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ZeroImpute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.ZeroImpute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ZeroImpute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.ZeroImpute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer" title="imputegap.recovery.imputation.BaseImputer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseImputer</span></code></a></p>
 <p>ZeroImpute class to impute missing values with zeros.</p>
 <dl class="py method">
@@ -941,11 +940,11 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infected_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the BaseImputer with an infected time series matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>infected_matrix</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
+<dd class="field-odd"><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – Matrix used during the imputation of the time series.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -965,7 +964,7 @@ Template for adding external new algorithm</p>
 <dd class="field-odd"><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of algorithm parameters (default is None).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>self</strong> – The object with <cite>imputed_matrix</cite> set.</p>
+<dd class="field-even"><p><strong>self</strong> – The object with <cite>recov_data</cite> set.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute" title="imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute">ZeroImpute</a></p>
@@ -980,13 +979,13 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputed_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score" title="Link to this definition"></a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>raw_matrix</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>imputed_matrix</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>recov_data</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The imputed time series (default is None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1002,13 +1001,13 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.evaluate_params">
-<span class="sig-name descname"><span class="pre">evaluate_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.evaluate_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.evaluate_params" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">evaluate_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.evaluate_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.evaluate_params" title="Link to this definition"></a></dt>
 <dd><p>Evaluate various metrics for given parameters and imputation algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ground_truth</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
-<li><p><strong>contamination</strong> (<em>numpy.ndarray</em>) – The time series with contamination.</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The original time series without contamination.</p></li>
+<li><p><strong>incomp_data</strong> (<em>numpy.ndarray</em>) – The time series with contamination.</p></li>
 <li><p><strong>configuration</strong> (<em>tuple</em>) – Tuple of the configuration of the algorithm.</p></li>
 <li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – Imputation algorithm to use. Valid values: ‘cdrec’, ‘mrnn’, ‘stmvl’, ‘iim’ (default is ‘cdrec’).</p></li>
 </ul>
@@ -1038,7 +1037,7 @@ Template for adding external new algorithm</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Quentin Nater.</p>
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

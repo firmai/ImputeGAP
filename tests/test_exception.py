@@ -16,15 +16,15 @@ class TestException(unittest.TestCase):
         """
         algorithm = "invalid_algo"
         with pytest.raises(ValueError, match=f"Invalid algorithm: {algorithm}"):
-            Imputation.evaluate_params(ground_truth=None, contamination=None, configuration=tuple(), algorithm=algorithm)
+            Imputation.evaluate_params(input_data=None, incomp_data=None, configuration=tuple(), algorithm=algorithm)
 
     def test_data_exc(self):
         """
-        The goal is to test the exception raised when ground_truth (raw_data) is None
+        The goal is to test the exception raised when input_data (raw_data) is None
         """
-        raw_data = None  # Simulate a scenario where raw_data is None
-        with pytest.raises(ValueError, match=f"Need ground_truth to be able to adapt the hyper-parameters: {raw_data}"):
-            _ = Imputation.MatrixCompletion.CDRec(None).impute(user_defined=False, params={"ground_truth":raw_data, "optimizer": "bayesian", "options":{"n_calls": 2}})
+        input_data = None  # Simulate a scenario where raw_data is None
+        with pytest.raises(ValueError, match=f"Need input_data to be able to adapt the hyper-parameters: {input_data}"):
+            _ = Imputation.MatrixCompletion.CDRec(None).impute(user_def=False, params={"input_data":input_data, "optimizer": "bayesian", "options":{"n_calls": 2}})
 
 
     def test_import_exc(self):
@@ -49,7 +49,7 @@ class TestException(unittest.TestCase):
         with pytest.raises(ValueError, match="The number of block to remove must be greater than 0. "
                                              "The dataset or the number of blocks may not be appropriate."):
             # Call the function or method that raises the ValueError
-            ts_01.Contaminate.mcar(ts=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), block_size=5)
+            ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), block_size=5)
 
     def test_percentage_exc(self):
         """
@@ -59,7 +59,7 @@ class TestException(unittest.TestCase):
         percentage = 120
 
         with pytest.raises(ValueError, match=f"The percentage is out of the acceptable range."):
-            ts_01.Contaminate.mcar(ts=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), missing_rate=percentage)
+            ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), missing_rate=percentage)
 
 
     def test_load_exc(self):
