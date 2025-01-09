@@ -9,7 +9,7 @@ import os
 import sys
 
 project = 'imputegap'
-copyright = '2024, Quentin Nater'
+copyright = '2025, Quentin Nater'
 author = 'Quentin Nater'
 
 

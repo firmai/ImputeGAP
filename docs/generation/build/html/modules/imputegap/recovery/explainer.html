@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.recovery.explainer &mdash; imputegap 1.0.2 documentation</title>
+  <title>imputegap.recovery.explainer &mdash; imputegap 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="../../../static/jquery.js?v=5d32c60e"></script>
       <script src="../../../static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../static/documentation_options.js?v=292eb321"></script>
+      <script src="../../../static/documentation_options.js?v=baaebd52"></script>
       <script src="../../../static/doctools.js?v=9bcbadda"></script>
       <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/js/theme.js"></script>
@@ -48,7 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -114,7 +114,7 @@
 <span class="sd">    load_configuration(file_path=None)</span>
 <span class="sd">        Load categories and features from a TOML file.</span>
 
-<span class="sd">    extract_features(data, features_categories, features_list, do_catch24=True)</span>
+<span class="sd">    extractor_pycatch(data, features_categories, features_list, do_catch24=True)</span>
 <span class="sd">        Extract features from time series data using pycatch22.</span>
 
 <span class="sd">    print(shap_values, shap_details=None)</span>
@@ -123,11 +123,11 @@
 <span class="sd">    convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save)</span>
 <span class="sd">        Convert SHAP raw results into a refined format for display.</span>
 
-<span class="sd">    launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)</span>
+<span class="sd">    execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)</span>
 <span class="sd">        Launch the SHAP model to explain the dataset features.</span>
 
-<span class="sd">    shap_explainer(raw_data, algorithm=&quot;cdrec&quot;, params=None, contamination=&quot;mcar&quot;, missing_rate=0.4,</span>
-<span class="sd">                   block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,</span>
+<span class="sd">    shap_explainer(input_data, algorithm=&quot;cdrec&quot;, params=None, extractor=&quot;pycatch22&quot;, incomp_data=&quot;mcar&quot;,</span>
+<span class="sd">                   missing_rate=0.4, block_size=10, offset=0.1, seed=True, limitation=15, splitter=0,</span>
 <span class="sd">                   file_name=&quot;ts&quot;, display=False, verbose=False)</span>
 <span class="sd">        Handle parameters and set variables to launch the SHAP model.</span>
 
@@ -166,9 +166,9 @@
 
 
 
-<div class="viewcode-block" id="Explainer.extract_features">
-<a class="viewcode-back" href="../../../imputegap.explainer.html#imputegap.recovery.explainer.Explainer.extract_features">[docs]</a>
-    <span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">features_categories</span><span class="p">,</span> <span class="n">features_list</span><span class="p">,</span> <span class="n">do_catch24</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Explainer.extractor_pycatch">
+<a class="viewcode-back" href="../../../imputegap.explainer.html#imputegap.recovery.explainer.Explainer.extractor_pycatch">[docs]</a>
+    <span class="k">def</span> <span class="nf">extractor_pycatch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">features_categories</span><span class="p">,</span> <span class="n">features_list</span><span class="p">,</span> <span class="n">do_catch24</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract features from time series data using pycatch22.</span>
 
@@ -249,21 +249,9 @@
 <span class="sd">        -------</span>
 <span class="sd">        None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="n">shap_details</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">x_data (with&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">shap_details</span><span class="p">),</span> <span class="s2">&quot;elements) : &quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">shap_details</span><span class="p">):</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">FEATURES VALUES&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span> <span class="s2">&quot;) : &quot;</span><span class="p">,</span> <span class="o">*</span><span class="nb">input</span><span class="p">)</span>
-
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">y_data (with&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">shap_details</span><span class="p">),</span> <span class="s2">&quot;elements) : &quot;</span><span class="p">)</span>
-
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">shap_details</span><span class="p">):</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">RMSE SERIES </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">&lt;5</span><span class="si">}</span><span class="s2"> : </span><span class="si">{</span><span class="n">output</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">SHAP Results details : &quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">algo</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">mean_features</span><span class="p">)</span> <span class="ow">in</span> <span class="n">shap_values</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Feature : </span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">&lt;5</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">algo</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> with a score of </span><span class="si">{</span><span class="n">rate</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">category</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">description</span><span class="si">:</span><span class="s2">&lt;75</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Feature : </span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">&lt;5</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">algo</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> with a score of </span><span class="si">{</span><span class="n">rate</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">category</span><span class="si">:</span><span class="s2">&lt;18</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">description</span><span class="si">:</span><span class="s2">&lt;75</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Explainer.convert_results">
@@ -316,10 +304,10 @@
         <span class="k">return</span> <span class="n">result_shap</span></div>
 
 
-<div class="viewcode-block" id="Explainer.launch_shap_model">
-<a class="viewcode-back" href="../../../imputegap.explainer.html#imputegap.recovery.explainer.Explainer.launch_shap_model">[docs]</a>
-    <span class="k">def</span> <span class="nf">launch_shap_model</span><span class="p">(</span><span class="n">x_dataset</span><span class="p">,</span> <span class="n">x_information</span><span class="p">,</span> <span class="n">y_dataset</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">splitter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                          <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Explainer.execute_shap_model">
+<a class="viewcode-back" href="../../../imputegap.explainer.html#imputegap.recovery.explainer.Explainer.execute_shap_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">execute_shap_model</span><span class="p">(</span><span class="n">x_dataset</span><span class="p">,</span> <span class="n">x_information</span><span class="p">,</span> <span class="n">y_dataset</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">splitter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                           <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Launch the SHAP model for explaining the features of the dataset.</span>
 
@@ -348,14 +336,14 @@
 <span class="sd">            Results of the SHAP explainer model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Initilization of the SHAP model with &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_information</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Initialization of the SHAP model with dimension&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_information</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
         <span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;./assets/shap/&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_file</span><span class="p">):</span>
             <span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;./imputegap&quot;</span> <span class="o">+</span> <span class="n">path_file</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
         <span class="n">x_features</span><span class="p">,</span> <span class="n">x_categories</span><span class="p">,</span> <span class="n">x_descriptions</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
-        <span class="n">x_fs</span><span class="p">,</span> <span class="n">x_cs</span><span class="p">,</span> <span class="n">x_ds</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">x_fs</span><span class="p">,</span> <span class="n">x_cs</span><span class="p">,</span> <span class="n">x_ds</span><span class="p">,</span> <span class="n">alphas</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">current_time_series</span> <span class="ow">in</span> <span class="n">x_information</span><span class="p">:</span>
             <span class="n">x_fs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -415,28 +403,30 @@
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path_file</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">shval</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">series_names</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_file</span> <span class="o">+</span> <span class="n">file</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">algorithm</span> <span class="o">+</span> <span class="s2">&quot;_shap_reverse_plot.png&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP Features by Series&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="n">shap</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">waterfall</span><span class="p">(</span><span class="n">shval_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">show</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_file</span> <span class="o">+</span> <span class="n">file</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">algorithm</span> <span class="o">+</span> <span class="s2">&quot;_DTL_Waterfall.png&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP Waterfall Results&quot;</span><span class="p">)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>  <span class="c1"># Get the current figure created by SHAP</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Ensure the size is correct</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
-        <span class="n">shap</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">beeswarm</span><span class="p">(</span><span class="n">shval_x</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
+        <span class="n">shap</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">beeswarm</span><span class="p">(</span><span class="n">shval_x</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="n">display</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
         <span class="n">alpha</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_file</span> <span class="o">+</span> <span class="n">file</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">algorithm</span> <span class="o">+</span> <span class="s2">&quot;_DTL_Beeswarm.png&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP Beeswarm Results&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="n">total_weights_for_all_algorithms</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -493,7 +483,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP details of geometry&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">transformation</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">transformationT</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
                           <span class="n">feature_names</span><span class="o">=</span><span class="n">transformationDesc</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
@@ -501,7 +491,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP details of transformation&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">correlation</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">correlationT</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
                           <span class="n">feature_names</span><span class="o">=</span><span class="n">correlationDesc</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
@@ -509,7 +499,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP details of correlation&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trend</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trendT</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">plot_size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">trendDesc</span><span class="p">,</span>
                           <span class="n">show</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
@@ -517,7 +507,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP details of Trend&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="n">aggregation_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
         <span class="n">aggregation_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">correlation</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
@@ -539,7 +529,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">aggregation_features</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">aggregation_test</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">series_names</span><span class="p">,</span>
                           <span class="n">show</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
@@ -547,7 +537,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;SHAP Aggregation Features by Series&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t</span><span class="s2">GRAPH has benn computed : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">alphas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">SHAP Families details :&quot;</span><span class="p">)</span>
@@ -566,6 +556,9 @@
 
         <span class="n">total_weights_for_all_algorithms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_weights_for_all_algorithms</span><span class="p">,</span> <span class="n">total_weights_percent</span><span class="p">)</span>
 
+        <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n\t</span><span class="s2">plot has been saved : &quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+
         <span class="n">results_shap</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">convert_results</span><span class="p">(</span><span class="n">total_weights_for_all_algorithms</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">x_descriptions</span><span class="p">,</span>
                                                  <span class="n">x_features</span><span class="p">,</span> <span class="n">x_categories</span><span class="p">,</span> <span class="n">mean_features</span><span class="p">,</span>
                                                  <span class="n">to_save</span><span class="o">=</span><span class="n">path_file</span> <span class="o">+</span> <span class="n">file</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">algorithm</span><span class="p">)</span>
@@ -575,36 +568,36 @@
 
 <div class="viewcode-block" id="Explainer.shap_explainer">
 <a class="viewcode-back" href="../../../imputegap.explainer.html#imputegap.recovery.explainer.Explainer.shap_explainer">[docs]</a>
-    <span class="k">def</span> <span class="nf">shap_explainer</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">contamination</span><span class="o">=</span><span class="s2">&quot;mcar&quot;</span><span class="p">,</span> <span class="n">missing_rate</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
-                       <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">protection</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">use_seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">limitation</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">splitter</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">shap_explainer</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extractor</span><span class="o">=</span><span class="s2">&quot;pycatch22&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;mcar&quot;</span><span class="p">,</span> <span class="n">missing_rate</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+                       <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">limit_ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
                        <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;ts&quot;</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle parameters and set variables to launch the SHAP model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        raw_data : numpy.ndarray</span>
+<span class="sd">        input_data : numpy.ndarray</span>
 <span class="sd">            The original time series dataset.</span>
 <span class="sd">        algorithm : str, optional</span>
 <span class="sd">            The algorithm used for imputation (default is &#39;cdrec&#39;). Valid values: &#39;cdrec&#39;, &#39;stmvl&#39;, &#39;iim&#39;, &#39;mrnn&#39;.</span>
 <span class="sd">        params : dict, optional</span>
 <span class="sd">            Parameters for the algorithm.</span>
-<span class="sd">        contamination : str, optional</span>
-<span class="sd">            Contamination scenario to apply (default is &#39;mcar&#39;).</span>
+<span class="sd">        pattern : str, optional</span>
+<span class="sd">            Contamination pattern to apply (default is &#39;mcar&#39;).</span>
+<span class="sd">        extractor : str, optional</span>
+<span class="sd">            Extractor use to get the features of the data (default is &#39;pycatch22&#39;).</span>
 <span class="sd">        missing_rate : float, optional</span>
 <span class="sd">            Percentage of missing values per series (default is 0.4).</span>
 <span class="sd">        block_size : int, optional</span>
 <span class="sd">            Size of the block to remove at each random position selected (default is 10).</span>
-<span class="sd">        protection : float, optional</span>
+<span class="sd">        offset : float, optional</span>
 <span class="sd">            Size of the uncontaminated section at the beginning of the time series (default is 0.1).</span>
-<span class="sd">        use_seed : bool, optional</span>
+<span class="sd">        seed : bool, optional</span>
 <span class="sd">            Whether to use a seed for reproducibility (default is True).</span>
-<span class="sd">        seed : int, optional</span>
-<span class="sd">            Seed value for reproducibility (default is 42).</span>
-<span class="sd">        limitation : int, optional</span>
-<span class="sd">            Limitation on the number of series for the model (default is 15).</span>
-<span class="sd">        splitter : int, optional</span>
-<span class="sd">            Limitation on the training series for the model (default is 0).</span>
+<span class="sd">        limit_ratio : flaot, optional</span>
+<span class="sd">            Limitation on the number of series for the model (default is 1).</span>
+<span class="sd">        split_ratio : flaot, optional</span>
+<span class="sd">            Limitation on the training series for the model (default is 0.6).</span>
 <span class="sd">        file_name : str, optional</span>
 <span class="sd">            Name of the dataset file (default is &#39;ts&#39;).</span>
 <span class="sd">        display : bool, optional</span>
@@ -630,61 +623,76 @@
 
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
 
-        <span class="k">if</span> <span class="n">limitation</span> <span class="o">&gt;</span> <span class="n">raw_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="n">limitation</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.75</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">limit_ratio</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">or</span> <span class="n">limit_ratio</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">limit percentage higher than 100%, reduce to 100</span><span class="si">% o</span><span class="s2">f the dataset&quot;</span><span class="p">)</span>
+            <span class="n">limit_ratio</span> <span class="o">=</span> <span class="mi">1</span>
 
-        <span class="k">if</span> <span class="n">splitter</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">splitter</span> <span class="o">&gt;=</span> <span class="n">limitation</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">splitter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">limitation</span> <span class="o">*</span> <span class="mf">0.60</span><span class="p">)</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">limit_ratio</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">split_ratio</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">or</span> <span class="n">split_ratio</span> <span class="o">&gt;</span> <span class="mf">0.95</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">split ratio to small or to high, reduce to 60</span><span class="si">% o</span><span class="s2">f the dataset&quot;</span><span class="p">)</span>
+            <span class="n">split_ratio</span> <span class="o">=</span> <span class="mf">0.6</span>
+
+        <span class="n">training_ratio</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">limit</span> <span class="o">*</span> <span class="n">split_ratio</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="n">M</span><span class="p">:</span>
+            <span class="n">limit</span> <span class="o">=</span> <span class="n">M</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">From&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="s2">&quot;elements, the training dataset has been set with&quot;</span><span class="p">,</span> <span class="n">training_ratio</span><span class="p">,</span><span class="s2">&quot;elements and the testing dataset with&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">limit</span><span class="o">-</span><span class="n">training_ratio</span><span class="p">),</span> <span class="s2">&quot;elements&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SHAP Explainer has been called</span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;missing_values (&quot;</span><span class="p">,</span> <span class="n">missing_rate</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%)</span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;for a contamination (&quot;</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="s2">&quot;), </span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;for a contamination (&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="s2">&quot;), </span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;imputated by (&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="s2">&quot;) with params (&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot;)</span><span class="se">\n\t</span><span class="s2">&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;with limitation and splitter after verification of (&quot;</span><span class="p">,</span> <span class="n">limitation</span><span class="p">,</span> <span class="s2">&quot;) and (&quot;</span><span class="p">,</span> <span class="n">splitter</span><span class="p">,</span> <span class="s2">&quot;) for &quot;</span><span class="p">,</span>
-                  <span class="n">raw_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;...</span><span class="se">\n\n\t</span><span class="s2">Generation of the dataset with the time series...&quot;</span><span class="p">)</span>
+                  <span class="s2">&quot;with limitation and splitter after verification of (&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="s2">&quot;) and (&quot;</span><span class="p">,</span> <span class="n">training_ratio</span><span class="p">,</span> <span class="s2">&quot;) for &quot;</span><span class="p">,</span>
+                  <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;...</span><span class="se">\n\n\t</span><span class="s2">Generation of the dataset with the time series...&quot;</span><span class="p">)</span>
 
-        <span class="n">ground_truth_matrices</span><span class="p">,</span> <span class="n">obfuscated_matrices</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">input_data_matrices</span><span class="p">,</span> <span class="n">obfuscated_matrices</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="n">output_metrics</span><span class="p">,</span> <span class="n">output_rmse</span><span class="p">,</span> <span class="n">input_params</span><span class="p">,</span> <span class="n">input_params_full</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
 
         <span class="n">categories</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">load_configuration</span><span class="p">()</span>
 
-        <span class="k">for</span> <span class="n">current_series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">limitation</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">current_series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generation &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">limitation</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">current_series</span> <span class="o">/</span> <span class="n">limitation</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;%)________________________________________________________&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generation &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">current_series</span> <span class="o">/</span> <span class="n">limit</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span> <span class="s2">&quot;%)________________________________________________________&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Contamination &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">contamination</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span><span class="p">:</span>
-                <span class="n">obfuscated_matrix</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">Contaminate</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">series_impacted</span><span class="o">=</span><span class="n">current_series</span><span class="p">,</span>
-                                                                  <span class="n">missing_rate</span><span class="o">=</span><span class="n">missing_rate</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span>
-                                                                  <span class="n">protection</span><span class="o">=</span><span class="n">protection</span><span class="p">,</span> <span class="n">use_seed</span><span class="o">=</span><span class="n">use_seed</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
-                                                                  <span class="n">explainer</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span><span class="p">:</span>
+                <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">input_data</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="n">current_series</span><span class="p">,</span>
+                                                                    <span class="n">missing_rate</span><span class="o">=</span><span class="n">missing_rate</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span>
+                                                                    <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                                                                    <span class="n">explainer</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Contamination proposed not found : &quot;</span><span class="p">,</span> <span class="n">contamination</span><span class="p">,</span> <span class="s2">&quot; &gt;&gt; BREAK&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Contamination proposed not found : &quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="s2">&quot; &gt;&gt; BREAK&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
 
-            <span class="n">ground_truth_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
-            <span class="n">obfuscated_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+            <span class="n">input_data_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+            <span class="n">obfuscated_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 
-            <span class="n">catch_fct</span><span class="p">,</span> <span class="n">descriptions</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">extract_features</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">),</span> <span class="n">categories</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-            <span class="n">extracted_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">catch_fct</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="k">if</span> <span class="n">extractor</span> <span class="o">==</span> <span class="s2">&quot;pycatch22&quot;</span><span class="p">:</span>
+                <span class="n">catch_fct</span><span class="p">,</span> <span class="n">descriptions</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">extractor_pycatch</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">),</span> <span class="n">categories</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="n">extracted_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">catch_fct</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">catch_fct</span><span class="p">,</span> <span class="n">descriptions</span><span class="p">,</span> <span class="n">extracted_features</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
             <span class="n">input_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extracted_features</span><span class="p">)</span>
             <span class="n">input_params_full</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span>
 
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Imputation &quot;</span><span class="p">,</span> <span class="n">current_series</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
-                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
-                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
-                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
-                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">obfuscated_matrix</span><span class="p">)</span>
+                <span class="n">algo</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 
             <span class="n">algo</span><span class="o">.</span><span class="n">logs</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="n">algo</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_defined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-            <span class="n">algo</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+            <span class="n">algo</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">algo</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
             <span class="n">imputation_results</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">metrics</span>
 
             <span class="n">output_metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imputation_results</span><span class="p">)</span>
@@ -694,8 +702,8 @@
         <span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">input_params</span><span class="p">,</span> <span class="n">output_metrics</span><span class="p">):</span>
             <span class="n">shap_details</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">]))</span>
 
-        <span class="n">shap_values</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">launch_shap_model</span><span class="p">(</span><span class="n">input_params</span><span class="p">,</span> <span class="n">input_params_full</span><span class="p">,</span> <span class="n">output_rmse</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span>
-                                                  <span class="n">splitter</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="n">shap_values</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">execute_shap_model</span><span class="p">(</span><span class="n">input_params</span><span class="p">,</span> <span class="n">input_params_full</span><span class="p">,</span> <span class="n">output_rmse</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span>
+                                                   <span class="n">training_ratio</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">SHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -714,7 +722,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Quentin Nater.</p>
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

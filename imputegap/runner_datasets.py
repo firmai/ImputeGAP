@@ -39,7 +39,7 @@ for dataset in datasets:
     data_n.plot(input_data=data_n.data, save_path="./dataset/docs/" + dataset + "", display=False)
 
     categories, features = Explainer.load_configuration()
-    characteristics, descriptions = Explainer.extract_features(data=data_n.data, features_categories=categories, features_list=features, do_catch24=False)
+    characteristics, descriptions = Explainer.extractor_pycatch(data=data_n.data, features_categories=categories, features_list=features, do_catch24=False)
 
     p = "./dataset/docs/"+dataset+"/features_"+dataset+".txt"
     with open(p, 'w') as f:

@@ -56,7 +56,9 @@ This pattern uses random number generator with fixed seed and will produce the s
 <br />
 
 ### MISSING PERCENTAGE
-**MISSING PERCENTAGE** selects of percent of series to contaminate from the first to the last with a desired percentage of missing value to remove.
+**MISSING PERCENTAGE** selects a percentage of time series to contaminate, applying the desired percentage of missing values from the beginning to the end of each selected series.
+
+
 
 <table>
     <tbody>Definition</tbody>
@@ -82,7 +84,84 @@ This pattern uses random number generator with fixed seed and will produce the s
 
 
 ### BLACKOUT
-The **BLACKOUT** pattern selects all time series to introduce missing values. It removes a set percentage of data points from all series, creating gaps for further analysis.
+The **BLACKOUT** pattern introduces missing values across all time series by removing a specified percentage of data points from each series, creating uniform gaps for analysis.
+
+
+<table>
+    <tbody>Definition</tbody>
+    <tr>
+        <td>N</td><td>MAX</td>
+    </tr>
+    <tr>
+        <td>M</td><td>MAX</td>
+    </tr>
+    <tr>
+        <td>R</td><td>1 - 100%</td>
+    </tr>
+    <tr>
+        <td>S</td><td>100%</td>
+    </tr>
+    <tr>
+        <td>W</td><td>(N-P) * R</td>
+    </tr>
+    <tr>
+        <td>B</td><td>R</td>
+    </tr>
+ </table><br />
+
+
+### GAUSSIAN
+The **GAUSSIAN** pattern introduces missing values into a percentage of time series, determined based on probabilities derived from a Gaussian distribution.
+
+<table>
+    <tbody>Definition</tbody>
+    <tr>
+        <td>N</td><td>MAX</td>
+    </tr>
+    <tr>
+        <td>M</td><td>MAX</td>
+    </tr>
+    <tr>
+        <td>R</td><td>1 - 100%</td>
+    </tr>
+    <tr>
+        <td>S</td><td>100%</td>
+    </tr>
+    <tr>
+        <td>W</td><td>(N-P) * R * probability</td>
+    </tr>
+    <tr>
+        <td>B</td><td>R</td>
+    </tr>
+ </table><br />
+
+### DISJOINT
+The **DISJOINT** pattern introduces missing values into time series by selecting segments with non-overlapping intervals. This process continues until either the missing rate limit is reached or the series length is exhausted.
+
+<table>
+    <tbody>Definition</tbody>
+    <tr>
+        <td>N</td><td>MAX</td>
+    </tr>
+    <tr>
+        <td>M</td><td>MAX</td>
+    </tr>
+    <tr>
+        <td>R</td><td>1 - 100%</td>
+    </tr>
+    <tr>
+        <td>S</td><td>100%</td>
+    </tr>
+    <tr>
+        <td>W</td><td>(N-P) * R</td>
+    </tr>
+    <tr>
+        <td>B</td><td>R</td>
+    </tr>
+ </table><br />
+
+### OVERLAP
+The **OVERLAP** pattern selects time series segments for introducing missing values by using a disjoint interval that is shifted by a specified percentage. This process continues until either the missing rate limit is reached or the series length is exhausted.
 
 
 <table>

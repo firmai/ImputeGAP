@@ -21,7 +21,7 @@ cdrec.score(ts_1.data, cdrec.recov_data)
 
 # 6. display the results
 ts_1.print_results(cdrec.metrics)
-ts_1.plot(input_data=ts_1.data, incomp_data=miss_matrix, recov_data=cdrec.recov_data, max_series=1, save_path="./assets", display=True)
+ts_1.plot(input_data=ts_1.data, incomp_data=miss_matrix, recov_data=cdrec.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
 # 7. save hyperparameters
 utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")

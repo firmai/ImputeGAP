@@ -21,15 +21,19 @@ class Benchmark:
     -------
     _config_optimization():
         Configure and execute optimization for a selected imputation algorithm and contamination pattern.
+    average_runs_by_names(self, data):
+        Average the results of all runs depending on the dataset.
     avg_results():
         Calculate average metrics (e.g., RMSE) across multiple datasets and algorithm runs.
-    generate_matrix():
+    generate_heatmap():
         Generate and save a heatmap visualization of RMSE scores for datasets and algorithms.
-    generate_reports():
+    generate_reports_txt():
         Create detailed text-based reports summarizing metrics and timing results for all evaluations.
+    generate_reports_excel():
+        Create detailed excel-based reports summarizing metrics and timing results for all evaluations.
     generate_plots():
         Visualize metrics (e.g., RMSE, MAE) and timing (e.g., imputation, optimization) across patterns and datasets.
-    comprehensive_evaluation():
+    eval():
         Perform a complete benchmarking pipeline, including contamination, imputation, evaluation, and reporting.
 
     Example

@@ -35,9 +35,9 @@ class Explainer:
     launch_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)
         Launch the SHAP model to explain the dataset features.
 
-    shap_explainer(raw_data, algorithm="cdrec", params=None, contamination="mcar", missing_rate=0.4,
-                   block_size=10, protection=0.1, use_seed=True, seed=42, limitation=15, splitter=0,
-                   file_name="ts", display=False, verbose=False)
+    shap_explainer(raw_data, algorithm="cdrec", params=None, extractor="pycatch22",
+                   contamination="mcar", missing_rate=0.4, block_size=10, protection=0.1, use_seed=True, seed=42,
+                   limitation=15, splitter=0, file_name="ts", display=False, verbose=False)
         Handle parameters and set variables to launch the SHAP model.
 
     """

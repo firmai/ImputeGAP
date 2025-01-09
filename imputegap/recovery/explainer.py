@@ -23,7 +23,7 @@ class Explainer:
     load_configuration(file_path=None)
         Load categories and features from a TOML file.
 
-    extract_features(data, features_categories, features_list, do_catch24=True)
+    extractor_pycatch(data, features_categories, features_list, do_catch24=True)
         Extract features from time series data using pycatch22.
 
     print(shap_values, shap_details=None)
@@ -35,8 +35,8 @@ class Explainer:
     execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)
         Launch the SHAP model to explain the dataset features.
 
-    shap_explainer(input_data, algorithm="cdrec", params=None, incomp_data="mcar", missing_rate=0.4,
-                   block_size=10, offset=0.1, seed=True, limitation=15, splitter=0,
+    shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch22", incomp_data="mcar",
+                   missing_rate=0.4, block_size=10, offset=0.1, seed=True, limitation=15, splitter=0,
                    file_name="ts", display=False, verbose=False)
         Handle parameters and set variables to launch the SHAP model.
 
@@ -72,7 +72,7 @@ class Explainer:
         return categories, features
 
 
-    def extract_features(data, features_categories, features_list, do_catch24=True):
+    def extractor_pycatch(data, features_categories, features_list, do_catch24=True):
         """
         Extract features from time series data using pycatch22.
 
@@ -150,15 +150,6 @@ class Explainer:
         -------
         None
         """
-
-        #if shap_details is not None:
-            #print("\n\nx_data (with", len(shap_details), "elements) : ")
-            #for i, (input, _) in enumerate(shap_details):
-            #    print("\tFEATURES VALUES", i, "(", len(input), ") : ", *input)
-            #print("\ny_data (with", len(shap_details), "elements) : ")
-            #for i, (_, output) in enumerate(shap_details):
-            #    print(f"\tRMSE SERIES {i:<5} : {output:<15}")
-
         print("\n\nSHAP Results details : ")
         for (x, algo, rate, description, feature, category, mean_features) in shap_values:
             print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
@@ -319,11 +310,13 @@ class Explainer:
         shap.plots.waterfall(shval_x[0], show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Waterfall.png")
         plt.title("SHAP Waterfall Results")
+        fig = plt.gcf()  # Get the current figure created by SHAP
+        fig.set_size_inches(20, 10)  # Ensure the size is correct
         plt.savefig(alpha)
         plt.close()
         alphas.append(alpha)
 
-        shap.plots.beeswarm(shval_x, show=display)
+        shap.plots.beeswarm(shval_x, show=display, plot_size=(22, 10))
         alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Beeswarm.png")
         plt.title("SHAP Beeswarm Results")
         plt.savefig(alpha)
@@ -459,7 +452,7 @@ class Explainer:
         total_weights_for_all_algorithms = np.append(total_weights_for_all_algorithms, total_weights_percent)
 
         for alpha in alphas:
-            print("\n\n\t\t\tplot has been saved : ", alpha)
+            print("\n\n\tplot has been saved : ", alpha)
 
         results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions,
                                                  x_features, x_categories, mean_features,
@@ -467,7 +460,7 @@ class Explainer:
 
         return results_shap
 
-    def shap_explainer(input_data, algorithm="cdrec", params=None, pattern="mcar", missing_rate=0.4,
+    def shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch22", pattern="mcar", missing_rate=0.4,
                        block_size=10, offset=0.1, seed=True, limit_ratio=1, split_ratio=0.6,
                        file_name="ts", display=False, verbose=False):
         """
@@ -483,6 +476,8 @@ class Explainer:
             Parameters for the algorithm.
         pattern : str, optional
             Contamination pattern to apply (default is 'mcar').
+        extractor : str, optional
+            Extractor use to get the features of the data (default is 'pycatch22').
         missing_rate : float, optional
             Percentage of missing values per series (default is 0.4).
         block_size : int, optional
@@ -568,8 +563,11 @@ class Explainer:
             input_data_matrices.append(input_data)
             obfuscated_matrices.append(incomp_data)
 
-            catch_fct, descriptions = Explainer.extract_features(np.array(incomp_data), categories, features, False)
-            extracted_features = np.array(list(catch_fct.values()))
+            if extractor == "pycatch22":
+                catch_fct, descriptions = Explainer.extractor_pycatch(np.array(incomp_data), categories, features, False)
+                extracted_features = np.array(list(catch_fct.values()))
+            else:
+                catch_fct, descriptions, extracted_features = None, None, None
 
             input_params.append(extracted_features)
             input_params_full.append(descriptions)

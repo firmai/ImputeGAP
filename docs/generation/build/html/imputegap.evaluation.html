@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap.recovery.evaluation package &mdash; imputegap 1.0.2 documentation</title>
+  <title>imputegap.recovery.evaluation package &mdash; imputegap 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=292eb321"></script>
+      <script src="static/documentation_options.js?v=baaebd52"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -67,7 +67,6 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
@@ -130,12 +129,12 @@
 <span id="modules"></span><h2>Modules<a class="headerlink" href="#module-imputegap.recovery.evaluation" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.</p>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">metrics_computation():</span></span></dt>
+<span class="sig-name descname"><span class="pre">compute_all_metrics():</span></span></dt>
 <dd><p>Compute various evaluation metrics (RMSE, MAE, MI, CORRELATION) for the imputation.</p>
 </dd></dl>
 
@@ -161,6 +160,25 @@
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">compute_correlation():</span></span></dt>
 <dd><p>Compute the Pearson correlation coefficient between the ground truth and the imputed values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation.compute_all_metrics">
+<span class="sig-name descname"><span class="pre">compute_all_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_all_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_all_metrics" title="Link to this definition"></a></dt>
+<dd><p>Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.</p>
+<p>The metrics include RMSE, MAE, Mutual Information (MI), and Pearson Correlation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing the computed metrics:
+- “RMSE”: Root Mean Squared Error
+- “MAE”: Mean Absolute Error
+- “MI”: Mutual Information
+- “CORRELATION”: Pearson Correlation Coefficient</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -226,25 +244,6 @@ giving higher weight to large errors.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation.metrics_computation">
-<span class="sig-name descname"><span class="pre">metrics_computation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.metrics_computation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.metrics_computation" title="Link to this definition"></a></dt>
-<dd><p>Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.</p>
-<p>The metrics include RMSE, MAE, Mutual Information (MI), and Pearson Correlation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary containing the computed metrics:
-- “RMSE”: Root Mean Squared Error
-- “MAE”: Mean Absolute Error
-- “MI”: Mutual Information
-- “CORRELATION”: Pearson Correlation Coefficient</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -255,12 +254,12 @@ giving higher weight to large errors.</p>
 <span id="imputegap-recovery-evaluation-module"></span><h2>imputegap.recovery.evaluation module<a class="headerlink" href="#module-0" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="id0">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imputation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contamination</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.</p>
 <dl class="py method">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">metrics_computation():</span></span></dt>
+<span class="sig-name descname"><span class="pre">compute_all_metrics():</span></span></dt>
 <dd><p>Compute various evaluation metrics (RMSE, MAE, MI, CORRELATION) for the imputation.</p>
 </dd></dl>
 
@@ -290,7 +289,26 @@ giving higher weight to large errors.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">compute_correlation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_all_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_all_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.</p>
+<p>The metrics include RMSE, MAE, Mutual Information (MI), and Pearson Correlation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing the computed metrics:
+- “RMSE”: Root Mean Squared Error
+- “MAE”: Mean Absolute Error
+- “MI”: Mutual Information
+- “CORRELATION”: Pearson Correlation Coefficient</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">compute_correlation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
 <dd><p>Compute the Pearson Correlation Coefficient between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>Pearson Correlation measures the linear relationship between the ground truth and imputed values,
 with 1 being a perfect positive correlation and -1 a perfect negative correlation.</p>
@@ -305,8 +323,8 @@ with 1 being a perfect positive correlation and -1 a perfect negative correlatio
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">compute_mae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">compute_mae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
 <dd><p>Compute the Mean Absolute Error (MAE) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>The MAE measures the average magnitude of the error in absolute terms, making it more robust to outliers than RMSE.</p>
 <dl class="field-list simple">
@@ -320,8 +338,8 @@ with 1 being a perfect positive correlation and -1 a perfect negative correlatio
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">compute_mi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">compute_mi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
 <dd><p>Compute the Mutual Information (MI) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>MI measures the amount of shared information between the ground truth and the imputed values,
 indicating how well the imputation preserves the underlying patterns of the data.</p>
@@ -336,8 +354,8 @@ indicating how well the imputation preserves the underlying patterns of the data
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">compute_rmse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_rmse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">compute_rmse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_rmse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
 <dd><p>Compute the Root Mean Squared Error (RMSE) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>The RMSE measures the average magnitude of the error between the imputed values and the ground truth,
 giving higher weight to large errors.</p>
@@ -347,25 +365,6 @@ giving higher weight to large errors.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">metrics_computation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.metrics_computation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
-<dd><p>Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.</p>
-<p>The metrics include RMSE, MAE, Mutual Information (MI), and Pearson Correlation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary containing the computed metrics:
-- “RMSE”: Root Mean Squared Error
-- “MAE”: Mean Absolute Error
-- “MI”: Mutual Information
-- “CORRELATION”: Pearson Correlation Coefficient</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -385,7 +384,7 @@ giving higher weight to large errors.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Quentin Nater.</p>
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

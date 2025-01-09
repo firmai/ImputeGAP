@@ -460,6 +460,15 @@ class TimeSeries:
 
         blackout(ts, missing_rate=0.2, offset=0.1) :
             Apply blackout contamination to the time series data.
+
+        gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):
+            Apply Gaussian contamination to the time series data.
+
+        def disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):
+            Apply Disjoint contamination to the time series data.
+
+        def overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):
+            Apply Overlapping contamination to the time series data.
         """
 
         def mcar(input_data, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False):
@@ -616,8 +625,7 @@ class TimeSeries:
             numpy.ndarray
                 The contaminated time series data.
             """
-            return TimeSeries.Contamination.missing_percentage(input_data, series_rate=1, missing_rate=missing_rate,
-                                                               offset=offset)
+            return TimeSeries.Contamination.missing_percentage(input_data, series_rate=1, missing_rate=missing_rate, offset=offset)
 
         def gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):
             """
@@ -687,5 +695,116 @@ class TimeSeries:
 
                 # apply missing values
                 ts_contaminated[S, missing_indices] = np.nan
+
+            return ts_contaminated
+
+        def disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):
+            """
+            Apply disjoint contamination to the time series data.
+
+            Parameters
+            ----------
+            input_data : numpy.ndarray
+                The time series dataset to contaminate.
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.1).
+            limit : float, optional
+                Percentage expressing the limit index of the end of the contamination (default is 1: all length).
+            offset : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
+            """
+            ts_contaminated = input_data.copy()
+            M, N = ts_contaminated.shape
+
+            missing_rate = utils.verification_limitation(missing_rate)
+            offset = utils.verification_limitation(offset)
+
+            print("\n\nMISSING PERCENTAGE contamination has been called with :"
+                  "\n\ta missing rate of ", missing_rate * 100, "%",
+                  "\n\ta starting position at ", offset,
+                  "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
+
+            S = 0
+            X = int(len(ts_contaminated[0]) * offset) # current index with offset
+            final_limit = int(N*limit)-1
+
+            while S < M:
+                N = len(ts_contaminated[S])  # number of values in the series
+                P = int(N * offset)  # values to protect in the beginning of the series
+                W = int((N - P) * missing_rate)  # number of data to remove
+                L = X + W  # new limit
+
+                for to_remove in range(X, L):
+                    index = P + to_remove
+                    ts_contaminated[S, index] = np.nan
+
+                    if index >= final_limit:  # reach the limitation
+                        return ts_contaminated
+
+                X = L + 1
+                S = S + 1
+
+            return ts_contaminated
+
+        def overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):
+            """
+            Apply overlap contamination to the time series data.
+
+            Parameters
+            ----------
+            input_data : numpy.ndarray
+                The time series dataset to contaminate.
+            missing_rate : float, optional
+                Percentage of missing values per series (default is 0.2).
+            limit : float, optional
+                Percentage expressing the limit index of the end of the contamination (default is 1: all length).
+            shift : float, optional
+                Percentage of shift inside each the last disjoint contamination.
+            offset : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
+            """
+            ts_contaminated = input_data.copy()
+            M, N = ts_contaminated.shape
+
+            missing_rate = utils.verification_limitation(missing_rate)
+            offset = utils.verification_limitation(offset)
+
+            print("\n\nMISSING PERCENTAGE contamination has been called with :"
+                  "\n\ta missing rate of ", missing_rate * 100, "%",
+                  "\n\ta starting position at ", offset,
+                  "\n\ta shift overlap of ", shift * 100, "%",
+                  "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
+
+            S = 0
+            X = int(len(ts_contaminated[0]) * offset)  # current index with offset
+            X = X + int(X * shift)  # counter first shift
+            final_limit = int(N * limit) - 1
+
+            while S < M:
+                N = len(ts_contaminated[S])  # number of values in the series
+                P = int(N * offset)  # values to protect in the beginning of the series
+                W = int((N - P) * missing_rate)  # number of data to remove
+                X = X - int(X * shift)
+                L = X + W  # new limit
+
+                for to_remove in range(X, L):
+                    index = P + to_remove
+                    ts_contaminated[S, index] = np.nan
+
+                    if index >= final_limit:  # reach the limitation
+                        return ts_contaminated
+
+                X = L + 1
+                S = S + 1
 
             return ts_contaminated

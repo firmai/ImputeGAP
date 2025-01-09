@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imputegap package &mdash; imputegap 1.0.2 documentation</title>
+  <title>imputegap package &mdash; imputegap 1.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="static/custom.css" />
@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
       <script src="static/jquery.js?v=5d32c60e"></script>
       <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=292eb321"></script>
+      <script src="static/documentation_options.js?v=baaebd52"></script>
       <script src="static/doctools.js?v=9bcbadda"></script>
       <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.optimization.html">imputegap.recovery.optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.explainer.html">imputegap.recovery.explainer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.evaluation.html">imputegap.recovery.evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmarking.html">imputegap.recovery.benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.recovery.benchmark.html">imputegap.recovery.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.cdrec.html">imputegap.algorithms.cdrec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.stmvl.html">imputegap.algorithms.stmvl</a></li>
 <li class="toctree-l1"><a class="reference internal" href="autosummary/imputegap.algorithms.iim.html">imputegap.algorithms.iim</a></li>
@@ -68,7 +68,6 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
@@ -120,7 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html#module-imputegap.recovery.manager">Module contents</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries"><code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contaminate"><code class="docutils literal notranslate"><span class="pre">TimeSeries.Contaminate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination"><code class="docutils literal notranslate"><span class="pre">TimeSeries.Contamination</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.import_matrix"><code class="docutils literal notranslate"><span class="pre">TimeSeries.import_matrix()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.load_timeseries"><code class="docutils literal notranslate"><span class="pre">TimeSeries.load_timeseries()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.normalize"><code class="docutils literal notranslate"><span class="pre">TimeSeries.normalize()</span></code></a></li>
@@ -180,43 +179,16 @@
 <li class="toctree-l2"><a class="reference internal" href="imputegap.explainer.html#module-imputegap.recovery.explainer">Module contents</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer"><code class="docutils literal notranslate"><span class="pre">Explainer</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.load_configuration"><code class="docutils literal notranslate"><span class="pre">Explainer.load_configuration()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.extract_features"><code class="docutils literal notranslate"><span class="pre">Explainer.extract_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.extractor_pycatch"><code class="docutils literal notranslate"><span class="pre">Explainer.extractor_pycatch()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.print"><code class="docutils literal notranslate"><span class="pre">Explainer.print()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.convert_results"><code class="docutils literal notranslate"><span class="pre">Explainer.convert_results()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.launch_shap_model"><code class="docutils literal notranslate"><span class="pre">Explainer.launch_shap_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.execute_shap_model"><code class="docutils literal notranslate"><span class="pre">Explainer.execute_shap_model()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#id0"><code class="docutils literal notranslate"><span class="pre">Explainer.convert_results()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#id1"><code class="docutils literal notranslate"><span class="pre">Explainer.extract_features()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#id2"><code class="docutils literal notranslate"><span class="pre">Explainer.launch_shap_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#id1"><code class="docutils literal notranslate"><span class="pre">Explainer.execute_shap_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#id2"><code class="docutils literal notranslate"><span class="pre">Explainer.extractor_pycatch()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#id3"><code class="docutils literal notranslate"><span class="pre">Explainer.load_configuration()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#id4"><code class="docutils literal notranslate"><span class="pre">Explainer.print()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.shap_explainer"><code class="docutils literal notranslate"><span class="pre">Explainer.shap_explainer()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="imputegap.benchmarking.html">imputegap.recovery.benchmarking package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmarking.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmarking.html#module-imputegap.recovery.benchmarking">Modules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking"><code class="docutils literal notranslate"><span class="pre">Benchmarking</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.avg_results"><code class="docutils literal notranslate"><span class="pre">Benchmarking.avg_results()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.comprehensive_evaluation"><code class="docutils literal notranslate"><span class="pre">Benchmarking.comprehensive_evaluation()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_matrix"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_matrix()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_plots"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_plots()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#imputegap.recovery.benchmarking.Benchmarking.generate_reports"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_reports()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmarking.html#submodule-documentation">Submodule Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmarking.html#module-0">imputegap.recovery.evaluation module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.benchmarking.html#id0"><code class="docutils literal notranslate"><span class="pre">Benchmarking</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#id1"><code class="docutils literal notranslate"><span class="pre">Benchmarking.avg_results()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#id2"><code class="docutils literal notranslate"><span class="pre">Benchmarking.comprehensive_evaluation()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#id3"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_matrix()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#id4"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_plots()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.benchmarking.html#id5"><code class="docutils literal notranslate"><span class="pre">Benchmarking.generate_reports()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -300,11 +272,11 @@
 <li class="toctree-l2"><a class="reference internal" href="imputegap.evaluation.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.evaluation.html#module-imputegap.recovery.evaluation">Modules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation"><code class="docutils literal notranslate"><span class="pre">Evaluation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_all_metrics"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_all_metrics()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_correlation"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_correlation()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mae"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_mae()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mi"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_mi()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_rmse"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_rmse()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.metrics_computation"><code class="docutils literal notranslate"><span class="pre">Evaluation.metrics_computation()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -312,11 +284,11 @@
 <li class="toctree-l2"><a class="reference internal" href="imputegap.evaluation.html#submodule-documentation">Submodule Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.evaluation.html#module-0">imputegap.recovery.evaluation module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.evaluation.html#id0"><code class="docutils literal notranslate"><span class="pre">Evaluation</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id1"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_correlation()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id2"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_mae()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id3"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_mi()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id4"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_rmse()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id5"><code class="docutils literal notranslate"><span class="pre">Evaluation.metrics_computation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id1"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_all_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id2"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_correlation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id3"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_mae()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id4"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_mi()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.evaluation.html#id5"><code class="docutils literal notranslate"><span class="pre">Evaluation.compute_rmse()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -345,7 +317,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Quentin Nater.</p>
+    <p>&#169; Copyright 2025, Quentin Nater.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
