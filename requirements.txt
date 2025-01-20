@@ -23,8 +23,8 @@ torch==2.5.1
 torchvision==0.20.1
 torchaudio==2.5.1
 
-# PyTorch Geometric and Extensions
---find-links https://data.pyg.org/whl/torch-2.5.1.html
+# PyTorch Geometric and Extensions (use prebuilt binaries)
+-f https://data.pyg.org/whl/torch-2.5.1.html
 torch-geometric==2.6.1
 torch-cluster==1.6.3
 
