@@ -1,0 +1,2 @@
+torch-geometric==2.6.1
+torch-cluster==1.6.3
