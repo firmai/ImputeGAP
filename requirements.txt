@@ -23,10 +23,9 @@ torch==2.5.1  # brits
 torchvision==0.20.1  # brits
 torchaudio==2.5.1  # brits
 
-# PyTorch Geometric and Extensions (Install via prebuilt binaries)
+# PyTorch Geometric and Extensions
 torch-geometric==2.6.1  # MPIN
-torch-cluster==1.6.3  # MPIN; install from prebuilt binaries
--f https://data.pyg.org/whl/torch-2.5.1.html
+torch-cluster==1.6.3 --find-links https://data.pyg.org/whl/torch-2.5.1.html  # MPIN
 
 # Other Dependencies
 ujson==5.10.0  # brits
