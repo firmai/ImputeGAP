@@ -1,7 +1,8 @@
 import copy
+import math
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import math
 from imputegap.wrapper.AlgoPython.priSTI.models.generate_adj import *
 
 
@@ -345,7 +346,9 @@ class Attn_spa(nn.Module):
         # merge head into batch for queries and key / values
         queries = queries.reshape(b, n, h, -1).transpose(1, 2)
 
-        merge_key_values = lambda t: t.reshape(b, k, -1, d_h).transpose(1, 2).expand(-1, h, -1, -1)
+        def merge_key_values(t):
+            return t.reshape(b, k, -1, d_h).transpose(1, 2).expand(-1, h, -1, -1)
+
         keys, values = map(merge_key_values, (keys, values))
 
         # attention
