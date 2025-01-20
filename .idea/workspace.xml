@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d2565aa5-b0c7-4b53-9b23-84bd42c9e5d7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/ruff_lint.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ruff_lint.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -293,7 +291,7 @@
       <workItem from="1737030284824" duration="646000" />
       <workItem from="1737038938437" duration="5646000" />
       <workItem from="1737103710507" duration="10389000" />
-      <workItem from="1737378385769" duration="15757000" />
+      <workItem from="1737378385769" duration="15887000" />
     </task>
     <servers />
   </component>

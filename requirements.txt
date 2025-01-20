@@ -19,17 +19,18 @@ types-setuptools
 wheel
 
 # PyTorch and Related Libraries
-torch==2.5.1  # brits
-torchvision==0.20.1  # brits
-torchaudio==2.5.1  # brits
+torch==2.5.1
+torchvision==0.20.1
+torchaudio==2.5.1
 
 # PyTorch Geometric and Extensions
-torch-geometric==2.6.1  # MPIN
-torch-cluster==1.6.3 --find-links https://data.pyg.org/whl/torch-2.5.1.html  # MPIN
+--find-links https://data.pyg.org/whl/torch-2.5.1.html
+torch-geometric==2.6.1
+torch-cluster==1.6.3
 
 # Other Dependencies
-ujson==5.10.0  # brits
-ipdb==0.13.13  # brits
-pandas==2.0.3  # brits
-torchcde==0.2.5  # PRISTI
-tables==3.10.2  # SSA
+ujson==5.10.0
+ipdb==0.13.13
+pandas==2.0.3
+torchcde==0.2.5
+tables==3.10.2
