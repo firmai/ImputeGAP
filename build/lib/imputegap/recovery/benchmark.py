@@ -91,17 +91,17 @@ class Benchmark:
             TimeSeries object containing contaminated data.
         """
         if pattern == "mcar":
-            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=rate, missing_rate=rate, block_size=block_size_mcar, seed=True)
+            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, dataset_rate=rate, series_rate=rate, block_size=block_size_mcar, seed=True)
         elif pattern == "mp":
-            incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, series_rate=rate, missing_rate=rate)
+            incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, dataset_rate=rate, series_rate=rate)
         elif pattern == "disjoint":
-            incomp_data = ts_test.Contamination.disjoint(input_data=ts_test.data, missing_rate=rate)
+            incomp_data = ts_test.Contamination.disjoint(input_data=ts_test.data, series_rate=rate)
         elif pattern == "overlap":
-            incomp_data = ts_test.Contamination.overlap(input_data=ts_test.data, missing_rate=rate)
+            incomp_data = ts_test.Contamination.overlap(input_data=ts_test.data, series_rate=rate)
         elif pattern == "gaussian":
-            incomp_data = ts_test.Contamination.gaussian(input_data=ts_test.data, series_rate=rate, missing_rate=rate, seed=True)
+            incomp_data = ts_test.Contamination.gaussian(input_data=ts_test.data, dataset_rate=rate, series_rate=rate, seed=True)
         else:
-            incomp_data = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=rate)
+            incomp_data = ts_test.Contamination.blackout(input_data=ts_test.data, series_rate=rate)
 
         return incomp_data
 
@@ -678,8 +678,8 @@ class Benchmark:
                     limitation_series = 10
                     limitation_values = 110
 
-                ts_test.load_timeseries(data=utils.search_path(dataset), max_series=limitation_series,
-                                        max_values=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), max_series=limitation_series,
+                                    max_values=limitation_values, header=header)
 
                 start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape

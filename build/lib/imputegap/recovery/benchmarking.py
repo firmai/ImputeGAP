@@ -56,14 +56,14 @@ class Benchmarking:
         """
 
         if scenario == "mcar":
-            infected_matrix_opti = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=opti_mean,
-                                                              missing_rate=opti_mean, block_size=block_size_mcar,
+            infected_matrix_opti = ts_test.Contamination.mcar(input_data=ts_test.data, dataset_rate=opti_mean,
+                                                              series_rate=opti_mean, block_size=block_size_mcar,
                                                               use_seed=True, seed=42)
         elif scenario == "mp":
-            infected_matrix_opti = ts_test.Contamination.missing_percentage(input_data=ts_test.data, series_rate=opti_mean,
-                                                                            missing_rate=opti_mean)
+            infected_matrix_opti = ts_test.Contamination.missing_percentage(input_data=ts_test.data, dataset_rate=opti_mean,
+                                                                            series_rate=opti_mean)
         else:
-            infected_matrix_opti = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=opti_mean)
+            infected_matrix_opti = ts_test.Contamination.blackout(input_data=ts_test.data, series_rate=opti_mean)
 
         i_opti = None
         if algorithm == "cdrec":
@@ -434,8 +434,8 @@ class Benchmarking:
                     limitation_values = 110
                     print("TEST LOADED...")
 
-                ts_test.load_timeseries(data=utils.search_path(dataset), max_series=limitation_series,
-                                        max_values=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), max_series=limitation_series,
+                                    max_values=limitation_values, header=header)
 
                 start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape
@@ -458,15 +458,15 @@ class Benchmarking:
 
                             start_time_contamination = time.time()  # Record start time
                             if scenario == "mcar":
-                                infected_matrix = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=x,
-                                                                             missing_rate=x, block_size=block_size_mcar,
+                                infected_matrix = ts_test.Contamination.mcar(input_data=ts_test.data, dataset_rate=x,
+                                                                             series_rate=x, block_size=block_size_mcar,
                                                                              use_seed=True, seed=42)
                             elif scenario == "mp":
                                 infected_matrix = ts_test.Contamination.missing_percentage(input_data=ts_test.data,
-                                                                                           series_rate=x,
-                                                                                           missing_rate=x)
+                                                                                           dataset_rate=x,
+                                                                                           series_rate=x)
                             else:
-                                infected_matrix = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=x)
+                                infected_matrix = ts_test.Contamination.blackout(input_data=ts_test.data, series_rate=x)
                             end_time_contamination = time.time()
 
                             for optimizer in optimizers:

@@ -27,3 +27,15 @@ jobs:
         python -m pytest ./tests/test_imputation_iim.py
         python -m pytest ./tests/test_imputation_mrnn.py
         python -m pytest ./tests/test_imputation_stmvl.py
+        python -m pytest ./tests/test_imputation_dynammo.py
+        python -m pytest ./tests/test_imputation_grouse.py
+        python -m pytest ./tests/test_imputation_iterative_svd.py
+        python -m pytest ./tests/test_imputation_rosl.py
+        python -m pytest ./tests/test_imputation_soft_impute.py
+        python -m pytest ./tests/test_imputation_spirit.py
+        python -m pytest ./tests/test_imputation_svt.py
+        python -m pytest ./tests/test_imputation_tkcm.py
+        python -m pytest ./tests/test_imputation_deepmvi.py
+        python -m pytest ./tests/test_imputation_brits.py
+        python -m pytest ./tests/test_imputation_mpin.py
+        python -m pytest ./tests/test_imputation_pristi.py

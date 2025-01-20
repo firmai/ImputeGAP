@@ -12,7 +12,7 @@ class TestContamination(unittest.TestCase):
         the goal is to test if only the selected values are contaminated
         """
         ts_1 = TimeSeries()
-        ts_1.load_timeseries(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test"))
 
         series_impacted = [0.4]
         missing_rates = [40]
@@ -25,8 +25,8 @@ class TestContamination(unittest.TestCase):
             for missing_rate in missing_rates:
 
                 ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                         series_rate=series_sel,
-                                                         missing_rate=missing_rate, block_size=block_size,
+                                                         dataset_rate=series_sel,
+                                                         series_rate=missing_rate, block_size=block_size,
                                                          offset=offset, seed=True)
 
                 check_nan_series = False
@@ -49,7 +49,7 @@ class TestContamination(unittest.TestCase):
         the goal is to test if the starting position is always guaranteed
         """
         ts_1 = TimeSeries()
-        ts_1.load_timeseries(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test"))
 
         series_impacted = [0.4, 1]
         missing_rates = [0.1, 0.4, 0.6]
@@ -59,8 +59,8 @@ class TestContamination(unittest.TestCase):
             for missing_rate in missing_rates:
 
                 ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                         series_rate=series_sel,
-                                                         missing_rate=missing_rate,
+                                                         dataset_rate=series_sel,
+                                                         series_rate=missing_rate,
                                                          block_size=2, offset=0.1,
                                                          seed=True)
 
@@ -83,14 +83,14 @@ class TestContamination(unittest.TestCase):
 
         for dataset in datasets:
             ts_1 = TimeSeries()
-            ts_1.load_timeseries(utils.search_path(dataset))
+            ts_1.load_series(utils.search_path(dataset))
 
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
                     ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             missing_rate=missing_rate,
-                                                             series_rate=series_sel,
+                                                             series_rate=missing_rate,
+                                                             dataset_rate=series_sel,
                                                              block_size=block_size, offset=offset,
                                                              seed=True)
 
@@ -121,15 +121,15 @@ class TestContamination(unittest.TestCase):
 
         for dataset in datasets:
             ts_1 = TimeSeries()
-            ts_1.load_timeseries(utils.search_path(dataset))
+            ts_1.load_series(utils.search_path(dataset))
             ten_percent_index = int(ts_1.data.shape[1] * 0.1)
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
 
                     ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             series_rate=series_sel,
-                                                             missing_rate=missing_rate,
+                                                             dataset_rate=series_sel,
+                                                             series_rate=missing_rate,
                                                              block_size=block_size, offset=offset,
                                                              seed=True)
 
@@ -145,10 +145,10 @@ class TestContamination(unittest.TestCase):
         Verify if the manager of a dataset is working
         """
         ts_1 = TimeSeries()
-        ts_1.load_timeseries(utils.search_path("chlorine"))
+        ts_1.load_series(utils.search_path("chlorine"))
 
         ts_2 = TimeSeries()
-        ts_2.import_matrix(ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.4, missing_rate=0.1,
+        ts_2.import_matrix(ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.1,
                                                    block_size=10, offset=0.1, seed=True))
 
         ts_1.print()
@@ -167,13 +167,13 @@ class TestContamination(unittest.TestCase):
 
         for dataset in datasets:
             ts_1 = TimeSeries()
-            ts_1.load_timeseries(utils.search_path(dataset))
+            ts_1.load_series(utils.search_path(dataset))
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
                     ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             missing_rate=missing_rate,
-                                                             series_rate=series_sel,
+                                                             series_rate=missing_rate,
+                                                             dataset_rate=series_sel,
                                                              block_size=block_size, offset=offset,
                                                              seed=True)
 

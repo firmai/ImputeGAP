@@ -7,7 +7,7 @@ datasets = ["eeg-alcohol", "eeg-reading"]
 for dataset in datasets:
     # small one
     data_n = TimeSeries()
-    data_n.load_timeseries(data=utils.search_path(dataset), max_series=20, max_values=400, header=False)
+    data_n.load_series(data=utils.search_path(dataset), max_series=20, max_values=400, header=False)
     data_n.plot(input_data=data_n.data, max_series=20, save_path="./dataset/docs/" + dataset + "", display=False)
     data_n.plot(input_data=data_n.data, max_series=1, save_path="./dataset/docs/" + dataset + "", display=False)
     data_n.normalize(normalizer="min_max")
@@ -28,14 +28,14 @@ for dataset in datasets:
     elif dataset == "drift":
         max_value = 400
 
-    data_n.load_timeseries(data=utils.search_path(dataset), max_series=max_series, max_values=max_value, header=False)
+    data_n.load_series(data=utils.search_path(dataset), max_series=max_series, max_values=max_value, header=False)
     data_n.plot(input_data=data_n.data, save_path="./dataset/docs/" + dataset + "", display=False)
     data_n.normalize(normalizer="min_max")
     data_n.plot(input_data=data_n.data, save_path="./dataset/docs/" + dataset + "", display=False)
 
     # full one
     data_n = TimeSeries()
-    data_n.load_timeseries(data=utils.search_path(dataset), header=False)
+    data_n.load_series(data=utils.search_path(dataset), header=False)
     data_n.plot(input_data=data_n.data, save_path="./dataset/docs/" + dataset + "", display=False)
 
     categories, features = Explainer.load_configuration()

@@ -1,6 +1,18 @@
 import re
 
+from imputegap.algorithms.brits import brits
+from imputegap.algorithms.deep_mvi import deep_mvi
+from imputegap.algorithms.dynammo import dynammo
+from imputegap.algorithms.grouse import grouse
+from imputegap.algorithms.iterative_svd import iterative_svd
 from imputegap.algorithms.mean_impute import mean_impute
+from imputegap.algorithms.mpin import mpin
+from imputegap.algorithms.pristi import pristi
+from imputegap.algorithms.rosl import rosl
+from imputegap.algorithms.soft_impute import soft_impute
+from imputegap.algorithms.spirit import spirit
+from imputegap.algorithms.svt import svt
+from imputegap.algorithms.tkcm import tkcm
 from imputegap.recovery.evaluation import Evaluation
 from imputegap.algorithms.cdrec import cdrec
 from imputegap.algorithms.iim import iim
@@ -576,74 +588,327 @@ class Imputation:
 
                 return self
 
-
-    class DeepLearning:
-        """
-        A class containing imputation algorithms for deep learning-based methods.
-
-        Subclasses
-        ----------
-        MRNN :
-            Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
-        """
-
-        class MRNN(BaseImputer):
+        class IterativeSVD(BaseImputer):
             """
-            MRNN class to impute missing values using Multi-directional Recurrent Neural Networks (MRNN).
+            IterativeSVD class to impute missing values using Iterative SVD.
 
             Methods
             -------
             impute(self, user_def=True, params=None):
-                Perform imputation using the MRNN algorithm.
+                Perform imputation using the Iterative SDV algorithm.
             """
-            algorithm = "mrnn"
 
-            def impute(self, user_def=True, params=None):
+            algorithm = "iterative_svd"
+
+            def impute(self, params=None):
                 """
-                Perform imputation using the MRNN algorithm.
+                Perform imputation using the Iterative SVD algorithm.
 
                 Parameters
                 ----------
-                user_def : bool, optional
-                    Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
-                    Parameters of the MRNN algorithm, if None, default ones are loaded.
+                    Parameters of the Iterative SVD algorithm or Auto-ML configuration, if None, default ones are loaded.
 
-                    - hidden_dim : int
-                        The number of hidden units in the neural network.
-                    - learning_rate : float
-                        Learning rate for training the neural network.
-                    - iterations : int
-                        Number of iterations for training.
-                    - sequence_length : int
-                        The length of the sequences used in the recurrent neural network.
+                    **Algorithm parameters:**
+
+                    - rank : int
+                        Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
+
 
                 Returns
                 -------
-                self : MRNN
-                    The object with `recov_data` set.
+                self : IterativeSVD
+                    IterativeSVD object with `recov_data` set.
 
                 Example
                 -------
-                >>> mrnn_imputer = Imputation.DeepLearning.MRNN(incomp_data)
-                >>> mrnn_imputer.impute()  # default parameters for imputation > or
-                >>> mrnn_imputer.impute(user_def=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
-                >>> mrnn_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
-                >>> recov_data = mrnn_imputer.recov_data
+                >>> i_svd_imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
+                >>> i_svd_imputer.impute()  # default parameters for imputation > or
+                >>> i_svd_imputer.impute(params={'rank': 5})
+                >>> recov_data = i_svd_imputer.recov_data
 
                 References
                 ----------
-                J. Yoon, W. R. Zame and M. van der Schaar, "Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks," in IEEE Transactions on Biomedical Engineering, vol. 66, no. 5, pp. 1477-1490, May 2019, doi: 10.1109/TBME.2018.2874712. keywords: {Time measurement;Interpolation;Estimation;Medical diagnostic imaging;Correlation;Recurrent neural networks;Biomedical measurement;Missing data;temporal data streams;imputation;recurrent neural nets}
+                Olga Troyanskaya, Michael Cantor, Gavin Sherlock, Pat Brown, Trevor Hastie, Robert Tibshirani, David Botstein, Russ B. Altman, Missing value estimation methods for DNA microarrays , Bioinformatics, Volume 17, Issue 6, June 2001, Pages 520–525, https://doi.org/10.1093/bioinformatics/17.6.520
+                """
+
+                if params is not None:
+                    rank = self._check_params(True, params)[0]
+                else:
+                    rank = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = iterative_svd(incomp_data=self.incomp_data, truncation_rank=rank, logs=self.logs)
+
+                return self
+
+        class GROUSE(BaseImputer):
+            """
+            GROUSE class to impute missing values using GROUSE.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the GROUSE algorithm.
+            """
+
+            algorithm = "grouse"
+
+            def impute(self, params=None):
+                """
+                Perform imputation using the GROUSE algorithm.
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Parameters of the GROUSE algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                    **Algorithm parameters:**
+
+                    - max_rank : int
+                        Max rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
+
+
+                Returns
+                -------
+                self : GROUSE
+                    GROUSE object with `recov_data` set.
+
+                Example
+                -------
+                >>> grouse_imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
+                >>> grouse_imputer.impute()  # default parameters for imputation > or
+                >>> grouse_imputer.impute(params={'max_rank': 5})
+                >>> recov_data = grouse_imputer.recov_data
+
+                References
+                ----------
+                D. Zhang and L. Balzano. Global convergence of a grassmannian gradient descent algorithm for subspace estimation. In Proceedings of the 19th International Conference on Artificial Intelligence and Statistics, AISTATS 2016, Cadiz, Spain, May 9-11, 2016, pages 1460–1468, 2016.
+                """
+
+                if params is not None:
+                    max_rank = self._check_params(True, params)[0]
+                else:
+                    max_rank = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = grouse(incomp_data=self.incomp_data, max_rank=max_rank, logs=self.logs)
+
+                return self
+
+        class ROSL(BaseImputer):
+            """
+            ROSL class to impute missing values using Robust Online Subspace Learning algorithm.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the ROSL algorithm.
+            """
+
+            algorithm = "rosl"
+
+            def impute(self, params=None):
+                """
+                Perform imputation using the ROSL algorithm.
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Parameters of the ROSL algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                    **Algorithm parameters:**
+
+                     rank : int
+                        The rank of the low-dimensional subspace for matrix decomposition.
+                        Must be greater than 0 and less than or equal to the number of columns in the matrix.
+                     regularization : float
+                        The regularization parameter to control the trade-off between reconstruction accuracy and robustness.
+                        Higher values enforce sparsity or robustness against noise in the data.
+
+                Returns
+                -------
+                self : ROSL
+                    ROSL object with `recov_data` set.
+
+                Example
+                -------
+                >>> rosl_imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
+                >>> rosl_imputer.impute()  # default parameters for imputation > or
+                >>> rosl_imputer.impute(params={'rank': 5, 'regularization': 10})
+                >>> recov_data = rosl_imputer.recov_data
+
+                References
+                ----------
+                X. Shu, F. Porikli, and N. Ahuja. Robust orthonormal subspace learning: Efficient recovery of corrupted low-rank matrices. In 2014 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2014, Columbus, OH, USA, June 23-28, 2014, pages 3874–3881, 2014.
                 """
                 if params is not None:
-                    hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_def, params)
+                    rank, regularization = self._check_params(True, params)
                 else:
-                    hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default",
-                                                                                                   algorithm="mrnn")
+                    rank, regularization = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.recov_data = mrnn(incomp_data=self.incomp_data, hidden_dim=hidden_dim,
-                                       learning_rate=learning_rate, iterations=iterations,
-                                       sequence_length=sequence_length, logs=self.logs)
+                self.recov_data = rosl(incomp_data=self.incomp_data, rank=rank, regularization=regularization, logs=self.logs)
+
+                return self
+
+        class SoftImpute(BaseImputer):
+            """
+            SoftImpute class to impute missing values using Soft Impute algorithm.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the Soft Impute algorithm.
+            """
+
+            algorithm = "soft_impute"
+
+            def impute(self, params=None):
+                """
+                Perform imputation using the Soft Impute algorithm.
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Parameters of the Soft Impute algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                    **Algorithm parameters:**
+
+                     max_rank : int
+                        The max rank of the low-dimensional subspace for matrix decomposition.
+                        Must be greater than 0 and less than or equal to the number of columns in the matrix.
+
+                Returns
+                -------
+                self : SoftImpute
+                    SoftImpute object with `recov_data` set.
+
+                Example
+                -------
+                >>> soft_impute_imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
+                >>> soft_impute_imputer.impute()  # default parameters for imputation > or
+                >>> soft_impute_imputer.impute(params={'max_rank': 5})
+                >>> recov_data = soft_impute_imputer.recov_data
+
+                References
+                ----------
+                R. Mazumder, T. Hastie, and R. Tibshirani. Spectral regularization algorithms for learning large incomplete matrices. Journal of Machine Learning Research, 11:2287–2322, 2010.
+                """
+                if params is not None:
+                    max_rank = self._check_params(True, params)[0]
+                else:
+                    max_rank = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = soft_impute(incomp_data=self.incomp_data, max_rank=max_rank, logs=self.logs)
+
+                return self
+
+        class SPIRIT(BaseImputer):
+            """
+            SPIRIT class to impute missing values using SPIRIT algorithm.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the SPIRIT algorithm.
+            """
+
+            algorithm = "spirit"
+
+            def impute(self, params=None):
+                """
+                Perform imputation using the SPIRIT algorithm.
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Parameters of the SPIRIT algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                    **Algorithm parameters:**
+
+                    k : int
+                        The number of eigencomponents (principal components) to retain for dimensionality reduction.
+                        Example: 2, 5, 10.
+                    w : int
+                        The window size for capturing temporal dependencies.
+                        Example: 5 (short-term), 20 (long-term).
+                    lambda_value : float
+                        The forgetting factor controlling how quickly past data is "forgotten".
+                        Example: 0.8 (fast adaptation), 0.95 (stable systems).
+
+                Returns
+                -------
+                self : SPIRIT
+                    SPIRIT object with `recov_data` set.
+
+                Example
+                -------
+                >>> spirit_imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
+                >>> spirit_imputer.impute()  # default parameters for imputation > or
+                >>> spirit_imputer.impute(params={'k': 2, 'w': 5, 'lambda_value': 0.85})
+                >>> recov_data = spirit_imputer.recov_data
+
+                References
+                ----------
+                S. Papadimitriou, J. Sun, and C. Faloutsos. Streaming pattern discovery in multiple time-series. In Proceedings of the 31st International Conference on Very Large Data Bases, Trondheim, Norway, August 30 - September 2, 2005, pages 697–708, 2005.
+                """
+                if params is not None:
+                    k, w, lambda_value = self._check_params(True, params)
+                else:
+                    k, w, lambda_value = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = spirit(incomp_data=self.incomp_data, k=k, w=w, lambda_value=lambda_value, logs=self.logs)
+
+                return self
+
+        class SVT(BaseImputer):
+            """
+            SVT class to impute missing values using Singular Value Thresholding algorithm.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the SVT algorithm.
+            """
+
+            algorithm = "svt"
+
+            def impute(self, params=None):
+                """
+                Perform imputation using the SVT algorithm.
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Parameters of the SVT algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                    **Algorithm parameters:**
+
+                    tau : float
+                        The thresholding parameter for singular values. Controls how singular values are shrunk during the decomposition process.
+                        Larger values encourage a sparser, lower-rank solution, while smaller values retain more detail.
+
+
+                Returns
+                -------
+                self : SVT
+                    SVT object with `recov_data` set.
+
+                Example
+                -------
+                >>> svt_imputer = Imputation.MatrixCompletion.SVT(incomp_data)
+                >>> svt_imputer.impute()  # default parameters for imputation > or
+                >>> svt_imputer.impute(params={'tau': 1})
+                >>> recov_data = svt_imputer.recov_data
+
+                References
+                ----------
+                J. Cai, E. J. Candès, and Z. Shen. A singular value thresholding algorithm for matrix completion. SIAM Journal on Optimization, 20(4):1956–1982, 2010. [8] J. Cambronero, J. K. Feser, M. J. Smith, and
+                """
+                if params is not None:
+                    tau = self._check_params(True, params)[0]
+                else:
+                    tau = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = svt(incomp_data=self.incomp_data, tau=tau, logs=self.logs)
 
                 return self
 
@@ -713,6 +978,367 @@ class Imputation:
                                         alpha=alpha, logs=self.logs)
 
                 return self
+
+        class DynaMMo(BaseImputer):
+            """
+            DynaMMo class to impute missing values using Dynamic Multi-Mode modeling with Missing Observations algorithm.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the DynaMMo algorithm.
+            """
+
+            algorithm = "dynammo"
+
+            def impute(self, params=None):
+                """
+                Perform imputation using the DynaMMo algorithm.
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Parameters of the DynaMMo algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                    **Algorithm parameters:**
+
+                        h : int
+                            The time window (H) parameter for modeling temporal dynamics.
+                        max_iteration : int
+                            The maximum number of iterations for the imputation process.
+                        approximation : bool
+                            If True, enables faster approximate processing.
+
+                Returns
+                -------
+                self : DynaMMo
+                    DynaMMo object with `recov_data` set.
+
+                Example
+                -------
+                >>> dynammo_imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
+                >>> dynammo_imputer.impute()  # default parameters for imputation > or
+                >>> dynammo_imputer.impute(params={'h': 5, 'max_iteration': 100, 'approximation': True})
+                >>> recov_data = dynammo_imputer.recov_data
+
+                References
+                ----------
+                L. Li, J. McCann, N. S. Pollard, and C. Faloutsos. Dynammo: mining and summarization of coevolving sequences with missing values. In Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Paris, France, June 28 - July 1, 2009, pages 507–516, 2009.
+                """
+                if params is not None:
+                    h, max_iteration, approximation = self._check_params(True, params)
+                else:
+                    h, max_iteration, approximation = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = dynammo(incomp_data=self.incomp_data, h=h, max_iteration=max_iteration,
+                                          approximation=approximation, logs=self.logs)
+
+                return self
+
+        class TKCM(BaseImputer):
+            """
+            TKCM class to impute missing values using Tensor Kernelized Coupled Matrix Completion algorithm.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the TKCM algorithm.
+            """
+
+            algorithm = "tkcm"
+
+            def impute(self, params=None):
+                """
+                Perform imputation using the TKCM algorithm.
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Parameters of the TKCM algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                    **Algorithm parameters:**
+
+                    rank : int
+                        The rank for matrix decomposition (must be greater than 1 and smaller than the number of series).
+
+                Returns
+                -------
+                self : TKCM
+                    TKCM object with `recov_data` set.
+
+                Example
+                -------
+                >>> tkcm_imputer = Imputation.PatternSearch.TKCM(incomp_data)
+                >>> tkcm_imputer.impute()  # default parameters for imputation > or
+                >>> tkcm_imputer.impute(params={'rank': 5})
+                >>> recov_data = tkcm_imputer.recov_data
+
+                References
+                ----------
+                K. Wellenzohn, M. H. Böhlen, A. Dignös, J. Gamper, and H. Mitterer. Continuous imputation of missing values in streams of pattern-determining time series. In Proceedings of the 20th International Conference on Extending Database Technology, EDBT 2017, Venice, Italy, March 21-24, 2017., pages 330–341, 2017.
+                """
+                if params is not None:
+                    rank = self._check_params(True, params)[0]
+                else:
+                    rank = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = tkcm(incomp_data=self.incomp_data, rank=rank, logs=self.logs)
+
+                return self
+
+    class DeepLearning:
+        """
+        A class containing imputation algorithms for deep learning-based methods.
+
+        Subclasses
+        ----------
+        MRNN :
+            Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
+        """
+
+        class MRNN(BaseImputer):
+            """
+            MRNN class to impute missing values using Multi-directional Recurrent Neural Networks (MRNN).
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the MRNN algorithm.
+            """
+            algorithm = "mrnn"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the MRNN algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the MRNN algorithm, if None, default ones are loaded.
+
+                    - hidden_dim : int
+                        The number of hidden units in the neural network.
+                    - learning_rate : float
+                        Learning rate for training the neural network.
+                    - iterations : int
+                        Number of iterations for training.
+                    - sequence_length : int
+                        The length of the sequences used in the recurrent neural network.
+
+                Returns
+                -------
+                self : MRNN
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> mrnn_imputer = Imputation.DeepLearning.MRNN(incomp_data)
+                >>> mrnn_imputer.impute()  # default parameters for imputation > or
+                >>> mrnn_imputer.impute(user_def=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
+                >>> mrnn_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> recov_data = mrnn_imputer.recov_data
+
+                References
+                ----------
+                J. Yoon, W. R. Zame and M. van der Schaar, "Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks," in IEEE Transactions on Biomedical Engineering, vol. 66, no. 5, pp. 1477-1490, May 2019, doi: 10.1109/TBME.2018.2874712. keywords: {Time measurement;Interpolation;Estimation;Medical diagnostic imaging;Correlation;Recurrent neural networks;Biomedical measurement;Missing data;temporal data streams;imputation;recurrent neural nets}
+                """
+                if params is not None:
+                    hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_def, params)
+                else:
+                    hidden_dim, learning_rate, iterations, sequence_length = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = mrnn(incomp_data=self.incomp_data, hidden_dim=hidden_dim,
+                                       learning_rate=learning_rate, iterations=iterations,
+                                       sequence_length=sequence_length, logs=self.logs)
+
+                return self
+
+        class BRITS(BaseImputer):
+            """
+            BRITS class to impute missing values using Bidirectional Recurrent Imputation for Time Series
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the BRITS algorithm.
+            """
+            algorithm = "brits"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the BRITS algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the BRITS algorithm, if None, default ones are loaded.
+
+                    - model : str
+                        Specifies the type of model to use for the imputation. Options may include predefined models like 'brits', 'brits-i' or 'brits_i_univ'.
+                    - epoch : int
+                        Number of epochs for training the model. Determines how many times the algorithm processes the entire dataset during training.
+                    - batch_size : int
+                        Size of the batches used during training. Larger batch sizes can speed up training but may require more memory.
+                    - nbr_features : int
+                        Number of features, dimension in the time series.
+                    - hidden_layer : int
+                        Number of units in the hidden layer of the model. Controls the capacity of the neural network to learn complex patterns.
+
+                Returns
+                -------
+                self : BRITS
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> brits_imputer = Imputation.DeepLearning.BRITS(incomp_data)
+                >>> brits_imputer.impute()  # default parameters for imputation
+                >>> recov_data = brits_imputer.recov_data
+
+                References
+                ----------
+                Cao, W., Wang, D., Li, J., Zhou, H., Li, L. & Li, Y. BRITS: Bidirectional Recurrent Imputation for Time Series. Advances in Neural Information Processing Systems, 31 (2018). https://proceedings.neurips.cc/paper_files/paper/2018/file/734e6bfcd358e25ac1db0a4241b95651-Paper.pdf
+                """
+                if params is not None:
+                    model, epoch, batch_size, nbr_features, hidden_layer = self._check_params(True, params)
+                else:
+                    model, epoch, batch_size, nbr_features, hidden_layer = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                seq_length = self.incomp_data.shape[1]
+
+                self.recov_data = brits(incomp_data=self.incomp_data, model=model, epoch=epoch, batch_size=batch_size, nbr_features=nbr_features, hidden_layers=hidden_layer, seq_length=seq_length, logs=self.logs)
+                return self
+
+        class DeepMVI(BaseImputer):
+            """
+            DeepMVI class to impute missing values using Deep Multivariate Imputation
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the DeepMVI algorithm.
+            """
+            algorithm = "deep_mvi"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the DeepMVI algorithm.
+
+                Parameters
+                ----------
+
+
+                Returns
+                -------
+                self : DeepMVI
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
+                >>> deep_mvi_imputer.impute()  # default parameters for imputation
+                >>> recov_data = deep_mvi_imputer.recov_data
+
+                References
+                ----------
+                P. Bansal, P. Deshpande, and S. Sarawagi. Missing value imputation on multidimensional time series. arXiv preprint arXiv:2103.01600, 2023
+                """
+                if params is not None:
+                    max_epoch, patience = self._check_params(True, params)
+                else:
+                    max_epoch, patience = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = deep_mvi(incomp_data=self.incomp_data, max_epoch=max_epoch, patience=patience, logs=self.logs)
+                return self
+
+        class MPIN(BaseImputer):
+            """
+            MPIN class to impute missing values using Multi-attribute Sensor Data Streams via Message Propagation algorithm.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the MPIN algorithm.
+            """
+            algorithm = "mpin"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the MPIN algorithm.
+
+                Parameters
+                ----------
+
+
+                Returns
+                -------
+                self : MPIN
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
+                >>> deep_mvi_imputer.impute()  # default parameters for imputation
+                >>> recov_data = deep_mvi_imputer.recov_data
+
+                References
+                ----------
+                Li, X., Li, H., Lu, H., Jensen, C.S., Pandey, V. & Markl, V. Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). arXiv (2023). https://arxiv.org/abs/2311.07344
+                """
+                if params is not None:
+                    incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base = self._check_params(True, params)
+                else:
+                    incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = mpin(incomp_data=self.incomp_data, incre_mode=incre_mode, window=window, k=k, lr=learning_rate, weight_decay=weight_decay, epochs=epochs, thre=threshold, base=base, logs=self.logs)
+                return self
+
+        class PRISTI(BaseImputer):
+            """
+            PRISTI class to impute missing values using A Conditional Diffusion Framework for Spatiotemporal Imputation algorithm.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the PRISTI algorithm.
+            """
+            algorithm = "pristi"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the PRISTI algorithm.
+
+                Parameters
+                ----------
+
+
+                Returns
+                -------
+                self : PRISTI
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> pristi_imputer = Imputation.DeepLearning.PRISTI(incomp_data)
+                >>> pristi_imputer.impute()  # default parameters for imputation
+                >>> recov_data = pristi_imputer.recov_data
+
+                References
+                ----------
+                M. Liu, H. Huang, H. Feng, L. Sun, B. Du and Y. Fu, "PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation," 2023 IEEE 39th International Conference on Data Engineering (ICDE), Anaheim, CA, USA, 2023, pp. 1927-1939, doi: 10.1109/ICDE55515.2023.00150.
+                """
+                if params is not None:
+                    target_strategy, unconditional, seed, device = self._check_params(True, params)
+                else:
+                    target_strategy, unconditional, seed, device = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = pristi(incomp_data=self.incomp_data, target_strategy=target_strategy, unconditional=unconditional, seed=seed, device=device, logs=self.logs)
+                return self
+
 
     class GraphLearning:
         """

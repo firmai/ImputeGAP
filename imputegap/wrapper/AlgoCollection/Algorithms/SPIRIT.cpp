@@ -24,6 +24,9 @@ void SPIRIT::doSpirit(arma::mat &A, uint64_t k0, uint64_t w, double lambda)
     // Step 0: prep
     // impute last exising value instead of all NaNs
     //
+
+    std::cout << "\t\t(C++) Spirit: Matrix Shape: (" << A.n_rows << ", " << A.n_cols << ") for K " << k0 << ", w " << w << ", and lambda " << lambda << " ..." << std::endl;
+
     
     uint64_t blockStart = static_cast<unsigned>(-1);
     uint64_t blockEnd = static_cast<unsigned>(-1);

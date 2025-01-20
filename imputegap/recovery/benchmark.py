@@ -57,6 +57,8 @@ class Benchmark:
         BaseImputer
             Configured imputer instance with optimal parameters.
         """
+
+        # 1st generation
         if algorithm == "cdrec":
             imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
         elif algorithm == "stmvl":
@@ -65,6 +67,32 @@ class Benchmark:
             imputer = Imputation.Statistics.IIM(incomp_data)
         elif algorithm == "mrnn":
             imputer = Imputation.DeepLearning.MRNN(incomp_data)
+
+        # 2nd generation
+        elif algorithm == "iterative_svd":
+            imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
+        elif algorithm == "grouse":
+            imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
+        elif algorithm == "dynammo":
+            imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
+        elif algorithm == "rosl":
+            imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
+        elif algorithm == "soft_impute":
+            imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
+        elif algorithm == "spirit":
+            imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
+        elif algorithm == "svt":
+            imputer = Imputation.MatrixCompletion.SVT(incomp_data)
+        elif algorithm == "tkcm":
+            imputer = Imputation.PatternSearch.TKCM(incomp_data)
+        elif algorithm == "deep_mvi":
+            imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
+        elif algorithm == "brits":
+            imputer = Imputation.DeepLearning.BRITS(incomp_data)
+        elif algorithm == "mpin":
+            imputer = Imputation.DeepLearning.MPIN(incomp_data)
+        elif algorithm == "pristi":
+            imputer = Imputation.DeepLearning.PRISTI(incomp_data)
         else:
             imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
@@ -91,17 +119,17 @@ class Benchmark:
             TimeSeries object containing contaminated data.
         """
         if pattern == "mcar":
-            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, series_rate=rate, missing_rate=rate, block_size=block_size_mcar, seed=True)
+            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, dataset_rate=rate, series_rate=rate, block_size=block_size_mcar, seed=True)
         elif pattern == "mp":
-            incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, series_rate=rate, missing_rate=rate)
+            incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, dataset_rate=rate, series_rate=rate)
         elif pattern == "disjoint":
-            incomp_data = ts_test.Contamination.disjoint(input_data=ts_test.data, missing_rate=rate)
+            incomp_data = ts_test.Contamination.disjoint(input_data=ts_test.data, series_rate=rate)
         elif pattern == "overlap":
-            incomp_data = ts_test.Contamination.overlap(input_data=ts_test.data, missing_rate=rate)
+            incomp_data = ts_test.Contamination.overlap(input_data=ts_test.data, series_rate=rate)
         elif pattern == "gaussian":
-            incomp_data = ts_test.Contamination.gaussian(input_data=ts_test.data, series_rate=rate, missing_rate=rate, seed=True)
+            incomp_data = ts_test.Contamination.gaussian(input_data=ts_test.data, dataset_rate=rate, series_rate=rate, seed=True)
         else:
-            incomp_data = ts_test.Contamination.blackout(input_data=ts_test.data, missing_rate=rate)
+            incomp_data = ts_test.Contamination.blackout(input_data=ts_test.data, series_rate=rate)
 
         return incomp_data
 
@@ -190,8 +218,7 @@ class Benchmark:
                                     for score_key, v in level_value["scores"].items():
                                         merger["scores"][score_key] = (merger["scores"].get(score_key, 0) + v / count)
                                     for time_key, time_value in level_value["times"].items():
-                                        merger["times"][time_key] = (
-                                                    merger["times"].get(time_key, 0) + time_value / count)
+                                        merger["times"][time_key] = (merger["times"].get(time_key, 0) + time_value / count)
 
             results_avg.append(merged_dict)
 
@@ -528,7 +555,7 @@ class Benchmark:
             for pattern, algo_items in pattern_items.items():
 
                 if subplot:
-                    fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(10, 12))  # Adjusted figsize
+                    fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(18, 12))  # Adjusted figsize
                     axes = axes.ravel()  # Flatten the 2D array of axes to a 1D array
 
                 # Iterate over each metric, generating separate plots, including new timing metrics
@@ -589,7 +616,7 @@ class Benchmark:
                         if metric == "imputation_time":
                             ax.set_ylim(-10, 90)
                         elif metric == "log_imputation":
-                            ax.set_ylim(-4.5, 2)
+                            ax.set_ylim(-4.5, 2.5)
                         elif metric == "MAE":
                             ax.set_ylim(-0.1, 2.4)
                         elif metric == "MI":
@@ -653,6 +680,7 @@ class Benchmark:
 
         print("Initialization of the comprehensive evaluation. It can take time...\n")
         run_storage = []
+        not_optimized = ["iter_svd", "grouse", "dynammo", "rosl", "soft_imp", "spirit", "svt", "tkcm", "deep_mvi", "brits", "mpin", "pristi"]
 
         for i_run in range(0, abs(runs)):
             for dataset in datasets:
@@ -678,8 +706,8 @@ class Benchmark:
                     limitation_series = 10
                     limitation_values = 110
 
-                ts_test.load_timeseries(data=utils.search_path(dataset), max_series=limitation_series,
-                                        max_values=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), max_series=limitation_series,
+                                    max_values=limitation_values, header=header)
 
                 start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape
@@ -711,7 +739,7 @@ class Benchmark:
                                     optimizer_gt = {"input_data": ts_test.data, **optimizer}
                                     optimizer_value = optimizer.get('optimizer')  # or optimizer['optimizer']
 
-                                    if not has_been_optimized and algorithm != "mean":
+                                    if not has_been_optimized and algorithm != "mean" and algorithm not in not_optimized:
                                         print("\n\t\t5. AutoML to set the parameters", optimizer, "\n")
                                         start_time_opti = time.time()  # Record start time
                                         i_opti = self._config_optimization(0.25, ts_test, pattern, algorithm, block_size_mcar)
@@ -723,12 +751,11 @@ class Benchmark:
                                     else:
                                         print("\n\t\t5. AutoML already optimized : ", optimizer, "\n")
 
-                                    if algorithm != "mean":
+                                    if algorithm != "mean" and algorithm not in not_optimized:
                                         opti_params = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="e")
                                         print("\n\t\t6. imputation", algorithm, "with optimal parameters", *opti_params)
-
                                     else:
-                                        print("\n\t\t5. MeanImpute launches without optimal params", optimizer, "for", algorithm, "\n")
+                                        print("\n\t\t5. No AutoML launches without optimal params", optimizer, "for", algorithm, "\n")
                                         opti_params = None
                                 else:
                                     print("\n\t\t5. Default parameters have been set the parameters", optimizer, "for", algorithm, "\n")

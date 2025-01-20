@@ -36,8 +36,8 @@ class TestException(unittest.TestCase):
         with pytest.raises(ValueError, match="Invalid input for import_matrix"):
             ts_01.import_matrix("wrong")
 
-        with pytest.raises(ValueError, match="Invalid input for load_timeseries"):
-            ts_01.load_timeseries(0.1)
+        with pytest.raises(ValueError, match="Invalid input for load_series"):
+            ts_01.load_series(0.1)
 
 
     def test_mcar_exc(self):
@@ -59,7 +59,7 @@ class TestException(unittest.TestCase):
         percentage = 120
 
         with pytest.raises(ValueError, match=f"The percentage is out of the acceptable range."):
-            ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), missing_rate=percentage)
+            ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), series_rate=percentage)
 
 
     def test_load_exc(self):

@@ -21,7 +21,7 @@ ImputeGAP is a comprehensive framework designed for time series imputation algor
 - **Datasets**: [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
 
 
- [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Integration**](#integration) | [**References**](#references) | [**Contributors**](#core-contributors)
+ [**Requirements**](#system-requirements) | [**Installation**](#installation) | [**Preprocessing**](#loading-and-preprocessing) | [**Contamination**](#contamination) | [**Auto-ML**](#parameterization) | [**Explainer**](#explainer) | [**Benchmark**](#benchmark) | [**Integration**](#integration) | [**References**](#references) | [**Contributors**](#core-contributors)
 
 ---
 
@@ -29,7 +29,7 @@ ImputeGAP is a comprehensive framework designed for time series imputation algor
 
 The following prerequisites are required to use ImputeGAP:
 
-- Python version 3.10 / 3.11 / 3.12 (recommended)
+- Python version 3.10 / 3.11 / 3.12
 - Unix-compatible environment for execution
 
 To create and set up an environment with Python 3.12, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).
@@ -85,7 +85,7 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-alcohol"), max_series=5, max_values=15)
+ts_1.load_series(utils.search_path("eeg-alcohol"), max_series=5, max_values=15)
 ts_1.normalize(normalizer="z_score")
 
 # [OPTIONAL] you can plot your raw data / print the information
@@ -96,7 +96,7 @@ ts_1.print(limit_series=10)
 ---
 
 ## Contamination
-ImputeGAP allows to contaminate a complete datasets with missing data patterns that mimics real-world scenarios. The available patterns are : `MCAR`, `MISSING POURCENTAGE`, and `BLACKOUT`. 
+ImputeGAP allows to contaminate a complete datasets with missing data patterns that mimics real-world scenarios. The available patterns are : `MCAR`, `MISSING POURCENTAGE`, `BLACKOUT`, `DISJOINT`, `OVERLAP`, and `GAUSSIAN`. 
 For more details, please refer to the documentation in this <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >page</a>.
 
 
@@ -111,15 +111,15 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
+ts_1.load_series(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR pattern
-incomp_data = ts_1.Contamination.mcar(ts_1.data, series_rate=0.2, missing_rate=0.2, seed=True)
+ts_mask = ts_1.Contamination.mcar(ts_1.data, dataset_rate=0.2, series_rate=0.2, seed=True)
 
 # [OPTIONAL] you can plot your raw data / print the contamination
 ts_1.print(limit_timestamps=12, limit_series=7)
-ts_1.plot(ts_1.data, incomp_data, max_series=9, subplot=True, save_path="./imputegap/assets")
+ts_1.plot(ts_1.data, ts_mask, max_series=9, subplot=True, save_path="./imputegap/assets")
 ```
 
 ---
@@ -141,14 +141,14 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
+ts_1.load_series(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-incomp_data = ts_1.Contamination.mcar(ts_1.data)
+ts_mask = ts_1.Contamination.mcar(ts_1.data)
 
 # [OPTIONAL] save your results in a new Time Series object
-ts_2 = TimeSeries().import_matrix(incomp_data)
+ts_2 = TimeSeries().import_matrix(ts_mask)
 
 # 4. imputation of the contaminated data
 # choice of the algorithm, and their parameters (default, automl, or defined by the user)
@@ -167,7 +167,8 @@ cdrec.score(ts_1.data, ts_3.data)
 
 # 6. display the results
 ts_3.print_results(cdrec.metrics, algorithm="cdrec")
-ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True, save_path="./imputegap/assets")
+ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True,
+          save_path="./imputegap/assets")
 ```
 
 ---
@@ -189,22 +190,25 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
+ts_1.load_series(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-miss_matrix = ts_1.Contamination.mcar(ts_1.data)
+ts_mask = ts_1.Contamination.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec = Imputation.MatrixCompletion.CDRec(miss_matrix).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 3}})
+cdrec = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False,
+                                                              params={"input_data": ts_1.data, "optimizer": "bayesian",
+                                                                      "options": {"n_calls": 3}})
 
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, cdrec.recov_data)
 
 # 6. display the results
 ts_1.print_results(cdrec.metrics)
-ts_1.plot(input_data=ts_1.data, incomp_data=miss_matrix, recov_data=cdrec.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
+ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=cdrec.recov_data, max_series=9, subplot=True,
+          save_path="./imputegap/assets", display=True)
 
 # 7. save hyperparameters
 utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")
@@ -231,10 +235,12 @@ from imputegap.tools import utils
 ts_1 = TimeSeries()
 
 # 2. load the timeseries from file or from the code
-ts_1.load_timeseries(utils.search_path("eeg-alcohol"))
+ts_1.load_series(utils.search_path("eeg-alcohol"))
 
 # 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
-shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, extractor="pycatch22", pattern="mcar", missing_rate=0.25, limit_ratio=1, split_ratio=0.7, file_name="eeg-alcohol", algorithm="cdrec")
+shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, extractor="pycatch22", pattern="mcar",
+                                                     missing_rate=0.25, limit_ratio=1, split_ratio=0.7,
+                                                     file_name="eeg-alcohol", algorithm="cdrec")
 
 # [OPTIONAL] print the results with the impact of each feature.
 Explainer.print(shap_values, shap_details)
@@ -262,7 +268,7 @@ datasets_demo = ["eeg-alcohol", "eeg-reading"]
 
 # SELECT YOUR OPTIMIZER :
 optimiser_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 15, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
-optimizers_demo = [optimiser_bayesian]  # add optimizer you want to test
+optimizers_demo = [optimiser_bayesian]
 
 # SELECT YOUR ALGORITHM(S) :
 algorithms_demo = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
@@ -288,7 +294,7 @@ To add your own imputation algorithm in Python or C++, please refer to the detai
 
 ## References
 
-Mourad Khayati, Quentin Nater, and Jacques Pasquier. ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024), 4329–32.
+Mourad Khayati, Quentin Nater, and Jacques Pasquier. ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024), 4329 32.
 
 Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudre-Mauroux. Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. In Proceedings of the VLDB Endowment (PVLDB), Vol. 13, 2020.
 

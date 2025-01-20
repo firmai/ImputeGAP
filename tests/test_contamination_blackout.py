@@ -11,14 +11,14 @@ class TestContamination(unittest.TestCase):
         the goal is to test if only the selected values are contaminated
         """
         ts_1 = TimeSeries()
-        ts_1.load_timeseries(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test"))
 
         missing_rates = [0.4, 1]
         offset = 0.1
         M, N = ts_1.data.shape
 
         for missing_rate in missing_rates:
-            ts_contaminate = ts_1.Contamination.blackout(input_data=ts_1.data, missing_rate=missing_rate, offset=offset)
+            ts_contaminate = ts_1.Contamination.blackout(input_data=ts_1.data, series_rate=missing_rate, offset=offset)
 
             n_nan = np.isnan(ts_contaminate).sum()
             expected_nan_series = M
@@ -32,14 +32,14 @@ class TestContamination(unittest.TestCase):
         the goal is to test if the starting position is always guaranteed
         """
         ts_1 = TimeSeries()
-        ts_1.load_timeseries(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test"))
 
         missing_rates = [0.1, 0.4, 0.6]
         ten_percent_index = int(ts_1.data.shape[1] * 0.1)
 
         for missing_rate in missing_rates:
 
-            ts_contaminate = ts_1.Contamination.blackout(input_data=ts_1.data, missing_rate=missing_rate, offset=0.1)
+            ts_contaminate = ts_1.Contamination.blackout(input_data=ts_1.data, series_rate=missing_rate, offset=0.1)
 
             if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                 check_position = False

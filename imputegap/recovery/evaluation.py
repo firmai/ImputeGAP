@@ -22,6 +22,7 @@ class Evaluation:
 
     """
 
+
     def __init__(self, input_data, recov_data, incomp_data):
         """
         Initialize the Evaluation class with ground truth, imputation, and incomp_data time series.
@@ -42,6 +43,7 @@ class Evaluation:
         self.input_data = input_data
         self.recov_data = recov_data
         self.incomp_data = incomp_data
+        self.large_error = 100
 
     def compute_all_metrics(self):
         """
@@ -84,6 +86,10 @@ class Evaluation:
         mse = np.mean((self.input_data[nan_locations] - self.recov_data[nan_locations]) ** 2)
         rmse = np.sqrt(mse)
 
+        if rmse > self.large_error:
+            print("Extreme error detected, limited to ", self.large_error)
+            rmse = self.large_error
+
         return float(rmse)
 
     def compute_mae(self):
@@ -101,6 +107,10 @@ class Evaluation:
 
         absolute_error = np.abs(self.input_data[nan_locations] - self.recov_data[nan_locations])
         mean_absolute_error = np.mean(absolute_error)
+
+        if mean_absolute_error > self.large_error:
+            print("Extreme error detected, limited to ", self.large_error)
+            mean_absolute_error = self.large_error
 
         return mean_absolute_error
 

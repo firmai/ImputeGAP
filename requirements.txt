@@ -14,3 +14,16 @@ xlsxwriter==3.2.0
 types-toml
 types-setuptools
 wheel
+
+# POST ALGO
+torch==2.5.1  # brits
+ujson==5.10.0  # brits
+torchaudio==2.5.1  # brits
+torchvision==0.20.1  # brits
+ipdb==0.13.13  # brits
+pandas==2.0.3  # brits
+
+torch-geometric==2.6.1  # MPIN
+torch-cluster==1.6.3   # MPIN
+torchcde==0.2.5  # PRISTI
+tables==3.10.2  # SSA

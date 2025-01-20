@@ -13,6 +13,9 @@ namespace Algorithms
 
 void SVT::doSVT(arma::mat &X, double tauScale)
 {
+
+    std::cout << "\t\t(C++) SVT: Matrix Shape: (" << X.n_rows << ", " << X.n_cols << ") for tauScale " << tauScale << " ..." << std::endl;
+
     // const parameters
     constexpr uint64_t incre = 5;
     constexpr uint64_t rInc = 4;

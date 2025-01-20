@@ -15,9 +15,9 @@ class TestOptiCDREC(unittest.TestCase):
         dataset = "chlorine"
 
         ts_1 = TimeSeries()
-        ts_1.load_timeseries(utils.search_path(dataset))
+        ts_1.load_series(utils.search_path(dataset))
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.4, missing_rate=0.4, block_size=2, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=2, offset=0.1, seed=True)
 
         params = utils.load_parameters(query="default", algorithm=algorithm)
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")

@@ -2,7 +2,51 @@ import ctypes
 import os
 import toml
 import importlib.resources
-from pathlib import Path
+import numpy as __numpy_import;
+
+
+
+def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
+    """
+    Marshal a ctypes container as a numpy column-major array.
+
+    Parameters
+    ----------
+    __ctype_container : ctypes.Array
+        The input ctypes container (flattened matrix).
+    __py_sizen : int
+        The number of rows in the numpy array.
+    __py_sizem : int
+        The number of columns in the numpy array.
+
+    Returns
+    -------
+    numpy.ndarray
+        A numpy array reshaped to the original matrix dimensions (row-major order).
+    """
+    __numpy_marshal = __numpy_import.array(__ctype_container).reshape(__py_sizem, __py_sizen).T;
+
+    return __numpy_marshal;
+
+
+def __marshal_as_native_column(__py_matrix):
+    """
+    Marshal a numpy array as a ctypes flat container for passing to native code.
+
+    Parameters
+    ----------
+    __py_matrix : numpy.ndarray
+        The input numpy matrix (2D array).
+
+    Returns
+    -------
+    ctypes.Array
+        A ctypes array containing the flattened matrix (in column-major order).
+    """
+    __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
+    __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
+
+    return __ctype_marshal;
 
 
 def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg"):
@@ -138,6 +182,62 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
             return (hidden_dim, learning_rate, iterations, sequence_length)
         else:
             return (hidden_dim, learning_rate, iterations)
+    elif algorithm == "iterative_svd":
+        truncation_rank = int(config['iterative_svd']['rank'])
+        return (truncation_rank)
+    elif algorithm == "grouse":
+        max_rank = int(config['grouse']['max_rank'])
+        return (max_rank)
+    elif algorithm == "dynammo":
+        h = int(config['dynammo']['h'])
+        max_iteration = int(config['dynammo']['max_iteration'])
+        approximation = bool(config['dynammo']['approximation'])
+        return (h, max_iteration, approximation)
+    elif algorithm == "rosl":
+        rank = int(config['rosl']['rank'])
+        regularization = int(config['rosl']['regularization'])
+        return (rank, regularization)
+    elif algorithm == "soft_impute":
+        max_rank = int(config['soft_impute']['max_rank'])
+        return (max_rank)
+    elif algorithm == "spirit":
+        k = int(config['spirit']['k'])
+        w = int(config['spirit']['w'])
+        lvalue = float(config['spirit']['lvalue'])
+        return (k, w, lvalue)
+    elif algorithm == "svt":
+        tau = float(config['svt']['tau'])
+        return (tau)
+    elif algorithm == "tkcm":
+        rank = int(config['tkcm']['rank'])
+        return (rank)
+    elif algorithm == "deep_mvi":
+        max_epoch = int(config['deep_mvi']['max_epoch'])
+        patience = int(config['deep_mvi']['patience'])
+        return (max_epoch, patience)
+    elif algorithm == "brits":
+        model = str(config['brits']['model'])
+        epoch = int(config['brits']['epoch'])
+        batch_size = int(config['brits']['batch_size'])
+        nbr_features = int(config['brits']['nbr_features'])
+        hidden_layers = int(config['brits']['hidden_layers'])
+        return (model, epoch, batch_size, nbr_features, hidden_layers)
+    elif algorithm == "mpin":
+        incre_mode = str(config['mpin']['incre_mode'])
+        window = int(config['mpin']['window'])
+        k = int(config['mpin']['k'])
+        learning_rate = float(config['mpin']['learning_rate'])
+        weight_decay = float(config['mpin']['weight_decay'])
+        epochs = int(config['mpin']['epochs'])
+        threshold = float(config['mpin']['threshold'])
+        base = str(config['mpin']['base'])
+        return (incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base)
+    elif algorithm == "pristi":
+        target_strategy = str(config['pristi']['target_strategy'])
+        unconditional = bool(config['pristi']['unconditional'])
+        seed = int(config['pristi']['seed'])
+        device = str(config['pristi']['device'])
+        return (target_strategy, unconditional, seed, device)
     elif algorithm == "greedy":
         n_calls = int(config['greedy']['n_calls'])
         metrics = config['greedy']['metrics']
@@ -166,6 +266,8 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     elif algorithm == "colors":
         colors = config['colors']['plot']
         return colors
+    elif algorithm == "other":
+        return config
     else:
         print("Default/Optimal config not found for this algorithm")
         return None
@@ -236,6 +338,8 @@ def load_share_lib(name="lib_cdrec", lib=True):
             local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
 
         lib_path = os.path.join(local_path_lin)
+        print("\tlib loaded from:", lib_path)
+
 
     return ctypes.CDLL(lib_path)
 

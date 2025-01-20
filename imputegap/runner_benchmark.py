@@ -7,10 +7,10 @@ nbr_run = 2
 
 # SELECT YOUR DATASET(S) :
 datasets_full = ["eeg-alcohol", "eeg-reading", "fmri-objectviewing", "fmri-stoptask", "chlorine", "drift"]
-datasets_demo = ["eeg-alcohol", "eeg-reading"]
+datasets_demo = ["eeg-alcohol", "chlorine"]
 
 # SELECT YOUR OPTIMIZER :
-optimiser_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 15, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
+optimiser_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 2, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
 optimiser_greedy = {"optimizer": "greedy", "options": {"n_calls": 250, "metrics": "RMSE"}}
 optimiser_pso = {"optimizer": "pso", "options": {"n_particles": 50, "iterations": 10, "metrics": "RMSE"}}
 optimiser_sh = {"optimizer": "sh", "options": {"num_configs": 10, "num_iterations": 5, "metrics": "RMSE"}}
@@ -18,11 +18,11 @@ optimizers_demo = [optimiser_bayesian]
 
 # SELECT YOUR ALGORITHM(S) :
 algorithms_full = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
-algorithms_demo = ["mean", "cdrec"]
+algorithms_demo = ["cdrec", "iter_svd", "grouse", "dynammo", "rosl", "soft_imp", "spirit", "svt", "tkcm"]
 
 # SELECT YOUR CONTAMINATION PATTERN(S) :
 patterns_full = ["mcar", "mp", "blackout", "disjoint", "overlap", "gaussian"]
-patterns_demo = ["mcar", "disjoint"]
+patterns_demo = ["mcar"]
 
 # SELECT YOUR MISSING RATE(S) :
 x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
