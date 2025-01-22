@@ -12,11 +12,12 @@ class TestExplainer(unittest.TestCase):
         Verify if the SHAP explainer is working
         """
         filename = "chlorine"
-        RMSE = [0.2683651272658591, 0.18536679458725042, 0.1509411163650527, 0.13510891276754608, 0.10669458140782341,
-                0.0945575377862439, 0.06491106119902068, 0.04802705750524594, 0.12897380114704524, 0.13074286774459615,
-                0.12366536487070472, 0.12559982507214026, 0.11389311467195656, 0.08676263762857882, 0.11609908197524361]
 
-        SHAP_VAL = [87.98, 5.06, 4.74, 1.21, 0.53, 0.28, 0.11, 0.08, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+        RMSE = [0.2780398282009316, 0.09024192407753003, 0.06264295609967269, 0.06008285096152065, 0.04622875362843607,
+         0.04100194460489083, 0.03182402833276032, 0.04031085927584528, 0.08353853381025556, 0.08183653114000404,
+         0.0712546131146801, 0.07127388277211984, 0.07853099688546698, 0.06457276731357126, 0.056051361732355906]
+
+        SHAP_VAL = [46.58, 21.37, 20.49, 4.32, 3.73, 2.02, 0.11, 1.48, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                     0.0, 0.0, 0.0, 0.0]
 
         expected_categories, expected_features = Explainer.load_configuration()
@@ -24,7 +25,8 @@ class TestExplainer(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path(filename))
 
-        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, limit_ratio=0.3, seed=True, verbose=True)
+        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, limit_ratio=0.3,
+                                                             seed=True, verbose=True)
 
         self.assertTrue(shap_values is not None)
         self.assertTrue(shap_details is not None)

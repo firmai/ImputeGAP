@@ -9,7 +9,7 @@ class TestOptiCDREC(unittest.TestCase):
 
     def test_optimization_bayesian_cdrec(self):
         """
-        the goal is to test if only the simple optimization with cdrec has the expected outcome
+        the goal is to test if only the simple optimization with CDRec has the expected outcome
         """
         algorithm = "cdrec"
         dataset = "chlorine"
@@ -23,7 +23,7 @@ class TestOptiCDREC(unittest.TestCase):
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")
 
         algo_opti = Imputation.MatrixCompletion.CDRec(incomp_data)
-        algo_opti.impute(user_def=False, params={"input_data":ts_1.data, "optimizer": "bayesian", "options":{"n_calls": 2}})
+        algo_opti.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})
         algo_opti.score(input_data=ts_1.data)
         metrics_optimal = algo_opti.metrics
 

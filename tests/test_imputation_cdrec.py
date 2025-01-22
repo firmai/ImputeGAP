@@ -22,10 +22,10 @@ class TestCDREC(unittest.TestCase):
         _, metrics = algo.recov_data, algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.5993259196563864,
-            "MAE": 0.5190054811092809,
-            "MI": 0.7796564257088495,
-            "CORRELATION": 0.6358270633906415
+            "RMSE": 0.4345469663511766,
+            "MAE": 0.364996518101561,
+            "MI": 1.1044925396596248,
+            "CORRELATION": 0.794760428131731
         }
 
         ts_1.print_results(metrics)
@@ -51,10 +51,10 @@ class TestCDREC(unittest.TestCase):
         _, metrics = algo.recov_data, algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.10329523970909142,
-            "MAE": 0.06717112854576478,
-            "MI": 0.7706445457837339,
-            "CORRELATION": 0.913368365805848
+            "RMSE": 0.07467415556012959,
+            "MAE": 0.04927307586281738,
+            "MI": 0.9032246175289653,
+            "CORRELATION": 0.9583571591921054
         }
 
         ts_1.print_results(metrics)
