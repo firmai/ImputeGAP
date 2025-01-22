@@ -12,6 +12,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
+from imputegap.tools import utils
 
 
 class Explainer:
@@ -150,6 +151,9 @@ class Explainer:
         -------
         None
         """
+        output = ", ".join([f"{output}" for _, output in shap_details])
+        print(f"RMSE RESULTS (Y_TRAIN & Y_TEST): [{output}]")
+
         print("\n\nSHAP Results details : ")
         for (x, algo, rate, description, feature, category, mean_features) in shap_values:
             print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
@@ -512,7 +516,6 @@ class Explainer:
         The contamination is applied to each time series using the specified method. The SHAP model is then used
         to generate explanations for the imputation results, which are logged in a local directory.
         """
-
         start_time = time.time()  # Record start time
 
         if limit_ratio < 0.05 or limit_ratio > 1:
@@ -535,8 +538,9 @@ class Explainer:
 
         if verbose:
             print("SHAP Explainer has been called\n\t",
-                  "missing_values (", missing_rate * 100, "%)\n\t",
+                  "missing_values (", missing_rate * 100, "% )\n\t",
                   "for a contamination (", pattern, "), \n\t",
+                  "extractor by (", extractor, ") \n\t",
                   "imputated by (", algorithm, ") with params (", params, ")\n\t",
                   "with limitation and splitter after verification of (", limit, ") and (", training_ratio, ") for ",
                   input_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
@@ -548,17 +552,13 @@ class Explainer:
 
         for current_series in range(0, limit):
 
-            print("Generation ", current_series, "/", limit, "(", int((current_series / limit) * 100), "%)________________________________________________________")
+            print("\n\nGeneration ", current_series, "/", limit, "(", int((current_series / limit) * 100), "%)________________________________________________________")
             print("\tContamination ", current_series, "...")
 
-            if pattern == "mcar":
-                incomp_data = TimeSeries().Contamination.mcar(input_data=input_data, dataset_rate=current_series,
-                                                              series_rate=missing_rate, block_size=block_size,
-                                                              offset=offset, seed=seed,
-                                                              explainer=True)
-            else:
-                print("Contamination proposed not found : ", pattern, " >> BREAK")
-                return None
+            tmp = TimeSeries()
+            tmp.import_matrix(input_data)
+            incomp_data = utils.config_contamination(ts=tmp, pattern=pattern, dataset_rate=current_series,
+                              series_rate=missing_rate, block_size=block_size, offset=offset, seed=seed, explainer=True)
 
             input_data_matrices.append(input_data)
             obfuscated_matrices.append(incomp_data)
@@ -573,15 +573,7 @@ class Explainer:
             input_params_full.append(descriptions)
 
             print("\tImputation ", current_series, "...")
-            if algorithm == "cdrec":
-                algo = Imputation.MatrixCompletion.CDRec(incomp_data)
-            elif algorithm == "stmvl":
-                algo = Imputation.PatternSearch.STMVL(incomp_data)
-            elif algorithm == "iim":
-                algo = Imputation.Statistics.IIM(incomp_data)
-            elif algorithm == "mrnn":
-                algo = Imputation.DeepLearning.MRNN(incomp_data)
-
+            algo = utils.config_impute_algorithm(incomp_data, algorithm)
             algo.logs = False
             algo.impute(user_def=True, params=params)
             algo.score(input_data)

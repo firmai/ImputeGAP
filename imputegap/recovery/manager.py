@@ -131,8 +131,8 @@ class TimeSeries:
 
                 #  update path form inner library datasets
                 if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt",
-                            "eeg-reading.txt",
-                            "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt", "fmri-stoptask.txt"]:
+                            "eeg-reading.txt", "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt",
+                            "fmri-stoptask.txt"]:
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 
                 if not os.path.exists(data):
@@ -343,6 +343,9 @@ class TimeSeries:
             series_indices = [series_range] if series_range is not None else range(min(input_data.shape[0], max_series))
             n_series_to_plot = len(series_indices)
 
+        if n_series_to_plot == 0:
+            n_series_to_plot = min(max_series, incomp_data.shape[0])
+
         if subplot:
             n_cols = min(3, n_series_to_plot)
             n_rows = (n_series_to_plot + n_cols - 1) // n_cols
@@ -411,6 +414,7 @@ class TimeSeries:
 
                 # Label and legend for subplot
                 if subplot:
+                    ax.set_title('Series ' + str(i+1), fontsize=9)
                     ax.set_xlabel('Timestamp', fontsize=7)
                     ax.set_ylabel('Values', fontsize=7)
                     ax.legend(loc='upper left', fontsize=7)
@@ -530,6 +534,7 @@ class TimeSeries:
                       "\n\ta starting position at ", offset,
                       "\n\ta block size of ", block_size,
                       "\n\twith a seed option set to ", seed,
+                      "\n\twith a seed_value set to ", seed_value,
                       "\n\tshape of the set ", ts_contaminated.shape,
                       "\n\tthis selection of series", *series_selected, "\n\n")
 

@@ -5,6 +5,100 @@ import importlib.resources
 import numpy as __numpy_import;
 
 
+def config_impute_algorithm(incomp_data, algorithm):
+    """
+    Configure and execute algorithm for selected imputation imputer and pattern.
+
+    Parameters
+    ----------
+    incomp_data : TimeSeries
+        TimeSeries object containing dataset.
+    algorithm : str
+        Name of algorithm
+
+    Returns
+    -------
+    BaseImputer
+        Configured imputer instance with optimal parameters.
+    """
+
+    from imputegap.recovery.imputation import Imputation
+
+    # 1st generation
+    if algorithm == "cdrec":
+        imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
+    elif algorithm == "stmvl":
+        imputer = Imputation.PatternSearch.STMVL(incomp_data)
+    elif algorithm == "iim":
+        imputer = Imputation.Statistics.IIM(incomp_data)
+    elif algorithm == "mrnn":
+        imputer = Imputation.DeepLearning.MRNN(incomp_data)
+
+    # 2nd generation
+    elif algorithm == "iterative_svd":
+        imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
+    elif algorithm == "grouse":
+        imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
+    elif algorithm == "dynammo":
+        imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
+    elif algorithm == "rosl":
+        imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
+    elif algorithm == "soft_impute":
+        imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
+    elif algorithm == "spirit":
+        imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
+    elif algorithm == "svt":
+        imputer = Imputation.MatrixCompletion.SVT(incomp_data)
+    elif algorithm == "tkcm":
+        imputer = Imputation.PatternSearch.TKCM(incomp_data)
+    elif algorithm == "deep_mvi":
+        imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
+    elif algorithm == "brits":
+        imputer = Imputation.DeepLearning.BRITS(incomp_data)
+    elif algorithm == "mpin":
+        imputer = Imputation.DeepLearning.MPIN(incomp_data)
+    elif algorithm == "pristi":
+        imputer = Imputation.DeepLearning.PRISTI(incomp_data)
+    else:
+        imputer = Imputation.Statistics.MeanImpute(incomp_data)
+
+    return imputer
+
+
+def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0, explainer=False):
+    """
+    Configure and execute contamination for selected imputation algorithm and pattern.
+
+    Parameters
+    ----------
+    rate : float
+        Mean parameter for contamination missing percentage rate.
+    ts_test : TimeSeries
+        A TimeSeries object containing dataset.
+    pattern : str
+        Type of contamination pattern (e.g., "mcar", "mp", "blackout", "disjoint", "overlap", "gaussian").
+    block_size_mcar : int
+        Size of blocks removed in MCAR
+
+    Returns
+    -------
+    TimeSeries
+        TimeSeries object containing contaminated data.
+    """
+    if pattern == "mcar":
+        incomp_data = ts.Contamination.mcar(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
+    elif pattern == "mp":
+        incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, offset=offset)
+    elif pattern == "disjoint":
+        incomp_data = ts.Contamination.disjoint(input_data=ts.data, series_rate=dataset_rate, limit=1, offset=offset)
+    elif pattern == "overlap":
+        incomp_data = ts.Contamination.overlap(input_data=ts.data, series_rate=dataset_rate, limit=limit, shift=shift, offset=offset)
+    elif pattern == "gaussian":
+        incomp_data = ts.Contamination.gaussian(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, std_dev=std_dev, offset=offset, seed=True)
+    else:
+        incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset)
+
+    return incomp_data
 
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
     """
@@ -156,120 +250,136 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     with open(filepath, "r") as _:
         config = toml.load(filepath)
 
+    print("\n\t\t\t\t(SYS) Inner files loaded : ", filepath, "\n")
+
     if algorithm == "cdrec":
-        truncation_rank = int(config['cdrec']['rank'])
-        epsilon = config['cdrec']['epsilon']
-        iterations = int(config['cdrec']['iteration'])
-        return (truncation_rank, float(epsilon), iterations)
+        truncation_rank = int(config[algorithm]['rank'])
+        epsilon = float(config[algorithm]['epsilon'])
+        iterations = int(config[algorithm]['iteration'])
+        return (truncation_rank, epsilon, iterations)
     elif algorithm == "stmvl":
-        window_size = int(config['stmvl']['window_size'])
-        gamma = float(config['stmvl']['gamma'])
-        alpha = int(config['stmvl']['alpha'])
+        window_size = int(config[algorithm]['window_size'])
+        gamma = float(config[algorithm]['gamma'])
+        alpha = int(config[algorithm]['alpha'])
         return (window_size, gamma, alpha)
     elif algorithm == "iim":
-        learning_neighbors = int(config['iim']['learning_neighbors'])
+        learning_neighbors = int(config[algorithm]['learning_neighbors'])
         if query == "default":
-            algo_code = config['iim']['algorithm_code']
+            algo_code = config[algorithm]['algorithm_code']
             return (learning_neighbors, algo_code)
         else:
             return (learning_neighbors,)
     elif algorithm == "mrnn":
-        hidden_dim = int(config['mrnn']['hidden_dim'])
-        learning_rate = float(config['mrnn']['learning_rate'])
-        iterations = int(config['mrnn']['iterations'])
+        hidden_dim = int(config[algorithm]['hidden_dim'])
+        learning_rate = float(config[algorithm]['learning_rate'])
+        iterations = int(config[algorithm]['iterations'])
         if query == "default":
-            sequence_length = int(config['mrnn']['sequence_length'])
+            sequence_length = int(config[algorithm]['sequence_length'])
             return (hidden_dim, learning_rate, iterations, sequence_length)
         else:
             return (hidden_dim, learning_rate, iterations)
     elif algorithm == "iterative_svd":
-        truncation_rank = int(config['iterative_svd']['rank'])
+        truncation_rank = int(config[algorithm]['rank'])
         return (truncation_rank)
     elif algorithm == "grouse":
-        max_rank = int(config['grouse']['max_rank'])
+        max_rank = int(config[algorithm]['max_rank'])
         return (max_rank)
     elif algorithm == "dynammo":
-        h = int(config['dynammo']['h'])
-        max_iteration = int(config['dynammo']['max_iteration'])
-        approximation = bool(config['dynammo']['approximation'])
+        h = int(config[algorithm]['h'])
+        max_iteration = int(config[algorithm]['max_iteration'])
+        approximation = bool(config[algorithm]['approximation'])
         return (h, max_iteration, approximation)
     elif algorithm == "rosl":
-        rank = int(config['rosl']['rank'])
-        regularization = int(config['rosl']['regularization'])
+        rank = int(config[algorithm]['rank'])
+        regularization = int(config[algorithm]['regularization'])
         return (rank, regularization)
     elif algorithm == "soft_impute":
-        max_rank = int(config['soft_impute']['max_rank'])
+        max_rank = int(config[algorithm]['max_rank'])
         return (max_rank)
     elif algorithm == "spirit":
-        k = int(config['spirit']['k'])
-        w = int(config['spirit']['w'])
-        lvalue = float(config['spirit']['lvalue'])
+        k = int(config[algorithm]['k'])
+        w = int(config[algorithm]['w'])
+        lvalue = float(config[algorithm]['lvalue'])
         return (k, w, lvalue)
     elif algorithm == "svt":
-        tau = float(config['svt']['tau'])
+        tau = float(config[algorithm]['tau'])
         return (tau)
     elif algorithm == "tkcm":
-        rank = int(config['tkcm']['rank'])
+        rank = int(config[algorithm]['rank'])
         return (rank)
     elif algorithm == "deep_mvi":
-        max_epoch = int(config['deep_mvi']['max_epoch'])
-        patience = int(config['deep_mvi']['patience'])
+        max_epoch = int(config[algorithm]['max_epoch'])
+        patience = int(config[algorithm]['patience'])
         return (max_epoch, patience)
     elif algorithm == "brits":
-        model = str(config['brits']['model'])
-        epoch = int(config['brits']['epoch'])
-        batch_size = int(config['brits']['batch_size'])
-        nbr_features = int(config['brits']['nbr_features'])
-        hidden_layers = int(config['brits']['hidden_layers'])
+        model = str(config[algorithm]['model'])
+        epoch = int(config[algorithm]['epoch'])
+        batch_size = int(config[algorithm]['batch_size'])
+        nbr_features = int(config[algorithm]['nbr_features'])
+        hidden_layers = int(config[algorithm]['hidden_layers'])
         return (model, epoch, batch_size, nbr_features, hidden_layers)
     elif algorithm == "mpin":
-        incre_mode = str(config['mpin']['incre_mode'])
-        window = int(config['mpin']['window'])
-        k = int(config['mpin']['k'])
-        learning_rate = float(config['mpin']['learning_rate'])
-        weight_decay = float(config['mpin']['weight_decay'])
-        epochs = int(config['mpin']['epochs'])
-        threshold = float(config['mpin']['threshold'])
-        base = str(config['mpin']['base'])
+        incre_mode = str(config[algorithm]['incre_mode'])
+        window = int(config[algorithm]['window'])
+        k = int(config[algorithm]['k'])
+        learning_rate = float(config[algorithm]['learning_rate'])
+        weight_decay = float(config[algorithm]['weight_decay'])
+        epochs = int(config[algorithm]['epochs'])
+        threshold = float(config[algorithm]['threshold'])
+        base = str(config[algorithm]['base'])
         return (incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base)
     elif algorithm == "pristi":
-        target_strategy = str(config['pristi']['target_strategy'])
-        unconditional = bool(config['pristi']['unconditional'])
-        seed = int(config['pristi']['seed'])
-        device = str(config['pristi']['device'])
+        target_strategy = str(config[algorithm]['target_strategy'])
+        unconditional = bool(config[algorithm]['unconditional'])
+        seed = int(config[algorithm]['seed'])
+        device = str(config[algorithm]['device'])
         return (target_strategy, unconditional, seed, device)
     elif algorithm == "greedy":
-        n_calls = int(config['greedy']['n_calls'])
-        metrics = config['greedy']['metrics']
+        n_calls = int(config[algorithm]['n_calls'])
+        metrics = config[algorithm]['metrics']
         return (n_calls, [metrics])
     elif algorithm == "bayesian":
-        n_calls = int(config['bayesian']['n_calls'])
-        n_random_starts = int(config['bayesian']['n_random_starts'])
-        acq_func = str(config['bayesian']['acq_func'])
+        n_calls = int(config[algorithm]['n_calls'])
+        n_random_starts = int(config[algorithm]['n_random_starts'])
+        acq_func = str(config[algorithm]['acq_func'])
         metrics = config['bayesian']['metrics']
         return (n_calls, n_random_starts, acq_func, [metrics])
     elif algorithm == "pso":
-        n_particles = int(config['pso']['n_particles'])
-        c1 = float(config['pso']['c1'])
-        c2 = float(config['pso']['c2'])
-        w = float(config['pso']['w'])
-        iterations = int(config['pso']['iterations'])
-        n_processes = int(config['pso']['n_processes'])
-        metrics = config['pso']['metrics']
+        n_particles = int(config[algorithm]['n_particles'])
+        c1 = float(config[algorithm]['c1'])
+        c2 = float(config[algorithm]['c2'])
+        w = float(config[algorithm]['w'])
+        iterations = int(config[algorithm]['iterations'])
+        n_processes = int(config[algorithm]['n_processes'])
+        metrics = config[algorithm]['metrics']
         return (n_particles, c1, c2, w, iterations, n_processes, [metrics])
     elif algorithm == "sh":
-        num_configs = int(config['sh']['num_configs'])
-        num_iterations = int(config['sh']['num_iterations'])
-        reduction_factor = int(config['sh']['reduction_factor'])
-        metrics = config['sh']['metrics']
+        num_configs = int(config[algorithm]['num_configs'])
+        num_iterations = int(config[algorithm]['num_iterations'])
+        reduction_factor = int(config[algorithm]['reduction_factor'])
+        metrics = config[algorithm]['metrics']
         return (num_configs, num_iterations, reduction_factor, [metrics])
+    elif algorithm == "forecaster-naive":
+        strategy = str(config[algorithm]['strategy'])
+        window_length = int(config[algorithm]['window_length'])
+        sp = int(config[algorithm]['sp'])
+        return {"strategy": strategy, "window_length": window_length, "sp": sp}
+    elif algorithm == "forecaster-exp-smoothing":
+        trend = str(config[algorithm]['trend'])
+        seasonal = str(config[algorithm]['seasonal'])
+        sp = int(config[algorithm]['sp'])
+        return {"trend": trend, "seasonal": seasonal, "sp": sp}
+    elif algorithm == "forecaster-prophet":
+        seasonality_mode = str(config[algorithm]['seasonality_mode'])
+        n_changepoints = int(config[algorithm]['n_changepoints'])
+        return {"seasonality_mode": seasonality_mode, "n_changepoints": n_changepoints}
     elif algorithm == "colors":
-        colors = config['colors']['plot']
+        colors = config[algorithm]['plot']
         return colors
     elif algorithm == "other":
         return config
     else:
-        print("Default/Optimal config not found for this algorithm")
+        print("\t\t(SYS) Default/Optimal config not found for this algorithm")
         return None
 
 
@@ -338,7 +448,7 @@ def load_share_lib(name="lib_cdrec", lib=True):
             local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
 
         lib_path = os.path.join(local_path_lin)
-        print("\tlib loaded from:", lib_path)
+        print("\t\t(SYS) lib loaded from:", lib_path)
 
 
     return ctypes.CDLL(lib_path)
@@ -366,8 +476,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     None
     """
     if file_name is None:
-        file_name = "../params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(
-            algorithm) + ".toml"
+        file_name = "../params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
 
     if not os.path.exists(file_name):
         file_name = file_name[1:]
@@ -410,6 +519,6 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     try:
         with open(file_name, 'w') as file:
             toml.dump(params_to_save, file)
-        print(f"\nOptimization parameters successfully saved to {file_name}")
+        print(f"\n\t\t(SYS) Optimization parameters successfully saved to {file_name}")
     except Exception as e:
-        print(f"\nAn error occurred while saving the file: {e}")
+        print(f"\n\t\t(SYS) An error occurred while saving the file: {e}")

@@ -13,6 +13,7 @@ from imputegap.algorithms.soft_impute import soft_impute
 from imputegap.algorithms.spirit import spirit
 from imputegap.algorithms.svt import svt
 from imputegap.algorithms.tkcm import tkcm
+from imputegap.recovery.downstream import Downstream
 from imputegap.recovery.evaluation import Evaluation
 from imputegap.algorithms.cdrec import cdrec
 from imputegap.algorithms.iim import iim
@@ -56,6 +57,7 @@ class BaseImputer:
         self.incomp_data = incomp_data
         self.recov_data = None
         self.metrics = None
+        self.downstream_metrics = None
         self.parameters = None
 
     def impute(self, params=None):
@@ -74,7 +76,7 @@ class BaseImputer:
         """
         raise NotImplementedError("This method should be overridden by subclasses")
 
-    def score(self, input_data, recov_data=None):
+    def score(self, input_data, recov_data=None, downstream=None):
         """
         Compute evaluation metrics for the imputed time series.
 
@@ -84,7 +86,9 @@ class BaseImputer:
             The original time series without contamination.
         recov_data : numpy.ndarray, optional
             The imputed time series (default is None).
-
+        downstream : dict, optional
+            Dictionary that calls, if active, the downstream evaluation. (default is None).
+            format : {"model": "forcaster", "params": parameters}
         Returns
         -------
         None
@@ -92,7 +96,10 @@ class BaseImputer:
         if self.recov_data is None:
             self.recov_data = recov_data
 
-        self.metrics = Evaluation(input_data, self.recov_data, self.incomp_data).compute_all_metrics()
+        if isinstance(downstream, dict) and downstream is not None:
+            self.downstream_metrics = Downstream(input_data, self.recov_data, self.incomp_data, downstream).downstream_analysis()
+        else:
+            self.metrics = Evaluation(input_data, self.recov_data, self.incomp_data).compute_all_metrics()
 
     def _check_params(self, user_def, params):
         """

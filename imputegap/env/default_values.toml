@@ -108,6 +108,24 @@ num_iterations = 2
 reduction_factor = 10
 metrics="RMSE"
 
+# DOWNSTREAM DEFAULT VALUES ==========================================================================
+[forecaster-naive]
+strategy = "mean"
+window_length = 10
+sp = 5
+
+[forecaster-exp-smoothing]
+trend = "additive"
+seasonal = "additive"
+sp = 5
+
+[forecaster-prophet]
+seasonality_mode = "additive"
+n_changepoints = 25
+
+
+
+
 # FUNCTION DEFAULT VALUES ==========================================================================
 
 # FUNCTION DEFAULT VALUES : EXPLAINER
