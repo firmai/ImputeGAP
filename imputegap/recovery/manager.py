@@ -731,7 +731,7 @@ class TimeSeries:
                 The contaminated time series data.
             """
             ts_contaminated = input_data.copy()
-            M, N = ts_contaminated.shape
+            M, NS = ts_contaminated.shape
 
             series_rate = utils.verification_limitation(series_rate)
             offset = utils.verification_limitation(offset)
@@ -742,8 +742,8 @@ class TimeSeries:
                   "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
 
             S = 0
-            X = int(len(ts_contaminated[0]) * offset) # current index with offset
-            final_limit = int(N*limit)-1
+            X = 0
+            final_limit = int(NS*limit)-1
 
             while S < M:
                 N = len(ts_contaminated[S])  # number of values in the series
@@ -758,12 +758,12 @@ class TimeSeries:
                     if index >= final_limit:  # reach the limitation
                         return ts_contaminated
 
-                X = L + 1
+                X = L
                 S = S + 1
 
             return ts_contaminated
 
-        def overlap(input_data, series_rate=0.2, limit=1, shift=0.05, offset=0.1, ):
+        def overlap(input_data, series_rate=0.2, limit=1, shift=0.05, offset=0.1):
             """
             Apply overlap contamination to the time series data.
 
@@ -786,7 +786,7 @@ class TimeSeries:
                 The contaminated time series data.
             """
             ts_contaminated = input_data.copy()
-            M, N = ts_contaminated.shape
+            M, NS = ts_contaminated.shape
 
             series_rate = utils.verification_limitation(series_rate)
             offset = utils.verification_limitation(offset)
@@ -797,16 +797,22 @@ class TimeSeries:
                   "\n\ta shift overlap of ", shift * 100, "%",
                   "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
 
-            S = 0
-            X = int(len(ts_contaminated[0]) * offset)  # current index with offset
-            X = X + int(X * shift)  # counter first shift
-            final_limit = int(N * limit) - 1
+            if int(((NS-(NS*offset)) * shift)) > int(NS*offset):
+                raise ValueError(f"Shift too big for this dataset and offset: shift ({int(((NS-(NS*offset)) * shift))}), offset ({int(NS*offset)}).")
+
+            S, X = 0, 0
+            final_limit = int(NS * limit) - 1
+
+            print("S", S)
 
             while S < M:
                 N = len(ts_contaminated[S])  # number of values in the series
                 P = int(N * offset)  # values to protect in the beginning of the series
                 W = int((N - P) * series_rate)  # number of data to remove
-                X = X - int(X * shift)
+
+                if X != 0:
+                    X = X - int((N - P) * shift)
+
                 L = X + W  # new limit
 
                 for to_remove in range(X, L):
@@ -816,7 +822,7 @@ class TimeSeries:
                     if index >= final_limit:  # reach the limitation
                         return ts_contaminated
 
-                X = L + 1
+                X = L
                 S = S + 1
 
             return ts_contaminated
