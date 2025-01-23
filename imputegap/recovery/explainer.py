@@ -205,8 +205,7 @@ class Explainer:
 
         return result_shap
 
-    def execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False,
-                           verbose=False):
+    def execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False):
         """
         Launch the SHAP model for explaining the features of the dataset.
 

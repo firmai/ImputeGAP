@@ -528,7 +528,7 @@ class TimeSeries:
                 series_selected = [str(dataset_rate)]
 
             if not explainer:
-                print("\n\nMCAR contamination has been called with :"
+                print("\n\n\tMCAR contamination has been called with :"
                       "\n\ta number of series impacted ", dataset_rate * 100, "%",
                       "\n\ta missing rate of ", series_rate * 100, "%",
                       "\n\ta starting position at ", offset,
