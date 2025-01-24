@@ -803,8 +803,6 @@ class TimeSeries:
             S, X = 0, 0
             final_limit = int(NS * limit) - 1
 
-            print("S", S)
-
             while S < M:
                 N = len(ts_contaminated[S])  # number of values in the series
                 P = int(N * offset)  # values to protect in the beginning of the series

@@ -49,9 +49,6 @@ def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
     # Native code uses linear matrix layout, and also it's easier to pass it in like this
     __ctype_matrix = utils.__marshal_as_native_column(__py_matrix);
 
-    print(f"\t\t\t\t(PYTHON) CDRec: ({__py_matrix.shape[0]},{__py_matrix.shape[1]}) for rank {__py_rank}, "
-          f"epsilon {__py_epsilon}, and iterations {__py_iterations}...")
-
     shared_lib.cdrec_imputation_parametrized(__ctype_matrix, __ctype_size_n, __ctype_size_m, __ctype_rank, __ctype_epsilon, __ctype_iterations);
 
     __py_imputed_matrix = utils.__marshal_as_numpy_column(__ctype_matrix, __py_n, __py_m);
@@ -89,6 +86,10 @@ def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, lib_path
     >>> print(recov_data)
 
     """
+
+    print(f"\t\t\t\t(PYTHON) CDRec: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for rank {truncation_rank}, "
+          f"epsilon {epsilon}, and iterations {iterations}...")
+
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery

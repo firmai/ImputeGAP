@@ -38,6 +38,8 @@ jobs:
         python -m pytest ./tests/test_contamination_mp.py
         python -m pytest ./tests/test_contamination_blackout.py
         python -m pytest ./tests/test_contamination_gaussian.py
+        python -m pytest ./tests/test_contamination_disjoint.py
+        python -m pytest ./tests/test_contamination_overlap.py
         python -m pytest ./tests/test_exception.py
         python -m pytest ./tests/test_benchmarking.py
         python -m pytest ./tests/test_downstream.py

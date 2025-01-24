@@ -26,3 +26,76 @@ class TestContaminationDisjoint(unittest.TestCase):
                 check_position = True
 
             self.assertTrue(check_position, True)
+
+    def test_disjoint_logic(self):
+        """
+        The goal is to test if the logic of the disjoint contamination is respected.
+        Each series is contaminated in a disjoint manner, starting from the end of the contamination
+        of the previous series and continuing without overlap.
+        """
+
+        datasets = ["chlorine", "eeg-alcohol", "fmri-stoptask"]
+        series_rate = [0.01, 0.2, 0.5, 0.8]  # Percentage of series impacted
+        P = 0.1  # Offset zone
+
+        for dataset in datasets:
+            ts = TimeSeries()
+            ts.load_series(utils.search_path(dataset))
+
+            for S in series_rate:
+                # Generate disjoint contamination
+                ts_miss = ts.Contamination.disjoint(input_data=ts.data, series_rate=S, limit=1, offset=P)
+
+                M, _ = ts.data.shape
+
+                INC = 0  # Incremental counter to track contamination shifts
+                X = int(len(ts.data[0]) * P)
+                FINAL_LIMIT = (len(ts.data[1]) - X) // (S * (len(ts.data[1]) - X))
+
+                for series_index, series in enumerate(ts_miss):
+                    N = len(series)  # Total number of values in the series
+                    O = int(N * P)  # Values to protect at the beginning of the series
+                    W = int((N - O) * S)  # Number of data points to remove
+                    L = X + W  # Ending position for contamination in the current series
+
+                    print(*[f"({indc} {se})" for indc, se in enumerate(series)], sep=" ")
+
+                    # 1. Check the number of NaN values
+                    nbr_expected_nan = W
+                    nbr_nan = np.isnan(series).sum()
+                    self.assertTrue(nbr_expected_nan - nbr_nan >= 0,
+                        f"Series {series_index}: Expected {nbr_expected_nan} NaN values, found {nbr_nan}.")
+
+                    # 2. Check the disjoint logic
+                    # Subsequent series: NaN values should range from X to L
+                    self.assertTrue(np.all(np.isnan(series[X:L])),
+                        f"Series {series_index}: NaN values not properly placed in range X to L. {X}>{L},"
+                        f"for P {P}, O {O}, W {W}, N {N}, S {S}")
+
+                    # Ensure no NaN values outside the expected range
+                    self.assertFalse(np.isnan(series[:O]).any(),
+                        f"Series {series_index}: Unexpected NaN values in the protected offset region.")
+
+                    self.assertFalse(np.isnan(series[L:]).any(),
+                        f"Series {series_index}: Unexpected NaN values after the contamination region.")
+
+                    # Update X and INC
+                    X = L
+                    INC = INC + 1
+
+                    # Exit the loop if INC exceeds FINAL_LIMIT
+                    if INC == FINAL_LIMIT:
+                        break
+
+                    # Check if INC matches FINAL_LIMIT
+                    self.assertTrue(INC < FINAL_LIMIT,
+                                     f"INC < FINAL_LIMIT ({INC}!<{FINAL_LIMIT}).")
+
+                if M < FINAL_LIMIT:
+                    # Check if INC matches FINAL_LIMIT
+                    self.assertEqual(INC, M,
+                                     f"INC ({INC}) does not match M ({M}).")
+                else:
+                    # Check if INC matches FINAL_LIMIT
+                    self.assertEqual(INC, FINAL_LIMIT,
+                        f"INC ({INC}) does not match FINAL_LIMIT ({FINAL_LIMIT}).")

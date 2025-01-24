@@ -42,7 +42,7 @@ class TestContamination(unittest.TestCase):
         the goal is to test if the starting position is always guaranteed
         """
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("drift"))
 
         series_impacted = [0.4, 0.8]
         missing_rates = [0.1, 0.4, 0.6]
@@ -61,3 +61,43 @@ class TestContamination(unittest.TestCase):
                     check_position = True
 
                 self.assertTrue(check_position, True)
+
+    def test_gaussian_logic(self):
+        """
+        The goal is to test if the logic of the Bayesian contamination is respected.
+        Specifically, contamination with a higher standard deviation should result in
+        more sparsely distributed NaN values compared to a lower standard deviation.
+        """
+
+        datasets = ["chlorine"]
+        nbr_series_impacted = [0.2, 0.5, 0.80]  # Percentage of series impacted
+        missing_rates_per_series = [0.4, 0.6]  # Percentage of missing values with NaN
+        std_devs = [0.2, 0.5]  # Standard deviations to test
+        P = 0.1  # Offset zone
+
+        for dataset in datasets:
+            ts = TimeSeries()
+            ts.load_series(utils.search_path(dataset))
+
+            for S in nbr_series_impacted:
+                for R in missing_rates_per_series:
+                    densities = {}
+
+                    for std_dev in std_devs:
+                        # Generate contamination with the current standard deviation
+                        contaminated_data = ts.Contamination.gaussian(input_data=ts.data, dataset_rate=S, series_rate=R,
+                                                                      std_dev=std_dev, offset=P)
+
+                        # Calculate positions of NaN values
+                        nan_positions = np.where(np.isnan(contaminated_data))
+
+                        # Center of the time series (considering offset zone)
+                        center = int((ts.data.shape[1] + (ts.data.shape[1] * P)) // 2)
+
+                        # Compute average distances of NaN positions from the center
+                        density = np.abs(nan_positions[1] - center).mean()
+                        densities[std_dev] = density
+
+                    self.assertLess(densities[0.2], densities[0.5],
+                        f"Medium deviation density {densities[0.2]} should be more tightly packed than high deviation density {densities[0.5]}, "
+                        f"for dataset {dataset}, series impacted {S}, and missing rate {R}. (Center: {center})")

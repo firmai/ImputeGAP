@@ -24,8 +24,10 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
     ],
     python_requires=">=3.10, <3.13",
-    install_requires=open('requirements.txt').read().splitlines(),
-    packages=setuptools.find_packages(),
+    install_requires=(
+            open('requirements.txt').read().splitlines() +
+            open('requirements_dev.txt').read().splitlines()
+    ),    packages=setuptools.find_packages(),
     include_package_data=True,
     package_data={
         'imputegap': [
