@@ -40,3 +40,7 @@ ipdb==0.13.13
 pandas==2.0.3
 torchcde==0.2.5
 tables==3.10.1
+
+
+# extractor
+tsfel==0.1.9

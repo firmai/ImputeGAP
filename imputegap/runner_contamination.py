@@ -9,10 +9,8 @@ ts_1.load_series(utils.search_path("chlorine"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR pattern
-low_deviation = ts_1.Contamination.disjoint(input_data=ts_1.data, series_rate=0.01, limit=1, offset=0.1)
+low_deviation = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.2, offset=0.1)
 
 # [OPTIONAL] you can plot your raw data / print the contamination
-
-
 ts_1.print(limit_timestamps=12, limit_series=7)
 ts_1.plot(ts_1.data, low_deviation, max_series=-1, subplot=True, save_path="./imputegap/assets")

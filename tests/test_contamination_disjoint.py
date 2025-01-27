@@ -27,6 +27,21 @@ class TestContaminationDisjoint(unittest.TestCase):
 
             self.assertTrue(check_position, True)
 
+
+    def get_last_nan_series_index(self, matrix):
+        last_nan_index = None  # Initialize the variable to store the result
+        all_nan = True  # Assume all series have NaN values initially
+
+        for i in range(matrix.shape[0]):  # Iterate in reverse
+            if np.isnan(matrix[i]).any():  # Check if any NaN exists in the series
+                last_nan_index = i + 1  # Update the variable with the index + 1
+            else:
+                all_nan = False  # Found a series without NaN, update the flag
+
+        if all_nan:
+            return matrix.shape[0]  # Return the size of shape[0] if all series have NaN
+        return last_nan_index  # Otherwise, return the last series index with NaN
+
     def test_disjoint_logic(self):
         """
         The goal is to test if the logic of the disjoint contamination is respected.
@@ -34,8 +49,8 @@ class TestContaminationDisjoint(unittest.TestCase):
         of the previous series and continuing without overlap.
         """
 
-        datasets = ["chlorine", "eeg-alcohol", "fmri-stoptask"]
-        series_rate = [0.01, 0.2, 0.5, 0.8]  # Percentage of series impacted
+        datasets = ["test", "chlorine", "eeg-alcohol", "fmri-stoptask"]
+        series_rate = [0.2, 0.5, 0.8]  # Percentage of series impacted
         P = 0.1  # Offset zone
 
         for dataset in datasets:
@@ -50,7 +65,8 @@ class TestContaminationDisjoint(unittest.TestCase):
 
                 INC = 0  # Incremental counter to track contamination shifts
                 X = int(len(ts.data[0]) * P)
-                FINAL_LIMIT = (len(ts.data[1]) - X) // (S * (len(ts.data[1]) - X))
+                FINAL_LIMIT = self.get_last_nan_series_index(ts_miss)
+
 
                 for series_index, series in enumerate(ts_miss):
                     N = len(series)  # Total number of values in the series

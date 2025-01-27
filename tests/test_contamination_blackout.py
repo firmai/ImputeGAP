@@ -4,7 +4,7 @@ from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 
 
-class TestContamination(unittest.TestCase):
+class TestContaminationBlackout(unittest.TestCase):
 
     def test_blackout_selection(self):
         """

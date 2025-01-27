@@ -48,7 +48,7 @@ class TestContaminationOverlap(unittest.TestCase):
         of the previous series and continuing with overlap.
         """
 
-        datasets = ["chlorine", "eeg-alcohol", "fmri-stoptask"]
+        datasets = ["test", "chlorine", "eeg-alcohol", "fmri-stoptask"]
         series_rate = [0.2, 0.5, 0.8]  # Percentage of series impacted
         P = 0.1  # Offset zone
         shift = [0.05, 0.1]
@@ -70,8 +70,6 @@ class TestContaminationOverlap(unittest.TestCase):
                     X = int(len(ts.data[0]) * P)  # 100
 
                     FINAL_LIMIT = self.get_last_nan_series_index(ts_miss)
-
-                    print("FINAL_LIMIT", FINAL_LIMIT)
 
                     for series_index, series in enumerate(ts_miss):
                         N = len(series)  # Total number of values in the series

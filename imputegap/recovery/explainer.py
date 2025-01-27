@@ -7,6 +7,7 @@ import numpy as np
 import shap
 import pycatch22
 import toml
+import tsfel
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
@@ -73,6 +74,29 @@ class Explainer:
         return categories, features
 
 
+    def extractor_tsfel(data, features_categories, features_list):
+        data = [[0 if num is None else num for num in sublist] for sublist in data]
+        data = [[0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num
+             in sublist] for sublist in data]
+        data = np.array(data)
+
+        cfg = tsfel.get_features_by_domain("spectral")
+        spectral = tsfel.time_series_features_extractor(cfg, data)
+
+        cfg = tsfel.get_features_by_domain("statistical")
+        statistical = tsfel.time_series_features_extractor(cfg, data)
+
+        cfg = tsfel.get_features_by_domain("temporal")
+        temporal = tsfel.time_series_features_extractor(cfg, data)
+
+        cfg = tsfel.get_features_by_domain("fractal")
+        fractal = tsfel.time_series_features_extractor(cfg, data)
+
+        print("spectral.shape", spectral.shape)
+        print("statistical.shape", statistical.shape)
+        print("temporal.shape", temporal.shape)
+        print("fractal.shape", fractal.shape)
+
     def extractor_pycatch(data, features_categories, features_list, do_catch24=True):
         """
         Extract features from time series data using pycatch22.
@@ -97,10 +121,8 @@ class Explainer:
         """
 
         data = [[0 if num is None else num for num in sublist] for sublist in data]
-        data = [
-            [0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num
+        data = [[0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num
              in sublist] for sublist in data]
-
         data = np.array(data)
 
         if isinstance(data, np.ndarray):
@@ -565,6 +587,10 @@ class Explainer:
             if extractor == "pycatch22":
                 catch_fct, descriptions = Explainer.extractor_pycatch(np.array(incomp_data), categories, features, False)
                 extracted_features = np.array(list(catch_fct.values()))
+            elif extractor == "tsfel":
+                catch_fct, descriptions = Explainer.extractor_tsfel(np.array(incomp_data), categories, features)
+                extracted_features = np.array(list(catch_fct.values()))
+
             else:
                 catch_fct, descriptions, extracted_features = None, None, None
 

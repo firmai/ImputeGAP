@@ -529,14 +529,14 @@ class TimeSeries:
 
             if not explainer:
                 print("\n\n\tMCAR contamination has been called with :"
-                      "\n\ta number of series impacted ", dataset_rate * 100, "%",
-                      "\n\ta missing rate of ", series_rate * 100, "%",
-                      "\n\ta starting position at ", offset,
-                      "\n\ta block size of ", block_size,
-                      "\n\twith a seed option set to ", seed,
-                      "\n\twith a seed_value set to ", seed_value,
-                      "\n\tshape of the set ", ts_contaminated.shape,
-                      "\n\tthis selection of series", *series_selected, "\n\n")
+                      "\n\t\ta number of series impacted ", dataset_rate * 100, "%",
+                      "\n\t\ta missing rate of ", series_rate * 100, "%",
+                      "\n\t\ta starting position at ", offset,
+                      "\n\t\ta block size of ", block_size,
+                      "\n\t\twith a seed option set to ", seed,
+                      "\n\t\twith a seed_value set to ", seed_value,
+                      "\n\t\tshape of the set ", ts_contaminated.shape,
+                      "\n\t\tthis selection of series", *series_selected, "\n\n")
 
             for series in series_selected:
                 S = int(series)
@@ -592,20 +592,21 @@ class TimeSeries:
             """
 
             ts_contaminated = input_data.copy()
-            M, _ = ts_contaminated.shape
+            M, NS = ts_contaminated.shape
 
             series_rate = utils.verification_limitation(series_rate)
             dataset_rate = utils.verification_limitation(dataset_rate)
             offset = utils.verification_limitation(offset)
 
             nbr_series_impacted = int(np.ceil(M * dataset_rate))
+            offset_nbr = int(offset*NS)
 
-            print("\n\nMISSING PERCENTAGE contamination has been called with :"
-                  "\n\ta number of series impacted ", dataset_rate * 100, "%",
-                  "\n\ta missing rate of ", series_rate * 100, "%",
-                  "\n\ta starting position at ", offset,
-                  "\n\tshape of the set ", ts_contaminated.shape,
-                  "\n\tthis selection of series 0 to ", nbr_series_impacted, "\n\n")
+            print("\n\n\tMISSING PERCENTAGE contamination has been called with :"
+                  "\n\t\ta number of series impacted ", dataset_rate * 100, "%",
+                  "\n\t\ta missing rate of ", series_rate * 100, "%",
+                  "\n\t\ta starting position at ", offset,
+                  "\n\t\tshape of the set ", ts_contaminated.shape,
+                  "\n\t\tthis selection of series : ", offset_nbr, "->", offset_nbr+nbr_series_impacted, "\n\n")
 
             for series in range(0, nbr_series_impacted):
                 S = int(series)
@@ -678,13 +679,13 @@ class TimeSeries:
 
             nbr_series_impacted = int(np.ceil(M * dataset_rate))
 
-            print("\n\nGAUSSIAN contamination has been called with :"
-                  "\n\ta number of series impacted ", dataset_rate * 100, "%",
-                  "\n\ta missing rate of ", series_rate * 100, "%",
-                  "\n\ta starting position at ", offset,
-                  "\n\tGaussian std_dev ", std_dev,
-                  "\n\tshape of the set ", ts_contaminated.shape,
-                  "\n\tthis selection of series 0 to ", nbr_series_impacted, "\n\n")
+            print("\n\n\tGAUSSIAN contamination has been called with :"
+                  "\n\t\ta number of series impacted ", dataset_rate * 100, "%",
+                  "\n\t\ta missing rate of ", series_rate * 100, "%",
+                  "\n\t\ta starting position at ", offset,
+                  "\n\t\tGaussian std_dev ", std_dev,
+                  "\n\t\tshape of the set ", ts_contaminated.shape,
+                  "\n\t\tthis selection of series 0 to ", nbr_series_impacted, "\n\n")
 
             for series in range(0, nbr_series_impacted):
                 S = int(series)
@@ -736,10 +737,10 @@ class TimeSeries:
             series_rate = utils.verification_limitation(series_rate)
             offset = utils.verification_limitation(offset)
 
-            print("\n\nDISJOINT contamination has been called with :"
-                  "\n\ta missing rate of ", series_rate * 100, "%",
-                  "\n\ta starting position at ", offset,
-                  "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
+            print("\n\n\tDISJOINT contamination has been called with :"
+                  "\n\t\ta missing rate of ", series_rate * 100, "%",
+                  "\n\t\ta starting position at ", offset,
+                  "\n\t\tshape of the set ", ts_contaminated.shape, "\n\n")
 
             S = 0
             X = 0
@@ -791,11 +792,11 @@ class TimeSeries:
             series_rate = utils.verification_limitation(series_rate)
             offset = utils.verification_limitation(offset)
 
-            print("\n\nOVERLAP contamination has been called with :"
-                  "\n\ta missing rate of ", series_rate * 100, "%",
-                  "\n\ta starting position at ", offset,
-                  "\n\ta shift overlap of ", shift * 100, "%",
-                  "\n\tshape of the set ", ts_contaminated.shape, "\n\n")
+            print("\n\n\tOVERLAP contamination has been called with :"
+                  "\n\t\ta missing rate of ", series_rate * 100, "%",
+                  "\n\t\ta starting position at ", offset,
+                  "\n\t\ta shift overlap of ", shift * 100, "%",
+                  "\n\t\tshape of the set ", ts_contaminated.shape, "\n\n")
 
             if int(((NS-(NS*offset)) * shift)) > int(NS*offset):
                 raise ValueError(f"Shift too big for this dataset and offset: shift ({int(((NS-(NS*offset)) * shift))}), offset ({int(NS*offset)}).")
