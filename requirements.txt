@@ -44,3 +44,4 @@ tables==3.10.1
 
 # extractor
 tsfel==0.1.9
+tsfresh==0.20.3

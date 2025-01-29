@@ -53,3 +53,12 @@ Trend = [
 "PD_PeriodicityWang_th0_01" = "Wangs periodicity metric"
 "FC_LocalSimple_mean3_stderr" = "Error of 3-point rolling mean forecast"
 "SB_MotifThree_quantile_hh" = "Entropy of successive pairs in symbolized series"
+
+[pycatch]
+categories = ["Geometry", "Correlation", "Transformation", "Trend"]
+
+[tsfel]
+categories = ["spectral", "statistical", "temporal", "fractal"]
+
+[tsfresh]
+categories = ["statistical", "temporal", "shape", "frequency"]

@@ -31,4 +31,8 @@ jobs:
         pip install pytest
 
     - name: Run pytest
-      run: python -m pytest ./tests/test_explainer.py
+      run: |
+        python -m pytest ./tests/test_explainer.py
+        python -m pytest ./tests/test_explainer_pycatch.py
+        python -m pytest ./tests/test_explainer_tsfel.py
+        python -m pytest ./tests/test_explainer_tsfresh.py

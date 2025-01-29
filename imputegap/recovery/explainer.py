@@ -4,10 +4,12 @@ import time
 import importlib.resources
 
 import numpy as np
+import pandas as pd
 import shap
 import pycatch22
 import toml
 import tsfel
+import tsfresh
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
@@ -28,6 +30,16 @@ class Explainer:
     extractor_pycatch(data, features_categories, features_list, do_catch24=True)
         Extract features from time series data using pycatch22.
 
+    extractor_tsfresh(data, categories=["statistical", "temporal", "frequency", "shape"])
+        Extract features from time series data using TSFresh.
+        The function supports filtering by feature categories and calculates a large set of features
+        (up to 783) related to statistics, temporal dynamics, frequency analysis, and shape.
+
+    extractor_tsfel(data, frequency=None, categories=["spectral", "statistical", "temporal", "fractal"])
+        Extract features from time series data using TSFEL (Time Series Feature Extraction Library).
+        This method calculates features based on the selected categories and optionally uses the
+        sampling frequency to compute frequency-domain features.
+
     print(shap_values, shap_details=None)
         Print SHAP values and details for display.
 
@@ -37,7 +49,7 @@ class Explainer:
     execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False)
         Launch the SHAP model to explain the dataset features.
 
-    shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch22", incomp_data="mcar",
+    shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch", incomp_data="mcar",
                    missing_rate=0.4, block_size=10, offset=0.1, seed=True, limitation=15, splitter=0,
                    file_name="ts", display=False, verbose=False)
         Handle parameters and set variables to launch the SHAP model.
@@ -56,7 +68,7 @@ class Explainer:
         Returns
         -------
         tuple
-            A tuple containing two dictionaries: categories and features.
+            A tuple containing two dictionaries: categories, features and config.
         """
 
         if file_path is None:
@@ -71,31 +83,164 @@ class Explainer:
         categories = config_data.get('CATEGORIES', {})
         features = config_data.get('FEATURES', {})
 
-        return categories, features
+        return categories, features, config_data
 
 
-    def extractor_tsfel(data, features_categories, features_list):
+    def extractor_tsfresh(data, categories=["statistical", "temporal", "shape", "frequency"]):
+        """
+        Extract features using tsfresh and group them into 4 categories:
+        statistical, temporal, frequency, and shape-based.
+
+        Parameters
+        ----------
+            data (numpy.ndarray): 2D array of shape (M, N), where M is the number of series
+                                  and N is the number of values per series.
+            categories (list): List of categories to extract. Must include one or more of:
+                               ["statistical", "temporal", "frequency", "shape"]
+
+        Returns
+        -------
+            dict: A dictionary with feature names as keys and their aggregated values as values.
+            list: A list of tuples (feature_name, category, formatted_feature_name).
+        """
+        M, N = data.shape
         data = [[0 if num is None else num for num in sublist] for sublist in data]
-        data = [[0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num
-             in sublist] for sublist in data]
+        data = [[0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num in sublist] for sublist in data]
         data = np.array(data)
 
-        cfg = tsfel.get_features_by_domain("spectral")
-        spectral = tsfel.time_series_features_extractor(cfg, data)
+        results, descriptions = {}, []
 
-        cfg = tsfel.get_features_by_domain("statistical")
-        statistical = tsfel.time_series_features_extractor(cfg, data)
+        indices = np.tile(np.arange(N), M)  # Repeats 0,1,2,... for each series
+        series_ids = np.repeat(np.arange(M), N)  # Assigns unique ID to each series
+        values = data.flatten()  # Convert 2D array to 1D for tsfresh
 
-        cfg = tsfel.get_features_by_domain("temporal")
-        temporal = tsfel.time_series_features_extractor(cfg, data)
+        # Convert to a minimal DataFrame for tsfresh processing
+        df = pd.DataFrame({"id": series_ids, "index": indices, "value": values})  # 'id' groups each series
 
-        cfg = tsfel.get_features_by_domain("fractal")
-        fractal = tsfel.time_series_features_extractor(cfg, data)
+        # Extract features (M, 783)
+        features = tsfresh.extract_features(df, column_id="id", column_sort="index")
 
-        print("spectral.shape", spectral.shape)
-        print("statistical.shape", statistical.shape)
-        print("temporal.shape", temporal.shape)
-        print("fractal.shape", fractal.shape)
+        # Aggregate for the whole dataset (1, 783)
+        features_list = features.mean(axis=0).to_frame().T
+
+        # Define the mapping of categories to keywords
+        category_keywords = {categories[0]: {"mean", "variance", "standard_deviation", "sum", "median", "skewness", "kurtosis", "entropy"},
+            categories[1]: {"autocorrelation", "change", "linear_trend", "time_reversal_asymmetry_statistic", "c3", "cid_ce", "symmetry", "number_crossing_m"},
+            categories[2]: {"fft", "frequency", "cwt", "spkt_welch_density", "ar_coefficient", "energy_ratio", "permutation_entropy", "fourier_entropy"},
+            categories[3]: {"peaks", "strike", "location", "range_count", "value_count", "large_standard_deviation", "ratio_beyond_r_sigma", "lempel_ziv_complexity"}
+        }
+
+        for inc, (feature_name, value) in enumerate(features_list.iloc[0].items()):
+            if np.isnan(value):
+                results[feature_name] = 0
+            else:
+                results[feature_name] = value
+
+            for cat, keywords in category_keywords.items():
+                if any(keyword in feature_name for keyword in keywords):
+                    category = cat
+                    break
+            if category is None:
+                print("\n\n\t\t\tOTHER CATEGORY DETECTED...", feature_name)
+                category = categories[0]
+
+            feature_name_desc = feature_name.replace("value__", "")
+            descriptions.append((feature_name, category, feature_name_desc.replace("_", " ").title()))
+
+        print(f"tsfresh : features extracted successfully___{inc} features_______________________________________\n\n")
+
+        return results, descriptions
+
+
+
+
+    def extractor_tsfel(data, frequency=None, categories=["spectral", "statistical", "temporal", "fractal"]):
+        """
+        Extract features using TSFEL (Time Series Feature Extraction Library).
+
+        This function extracts features from the input time series data based on the specified
+        categories. The categories determine the type of features to compute, such as spectral,
+        statistical, temporal, or fractal features. Optionally, a frequency value can be provided
+        to compute frequency-specific features.
+
+        Parameters
+        ----------
+            data (numpy.ndarray):
+                2D array of shape (M, N), where M is the number of time series and N is the number
+                of values per time series. Each row represents a separate time series.
+            frequency (float, optional):
+                The sampling frequency of the time series data. This is used for spectral feature
+                calculations (e.g., FFT-based features). If None, spectral features will be computed
+                using default assumptions.
+            categories (list, optional):
+                A list of categories to extract. Valid categories are:
+                    - "spectral": Extract frequency-domain features (e.g., FFT, spectral entropy).
+                    - "statistical": Extract basic statistical features (e.g., mean, variance, skewness).
+                    - "temporal": Extract temporal-domain features (e.g., autocorrelation, zero crossings).
+                    - "fractal": Extract fractal-related features (e.g., Hurst exponent, fractal dimension).
+                By default, all four categories are extracted.
+
+        Returns
+        -------
+            dict:
+                A dictionary where keys are feature names and values are the computed feature values
+                for the entire dataset (aggregated over all time series).
+            list:
+                A list of tuples, where each tuple contains:
+                    - Feature name (str): The name of the feature.
+                    - Category (str): The category to which the feature belongs.
+                    - Formatted feature name (str): A human-readable version of the feature name.
+
+        Example:
+            >>> import numpy as np
+            >>> data = np.random.rand(5, 100)  # 5 time series, each with 100 values
+            >>> results, descriptions = extractor_tsfel(data, frequency=50, categories=["statistical", "temporal"])
+            >>> print(results)
+            >>> print(descriptions)
+
+        Notes:
+            - This function requires TSFEL to be installed: `pip install tsfel`.
+            - Categories can be customized to extract only the desired features, reducing computation time.
+        """
+        M, N = data.shape
+        data = [[0 if num is None else num for num in sublist] for sublist in data]
+        data = [[0 if num is None or (isinstance(num, (float, np.float32, np.float64)) and np.isnan(num)) else num for num in sublist] for sublist in data]
+        data = np.array(data)
+
+        results, descriptions = {}, []
+
+        import warnings
+        warnings.filterwarnings("ignore")
+
+        total_inc = 0
+        for category in categories:
+            # the spectral configuration
+            # Extract features with TSFEL
+            cfg = tsfel.get_features_by_domain(category)
+            features = tsfel.time_series_features_extractor(cfg, data, fs=frequency)
+
+            # Extract feature types by removing the ID prefix
+            features.columns = features.columns.str.split('_', n=1).str[1]
+
+            # Group by feature type to handle duplicates and compute the mean
+            aggregated_features = features.groupby(features.columns, axis=1).mean()
+
+            # Convert to a single-row DataFrame
+            features_list = pd.DataFrame([aggregated_features.mean(axis=0)])
+
+            # Print the shape and aggregated features
+            for inc, (feature_name, value) in enumerate(features_list.iloc[0].items()):
+                if np.isnan(value):
+                    results[feature_name] = 0
+                else:
+                    results[feature_name] = value
+                descriptions.append((feature_name, category, feature_name.replace("_", " ").title()))
+            total_inc = total_inc + inc
+
+        print(f"tsfel : features extracted successfully___{total_inc} features_______________________________________\n\n")
+
+        return results, descriptions
+
 
     def extractor_pycatch(data, features_categories, features_list, do_catch24=True):
         """
@@ -142,6 +287,7 @@ class Explainer:
         if any(isinstance(value, (float, np.float32, np.float64)) and np.isnan(value) for value in feature_values):
             raise ValueError("Error: NaN value detected in feature_values")
 
+        inc = 0
         for feature_name, feature_value in zip(feature_names, feature_values):
             results[feature_name] = feature_value
 
@@ -153,8 +299,9 @@ class Explainer:
             feature_description = features_list.get(feature_name)
 
             descriptions.append((feature_name, category_value, feature_description))
+            inc = inc + 1
 
-        print("pycatch22 : features extracted successfully_______________________________________\n\n")
+        print(f"pycatch22 : features extracted successfully___{inc} features_______________________________________\n\n")
 
         return results, descriptions
 
@@ -227,7 +374,7 @@ class Explainer:
 
         return result_shap
 
-    def execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, display=False, verbose=False):
+    def execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, extractor="pycatch", display=False, verbose=False):
         """
         Launch the SHAP model for explaining the features of the dataset.
 
@@ -245,6 +392,8 @@ class Explainer:
             Algorithm used for imputation (e.g., 'cdrec', 'stmvl', 'iim', 'mrnn').
         splitter : int, optional
             Split ratio for data training and testing (default is 10).
+        extractor : str
+            Feature extractor used for the regression (e.g., 'pycatch', 'tsfel').
         display : bool, optional
             Whether to display the SHAP plots (default is False).
         verbose : bool, optional
@@ -257,6 +406,8 @@ class Explainer:
         """
 
         print("\n\nInitialization of the SHAP model with dimension", np.array(x_information).shape)
+        _, _, config = Explainer.load_configuration()
+        plots_categories = config[extractor]['categories']
 
         path_file = "./assets/shap/"
         if not os.path.exists(path_file):
@@ -294,6 +445,7 @@ class Explainer:
         print("\t SHAP_MODEL >> x_test shape:", x_test.shape)
         print("\t SHAP_MODEL >> y_test shape:", y_test.shape, "\n")
         if verbose:
+            print("\t SHAP_MODEL >> extractor:", extractor)
             print("\t SHAP_MODEL >> features shape:", x_features.shape)
             print("\t SHAP_MODEL >> categories shape:", x_categories.shape)
             print("\t SHAP_MODEL >> descriptions shape:", x_descriptions.shape, "\n")
@@ -318,7 +470,7 @@ class Explainer:
             series_names.append("Series " + str(names + np.array(x_train).shape[0]))
 
         shap.summary_plot(shval, x_test, plot_size=(25, 10), feature_names=optimal_display, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_plot.png")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_plot.png")
         plt.title("SHAP Details Results")
         os.makedirs(path_file, exist_ok=True)
         plt.savefig(alpha)
@@ -326,14 +478,14 @@ class Explainer:
         alphas.append(alpha)
 
         shap.summary_plot(np.array(shval).T, np.array(x_test).T, feature_names=series_names, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_reverse_plot.png")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_reverse_plot.png")
         plt.title("SHAP Features by Series")
         plt.savefig(alpha)
         plt.close()
         alphas.append(alpha)
 
         shap.plots.waterfall(shval_x[0], show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Waterfall.png")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_DTL_Waterfall.png")
         plt.title("SHAP Waterfall Results")
         fig = plt.gcf()  # Get the current figure created by SHAP
         fig.set_size_inches(20, 10)  # Ensure the size is correct
@@ -342,7 +494,7 @@ class Explainer:
         alphas.append(alpha)
 
         shap.plots.beeswarm(shval_x, show=display, plot_size=(22, 10))
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_DTL_Beeswarm.png")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_DTL_Beeswarm.png")
         plt.title("SHAP Beeswarm Results")
         plt.savefig(alpha)
         plt.close()
@@ -359,28 +511,28 @@ class Explainer:
         geometryDesc, correlationDesc, transformationDesc, trendDesc = [], [], [], []
 
         for index, feat in enumerate(t_shval):
-            if x_categories[0][index] == "Geometry":
+            if x_categories[0][index] == plots_categories[0]:
                 geometry.append(feat)
                 geometryDesc.append(x_descriptions[0][index])
-            elif x_categories[0][index] == "Correlation":
+            elif x_categories[0][index] == plots_categories[1]:
                 correlation.append(feat)
                 correlationDesc.append(x_descriptions[0][index])
-            elif x_categories[0][index] == "Transformation":
+            elif x_categories[0][index] == plots_categories[2]:
                 transformation.append(feat)
                 transformationDesc.append(x_descriptions[0][index])
-            elif x_categories[0][index] == "Trend":
+            elif x_categories[0][index] == plots_categories[3]:
                 trend.append(feat)
                 trendDesc.append(x_descriptions[0][index])
 
         geometryT, correlationT, transformationT, trendT = [], [], [], []
         for index, feat in enumerate(t_Xtest):
-            if x_categories[0][index] == "Geometry":
+            if x_categories[0][index] == plots_categories[0]:
                 geometryT.append(feat)
-            elif x_categories[0][index] == "Correlation":
+            elif x_categories[0][index] == plots_categories[1]:
                 correlationT.append(feat)
-            elif x_categories[0][index] == "Transformation":
+            elif x_categories[0][index] == plots_categories[2]:
                 transformationT.append(feat)
-            elif x_categories[0][index] == "Trend":
+            elif x_categories[0][index] == plots_categories[3]:
                 trendT.append(feat)
 
         mean_features = []
@@ -397,34 +549,33 @@ class Explainer:
         trendT = np.array(trendT)
         mean_features = np.array(mean_features)
 
-        shap.summary_plot(np.array(geometry).T, np.array(geometryT).T, plot_size=(20, 10), feature_names=geometryDesc,
-                          show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_geometry_plot.png")
-        plt.title("SHAP details of geometry")
+        shap.summary_plot(np.array(geometry).T, np.array(geometryT).T, plot_size=(20, 10), feature_names=geometryDesc, show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[0].lower() + "_plot.png")
+        plt.title("SHAP details of " + plots_categories[0].lower())
         plt.savefig(alpha)
         plt.close()
         alphas.append(alpha)
 
         shap.summary_plot(np.array(transformation).T, np.array(transformationT).T, plot_size=(20, 10),
                           feature_names=transformationDesc, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_transformation_plot.png")
-        plt.title("SHAP details of transformation")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[2].lower() + "_plot.png")
+        plt.title("SHAP details of " + plots_categories[1].lower())
         plt.savefig(alpha)
         plt.close()
         alphas.append(alpha)
 
         shap.summary_plot(np.array(correlation).T, np.array(correlationT).T, plot_size=(20, 10),
                           feature_names=correlationDesc, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_correlation_plot.png")
-        plt.title("SHAP details of correlation")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[1].lower() + "_plot.png")
+        plt.title("SHAP details of " + plots_categories[1].lower())
         plt.savefig(alpha)
         plt.close()
         alphas.append(alpha)
 
         shap.summary_plot(np.array(trend).T, np.array(trendT).T, plot_size=(20, 8), feature_names=trendDesc,
                           show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_trend_plot.png")
-        plt.title("SHAP details of Trend")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[3].lower() + "_plot.png")
+        plt.title("SHAP details of " + plots_categories[3].lower())
         plt.savefig(alpha)
         plt.close()
         alphas.append(alpha)
@@ -442,18 +593,16 @@ class Explainer:
         aggregation_features = np.array(aggregation_features).T
         aggregation_test = np.array(aggregation_test).T
 
-        shap.summary_plot(aggregation_features, aggregation_test,
-                          feature_names=['Geometry', 'Correlation', 'Transformation', 'Trend'], show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_aggregate_plot.png")
+        shap.summary_plot(aggregation_features, aggregation_test, feature_names=plots_categories, show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_aggregate_plot.png")
         plt.title("SHAP Aggregation Results")
         plt.gca().axes.get_xaxis().set_visible(False)
         plt.savefig(alpha)
         plt.close()
         alphas.append(alpha)
 
-        shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names,
-                          show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_shap_aggregate_reverse_plot.png")
+        shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names, show=display)
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_aggregate_reverse_plot.png")
         plt.title("SHAP Aggregation Features by Series")
         plt.savefig(alpha)
         plt.close()
@@ -485,7 +634,7 @@ class Explainer:
 
         return results_shap
 
-    def shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch22", pattern="mcar", missing_rate=0.4,
+    def shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch", pattern="mcar", missing_rate=0.4,
                        block_size=10, offset=0.1, seed=True, limit_ratio=1, split_ratio=0.6,
                        file_name="ts", display=False, verbose=False):
         """
@@ -502,7 +651,7 @@ class Explainer:
         pattern : str, optional
             Contamination pattern to apply (default is 'mcar').
         extractor : str, optional
-            Extractor use to get the features of the data (default is 'pycatch22').
+            Extractor use to get the features of the data (default is 'pycatch').  Valid values: 'pycatch', 'tsfel', 'tsfresh'
         missing_rate : float, optional
             Percentage of missing values per series (default is 0.4).
         block_size : int, optional
@@ -569,7 +718,8 @@ class Explainer:
         input_data_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
 
-        categories, features = Explainer.load_configuration()
+        if extractor == "pycatch":
+            categories, features, _ = Explainer.load_configuration()
 
         for current_series in range(0, limit):
 
@@ -578,19 +728,20 @@ class Explainer:
 
             tmp = TimeSeries()
             tmp.import_matrix(input_data)
-            incomp_data = utils.config_contamination(ts=tmp, pattern=pattern, dataset_rate=current_series,
-                              series_rate=missing_rate, block_size=block_size, offset=offset, seed=seed, explainer=True)
+            incomp_data = utils.config_contamination(ts=tmp, pattern=pattern, dataset_rate=current_series, series_rate=missing_rate, block_size=block_size, offset=offset, seed=seed, explainer=True)
 
             input_data_matrices.append(input_data)
             obfuscated_matrices.append(incomp_data)
 
-            if extractor == "pycatch22":
-                catch_fct, descriptions = Explainer.extractor_pycatch(np.array(incomp_data), categories, features, False)
+            if extractor == "pycatch":
+                catch_fct, descriptions = Explainer.extractor_pycatch(incomp_data, categories, features, False)
                 extracted_features = np.array(list(catch_fct.values()))
             elif extractor == "tsfel":
-                catch_fct, descriptions = Explainer.extractor_tsfel(np.array(incomp_data), categories, features)
+                catch_fct, descriptions = Explainer.extractor_tsfel(incomp_data)
                 extracted_features = np.array(list(catch_fct.values()))
-
+            elif extractor == "tsfresh":
+                catch_fct, descriptions = Explainer.extractor_tsfresh(incomp_data)
+                extracted_features = np.array(list(catch_fct.values()))
             else:
                 catch_fct, descriptions, extracted_features = None, None, None
 
@@ -612,7 +763,7 @@ class Explainer:
             shap_details.append((input, output["RMSE"]))
 
         shap_values = Explainer.execute_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
-                                                   training_ratio, display, verbose)
+                                                   training_ratio, extractor, display, verbose)
 
         print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
 

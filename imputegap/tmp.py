@@ -1,38 +1,15 @@
 from imputegap.recovery.manager import TimeSeries
+from imputegap.recovery.explainer import Explainer
 from imputegap.tools import utils
 
-import numpy as np
-import tsfel
-
+# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
 ts_1 = TimeSeries()
-ts_1.load_series(utils.search_path("chlorine"))
 
-incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True)
+# 2. load the timeseries from file or from the code
+ts_1.load_series(utils.search_path("chlorine"), max_series=42)
 
-nan_less_matrix = incomp_data.copy()  # Copy to preserve the original matrix if needed
-nan_less_matrix[np.isnan(nan_less_matrix)] = 0
-M, N = nan_less_matrix.shape
+# 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
+shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, algorithm="cdrec", extractor="tsfel", pattern="mcar", missing_rate=0.25, limit_ratio=0.9, split_ratio=0.7, file_name="eeg-alcohol")
 
-cfg = tsfel.get_features_by_domain("spectral")
-spectral = tsfel.time_series_features_extractor(cfg, nan_less_matrix)
-
-cfg = tsfel.get_features_by_domain("statistical")
-statistical = tsfel.time_series_features_extractor(cfg, nan_less_matrix)
-
-
-cfg = tsfel.get_features_by_domain("temporal")
-temporal = tsfel.time_series_features_extractor(cfg, nan_less_matrix)
-
-cfg = tsfel.get_features_by_domain("fractal")
-fractal = tsfel.time_series_features_extractor(cfg, nan_less_matrix)
-
-print("spectral.shape", spectral.shape)
-print("statistical.shape", statistical.shape)
-print("temporal.shape", temporal.shape)
-print("fractal.shape", fractal.shape)
-
-# Iterate over each value in the row
-#for col, value in X.iloc[0].items():  # Only one row, so use X.iloc[0]
-#    print(f"{col}: {value}")
-
-
+# [OPTIONAL] print the results with the impact of each feature.
+Explainer.print(shap_values, shap_details)

@@ -1,5 +1,4 @@
 import torch
-import yaml
 import numpy as np
 
 from imputegap.tools import utils
@@ -36,7 +35,7 @@ def recovPRISTI(data, target_strategy="hybrid", unconditional=True, seed=42, dev
     config["train"]["batch_size"] = data.shape[1]
 
     model = PriSTI_(config, device, target_dim=dim, seq_len=n).to(device)
-    print("Starting training\n")
+    print("\t\t\tStarting training\n")
     train(
         model,
         config["train"],
@@ -44,7 +43,7 @@ def recovPRISTI(data, target_strategy="hybrid", unconditional=True, seed=42, dev
         valid_loader=data_loader
     )
     
-    print("Starting evaluation\n")
+    print("\t\t\tStarting evaluation\n")
     matrix = evaluate(model, data_loader, nsample=1)
 
     return np.array(matrix)

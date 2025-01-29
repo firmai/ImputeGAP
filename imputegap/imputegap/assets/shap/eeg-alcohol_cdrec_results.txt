@@ -1,0 +1,783 @@
+Feature : 701   cdrec      with a score of 14.61      temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 50  F Agg "Var"        value__agg_linear_trend__attr_"rvalue"__chunk_len_50__f_agg_"var"
+Feature : 564   cdrec      with a score of 7.64       shape              Fft Coefficient  Attr "Abs"  Coeff 99                             value__fft_coefficient__attr_"abs"__coeff_99
+Feature : 514   cdrec      with a score of 5.71       shape              Fft Coefficient  Attr "Abs"  Coeff 49                             value__fft_coefficient__attr_"abs"__coeff_49
+Feature : 629   cdrec      with a score of 5.59       shape              Fft Coefficient  Attr "Angle"  Coeff 64                           value__fft_coefficient__attr_"angle"__coeff_64
+Feature : 586   cdrec      with a score of 3.95       shape              Fft Coefficient  Attr "Angle"  Coeff 21                           value__fft_coefficient__attr_"angle"__coeff_21
+Feature : 677   cdrec      with a score of 3.31       statistical        Approximate Entropy  M 2  R 0.5                                   value__approximate_entropy__m_2__r_0.5
+Feature : 590   cdrec      with a score of 3.02       shape              Fft Coefficient  Attr "Angle"  Coeff 25                           value__fft_coefficient__attr_"angle"__coeff_25
+Feature : 659   cdrec      with a score of 2.82       shape              Fft Coefficient  Attr "Angle"  Coeff 94                           value__fft_coefficient__attr_"angle"__coeff_94
+Feature : 195   cdrec      with a score of 2.24       shape              Ar Coefficient  Coeff 1  K 10                                     value__ar_coefficient__coeff_1__k_10
+Feature : 323   cdrec      with a score of 2.23       shape              Fft Coefficient  Attr "Real"  Coeff 58                            value__fft_coefficient__attr_"real"__coeff_58
+Feature : 437   cdrec      with a score of 1.99       shape              Fft Coefficient  Attr "Imag"  Coeff 72                            value__fft_coefficient__attr_"imag"__coeff_72
+Feature : 651   cdrec      with a score of 1.7        shape              Fft Coefficient  Attr "Angle"  Coeff 86                           value__fft_coefficient__attr_"angle"__coeff_86
+Feature : 723   cdrec      with a score of 1.57       temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 50  F Agg "Min"         value__agg_linear_trend__attr_"slope"__chunk_len_50__f_agg_"min"
+Feature : 752   cdrec      with a score of 1.44       shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 8          value__energy_ratio_by_chunks__num_segments_10__segment_focus_8
+Feature : 614   cdrec      with a score of 1.37       shape              Fft Coefficient  Attr "Angle"  Coeff 49                           value__fft_coefficient__attr_"angle"__coeff_49
+Feature : 591   cdrec      with a score of 1.29       shape              Fft Coefficient  Attr "Angle"  Coeff 26                           value__fft_coefficient__attr_"angle"__coeff_26
+Feature : 628   cdrec      with a score of 1.15       shape              Fft Coefficient  Attr "Angle"  Coeff 63                           value__fft_coefficient__attr_"angle"__coeff_63
+Feature : 360   cdrec      with a score of 1.03       shape              Fft Coefficient  Attr "Real"  Coeff 95                            value__fft_coefficient__attr_"real"__coeff_95
+Feature : 654   cdrec      with a score of 0.99       shape              Fft Coefficient  Attr "Angle"  Coeff 89                           value__fft_coefficient__attr_"angle"__coeff_89
+Feature : 660   cdrec      with a score of 0.94       shape              Fft Coefficient  Attr "Angle"  Coeff 95                           value__fft_coefficient__attr_"angle"__coeff_95
+Feature : 445   cdrec      with a score of 0.91       shape              Fft Coefficient  Attr "Imag"  Coeff 80                            value__fft_coefficient__attr_"imag"__coeff_80
+Feature : 547   cdrec      with a score of 0.87       shape              Fft Coefficient  Attr "Abs"  Coeff 82                             value__fft_coefficient__attr_"abs"__coeff_82
+Feature : 556   cdrec      with a score of 0.8        shape              Fft Coefficient  Attr "Abs"  Coeff 91                             value__fft_coefficient__attr_"abs"__coeff_91
+Feature : 90    cdrec      with a score of 0.75       statistical        Quantile  Q 0.8                                                   value__quantile__q_0.8
+Feature : 658   cdrec      with a score of 0.73       shape              Fft Coefficient  Attr "Angle"  Coeff 93                           value__fft_coefficient__attr_"angle"__coeff_93
+Feature : 666   cdrec      with a score of 0.71       statistical        Fft Aggregated  Aggtype "Variance"                                value__fft_aggregated__aggtype_"variance"
+Feature : 593   cdrec      with a score of 0.69       shape              Fft Coefficient  Attr "Angle"  Coeff 28                           value__fft_coefficient__attr_"angle"__coeff_28
+Feature : 736   cdrec      with a score of 0.69       statistical        Agg Linear Trend  Attr "Stderr"  Chunk Len 50  F Agg "Mean"       value__agg_linear_trend__attr_"stderr"__chunk_len_50__f_agg_"mean"
+Feature : 609   cdrec      with a score of 0.68       shape              Fft Coefficient  Attr "Angle"  Coeff 44                           value__fft_coefficient__attr_"angle"__coeff_44
+Feature : 580   cdrec      with a score of 0.63       shape              Fft Coefficient  Attr "Angle"  Coeff 15                           value__fft_coefficient__attr_"angle"__coeff_15
+Feature : 197   cdrec      with a score of 0.57       shape              Ar Coefficient  Coeff 3  K 10                                     value__ar_coefficient__coeff_3__k_10
+Feature : 585   cdrec      with a score of 0.57       shape              Fft Coefficient  Attr "Angle"  Coeff 20                           value__fft_coefficient__attr_"angle"__coeff_20
+Feature : 464   cdrec      with a score of 0.56       shape              Fft Coefficient  Attr "Imag"  Coeff 99                            value__fft_coefficient__attr_"imag"__coeff_99
+Feature : 114   cdrec      with a score of 0.55       temporal           Partial Autocorrelation  Lag 9                                    value__partial_autocorrelation__lag_9
+Feature : 402   cdrec      with a score of 0.52       shape              Fft Coefficient  Attr "Imag"  Coeff 37                            value__fft_coefficient__attr_"imag"__coeff_37
+Feature : 200   cdrec      with a score of 0.5        shape              Ar Coefficient  Coeff 6  K 10                                     value__ar_coefficient__coeff_6__k_10
+Feature : 5     cdrec      with a score of 0.49       statistical        Abs Energy                                                        value__abs_energy
+Feature : 592   cdrec      with a score of 0.49       shape              Fft Coefficient  Attr "Angle"  Coeff 27                           value__fft_coefficient__attr_"angle"__coeff_27
+Feature : 722   cdrec      with a score of 0.47       temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 50  F Agg "Max"         value__agg_linear_trend__attr_"slope"__chunk_len_50__f_agg_"max"
+Feature : 574   cdrec      with a score of 0.46       shape              Fft Coefficient  Attr "Angle"  Coeff 9                            value__fft_coefficient__attr_"angle"__coeff_9
+Feature : 311   cdrec      with a score of 0.45       shape              Fft Coefficient  Attr "Real"  Coeff 46                            value__fft_coefficient__attr_"real"__coeff_46
+Feature : 575   cdrec      with a score of 0.43       shape              Fft Coefficient  Attr "Angle"  Coeff 10                           value__fft_coefficient__attr_"angle"__coeff_10
+Feature : 589   cdrec      with a score of 0.43       shape              Fft Coefficient  Attr "Angle"  Coeff 24                           value__fft_coefficient__attr_"angle"__coeff_24
+Feature : 612   cdrec      with a score of 0.41       shape              Fft Coefficient  Attr "Angle"  Coeff 47                           value__fft_coefficient__attr_"angle"__coeff_47
+Feature : 587   cdrec      with a score of 0.39       shape              Fft Coefficient  Attr "Angle"  Coeff 22                           value__fft_coefficient__attr_"angle"__coeff_22
+Feature : 597   cdrec      with a score of 0.39       shape              Fft Coefficient  Attr "Angle"  Coeff 32                           value__fft_coefficient__attr_"angle"__coeff_32
+Feature : 548   cdrec      with a score of 0.38       shape              Fft Coefficient  Attr "Abs"  Coeff 83                             value__fft_coefficient__attr_"abs"__coeff_83
+Feature : 120   cdrec      with a score of 0.37       frequency          Number Peaks  N 10                                                value__number_peaks__n_10
+Feature : 604   cdrec      with a score of 0.37       shape              Fft Coefficient  Attr "Angle"  Coeff 39                           value__fft_coefficient__attr_"angle"__coeff_39
+Feature : 676   cdrec      with a score of 0.34       statistical        Approximate Entropy  M 2  R 0.3                                   value__approximate_entropy__m_2__r_0.3
+Feature : 731   cdrec      with a score of 0.32       temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 10  F Agg "Min"        value__agg_linear_trend__attr_"stderr"__chunk_len_10__f_agg_"min"
+Feature : 406   cdrec      with a score of 0.31       shape              Fft Coefficient  Attr "Imag"  Coeff 41                            value__fft_coefficient__attr_"imag"__coeff_41
+Feature : 618   cdrec      with a score of 0.31       shape              Fft Coefficient  Attr "Angle"  Coeff 53                           value__fft_coefficient__attr_"angle"__coeff_53
+Feature : 202   cdrec      with a score of 0.3        shape              Ar Coefficient  Coeff 8  K 10                                     value__ar_coefficient__coeff_8__k_10
+Feature : 249   cdrec      with a score of 0.3        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 1.0  Ql 0.4       value__change_quantiles__f_agg_"mean"__isabs_False__qh_1.0__ql_0.4
+Feature : 278   cdrec      with a score of 0.29       shape              Fft Coefficient  Attr "Real"  Coeff 13                            value__fft_coefficient__attr_"real"__coeff_13
+Feature : 581   cdrec      with a score of 0.29       shape              Fft Coefficient  Attr "Angle"  Coeff 16                           value__fft_coefficient__attr_"angle"__coeff_16
+Feature : 194   cdrec      with a score of 0.28       shape              Ar Coefficient  Coeff 0  K 10                                     value__ar_coefficient__coeff_0__k_10
+Feature : 261   cdrec      with a score of 0.28       statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 1.0  Ql 0.8       value__change_quantiles__f_agg_"mean"__isabs_False__qh_1.0__ql_0.8
+Feature : 572   cdrec      with a score of 0.28       shape              Fft Coefficient  Attr "Angle"  Coeff 7                            value__fft_coefficient__attr_"angle"__coeff_7
+Feature : 196   cdrec      with a score of 0.26       shape              Ar Coefficient  Coeff 2  K 10                                     value__ar_coefficient__coeff_2__k_10
+Feature : 298   cdrec      with a score of 0.26       shape              Fft Coefficient  Attr "Real"  Coeff 33                            value__fft_coefficient__attr_"real"__coeff_33
+Feature : 340   cdrec      with a score of 0.26       shape              Fft Coefficient  Attr "Real"  Coeff 75                            value__fft_coefficient__attr_"real"__coeff_75
+Feature : 567   cdrec      with a score of 0.26       shape              Fft Coefficient  Attr "Angle"  Coeff 2                            value__fft_coefficient__attr_"angle"__coeff_2
+Feature : 771   cdrec      with a score of 0.26       statistical        Fourier Entropy  Bins 2                                           value__fourier_entropy__bins_2
+Feature : 607   cdrec      with a score of 0.25       shape              Fft Coefficient  Attr "Angle"  Coeff 42                           value__fft_coefficient__attr_"angle"__coeff_42
+Feature : 639   cdrec      with a score of 0.25       shape              Fft Coefficient  Attr "Angle"  Coeff 74                           value__fft_coefficient__attr_"angle"__coeff_74
+Feature : 31    cdrec      with a score of 0.24       statistical        Ratio Value Number To Time Series Length                          value__ratio_value_number_to_time_series_length
+Feature : 630   cdrec      with a score of 0.24       shape              Fft Coefficient  Attr "Angle"  Coeff 65                           value__fft_coefficient__attr_"angle"__coeff_65
+Feature : 270   cdrec      with a score of 0.23       shape              Fft Coefficient  Attr "Real"  Coeff 5                             value__fft_coefficient__attr_"real"__coeff_5
+Feature : 284   cdrec      with a score of 0.23       shape              Fft Coefficient  Attr "Real"  Coeff 19                            value__fft_coefficient__attr_"real"__coeff_19
+Feature : 513   cdrec      with a score of 0.23       shape              Fft Coefficient  Attr "Abs"  Coeff 48                             value__fft_coefficient__attr_"abs"__coeff_48
+Feature : 745   cdrec      with a score of 0.23       shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 1          value__energy_ratio_by_chunks__num_segments_10__segment_focus_1
+Feature : 418   cdrec      with a score of 0.22       shape              Fft Coefficient  Attr "Imag"  Coeff 53                            value__fft_coefficient__attr_"imag"__coeff_53
+Feature : 656   cdrec      with a score of 0.22       shape              Fft Coefficient  Attr "Angle"  Coeff 91                           value__fft_coefficient__attr_"angle"__coeff_91
+Feature : 382   cdrec      with a score of 0.21       shape              Fft Coefficient  Attr "Imag"  Coeff 17                            value__fft_coefficient__attr_"imag"__coeff_17
+Feature : 623   cdrec      with a score of 0.21       shape              Fft Coefficient  Attr "Angle"  Coeff 58                           value__fft_coefficient__attr_"angle"__coeff_58
+Feature : 636   cdrec      with a score of 0.21       shape              Fft Coefficient  Attr "Angle"  Coeff 71                           value__fft_coefficient__attr_"angle"__coeff_71
+Feature : 683   cdrec      with a score of 0.21       statistical        Friedrich Coefficients  Coeff 3  M 3  R 30                        value__friedrich_coefficients__coeff_3__m_3__r_30
+Feature : 118   cdrec      with a score of 0.2        frequency          Number Peaks  N 3                                                 value__number_peaks__n_3
+Feature : 389   cdrec      with a score of 0.2        shape              Fft Coefficient  Attr "Imag"  Coeff 24                            value__fft_coefficient__attr_"imag"__coeff_24
+Feature : 621   cdrec      with a score of 0.2        shape              Fft Coefficient  Attr "Angle"  Coeff 56                           value__fft_coefficient__attr_"angle"__coeff_56
+Feature : 539   cdrec      with a score of 0.19       shape              Fft Coefficient  Attr "Abs"  Coeff 74                             value__fft_coefficient__attr_"abs"__coeff_74
+Feature : 94    cdrec      with a score of 0.18       temporal           Autocorrelation  Lag 2                                            value__autocorrelation__lag_2
+Feature : 98    cdrec      with a score of 0.18       temporal           Autocorrelation  Lag 6                                            value__autocorrelation__lag_6
+Feature : 18    cdrec      with a score of 0.17       statistical        Absolute Sum Of Changes                                           value__absolute_sum_of_changes
+Feature : 478   cdrec      with a score of 0.17       shape              Fft Coefficient  Attr "Abs"  Coeff 13                             value__fft_coefficient__attr_"abs"__coeff_13
+Feature : 512   cdrec      with a score of 0.17       shape              Fft Coefficient  Attr "Abs"  Coeff 47                             value__fft_coefficient__attr_"abs"__coeff_47
+Feature : 679   cdrec      with a score of 0.17       statistical        Approximate Entropy  M 2  R 0.9                                   value__approximate_entropy__m_2__r_0.9
+Feature : 257   cdrec      with a score of 0.16       statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 1.0  Ql 0.6       value__change_quantiles__f_agg_"mean"__isabs_False__qh_1.0__ql_0.6
+Feature : 737   cdrec      with a score of 0.16       temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 50  F Agg "Var"        value__agg_linear_trend__attr_"stderr"__chunk_len_50__f_agg_"var"
+Feature : 472   cdrec      with a score of 0.15       shape              Fft Coefficient  Attr "Abs"  Coeff 7                              value__fft_coefficient__attr_"abs"__coeff_7
+Feature : 13    cdrec      with a score of 0.14       statistical        Variation Coefficient                                             value__variation_coefficient
+Feature : 456   cdrec      with a score of 0.14       shape              Fft Coefficient  Attr "Imag"  Coeff 91                            value__fft_coefficient__attr_"imag"__coeff_91
+Feature : 570   cdrec      with a score of 0.14       shape              Fft Coefficient  Attr "Angle"  Coeff 5                            value__fft_coefficient__attr_"angle"__coeff_5
+Feature : 32    cdrec      with a score of 0.13       statistical        Sample Entropy                                                    value__sample_entropy
+Feature : 299   cdrec      with a score of 0.13       shape              Fft Coefficient  Attr "Real"  Coeff 34                            value__fft_coefficient__attr_"real"__coeff_34
+Feature : 489   cdrec      with a score of 0.13       shape              Fft Coefficient  Attr "Abs"  Coeff 24                             value__fft_coefficient__attr_"abs"__coeff_24
+Feature : 503   cdrec      with a score of 0.13       shape              Fft Coefficient  Attr "Abs"  Coeff 38                             value__fft_coefficient__attr_"abs"__coeff_38
+Feature : 507   cdrec      with a score of 0.13       shape              Fft Coefficient  Attr "Abs"  Coeff 42                             value__fft_coefficient__attr_"abs"__coeff_42
+Feature : 724   cdrec      with a score of 0.13       statistical        Agg Linear Trend  Attr "Slope"  Chunk Len 50  F Agg "Mean"        value__agg_linear_trend__attr_"slope"__chunk_len_50__f_agg_"mean"
+Feature : 203   cdrec      with a score of 0.12       shape              Ar Coefficient  Coeff 9  K 10                                     value__ar_coefficient__coeff_9__k_10
+Feature : 453   cdrec      with a score of 0.12       shape              Fft Coefficient  Attr "Imag"  Coeff 88                            value__fft_coefficient__attr_"imag"__coeff_88
+Feature : 383   cdrec      with a score of 0.11       shape              Fft Coefficient  Attr "Imag"  Coeff 18                            value__fft_coefficient__attr_"imag"__coeff_18
+Feature : 430   cdrec      with a score of 0.11       shape              Fft Coefficient  Attr "Imag"  Coeff 65                            value__fft_coefficient__attr_"imag"__coeff_65
+Feature : 458   cdrec      with a score of 0.11       shape              Fft Coefficient  Attr "Imag"  Coeff 93                            value__fft_coefficient__attr_"imag"__coeff_93
+Feature : 506   cdrec      with a score of 0.11       shape              Fft Coefficient  Attr "Abs"  Coeff 41                             value__fft_coefficient__attr_"abs"__coeff_41
+Feature : 625   cdrec      with a score of 0.11       shape              Fft Coefficient  Attr "Angle"  Coeff 60                           value__fft_coefficient__attr_"angle"__coeff_60
+Feature : 750   cdrec      with a score of 0.11       shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 6          value__energy_ratio_by_chunks__num_segments_10__segment_focus_6
+Feature : 268   cdrec      with a score of 0.1        shape              Fft Coefficient  Attr "Real"  Coeff 3                             value__fft_coefficient__attr_"real"__coeff_3
+Feature : 432   cdrec      with a score of 0.1        shape              Fft Coefficient  Attr "Imag"  Coeff 67                            value__fft_coefficient__attr_"imag"__coeff_67
+Feature : 469   cdrec      with a score of 0.1        shape              Fft Coefficient  Attr "Abs"  Coeff 4                              value__fft_coefficient__attr_"abs"__coeff_4
+Feature : 641   cdrec      with a score of 0.1        shape              Fft Coefficient  Attr "Angle"  Coeff 76                           value__fft_coefficient__attr_"angle"__coeff_76
+Feature : 780   cdrec      with a score of 0.1        statistical        Permutation Entropy  Dimension 7  Tau 1                           value__permutation_entropy__dimension_7__tau_1
+Feature : 116   cdrec      with a score of 0.09       shape              Number Cwt Peaks  N 5                                             value__number_cwt_peaks__n_5
+Feature : 374   cdrec      with a score of 0.09       shape              Fft Coefficient  Attr "Imag"  Coeff 9                             value__fft_coefficient__attr_"imag"__coeff_9
+Feature : 422   cdrec      with a score of 0.09       shape              Fft Coefficient  Attr "Imag"  Coeff 57                            value__fft_coefficient__attr_"imag"__coeff_57
+Feature : 511   cdrec      with a score of 0.09       shape              Fft Coefficient  Attr "Abs"  Coeff 46                             value__fft_coefficient__attr_"abs"__coeff_46
+Feature : 566   cdrec      with a score of 0.09       shape              Fft Coefficient  Attr "Angle"  Coeff 1                            value__fft_coefficient__attr_"angle"__coeff_1
+Feature : 611   cdrec      with a score of 0.09       shape              Fft Coefficient  Attr "Angle"  Coeff 46                           value__fft_coefficient__attr_"angle"__coeff_46
+Feature : 692   cdrec      with a score of 0.09       statistical        Agg Linear Trend  Attr "Rvalue"  Chunk Len 5  F Agg "Mean"        value__agg_linear_trend__attr_"rvalue"__chunk_len_5__f_agg_"mean"
+Feature : 777   cdrec      with a score of 0.09       statistical        Permutation Entropy  Dimension 4  Tau 1                           value__permutation_entropy__dimension_4__tau_1
+Feature : 93    cdrec      with a score of 0.08       temporal           Autocorrelation  Lag 1                                            value__autocorrelation__lag_1
+Feature : 295   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Real"  Coeff 30                            value__fft_coefficient__attr_"real"__coeff_30
+Feature : 345   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Real"  Coeff 80                            value__fft_coefficient__attr_"real"__coeff_80
+Feature : 396   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Imag"  Coeff 31                            value__fft_coefficient__attr_"imag"__coeff_31
+Feature : 417   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Imag"  Coeff 52                            value__fft_coefficient__attr_"imag"__coeff_52
+Feature : 444   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Imag"  Coeff 79                            value__fft_coefficient__attr_"imag"__coeff_79
+Feature : 521   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Abs"  Coeff 56                             value__fft_coefficient__attr_"abs"__coeff_56
+Feature : 634   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Angle"  Coeff 69                           value__fft_coefficient__attr_"angle"__coeff_69
+Feature : 657   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Angle"  Coeff 92                           value__fft_coefficient__attr_"angle"__coeff_92
+Feature : 663   cdrec      with a score of 0.08       shape              Fft Coefficient  Attr "Angle"  Coeff 98                           value__fft_coefficient__attr_"angle"__coeff_98
+Feature : 709   cdrec      with a score of 0.08       temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 10  F Agg "Var"     value__agg_linear_trend__attr_"intercept"__chunk_len_10__f_agg_"var"
+Feature : 715   cdrec      with a score of 0.08       temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 5  F Agg "Min"          value__agg_linear_trend__attr_"slope"__chunk_len_5__f_agg_"min"
+Feature : 9     cdrec      with a score of 0.07       statistical        Median                                                            value__median
+Feature : 124   cdrec      with a score of 0.07       statistical        Index Mass Quantile  Q 0.2                                        value__index_mass_quantile__q_0.2
+Feature : 358   cdrec      with a score of 0.07       shape              Fft Coefficient  Attr "Real"  Coeff 93                            value__fft_coefficient__attr_"real"__coeff_93
+Feature : 363   cdrec      with a score of 0.07       shape              Fft Coefficient  Attr "Real"  Coeff 98                            value__fft_coefficient__attr_"real"__coeff_98
+Feature : 388   cdrec      with a score of 0.07       shape              Fft Coefficient  Attr "Imag"  Coeff 23                            value__fft_coefficient__attr_"imag"__coeff_23
+Feature : 442   cdrec      with a score of 0.07       shape              Fft Coefficient  Attr "Imag"  Coeff 77                            value__fft_coefficient__attr_"imag"__coeff_77
+Feature : 476   cdrec      with a score of 0.07       shape              Fft Coefficient  Attr "Abs"  Coeff 11                             value__fft_coefficient__attr_"abs"__coeff_11
+Feature : 681   cdrec      with a score of 0.07       statistical        Friedrich Coefficients  Coeff 1  M 3  R 30                        value__friedrich_coefficients__coeff_1__m_3__r_30
+Feature : 751   cdrec      with a score of 0.07       shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 7          value__energy_ratio_by_chunks__num_segments_10__segment_focus_7
+Feature : 3     cdrec      with a score of 0.06       statistical        Has Duplicate                                                     value__has_duplicate
+Feature : 87    cdrec      with a score of 0.06       statistical        Quantile  Q 0.4                                                   value__quantile__q_0.4
+Feature : 193   cdrec      with a score of 0.06       shape              Spkt Welch Density  Coeff 8                                       value__spkt_welch_density__coeff_8
+Feature : 404   cdrec      with a score of 0.06       shape              Fft Coefficient  Attr "Imag"  Coeff 39                            value__fft_coefficient__attr_"imag"__coeff_39
+Feature : 465   cdrec      with a score of 0.06       shape              Fft Coefficient  Attr "Abs"  Coeff 0                              value__fft_coefficient__attr_"abs"__coeff_0
+Feature : 550   cdrec      with a score of 0.06       shape              Fft Coefficient  Attr "Abs"  Coeff 85                             value__fft_coefficient__attr_"abs"__coeff_85
+Feature : 576   cdrec      with a score of 0.06       shape              Fft Coefficient  Attr "Angle"  Coeff 11                           value__fft_coefficient__attr_"angle"__coeff_11
+Feature : 601   cdrec      with a score of 0.06       shape              Fft Coefficient  Attr "Angle"  Coeff 36                           value__fft_coefficient__attr_"angle"__coeff_36
+Feature : 673   cdrec      with a score of 0.06       frequency          Range Count  Max 0  Min -1000000000000.0                          value__range_count__max_0__min_-1000000000000.0
+Feature : 684   cdrec      with a score of 0.06       statistical        Max Langevin Fixed Point  M 3  R 30                               value__max_langevin_fixed_point__m_3__r_30
+Feature : 757   cdrec      with a score of 0.06       frequency          Ratio Beyond R Sigma  R 2                                         value__ratio_beyond_r_sigma__r_2
+Feature : 304   cdrec      with a score of 0.05       shape              Fft Coefficient  Attr "Real"  Coeff 39                            value__fft_coefficient__attr_"real"__coeff_39
+Feature : 416   cdrec      with a score of 0.05       shape              Fft Coefficient  Attr "Imag"  Coeff 51                            value__fft_coefficient__attr_"imag"__coeff_51
+Feature : 423   cdrec      with a score of 0.05       shape              Fft Coefficient  Attr "Imag"  Coeff 58                            value__fft_coefficient__attr_"imag"__coeff_58
+Feature : 482   cdrec      with a score of 0.05       shape              Fft Coefficient  Attr "Abs"  Coeff 17                             value__fft_coefficient__attr_"abs"__coeff_17
+Feature : 484   cdrec      with a score of 0.05       shape              Fft Coefficient  Attr "Abs"  Coeff 19                             value__fft_coefficient__attr_"abs"__coeff_19
+Feature : 502   cdrec      with a score of 0.05       shape              Fft Coefficient  Attr "Abs"  Coeff 37                             value__fft_coefficient__attr_"abs"__coeff_37
+Feature : 577   cdrec      with a score of 0.05       shape              Fft Coefficient  Attr "Angle"  Coeff 12                           value__fft_coefficient__attr_"angle"__coeff_12
+Feature : 602   cdrec      with a score of 0.05       shape              Fft Coefficient  Attr "Angle"  Coeff 37                           value__fft_coefficient__attr_"angle"__coeff_37
+Feature : 741   cdrec      with a score of 0.05       temporal           Number Crossing M  M 0                                            value__number_crossing_m__m_0
+Feature : 765   cdrec      with a score of 0.05       frequency          Count Below  T 0                                                  value__count_below__t_0
+Feature : 776   cdrec      with a score of 0.05       statistical        Permutation Entropy  Dimension 3  Tau 1                           value__permutation_entropy__dimension_3__tau_1
+Feature : 778   cdrec      with a score of 0.05       statistical        Permutation Entropy  Dimension 5  Tau 1                           value__permutation_entropy__dimension_5__tau_1
+Feature : 88    cdrec      with a score of 0.04       statistical        Quantile  Q 0.6                                                   value__quantile__q_0.6
+Feature : 288   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Real"  Coeff 23                            value__fft_coefficient__attr_"real"__coeff_23
+Feature : 322   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Real"  Coeff 57                            value__fft_coefficient__attr_"real"__coeff_57
+Feature : 334   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Real"  Coeff 69                            value__fft_coefficient__attr_"real"__coeff_69
+Feature : 338   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Real"  Coeff 73                            value__fft_coefficient__attr_"real"__coeff_73
+Feature : 371   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Imag"  Coeff 6                             value__fft_coefficient__attr_"imag"__coeff_6
+Feature : 385   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Imag"  Coeff 20                            value__fft_coefficient__attr_"imag"__coeff_20
+Feature : 510   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Abs"  Coeff 45                             value__fft_coefficient__attr_"abs"__coeff_45
+Feature : 524   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Abs"  Coeff 59                             value__fft_coefficient__attr_"abs"__coeff_59
+Feature : 535   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Abs"  Coeff 70                             value__fft_coefficient__attr_"abs"__coeff_70
+Feature : 573   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Angle"  Coeff 8                            value__fft_coefficient__attr_"angle"__coeff_8
+Feature : 596   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Angle"  Coeff 31                           value__fft_coefficient__attr_"angle"__coeff_31
+Feature : 613   cdrec      with a score of 0.04       shape              Fft Coefficient  Attr "Angle"  Coeff 48                           value__fft_coefficient__attr_"angle"__coeff_48
+Feature : 201   cdrec      with a score of 0.03       shape              Ar Coefficient  Coeff 7  K 10                                     value__ar_coefficient__coeff_7__k_10
+Feature : 204   cdrec      with a score of 0.03       shape              Ar Coefficient  Coeff 10  K 10                                    value__ar_coefficient__coeff_10__k_10
+Feature : 211   cdrec      with a score of 0.03       statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.4  Ql 0.0        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.4__ql_0.0
+Feature : 217   cdrec      with a score of 0.03       statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.8  Ql 0.0       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.8__ql_0.0
+Feature : 230   cdrec      with a score of 0.03       temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.6  Ql 0.2        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.6__ql_0.2
+Feature : 238   cdrec      with a score of 0.03       temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 1.0  Ql 0.2        value__change_quantiles__f_agg_"var"__isabs_False__qh_1.0__ql_0.2
+Feature : 321   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Real"  Coeff 56                            value__fft_coefficient__attr_"real"__coeff_56
+Feature : 378   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Imag"  Coeff 13                            value__fft_coefficient__attr_"imag"__coeff_13
+Feature : 450   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Imag"  Coeff 85                            value__fft_coefficient__attr_"imag"__coeff_85
+Feature : 457   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Imag"  Coeff 92                            value__fft_coefficient__attr_"imag"__coeff_92
+Feature : 485   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Abs"  Coeff 20                             value__fft_coefficient__attr_"abs"__coeff_20
+Feature : 496   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Abs"  Coeff 31                             value__fft_coefficient__attr_"abs"__coeff_31
+Feature : 528   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Abs"  Coeff 63                             value__fft_coefficient__attr_"abs"__coeff_63
+Feature : 568   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Angle"  Coeff 3                            value__fft_coefficient__attr_"angle"__coeff_3
+Feature : 632   cdrec      with a score of 0.03       shape              Fft Coefficient  Attr "Angle"  Coeff 67                           value__fft_coefficient__attr_"angle"__coeff_67
+Feature : 694   cdrec      with a score of 0.03       temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 10  F Agg "Max"        value__agg_linear_trend__attr_"rvalue"__chunk_len_10__f_agg_"max"
+Feature : 36    cdrec      with a score of 0.02       statistical        Benford Correlation                                               value__benford_correlation
+Feature : 97    cdrec      with a score of 0.02       temporal           Autocorrelation  Lag 5                                            value__autocorrelation__lag_5
+Feature : 128   cdrec      with a score of 0.02       statistical        Index Mass Quantile  Q 0.7                                        value__index_mass_quantile__q_0.7
+Feature : 199   cdrec      with a score of 0.02       shape              Ar Coefficient  Coeff 5  K 10                                     value__ar_coefficient__coeff_5__k_10
+Feature : 213   cdrec      with a score of 0.02       statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.6  Ql 0.0       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.6__ql_0.0
+Feature : 229   cdrec      with a score of 0.02       statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.6  Ql 0.2       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.6__ql_0.2
+Feature : 243   cdrec      with a score of 0.02       statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.6  Ql 0.4        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.6__ql_0.4
+Feature : 297   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Real"  Coeff 32                            value__fft_coefficient__attr_"real"__coeff_32
+Feature : 331   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Real"  Coeff 66                            value__fft_coefficient__attr_"real"__coeff_66
+Feature : 350   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Real"  Coeff 85                            value__fft_coefficient__attr_"real"__coeff_85
+Feature : 364   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Real"  Coeff 99                            value__fft_coefficient__attr_"real"__coeff_99
+Feature : 393   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 28                            value__fft_coefficient__attr_"imag"__coeff_28
+Feature : 397   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 32                            value__fft_coefficient__attr_"imag"__coeff_32
+Feature : 401   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 36                            value__fft_coefficient__attr_"imag"__coeff_36
+Feature : 412   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 47                            value__fft_coefficient__attr_"imag"__coeff_47
+Feature : 428   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 63                            value__fft_coefficient__attr_"imag"__coeff_63
+Feature : 435   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 70                            value__fft_coefficient__attr_"imag"__coeff_70
+Feature : 452   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 87                            value__fft_coefficient__attr_"imag"__coeff_87
+Feature : 460   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 95                            value__fft_coefficient__attr_"imag"__coeff_95
+Feature : 461   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Imag"  Coeff 96                            value__fft_coefficient__attr_"imag"__coeff_96
+Feature : 475   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Abs"  Coeff 10                             value__fft_coefficient__attr_"abs"__coeff_10
+Feature : 546   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Abs"  Coeff 81                             value__fft_coefficient__attr_"abs"__coeff_81
+Feature : 588   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Angle"  Coeff 23                           value__fft_coefficient__attr_"angle"__coeff_23
+Feature : 600   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Angle"  Coeff 35                           value__fft_coefficient__attr_"angle"__coeff_35
+Feature : 622   cdrec      with a score of 0.02       shape              Fft Coefficient  Attr "Angle"  Coeff 57                           value__fft_coefficient__attr_"angle"__coeff_57
+Feature : 764   cdrec      with a score of 0.02       frequency          Count Above  T 0                                                  value__count_above__t_0
+Feature : 2     cdrec      with a score of 0.01       statistical        Has Duplicate Min                                                 value__has_duplicate_min
+Feature : 10    cdrec      with a score of 0.01       statistical        Mean                                                              value__mean
+Feature : 22    cdrec      with a score of 0.01       statistical        Count Below Mean                                                  value__count_below_mean
+Feature : 42    cdrec      with a score of 0.01       temporal           C3  Lag 3                                                         value__c3__lag_3
+Feature : 106   cdrec      with a score of 0.01       temporal           Partial Autocorrelation  Lag 1                                    value__partial_autocorrelation__lag_1
+Feature : 108   cdrec      with a score of 0.01       temporal           Partial Autocorrelation  Lag 3                                    value__partial_autocorrelation__lag_3
+Feature : 109   cdrec      with a score of 0.01       temporal           Partial Autocorrelation  Lag 4                                    value__partial_autocorrelation__lag_4
+Feature : 113   cdrec      with a score of 0.01       temporal           Partial Autocorrelation  Lag 8                                    value__partial_autocorrelation__lag_8
+Feature : 117   cdrec      with a score of 0.01       frequency          Number Peaks  N 1                                                 value__number_peaks__n_1
+Feature : 122   cdrec      with a score of 0.01       statistical        Binned Entropy  Max Bins 10                                       value__binned_entropy__max_bins_10
+Feature : 126   cdrec      with a score of 0.01       statistical        Index Mass Quantile  Q 0.4                                        value__index_mass_quantile__q_0.4
+Feature : 192   cdrec      with a score of 0.01       shape              Spkt Welch Density  Coeff 5                                       value__spkt_welch_density__coeff_5
+Feature : 219   cdrec      with a score of 0.01       statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.8  Ql 0.0        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.8__ql_0.0
+Feature : 231   cdrec      with a score of 0.01       statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.6  Ql 0.2        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.6__ql_0.2
+Feature : 233   cdrec      with a score of 0.01       statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.8  Ql 0.2       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.8__ql_0.2
+Feature : 240   cdrec      with a score of 0.01       temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 1.0  Ql 0.2         value__change_quantiles__f_agg_"var"__isabs_True__qh_1.0__ql_0.2
+Feature : 255   cdrec      with a score of 0.01       statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.8  Ql 0.6        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.8__ql_0.6
+Feature : 275   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 10                            value__fft_coefficient__attr_"real"__coeff_10
+Feature : 291   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 26                            value__fft_coefficient__attr_"real"__coeff_26
+Feature : 308   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 43                            value__fft_coefficient__attr_"real"__coeff_43
+Feature : 309   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 44                            value__fft_coefficient__attr_"real"__coeff_44
+Feature : 313   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 48                            value__fft_coefficient__attr_"real"__coeff_48
+Feature : 339   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 74                            value__fft_coefficient__attr_"real"__coeff_74
+Feature : 342   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 77                            value__fft_coefficient__attr_"real"__coeff_77
+Feature : 344   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 79                            value__fft_coefficient__attr_"real"__coeff_79
+Feature : 348   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 83                            value__fft_coefficient__attr_"real"__coeff_83
+Feature : 349   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 84                            value__fft_coefficient__attr_"real"__coeff_84
+Feature : 359   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Real"  Coeff 94                            value__fft_coefficient__attr_"real"__coeff_94
+Feature : 372   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 7                             value__fft_coefficient__attr_"imag"__coeff_7
+Feature : 384   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 19                            value__fft_coefficient__attr_"imag"__coeff_19
+Feature : 386   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 21                            value__fft_coefficient__attr_"imag"__coeff_21
+Feature : 390   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 25                            value__fft_coefficient__attr_"imag"__coeff_25
+Feature : 391   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 26                            value__fft_coefficient__attr_"imag"__coeff_26
+Feature : 399   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 34                            value__fft_coefficient__attr_"imag"__coeff_34
+Feature : 403   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 38                            value__fft_coefficient__attr_"imag"__coeff_38
+Feature : 410   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 45                            value__fft_coefficient__attr_"imag"__coeff_45
+Feature : 413   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 48                            value__fft_coefficient__attr_"imag"__coeff_48
+Feature : 414   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 49                            value__fft_coefficient__attr_"imag"__coeff_49
+Feature : 429   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 64                            value__fft_coefficient__attr_"imag"__coeff_64
+Feature : 434   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 69                            value__fft_coefficient__attr_"imag"__coeff_69
+Feature : 439   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 74                            value__fft_coefficient__attr_"imag"__coeff_74
+Feature : 440   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 75                            value__fft_coefficient__attr_"imag"__coeff_75
+Feature : 447   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 82                            value__fft_coefficient__attr_"imag"__coeff_82
+Feature : 451   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 86                            value__fft_coefficient__attr_"imag"__coeff_86
+Feature : 459   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Imag"  Coeff 94                            value__fft_coefficient__attr_"imag"__coeff_94
+Feature : 467   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 2                              value__fft_coefficient__attr_"abs"__coeff_2
+Feature : 470   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 5                              value__fft_coefficient__attr_"abs"__coeff_5
+Feature : 473   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 8                              value__fft_coefficient__attr_"abs"__coeff_8
+Feature : 474   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 9                              value__fft_coefficient__attr_"abs"__coeff_9
+Feature : 491   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 26                             value__fft_coefficient__attr_"abs"__coeff_26
+Feature : 501   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 36                             value__fft_coefficient__attr_"abs"__coeff_36
+Feature : 509   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 44                             value__fft_coefficient__attr_"abs"__coeff_44
+Feature : 519   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 54                             value__fft_coefficient__attr_"abs"__coeff_54
+Feature : 526   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 61                             value__fft_coefficient__attr_"abs"__coeff_61
+Feature : 529   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 64                             value__fft_coefficient__attr_"abs"__coeff_64
+Feature : 544   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 79                             value__fft_coefficient__attr_"abs"__coeff_79
+Feature : 554   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 89                             value__fft_coefficient__attr_"abs"__coeff_89
+Feature : 557   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Abs"  Coeff 92                             value__fft_coefficient__attr_"abs"__coeff_92
+Feature : 571   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 6                            value__fft_coefficient__attr_"angle"__coeff_6
+Feature : 582   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 17                           value__fft_coefficient__attr_"angle"__coeff_17
+Feature : 595   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 30                           value__fft_coefficient__attr_"angle"__coeff_30
+Feature : 598   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 33                           value__fft_coefficient__attr_"angle"__coeff_33
+Feature : 599   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 34                           value__fft_coefficient__attr_"angle"__coeff_34
+Feature : 603   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 38                           value__fft_coefficient__attr_"angle"__coeff_38
+Feature : 615   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 50                           value__fft_coefficient__attr_"angle"__coeff_50
+Feature : 616   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 51                           value__fft_coefficient__attr_"angle"__coeff_51
+Feature : 624   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 59                           value__fft_coefficient__attr_"angle"__coeff_59
+Feature : 647   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 82                           value__fft_coefficient__attr_"angle"__coeff_82
+Feature : 662   cdrec      with a score of 0.01       shape              Fft Coefficient  Attr "Angle"  Coeff 97                           value__fft_coefficient__attr_"angle"__coeff_97
+Feature : 665   cdrec      with a score of 0.01       shape              Fft Aggregated  Aggtype "Centroid"                                value__fft_aggregated__aggtype_"centroid"
+Feature : 668   cdrec      with a score of 0.01       statistical        Fft Aggregated  Aggtype "Kurtosis"                                value__fft_aggregated__aggtype_"kurtosis"
+Feature : 680   cdrec      with a score of 0.01       statistical        Friedrich Coefficients  Coeff 0  M 3  R 30                        value__friedrich_coefficients__coeff_0__m_3__r_30
+Feature : 688   cdrec      with a score of 0.01       temporal           Linear Trend  Attr "Slope"                                        value__linear_trend__attr_"slope"
+Feature : 705   cdrec      with a score of 0.01       temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 5  F Agg "Var"      value__agg_linear_trend__attr_"intercept"__chunk_len_5__f_agg_"var"
+Feature : 707   cdrec      with a score of 0.01       temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 10  F Agg "Min"     value__agg_linear_trend__attr_"intercept"__chunk_len_10__f_agg_"min"
+Feature : 714   cdrec      with a score of 0.01       temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 5  F Agg "Max"          value__agg_linear_trend__attr_"slope"__chunk_len_5__f_agg_"max"
+Feature : 716   cdrec      with a score of 0.01       statistical        Agg Linear Trend  Attr "Slope"  Chunk Len 5  F Agg "Mean"         value__agg_linear_trend__attr_"slope"__chunk_len_5__f_agg_"mean"
+Feature : 718   cdrec      with a score of 0.01       temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 10  F Agg "Max"         value__agg_linear_trend__attr_"slope"__chunk_len_10__f_agg_"max"
+Feature : 719   cdrec      with a score of 0.01       temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 10  F Agg "Min"         value__agg_linear_trend__attr_"slope"__chunk_len_10__f_agg_"min"
+Feature : 730   cdrec      with a score of 0.01       temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 10  F Agg "Max"        value__agg_linear_trend__attr_"stderr"__chunk_len_10__f_agg_"max"
+Feature : 735   cdrec      with a score of 0.01       temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 50  F Agg "Min"        value__agg_linear_trend__attr_"stderr"__chunk_len_50__f_agg_"min"
+Feature : 738   cdrec      with a score of 0.01       temporal           Augmented Dickey Fuller  Attr "Teststat"  Autolag "Aic"           value__augmented_dickey_fuller__attr_"teststat"__autolag_"AIC"
+Feature : 758   cdrec      with a score of 0.01       frequency          Ratio Beyond R Sigma  R 2.5                                       value__ratio_beyond_r_sigma__r_2.5
+Feature : 767   cdrec      with a score of 0.01       frequency          Lempel Ziv Complexity  Bins 3                                     value__lempel_ziv_complexity__bins_3
+Feature : 0     cdrec      with a score of 0.0        statistical        Variance Larger Than Standard Deviation                           value__variance_larger_than_standard_deviation
+Feature : 1     cdrec      with a score of 0.0        statistical        Has Duplicate Max                                                 value__has_duplicate_max
+Feature : 4     cdrec      with a score of 0.0        statistical        Sum Values                                                        value__sum_values
+Feature : 6     cdrec      with a score of 0.0        statistical        Mean Abs Change                                                   value__mean_abs_change
+Feature : 7     cdrec      with a score of 0.0        statistical        Mean Change                                                       value__mean_change
+Feature : 8     cdrec      with a score of 0.0        statistical        Mean Second Derivative Central                                    value__mean_second_derivative_central
+Feature : 11    cdrec      with a score of 0.0        statistical        Length                                                            value__length
+Feature : 12    cdrec      with a score of 0.0        statistical        Standard Deviation                                                value__standard_deviation
+Feature : 14    cdrec      with a score of 0.0        statistical        Variance                                                          value__variance
+Feature : 15    cdrec      with a score of 0.0        statistical        Skewness                                                          value__skewness
+Feature : 16    cdrec      with a score of 0.0        statistical        Kurtosis                                                          value__kurtosis
+Feature : 17    cdrec      with a score of 0.0        statistical        Root Mean Square                                                  value__root_mean_square
+Feature : 19    cdrec      with a score of 0.0        statistical        Longest Strike Below Mean                                         value__longest_strike_below_mean
+Feature : 20    cdrec      with a score of 0.0        statistical        Longest Strike Above Mean                                         value__longest_strike_above_mean
+Feature : 21    cdrec      with a score of 0.0        statistical        Count Above Mean                                                  value__count_above_mean
+Feature : 23    cdrec      with a score of 0.0        frequency          Last Location Of Maximum                                          value__last_location_of_maximum
+Feature : 24    cdrec      with a score of 0.0        frequency          First Location Of Maximum                                         value__first_location_of_maximum
+Feature : 25    cdrec      with a score of 0.0        frequency          Last Location Of Minimum                                          value__last_location_of_minimum
+Feature : 26    cdrec      with a score of 0.0        frequency          First Location Of Minimum                                         value__first_location_of_minimum
+Feature : 27    cdrec      with a score of 0.0        frequency          Percentage Of Reoccurring Values To All Values                    value__percentage_of_reoccurring_values_to_all_values
+Feature : 28    cdrec      with a score of 0.0        frequency          Percentage Of Reoccurring Datapoints To All Datapoints            value__percentage_of_reoccurring_datapoints_to_all_datapoints
+Feature : 29    cdrec      with a score of 0.0        statistical        Sum Of Reoccurring Values                                         value__sum_of_reoccurring_values
+Feature : 30    cdrec      with a score of 0.0        statistical        Sum Of Reoccurring Data Points                                    value__sum_of_reoccurring_data_points
+Feature : 33    cdrec      with a score of 0.0        statistical        Maximum                                                           value__maximum
+Feature : 34    cdrec      with a score of 0.0        statistical        Absolute Maximum                                                  value__absolute_maximum
+Feature : 35    cdrec      with a score of 0.0        statistical        Minimum                                                           value__minimum
+Feature : 37    cdrec      with a score of 0.0        temporal           Time Reversal Asymmetry Statistic  Lag 1                          value__time_reversal_asymmetry_statistic__lag_1
+Feature : 38    cdrec      with a score of 0.0        temporal           Time Reversal Asymmetry Statistic  Lag 2                          value__time_reversal_asymmetry_statistic__lag_2
+Feature : 39    cdrec      with a score of 0.0        temporal           Time Reversal Asymmetry Statistic  Lag 3                          value__time_reversal_asymmetry_statistic__lag_3
+Feature : 40    cdrec      with a score of 0.0        temporal           C3  Lag 1                                                         value__c3__lag_1
+Feature : 41    cdrec      with a score of 0.0        temporal           C3  Lag 2                                                         value__c3__lag_2
+Feature : 43    cdrec      with a score of 0.0        temporal           Cid Ce  Normalize True                                            value__cid_ce__normalize_True
+Feature : 44    cdrec      with a score of 0.0        temporal           Cid Ce  Normalize False                                           value__cid_ce__normalize_False
+Feature : 45    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.0                                           value__symmetry_looking__r_0.0
+Feature : 46    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.05                                          value__symmetry_looking__r_0.05
+Feature : 47    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.1                                           value__symmetry_looking__r_0.1
+Feature : 48    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.15000000000000002                           value__symmetry_looking__r_0.15000000000000002
+Feature : 49    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.2                                           value__symmetry_looking__r_0.2
+Feature : 50    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.25                                          value__symmetry_looking__r_0.25
+Feature : 51    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.30000000000000004                           value__symmetry_looking__r_0.30000000000000004
+Feature : 52    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.35000000000000003                           value__symmetry_looking__r_0.35000000000000003
+Feature : 53    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.4                                           value__symmetry_looking__r_0.4
+Feature : 54    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.45                                          value__symmetry_looking__r_0.45
+Feature : 55    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.5                                           value__symmetry_looking__r_0.5
+Feature : 56    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.55                                          value__symmetry_looking__r_0.55
+Feature : 57    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.6000000000000001                            value__symmetry_looking__r_0.6000000000000001
+Feature : 58    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.65                                          value__symmetry_looking__r_0.65
+Feature : 59    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.7000000000000001                            value__symmetry_looking__r_0.7000000000000001
+Feature : 60    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.75                                          value__symmetry_looking__r_0.75
+Feature : 61    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.8                                           value__symmetry_looking__r_0.8
+Feature : 62    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.8500000000000001                            value__symmetry_looking__r_0.8500000000000001
+Feature : 63    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.9                                           value__symmetry_looking__r_0.9
+Feature : 64    cdrec      with a score of 0.0        temporal           Symmetry Looking  R 0.9500000000000001                            value__symmetry_looking__r_0.9500000000000001
+Feature : 65    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.05                                  value__large_standard_deviation__r_0.05
+Feature : 66    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.1                                   value__large_standard_deviation__r_0.1
+Feature : 67    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.15000000000000002                   value__large_standard_deviation__r_0.15000000000000002
+Feature : 68    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.2                                   value__large_standard_deviation__r_0.2
+Feature : 69    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.25                                  value__large_standard_deviation__r_0.25
+Feature : 70    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.30000000000000004                   value__large_standard_deviation__r_0.30000000000000004
+Feature : 71    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.35000000000000003                   value__large_standard_deviation__r_0.35000000000000003
+Feature : 72    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.4                                   value__large_standard_deviation__r_0.4
+Feature : 73    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.45                                  value__large_standard_deviation__r_0.45
+Feature : 74    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.5                                   value__large_standard_deviation__r_0.5
+Feature : 75    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.55                                  value__large_standard_deviation__r_0.55
+Feature : 76    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.6000000000000001                    value__large_standard_deviation__r_0.6000000000000001
+Feature : 77    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.65                                  value__large_standard_deviation__r_0.65
+Feature : 78    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.7000000000000001                    value__large_standard_deviation__r_0.7000000000000001
+Feature : 79    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.75                                  value__large_standard_deviation__r_0.75
+Feature : 80    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.8                                   value__large_standard_deviation__r_0.8
+Feature : 81    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.8500000000000001                    value__large_standard_deviation__r_0.8500000000000001
+Feature : 82    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.9                                   value__large_standard_deviation__r_0.9
+Feature : 83    cdrec      with a score of 0.0        statistical        Large Standard Deviation  R 0.9500000000000001                    value__large_standard_deviation__r_0.9500000000000001
+Feature : 84    cdrec      with a score of 0.0        statistical        Quantile  Q 0.1                                                   value__quantile__q_0.1
+Feature : 85    cdrec      with a score of 0.0        statistical        Quantile  Q 0.2                                                   value__quantile__q_0.2
+Feature : 86    cdrec      with a score of 0.0        statistical        Quantile  Q 0.3                                                   value__quantile__q_0.3
+Feature : 89    cdrec      with a score of 0.0        statistical        Quantile  Q 0.7                                                   value__quantile__q_0.7
+Feature : 91    cdrec      with a score of 0.0        statistical        Quantile  Q 0.9                                                   value__quantile__q_0.9
+Feature : 92    cdrec      with a score of 0.0        temporal           Autocorrelation  Lag 0                                            value__autocorrelation__lag_0
+Feature : 95    cdrec      with a score of 0.0        temporal           Autocorrelation  Lag 3                                            value__autocorrelation__lag_3
+Feature : 96    cdrec      with a score of 0.0        temporal           Autocorrelation  Lag 4                                            value__autocorrelation__lag_4
+Feature : 99    cdrec      with a score of 0.0        temporal           Autocorrelation  Lag 7                                            value__autocorrelation__lag_7
+Feature : 100   cdrec      with a score of 0.0        temporal           Autocorrelation  Lag 8                                            value__autocorrelation__lag_8
+Feature : 101   cdrec      with a score of 0.0        temporal           Autocorrelation  Lag 9                                            value__autocorrelation__lag_9
+Feature : 102   cdrec      with a score of 0.0        statistical        Agg Autocorrelation  F Agg "Mean"  Maxlag 40                      value__agg_autocorrelation__f_agg_"mean"__maxlag_40
+Feature : 103   cdrec      with a score of 0.0        statistical        Agg Autocorrelation  F Agg "Median"  Maxlag 40                    value__agg_autocorrelation__f_agg_"median"__maxlag_40
+Feature : 104   cdrec      with a score of 0.0        temporal           Agg Autocorrelation  F Agg "Var"  Maxlag 40                       value__agg_autocorrelation__f_agg_"var"__maxlag_40
+Feature : 105   cdrec      with a score of 0.0        temporal           Partial Autocorrelation  Lag 0                                    value__partial_autocorrelation__lag_0
+Feature : 107   cdrec      with a score of 0.0        temporal           Partial Autocorrelation  Lag 2                                    value__partial_autocorrelation__lag_2
+Feature : 110   cdrec      with a score of 0.0        temporal           Partial Autocorrelation  Lag 5                                    value__partial_autocorrelation__lag_5
+Feature : 111   cdrec      with a score of 0.0        temporal           Partial Autocorrelation  Lag 6                                    value__partial_autocorrelation__lag_6
+Feature : 112   cdrec      with a score of 0.0        temporal           Partial Autocorrelation  Lag 7                                    value__partial_autocorrelation__lag_7
+Feature : 115   cdrec      with a score of 0.0        shape              Number Cwt Peaks  N 1                                             value__number_cwt_peaks__n_1
+Feature : 119   cdrec      with a score of 0.0        frequency          Number Peaks  N 5                                                 value__number_peaks__n_5
+Feature : 121   cdrec      with a score of 0.0        frequency          Number Peaks  N 50                                                value__number_peaks__n_50
+Feature : 123   cdrec      with a score of 0.0        statistical        Index Mass Quantile  Q 0.1                                        value__index_mass_quantile__q_0.1
+Feature : 125   cdrec      with a score of 0.0        statistical        Index Mass Quantile  Q 0.3                                        value__index_mass_quantile__q_0.3
+Feature : 127   cdrec      with a score of 0.0        statistical        Index Mass Quantile  Q 0.6                                        value__index_mass_quantile__q_0.6
+Feature : 129   cdrec      with a score of 0.0        statistical        Index Mass Quantile  Q 0.8                                        value__index_mass_quantile__q_0.8
+Feature : 130   cdrec      with a score of 0.0        statistical        Index Mass Quantile  Q 0.9                                        value__index_mass_quantile__q_0.9
+Feature : 131   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 0  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_0__w_2__widths_(2, 5, 10, 20)
+Feature : 132   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 0  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_0__w_5__widths_(2, 5, 10, 20)
+Feature : 133   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 0  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_0__w_10__widths_(2, 5, 10, 20)
+Feature : 134   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 0  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_0__w_20__widths_(2, 5, 10, 20)
+Feature : 135   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 1  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_1__w_2__widths_(2, 5, 10, 20)
+Feature : 136   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 1  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_1__w_5__widths_(2, 5, 10, 20)
+Feature : 137   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 1  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_1__w_10__widths_(2, 5, 10, 20)
+Feature : 138   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 1  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_1__w_20__widths_(2, 5, 10, 20)
+Feature : 139   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 2  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_2__w_2__widths_(2, 5, 10, 20)
+Feature : 140   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 2  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_2__w_5__widths_(2, 5, 10, 20)
+Feature : 141   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 2  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_2__w_10__widths_(2, 5, 10, 20)
+Feature : 142   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 2  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_2__w_20__widths_(2, 5, 10, 20)
+Feature : 143   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 3  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_3__w_2__widths_(2, 5, 10, 20)
+Feature : 144   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 3  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_3__w_5__widths_(2, 5, 10, 20)
+Feature : 145   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 3  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_3__w_10__widths_(2, 5, 10, 20)
+Feature : 146   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 3  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_3__w_20__widths_(2, 5, 10, 20)
+Feature : 147   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 4  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_4__w_2__widths_(2, 5, 10, 20)
+Feature : 148   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 4  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_4__w_5__widths_(2, 5, 10, 20)
+Feature : 149   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 4  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_4__w_10__widths_(2, 5, 10, 20)
+Feature : 150   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 4  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_4__w_20__widths_(2, 5, 10, 20)
+Feature : 151   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 5  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_5__w_2__widths_(2, 5, 10, 20)
+Feature : 152   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 5  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_5__w_5__widths_(2, 5, 10, 20)
+Feature : 153   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 5  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_5__w_10__widths_(2, 5, 10, 20)
+Feature : 154   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 5  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_5__w_20__widths_(2, 5, 10, 20)
+Feature : 155   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 6  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_6__w_2__widths_(2, 5, 10, 20)
+Feature : 156   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 6  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_6__w_5__widths_(2, 5, 10, 20)
+Feature : 157   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 6  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_6__w_10__widths_(2, 5, 10, 20)
+Feature : 158   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 6  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_6__w_20__widths_(2, 5, 10, 20)
+Feature : 159   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 7  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_7__w_2__widths_(2, 5, 10, 20)
+Feature : 160   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 7  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_7__w_5__widths_(2, 5, 10, 20)
+Feature : 161   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 7  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_7__w_10__widths_(2, 5, 10, 20)
+Feature : 162   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 7  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_7__w_20__widths_(2, 5, 10, 20)
+Feature : 163   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 8  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_8__w_2__widths_(2, 5, 10, 20)
+Feature : 164   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 8  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_8__w_5__widths_(2, 5, 10, 20)
+Feature : 165   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 8  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_8__w_10__widths_(2, 5, 10, 20)
+Feature : 166   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 8  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_8__w_20__widths_(2, 5, 10, 20)
+Feature : 167   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 9  W 2  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_9__w_2__widths_(2, 5, 10, 20)
+Feature : 168   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 9  W 5  Widths (2, 5, 10, 20)             value__cwt_coefficients__coeff_9__w_5__widths_(2, 5, 10, 20)
+Feature : 169   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 9  W 10  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_9__w_10__widths_(2, 5, 10, 20)
+Feature : 170   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 9  W 20  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_9__w_20__widths_(2, 5, 10, 20)
+Feature : 171   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 10  W 2  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_10__w_2__widths_(2, 5, 10, 20)
+Feature : 172   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 10  W 5  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_10__w_5__widths_(2, 5, 10, 20)
+Feature : 173   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 10  W 10  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_10__w_10__widths_(2, 5, 10, 20)
+Feature : 174   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 10  W 20  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_10__w_20__widths_(2, 5, 10, 20)
+Feature : 175   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 11  W 2  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_11__w_2__widths_(2, 5, 10, 20)
+Feature : 176   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 11  W 5  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_11__w_5__widths_(2, 5, 10, 20)
+Feature : 177   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 11  W 10  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_11__w_10__widths_(2, 5, 10, 20)
+Feature : 178   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 11  W 20  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_11__w_20__widths_(2, 5, 10, 20)
+Feature : 179   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 12  W 2  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_12__w_2__widths_(2, 5, 10, 20)
+Feature : 180   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 12  W 5  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_12__w_5__widths_(2, 5, 10, 20)
+Feature : 181   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 12  W 10  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_12__w_10__widths_(2, 5, 10, 20)
+Feature : 182   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 12  W 20  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_12__w_20__widths_(2, 5, 10, 20)
+Feature : 183   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 13  W 2  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_13__w_2__widths_(2, 5, 10, 20)
+Feature : 184   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 13  W 5  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_13__w_5__widths_(2, 5, 10, 20)
+Feature : 185   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 13  W 10  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_13__w_10__widths_(2, 5, 10, 20)
+Feature : 186   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 13  W 20  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_13__w_20__widths_(2, 5, 10, 20)
+Feature : 187   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 14  W 2  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_14__w_2__widths_(2, 5, 10, 20)
+Feature : 188   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 14  W 5  Widths (2, 5, 10, 20)            value__cwt_coefficients__coeff_14__w_5__widths_(2, 5, 10, 20)
+Feature : 189   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 14  W 10  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_14__w_10__widths_(2, 5, 10, 20)
+Feature : 190   cdrec      with a score of 0.0        shape              Cwt Coefficients  Coeff 14  W 20  Widths (2, 5, 10, 20)           value__cwt_coefficients__coeff_14__w_20__widths_(2, 5, 10, 20)
+Feature : 191   cdrec      with a score of 0.0        shape              Spkt Welch Density  Coeff 2                                       value__spkt_welch_density__coeff_2
+Feature : 198   cdrec      with a score of 0.0        shape              Ar Coefficient  Coeff 4  K 10                                     value__ar_coefficient__coeff_4__k_10
+Feature : 205   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.2  Ql 0.0       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.2__ql_0.0
+Feature : 206   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.2  Ql 0.0        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.2__ql_0.0
+Feature : 207   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.2  Ql 0.0        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.2__ql_0.0
+Feature : 208   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.2  Ql 0.0         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.2__ql_0.0
+Feature : 209   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.4  Ql 0.0       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.4__ql_0.0
+Feature : 210   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.4  Ql 0.0        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.4__ql_0.0
+Feature : 212   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.4  Ql 0.0         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.4__ql_0.0
+Feature : 214   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.6  Ql 0.0        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.6__ql_0.0
+Feature : 215   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.6  Ql 0.0        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.6__ql_0.0
+Feature : 216   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.6  Ql 0.0         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.6__ql_0.0
+Feature : 218   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.8  Ql 0.0        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.8__ql_0.0
+Feature : 220   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.8  Ql 0.0         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.8__ql_0.0
+Feature : 221   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 1.0  Ql 0.0       value__change_quantiles__f_agg_"mean"__isabs_False__qh_1.0__ql_0.0
+Feature : 222   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 1.0  Ql 0.0        value__change_quantiles__f_agg_"var"__isabs_False__qh_1.0__ql_0.0
+Feature : 223   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 1.0  Ql 0.0        value__change_quantiles__f_agg_"mean"__isabs_True__qh_1.0__ql_0.0
+Feature : 224   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 1.0  Ql 0.0         value__change_quantiles__f_agg_"var"__isabs_True__qh_1.0__ql_0.0
+Feature : 225   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.4  Ql 0.2       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.4__ql_0.2
+Feature : 226   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.4  Ql 0.2        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.4__ql_0.2
+Feature : 227   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.4  Ql 0.2        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.4__ql_0.2
+Feature : 228   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.4  Ql 0.2         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.4__ql_0.2
+Feature : 232   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.6  Ql 0.2         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.6__ql_0.2
+Feature : 234   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.8  Ql 0.2        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.8__ql_0.2
+Feature : 235   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.8  Ql 0.2        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.8__ql_0.2
+Feature : 236   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.8  Ql 0.2         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.8__ql_0.2
+Feature : 237   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 1.0  Ql 0.2       value__change_quantiles__f_agg_"mean"__isabs_False__qh_1.0__ql_0.2
+Feature : 239   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 1.0  Ql 0.2        value__change_quantiles__f_agg_"mean"__isabs_True__qh_1.0__ql_0.2
+Feature : 241   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.6  Ql 0.4       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.6__ql_0.4
+Feature : 242   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.6  Ql 0.4        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.6__ql_0.4
+Feature : 244   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.6  Ql 0.4         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.6__ql_0.4
+Feature : 245   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.8  Ql 0.4       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.8__ql_0.4
+Feature : 246   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.8  Ql 0.4        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.8__ql_0.4
+Feature : 247   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 0.8  Ql 0.4        value__change_quantiles__f_agg_"mean"__isabs_True__qh_0.8__ql_0.4
+Feature : 248   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.8  Ql 0.4         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.8__ql_0.4
+Feature : 250   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 1.0  Ql 0.4        value__change_quantiles__f_agg_"var"__isabs_False__qh_1.0__ql_0.4
+Feature : 251   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 1.0  Ql 0.4        value__change_quantiles__f_agg_"mean"__isabs_True__qh_1.0__ql_0.4
+Feature : 252   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 1.0  Ql 0.4         value__change_quantiles__f_agg_"var"__isabs_True__qh_1.0__ql_0.4
+Feature : 253   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs False  Qh 0.8  Ql 0.6       value__change_quantiles__f_agg_"mean"__isabs_False__qh_0.8__ql_0.6
+Feature : 254   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 0.8  Ql 0.6        value__change_quantiles__f_agg_"var"__isabs_False__qh_0.8__ql_0.6
+Feature : 256   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 0.8  Ql 0.6         value__change_quantiles__f_agg_"var"__isabs_True__qh_0.8__ql_0.6
+Feature : 258   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 1.0  Ql 0.6        value__change_quantiles__f_agg_"var"__isabs_False__qh_1.0__ql_0.6
+Feature : 259   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 1.0  Ql 0.6        value__change_quantiles__f_agg_"mean"__isabs_True__qh_1.0__ql_0.6
+Feature : 260   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 1.0  Ql 0.6         value__change_quantiles__f_agg_"var"__isabs_True__qh_1.0__ql_0.6
+Feature : 262   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs False  Qh 1.0  Ql 0.8        value__change_quantiles__f_agg_"var"__isabs_False__qh_1.0__ql_0.8
+Feature : 263   cdrec      with a score of 0.0        statistical        Change Quantiles  F Agg "Mean"  Isabs True  Qh 1.0  Ql 0.8        value__change_quantiles__f_agg_"mean"__isabs_True__qh_1.0__ql_0.8
+Feature : 264   cdrec      with a score of 0.0        temporal           Change Quantiles  F Agg "Var"  Isabs True  Qh 1.0  Ql 0.8         value__change_quantiles__f_agg_"var"__isabs_True__qh_1.0__ql_0.8
+Feature : 265   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 0                             value__fft_coefficient__attr_"real"__coeff_0
+Feature : 266   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 1                             value__fft_coefficient__attr_"real"__coeff_1
+Feature : 267   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 2                             value__fft_coefficient__attr_"real"__coeff_2
+Feature : 269   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 4                             value__fft_coefficient__attr_"real"__coeff_4
+Feature : 271   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 6                             value__fft_coefficient__attr_"real"__coeff_6
+Feature : 272   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 7                             value__fft_coefficient__attr_"real"__coeff_7
+Feature : 273   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 8                             value__fft_coefficient__attr_"real"__coeff_8
+Feature : 274   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 9                             value__fft_coefficient__attr_"real"__coeff_9
+Feature : 276   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 11                            value__fft_coefficient__attr_"real"__coeff_11
+Feature : 277   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 12                            value__fft_coefficient__attr_"real"__coeff_12
+Feature : 279   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 14                            value__fft_coefficient__attr_"real"__coeff_14
+Feature : 280   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 15                            value__fft_coefficient__attr_"real"__coeff_15
+Feature : 281   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 16                            value__fft_coefficient__attr_"real"__coeff_16
+Feature : 282   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 17                            value__fft_coefficient__attr_"real"__coeff_17
+Feature : 283   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 18                            value__fft_coefficient__attr_"real"__coeff_18
+Feature : 285   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 20                            value__fft_coefficient__attr_"real"__coeff_20
+Feature : 286   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 21                            value__fft_coefficient__attr_"real"__coeff_21
+Feature : 287   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 22                            value__fft_coefficient__attr_"real"__coeff_22
+Feature : 289   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 24                            value__fft_coefficient__attr_"real"__coeff_24
+Feature : 290   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 25                            value__fft_coefficient__attr_"real"__coeff_25
+Feature : 292   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 27                            value__fft_coefficient__attr_"real"__coeff_27
+Feature : 293   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 28                            value__fft_coefficient__attr_"real"__coeff_28
+Feature : 294   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 29                            value__fft_coefficient__attr_"real"__coeff_29
+Feature : 296   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 31                            value__fft_coefficient__attr_"real"__coeff_31
+Feature : 300   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 35                            value__fft_coefficient__attr_"real"__coeff_35
+Feature : 301   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 36                            value__fft_coefficient__attr_"real"__coeff_36
+Feature : 302   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 37                            value__fft_coefficient__attr_"real"__coeff_37
+Feature : 303   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 38                            value__fft_coefficient__attr_"real"__coeff_38
+Feature : 305   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 40                            value__fft_coefficient__attr_"real"__coeff_40
+Feature : 306   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 41                            value__fft_coefficient__attr_"real"__coeff_41
+Feature : 307   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 42                            value__fft_coefficient__attr_"real"__coeff_42
+Feature : 310   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 45                            value__fft_coefficient__attr_"real"__coeff_45
+Feature : 312   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 47                            value__fft_coefficient__attr_"real"__coeff_47
+Feature : 314   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 49                            value__fft_coefficient__attr_"real"__coeff_49
+Feature : 315   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 50                            value__fft_coefficient__attr_"real"__coeff_50
+Feature : 316   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 51                            value__fft_coefficient__attr_"real"__coeff_51
+Feature : 317   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 52                            value__fft_coefficient__attr_"real"__coeff_52
+Feature : 318   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 53                            value__fft_coefficient__attr_"real"__coeff_53
+Feature : 319   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 54                            value__fft_coefficient__attr_"real"__coeff_54
+Feature : 320   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 55                            value__fft_coefficient__attr_"real"__coeff_55
+Feature : 324   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 59                            value__fft_coefficient__attr_"real"__coeff_59
+Feature : 325   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 60                            value__fft_coefficient__attr_"real"__coeff_60
+Feature : 326   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 61                            value__fft_coefficient__attr_"real"__coeff_61
+Feature : 327   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 62                            value__fft_coefficient__attr_"real"__coeff_62
+Feature : 328   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 63                            value__fft_coefficient__attr_"real"__coeff_63
+Feature : 329   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 64                            value__fft_coefficient__attr_"real"__coeff_64
+Feature : 330   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 65                            value__fft_coefficient__attr_"real"__coeff_65
+Feature : 332   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 67                            value__fft_coefficient__attr_"real"__coeff_67
+Feature : 333   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 68                            value__fft_coefficient__attr_"real"__coeff_68
+Feature : 335   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 70                            value__fft_coefficient__attr_"real"__coeff_70
+Feature : 336   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 71                            value__fft_coefficient__attr_"real"__coeff_71
+Feature : 337   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 72                            value__fft_coefficient__attr_"real"__coeff_72
+Feature : 341   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 76                            value__fft_coefficient__attr_"real"__coeff_76
+Feature : 343   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 78                            value__fft_coefficient__attr_"real"__coeff_78
+Feature : 346   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 81                            value__fft_coefficient__attr_"real"__coeff_81
+Feature : 347   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 82                            value__fft_coefficient__attr_"real"__coeff_82
+Feature : 351   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 86                            value__fft_coefficient__attr_"real"__coeff_86
+Feature : 352   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 87                            value__fft_coefficient__attr_"real"__coeff_87
+Feature : 353   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 88                            value__fft_coefficient__attr_"real"__coeff_88
+Feature : 354   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 89                            value__fft_coefficient__attr_"real"__coeff_89
+Feature : 355   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 90                            value__fft_coefficient__attr_"real"__coeff_90
+Feature : 356   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 91                            value__fft_coefficient__attr_"real"__coeff_91
+Feature : 357   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 92                            value__fft_coefficient__attr_"real"__coeff_92
+Feature : 361   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 96                            value__fft_coefficient__attr_"real"__coeff_96
+Feature : 362   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Real"  Coeff 97                            value__fft_coefficient__attr_"real"__coeff_97
+Feature : 365   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 0                             value__fft_coefficient__attr_"imag"__coeff_0
+Feature : 366   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 1                             value__fft_coefficient__attr_"imag"__coeff_1
+Feature : 367   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 2                             value__fft_coefficient__attr_"imag"__coeff_2
+Feature : 368   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 3                             value__fft_coefficient__attr_"imag"__coeff_3
+Feature : 369   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 4                             value__fft_coefficient__attr_"imag"__coeff_4
+Feature : 370   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 5                             value__fft_coefficient__attr_"imag"__coeff_5
+Feature : 373   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 8                             value__fft_coefficient__attr_"imag"__coeff_8
+Feature : 375   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 10                            value__fft_coefficient__attr_"imag"__coeff_10
+Feature : 376   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 11                            value__fft_coefficient__attr_"imag"__coeff_11
+Feature : 377   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 12                            value__fft_coefficient__attr_"imag"__coeff_12
+Feature : 379   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 14                            value__fft_coefficient__attr_"imag"__coeff_14
+Feature : 380   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 15                            value__fft_coefficient__attr_"imag"__coeff_15
+Feature : 381   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 16                            value__fft_coefficient__attr_"imag"__coeff_16
+Feature : 387   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 22                            value__fft_coefficient__attr_"imag"__coeff_22
+Feature : 392   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 27                            value__fft_coefficient__attr_"imag"__coeff_27
+Feature : 394   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 29                            value__fft_coefficient__attr_"imag"__coeff_29
+Feature : 395   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 30                            value__fft_coefficient__attr_"imag"__coeff_30
+Feature : 398   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 33                            value__fft_coefficient__attr_"imag"__coeff_33
+Feature : 400   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 35                            value__fft_coefficient__attr_"imag"__coeff_35
+Feature : 405   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 40                            value__fft_coefficient__attr_"imag"__coeff_40
+Feature : 407   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 42                            value__fft_coefficient__attr_"imag"__coeff_42
+Feature : 408   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 43                            value__fft_coefficient__attr_"imag"__coeff_43
+Feature : 409   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 44                            value__fft_coefficient__attr_"imag"__coeff_44
+Feature : 411   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 46                            value__fft_coefficient__attr_"imag"__coeff_46
+Feature : 415   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 50                            value__fft_coefficient__attr_"imag"__coeff_50
+Feature : 419   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 54                            value__fft_coefficient__attr_"imag"__coeff_54
+Feature : 420   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 55                            value__fft_coefficient__attr_"imag"__coeff_55
+Feature : 421   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 56                            value__fft_coefficient__attr_"imag"__coeff_56
+Feature : 424   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 59                            value__fft_coefficient__attr_"imag"__coeff_59
+Feature : 425   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 60                            value__fft_coefficient__attr_"imag"__coeff_60
+Feature : 426   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 61                            value__fft_coefficient__attr_"imag"__coeff_61
+Feature : 427   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 62                            value__fft_coefficient__attr_"imag"__coeff_62
+Feature : 431   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 66                            value__fft_coefficient__attr_"imag"__coeff_66
+Feature : 433   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 68                            value__fft_coefficient__attr_"imag"__coeff_68
+Feature : 436   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 71                            value__fft_coefficient__attr_"imag"__coeff_71
+Feature : 438   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 73                            value__fft_coefficient__attr_"imag"__coeff_73
+Feature : 441   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 76                            value__fft_coefficient__attr_"imag"__coeff_76
+Feature : 443   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 78                            value__fft_coefficient__attr_"imag"__coeff_78
+Feature : 446   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 81                            value__fft_coefficient__attr_"imag"__coeff_81
+Feature : 448   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 83                            value__fft_coefficient__attr_"imag"__coeff_83
+Feature : 449   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 84                            value__fft_coefficient__attr_"imag"__coeff_84
+Feature : 454   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 89                            value__fft_coefficient__attr_"imag"__coeff_89
+Feature : 455   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 90                            value__fft_coefficient__attr_"imag"__coeff_90
+Feature : 462   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 97                            value__fft_coefficient__attr_"imag"__coeff_97
+Feature : 463   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Imag"  Coeff 98                            value__fft_coefficient__attr_"imag"__coeff_98
+Feature : 466   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 1                              value__fft_coefficient__attr_"abs"__coeff_1
+Feature : 468   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 3                              value__fft_coefficient__attr_"abs"__coeff_3
+Feature : 471   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 6                              value__fft_coefficient__attr_"abs"__coeff_6
+Feature : 477   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 12                             value__fft_coefficient__attr_"abs"__coeff_12
+Feature : 479   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 14                             value__fft_coefficient__attr_"abs"__coeff_14
+Feature : 480   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 15                             value__fft_coefficient__attr_"abs"__coeff_15
+Feature : 481   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 16                             value__fft_coefficient__attr_"abs"__coeff_16
+Feature : 483   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 18                             value__fft_coefficient__attr_"abs"__coeff_18
+Feature : 486   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 21                             value__fft_coefficient__attr_"abs"__coeff_21
+Feature : 487   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 22                             value__fft_coefficient__attr_"abs"__coeff_22
+Feature : 488   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 23                             value__fft_coefficient__attr_"abs"__coeff_23
+Feature : 490   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 25                             value__fft_coefficient__attr_"abs"__coeff_25
+Feature : 492   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 27                             value__fft_coefficient__attr_"abs"__coeff_27
+Feature : 493   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 28                             value__fft_coefficient__attr_"abs"__coeff_28
+Feature : 494   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 29                             value__fft_coefficient__attr_"abs"__coeff_29
+Feature : 495   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 30                             value__fft_coefficient__attr_"abs"__coeff_30
+Feature : 497   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 32                             value__fft_coefficient__attr_"abs"__coeff_32
+Feature : 498   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 33                             value__fft_coefficient__attr_"abs"__coeff_33
+Feature : 499   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 34                             value__fft_coefficient__attr_"abs"__coeff_34
+Feature : 500   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 35                             value__fft_coefficient__attr_"abs"__coeff_35
+Feature : 504   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 39                             value__fft_coefficient__attr_"abs"__coeff_39
+Feature : 505   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 40                             value__fft_coefficient__attr_"abs"__coeff_40
+Feature : 508   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 43                             value__fft_coefficient__attr_"abs"__coeff_43
+Feature : 515   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 50                             value__fft_coefficient__attr_"abs"__coeff_50
+Feature : 516   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 51                             value__fft_coefficient__attr_"abs"__coeff_51
+Feature : 517   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 52                             value__fft_coefficient__attr_"abs"__coeff_52
+Feature : 518   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 53                             value__fft_coefficient__attr_"abs"__coeff_53
+Feature : 520   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 55                             value__fft_coefficient__attr_"abs"__coeff_55
+Feature : 522   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 57                             value__fft_coefficient__attr_"abs"__coeff_57
+Feature : 523   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 58                             value__fft_coefficient__attr_"abs"__coeff_58
+Feature : 525   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 60                             value__fft_coefficient__attr_"abs"__coeff_60
+Feature : 527   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 62                             value__fft_coefficient__attr_"abs"__coeff_62
+Feature : 530   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 65                             value__fft_coefficient__attr_"abs"__coeff_65
+Feature : 531   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 66                             value__fft_coefficient__attr_"abs"__coeff_66
+Feature : 532   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 67                             value__fft_coefficient__attr_"abs"__coeff_67
+Feature : 533   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 68                             value__fft_coefficient__attr_"abs"__coeff_68
+Feature : 534   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 69                             value__fft_coefficient__attr_"abs"__coeff_69
+Feature : 536   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 71                             value__fft_coefficient__attr_"abs"__coeff_71
+Feature : 537   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 72                             value__fft_coefficient__attr_"abs"__coeff_72
+Feature : 538   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 73                             value__fft_coefficient__attr_"abs"__coeff_73
+Feature : 540   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 75                             value__fft_coefficient__attr_"abs"__coeff_75
+Feature : 541   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 76                             value__fft_coefficient__attr_"abs"__coeff_76
+Feature : 542   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 77                             value__fft_coefficient__attr_"abs"__coeff_77
+Feature : 543   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 78                             value__fft_coefficient__attr_"abs"__coeff_78
+Feature : 545   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 80                             value__fft_coefficient__attr_"abs"__coeff_80
+Feature : 549   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 84                             value__fft_coefficient__attr_"abs"__coeff_84
+Feature : 551   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 86                             value__fft_coefficient__attr_"abs"__coeff_86
+Feature : 552   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 87                             value__fft_coefficient__attr_"abs"__coeff_87
+Feature : 553   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 88                             value__fft_coefficient__attr_"abs"__coeff_88
+Feature : 555   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 90                             value__fft_coefficient__attr_"abs"__coeff_90
+Feature : 558   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 93                             value__fft_coefficient__attr_"abs"__coeff_93
+Feature : 559   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 94                             value__fft_coefficient__attr_"abs"__coeff_94
+Feature : 560   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 95                             value__fft_coefficient__attr_"abs"__coeff_95
+Feature : 561   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 96                             value__fft_coefficient__attr_"abs"__coeff_96
+Feature : 562   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 97                             value__fft_coefficient__attr_"abs"__coeff_97
+Feature : 563   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Abs"  Coeff 98                             value__fft_coefficient__attr_"abs"__coeff_98
+Feature : 565   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 0                            value__fft_coefficient__attr_"angle"__coeff_0
+Feature : 569   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 4                            value__fft_coefficient__attr_"angle"__coeff_4
+Feature : 578   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 13                           value__fft_coefficient__attr_"angle"__coeff_13
+Feature : 579   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 14                           value__fft_coefficient__attr_"angle"__coeff_14
+Feature : 583   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 18                           value__fft_coefficient__attr_"angle"__coeff_18
+Feature : 584   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 19                           value__fft_coefficient__attr_"angle"__coeff_19
+Feature : 594   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 29                           value__fft_coefficient__attr_"angle"__coeff_29
+Feature : 605   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 40                           value__fft_coefficient__attr_"angle"__coeff_40
+Feature : 606   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 41                           value__fft_coefficient__attr_"angle"__coeff_41
+Feature : 608   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 43                           value__fft_coefficient__attr_"angle"__coeff_43
+Feature : 610   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 45                           value__fft_coefficient__attr_"angle"__coeff_45
+Feature : 617   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 52                           value__fft_coefficient__attr_"angle"__coeff_52
+Feature : 619   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 54                           value__fft_coefficient__attr_"angle"__coeff_54
+Feature : 620   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 55                           value__fft_coefficient__attr_"angle"__coeff_55
+Feature : 626   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 61                           value__fft_coefficient__attr_"angle"__coeff_61
+Feature : 627   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 62                           value__fft_coefficient__attr_"angle"__coeff_62
+Feature : 631   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 66                           value__fft_coefficient__attr_"angle"__coeff_66
+Feature : 633   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 68                           value__fft_coefficient__attr_"angle"__coeff_68
+Feature : 635   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 70                           value__fft_coefficient__attr_"angle"__coeff_70
+Feature : 637   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 72                           value__fft_coefficient__attr_"angle"__coeff_72
+Feature : 638   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 73                           value__fft_coefficient__attr_"angle"__coeff_73
+Feature : 640   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 75                           value__fft_coefficient__attr_"angle"__coeff_75
+Feature : 642   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 77                           value__fft_coefficient__attr_"angle"__coeff_77
+Feature : 643   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 78                           value__fft_coefficient__attr_"angle"__coeff_78
+Feature : 644   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 79                           value__fft_coefficient__attr_"angle"__coeff_79
+Feature : 645   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 80                           value__fft_coefficient__attr_"angle"__coeff_80
+Feature : 646   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 81                           value__fft_coefficient__attr_"angle"__coeff_81
+Feature : 648   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 83                           value__fft_coefficient__attr_"angle"__coeff_83
+Feature : 649   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 84                           value__fft_coefficient__attr_"angle"__coeff_84
+Feature : 650   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 85                           value__fft_coefficient__attr_"angle"__coeff_85
+Feature : 652   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 87                           value__fft_coefficient__attr_"angle"__coeff_87
+Feature : 653   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 88                           value__fft_coefficient__attr_"angle"__coeff_88
+Feature : 655   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 90                           value__fft_coefficient__attr_"angle"__coeff_90
+Feature : 661   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 96                           value__fft_coefficient__attr_"angle"__coeff_96
+Feature : 664   cdrec      with a score of 0.0        shape              Fft Coefficient  Attr "Angle"  Coeff 99                           value__fft_coefficient__attr_"angle"__coeff_99
+Feature : 667   cdrec      with a score of 0.0        shape              Fft Aggregated  Aggtype "Skew"                                    value__fft_aggregated__aggtype_"skew"
+Feature : 669   cdrec      with a score of 0.0        frequency          Value Count  Value 0                                              value__value_count__value_0
+Feature : 670   cdrec      with a score of 0.0        frequency          Value Count  Value 1                                              value__value_count__value_1
+Feature : 671   cdrec      with a score of 0.0        frequency          Value Count  Value -1                                             value__value_count__value_-1
+Feature : 672   cdrec      with a score of 0.0        frequency          Range Count  Max 1  Min -1                                        value__range_count__max_1__min_-1
+Feature : 674   cdrec      with a score of 0.0        frequency          Range Count  Max 1000000000000.0  Min 0                           value__range_count__max_1000000000000.0__min_0
+Feature : 675   cdrec      with a score of 0.0        statistical        Approximate Entropy  M 2  R 0.1                                   value__approximate_entropy__m_2__r_0.1
+Feature : 678   cdrec      with a score of 0.0        statistical        Approximate Entropy  M 2  R 0.7                                   value__approximate_entropy__m_2__r_0.7
+Feature : 682   cdrec      with a score of 0.0        statistical        Friedrich Coefficients  Coeff 2  M 3  R 30                        value__friedrich_coefficients__coeff_2__m_3__r_30
+Feature : 685   cdrec      with a score of 0.0        temporal           Linear Trend  Attr "Pvalue"                                       value__linear_trend__attr_"pvalue"
+Feature : 686   cdrec      with a score of 0.0        temporal           Linear Trend  Attr "Rvalue"                                       value__linear_trend__attr_"rvalue"
+Feature : 687   cdrec      with a score of 0.0        temporal           Linear Trend  Attr "Intercept"                                    value__linear_trend__attr_"intercept"
+Feature : 689   cdrec      with a score of 0.0        temporal           Linear Trend  Attr "Stderr"                                       value__linear_trend__attr_"stderr"
+Feature : 690   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 5  F Agg "Max"         value__agg_linear_trend__attr_"rvalue"__chunk_len_5__f_agg_"max"
+Feature : 691   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 5  F Agg "Min"         value__agg_linear_trend__attr_"rvalue"__chunk_len_5__f_agg_"min"
+Feature : 693   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 5  F Agg "Var"         value__agg_linear_trend__attr_"rvalue"__chunk_len_5__f_agg_"var"
+Feature : 695   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 10  F Agg "Min"        value__agg_linear_trend__attr_"rvalue"__chunk_len_10__f_agg_"min"
+Feature : 696   cdrec      with a score of 0.0        statistical        Agg Linear Trend  Attr "Rvalue"  Chunk Len 10  F Agg "Mean"       value__agg_linear_trend__attr_"rvalue"__chunk_len_10__f_agg_"mean"
+Feature : 697   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 10  F Agg "Var"        value__agg_linear_trend__attr_"rvalue"__chunk_len_10__f_agg_"var"
+Feature : 698   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 50  F Agg "Max"        value__agg_linear_trend__attr_"rvalue"__chunk_len_50__f_agg_"max"
+Feature : 699   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Rvalue"  Chunk Len 50  F Agg "Min"        value__agg_linear_trend__attr_"rvalue"__chunk_len_50__f_agg_"min"
+Feature : 700   cdrec      with a score of 0.0        statistical        Agg Linear Trend  Attr "Rvalue"  Chunk Len 50  F Agg "Mean"       value__agg_linear_trend__attr_"rvalue"__chunk_len_50__f_agg_"mean"
+Feature : 702   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 5  F Agg "Max"      value__agg_linear_trend__attr_"intercept"__chunk_len_5__f_agg_"max"
+Feature : 703   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 5  F Agg "Min"      value__agg_linear_trend__attr_"intercept"__chunk_len_5__f_agg_"min"
+Feature : 704   cdrec      with a score of 0.0        statistical        Agg Linear Trend  Attr "Intercept"  Chunk Len 5  F Agg "Mean"     value__agg_linear_trend__attr_"intercept"__chunk_len_5__f_agg_"mean"
+Feature : 706   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 10  F Agg "Max"     value__agg_linear_trend__attr_"intercept"__chunk_len_10__f_agg_"max"
+Feature : 708   cdrec      with a score of 0.0        statistical        Agg Linear Trend  Attr "Intercept"  Chunk Len 10  F Agg "Mean"    value__agg_linear_trend__attr_"intercept"__chunk_len_10__f_agg_"mean"
+Feature : 710   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 50  F Agg "Max"     value__agg_linear_trend__attr_"intercept"__chunk_len_50__f_agg_"max"
+Feature : 711   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 50  F Agg "Min"     value__agg_linear_trend__attr_"intercept"__chunk_len_50__f_agg_"min"
+Feature : 712   cdrec      with a score of 0.0        statistical        Agg Linear Trend  Attr "Intercept"  Chunk Len 50  F Agg "Mean"    value__agg_linear_trend__attr_"intercept"__chunk_len_50__f_agg_"mean"
+Feature : 713   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Intercept"  Chunk Len 50  F Agg "Var"     value__agg_linear_trend__attr_"intercept"__chunk_len_50__f_agg_"var"
+Feature : 717   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 5  F Agg "Var"          value__agg_linear_trend__attr_"slope"__chunk_len_5__f_agg_"var"
+Feature : 720   cdrec      with a score of 0.0        statistical        Agg Linear Trend  Attr "Slope"  Chunk Len 10  F Agg "Mean"        value__agg_linear_trend__attr_"slope"__chunk_len_10__f_agg_"mean"
+Feature : 721   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 10  F Agg "Var"         value__agg_linear_trend__attr_"slope"__chunk_len_10__f_agg_"var"
+Feature : 725   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Slope"  Chunk Len 50  F Agg "Var"         value__agg_linear_trend__attr_"slope"__chunk_len_50__f_agg_"var"
+Feature : 726   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 5  F Agg "Max"         value__agg_linear_trend__attr_"stderr"__chunk_len_5__f_agg_"max"
+Feature : 727   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 5  F Agg "Min"         value__agg_linear_trend__attr_"stderr"__chunk_len_5__f_agg_"min"
+Feature : 728   cdrec      with a score of 0.0        statistical        Agg Linear Trend  Attr "Stderr"  Chunk Len 5  F Agg "Mean"        value__agg_linear_trend__attr_"stderr"__chunk_len_5__f_agg_"mean"
+Feature : 729   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 5  F Agg "Var"         value__agg_linear_trend__attr_"stderr"__chunk_len_5__f_agg_"var"
+Feature : 732   cdrec      with a score of 0.0        statistical        Agg Linear Trend  Attr "Stderr"  Chunk Len 10  F Agg "Mean"       value__agg_linear_trend__attr_"stderr"__chunk_len_10__f_agg_"mean"
+Feature : 733   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 10  F Agg "Var"        value__agg_linear_trend__attr_"stderr"__chunk_len_10__f_agg_"var"
+Feature : 734   cdrec      with a score of 0.0        temporal           Agg Linear Trend  Attr "Stderr"  Chunk Len 50  F Agg "Max"        value__agg_linear_trend__attr_"stderr"__chunk_len_50__f_agg_"max"
+Feature : 739   cdrec      with a score of 0.0        temporal           Augmented Dickey Fuller  Attr "Pvalue"  Autolag "Aic"             value__augmented_dickey_fuller__attr_"pvalue"__autolag_"AIC"
+Feature : 740   cdrec      with a score of 0.0        temporal           Augmented Dickey Fuller  Attr "Usedlag"  Autolag "Aic"            value__augmented_dickey_fuller__attr_"usedlag"__autolag_"AIC"
+Feature : 742   cdrec      with a score of 0.0        temporal           Number Crossing M  M -1                                           value__number_crossing_m__m_-1
+Feature : 743   cdrec      with a score of 0.0        temporal           Number Crossing M  M 1                                            value__number_crossing_m__m_1
+Feature : 744   cdrec      with a score of 0.0        shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 0          value__energy_ratio_by_chunks__num_segments_10__segment_focus_0
+Feature : 746   cdrec      with a score of 0.0        shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 2          value__energy_ratio_by_chunks__num_segments_10__segment_focus_2
+Feature : 747   cdrec      with a score of 0.0        shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 3          value__energy_ratio_by_chunks__num_segments_10__segment_focus_3
+Feature : 748   cdrec      with a score of 0.0        shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 4          value__energy_ratio_by_chunks__num_segments_10__segment_focus_4
+Feature : 749   cdrec      with a score of 0.0        shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 5          value__energy_ratio_by_chunks__num_segments_10__segment_focus_5
+Feature : 753   cdrec      with a score of 0.0        shape              Energy Ratio By Chunks  Num Segments 10  Segment Focus 9          value__energy_ratio_by_chunks__num_segments_10__segment_focus_9
+Feature : 754   cdrec      with a score of 0.0        frequency          Ratio Beyond R Sigma  R 0.5                                       value__ratio_beyond_r_sigma__r_0.5
+Feature : 755   cdrec      with a score of 0.0        frequency          Ratio Beyond R Sigma  R 1                                         value__ratio_beyond_r_sigma__r_1
+Feature : 756   cdrec      with a score of 0.0        frequency          Ratio Beyond R Sigma  R 1.5                                       value__ratio_beyond_r_sigma__r_1.5
+Feature : 759   cdrec      with a score of 0.0        frequency          Ratio Beyond R Sigma  R 3                                         value__ratio_beyond_r_sigma__r_3
+Feature : 760   cdrec      with a score of 0.0        frequency          Ratio Beyond R Sigma  R 5                                         value__ratio_beyond_r_sigma__r_5
+Feature : 761   cdrec      with a score of 0.0        frequency          Ratio Beyond R Sigma  R 6                                         value__ratio_beyond_r_sigma__r_6
+Feature : 762   cdrec      with a score of 0.0        frequency          Ratio Beyond R Sigma  R 7                                         value__ratio_beyond_r_sigma__r_7
+Feature : 763   cdrec      with a score of 0.0        frequency          Ratio Beyond R Sigma  R 10                                        value__ratio_beyond_r_sigma__r_10
+Feature : 766   cdrec      with a score of 0.0        frequency          Lempel Ziv Complexity  Bins 2                                     value__lempel_ziv_complexity__bins_2
+Feature : 768   cdrec      with a score of 0.0        frequency          Lempel Ziv Complexity  Bins 5                                     value__lempel_ziv_complexity__bins_5
+Feature : 769   cdrec      with a score of 0.0        frequency          Lempel Ziv Complexity  Bins 10                                    value__lempel_ziv_complexity__bins_10
+Feature : 770   cdrec      with a score of 0.0        frequency          Lempel Ziv Complexity  Bins 100                                   value__lempel_ziv_complexity__bins_100
+Feature : 772   cdrec      with a score of 0.0        statistical        Fourier Entropy  Bins 3                                           value__fourier_entropy__bins_3
+Feature : 773   cdrec      with a score of 0.0        statistical        Fourier Entropy  Bins 5                                           value__fourier_entropy__bins_5
+Feature : 774   cdrec      with a score of 0.0        statistical        Fourier Entropy  Bins 10                                          value__fourier_entropy__bins_10
+Feature : 775   cdrec      with a score of 0.0        statistical        Fourier Entropy  Bins 100                                         value__fourier_entropy__bins_100
+Feature : 779   cdrec      with a score of 0.0        statistical        Permutation Entropy  Dimension 6  Tau 1                           value__permutation_entropy__dimension_6__tau_1
+Feature : 781   cdrec      with a score of 0.0        statistical        Query Similarity Count  Query None  Threshold 0.0                 value__query_similarity_count__query_None__threshold_0.0
+Feature : 782   cdrec      with a score of 0.0        statistical        Mean N Absolute Max  Number Of Maxima 7                           value__mean_n_absolute_max__number_of_maxima_7
