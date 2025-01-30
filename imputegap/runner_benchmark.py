@@ -27,7 +27,7 @@ patterns_full = ["mcar", "mp", "blackout", "disjoint", "overlap", "gaussian"]
 patterns_demo = ["mcar"]
 
 # SELECT YOUR MISSING RATE(S) :
-x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
+x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.7]
 x_axis_s = [0.2, 0.4, 0.6]
 
 if not reconstruction:

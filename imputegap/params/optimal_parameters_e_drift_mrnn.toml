@@ -1,0 +1,4 @@
+[mrnn]
+hidden_dim = 15
+learning_rate = 4.4655450645014494e-5
+iterations = 92

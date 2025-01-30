@@ -17,7 +17,7 @@ class TestExplainer(unittest.TestCase):
          0.04100194460489083, 0.03182402833276032, 0.04031085927584528, 0.08353853381025556, 0.08183653114000404,
          0.0712546131146801, 0.07127388277211984, 0.07853099688546698, 0.06457276731357126, 0.056051361732355906]
 
-        expected_categories, expected_features = Explainer.load_configuration()
+        expected_categories, expected_features, _ = Explainer.load_configuration()
 
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path(filename))

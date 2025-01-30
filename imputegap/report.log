@@ -556,3 +556,147 @@
 2025-01-29 00:12:39,943 - root - INFO - avg_epoch_loss:0.0, epoch:19
 2025-01-29 00:13:17,262 - root - INFO - valid_avg_epoch_loss1.5973390340805054, epoch:19
 2025-01-29 00:13:17,266 - root - INFO - best loss is updated to 1.5973390340805054 at 19
+2025-01-30 13:30:15,775 - root - INFO - avg_epoch_loss:1.6953513622283936, epoch:0
+2025-01-30 13:30:17,257 - root - INFO - avg_epoch_loss:1.6700550317764282, epoch:1
+2025-01-30 13:30:18,414 - root - INFO - avg_epoch_loss:1.6432772874832153, epoch:2
+2025-01-30 13:30:20,371 - root - INFO - avg_epoch_loss:1.6166110038757324, epoch:3
+2025-01-30 13:30:21,070 - root - INFO - avg_epoch_loss:0.0, epoch:4
+2025-01-30 13:30:21,750 - root - INFO - avg_epoch_loss:0.0, epoch:5
+2025-01-30 13:30:22,451 - root - INFO - avg_epoch_loss:0.0, epoch:6
+2025-01-30 13:30:23,617 - root - INFO - avg_epoch_loss:1.4982107877731323, epoch:7
+2025-01-30 13:30:25,474 - root - INFO - avg_epoch_loss:1.4680670499801636, epoch:8
+2025-01-30 13:30:27,356 - root - INFO - avg_epoch_loss:1.4270195960998535, epoch:9
+2025-01-30 13:30:28,032 - root - INFO - avg_epoch_loss:0.0, epoch:10
+2025-01-30 13:30:29,466 - root - INFO - avg_epoch_loss:1.3588676452636719, epoch:11
+2025-01-30 13:30:30,159 - root - INFO - avg_epoch_loss:0.0, epoch:12
+2025-01-30 13:30:30,843 - root - INFO - avg_epoch_loss:0.0, epoch:13
+2025-01-30 13:30:31,526 - root - INFO - avg_epoch_loss:0.0, epoch:14
+2025-01-30 13:30:44,853 - root - INFO - valid_avg_epoch_loss1.1884095668792725, epoch:14
+2025-01-30 13:30:44,855 - root - INFO - best loss is updated to 1.1884095668792725 at 14
+2025-01-30 13:30:46,136 - root - INFO - avg_epoch_loss:1.1837642192840576, epoch:15
+2025-01-30 13:30:47,340 - root - INFO - avg_epoch_loss:1.1840074062347412, epoch:16
+2025-01-30 13:30:48,026 - root - INFO - avg_epoch_loss:0.0, epoch:17
+2025-01-30 13:30:49,923 - root - INFO - avg_epoch_loss:1.1891111135482788, epoch:18
+2025-01-30 13:30:50,604 - root - INFO - avg_epoch_loss:0.0, epoch:19
+2025-01-30 13:31:03,436 - root - INFO - valid_avg_epoch_loss0.0, epoch:19
+2025-01-30 13:31:03,438 - root - INFO - best loss is updated to 0.0 at 19
+2025-01-30 13:31:18,379 - root - INFO - avg_epoch_loss:1.6947637796401978, epoch:0
+2025-01-30 13:31:19,831 - root - INFO - avg_epoch_loss:1.6709362268447876, epoch:1
+2025-01-30 13:31:20,893 - root - INFO - avg_epoch_loss:1.6414052248001099, epoch:2
+2025-01-30 13:31:22,434 - root - INFO - avg_epoch_loss:1.6159862279891968, epoch:3
+2025-01-30 13:31:23,126 - root - INFO - avg_epoch_loss:0.0, epoch:4
+2025-01-30 13:31:23,826 - root - INFO - avg_epoch_loss:0.0, epoch:5
+2025-01-30 13:31:24,522 - root - INFO - avg_epoch_loss:0.0, epoch:6
+2025-01-30 13:31:25,682 - root - INFO - avg_epoch_loss:1.4978867769241333, epoch:7
+2025-01-30 13:31:27,287 - root - INFO - avg_epoch_loss:1.468353271484375, epoch:8
+2025-01-30 13:31:28,905 - root - INFO - avg_epoch_loss:1.42465078830719, epoch:9
+2025-01-30 13:31:29,605 - root - INFO - avg_epoch_loss:0.0, epoch:10
+2025-01-30 13:31:31,034 - root - INFO - avg_epoch_loss:1.3558056354522705, epoch:11
+2025-01-30 13:31:31,724 - root - INFO - avg_epoch_loss:0.0, epoch:12
+2025-01-30 13:31:32,418 - root - INFO - avg_epoch_loss:0.0, epoch:13
+2025-01-30 13:31:33,109 - root - INFO - avg_epoch_loss:0.0, epoch:14
+2025-01-30 13:31:46,383 - root - INFO - valid_avg_epoch_loss1.188075065612793, epoch:14
+2025-01-30 13:31:46,386 - root - INFO - best loss is updated to 1.188075065612793 at 14
+2025-01-30 13:31:47,596 - root - INFO - avg_epoch_loss:1.1815366744995117, epoch:15
+2025-01-30 13:31:48,782 - root - INFO - avg_epoch_loss:1.1824630498886108, epoch:16
+2025-01-30 13:31:49,448 - root - INFO - avg_epoch_loss:0.0, epoch:17
+2025-01-30 13:31:50,974 - root - INFO - avg_epoch_loss:1.1859185695648193, epoch:18
+2025-01-30 13:31:51,673 - root - INFO - avg_epoch_loss:0.0, epoch:19
+2025-01-30 13:32:04,636 - root - INFO - valid_avg_epoch_loss0.0, epoch:19
+2025-01-30 13:32:04,638 - root - INFO - best loss is updated to 0.0 at 19
+2025-01-30 13:32:19,417 - root - INFO - avg_epoch_loss:1.694777488708496, epoch:0
+2025-01-30 13:32:20,845 - root - INFO - avg_epoch_loss:1.6709926128387451, epoch:1
+2025-01-30 13:32:21,929 - root - INFO - avg_epoch_loss:1.6460756063461304, epoch:2
+2025-01-30 13:32:23,771 - root - INFO - avg_epoch_loss:1.6164082288742065, epoch:3
+2025-01-30 13:32:24,479 - root - INFO - avg_epoch_loss:0.0, epoch:4
+2025-01-30 13:32:25,179 - root - INFO - avg_epoch_loss:0.0, epoch:5
+2025-01-30 13:32:25,891 - root - INFO - avg_epoch_loss:0.0, epoch:6
+2025-01-30 13:32:27,065 - root - INFO - avg_epoch_loss:1.495842695236206, epoch:7
+2025-01-30 13:32:29,759 - root - INFO - avg_epoch_loss:1.4740421772003174, epoch:8
+2025-01-30 13:32:32,977 - root - INFO - avg_epoch_loss:1.428722858428955, epoch:9
+2025-01-30 13:32:33,734 - root - INFO - avg_epoch_loss:0.0, epoch:10
+2025-01-30 13:32:35,548 - root - INFO - avg_epoch_loss:1.3606895208358765, epoch:11
+2025-01-30 13:32:36,314 - root - INFO - avg_epoch_loss:0.0, epoch:12
+2025-01-30 13:32:37,072 - root - INFO - avg_epoch_loss:0.0, epoch:13
+2025-01-30 13:32:37,843 - root - INFO - avg_epoch_loss:0.0, epoch:14
+2025-01-30 13:32:53,832 - root - INFO - valid_avg_epoch_loss1.194296956062317, epoch:14
+2025-01-30 13:32:53,835 - root - INFO - best loss is updated to 1.194296956062317 at 14
+2025-01-30 13:32:55,317 - root - INFO - avg_epoch_loss:1.1891334056854248, epoch:15
+2025-01-30 13:32:56,770 - root - INFO - avg_epoch_loss:1.189984917640686, epoch:16
+2025-01-30 13:32:57,545 - root - INFO - avg_epoch_loss:0.0, epoch:17
+2025-01-30 13:32:59,518 - root - INFO - avg_epoch_loss:1.1918896436691284, epoch:18
+2025-01-30 13:33:00,257 - root - INFO - avg_epoch_loss:0.0, epoch:19
+2025-01-30 13:33:13,060 - root - INFO - valid_avg_epoch_loss0.0, epoch:19
+2025-01-30 13:33:13,062 - root - INFO - best loss is updated to 0.0 at 19
+2025-01-30 13:33:28,019 - root - INFO - avg_epoch_loss:1.6967464685440063, epoch:0
+2025-01-30 13:33:29,412 - root - INFO - avg_epoch_loss:1.6734541654586792, epoch:1
+2025-01-30 13:33:30,556 - root - INFO - avg_epoch_loss:1.6469862461090088, epoch:2
+2025-01-30 13:33:32,386 - root - INFO - avg_epoch_loss:1.62078058719635, epoch:3
+2025-01-30 13:33:33,225 - root - INFO - avg_epoch_loss:0.0, epoch:4
+2025-01-30 13:33:34,061 - root - INFO - avg_epoch_loss:0.0, epoch:5
+2025-01-30 13:33:34,898 - root - INFO - avg_epoch_loss:0.0, epoch:6
+2025-01-30 13:33:36,136 - root - INFO - avg_epoch_loss:1.4883179664611816, epoch:7
+2025-01-30 13:33:38,015 - root - INFO - avg_epoch_loss:1.4668982028961182, epoch:8
+2025-01-30 13:33:39,921 - root - INFO - avg_epoch_loss:1.4103869199752808, epoch:9
+2025-01-30 13:33:40,746 - root - INFO - avg_epoch_loss:0.0, epoch:10
+2025-01-30 13:33:42,506 - root - INFO - avg_epoch_loss:1.3628878593444824, epoch:11
+2025-01-30 13:33:43,328 - root - INFO - avg_epoch_loss:0.0, epoch:12
+2025-01-30 13:33:44,144 - root - INFO - avg_epoch_loss:0.0, epoch:13
+2025-01-30 13:33:44,979 - root - INFO - avg_epoch_loss:0.0, epoch:14
+2025-01-30 13:33:58,018 - root - INFO - valid_avg_epoch_loss1.1934220790863037, epoch:14
+2025-01-30 13:33:58,020 - root - INFO - best loss is updated to 1.1934220790863037 at 14
+2025-01-30 13:33:59,311 - root - INFO - avg_epoch_loss:1.1871082782745361, epoch:15
+2025-01-30 13:34:00,594 - root - INFO - avg_epoch_loss:1.195368766784668, epoch:16
+2025-01-30 13:34:01,413 - root - INFO - avg_epoch_loss:0.0, epoch:17
+2025-01-30 13:34:03,278 - root - INFO - avg_epoch_loss:1.1949801445007324, epoch:18
+2025-01-30 13:34:04,087 - root - INFO - avg_epoch_loss:0.0, epoch:19
+2025-01-30 13:34:16,898 - root - INFO - valid_avg_epoch_loss0.0, epoch:19
+2025-01-30 13:34:16,901 - root - INFO - best loss is updated to 0.0 at 19
+2025-01-30 13:34:32,020 - root - INFO - avg_epoch_loss:1.6927032470703125, epoch:0
+2025-01-30 13:34:33,320 - root - INFO - avg_epoch_loss:1.67801034450531, epoch:1
+2025-01-30 13:34:34,553 - root - INFO - avg_epoch_loss:1.6480045318603516, epoch:2
+2025-01-30 13:34:36,397 - root - INFO - avg_epoch_loss:1.6236073970794678, epoch:3
+2025-01-30 13:34:37,408 - root - INFO - avg_epoch_loss:0.0, epoch:4
+2025-01-30 13:34:38,428 - root - INFO - avg_epoch_loss:0.0, epoch:5
+2025-01-30 13:34:39,416 - root - INFO - avg_epoch_loss:0.0, epoch:6
+2025-01-30 13:34:40,767 - root - INFO - avg_epoch_loss:1.4870212078094482, epoch:7
+2025-01-30 13:34:42,666 - root - INFO - avg_epoch_loss:1.4754770994186401, epoch:8
+2025-01-30 13:34:44,513 - root - INFO - avg_epoch_loss:1.4095697402954102, epoch:9
+2025-01-30 13:34:45,519 - root - INFO - avg_epoch_loss:0.0, epoch:10
+2025-01-30 13:34:47,008 - root - INFO - avg_epoch_loss:1.3522733449935913, epoch:11
+2025-01-30 13:34:48,009 - root - INFO - avg_epoch_loss:0.0, epoch:12
+2025-01-30 13:34:49,006 - root - INFO - avg_epoch_loss:0.0, epoch:13
+2025-01-30 13:34:49,957 - root - INFO - avg_epoch_loss:0.0, epoch:14
+2025-01-30 13:35:03,190 - root - INFO - valid_avg_epoch_loss1.185184121131897, epoch:14
+2025-01-30 13:35:03,192 - root - INFO - best loss is updated to 1.185184121131897 at 14
+2025-01-30 13:35:04,466 - root - INFO - avg_epoch_loss:1.1774539947509766, epoch:15
+2025-01-30 13:35:05,817 - root - INFO - avg_epoch_loss:1.1858199834823608, epoch:16
+2025-01-30 13:35:06,833 - root - INFO - avg_epoch_loss:0.0, epoch:17
+2025-01-30 13:35:08,653 - root - INFO - avg_epoch_loss:1.1881141662597656, epoch:18
+2025-01-30 13:35:09,653 - root - INFO - avg_epoch_loss:0.0, epoch:19
+2025-01-30 13:35:22,612 - root - INFO - valid_avg_epoch_loss0.0, epoch:19
+2025-01-30 13:35:22,615 - root - INFO - best loss is updated to 0.0 at 19
+2025-01-30 13:35:39,650 - root - INFO - avg_epoch_loss:1.6878541707992554, epoch:0
+2025-01-30 13:35:40,996 - root - INFO - avg_epoch_loss:1.6803309917449951, epoch:1
+2025-01-30 13:35:42,538 - root - INFO - avg_epoch_loss:1.6507974863052368, epoch:2
+2025-01-30 13:35:44,907 - root - INFO - avg_epoch_loss:1.6311315298080444, epoch:3
+2025-01-30 13:35:46,361 - root - INFO - avg_epoch_loss:0.0, epoch:4
+2025-01-30 13:35:47,856 - root - INFO - avg_epoch_loss:0.0, epoch:5
+2025-01-30 13:35:49,340 - root - INFO - avg_epoch_loss:0.0, epoch:6
+2025-01-30 13:35:51,069 - root - INFO - avg_epoch_loss:1.503283977508545, epoch:7
+2025-01-30 13:35:53,227 - root - INFO - avg_epoch_loss:1.46614408493042, epoch:8
+2025-01-30 13:35:55,195 - root - INFO - avg_epoch_loss:1.406130075454712, epoch:9
+2025-01-30 13:35:56,313 - root - INFO - avg_epoch_loss:0.0, epoch:10
+2025-01-30 13:35:58,260 - root - INFO - avg_epoch_loss:1.344401478767395, epoch:11
+2025-01-30 13:35:59,353 - root - INFO - avg_epoch_loss:0.0, epoch:12
+2025-01-30 13:36:00,477 - root - INFO - avg_epoch_loss:0.0, epoch:13
+2025-01-30 13:36:01,678 - root - INFO - avg_epoch_loss:0.0, epoch:14
+2025-01-30 13:36:15,181 - root - INFO - valid_avg_epoch_loss1.1908636093139648, epoch:14
+2025-01-30 13:36:15,184 - root - INFO - best loss is updated to 1.1908636093139648 at 14
+2025-01-30 13:36:16,722 - root - INFO - avg_epoch_loss:1.1916533708572388, epoch:15
+2025-01-30 13:36:18,164 - root - INFO - avg_epoch_loss:1.1953752040863037, epoch:16
+2025-01-30 13:36:19,298 - root - INFO - avg_epoch_loss:0.0, epoch:17
+2025-01-30 13:36:21,184 - root - INFO - avg_epoch_loss:1.190360188484192, epoch:18
+2025-01-30 13:36:22,286 - root - INFO - avg_epoch_loss:0.0, epoch:19
+2025-01-30 13:36:35,681 - root - INFO - valid_avg_epoch_loss0.0, epoch:19
+2025-01-30 13:36:35,684 - root - INFO - best loss is updated to 0.0 at 19

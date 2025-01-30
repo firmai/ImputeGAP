@@ -75,7 +75,7 @@ class Explainer:
             path = importlib.resources.files('imputegap.env').joinpath("./default_explainer.toml")
         else:
             if not os.path.exists(file_path):
-                file_path = file_path[1:]
+                path = file_path[1:]
 
         config_data = toml.load(path)
 
@@ -630,7 +630,7 @@ class Explainer:
 
         results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions,
                                                  x_features, x_categories, mean_features,
-                                                 to_save=path_file + file + "_" + algorithm)
+                                                 to_save=path_file + file + "_" + algorithm + "_" + extractor)
 
         return results_shap
 
