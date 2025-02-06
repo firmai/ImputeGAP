@@ -622,7 +622,8 @@ class Optimization:
             tuple
                 A tuple containing the best parameters and their corresponding score.
             """
-            ray.init()
+            if not ray.is_initialized():
+                ray.init()
             used_metric = metrics[0]
 
             if max_concurrent_trials == -1:
