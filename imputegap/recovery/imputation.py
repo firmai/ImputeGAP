@@ -3,6 +3,7 @@ import re
 from imputegap.algorithms.brits import brits
 from imputegap.algorithms.deep_mvi import deep_mvi
 from imputegap.algorithms.dynammo import dynammo
+from imputegap.algorithms.grin import grin
 from imputegap.algorithms.grouse import grouse
 from imputegap.algorithms.iterative_svd import iterative_svd
 from imputegap.algorithms.mean_impute import mean_impute
@@ -22,6 +23,9 @@ from imputegap.algorithms.mrnn import mrnn
 from imputegap.algorithms.stmvl import stmvl
 from imputegap.algorithms.zero_impute import zero_impute
 from imputegap.tools import utils
+
+not_optimized = ["iterative_svd", "grouse", "dynammo", "rosl", "soft_impute", "spirit", "svt", "tkcm", "deep_mvi", "brits", "mpin", "pristi"]
+
 
 
 class BaseImputer:
@@ -160,14 +164,25 @@ class BaseImputer:
         """
         from imputegap.recovery.optimization import Optimization
 
+        optimizer = parameters.get('optimizer', "ray_tune")
+
+
+        if self.algorithm in not_optimized and optimizer != "ray_tune":
+            raise ValueError(
+                f"\n\tThis algorithm '{self.algorithm}' is not optimized for this optimizer. "
+                f"\n\tPlease use `run_tune` to optimize the hyperparameters for:\n\t\t {', '.join(not_optimized)}"
+                "\n\tPlease use update your call :\n\t\t.impute(user_def=False, params={'input_data': ts_1.data, 'optimizer': 'ray_tune'})"
+            )
+
         input_data = parameters.get('input_data')
         if input_data is None:
             raise ValueError(f"Need input_data to be able to adapt the hyper-parameters: {input_data}")
 
-        optimizer = parameters.get('optimizer', "bayesian")
         defaults = utils.load_parameters(query="default", algorithm=optimizer)
 
-        print("\noptimizer", optimizer, "has been called with", self.algorithm, "...\n")
+
+
+        print("\n\t\t\t(OPTI) optimizer", optimizer, "has been called with", self.algorithm, "...\n")
 
         if optimizer == "bayesian":
             n_calls_d, n_random_starts_d, acq_func_d, selected_metrics_d = defaults
@@ -225,6 +240,18 @@ class BaseImputer:
                                                       metrics=metrics, algorithm=self.algorithm,
                                                       num_configs=num_configs, num_iterations=num_iterations,
                                                       reduction_factor=reduction_factor)
+
+        elif optimizer == "ray_tune":
+
+            selected_metrics_d, n_calls_d, max_concurrent_trials_d = defaults
+
+            options = parameters.get('options', {})
+            n_calls = options.get('n_calls', n_calls_d)
+            max_concurrent_trials = options.get('max_concurrent_trials', max_concurrent_trials_d)
+            metrics = options.get('metrics', selected_metrics_d)
+
+            ray_tune_optimizer = Optimization.RayTune()
+            optimal_params = ray_tune_optimizer.optimize(input_data=input_data, incomp_data=self.incomp_data, metrics=metrics, algorithm=self.algorithm, n_calls=n_calls, max_concurrent_trials=max_concurrent_trials)
 
         else:
             n_calls_d, selected_metrics_d = defaults
@@ -607,12 +634,15 @@ class Imputation:
 
             algorithm = "iterative_svd"
 
-            def impute(self, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the Iterative SVD algorithm.
 
                 Parameters
                 ----------
+                 user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
                 params : dict, optional
                     Parameters of the Iterative SVD algorithm or Auto-ML configuration, if None, default ones are loaded.
 
@@ -629,7 +659,7 @@ class Imputation:
 
                 Example
                 -------
-                >>> i_svd_imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
+                >>> i_svd_imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
                 >>> i_svd_imputer.impute()  # default parameters for imputation > or
                 >>> i_svd_imputer.impute(params={'rank': 5})
                 >>> recov_data = i_svd_imputer.recov_data
@@ -640,7 +670,7 @@ class Imputation:
                 """
 
                 if params is not None:
-                    rank = self._check_params(True, params)[0]
+                    rank  = self._check_params(user_def, params)[0]
                 else:
                     rank = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -660,12 +690,15 @@ class Imputation:
 
             algorithm = "grouse"
 
-            def impute(self, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the GROUSE algorithm.
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
                 params : dict, optional
                     Parameters of the GROUSE algorithm or Auto-ML configuration, if None, default ones are loaded.
 
@@ -693,7 +726,7 @@ class Imputation:
                 """
 
                 if params is not None:
-                    max_rank = self._check_params(True, params)[0]
+                    max_rank  = self._check_params(user_def, params)[0]
                 else:
                     max_rank = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -713,12 +746,15 @@ class Imputation:
 
             algorithm = "rosl"
 
-            def impute(self, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the ROSL algorithm.
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
                 params : dict, optional
                     Parameters of the ROSL algorithm or Auto-ML configuration, if None, default ones are loaded.
 
@@ -748,7 +784,7 @@ class Imputation:
                 X. Shu, F. Porikli, and N. Ahuja. Robust orthonormal subspace learning: Efficient recovery of corrupted low-rank matrices. In 2014 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2014, Columbus, OH, USA, June 23-28, 2014, pages 3874–3881, 2014.
                 """
                 if params is not None:
-                    rank, regularization = self._check_params(True, params)
+                    rank, regularization = self._check_params(user_def, params)
                 else:
                     rank, regularization = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -768,12 +804,15 @@ class Imputation:
 
             algorithm = "soft_impute"
 
-            def impute(self, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the Soft Impute algorithm.
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
                 params : dict, optional
                     Parameters of the Soft Impute algorithm or Auto-ML configuration, if None, default ones are loaded.
 
@@ -800,13 +839,14 @@ class Imputation:
                 R. Mazumder, T. Hastie, and R. Tibshirani. Spectral regularization algorithms for learning large incomplete matrices. Journal of Machine Learning Research, 11:2287–2322, 2010.
                 """
                 if params is not None:
-                    max_rank = self._check_params(True, params)[0]
+                    max_rank = self._check_params(user_def, params)[0]
                 else:
                     max_rank = utils.load_parameters(query="default", algorithm=self.algorithm)
 
                 self.recov_data = soft_impute(incomp_data=self.incomp_data, max_rank=max_rank, logs=self.logs)
 
                 return self
+
 
         class SPIRIT(BaseImputer):
             """
@@ -820,12 +860,15 @@ class Imputation:
 
             algorithm = "spirit"
 
-            def impute(self, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the SPIRIT algorithm.
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
                 params : dict, optional
                     Parameters of the SPIRIT algorithm or Auto-ML configuration, if None, default ones are loaded.
 
@@ -858,7 +901,7 @@ class Imputation:
                 S. Papadimitriou, J. Sun, and C. Faloutsos. Streaming pattern discovery in multiple time-series. In Proceedings of the 31st International Conference on Very Large Data Bases, Trondheim, Norway, August 30 - September 2, 2005, pages 697–708, 2005.
                 """
                 if params is not None:
-                    k, w, lambda_value = self._check_params(True, params)
+                    k, w, lambda_value = self._check_params(user_def, params)
                 else:
                     k, w, lambda_value = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -878,12 +921,15 @@ class Imputation:
 
             algorithm = "svt"
 
-            def impute(self, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the SVT algorithm.
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
                 params : dict, optional
                     Parameters of the SVT algorithm or Auto-ML configuration, if None, default ones are loaded.
 
@@ -911,7 +957,7 @@ class Imputation:
                 J. Cai, E. J. Candès, and Z. Shen. A singular value thresholding algorithm for matrix completion. SIAM Journal on Optimization, 20(4):1956–1982, 2010. [8] J. Cambronero, J. K. Feser, M. J. Smith, and
                 """
                 if params is not None:
-                    tau = self._check_params(True, params)[0]
+                    tau = self._check_params(user_def, params)[0]
                 else:
                     tau = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -998,12 +1044,14 @@ class Imputation:
 
             algorithm = "dynammo"
 
-            def impute(self, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the DynaMMo algorithm.
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the DynaMMo algorithm or Auto-ML configuration, if None, default ones are loaded.
 
@@ -1033,7 +1081,7 @@ class Imputation:
                 L. Li, J. McCann, N. S. Pollard, and C. Faloutsos. Dynammo: mining and summarization of coevolving sequences with missing values. In Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Paris, France, June 28 - July 1, 2009, pages 507–516, 2009.
                 """
                 if params is not None:
-                    h, max_iteration, approximation = self._check_params(True, params)
+                    h, max_iteration, approximation = self._check_params(user_def, params)
                 else:
                     h, max_iteration, approximation = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -1054,12 +1102,14 @@ class Imputation:
 
             algorithm = "tkcm"
 
-            def impute(self, params=None):
+            def impute(self, user_def=True, params=None):
                 """
                 Perform imputation using the TKCM algorithm.
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the TKCM algorithm or Auto-ML configuration, if None, default ones are loaded.
 
@@ -1085,7 +1135,7 @@ class Imputation:
                 K. Wellenzohn, M. H. Böhlen, A. Dignös, J. Gamper, and H. Mitterer. Continuous imputation of missing values in streams of pattern-determining time series. In Proceedings of the 20th International Conference on Extending Database Technology, EDBT 2017, Venice, Italy, March 21-24, 2017., pages 330–341, 2017.
                 """
                 if params is not None:
-                    rank = self._check_params(True, params)[0]
+                    rank = self._check_params(user_def, params)[0]
                 else:
                     rank = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -1211,7 +1261,7 @@ class Imputation:
                 Cao, W., Wang, D., Li, J., Zhou, H., Li, L. & Li, Y. BRITS: Bidirectional Recurrent Imputation for Time Series. Advances in Neural Information Processing Systems, 31 (2018). https://proceedings.neurips.cc/paper_files/paper/2018/file/734e6bfcd358e25ac1db0a4241b95651-Paper.pdf
                 """
                 if params is not None:
-                    model, epoch, batch_size, nbr_features, hidden_layer = self._check_params(True, params)
+                    model, epoch, batch_size, nbr_features, hidden_layer = self._check_params(user_def, params)
                 else:
                     model, epoch, batch_size, nbr_features, hidden_layer = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -1237,7 +1287,10 @@ class Imputation:
 
                 Parameters
                 ----------
-
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the BRITS algorithm, if None, default ones are loaded.
 
                 Returns
                 -------
@@ -1255,7 +1308,7 @@ class Imputation:
                 P. Bansal, P. Deshpande, and S. Sarawagi. Missing value imputation on multidimensional time series. arXiv preprint arXiv:2103.01600, 2023
                 """
                 if params is not None:
-                    max_epoch, patience = self._check_params(True, params)
+                    max_epoch, patience = self._check_params(user_def, params)
                 else:
                     max_epoch, patience = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -1279,6 +1332,10 @@ class Imputation:
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the BRITS algorithm, if None, default ones are loaded.
 
 
                 Returns
@@ -1288,16 +1345,16 @@ class Imputation:
 
                 Example
                 -------
-                >>> deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
-                >>> deep_mvi_imputer.impute()  # default parameters for imputation
-                >>> recov_data = deep_mvi_imputer.recov_data
+                >>> mpin_imputer = Imputation.DeepLearning.MPIN(incomp_data)
+                >>> mpin_imputer.impute()  # default parameters for imputation
+                >>> recov_data = mpin_imputer.recov_data
 
                 References
                 ----------
                 Li, X., Li, H., Lu, H., Jensen, C.S., Pandey, V. & Markl, V. Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). arXiv (2023). https://arxiv.org/abs/2311.07344
                 """
                 if params is not None:
-                    incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base = self._check_params(True, params)
+                    incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base = self._check_params(user_def, params)
                 else:
                     incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -1321,6 +1378,10 @@ class Imputation:
 
                 Parameters
                 ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the BRITS algorithm, if None, default ones are loaded.
 
 
                 Returns
@@ -1339,7 +1400,7 @@ class Imputation:
                 M. Liu, H. Huang, H. Feng, L. Sun, B. Du and Y. Fu, "PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation," 2023 IEEE 39th International Conference on Data Engineering (ICDE), Anaheim, CA, USA, 2023, pp. 1927-1939, doi: 10.1109/ICDE55515.2023.00150.
                 """
                 if params is not None:
-                    target_strategy, unconditional, seed, device = self._check_params(True, params)
+                    target_strategy, unconditional, seed, device = self._check_params(user_def, params)
                 else:
                     target_strategy, unconditional, seed, device = utils.load_parameters(query="default", algorithm=self.algorithm)
 
@@ -1355,4 +1416,54 @@ class Imputation:
         Subclasses
         ----------
         """
+
+        class GRIN(BaseImputer):
+            """
+            GRIN class to impute missing values using Multivariate Time Series Imputation by Graph Neural Networks.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the Iterative SDV algorithm.
+            """
+
+            algorithm = "grin"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the Iterative SVD algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
+                params : dict, optional
+                    Parameters of the Iterative SVD algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+
+                Returns
+                -------
+                self : GRIN
+                    GRIN object with `recov_data` set.
+
+                Example
+                -------
+                >>> grin_imputer = Imputation.GraphLearning.GRIN(incomp_data)
+                >>> grin_imputer.impute()  # default parameters for imputation > or
+                >>> recov_data = grin_imputer.recov_data
+
+                References
+                ----------
+                A. Cini, I. Marisca, and C. Alippi, "Filling the Gaps: Multivariate Time Series Imputation by Graph Neural Networks," International Conference on Learning Representations (ICLR), 2022.
+                """
+
+                if params is not None:
+                    _ = self._check_params(user_def, params)[0]
+                else:
+                    _ = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = grin(incomp_data=self.incomp_data, logs=self.logs)
+
+                return self
 

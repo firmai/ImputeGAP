@@ -87,8 +87,10 @@ class OurModel(nn.Module):
         self.pool = nn.AvgPool1d(kernel_size = self.kernel_size,stride = self.kernel_size)
         self.attention = AttentionModule(dquery=self.atten_qdim,dkey=self.atten_qdim,dvalue=self.vdim,nhid=hidden_dim,nhead=nhead,dropout=0.0,mask_len=mask_len)
         # self.mapping_value = nn.Linear(nkernel,self.vdim)
-        
+
         if (use_local):
+            print("\t\t\t\t kernel size", kernel_size, " vs block_size", block_size)
+
             assert self.kernel_size % self.block_size == 0
             self.pool2 = nn.AvgPool1d(kernel_size = self.block_size,stride = self.block_size)
             

@@ -1,0 +1,3 @@
+# Ignore configuration and build script
+.pypirc
+build_script.txt

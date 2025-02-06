@@ -1,5 +1,7 @@
 import numpy as np
 from skopt.space import Integer, Real
+from ray import train, tune
+
 
 # CDRec parameters
 CDREC_RANK_RANGE = [i for i in range(1, 11)]  # This will generate a range from 1 to 10
@@ -53,3 +55,104 @@ STMVL_PARAMS = {'window_size': STMVL_WINDOW_SIZE_RANGE, 'gamma': STMVL_GAMMA_RAN
 
 # Create a dictionary to hold all parameter dictionaries for each algorithm
 ALL_ALGO_PARAMS = {'cdrec': CDREC_PARAMS, 'iim': IIM_PARAMS, 'mrnn': MRNN_PARAMS, 'stmvl': STMVL_PARAMS}
+
+
+RAYTUNE_PARAMS = {
+    'cdrec': {
+        "rank": tune.grid_search([i for i in range(2, 16, 1)]),
+        "eps": tune.loguniform(1e-6, 1),
+        "iters": tune.grid_search([i * 100 for i in range(1, 3)])
+    },
+    "iim": {
+        "learning_neighbors": tune.grid_search([i for i in range(1, 100)])  # Up to 100 learning neighbors
+    },
+    "mrnn": {
+        "hidden_dim":  tune.grid_search([i for i in range(10, 100, 20)]),  # Hidden dimension
+        "learning_rate": tune.loguniform(1e-6, 1),  # Log scale for learning rate
+        "num_iter": tune.grid_search([i for i in range(5, 10, 5)]),  # Number of epochs
+        "seq_len": 7  # tune.grid_search([i for i in range(5, 7, 2)]),  # Sequence length
+        #"keep_prob": tune.loguniform(1e-6, 1)  # Dropout keep probability
+    },
+    "stmvl": {
+        "window_size": tune.grid_search([i for i in range(2, 100)]),  # Window size
+        "gamma": tune.loguniform(1e-6, 1),  # Smoothing parameter gamma
+        "alpha": tune.grid_search([i for i in range(1, 10)])  # Smoothing parameter alpha
+    },
+
+    # --- New Algorithms ---
+
+    "iterative_svd": {
+        "rank": tune.grid_search([i for i in range(2, 16, 1)])  # Testing rank from 2 to 18
+    },
+
+    "grouse": {
+        "max_rank": tune.grid_search([i for i in range(2, 16, 1)])  # Testing rank from 2 to 18
+    },
+
+    "rosl": {
+        "rank": tune.grid_search([i for i in range(2, 16, 2)]),  # Testing rank from 2 to 18
+        "regularization": tune.loguniform(1e-3, 10)  # Regularization parameter
+    },
+
+    "soft_impute": {
+        "max_rank": tune.grid_search([i for i in range(2, 16, 1)])   # Testing max_rank from 5 to 15
+    },
+
+    "spirit": {
+        "k": tune.grid_search([i for i in range(1, 10)]),  # Number of components
+        "w": tune.grid_search([i for i in range(1, 10)]),  # Window size
+        "lvalue": tune.loguniform(0.1, 5)  # Eigenvalue scaling
+    },
+
+    "svt": {
+        "tau": tune.loguniform(1e-2, 10),  # Singular value thresholding parameter
+        "delta": tune.loguniform(1e-4, 1),  # Step size for SVT
+        "max_iter": tune.grid_search([i * 10 for i in range(5, 20, 5)])  # Max iterations (50 to 150)
+    },
+
+    # --- Newly Added Pattern-Based Algorithms ---
+
+    "dynammo": {
+        "h": tune.grid_search([i for i in range(3, 10)]),  # Pattern length, range 3 to 9
+        "max_iteration": tune.grid_search([i for i in range(3, 15, 3)]),  # Iteration range 3 to 12
+        "approximation": tune.choice([True, False])  # Binary choice for approximation
+    },
+
+    "tkcm": {
+        "rank": tune.grid_search([i for i in range(2, 16, 1)])   # Testing rank from 2 to 8
+    },
+
+    # --- Newly Added Deep Learning-Based Algorithms ---
+
+    "brits": {
+        "model": tune.choice(["brits_i_univ", "brits_i", "brits"]),  # Support both univariate & multivariate models
+        "epoch": tune.grid_search([i for i in range(5, 20, 5)]),  # Epochs from 5 to 15
+        "batch_size": tune.grid_search([8, 16, 32]),  # Test different batch sizes
+        "nbr_features": 1,  # tune.grid_search([1, 2, 5]),  # Number of features
+        "hidden_layers": tune.grid_search([32, 64, 128])  # Hidden layer sizes
+    },
+
+    "deep_mvi": {
+        "max_epoch": tune.grid_search([10, 50, 100]),  # Testing from 500 to 1500 epochs
+        "patience": tune.grid_search([2, 5, 10])  # Number of early stopping patience
+    },
+
+    "mpin": {
+        "incre_mode": tune.choice(["alone", "data", "state", "state+transfer", "data+state", "data+state+transfer"]),  # Different incremental modes
+        "window": tune.grid_search([1]),  # Window size variations
+        "k": tune.grid_search([5, 10, 15]),  # Number of neighbors
+        "learning_rate": tune.loguniform(1e-4, 0.1),  # Learning rate range
+        "weight_decay": tune.loguniform(1e-4, 0.1),  # Weight decay regularization
+        "epochs": tune.grid_search([5, 10, 20]),  # Number of epochs
+        "threshold": tune.uniform(0.1, 0.5),  # Threshold range
+        "base": tune.choice(["SAGE", "GAT", "GCN"])  # Model architectures
+    },
+
+    "pristi": {
+        "target_strategy": tune.choice(["mean", "zero", "hybrid"]),  # Different strategies
+        "unconditional": tune.choice([True, False]),  # Use unconditional or not
+        "seed": 42,  #tune.grid_search([42, 1234, 5678]),  # Different seeds for reproducibility
+        "device": tune.choice(["cpu"])  # Allow switching between CPU and GPU
+    }
+
+}

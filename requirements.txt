@@ -46,3 +46,11 @@ tables==3.10.1
 # extractor
 tsfel==0.1.9
 tsfresh==0.20.3
+
+# grin
+einops==0.8.0
+
+
+# automl
+ray==2.41.0
+ray[tune]==2.41.0

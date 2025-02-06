@@ -40,3 +40,5 @@ jobs:
         python -m pytest ./tests/test_opti_greedy_cdrec.py
         python -m pytest ./tests/test_opti_pso_cdrec.py
         python -m pytest ./tests/test_opti_sh_cdrec.py
+        python -m pytest ./tests/test_opti_ray_cdrec_eeg.py
+        python -m pytest ./tests/test_opti_ray_whole.py

@@ -101,7 +101,7 @@ class TimeSeries:
 
             return self
 
-    def load_series(self, data, max_series=None, max_values=None, header=False):
+    def load_series(self, data, max_series=None, max_values=None, header=False, replace_nan=False):
         """
         Loads time series data from a file or predefined dataset.
 
@@ -118,6 +118,9 @@ class TimeSeries:
             The maximum number of values per series.
         header : bool, optional
             Whether the dataset has a header. Default is False.
+        replace_nan : bool, optional
+            The Dataset has already NaN values that needs to be replaced by 0 values.
+
 
         Returns
         -------
@@ -150,6 +153,10 @@ class TimeSeries:
                 print("\nThe time series have not been loaded, format unknown\n")
                 self.data = None
                 raise ValueError("Invalid input for load_series")
+
+            if replace_nan:
+                print("\nThe NaN values has been set to zero...\n")
+                self.data = np.nan_to_num(self.data)  # Replace NaNs with 0
 
             self.data = self.data.T
 
@@ -600,13 +607,15 @@ class TimeSeries:
 
             nbr_series_impacted = int(np.ceil(M * dataset_rate))
             offset_nbr = int(offset*NS)
+            values_nbr = int((NS-offset_nbr)*series_rate)
 
             print("\n\n\tMISSING PERCENTAGE contamination has been called with :"
                   "\n\t\ta number of series impacted ", dataset_rate * 100, "%",
                   "\n\t\ta missing rate of ", series_rate * 100, "%",
                   "\n\t\ta starting position at ", offset,
                   "\n\t\tshape of the set ", ts_contaminated.shape,
-                  "\n\t\tthis selection of series : ", offset_nbr, "->", offset_nbr+nbr_series_impacted, "\n\n")
+                  "\n\t\tthis selection of series : ", 0, "->", nbr_series_impacted,
+                  "\n\t\tvalues : ", offset_nbr, "->", offset_nbr+values_nbr, "\n\n")
 
             for series in range(0, nbr_series_impacted):
                 S = int(series)

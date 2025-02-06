@@ -100,6 +100,7 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
 
     return incomp_data
 
+
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
     """
     Marshal a ctypes container as a numpy column-major array.
@@ -359,6 +360,11 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         reduction_factor = int(config[algorithm]['reduction_factor'])
         metrics = config[algorithm]['metrics']
         return (num_configs, num_iterations, reduction_factor, [metrics])
+    elif algorithm == "ray_tune":
+        metrics = config[algorithm]['metrics']
+        n_calls = int(config[algorithm]['n_calls'])
+        max_concurrent_trials = int(config[algorithm]['max_concurrent_trials'])
+        return ([metrics], n_calls, max_concurrent_trials)
     elif algorithm == "forecaster-naive":
         strategy = str(config[algorithm]['strategy'])
         window_length = int(config[algorithm]['window_length'])
@@ -486,35 +492,99 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         os.makedirs(dir_name)
 
     if algorithm == "mrnn":
-        params_to_save = {
-            algorithm: {
-                "hidden_dim": int(optimal_params[0]),
-                "learning_rate": optimal_params[1],
-                "iterations": int(optimal_params[2])
-            }
+        params_to_save = { "hidden_dim": int(optimal_params[0]),
+            "learning_rate": optimal_params[1],
+            "num_iter": int(optimal_params[2]),
+            "seq_len": 7  # Default value
         }
     elif algorithm == "stmvl":
         params_to_save = {
-            algorithm: {
-                "window_size": int(optimal_params[0]),
-                "gamma": optimal_params[1],
-                "alpha": int(optimal_params[2])
-            }
+            "window_size": int(optimal_params[0]),
+            "gamma": optimal_params[1],
+            "alpha": int(optimal_params[2])
         }
     elif algorithm == "iim":
         params_to_save = {
-            algorithm: {
-                "learning_neighbors": int(optimal_params[0])
-            }
+            "learning_neighbors": int(optimal_params[0])
+        }
+    elif algorithm == "cdrec":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "eps": optimal_params[1],
+            "iters": int(optimal_params[2])
+        }
+    elif algorithm == "iterative_svd":
+        params_to_save = {
+            "rank": int(optimal_params[0])
+        }
+    elif algorithm == "grouse":
+        params_to_save= {
+            "max_rank": int(optimal_params[0])
+        }
+    elif algorithm == "rosl":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "regularization": optimal_params[1]
+        }
+    elif algorithm == "soft_impute":
+        params_to_save = {
+            "max_rank": int(optimal_params[0])
+        }
+    elif algorithm == "spirit":
+        params_to_save = {
+            "k": int(optimal_params[0]),
+            "w": int(optimal_params[1]),
+            "lvalue": optimal_params[2]
+        }
+    elif algorithm == "svt":
+        params_to_save = {
+            "tau": optimal_params[0],
+            "delta": optimal_params[1],
+            "max_iter": int(optimal_params[2])
+        }
+    elif algorithm == "dynammo":
+        params_to_save = {
+            "h": int(optimal_params[0]),
+            "max_iteration": int(optimal_params[1]),
+            "approximation": bool(optimal_params[2])
+        }
+    elif algorithm == "tkcm":
+        params_to_save = {
+            "rank": int(optimal_params[0])
+        }
+    elif algorithm == "brits":
+        params_to_save = {
+            "model": optimal_params[0],
+            "epoch": int(optimal_params[1]),
+            "batch_size": int(optimal_params[2]),
+            "hidden_layers": int(optimal_params[3])
+        }
+    elif algorithm == "deep_mvi":
+        params_to_save = {
+            "max_epoch": int(optimal_params[0]),
+            "patience": int(optimal_params[1])
+        }
+    elif algorithm == "mpin":
+        params_to_save = {
+            "incre_mode": optimal_params[0],
+            "window": int(optimal_params[1]),
+            "k": int(optimal_params[2]),
+            "learning_rate": optimal_params[3],
+            "weight_decay": optimal_params[4],
+            "epochs": int(optimal_params[5]),
+            "threshold": optimal_params[6],
+            "base": optimal_params[7]
+        }
+    elif algorithm == "pristi":
+        params_to_save = {
+            "target_strategy": optimal_params[0],
+            "unconditional": bool(optimal_params[1]),
+            "seed": 42,  # Default seed
+            "device": "cpu"  # Default device
         }
     else:
-        params_to_save = {
-            algorithm: {
-                "rank": int(optimal_params[0]),
-                "epsilon": optimal_params[1],
-                "iteration": int(optimal_params[2])
-            }
-        }
+        print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
+        return
 
     try:
         with open(file_name, 'w') as file:

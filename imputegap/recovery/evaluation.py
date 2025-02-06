@@ -155,6 +155,11 @@ class Evaluation:
         input_data_values = self.input_data[nan_locations]
         imputed_values = self.recov_data[nan_locations]
 
+        # Check if input data is constant (i.e., no variance)
+        if np.all(input_data_values == input_data_values[0]) or np.all(imputed_values == imputed_values[0]):
+            print("\t\t\t\nAn input array is constant; the correlation coefficient is not defined, set to 0")
+            return 0  # Return 0 when correlation is not defined
+
         correlation, _ = pearsonr(input_data_values, imputed_values)
 
         if np.isnan(correlation):

@@ -3,5 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/imputegap/wrapper/AlgoCollection/ensmallen" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/imputegap/wrapper/AlgoCollection/mlpack" vcs="Git" />
   </component>
 </project>

@@ -5,36 +5,45 @@ from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 
 
-class TestOptiRAYCDREC(unittest.TestCase):
+class TestOptiRAY(unittest.TestCase):
 
-    def test_optimization_ray_cdrec_eeg(self):
+    def test_optimization_ray(self):
         """
         the goal is to test if only the simple optimization RAY TUNE with CDRec has the expected outcome
         """
-        algorithm = "cdrec"
-        dataset = "eeg-alcohol"
+        from imputegap.recovery.manager import TimeSeries
+        from imputegap.tools import utils
 
+        # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path(dataset), header=False)
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=2, offset=0.1, seed=True)
+        check = False
 
-        params = utils.load_parameters(query="default", algorithm=algorithm)
+        # 2. load the timeseries from file or from the code
+        ts_1.load_series(utils.search_path("eeg-alcohol"))
+        ts_1.normalize(normalizer="min_max")
 
-        algo_opti = Imputation.MatrixCompletion.CDRec(incomp_data)
-        algo_opti.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
-        algo_opti.score(input_data=ts_1.data)
-        metrics_optimal = algo_opti.metrics
+        # 3. contamination of the data
+        ts_mask = ts_1.Contamination.mcar(ts_1.data)
 
-        print("\t\t\t\toptimal params", algo_opti.parameters)
-        print("\t\t\t\tdefault params", params, "\n")
+        # 4. imputation of the contaminated data
+        # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
 
-        algo_default = Imputation.MatrixCompletion.CDRec(incomp_data)
-        algo_default.impute(params=params)
-        algo_default.score(input_data=ts_1.data)
-        metrics_default = algo_default.metrics
+        algorithms_all = ["cdrec", "stmvl", "iim", "mrnn", "iter_svd", "grouse", "dynammo", "rosl", "soft_imp",
+                          "spirit", "svt", "tkcm", "brits", "deep_mvi", "mpin", "pristi"]
 
-        print("\t\t\t\tmetrics_optimal['RMSE'] < metrics_default['RMSE']", metrics_optimal["RMSE"], " < ", metrics_default["RMSE"], "\n")
+        for alg in algorithms_all:
+            imputer = utils.config_impute_algorithm(incomp_data=ts_mask, algorithm=alg)
+            imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
 
+            # 5. score the imputation with the raw_data
+            imputer.score(ts_1.data, imputer.recov_data)
 
-        self.assertTrue(metrics_optimal["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal['RMSE']} < {metrics_default['RMSE']}")
+            # 6. display the results
+            ts_1.print_results(imputer.metrics)
+
+            # 7. save hyperparameters
+            utils.save_optimization(optimal_params=imputer.parameters, algorithm=alg, dataset="eeg", optimizer="ray")
+
+        check = True
+        self.assertTrue(check)

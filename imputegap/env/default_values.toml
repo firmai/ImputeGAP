@@ -63,7 +63,7 @@ nbr_features = 1
 hidden_layers = 64
 
 [deep_mvi]
-max_epoch = 1000
+max_epoch = 100
 patience = 2
 
 [mpin]
@@ -107,6 +107,11 @@ num_configs = 10
 num_iterations = 2
 reduction_factor = 10
 metrics="RMSE"
+
+[ray_tune]
+metrics = 'RMSE'
+n_calls = 1
+max_concurrent_trials = -1
 
 # DOWNSTREAM DEFAULT VALUES ==========================================================================
 [forecaster-naive]

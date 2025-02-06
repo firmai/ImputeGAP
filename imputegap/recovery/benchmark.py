@@ -215,7 +215,12 @@ class Benchmark:
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
-        fig, ax = plt.subplots(figsize=(10, 6))
+        nbr_algorithms = len(algos)
+        nbr_datasets= len(sets)
+        x_size = min(10, 4*nbr_algorithms)
+        y_size = min(6, 3*nbr_datasets)
+
+        fig, ax = plt.subplots(figsize=(x_size, y_size))
         cmap = plt.cm.Greys
         norm = plt.Normalize(vmin=0, vmax=2)  # Normalizing values between 0 and 2 (RMSE)
 
@@ -227,9 +232,9 @@ class Benchmark:
         cbar.set_label('RMSE', rotation=270, labelpad=15)
 
         # Set the tick labels
-        ax.set_xticks(np.arange(len(algos)))
+        ax.set_xticks(np.arange(nbr_algorithms))
         ax.set_xticklabels(algos)
-        ax.set_yticks(np.arange(len(sets)))
+        ax.set_yticks(np.arange(nbr_datasets))
         ax.set_yticklabels(sets)
 
         # Add titles and labels
@@ -588,8 +593,7 @@ class Benchmark:
 
         print("Initialization of the comprehensive evaluation. It can take time...\n")
         run_storage = []
-        not_optimized = ["iter_svd", "grouse", "dynammo", "rosl", "soft_imp", "spirit", "svt", "tkcm", "deep_mvi",
-                         "brits", "mpin", "pristi"]
+        not_optimized = ["none"]
 
         for i_run in range(0, abs(runs)):
             for dataset in datasets:

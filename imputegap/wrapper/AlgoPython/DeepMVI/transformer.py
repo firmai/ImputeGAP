@@ -84,10 +84,7 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2):
     np.random.seed(0)
     random.seed(0)
 
-    print ('start')
-    use_embed=True
-    use_context=True
-    use_local = False
+    print ('\n\t\t\ttransformer_recovery : start')
     global interval
 
     mean = np.nanmean(input_feats,axis=0)
@@ -110,8 +107,8 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2):
     
     print ('\t\t\tBlock size is %d, kernel size is %d'%(block_size,kernel_size))
     print ('\t\t\t\tUse Kernel Regression : ',use_embed)
-    print ('\t\t\t\tUse Context in Keys : ',use_context)
-    print ('\t\t\t\tUse Local Attention : ',use_local)
+    print ('\t\t\t\tUse Context in Keys : ', use_context)
+    print ('\t\t\t\tUse Local Attention : ', use_local)
 
     batch_size = min(input_feats.shape[1]*int(input_feats.shape[0]/time_context),16)
     batch_size = input_feats.shape[1]
@@ -121,7 +118,7 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2):
     val_set = myValDataset(val_feats,val_points,False,use_local,time_context = time_context)
     test_set = myValDataset(val_feats,test_points,True,use_local,time_context = time_context)
     train_loader = torch.utils.data.DataLoader(train_set,batch_size = batch_size,drop_last = False,shuffle=True,collate_fn = my_collate)
-    val_loader = torch.utils.data.DataLoader(val_set,batch_size = batch_size,drop_last = False,shuffle=True,collate_fn = my_collate)
+    val_loader = torch.utils.data.DataLoader(val_set,batch_size = batch_size, drop_last = False, shuffle=True, collate_fn = my_collate)
     test_loader = torch.utils.data.DataLoader(test_set,batch_size = 1,drop_last = False,shuffle=True,collate_fn = my_collate)
 
     model = OurModel(sizes=[train_feats.shape[1]],kernel_size=kernel_size,block_size = block_size,nhead=2,time_len=train_feats.shape[0],use_embed=use_embed,use_context=use_context,use_local=use_local).to(device)

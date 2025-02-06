@@ -5,11 +5,11 @@ from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 
 
-class TestOptiCDRECEEG(unittest.TestCase):
+class TestOptiRAYCDREC(unittest.TestCase):
 
-    def test_optimization_bayesian_cdrec_eeg(self):
+    def test_optimization_ray_cdrec_eeg(self):
         """
-        the goal is to test if only the simple optimization with CDRec has the expected outcome
+        the goal is to test if only the simple optimization RAY TUNE with CDRec has the expected outcome
         """
         algorithm = "cdrec"
         dataset = "eeg-alcohol"
@@ -22,7 +22,7 @@ class TestOptiCDRECEEG(unittest.TestCase):
         params = utils.load_parameters(query="default", algorithm=algorithm)
 
         algo_opti = Imputation.MatrixCompletion.CDRec(incomp_data)
-        algo_opti.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 5}})
+        algo_opti.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
         algo_opti.score(input_data=ts_1.data)
         metrics_optimal = algo_opti.metrics
 
@@ -33,5 +33,8 @@ class TestOptiCDRECEEG(unittest.TestCase):
         algo_default.impute(params=params)
         algo_default.score(input_data=ts_1.data)
         metrics_default = algo_default.metrics
+
+        print("\t\t\t\tmetrics_optimal['RMSE'] < metrics_default['RMSE']", metrics_optimal["RMSE"], " < ", metrics_default["RMSE"], "\n")
+
 
         self.assertTrue(metrics_optimal["RMSE"] < metrics_default["RMSE"], f"Expected {metrics_optimal['RMSE']} < {metrics_default['RMSE']}")

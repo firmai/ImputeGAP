@@ -7,6 +7,10 @@
 # export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 # export CPLUS_INCLUDE_PATH=/usr/include/mlpack:$CPLUS_INCLUDE_PATH
 
+# sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+# sudo apt-get update
+# sudo apt-get install --only-upgrade libstdc++6
+
 
 all: libAlgoCollection.so AlgoCollection.dll
 

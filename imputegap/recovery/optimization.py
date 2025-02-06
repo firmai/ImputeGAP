@@ -1,9 +1,16 @@
+import os
 import time
 from itertools import product
 import numpy as np
+
 from imputegap.recovery.imputation import Imputation
-from imputegap.tools.algorithm_parameters import SEARCH_SPACES, ALL_ALGO_PARAMS, PARAM_NAMES, SEARCH_SPACES_PSO
+from imputegap.tools import utils
+from imputegap.tools.algorithm_parameters import SEARCH_SPACES, ALL_ALGO_PARAMS, PARAM_NAMES, SEARCH_SPACES_PSO, RAYTUNE_PARAMS
 import imputegap.tools.algorithm_parameters as sh_params
+
+# RAY TUNE IMPORT
+from ray import tune
+import ray
 
 # PSO IMPORT
 from functools import partial
@@ -15,7 +22,6 @@ from skopt.space import Integer
 
 from pyswarms.utils.reporter import Reporter
 reporter = Reporter()
-
 
 class BaseOptimizer:
     """
@@ -573,3 +579,86 @@ class Optimization:
             print(f"\n\t\t> logs, optimization sh - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
             return best_config_dict, best_score
+
+    class RayTune(BaseOptimizer):
+        """
+        RayTune optimization strategy for hyperparameters.
+        """
+
+        def _objective(self, params, input_data, incomp_data, algorithm, used_metric):
+            """
+            Objective function for RayTune optimization.
+            """
+
+            print("\n\n\nPARAMS ", params)
+            imputer = utils.config_impute_algorithm(incomp_data, algorithm)
+            imputer.impute(user_def=True, params=params)
+            imputer.score(input_data=input_data)
+            score = imputer.metrics.get(used_metric, "Key not found")
+            return score
+
+        def optimize(self, input_data, incomp_data, metrics=["RMSE"], algorithm="cdrec", n_calls=1, max_concurrent_trials=-1):
+            """
+            Perform Ray Tune optimization for hyperparameters.
+
+            Parameters
+            ----------
+            input_data : numpy.ndarray
+                The ground truth time series dataset.
+            incomp_data : numpy.ndarray
+                The contaminated time series dataset to impute.
+            metrics : list of str, optional
+                List of selected metrics for optimization (default is ["RMSE"]).
+            algorithm : str, optional
+                The imputation algorithm to optimize (default is 'cdrec').
+            n_calls : int, optional
+                Number of calls to the objective function (default is 10).
+            max_concurrent_trials : int, optional
+                Number of trials run in parallel, related to your total memory / cpu / gpu (default is 2).
+                Please increase the value if you have more resources
+
+            Returns
+            -------
+            tuple
+                A tuple containing the best parameters and their corresponding score.
+            """
+            ray.init()
+            used_metric = metrics[0]
+
+            if max_concurrent_trials == -1:
+                total_cpus = sum(node["Resources"].get("CPU", 0) for node in ray.nodes() if node["Alive"])
+                total_memory = sum(node["Resources"].get("memory", 0) for node in ray.nodes() if node["Alive"])
+                total_memory_gb = (total_memory // (1024 ** 3))
+
+                print(f"\n\t\t(OPTI) > Ray Total accessible CPU cores for parallelization: {total_cpus}")
+                print(f"\n\t\t(OPTI) > Ray Total accessible memory for parallelization: {total_memory_gb:.2f} GB")
+
+                max_concurrent_trials = min(total_memory_gb, total_cpus)
+
+            print(f"\n\t\t(OPTI) > Ray tune max_concurrent_trials {max_concurrent_trials}, for {n_calls} calls and metric {used_metric}\n")
+
+            start_time = time.time()  # Record start time
+
+            search_space = RAYTUNE_PARAMS[algorithm]
+            print(f"\n\t\t(OPTI) > Ray tune - SEARCH SPACE: {search_space}\n")
+
+            def objective_wrapper(config):
+                params = {key: config[key] for key in config}
+                score = self._objective(params, input_data, incomp_data, algorithm, used_metric)
+                return {used_metric: score}  # Ensures correct format
+
+            analysis = tune.run(
+                objective_wrapper,
+                config=search_space,
+                metric=used_metric,
+                mode="min",
+                num_samples=n_calls,
+                max_concurrent_trials=max_concurrent_trials
+            )
+
+            print(f"\n\t\t(OPTI) > Ray tune - BEST CONFIG: {analysis.best_config}\n")
+
+            end_time = time.time()
+            print(f"\n\t\t> logs, optimization ray tune - Execution Time: {(end_time - start_time):.4f} seconds_____\n")
+
+            return analysis.best_config

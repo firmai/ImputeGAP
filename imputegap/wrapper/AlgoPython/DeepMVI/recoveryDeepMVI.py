@@ -17,11 +17,11 @@ def deep_mvi_recovery(input, max_epoch=1000, patience=2):
     # read input matrix
     matrix = input
     
-    matrix_imputed = recover_matrix(matrix, max_epoch, patience);
+    matrix_imputed = recover_matrix(matrix, max_epoch, patience)
     
     # verification
-    nan_mask = np.isnan(matrix_imputed);
-    matrix_imputed[nan_mask] = np.sqrt(np.finfo('d').max / 100000.0);
+    nan_mask = np.isnan(matrix_imputed)
+    matrix_imputed[nan_mask] = np.sqrt(np.finfo('d').max / 100000.0)
 
     return matrix_imputed
     # end if
