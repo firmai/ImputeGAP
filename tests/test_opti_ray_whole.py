@@ -1,8 +1,7 @@
 import unittest
 
-from imputegap.recovery.imputation import Imputation
-from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
+from imputegap.tools import utils
 
 
 class TestOptiRAY(unittest.TestCase):
@@ -11,8 +10,6 @@ class TestOptiRAY(unittest.TestCase):
         """
         the goal is to test if only the simple optimization RAY TUNE with CDRec has the expected outcome
         """
-        from imputegap.recovery.manager import TimeSeries
-        from imputegap.tools import utils
 
         # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
         ts_1 = TimeSeries()
