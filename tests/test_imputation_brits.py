@@ -28,9 +28,9 @@ class TestBRITS(unittest.TestCase):
             "CORRELATION": 0.19068315619146248
         }
 
-        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.1,
+        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
-        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.1,
+        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2,
                         f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
         self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
                         f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")

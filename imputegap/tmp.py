@@ -12,7 +12,7 @@ ts_1.load_series(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-ts_mask = ts_1.Contamination.mcar(ts_1.data)
+ts_mask = ts_1.Contamination.missing_percentage(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm

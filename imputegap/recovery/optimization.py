@@ -662,4 +662,6 @@ class Optimization:
             end_time = time.time()
             print(f"\n\t\t> logs, optimization ray tune - Execution Time: {(end_time - start_time):.4f} seconds_____\n")
 
+            ray.shutdown()
+
             return analysis.best_config

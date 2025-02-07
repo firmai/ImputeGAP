@@ -3,7 +3,7 @@ from imputegap.recovery.benchmark import Benchmark
 # VARIABLES
 reconstruction = False
 save_dir = "./analysis"
-nbr_run = 1
+nbr_run = 2
 
 # SELECT YOUR DATASET(S) :
 datasets_full = ["eeg-alcohol", "eeg-reading", "fmri-objectviewing", "fmri-stoptask", "chlorine", "drift"]

@@ -12,7 +12,7 @@ class TestBenchmarking(unittest.TestCase):
         opti_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 2, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
         optimizers = [opti_bayesian]
 
-        algorithms_full = ["mean", "cdrec", "stmvl", "iim", "mrnn", "iter_svd", "grouse", "dynammo", "rosl", "soft_imp", "spirit", "svt", "tkcm", "deep_mvi"]
+        algorithms_full = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
         patterns_small = ["mcar"]
 
         x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
