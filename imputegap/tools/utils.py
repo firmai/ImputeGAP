@@ -35,7 +35,7 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.DeepLearning.MRNN(incomp_data)
 
     # 2nd generation
-    elif algorithm == "iterative_svd":
+    elif algorithm == "iterative_svd" or algorithm == "iter_svd":
         imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
     elif algorithm == "grouse":
         imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
@@ -43,7 +43,7 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
     elif algorithm == "rosl":
         imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
-    elif algorithm == "soft_impute":
+    elif algorithm == "soft_impute" or algorithm == "soft_imp":
         imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
     elif algorithm == "spirit":
         imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)

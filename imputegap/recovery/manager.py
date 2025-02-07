@@ -303,7 +303,7 @@ class TimeSeries:
         print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     def plot(self, input_data, incomp_data=None, recov_data=None, max_series=None, max_values=None, series_range=None,
-             subplot=False, size=(16, 8), save_path="", display=True):
+             subplot=False, size=(16, 8), save_path="./imputegap/assets", display=True):
         """
         Plot the time series data, including raw, contaminated, or imputed data.
 
@@ -401,7 +401,7 @@ class TimeSeries:
                 if incomp_data is not None and recov_data is None:  # plot infected matrix
                     if np.isnan(incomp_data[i, :]).any():
                         ax.plot(timestamps, input_data[i, :max_values], linewidth=1.5,
-                                color='r', linestyle='--', label=f'TS-INCOMP {i + 1}')
+                                color=color, linestyle='--', label=f'TS-INCOMP {i + 1}')
 
                     if np.isnan(incomp_data[i, :]).any() or not subplot:
                         ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],

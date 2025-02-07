@@ -1,3 +1,6 @@
+import datetime
+import os
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -156,7 +159,7 @@ class Downstream:
             return None
 
     @staticmethod
-    def _plot_downstream(y_train, y_test, y_pred, incomp_data, title="Ground Truth vs Predictions", max_series=4):
+    def _plot_downstream(y_train, y_test, y_pred, incomp_data, title="Ground Truth vs Predictions", max_series=4, save_path="./imputegap/assets"):
         """
         Plot ground truth vs. predictions for contaminated series (series with NaN values).
 
@@ -176,7 +179,10 @@ class Downstream:
             Maximum number of series to plot (default is 9).
         """
         # Create a 3x3 subplot grid (3 rows for data types, 3 columns for valid series)
-        fig, axs = plt.subplots(3, max_series, figsize=(15, 15))
+
+        x_size = max_series * 5
+
+        fig, axs = plt.subplots(3, max_series, figsize=(x_size, 15))
         fig.suptitle(title, fontsize=16)
 
         # Iterate over the three data types (recov_data, input_data, mean_impute)
@@ -197,7 +203,7 @@ class Downstream:
                 full_series = np.concatenate([s_y_train[series_idx], s_y_test[series_idx]])
 
                 # Plot training data
-                ax.plot(range(len(s_y_train[series_idx])), s_y_train[series_idx], label="Training Data", color="blue")
+                ax.plot(range(len(s_y_train[series_idx])), s_y_train[series_idx], label="Training Data", color="green")
 
                 # Plot ground truth (testing data)
                 ax.plot(
@@ -222,11 +228,11 @@ class Downstream:
 
                 # Add labels, title, and grid
                 if row_idx == 0:
-                    ax.set_title(f"recov_data, series {series_idx}")
+                    ax.set_title(f"IMPUTATED DATA (RECOVERY), series {series_idx}")
                 elif row_idx == 1:
-                    ax.set_title(f"input_data, series {series_idx}")
+                    ax.set_title(f"ORIGINAL DATA (GROUND TRUTH), series {series_idx}")
                 else:
-                    ax.set_title(f"mean_impute, series {series_idx}")
+                    ax.set_title(f"BAD IMPUTER (ZERO IMP), series {series_idx}")
 
                 ax.set_xlabel("Timestamp")
                 ax.set_ylabel("Value")
@@ -235,4 +241,14 @@ class Downstream:
 
         # Adjust layout
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+
+        if save_path:
+            os.makedirs(save_path, exist_ok=True)
+
+            now = datetime.datetime.now()
+            current_time = now.strftime("%y_%m_%d_%H_%M_%S")
+            file_path = os.path.join(save_path + "/" + current_time + "_downstream.jpg")
+            plt.savefig(file_path, bbox_inches='tight')
+            print("plots saved in ", file_path)
+
         plt.show()
