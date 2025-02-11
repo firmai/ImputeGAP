@@ -627,14 +627,13 @@ class Optimization:
             used_metric = metrics[0]
 
             if max_concurrent_trials == -1:
-                total_cpus = sum(node["Resources"].get("CPU", 0) for node in ray.nodes() if node["Alive"])
-                total_memory = sum(node["Resources"].get("memory", 0) for node in ray.nodes() if node["Alive"])
-                total_memory_gb = (total_memory // (1024 ** 3))
+                total_cpus = max(1, sum(node["Resources"].get("CPU", 0) for node in ray.nodes() if node["Alive"]) - 1)
+                total_memory_gb = sum(node["Resources"].get("memory", 0) for node in ray.nodes() if node["Alive"]) / (1024 ** 3)
 
                 print(f"\n\t\t(OPTI) > Ray Total accessible CPU cores for parallelization: {total_cpus}")
                 print(f"\n\t\t(OPTI) > Ray Total accessible memory for parallelization: {total_memory_gb:.2f} GB")
 
-                max_concurrent_trials = min(total_memory_gb, total_cpus)
+                max_concurrent_trials = min(int(total_memory_gb // 2), total_cpus)
 
             print(f"\n\t\t(OPTI) > Ray tune max_concurrent_trials {max_concurrent_trials}, for {n_calls} calls and metric {used_metric}\n")
 
@@ -645,7 +644,15 @@ class Optimization:
 
             def objective_wrapper(config):
                 params = {key: config[key] for key in config}
-                score = self._objective(params, input_data, incomp_data, algorithm, used_metric)
+
+                try:
+                    score = self._objective(params, input_data, incomp_data, algorithm, used_metric)
+                    if score is None or not isinstance(score, (int, float)):
+                        raise ValueError("\n\n\n\t\t\tRAY_TUNE OBJECTIVE ERROR) >> Invalid score returned from _objective")
+                except Exception as e:
+                    print(f"\n\n\n\t\t\t(RAY_TUNE OBJECTIVE ERROR) >> Error in objective function: {e}")
+                    score = float("inf")  # Return worst possible score
+
                 return {used_metric: score}  # Ensures correct format
 
             analysis = tune.run(

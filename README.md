@@ -187,7 +187,7 @@ ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
 cdrec.score(ts_1.data, ts_3.data)
 
 # 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm="cdrec")
+ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
 ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True,
           save_path="./imputegap/assets")
 ```
@@ -232,7 +232,7 @@ ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=cdrec.recov_data
           save_path="./imputegap/assets", display=True)
 
 # 7. save hyperparameters
-utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm=cdrec.algorithm, dataset="eeg", optimizer="t")
 ```
 
 ---
@@ -305,8 +305,8 @@ cdrec.score(ts_1.data, ts_3.data)  # upstream standard analysis
 cdrec.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
 
 # 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm="cdrec")
-ts_3.print_results(cdrec.downstream_metrics, algorithm="cdrec")
+ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
+ts_3.print_results(cdrec.downstream_metrics, algorithm=cdrec.algorithm)
 ```
 
 

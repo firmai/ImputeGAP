@@ -5,8 +5,11 @@ from imputegap.algorithms.deep_mvi import deep_mvi
 from imputegap.algorithms.dynammo import dynammo
 from imputegap.algorithms.grin import grin
 from imputegap.algorithms.grouse import grouse
+from imputegap.algorithms.interpolation import interpolation
 from imputegap.algorithms.iterative_svd import iterative_svd
+from imputegap.algorithms.knn import knn
 from imputegap.algorithms.mean_impute import mean_impute
+from imputegap.algorithms.mean_impute_by_series import mean_impute_by_series
 from imputegap.algorithms.mpin import mpin
 from imputegap.algorithms.pristi import pristi
 from imputegap.algorithms.rosl import rosl
@@ -24,7 +27,7 @@ from imputegap.algorithms.stmvl import stmvl
 from imputegap.algorithms.zero_impute import zero_impute
 from imputegap.tools import utils
 
-not_optimized = ["iterative_svd", "grouse", "dynammo", "rosl", "soft_impute", "spirit", "svt", "tkcm", "deep_mvi", "brits", "mpin", "pristi"]
+not_optimized = ["knn", "interpolation", "iterative_svd", "grouse", "dynammo", "rosl", "soft_impute", "spirit", "svt", "tkcm", "deep_mvi", "brits", "mpin", "pristi"]
 
 
 
@@ -46,7 +49,7 @@ class BaseImputer:
     _optimize(parameters={}):
         Optimize hyperparameters for the imputation algorithm.
     """
-    algorithm = ""  # Class variable to hold the algorithm name
+    algorithm = ""
     logs = True
 
     def __init__(self, incomp_data):
@@ -165,7 +168,6 @@ class BaseImputer:
         from imputegap.recovery.optimization import Optimization
 
         optimizer = parameters.get('optimizer', "ray_tune")
-
 
         if self.algorithm in not_optimized and optimizer != "ray_tune":
             raise ValueError(
@@ -386,36 +388,6 @@ class Imputation:
 
                 return self
 
-        class MinImpute(BaseImputer):
-            """
-            MinImpute class to impute missing values with the minimum value of the ground truth.
-
-            Methods
-            -------
-            impute(self, params=None):
-                Perform imputation by replacing missing values with the minimum value of the ground truth.
-            """
-            algorithm = "min_impute"
-
-            def impute(self, params=None):
-                """
-                Impute missing values by replacing them with the minimum value of the ground truth.
-                Template for adding external new algorithm
-
-                Parameters
-                ----------
-                params : dict, optional
-                    Dictionary of algorithm parameters (default is None).
-
-                Returns
-                -------
-                self : MinImpute
-                    The object with `recov_data` set.
-                """
-                self.recov_data = min_impute(self.incomp_data, params)
-
-                return self
-
         class MeanImpute(BaseImputer):
             """
             MeanImpute class to impute missing values with the mean value of the ground truth.
@@ -446,10 +418,138 @@ class Imputation:
 
                 return self
 
+        class MinImpute(BaseImputer):
+            """
+            MinImpute class to impute missing values with the minimum value of the ground truth.
+
+            Methods
+            -------
+            impute(self, params=None):
+                Perform imputation by replacing missing values with the minimum value of the ground truth.
+            """
+            algorithm = "min_impute"
+
+            def impute(self, params=None):
+                """
+                Impute missing values by replacing them with the minimum value of the ground truth.
+                Template for adding external new algorithm
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Dictionary of algorithm parameters (default is None).
+
+                Returns
+                -------
+                self : MinImpute
+                    The object with `recov_data` set.
+                """
+                self.recov_data = min_impute(self.incomp_data, params)
+
+                return self
+
+        class MeanImputeBySeries(BaseImputer):
+            """
+            MeanImputeBySeries class to impute missing values with the mean value by series.
+
+            Methods
+            -------
+            impute(self, params=None):
+                Perform imputation by replacing missing values with the mean value by series
+            """
+            algorithm = "mean_impute"
+
+            def impute(self):
+                """
+                Impute missing values by replacing them with the mean value of the series.
+
+                Returns
+                -------
+                self : MeanImputeBySeries
+                    The object with `recov_data` set.
+                """
+                self.recov_data = mean_impute_by_series(self.incomp_data, logs=self.logs)
+
+                return self
+
+        class Interpolation(BaseImputer):
+            """
+            Interpolation class to impute missing values with interpolation-based algorithm
+
+            Methods
+            -------
+            impute(self, params=None):
+                Perform imputation by replacing missing values with interpolation-based algorithm
+            """
+            algorithm = "interpolation"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Impute missing values by replacing them with the interpolation-based algorithm
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the IIM algorithm, if None, default ones are loaded.
+
+                Returns
+                -------
+                self : Interpolation
+                    The object with `recov_data` set.
+                """
+                if params is not None:
+                    method, poly_order = self._check_params(user_def, params)
+                else:
+                    method, poly_order = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = interpolation(incomp_data=self.incomp_data, method=method, poly_order=poly_order, logs=self.logs)
+
+                return self
+
+
+        class KNN(BaseImputer):
+            """
+            KNN class to impute missing values with K-Nearest Neighbor algorithm
+
+            Methods
+            -------
+            impute(self, params=None):
+                Perform imputation by replacing missing values with K-Nearest Neighbor
+            """
+            algorithm = "knn"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Impute missing values by replacing them with the K-Nearest Neighbor value
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the IIM algorithm, if None, default ones are loaded.
+
+                Returns
+                -------
+                self : KNN
+                    The object with `recov_data` set.
+                """
+                if params is not None:
+                    k, weights = self._check_params(user_def, params)
+                else:
+                    k, weights = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = knn(incomp_data=self.incomp_data, k=k, weights=weights, logs=self.logs)
+
+                return self
+
+
+
         class IIM(BaseImputer):
             """
             IIM class to impute missing values using Iterative Imputation with Metric Learning (IIM).
-
             Methods
             -------
             impute(self, user_def=True, params=None):

@@ -17,12 +17,12 @@ ts_mask = ts_1.Contamination.missing_percentage(ts_1.data)
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
 
-algorithms_all = ["cdrec", "stmvl", "iim", "mrnn", "iter_svd", "grouse", "dynammo", "rosl", "soft_imp",
-                  "spirit", "svt", "tkcm", "brits", "deep_mvi", "mpin", "pristi"]
+algorithms_all = ["cdrec", "stmvl", "iim", "mrnn", "knn", "interpolation", "iter_svd", "grouse", "dynammo", "rosl",
+                  "soft_imp", "spirit", "svt", "tkcm", "brits", "deep_mvi", "mpin", "pristi"]
 
 for alg in algorithms_all:
     imputer = utils.config_impute_algorithm(incomp_data=ts_mask, algorithm=alg)
-    imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
+    imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune", "options": {"max_concurrent_trials": 6}})
 
     # 5. score the imputation with the raw_data
     imputer.score(ts_1.data, imputer.recov_data)

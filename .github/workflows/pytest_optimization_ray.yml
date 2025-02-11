@@ -1,5 +1,5 @@
 
-name: Pytest - ImputeGAP - OPTIMIZATION - 12
+name: Pytest - ImputeGAP - RAY - 12
 
 on:
   push:
@@ -32,12 +32,4 @@ jobs:
 
     - name: Run pytest
       run: |
-        python -m pytest ./tests/test_opti_bayesian_cdrec.py
-        python -m pytest ./tests/test_opti_bayesian_cdrec_eeg.py
-        python -m pytest ./tests/test_opti_bayesian_iim.py
-        python -m pytest ./tests/test_opti_bayesian_mrnn.py
-        python -m pytest ./tests/test_opti_bayesian_stmvl.py
-        python -m pytest ./tests/test_opti_greedy_cdrec.py
-        python -m pytest ./tests/test_opti_pso_cdrec.py
-        python -m pytest ./tests/test_opti_sh_cdrec.py
-        python -m pytest ./tests/test_opti_ray_cdrec_eeg.py
+        python -m pytest ./tests/test_opti_ray_whole.py

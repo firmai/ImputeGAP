@@ -8,45 +8,54 @@ epsilon_str = "E-6"
 iteration = 100
 
 [iterative_svd]
-rank = 2
+rank = 3
 
 [grouse]
-max_rank = 2
+max_rank = 3
 
 [rosl]
-rank = 2
-regularization = 2
+rank = 3
+regularization = 0.6
 
 [soft_impute]
-max_rank = 5
+max_rank = 3
 
 [spirit]
-k = 5
+k = 4
 w = 6
-lvalue = 1
+lvalue = 1.0
 
 [svt]
-tau = 1
+tau = 0.2
 
 
 # ALGORITHM DEFAULT VALUES : PATTERN SEARCH
 [stmvl]
-window_size = 2
+window_size = 7
 gamma = 0.85
-alpha = 7
+alpha = 2
 
 [dynammo]
-h = 5
-max_iteration = 5
+h = 3
+max_iteration = 100
 approximation = true
 
 [tkcm]
-rank = 2
+rank = 4
 
 # ALGORITHM DEFAULT VALUES : STATISTICS
 [iim]
 learning_neighbors = 10
 algorithm_code = "iim 2"
+
+[knn]
+k = 5
+weights = "uniform"
+
+[interpolation]
+method = "linear"
+poly_order = 2
+
 
 # ALGORITHM DEFAULT VALUES : DEEP LEARNING
 [mrnn]

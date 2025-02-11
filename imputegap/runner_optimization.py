@@ -14,7 +14,7 @@ ts_mask = ts_1.Contamination.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 3}})
+cdrec = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
 
 # 5. score the imputation with the raw_data
 cdrec.score(ts_1.data, cdrec.recov_data)
@@ -24,4 +24,4 @@ ts_1.print_results(cdrec.metrics)
 ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=cdrec.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
 # 7. save hyperparameters
-utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm=cdrec.parameters, dataset="eeg", optimizer="t")

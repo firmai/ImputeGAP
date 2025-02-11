@@ -214,7 +214,7 @@ class TimeSeries:
         print("\nshape of the time series :", to_print.shape, "\n\tnumber of series =", nbr_series,
               "\n\tnumber of values =", nbr_values, "\n\n")
 
-    def print_results(self, metrics, algorithm=""):
+    def print_results(self, metrics, algorithm="", text="Imputation Results of"):
         """
         Prints the results of the imputation process.
 
@@ -224,13 +224,19 @@ class TimeSeries:
            A dictionary containing the imputation metrics to display.
         algorithm : str, optional
            The name of the algorithm used for imputation.
+        algorithm : str, optional
+           Output text to help the user.
 
         Returns
         -------
         None
         """
 
-        print("\n\nImputation Results of", algorithm, ":")
+        if algorithm != "":
+            print(f"\n\n{text} ({algorithm}) :")
+        else:
+            print(f"\n\n{text} :")
+
         for key, value in metrics.items():
             print(f"{key:<20} = {value}")
         print("\n")

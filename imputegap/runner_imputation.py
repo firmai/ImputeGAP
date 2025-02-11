@@ -31,5 +31,5 @@ ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
 cdrec.score(ts_1.data, ts_3.data)
 
 # 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm="cdrec")
+ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
 ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True, save_path="./imputegap/assets")

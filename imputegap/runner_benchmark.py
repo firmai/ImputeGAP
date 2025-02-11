@@ -21,7 +21,8 @@ optimizers_demo = [optimiser_ray]
 algorithms_full = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
 algorithms_demo = ["cdrec", "iter_svd", "grouse", "dynammo", "rosl", "soft_imp", "spirit", "svt", "tkcm"]
 algorithms_dl = ["brits", "deep_mvi", "mpin", "pristi"]
-algorithms_all = ["mean", "cdrec", "stmvl", "iim", "mrnn", "iter_svd", "grouse", "dynammo", "rosl", "soft_imp", "spirit", "svt", "tkcm", "brits", "deep_mvi", "mpin", "pristi"]
+algorithms_all = ["mean", "cdrec", "stmvl", "iim", "mrnn", "knn", "interpolation", "iter_svd", "grouse", "dynammo",
+                  "rosl", "soft_imp", "spirit", "svt", "tkcm", "brits", "deep_mvi", "mpin", "pristi"]
 
 # SELECT YOUR CONTAMINATION PATTERN(S) :
 patterns_full = ["mcar", "mp", "blackout", "disjoint", "overlap", "gaussian"]

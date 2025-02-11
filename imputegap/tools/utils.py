@@ -59,6 +59,15 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.DeepLearning.MPIN(incomp_data)
     elif algorithm == "pristi":
         imputer = Imputation.DeepLearning.PRISTI(incomp_data)
+
+    # 3rd generation
+    elif algorithm == "knn":
+        imputer = Imputation.Statistics.KNN(incomp_data)
+    elif algorithm == "interpolation":
+        imputer = Imputation.Statistics.Interpolation(incomp_data)
+    elif algorithm == "mean_series":
+        imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
+
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
@@ -292,7 +301,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         return (h, max_iteration, approximation)
     elif algorithm == "rosl":
         rank = int(config[algorithm]['rank'])
-        regularization = int(config[algorithm]['regularization'])
+        regularization = float(config[algorithm]['regularization'])
         return (rank, regularization)
     elif algorithm == "soft_impute":
         max_rank = int(config[algorithm]['max_rank'])
@@ -335,6 +344,14 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         seed = int(config[algorithm]['seed'])
         device = str(config[algorithm]['device'])
         return (target_strategy, unconditional, seed, device)
+    elif algorithm == "knn":
+        k = int(config[algorithm]['k'])
+        weights = str(config[algorithm]['weights'])
+        return (k, weights)
+    elif algorithm == "interpolation":
+        method = str(config[algorithm]['method'])
+        poly_order = int(config[algorithm]['poly_order'])
+        return (method, poly_order)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -581,6 +598,16 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "unconditional": bool(optimal_params[1]),
             "seed": 42,  # Default seed
             "device": "cpu"  # Default device
+        }
+    elif algorithm == "knn":
+        params_to_save = {
+            "k": int(optimal_params[0]),
+            "weights": str(optimal_params[1])
+        }
+    elif algorithm == "interpolation":
+        params_to_save = {
+            "method": str(optimal_params[0]),
+            "poly_order": int(optimal_params[1])
         }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")

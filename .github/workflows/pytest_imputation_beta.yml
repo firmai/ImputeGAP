@@ -24,6 +24,8 @@ jobs:
         pip install mypy pytest
     - name: Run pytest
       run: |
+        python -m pytest ./tests/test_imputation_knn.py
+        python -m pytest ./tests/test_imputation_interpolation.py
         python -m pytest ./tests/test_imputation_dynammo.py
         python -m pytest ./tests/test_imputation_grouse.py
         python -m pytest ./tests/test_imputation_iterative_svd.py

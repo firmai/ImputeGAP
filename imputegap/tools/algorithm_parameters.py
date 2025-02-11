@@ -64,7 +64,7 @@ RAYTUNE_PARAMS = {
         "iters": tune.grid_search([i * 100 for i in range(1, 3)])
     },
     "iim": {
-        "learning_neighbors": tune.grid_search([i for i in range(1, 100)])  # Up to 100 learning neighbors
+        "learning_neighbors": tune.grid_search([i for i in range(1, 20)])  # Up to 100 learning neighbors
     },
     "mrnn": {
         "hidden_dim":  tune.grid_search([i for i in range(10, 100, 20)]),  # Hidden dimension
@@ -91,7 +91,7 @@ RAYTUNE_PARAMS = {
 
     "rosl": {
         "rank": tune.grid_search([i for i in range(2, 16, 2)]),  # Testing rank from 2 to 18
-        "regularization": tune.loguniform(1e-3, 10)  # Regularization parameter
+        "regularization": tune.loguniform(0.1, 3)  # Regularization parameter
     },
 
     "soft_impute": {
@@ -153,6 +153,16 @@ RAYTUNE_PARAMS = {
         "unconditional": tune.choice([True, False]),  # Use unconditional or not
         "seed": 42,  #tune.grid_search([42, 1234, 5678]),  # Different seeds for reproducibility
         "device": tune.choice(["cpu"])  # Allow switching between CPU and GPU
+    },
+
+    "knn": {
+        "k": tune.grid_search([1, 12, 1]),
+        "weights": tune.choice(["uniform", "distance"])
+    },
+
+    "interpolation": {
+        "method": tune.choice(["nearest", "spline", "polynomial", "linear"]),
+        "poly_order": tune.grid_search([2, 10, 1])
     }
 
 }

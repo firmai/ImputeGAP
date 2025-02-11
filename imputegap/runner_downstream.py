@@ -26,5 +26,5 @@ cdrec.score(ts_1.data, ts_3.data)  # upstream standard analysis
 cdrec.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
 
 # 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm="cdrec")
-ts_3.print_results(cdrec.downstream_metrics, algorithm="cdrec")
+ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
+ts_3.print_results(cdrec.downstream_metrics, algorithm=cdrec.algorithm)
