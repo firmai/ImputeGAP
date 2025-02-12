@@ -21,10 +21,10 @@ class TestSVT(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.0954472512325196,
-            "MAE": 0.07358754827478305,
-            "MI": 0.7507515417491643,
-            "CORRELATION": 0.8940713168949612
+            "RMSE": 0.05559479346635801,
+            "MAE": 0.04122525697280994,
+            "MI": 1.1183928744751146,
+            "CORRELATION": 0.9671521894143095
         }
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"

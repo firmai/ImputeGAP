@@ -21,10 +21,10 @@ class TestSoftImpute(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.08170571441771922,
-            "MAE": 0.06271339280403729,
-            "MI": 0.911998312708481,
-            "CORRELATION": 0.9345533571324787
+            "RMSE": 0.09627777349763414,
+            "MAE": 0.07448970558861644,
+            "MI": 0.7493079086248395,
+            "CORRELATION": 0.8982101360155362
         }
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"

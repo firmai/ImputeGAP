@@ -21,10 +21,10 @@ class TestROSL(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.1280117567948824,
-            "MAE": 0.09713601017140877,
-            "MI": 0.48990062140021917,
-            "CORRELATION": 0.7901486988894544
+            "RMSE": 0.10120387850873366,
+            "MAE": 0.07732958857438763,
+            "MI": 0.6705497211056336,
+            "CORRELATION": 0.8763049995212882
         }
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"

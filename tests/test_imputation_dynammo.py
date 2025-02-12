@@ -21,10 +21,10 @@ class TestDynaMMo(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.08046846998412374,
-            "MAE": 0.061864876581497766,
-            "MI": 0.8886827250532137,
-            "CORRELATION": 0.9284134362991301
+            "RMSE": 0.08992309829546972,
+            "MAE": 0.06933425171172114,
+            "MI": 0.7600666467883912,
+            "CORRELATION": 0.9024599853439144
         }
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"

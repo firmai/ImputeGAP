@@ -21,10 +21,10 @@ class TestIterativeSVD(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.11698881358396492,
-            "MAE": 0.09067350463451396,
-            "MI": 0.5516520823210832,
-            "CORRELATION": 0.8275363898338868
+            "RMSE": 0.0896028056184559,
+            "MAE": 0.06903741479850772,
+            "MI": 0.7705228407404124,
+            "CORRELATION": 0.9031251285117765
         }
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"

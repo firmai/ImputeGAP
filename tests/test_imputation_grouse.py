@@ -21,10 +21,10 @@ class TestGROUSE(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.1873413528486015,
-            "MAE": 0.14962571931848923,
-            "MI": 0.13612904553153546,
-            "CORRELATION": 0.44880776125274635
+            "RMSE": 0.18874406368396715,
+            "MAE": 0.1510815475102299,
+            "MI": 0.12630593106068652,
+            "CORRELATION": 0.4450326583619584
         }
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"

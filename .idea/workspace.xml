@@ -5,14 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c64130a-5955-4091-9d95-7527058d5bd0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/pytest_optimization_ray.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/algorithms/interpolation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/algorithms/knn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/algorithms/mean_impute_by_series.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/airq_m200.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/dataset/chlorine_m200.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_imputation_interpolation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_imputation_knn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.coverage" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.github/mypy_check.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.github/workflows/pytest_imputation_alpha.yml" beforeDir="false" />
@@ -751,25 +743,16 @@
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/entry_points.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/requires.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/top_level.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pytest_imputation_beta.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest_imputation_beta.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pytest_optimization.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest_optimization.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/imputegap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/imputegap.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/env/default_values.toml" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/env/default_values.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/params/optimal_parameters_ray_eeg_mrnn.toml" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/params/optimal_parameters_ray_eeg_mrnn.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/imputation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/optimization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/runner_benchmark.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_benchmark.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_downstream.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_downstream.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_imputation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_optimization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/tmp.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/tmp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/tools/algorithm_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/tools/algorithm_parameters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/tools/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/tools/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_dynammo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_dynammo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_grouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_grouse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_iterative_svd.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_iterative_svd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_rosl.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_rosl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_soft_impute.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_soft_impute.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_spirit.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_spirit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_stmvl.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_stmvl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_svt.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_svt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mypy.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/about/about.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/installation/README.md" beforeDir="false" />
@@ -877,6 +860,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python tests.pytest for test_explainer_tsfel.TestExplainerTSFEL.test_explainer_tsfel.executor": "Run",
+    "Python tests.pytest for test_imputation_dynammo.TestDynaMMo.test_imputation_dynammo_dft.executor": "Run",
     "Python tests.pytest for tests.test_explainer.executor": "Run",
     "Python tests.pytest in test_explainer_pycatch.py.executor": "Run",
     "Python tests.pytest in test_explainer_tsfel.py.executor": "Run",
@@ -922,7 +906,30 @@
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\dataset" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.runner_optimization">
+  <component name="RunManager" selected="Python.tmp2">
+    <configuration name="runner_benchmark" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="imputegap" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imputegap" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/runner_benchmark.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="runner_optimization" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="ENV_FILES" value="" />
@@ -938,29 +945,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/runner_optimization.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="tmp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="imputegap" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imputegap" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/tmp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -992,7 +976,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="tmp3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="tmp2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -1006,7 +990,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/tmp3.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/tmp2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -1015,7 +999,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest in test_imputation_interpolation.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest for test_imputation_dynammo.TestDynaMMo.test_imputation_dynammo_dft" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -1029,17 +1013,17 @@
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_parameters" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_imputation_interpolation.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <option name="_new_target" value="&quot;test_imputation_dynammo.TestDynaMMo.test_imputation_dynammo_dft&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.tmp2" />
+        <item itemvalue="Python tests.pytest for test_imputation_dynammo.TestDynaMMo.test_imputation_dynammo_dft" />
+        <item itemvalue="Python.runner_benchmark" />
         <item itemvalue="Python.runner_optimization" />
         <item itemvalue="Python.tmp1" />
-        <item itemvalue="Python tests.pytest in test_imputation_interpolation.py" />
-        <item itemvalue="Python.tmp" />
-        <item itemvalue="Python.tmp3" />
       </list>
     </recent_temporary>
   </component>
@@ -1068,7 +1052,8 @@
       <workItem from="1738767330418" duration="7617000" />
       <workItem from="1738843878809" duration="108000" />
       <workItem from="1739193410324" duration="12718000" />
-      <workItem from="1739277269981" duration="11979000" />
+      <workItem from="1739277269981" duration="12992000" />
+      <workItem from="1739362941695" duration="3114000" />
     </task>
     <servers />
   </component>
@@ -1091,24 +1076,25 @@
     <SUITE FILE_PATH="coverage/imputegap$tmp3.coverage" NAME="tmp3 Coverage Results" MODIFIED="1739286822698" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_knn_py.coverage" NAME="pytest in test_imputation_knn.py Coverage Results" MODIFIED="1739281775251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$mourad2.coverage" NAME="mourad2 Coverage Results" MODIFIED="1738774572667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$pytest_for_tests_test_explainer.coverage" NAME="pytest for tests.test_explainer Coverage Results" MODIFIED="1737640201696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$runner_downstream.coverage" NAME="runner_downstream Coverage Results" MODIFIED="1739282973526" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$runner_loading.coverage" NAME="runner_loading Coverage Results" MODIFIED="1738160109685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$tmp2.coverage" NAME="tmp2 Coverage Results" MODIFIED="1739286709705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_optimization.coverage" NAME="runner_optimization Coverage Results" MODIFIED="1739288354266" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1738247456240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_explainer_tsfresh_py.coverage" NAME="pytest in test_explainer_tsfresh.py Coverage Results" MODIFIED="1738167065727" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/imputegap$runner_imputation.coverage" NAME="runner_imputation Coverage Results" MODIFIED="1739283018476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_contamination.coverage" NAME="runner_contamination Coverage Results" MODIFIED="1738934714926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1739286940383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_interpolation_py.coverage" NAME="pytest in test_imputation_interpolation.py Coverage Results" MODIFIED="1739287478618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_explainer_tsfel_py.coverage" NAME="pytest in test_explainer_tsfel.py Coverage Results" MODIFIED="1738155400917" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_for_tests_test_explainer.coverage" NAME="pytest for tests.test_explainer Coverage Results" MODIFIED="1737640201696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$runner_loading.coverage" NAME="runner_loading Coverage Results" MODIFIED="1738160109685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$tmp2.coverage" NAME="tmp2 Coverage Results" MODIFIED="1739366016751" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1738247456240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$runner_imputation.coverage" NAME="runner_imputation Coverage Results" MODIFIED="1739283018476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$tmp1.coverage" NAME="tmp1 Coverage Results" MODIFIED="1739287988496" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_explainer.coverage" NAME="runner_explainer Coverage Results" MODIFIED="1738155472490" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$mourad.coverage" NAME="mourad Coverage Results" MODIFIED="1738770271650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_interpolation_py.coverage" NAME="pytest in test_imputation_interpolation.py Coverage Results" MODIFIED="1739287478618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_imputation_dynammo_TestDynaMMo_test_imputation_dynammo_dft.coverage" NAME="pytest for test_imputation_dynammo.TestDynaMMo.test_imputation_dynammo_dft Coverage Results" MODIFIED="1739365096655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_explainer_pycatch_py.coverage" NAME="pytest in test_explainer_pycatch.py Coverage Results" MODIFIED="1738168210067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/imputegap$runner_benchmark.coverage" NAME="runner_benchmark Coverage Results" MODIFIED="1738859097378" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$tmp4.coverage" NAME="tmp4 Coverage Results" MODIFIED="1739286266467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
-    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_explainer_tsfel_py.coverage" NAME="pytest in test_explainer_tsfel.py Coverage Results" MODIFIED="1738155400917" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$runner_benchmark.coverage" NAME="runner_benchmark Coverage Results" MODIFIED="1739364284803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_opti_ray_cdrec_eeg_py.coverage" NAME="pytest in test_opti_ray_cdrec_eeg.py Coverage Results" MODIFIED="1738848944890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>

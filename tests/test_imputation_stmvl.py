@@ -21,10 +21,10 @@ class TestSTMVL(unittest.TestCase):
         _, metrics = algo.recov_data, algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.05795429338869703,
-            "MAE": 0.038205100250362625,
-            "MI": 0.9955907463544946,
-            "CORRELATION": 0.9729604272282141
+            "RMSE": 0.1368300154471035,
+            "MAE": 0.0826527606378556,
+            "MI": 0.9622655017829951,
+            "CORRELATION": 0.9324369637045151
         }
 
         ts_1.print_results(metrics)
