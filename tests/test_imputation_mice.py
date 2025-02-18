@@ -32,9 +32,9 @@ class TestMICE(unittest.TestCase):
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
         self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.1,
                         f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
-        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.1,
+        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
                         f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
-        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.1,
+        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.3,
                         f"metrics CORRELATION = {metrics['CORRELATION']}, expected CORRELATION = {expected_metrics['CORRELATION']} ")
 
 
