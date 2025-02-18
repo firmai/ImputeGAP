@@ -30,7 +30,7 @@ def config_impute_algorithm(incomp_data, algorithm):
     elif algorithm == "stmvl":
         imputer = Imputation.PatternSearch.STMVL(incomp_data)
     elif algorithm == "iim":
-        imputer = Imputation.Statistics.IIM(incomp_data)
+        imputer = Imputation.MachineLearning.IIM(incomp_data)
     elif algorithm == "mrnn":
         imputer = Imputation.DeepLearning.MRNN(incomp_data)
 
@@ -67,7 +67,14 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.Statistics.Interpolation(incomp_data)
     elif algorithm == "mean_series":
         imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
-
+    elif algorithm == "trmf":
+        imputer = Imputation.MatrixCompletion.TRMF(incomp_data)
+    elif algorithm == "mice":
+        imputer = Imputation.MachineLearning.MICE(incomp_data)
+    elif algorithm == "miss_forest":
+        imputer = Imputation.MachineLearning.MissForest(incomp_data)
+    elif algorithm == "xgboost":
+        imputer = Imputation.MachineLearning.XGBOOST(incomp_data)
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
@@ -320,7 +327,8 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     elif algorithm == "deep_mvi":
         max_epoch = int(config[algorithm]['max_epoch'])
         patience = int(config[algorithm]['patience'])
-        return (max_epoch, patience)
+        lr = float(config[algorithm]['lr'])
+        return (max_epoch, patience, lr)
     elif algorithm == "brits":
         model = str(config[algorithm]['model'])
         epoch = int(config[algorithm]['epoch'])
@@ -335,9 +343,10 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         learning_rate = float(config[algorithm]['learning_rate'])
         weight_decay = float(config[algorithm]['weight_decay'])
         epochs = int(config[algorithm]['epochs'])
+        num_of_iteration = int(config[algorithm]['num_of_iteration'])
         threshold = float(config[algorithm]['threshold'])
         base = str(config[algorithm]['base'])
-        return (incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base)
+        return (incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base)
     elif algorithm == "pristi":
         target_strategy = str(config[algorithm]['target_strategy'])
         unconditional = bool(config[algorithm]['unconditional'])
@@ -352,6 +361,32 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         method = str(config[algorithm]['method'])
         poly_order = int(config[algorithm]['poly_order'])
         return (method, poly_order)
+    elif algorithm == "trmf":
+        lags = list(config[algorithm]['lags'])
+        K = int(config[algorithm]['K'])
+        lambda_f = float(config[algorithm]['lambda_f'])
+        lambda_x = float(config[algorithm]['lambda_x'])
+        lambda_w = float(config[algorithm]['lambda_w'])
+        eta = float(config[algorithm]['eta'])
+        alpha = float(config[algorithm]['alpha'])
+        max_iter = int(config[algorithm]['max_iter'])
+        return (lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_iter)
+    elif algorithm == "mice":
+        max_iter = int(config[algorithm]['max_iter'])
+        tol = float(config[algorithm]['tol'])
+        initial_strategy = str(config[algorithm]['initial_strategy'])
+        seed = int(config[algorithm]['seed'])
+        return (max_iter, tol, initial_strategy, seed)
+    elif algorithm == "miss_forest":
+        n_estimators = int(config[algorithm]['n_estimators'])
+        max_iter = int(config[algorithm]['max_iter'])
+        max_features = str(config[algorithm]['max_features'])
+        seed = int(config[algorithm]['seed'])
+        return (n_estimators, max_iter, max_features, seed)
+    elif algorithm == "xgboost":
+        n_estimators = int(config[algorithm]['n_estimators'])
+        seed = int(config[algorithm]['seed'])
+        return (n_estimators, seed)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -579,7 +614,8 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     elif algorithm == "deep_mvi":
         params_to_save = {
             "max_epoch": int(optimal_params[0]),
-            "patience": int(optimal_params[1])
+            "patience": int(optimal_params[1]),
+            "lr": float(optimal_params[2])
         }
     elif algorithm == "mpin":
         params_to_save = {
@@ -589,8 +625,9 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "learning_rate": optimal_params[3],
             "weight_decay": optimal_params[4],
             "epochs": int(optimal_params[5]),
-            "threshold": optimal_params[6],
-            "base": optimal_params[7]
+            "num_of_iteration": int(optimal_params[6]),
+            "threshold": optimal_params[7],
+            "base": optimal_params[8]
         }
     elif algorithm == "pristi":
         params_to_save = {
@@ -608,6 +645,25 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         params_to_save = {
             "method": str(optimal_params[0]),
             "poly_order": int(optimal_params[1])
+        }
+    elif algorithm == "mice":
+        params_to_save = {
+            "max_iter": int(optimal_params[0]),
+            "tol": float(optimal_params[1]),
+            "initial_strategy": str(optimal_params[2]),
+            "seed": 42
+        }
+    elif algorithm == "miss_forest":
+        params_to_save = {
+            "n_estimators": int(optimal_params[0]),
+            "max_iter": int(optimal_params[1]),
+            "max_features": str(optimal_params[2]),
+            "seed": 42
+        }
+    elif algorithm == "miss_forest":
+        params_to_save = {
+            "n_estimators": int(optimal_params[0]),
+            "seed": 42
         }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")

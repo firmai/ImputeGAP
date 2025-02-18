@@ -10,6 +10,8 @@ from imputegap.algorithms.iterative_svd import iterative_svd
 from imputegap.algorithms.knn import knn
 from imputegap.algorithms.mean_impute import mean_impute
 from imputegap.algorithms.mean_impute_by_series import mean_impute_by_series
+from imputegap.algorithms.mice import mice
+from imputegap.algorithms.miss_forest import miss_forest
 from imputegap.algorithms.mpin import mpin
 from imputegap.algorithms.pristi import pristi
 from imputegap.algorithms.rosl import rosl
@@ -17,6 +19,8 @@ from imputegap.algorithms.soft_impute import soft_impute
 from imputegap.algorithms.spirit import spirit
 from imputegap.algorithms.svt import svt
 from imputegap.algorithms.tkcm import tkcm
+from imputegap.algorithms.trmf import trmf
+from imputegap.algorithms.xgboost import xgboost
 from imputegap.recovery.downstream import Downstream
 from imputegap.recovery.evaluation import Evaluation
 from imputegap.algorithms.cdrec import cdrec
@@ -204,6 +208,11 @@ class BaseImputer:
                                                       n_calls=n_calls,
                                                       n_random_starts=random_starts,
                                                       acq_func=func)
+
+            if optimal_params is None:
+                print("\n\t\t\t(OPTI) optimization does not find results for ", self.algorithm, " > load default params.\n")
+                optimal_params = utils.load_parameters(query="default", algorithm=self.algorithm)
+
         elif optimizer == "pso":
 
             n_particles_d, c1_d, c2_d, w_d, iterations_d, n_processes_d, selected_metrics_d = defaults
@@ -318,7 +327,7 @@ class Imputation:
             learning_neighbours = configuration[0]
             alg_code = "iim " + re.sub(r'[\W_]', '', str(learning_neighbours))
 
-            algo = Imputation.Statistics.IIM(incomp_data)
+            algo = Imputation.MachineLearning.IIM(incomp_data)
             algo.logs = False
             algo.impute(user_def=True, params={"learning_neighbours": learning_neighbours, "alg_code": alg_code})
 
@@ -492,7 +501,7 @@ class Imputation:
                 user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
-                    Parameters of the IIM algorithm, if None, default ones are loaded.
+                    Parameters of the interpolation algorithm, if None, default ones are loaded.
 
                 Returns
                 -------
@@ -529,7 +538,7 @@ class Imputation:
                 user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
-                    Parameters of the IIM algorithm, if None, default ones are loaded.
+                    Parameters of the KNN algorithm, if None, default ones are loaded.
 
                 Returns
                 -------
@@ -547,59 +556,7 @@ class Imputation:
 
 
 
-        class IIM(BaseImputer):
-            """
-            IIM class to impute missing values using Iterative Imputation with Metric Learning (IIM).
-            Methods
-            -------
-            impute(self, user_def=True, params=None):
-                Perform imputation using the IIM algorithm.
-            """
-            algorithm = "iim"
 
-            def impute(self, user_def=True, params=None):
-                """
-                Perform imputation using the IIM algorithm.
-
-                Parameters
-                ----------
-                user_def : bool, optional
-                    Whether to use user-defined or default parameters (default is True).
-                params : dict, optional
-                    Parameters of the IIM algorithm, if None, default ones are loaded.
-
-                    - learning_neighbours : int
-                        Number of nearest neighbors for learning.
-                    - algo_code : str
-                        Unique code for the algorithm configuration.
-
-                Returns
-                -------
-                self : IIM
-                    The object with `recov_data` set.
-
-                Example
-                -------
-                >>> iim_imputer = Imputation.Statistics.IIM(incomp_data)
-                >>> iim_imputer.impute()  # default parameters for imputation > or
-                >>> iim_imputer.impute(user_def=True, params={'learning_neighbors': 10})  # user-defined  > or
-                >>> iim_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
-                >>> recov_data = iim_imputer.recov_data
-
-                References
-                ----------
-                A. Zhang, S. Song, Y. Sun and J. Wang, "Learning Individual Models for Imputation," 2019 IEEE 35th International Conference on Data Engineering (ICDE), Macao, China, 2019, pp. 160-171, doi: 10.1109/ICDE.2019.00023.
-                keywords: {Data models;Adaptation models;Computational modeling;Predictive models;Numerical models;Aggregates;Regression tree analysis;Missing values;Data imputation}
-                """
-                if params is not None:
-                    learning_neighbours, algo_code = self._check_params(user_def, params)
-                else:
-                    learning_neighbours, algo_code = utils.load_parameters(query="default", algorithm=self.algorithm)
-
-                self.recov_data = iim(incomp_data=self.incomp_data, number_neighbor=learning_neighbours,
-                                      algo_code=algo_code, logs=self.logs)
-
-                return self
 
     class MatrixCompletion:
         """
@@ -1065,6 +1022,303 @@ class Imputation:
 
                 return self
 
+        class TRMF(BaseImputer):
+            """
+            TRMF class to impute missing values using Temporal Regularized Matrix Factorization.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the TRMF algorithm.
+            """
+
+            algorithm = "trmf"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the TRMF algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
+                params : dict, optional
+                    Parameters of the TRMF algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                    **Algorithm parameters:**
+
+                    lags : array-like, optional
+                        Set of lag indices to use in model.
+                    K : int, optional
+                        Length of latent embedding dimension
+                    lambda_f : float, optional
+                        Regularization parameter used for matrix F.
+                    lambda_x : float, optional
+                        Regularization parameter used for matrix X.
+                    lambda_w : float, optional
+                        Regularization parameter used for matrix W.
+                    alpha : float, optional
+                        Regularization parameter used for make the sum of lag coefficient close to 1.
+                        That helps to avoid big deviations when forecasting.
+                    eta : float, optional
+                        Regularization parameter used for X when undercovering autoregressive dependencies.
+                    max_iter : int, optional
+                        Number of iterations of updating matrices F, X and W.
+                    logs : bool, optional
+                        Whether to log the execution time (default is True).
+
+
+                Returns
+                -------
+                self : TRMF
+                    TRMF object with `recov_data` set.
+
+                Example
+                -------
+                >>> trmf_imputer = Imputation.MatrixCompletion.SVT(incomp_data)
+                >>> trmf_imputer.impute()  # default parameters for imputation > or
+                >>> trmf_imputer.impute(params={"lags":[], "K":-1, "lambda_f":1.0, "lambda_x":1.0, "lambda_w":1.0, "eta":1.0, "alpha":1000.0, "max_iter":100})
+                >>> recov_data = trmf_imputer.recov_data
+
+                References
+                ----------
+                H.-F. Yu, N. Rao, and I. S. Dhillon, "Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction," in *Advances in Neural Information Processing Systems*, vol. 29, 2016. [Online]. Available: https://proceedings.neurips.cc/paper_files/paper/2016/file/85422afb467e9456013a2a51d4dff702-Paper.pdf
+                """
+                if params is not None:
+                    lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_iter = self._check_params(user_def, params)[0]
+                else:
+                    lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_iter = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = trmf(incomp_data=self.incomp_data, lags=lags, K=K, lambda_f=lambda_f, lambda_x=lambda_x, lambda_w=lambda_w, eta=eta, alpha=alpha, max_iter=max_iter, logs=self.logs)
+
+                return self
+
+
+
+
+
+    class MachineLearning:
+        """
+        A class containing imputation algorithms for pattern-based methods.
+
+        Subclasses
+        ----------
+        MissForest :
+            Imputation method using Miss Forest (MissForest)
+        MICE :
+            Imputation method using Multivariate imputation of chained equations (MICE).
+        IIM :
+            Imputation method using Iterative Imputation with Metric Learning (IIM).
+        """
+
+        class MissForest(BaseImputer):
+            """
+            MissForest class to impute missing values with Miss Forest.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the Miss Forest algorithm.
+            """
+            algorithm = "miss_forest"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the Miss Forest algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the miss forest algorithm, if None, default ones are loaded.
+
+                Returns
+                -------
+                self : MissForest
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> mf_imputer = Imputation.MachineLearning.MissForest(incomp_data)
+                >>> mf_imputer.impute()  # default parameters for imputation > or
+                >>> mf_imputer.impute(user_def=True, params={"n_estimators":10, "max_iter":3, "max_features":"sqrt", "seed": 42})  # user defined
+                >>> recov_data = mf_imputer.recov_data
+
+                References
+                ----------
+                Daniel J. Stekhoven, Peter Bühlmann, MissForest—non-parametric missing value imputation for mixed-type data, Bioinformatics, Volume 28, Issue 1, January 2012, Pages 112–118, https://doi.org/10.1093/bioinformatics/btr597
+                https://github.com/yuenshingyan/MissForest
+                https://pypi.org/project/MissForest/
+                """
+                if params is not None:
+                    n_estimators, max_iter, max_features, seed = self._check_params(user_def, params)
+                else:
+                    n_estimators, max_iter, max_features, seed = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = miss_forest(incomp_data=self.incomp_data, n_estimators=n_estimators, max_iter=max_iter, max_features=max_features, seed=seed, logs=self.logs)
+
+                return self
+
+
+        class MICE(BaseImputer):
+            """
+            MICE class to impute missing values with Multivariate imputation of chained equations (MICE).
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the STMVL algorithm.
+            """
+            algorithm = "mice"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the MICE algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the STMVL algorithm, if None, default ones are loaded.
+
+                Returns
+                -------
+                self : MICE
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> mice_imputer = Imputation.MachineLearning.MICE(incomp_data)
+                >>> mice_imputer.impute()  # default parameters for imputation > or
+                >>> mice_imputer.impute(user_def=True, params={"max_iter":3, "tol":0.001, "initial_strategy":"mean", "seed": 42})  # user defined
+                >>> recov_data = mice_imputer.recov_data
+
+                References
+                ----------
+                P. Royston and I. R. White. Multiple Imputation by Chained Equations (MICE): Implementation in Stata. Journal of Statistical Software, 45(4):1–20, 2011. Available: https://www.jstatsoft.org/index.php/jss/article/view/v045i04.
+                Stef van Buuren, Karin Groothuis-Oudshoorn (2011). “mice: Multivariate Imputation by Chained Equations in R”. Journal of Statistical Software 45: 1-67.
+                S. F. Buck, (1960). “A Method of Estimation of Missing Values in Multivariate Data Suitable for use with an Electronic Computer”. Journal of the Royal Statistical Society 22(2): 302-306.
+                https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html#sklearn.impute.IterativeImputer
+                """
+                if params is not None:
+                    max_iter, tol, initial_strategy, seed = self._check_params(user_def, params)
+                else:
+                    max_iter, tol, initial_strategy, seed = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = mice(incomp_data=self.incomp_data, max_iter=max_iter, tol=tol, initial_strategy=initial_strategy, seed=seed, logs=self.logs)
+
+                return self
+
+        class XGBOOST(BaseImputer):
+            """
+            XGBOOST class to impute missing values with Extreme Gradient Boosting (XGBOOST).
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the XGBOOST algorithm.
+            """
+            algorithm = "xgboost"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the XGBOOST algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the STMVL algorithm, if None, default ones are loaded.
+
+                Returns
+                -------
+                self : XGBOOST
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> mxgboost_imputer = Imputation.MachineLearning.MICE(incomp_data)
+                >>> mxgboost_imputer.impute()  # default parameters for imputation > or
+                >>> mxgboost_imputer.impute(user_def=True, params={"n_estimators":3, "seed": 42})  # user defined
+                >>> recov_data = mxgboost_imputer.recov_data
+
+                References
+                ----------
+                Tianqi Chen and Carlos Guestrin. 2016. XGBoost: A Scalable Tree Boosting System. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD '16). Association for Computing Machinery, New York, NY, USA, 785–794. https://doi.org/10.1145/2939672.2939785
+                https://dl.acm.org/doi/10.1145/2939672.2939785
+                https://medium.com/@tzhaonj/imputing-missing-data-using-xgboost-802757cace6d
+                """
+                if params is not None:
+                    n_estimators, seed = self._check_params(user_def, params)
+                else:
+                    n_estimators, seed = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = xgboost(incomp_data=self.incomp_data, n_estimators=n_estimators, seed=seed, logs=self.logs)
+
+                return self
+
+        class IIM(BaseImputer):
+            """
+            IIM class to impute missing values using Iterative Imputation with Metric Learning (IIM).
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the IIM algorithm.
+            """
+            algorithm = "iim"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the IIM algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the IIM algorithm, if None, default ones are loaded.
+
+                    - learning_neighbours : int
+                        Number of nearest neighbors for learning.
+                    - algo_code : str
+                        Unique code for the algorithm configuration.
+
+                Returns
+                -------
+                self : IIM
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> iim_imputer = Imputation.MachineLearning.IIM(incomp_data)
+                >>> iim_imputer.impute()  # default parameters for imputation > or
+                >>> iim_imputer.impute(user_def=True, params={'learning_neighbors': 10})  # user-defined  > or
+                >>> iim_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> recov_data = iim_imputer.recov_data
+
+                References
+                ----------
+                A. Zhang, S. Song, Y. Sun and J. Wang, "Learning Individual Models for Imputation," 2019 IEEE 35th International Conference on Data Engineering (ICDE), Macao, China, 2019, pp. 160-171, doi: 10.1109/ICDE.2019.00023.
+                keywords: {Data models;Adaptation models;Computational modeling;Predictive models;Numerical models;Aggregates;Regression tree analysis;Missing values;Data imputation}
+                """
+                if params is not None:
+                    learning_neighbours, algo_code = self._check_params(user_def, params)
+                else:
+                    learning_neighbours, algo_code = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = iim(incomp_data=self.incomp_data, number_neighbor=learning_neighbours,
+                                      algo_code=algo_code, logs=self.logs)
+
+                return self
+
+
+
+
+
     class PatternSearch:
         """
         A class containing imputation algorithms for pattern-based methods.
@@ -1073,6 +1327,12 @@ class Imputation:
         ----------
         STMVL :
             Imputation method using Spatio-Temporal Matrix Variational Learning (STMVL).
+
+        DynaMMo :
+            Imputation method using Dynamic Multi-Mode modeling with Missing Observations algorithm (DynaMMo).
+
+        TKCM :
+            TKCM class to impute missing values using Tensor Kernelized Coupled Matrix Completion algorithm. (TKCM).
         """
 
         class STMVL(BaseImputer):
@@ -1125,7 +1385,7 @@ class Imputation:
                 if params is not None:
                     window_size, gamma, alpha = self._check_params(user_def, params)
                 else:
-                    window_size, gamma, alpha = utils.load_parameters(query="default", algorithm="stmvl")
+                    window_size, gamma, alpha = utils.load_parameters(query="default", algorithm=self.algorithm)
 
                 self.recov_data = stmvl(incomp_data=self.incomp_data, window_size=window_size, gamma=gamma,
                                         alpha=alpha, logs=self.logs)
@@ -1408,11 +1668,11 @@ class Imputation:
                 P. Bansal, P. Deshpande, and S. Sarawagi. Missing value imputation on multidimensional time series. arXiv preprint arXiv:2103.01600, 2023
                 """
                 if params is not None:
-                    max_epoch, patience = self._check_params(user_def, params)
+                    max_epoch, patience, lr = self._check_params(user_def, params)
                 else:
-                    max_epoch, patience = utils.load_parameters(query="default", algorithm=self.algorithm)
+                    max_epoch, patience, lr = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.recov_data = deep_mvi(incomp_data=self.incomp_data, max_epoch=max_epoch, patience=patience, logs=self.logs)
+                self.recov_data = deep_mvi(incomp_data=self.incomp_data, max_epoch=max_epoch, patience=patience, lr=lr, logs=self.logs)
                 return self
 
         class MPIN(BaseImputer):
@@ -1454,11 +1714,11 @@ class Imputation:
                 Li, X., Li, H., Lu, H., Jensen, C.S., Pandey, V. & Markl, V. Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). arXiv (2023). https://arxiv.org/abs/2311.07344
                 """
                 if params is not None:
-                    incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base = self._check_params(user_def, params)
+                    incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base = self._check_params(user_def, params)
                 else:
-                    incre_mode, window, k, learning_rate, weight_decay, epochs, threshold, base = utils.load_parameters(query="default", algorithm=self.algorithm)
+                    incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.recov_data = mpin(incomp_data=self.incomp_data, incre_mode=incre_mode, window=window, k=k, lr=learning_rate, weight_decay=weight_decay, epochs=epochs, thre=threshold, base=base, logs=self.logs)
+                self.recov_data = mpin(incomp_data=self.incomp_data, incre_mode=incre_mode, window=window, k=k, lr=learning_rate, weight_decay=weight_decay, epochs=epochs, num_of_iteration=num_of_iteration, thre=threshold, base=base, logs=self.logs)
                 return self
 
         class PRISTI(BaseImputer):

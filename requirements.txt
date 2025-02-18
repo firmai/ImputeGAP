@@ -41,6 +41,9 @@ ipdb==0.13.13
 pandas==2.0.3
 torchcde==0.2.5
 tables==3.10.1
+MissForest==4.2.3
+lightgbm==4.6.0
+xgboost==2.1.4
 
 
 # extractor

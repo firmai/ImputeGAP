@@ -9,19 +9,18 @@ from imputegap.wrapper.AlgoPython.DeepMVI.model import *
 
 interval = 0
 
-def train(model,train_loader,val_loader,device, max_epoch=1000, patience=2):
+def train(model,train_loader,val_loader,device, max_epoch=1000, patience=2, lr = 1e-3):
     best_state_dict = model.state_dict()
     best_loss = float('inf')
 
-    lr = 1e-3
-    optim = torch.optim.Adam(model.parameters(),lr=lr)
+    optim = torch.optim.Adam(model.parameters(), lr=lr)
 
     iteration = 0
     start_epoch = 0
     tolerance_epoch = 0
     train_error = 0
     for epoch in range(start_epoch, max_epoch):
-        print("\n\t\t\t\tStarting Epoch : %d"%epoch, "======/ max",max_epoch,"/==============================")
+        print("\n\t\t\t\tStarting Epoch : %d"%epoch, "======/ max", max_epoch,"/==============================")
 
         for inp_,mask,residuals,context_info in train_loader :
             inp_ = inp_.to(device).requires_grad_(True)
@@ -73,7 +72,7 @@ def test(model,test_loader,val_feats,device):
     return output_matrix
 
 
-def transformer_recovery(input_feats, max_epoch=1000, patience=2):
+def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3):
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.deterministic = True
     torch.manual_seed(0)
@@ -84,7 +83,7 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2):
     np.random.seed(0)
     random.seed(0)
 
-    print ('\n\t\t\ttransformer_recovery : start')
+    print ('\n\t\t\tTransformer_recovery : start\n')
     global interval
 
     mean = np.nanmean(input_feats,axis=0)
@@ -104,7 +103,6 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2):
     use_context=(block_size <= kernel_size)
     use_local = (block_size < kernel_size)
 
-    
     print ('\t\t\tBlock size is %d, kernel size is %d'%(block_size,kernel_size))
     print ('\t\t\t\tUse Kernel Regression : ',use_embed)
     print ('\t\t\t\tUse Context in Keys : ', use_context)
@@ -124,7 +122,7 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2):
     model = OurModel(sizes=[train_feats.shape[1]],kernel_size=kernel_size,block_size = block_size,nhead=2,time_len=train_feats.shape[0],use_embed=use_embed,use_context=use_context,use_local=use_local).to(device)
     model.std = torch.from_numpy(std).to(device)
 
-    best_state_dict = train(model,train_loader,val_loader,device,max_epoch,patience)
+    best_state_dict = train(model,train_loader,val_loader,device,max_epoch,patience, lr)
     model.load_state_dict(best_state_dict)
 
     matrix = test(model,test_loader,val_feats,device)

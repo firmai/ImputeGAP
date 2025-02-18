@@ -22,10 +22,10 @@ class TestDeepMVI(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.17258590893961756,
-            "MAE": 0.13678496260986875,
-            "MI": 0.14166243572944076,
-            "CORRELATION": 0.4891177167156986
+            "RMSE": 0.14637256541505142,
+            "MAE": 0.11345522331290149,
+            "MI": 0.35551234902424306,
+            "CORRELATION": 0.7168595846429486
         }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.1,

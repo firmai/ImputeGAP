@@ -15,10 +15,14 @@ def M_RNN (trainZ, trainM, trainT, testZ, testM, testT, hidden_dim=10, learning_
 
     # Graph Initialization
     ops.reset_default_graph()
-    
+
+    print(f"\n\t\t\t\t\t (MRNN) >> trainZ.ndim {trainZ.ndim}")
+
     #%% Parameters
     seq_length = len(trainZ[0,:,0])
     feature_dim = len(trainZ[0,0,:])
+
+    print(f"\n\t\t\t\t\t (MRNN) >> Sequence length: {seq_length}, Feature dimension: {feature_dim}")
 
     #%% input place holders (Y: target, M: Mask)
     tf.compat.v1.disable_eager_execution()  # Added for compatibility

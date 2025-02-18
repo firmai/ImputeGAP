@@ -115,7 +115,7 @@ RAYTUNE_PARAMS = {
     "dynammo": {
         "h": tune.grid_search([i for i in range(3, 10)]),  # Pattern length, range 3 to 9
         "max_iteration": tune.grid_search([i for i in range(3, 15, 3)]),  # Iteration range 3 to 12
-        "approximation": tune.choice([True, False])  # Binary choice for approximation
+        "approximation": True
     },
 
     "tkcm": {
@@ -134,7 +134,8 @@ RAYTUNE_PARAMS = {
 
     "deep_mvi": {
         "max_epoch": tune.grid_search([10, 50, 100]),  # Testing from 500 to 1500 epochs
-        "patience": tune.grid_search([2, 5, 10])  # Number of early stopping patience
+        "patience": tune.grid_search([2, 5, 10]),  # Number of early stopping patience
+        "lr": tune.grid_search([0.001, 0.1])  # learning rate
     },
 
     "mpin": {
@@ -144,6 +145,7 @@ RAYTUNE_PARAMS = {
         "learning_rate": tune.loguniform(1e-4, 0.1),  # Learning rate range
         "weight_decay": tune.loguniform(1e-4, 0.1),  # Weight decay regularization
         "epochs": tune.grid_search([5, 10, 20]),  # Number of epochs
+        "num_of_iteration": tune.grid_search([1, 5]),  # Number of epochs
         "threshold": tune.uniform(0.1, 0.5),  # Threshold range
         "base": tune.choice(["SAGE", "GAT", "GCN"])  # Model architectures
     },
@@ -163,6 +165,36 @@ RAYTUNE_PARAMS = {
     "interpolation": {
         "method": tune.choice(["nearest", "spline", "polynomial", "linear"]),
         "poly_order": tune.grid_search([2, 10, 1])
-    }
+    },
+
+    "trmf": {
+        "lags": tune.grid_search([[], [1, 2, 3], [1, 5, 10]]),  # Different lag configurations
+        "K": tune.choice([-1, 5, 10, 20]),  # Latent dimensions
+        "lambda_f": tune.grid_search([0.1, 1.0, 10.0]),  # Regularization parameter for factors
+        "lambda_x": tune.grid_search([0.1, 1.0, 10.0]),  # Regularization parameter for observations
+        "lambda_w": tune.grid_search([0.1, 1.0, 10.0]),  # Regularization parameter for weights
+        "eta": tune.grid_search([0.1, 1.0, 5.0]),  # Learning rate-like parameter
+        "alpha": tune.grid_search([100.0, 500.0, 1000.0]),  # Temporal regularization strength
+        "max_iter": tune.choice([10, 100])  # Maximum number of iterations
+    },
+
+    "mice": {
+        "max_iter": tune.grid_search([2, 3]),
+        "tol": tune.grid_search([0.001, 0.1]),
+        "initial_strategy": tune.choice(["mean", "median", "most_frequent", "constant"]),
+        "seed": 42
+    },
+
+    "miss_forest": {
+        "n_estimators": tune.grid_search([2, 10, 15]),
+        "max_iter": tune.grid_search([2, 5, 10]),
+        "max_features": tune.choice(["auto", "sqrt", "log2"]),
+        "seed": 42
+    },
+
+    "xgboost": {
+        "n_estimators": tune.grid_search([2, 10, 15]),
+        "seed": 42
+    },
 
 }

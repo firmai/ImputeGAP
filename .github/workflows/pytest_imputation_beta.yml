@@ -25,6 +25,9 @@ jobs:
     - name: Run pytest
       run: |
         python -m pytest ./tests/test_imputation_knn.py
+        python -m pytest ./tests/test_imputation_mf.py
+        python -m pytest ./tests/test_imputation_mice.py
+        python -m pytest ./tests/test_imputation_xgboost.py
         python -m pytest ./tests/test_imputation_interpolation.py
         python -m pytest ./tests/test_imputation_dynammo.py
         python -m pytest ./tests/test_imputation_grouse.py

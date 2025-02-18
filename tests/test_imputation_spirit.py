@@ -10,21 +10,24 @@ class TestSPIRIT(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with SPIRIT has the expected outcome
         """
-        ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("airq"))
-        ts_1.normalize(normalizer="min_max")
+        # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
+        ts_x = TimeSeries()
+        ts_x.load_series(utils.search_path("airq"))
+        ts_x.data = ts_x.data.T
 
-        incomp_data = ts_1.Contamination.missing_percentage(input_data=ts_1.data, dataset_rate=0.05)
+        miss_ts = ts_x.Contamination.missing_percentage(ts_x.data.T, dataset_rate=0.1, series_rate=0.2)
+        miss_ts = miss_ts.T
 
-        algo = Imputation.MatrixCompletion.SPIRIT(incomp_data).impute()
-        algo.score(ts_1.data)
-        metrics = algo.metrics
+        algo2 = Imputation.MatrixCompletion.SPIRIT(miss_ts).impute()
+        algo2.score(ts_x.data, algo2.recov_data)
+        metrics = algo2.metrics
+        ts_x.print_results(algo2.metrics, algorithm=algo2.algorithm)
 
         expected_metrics = {
-            "RMSE": 100,
-            "MAE": 100,
-            "MI": 0.0,
-            "CORRELATION": 0
+            "RMSE": 0.38937914191833917,
+            "MAE": 0.25818866227956544,
+            "MI": 1.1257311598908373,
+            "CORRELATION": 0.9383991348665752
         }
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"

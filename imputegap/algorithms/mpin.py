@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.MPIN.runnerMPIN import recoverMPIN
 
 
-def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, thre=0.25, base="SAGE", logs=True):
+def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, num_of_iteration=5, thre=0.25, base="SAGE", logs=True):
     """
     Perform imputation using the Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation algorithm.
 
@@ -23,6 +23,8 @@ def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_d
         The weight decay (regularization) term to prevent overfitting during training (default is 0.1).
     epochs : int, optional
         The number of epochs to run the training process (default is 200).
+    num_of_iteration : int, optional
+        The number of iteration of the whole training (default is 5).
     thre : float, optional
         The threshold for considering a missing value as imputed (default is 0.25).
     base : str, optional
@@ -45,7 +47,7 @@ def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_d
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoverMPIN(input=incomp_data, mode=incre_mode, window=window, k=k, lr=lr, weight_decay=weight_decay, epochs=epochs, thre=thre, base=base, out_channels=64, eval_ratio=0.05, state=True)
+    recov_data = recoverMPIN(input=incomp_data, mode=incre_mode, window=window, k=k, lr=lr, weight_decay=weight_decay, epochs=epochs, num_of_iteration=num_of_iteration, thre=thre, base=base, out_channels=64, eval_ratio=0.05, state=True)
 
     end_time = time.time()
     if logs:

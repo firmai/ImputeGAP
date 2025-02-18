@@ -217,8 +217,10 @@ class Benchmark:
 
         nbr_algorithms = len(algos)
         nbr_datasets= len(sets)
-        x_size = min(10, 4*nbr_algorithms)
-        y_size = min(6, 3*nbr_datasets)
+
+        cell_size = 4.0
+        x_size = cell_size*nbr_algorithms
+        y_size = cell_size*nbr_datasets
 
         fig, ax = plt.subplots(figsize=(x_size, y_size))
         cmap = plt.cm.Greys
@@ -437,7 +439,7 @@ class Benchmark:
 
         print(f"\nExcel report recorded in {save_path}")
 
-    def generate_plots(self, runs_plots_scores, ticks, subplot=False, save_dir="./reports"):
+    def generate_plots(self, runs_plots_scores, ticks, subplot=False, y_size=4, save_dir="./reports"):
         """
         Generate and save plots for each metric and pattern based on provided scores.
 
@@ -462,12 +464,14 @@ class Benchmark:
         """
         os.makedirs(save_dir, exist_ok=True)
         metrics = ["RMSE", "MAE", "MI", "CORRELATION", "imputation_time", "log_imputation"]
+        x_size = 16
+
 
         for dataset, pattern_items in runs_plots_scores.items():
             for pattern, algo_items in pattern_items.items():
 
                 if subplot:
-                    fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(18, 12))  # Adjusted figsize
+                    fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(x_size*1.90, y_size*2.90))  # Adjusted figsize
                     axes = axes.ravel()  # Flatten the 2D array of axes to a 1D array
 
                 # Iterate over each metric, generating separate plots, including new timing metrics
@@ -479,7 +483,7 @@ class Benchmark:
                         else:
                             break  # Prevent index out of bounds if metrics exceed subplot slots
                     else:
-                        plt.figure(figsize=(10, 4))
+                        plt.figure(figsize=(x_size, y_size))
                         ax = plt.gca()
 
                     has_data = False  # Flag to check if any data is added to the plot
@@ -600,6 +604,7 @@ class Benchmark:
                 runs_plots_scores = {}
                 limitation_series, limitation_values = 100, 1000
                 block_size_mcar = 10
+                y_p_size = max(4, len(algorithms)*0.275)
 
                 print("\n1. evaluation launch for", dataset,
                       "========================================================\n\n\n")
@@ -707,8 +712,8 @@ class Benchmark:
 
                 save_dir_runs = save_dir + "/run_" + str(i_run) + "/" + dataset
                 print("\n\truns saved in : ", save_dir_runs)
-                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=True, save_dir=save_dir_runs)
-                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=False, save_dir=save_dir_runs)
+                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_runs)
+                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_runs)
                 self.generate_reports_txt(runs_plots_scores, save_dir_runs, dataset, i_run)
                 self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run)
                 run_storage.append(runs_plots_scores)
@@ -729,8 +734,8 @@ class Benchmark:
 
             save_dir_agg_set = save_dir_agg + "/" + dataset_name
 
-            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=True, save_dir=save_dir_agg_set)
-            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=False, save_dir=save_dir_agg_set)
+            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set)
+            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_agg_set)
             self.generate_reports_txt(scores, save_dir_agg_set, dataset_name, -1)
             self.generate_reports_excel(scores, save_dir_agg_set, dataset_name, -1)
 

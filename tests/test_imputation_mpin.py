@@ -22,10 +22,10 @@ class TestMPIN(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.22261999200189642,
-            "MAE": 0.1761226608632749,
-            "MI": 0.07843412505496798,
-            "CORRELATION": 0.30681642218280286
+            "RMSE": 0.19174063274571385,
+            "MAE": 0.1527042210196353,
+            "MI": 0.11795549781189898,
+            "CORRELATION": 0.43110758880863054
         }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.1,
@@ -50,7 +50,7 @@ class TestMPIN(unittest.TestCase):
                                               offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.MPIN(incomp_data).impute(params={"incre_mode": "data+state", "window": 1,
-            "k": 15, "learning_rate": 0.001, "weight_decay": 0.2, "epochs": 6, "threshold": 0.50, "base": "GCN"})
+            "k": 15, "learning_rate": 0.001, "weight_decay": 0.2, "epochs": 6, "num_of_iteration": 6, "threshold": 0.50, "base": "GCN"})
         algo.score(ts_1.data)
         metrics = algo.metrics
 

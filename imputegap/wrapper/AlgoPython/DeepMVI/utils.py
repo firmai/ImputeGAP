@@ -36,7 +36,7 @@ def make_validation(matrix, num_missing=20):
     else:
         block_size = temp.mean() if len(temp) > 0 else 1  # Default to 1 if empty
 
-    block_size = 1  # CURRENT DEBUG TO CHANGE - NATERQ
+    #block_size = 1  # CURRENT DEBUG TO CHANGE - NATERQ
 
     # Compute kernel size w
     w = int(10 * np.log10(max(block_size, 1)))  # Avoid log of zero or negative values

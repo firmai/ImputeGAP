@@ -6,6 +6,10 @@ from imputegap.wrapper.AlgoPython.MRNN.M_RNN import M_RNN
 
 def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, seq_length=7):
 
+    print("\t\t(PYTHON) MRNN: Matrix Shape: (", matrix_in.shape[0], ", ", matrix_in.shape[1], ") "
+        "for hidden_dim ", hidden_dim, ", learning_rate ", learning_rate, " iterations ", iterations,
+          " seq_length ", seq_length, "...")
+
     matrix_in = np.array(matrix_in).T
 
     _, trainZ, trainM, trainT, testX, testZ, testM, testT, dmin, dmax, train_size, x = Data_Loader.Data_Loader_With_Dataset(

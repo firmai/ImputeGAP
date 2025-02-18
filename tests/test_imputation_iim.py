@@ -18,7 +18,7 @@ class TestIIM(unittest.TestCase):
         incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10,
                                               offset=0.1, seed=True)
 
-        algo = Imputation.Statistics.IIM(incomp_data)
+        algo = Imputation.MachineLearning.IIM(incomp_data)
         algo.impute()
         algo.score(ts_1.data)
 

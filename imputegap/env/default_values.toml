@@ -28,6 +28,38 @@ lvalue = 1.0
 [svt]
 tau = 0.2
 
+[trmf]
+lags = []
+K = 10
+lambda_f = 0.1
+lambda_x = 0.1
+lambda_w = 0.1
+eta = 1
+alpha = 10
+max_iter = 100
+
+# ALGORITHM DEFAULT VALUES : MACHINE LEARNING
+[iim]
+learning_neighbors = 10
+algorithm_code = "iim 2"
+
+[mice]
+max_iter = 1
+tol = 0.001
+initial_strategy = "mean"
+seed = 42
+
+[miss_forest]
+n_estimators = 10
+max_iter = 3
+max_features = "sqrt"
+seed = 42
+
+[xgboost]
+n_estimators = 3
+seed = 42
+
+
 
 # ALGORITHM DEFAULT VALUES : PATTERN SEARCH
 [stmvl]
@@ -44,10 +76,6 @@ approximation = true
 rank = 4
 
 # ALGORITHM DEFAULT VALUES : STATISTICS
-[iim]
-learning_neighbors = 10
-algorithm_code = "iim 2"
-
 [knn]
 k = 5
 weights = "uniform"
@@ -67,15 +95,27 @@ sequence_length = 7
 [brits]
 model = "brits_i_univ"
 epoch = 10
-batch_size = 10
+batch_size = 64
 nbr_features = 1
 hidden_layers = 64
 
 [deep_mvi]
-max_epoch = 100
+max_epoch = 1000
 patience = 2
+lr = 0.001
 
 [mpin]
+incre_mode = "alone"
+window = 1
+k = 10
+learning_rate = 0.01
+weight_decay = 0.1
+epochs = 200
+num_of_iteration = 5
+threshold = 0.25
+base = "SAGE"
+
+[mpin_old]
 incre_mode = "data+state+transfer"
 window = 1
 k = 10

@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.DeepMVI.recoveryDeepMVI import deep_mvi_recovery
 
 
-def deep_mvi(incomp_data, max_epoch=1000, patience=2, logs=True):
+def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True):
     """
     Perform imputation using the DEEP MVI (Deep Multivariate Imputation) algorithm.
 
@@ -11,10 +11,12 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, logs=True):
     ----------
     incomp_data : numpy.ndarray
         The input matrix with contamination (missing values represented as NaNs).
-    max_epoch : int
+    max_epoch : int, optional
         Limit of training epoch (default is 1000)
-    patience : int
+    patience : int, optional
         Number of threshold error that can be crossed during the training (default is 2)
+    lr : float, optional
+        Learning rate of the training (default is 0.001)
     logs : bool, optional
         Whether to log the execution time (default is True).
 
@@ -25,7 +27,7 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, logs=True):
 
     Example
     -------
-    >>> recov_data = deep_mvi(incomp_data, 1000, 2)
+    >>> recov_data = deep_mvi(incomp_data, 1000, 2, 0.001)
     >>> print(recov_data)
 
     References
@@ -34,7 +36,7 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, logs=True):
     """
     start_time = time.time()  # Record start time
 
-    recov_data = deep_mvi_recovery(input=incomp_data, max_epoch=max_epoch, patience=patience)
+    recov_data = deep_mvi_recovery(input=incomp_data, max_epoch=max_epoch, patience=patience, lr=lr)
 
     end_time = time.time()
     if logs:

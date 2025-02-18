@@ -10,21 +10,23 @@ class TestTKCM(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with TKCM has the expected outcome
         """
-        ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("eeg-alcohol"))
-        ts_1.normalize(normalizer="min_max")
+        ts_x = TimeSeries()
+        ts_x.load_series(utils.search_path("airq"))
+        ts_x.data = ts_x.data.T
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True)
+        miss_ts = ts_x.Contamination.missing_percentage(ts_x.data.T, dataset_rate=0.1, series_rate=0.2)
+        miss_ts = miss_ts.T
 
-        algo = Imputation.PatternSearch.TKCM(incomp_data).impute()
-        algo.score(ts_1.data)
-        metrics = algo.metrics
+        algo2 = Imputation.PatternSearch.TKCM(miss_ts).impute()
+        algo2.score(ts_x.data, algo2.recov_data)
+        metrics = algo2.metrics
+        ts_x.print_results(algo2.metrics, algorithm=algo2.algorithm)
 
         expected_metrics = {
-            "RMSE": 100,
-            "MAE": 100,
-            "MI": 0.0,
-            "CORRELATION": 0
+            "RMSE": 1.2089644212693214,
+            "MAE": 1.0752244263272457,
+            "MI": 0.13095109995310927,
+            "CORRELATION": 0.06884749318217419
         }
 
         assert np.isclose(metrics["RMSE"], expected_metrics["RMSE"]), f"RMSE mismatch: expected {expected_metrics['RMSE']}, got {metrics['RMSE']}"

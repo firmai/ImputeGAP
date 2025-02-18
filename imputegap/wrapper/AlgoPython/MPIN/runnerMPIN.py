@@ -54,13 +54,13 @@ def get_window_data(base_X, base_X_mask, start, end, ratio):
 
 def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=None, X_last=None, mask_last=None,
                       mae_last=None, transfer=False, lr=0.01, weight_decay=0.1, epochs=200, out_channels=256,
-                      state=True, k=10, base="SAGE", thre=0.25, eval_ratio=0.05, dynamic=True, device=None):
+                      state=True, k=10, base="SAGE", thre=0.25, eval_ratio=0.05, dynamic=False, device=None):
 
     X, X_mask = get_window_data(base_X=input, base_X_mask=mask, start=start, end=end, ratio=sample_ratio)
 
-    print("\t\t\t(PYTHON) window_imputation: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
+    print("\n\n\t\t\t(PYTHON) window_imputation: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
           " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " threshold ", thre,
-          ", and base ", base, "...")
+          ", and base ", base, "=================================================\n\n ")
 
     ori_X = copy.copy(X)
     feature_dim = ori_X.shape[1]
@@ -110,8 +110,6 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
     X_mask = torch.LongTensor(X_mask).to(device)
     eval_X = torch.FloatTensor(eval_X).to(device)
     eval_mask = torch.LongTensor(eval_mask).to(device)
-
-
 
     # build model
     if dynamic == 'true':
@@ -225,23 +223,22 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
     return best_state_dict, keep_X.tolist(), keep_mask, results_list, min_mae_error, best_X_imputed
 
 
-def recoverMPIN(input, mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, thre=0.25,
-                base="SAGE", out_channels=64, eval_ratio=0.05, state=True, dynamic=True):
+def recoverMPIN(input, mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, num_of_iteration=5, thre=0.25,
+                base="SAGE", out_channels=64, eval_ratio=0.05, state=True, dynamic=True, seed=0):
 
     print("\t\t(PYTHON) MPIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for mode ", mode,
-          ", window ", window, " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " threshold ", thre,
-          ", and base ", base, "...")
+          ", window ", window, " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " num_of_iteration ",
+          num_of_iteration, " threshold ", thre, ", and base ", base, "...")
 
-    torch.random.manual_seed(0)
+    torch.random.manual_seed(seed)
     device = torch.device('cpu')
 
-    random.seed(42)
+    random.seed(seed)
     base_X = input
     base_X_mask = (~np.isnan(base_X)).astype(int)
     base_X = np.nan_to_num(base_X)
 
     num_windows = window
-    num_of_iteration = epochs
 
     results_schema = ['opt_epoch', 'opt_mae', 'mse', 'mape', 'para', 'memo', 'opt_time', 'tot_time']
 
