@@ -221,6 +221,7 @@ TREE
    :caption: Contents:
 
    getting_started
+   datasets
    tutorials
    references
    GitHub Repository <https://github.com/eXascaleInfolab/ImputeGAP/>
