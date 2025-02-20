@@ -211,7 +211,7 @@ class TimeSeries:
         if limit_series < nbr_series:
             print("...")
 
-        print("\nshape of the time series :", to_print.shape, "\n\tnumber of series =", nbr_series,
+        print("\nshape of the time series :", self.data.shape, "\n\tnumber of series =", nbr_series,
               "\n\tnumber of values =", nbr_values, "\n\n")
 
     def print_results(self, metrics, algorithm="", text="Imputation Results of"):

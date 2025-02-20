@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>imputegap.tools.utils &#8212; imputegap 1.0.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=56c4699f" />
+    <script src="../../../_static/documentation_options.js?v=71272d9f"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for imputegap.tools.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ctypes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">toml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.resources</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">__numpy_import</span><span class="p">;</span>
+
+
+<div class="viewcode-block" id="config_impute_algorithm">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.config_impute_algorithm">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">config_impute_algorithm</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configure and execute algorithm for selected imputation imputer and pattern.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    incomp_data : TimeSeries</span>
+<span class="sd">        TimeSeries object containing dataset.</span>
+<span class="sd">    algorithm : str</span>
+<span class="sd">        Name of algorithm</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    BaseImputer</span>
+<span class="sd">        Configured imputer instance with optimal parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
+
+    <span class="c1"># 1st generation</span>
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+
+    <span class="c1"># 2nd generation</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iterative_svd&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iter_svd&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">IterativeSVD</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;grouse&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">GROUSE</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;dynammo&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">DynaMMo</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;rosl&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">ROSL</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;soft_impute&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;soft_imp&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">SoftImpute</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;spirit&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">SPIRIT</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;svt&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">SVT</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;tkcm&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">TKCM</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;deep_mvi&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">DeepMVI</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;brits&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">BRITS</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mpin&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MPIN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pristi&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">PRISTI</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+
+    <span class="c1"># 3rd generation</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">KNN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;interpolation&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">Interpolation</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mean_series&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">MeanImputeBySeries</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;trmf&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">TRMF</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mice&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">MICE</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_forest&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">MissForest</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;xgboost&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">XGBOOST</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_net&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MissNet</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">MeanImpute</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">imputer</span></div>
+
+
+
+<div class="viewcode-block" id="config_contamination">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.config_contamination">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">config_contamination</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">dataset_rate</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">std_dev</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configure and execute contamination for selected imputation algorithm and pattern.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rate : float</span>
+<span class="sd">        Mean parameter for contamination missing percentage rate.</span>
+<span class="sd">    ts_test : TimeSeries</span>
+<span class="sd">        A TimeSeries object containing dataset.</span>
+<span class="sd">    pattern : str</span>
+<span class="sd">        Type of contamination pattern (e.g., &quot;mcar&quot;, &quot;mp&quot;, &quot;blackout&quot;, &quot;disjoint&quot;, &quot;overlap&quot;, &quot;gaussian&quot;).</span>
+<span class="sd">    block_size_mcar : int</span>
+<span class="sd">        Size of blocks removed in MCAR</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TimeSeries</span>
+<span class="sd">        TimeSeries object containing contaminated data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dataset_rate</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="n">explainer</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mp&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dataset_rate</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;disjoint&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">disjoint</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;overlap&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">overlap</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="n">shift</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;gaussian&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dataset_rate</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">std_dev</span><span class="o">=</span><span class="n">std_dev</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">blackout</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">incomp_data</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">__marshal_as_numpy_column</span><span class="p">(</span><span class="n">__ctype_container</span><span class="p">,</span> <span class="n">__py_sizen</span><span class="p">,</span> <span class="n">__py_sizem</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Marshal a ctypes container as a numpy column-major array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    __ctype_container : ctypes.Array</span>
+<span class="sd">        The input ctypes container (flattened matrix).</span>
+<span class="sd">    __py_sizen : int</span>
+<span class="sd">        The number of rows in the numpy array.</span>
+<span class="sd">    __py_sizem : int</span>
+<span class="sd">        The number of columns in the numpy array.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        A numpy array reshaped to the original matrix dimensions (row-major order).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__numpy_marshal</span> <span class="o">=</span> <span class="n">__numpy_import</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">__ctype_container</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">__py_sizem</span><span class="p">,</span> <span class="n">__py_sizen</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">__numpy_marshal</span><span class="p">;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">__marshal_as_native_column</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Marshal a numpy array as a ctypes flat container for passing to native code.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    __py_matrix : numpy.ndarray</span>
+<span class="sd">        The input numpy matrix (2D array).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ctypes.Array</span>
+<span class="sd">        A ctypes array containing the flattened matrix (in column-major order).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__py_input_flat</span> <span class="o">=</span> <span class="n">__numpy_import</span><span class="o">.</span><span class="n">ndarray</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">__py_matrix</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+    <span class="n">__ctype_marshal</span> <span class="o">=</span> <span class="n">__numpy_import</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_ctypes</span><span class="p">(</span><span class="n">__py_input_flat</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">__ctype_marshal</span><span class="p">;</span>
+
+
+<div class="viewcode-block" id="display_title">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.display_title">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">display_title</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Master Thesis&quot;</span><span class="p">,</span> <span class="n">aut</span><span class="o">=</span><span class="s2">&quot;Quentin Nater&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="s2">&quot;ImputeGAP&quot;</span><span class="p">,</span> <span class="n">university</span><span class="o">=</span><span class="s2">&quot;University Fribourg&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display the title and author information.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    title : str, optional</span>
+<span class="sd">        The title of the thesis (default is &quot;Master Thesis&quot;).</span>
+<span class="sd">    aut : str, optional</span>
+<span class="sd">        The author&#39;s name (default is &quot;Quentin Nater&quot;).</span>
+<span class="sd">    lib : str, optional</span>
+<span class="sd">        The library or project name (default is &quot;ImputeGAP&quot;).</span>
+<span class="sd">    university : str, optional</span>
+<span class="sd">        The university or institution (default is &quot;University Fribourg&quot;).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> : </span><span class="si">{</span><span class="n">aut</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">lib</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">university</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="search_path">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.search_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">search_path</span><span class="p">(</span><span class="n">set_name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the accurate path for loading test files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    set_name : str, optional</span>
+<span class="sd">        Name of the dataset (default is &quot;test&quot;).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The correct file path for the dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">set_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bafu&quot;</span><span class="p">,</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span> <span class="s2">&quot;climate&quot;</span><span class="p">,</span> <span class="s2">&quot;drift&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-reading&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="s2">&quot;fmri-objectviewing&quot;</span><span class="p">,</span> <span class="s2">&quot;fmri-stoptask&quot;</span><span class="p">,</span> <span class="s2">&quot;meteo&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;test-large&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">set_name</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;../imputegap/dataset/&quot;</span> <span class="o">+</span> <span class="n">set_name</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">filepath</span></div>
+
+
+
+<div class="viewcode-block" id="load_parameters">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.load_parameters">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load default or optimal parameters for algorithms from a TOML file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    query : str, optional</span>
+<span class="sd">        &#39;default&#39; or &#39;optimal&#39; to load default or optimal parameters (default is &quot;default&quot;).</span>
+<span class="sd">    algorithm : str, optional</span>
+<span class="sd">        Algorithm to load parameters for (default is &quot;cdrec&quot;).</span>
+<span class="sd">    dataset : str, optional</span>
+<span class="sd">        Name of the dataset (default is &quot;chlorine&quot;).</span>
+<span class="sd">    optimizer : str, optional</span>
+<span class="sd">        Optimizer type for optimal parameters (default is &quot;b&quot;).</span>
+<span class="sd">    path : str, optional</span>
+<span class="sd">        Custom file path for the TOML file (default is None).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the loaded parameters for the given algorithm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.env&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./default_values.toml&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">filepath</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;./env/default_values.toml&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">path</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+                <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;./env/default_values.toml&quot;</span>
+
+    <span class="k">elif</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;optimal&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;./optimal_parameters_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.params&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">filepath</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;./params/optimal_parameters_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">path</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+                <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;./params/optimal_parameters_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query not found for this function (&#39;optimal&#39; or &#39;default&#39;)&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;./params/optimal_parameters_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">toml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\t\t\t\t</span><span class="s2">(SYS) Inner files loaded : &quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
+        <span class="n">truncation_rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;rank&#39;</span><span class="p">])</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;epsilon&#39;</span><span class="p">])</span>
+        <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;iteration&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">truncation_rank</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
+        <span class="n">window_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;window_size&#39;</span><span class="p">])</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;gamma&#39;</span><span class="p">])</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;alpha&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
+        <span class="n">learning_neighbors</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;learning_neighbors&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+            <span class="n">algo_code</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;algorithm_code&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">learning_neighbors</span><span class="p">,</span> <span class="n">algo_code</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">learning_neighbors</span><span class="p">,)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+        <span class="n">hidden_dim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;hidden_dim&#39;</span><span class="p">])</span>
+        <span class="n">learning_rate</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">])</span>
+        <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;iterations&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+            <span class="n">sequence_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sequence_length&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">sequence_length</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iterative_svd&quot;</span><span class="p">:</span>
+        <span class="n">truncation_rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;rank&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">truncation_rank</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;grouse&quot;</span><span class="p">:</span>
+        <span class="n">max_rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_rank&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">max_rank</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;dynammo&quot;</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;h&#39;</span><span class="p">])</span>
+        <span class="n">max_iteration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_iteration&#39;</span><span class="p">])</span>
+        <span class="n">approximation</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;approximation&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">max_iteration</span><span class="p">,</span> <span class="n">approximation</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;rosl&quot;</span><span class="p">:</span>
+        <span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;rank&#39;</span><span class="p">])</span>
+        <span class="n">regularization</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;regularization&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">regularization</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;soft_impute&quot;</span><span class="p">:</span>
+        <span class="n">max_rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_rank&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">max_rank</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;spirit&quot;</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;k&#39;</span><span class="p">])</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;w&#39;</span><span class="p">])</span>
+        <span class="n">lvalue</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lvalue&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">lvalue</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;svt&quot;</span><span class="p">:</span>
+        <span class="n">tau</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;tau&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">tau</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;tkcm&quot;</span><span class="p">:</span>
+        <span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;rank&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;deep_mvi&quot;</span><span class="p">:</span>
+        <span class="n">max_epoch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_epoch&#39;</span><span class="p">])</span>
+        <span class="n">patience</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;patience&#39;</span><span class="p">])</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lr&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">max_epoch</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">lr</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;brits&quot;</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">])</span>
+        <span class="n">epoch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;epoch&#39;</span><span class="p">])</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;batch_size&#39;</span><span class="p">])</span>
+        <span class="n">nbr_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;nbr_features&#39;</span><span class="p">])</span>
+        <span class="n">hidden_layers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;hidden_layers&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">nbr_features</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mpin&quot;</span><span class="p">:</span>
+        <span class="n">incre_mode</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;incre_mode&#39;</span><span class="p">])</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;window&#39;</span><span class="p">])</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;k&#39;</span><span class="p">])</span>
+        <span class="n">learning_rate</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">])</span>
+        <span class="n">weight_decay</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">])</span>
+        <span class="n">epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;epochs&#39;</span><span class="p">])</span>
+        <span class="n">num_of_iteration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_of_iteration&#39;</span><span class="p">])</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;threshold&#39;</span><span class="p">])</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;base&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">incre_mode</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">weight_decay</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">num_of_iteration</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pristi&quot;</span><span class="p">:</span>
+        <span class="n">target_strategy</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;target_strategy&#39;</span><span class="p">])</span>
+        <span class="n">unconditional</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;unconditional&#39;</span><span class="p">])</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;device&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;k&#39;</span><span class="p">])</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;weights&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;interpolation&quot;</span><span class="p">:</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;method&#39;</span><span class="p">])</span>
+        <span class="n">poly_order</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;poly_order&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">poly_order</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;trmf&quot;</span><span class="p">:</span>
+        <span class="n">lags</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lags&#39;</span><span class="p">])</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;K&#39;</span><span class="p">])</span>
+        <span class="n">lambda_f</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lambda_f&#39;</span><span class="p">])</span>
+        <span class="n">lambda_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lambda_x&#39;</span><span class="p">])</span>
+        <span class="n">lambda_w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lambda_w&#39;</span><span class="p">])</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;eta&#39;</span><span class="p">])</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;alpha&#39;</span><span class="p">])</span>
+        <span class="n">max_iter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_iter&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">lags</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambda_f</span><span class="p">,</span> <span class="n">lambda_x</span><span class="p">,</span> <span class="n">lambda_w</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mice&quot;</span><span class="p">:</span>
+        <span class="n">max_iter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_iter&#39;</span><span class="p">])</span>
+        <span class="n">tol</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;tol&#39;</span><span class="p">])</span>
+        <span class="n">initial_strategy</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;initial_strategy&#39;</span><span class="p">])</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">initial_strategy</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_forest&quot;</span><span class="p">:</span>
+        <span class="n">n_estimators</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">])</span>
+        <span class="n">max_iter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_iter&#39;</span><span class="p">])</span>
+        <span class="n">max_features</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_features&#39;</span><span class="p">])</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_estimators</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">max_features</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;xgboost&quot;</span><span class="p">:</span>
+        <span class="n">n_estimators</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">])</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_estimators</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_net&quot;</span><span class="p">:</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;alpha&#39;</span><span class="p">])</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;beta&#39;</span><span class="p">])</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;L&#39;</span><span class="p">])</span>
+        <span class="n">n_cl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_cl&#39;</span><span class="p">])</span>
+        <span class="n">max_iter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_iter&#39;</span><span class="p">])</span>
+        <span class="n">tol</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;tol&#39;</span><span class="p">])</span>
+        <span class="n">random_init</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;random_init&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">n_cl</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">random_init</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;greedy&quot;</span><span class="p">:</span>
+        <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_calls</span><span class="p">,</span> <span class="p">[</span><span class="n">metrics</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">:</span>
+        <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
+        <span class="n">n_random_starts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_random_starts&#39;</span><span class="p">])</span>
+        <span class="n">acq_func</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;acq_func&#39;</span><span class="p">])</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;bayesian&#39;</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_calls</span><span class="p">,</span> <span class="n">n_random_starts</span><span class="p">,</span> <span class="n">acq_func</span><span class="p">,</span> <span class="p">[</span><span class="n">metrics</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pso&quot;</span><span class="p">:</span>
+        <span class="n">n_particles</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_particles&#39;</span><span class="p">])</span>
+        <span class="n">c1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;c1&#39;</span><span class="p">])</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;c2&#39;</span><span class="p">])</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;w&#39;</span><span class="p">])</span>
+        <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;iterations&#39;</span><span class="p">])</span>
+        <span class="n">n_processes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_processes&#39;</span><span class="p">])</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">n_processes</span><span class="p">,</span> <span class="p">[</span><span class="n">metrics</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;sh&quot;</span><span class="p">:</span>
+        <span class="n">num_configs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_configs&#39;</span><span class="p">])</span>
+        <span class="n">num_iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_iterations&#39;</span><span class="p">])</span>
+        <span class="n">reduction_factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;reduction_factor&#39;</span><span class="p">])</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">num_configs</span><span class="p">,</span> <span class="n">num_iterations</span><span class="p">,</span> <span class="n">reduction_factor</span><span class="p">,</span> <span class="p">[</span><span class="n">metrics</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">:</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
+        <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
+        <span class="n">max_concurrent_trials</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_concurrent_trials&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">([</span><span class="n">metrics</span><span class="p">],</span> <span class="n">n_calls</span><span class="p">,</span> <span class="n">max_concurrent_trials</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-naive&quot;</span><span class="p">:</span>
+        <span class="n">strategy</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;strategy&#39;</span><span class="p">])</span>
+        <span class="n">window_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;window_length&#39;</span><span class="p">])</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;strategy&quot;</span><span class="p">:</span> <span class="n">strategy</span><span class="p">,</span> <span class="s2">&quot;window_length&quot;</span><span class="p">:</span> <span class="n">window_length</span><span class="p">,</span> <span class="s2">&quot;sp&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-exp-smoothing&quot;</span><span class="p">:</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;trend&#39;</span><span class="p">])</span>
+        <span class="n">seasonal</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seasonal&#39;</span><span class="p">])</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;trend&quot;</span><span class="p">:</span> <span class="n">trend</span><span class="p">,</span> <span class="s2">&quot;seasonal&quot;</span><span class="p">:</span> <span class="n">seasonal</span><span class="p">,</span> <span class="s2">&quot;sp&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-prophet&quot;</span><span class="p">:</span>
+        <span class="n">seasonality_mode</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seasonality_mode&#39;</span><span class="p">])</span>
+        <span class="n">n_changepoints</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_changepoints&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;seasonality_mode&quot;</span><span class="p">:</span> <span class="n">seasonality_mode</span><span class="p">,</span> <span class="s2">&quot;n_changepoints&quot;</span><span class="p">:</span> <span class="n">n_changepoints</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;colors&quot;</span><span class="p">:</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">colors</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;other&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">config</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">(SYS) Default/Optimal config not found for this algorithm&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="verification_limitation">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.verification_limitation">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">verification_limitation</span><span class="p">(</span><span class="n">percentage</span><span class="p">,</span> <span class="n">low_limit</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">high_limit</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Format and verify that the percentage given by the user is within acceptable bounds.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    percentage : float</span>
+<span class="sd">        The percentage value to be checked and potentially adjusted.</span>
+<span class="sd">    low_limit : float, optional</span>
+<span class="sd">        The lower limit of the acceptable percentage range (default is 0.01).</span>
+<span class="sd">    high_limit : float, optional</span>
+<span class="sd">        The upper limit of the acceptable percentage range (default is 1.0).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        Adjusted percentage based on the limits.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the percentage is outside the accepted limits.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - If the percentage is between 1 and 100, it will be divided by 100 to convert it to a decimal format.</span>
+<span class="sd">    - If the percentage is outside the low and high limits, the function will print a warning and return the original value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">low_limit</span> <span class="o">&lt;=</span> <span class="n">percentage</span> <span class="o">&lt;=</span> <span class="n">high_limit</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">percentage</span>  <span class="c1"># No modification needed</span>
+
+    <span class="k">elif</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">percentage</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The percentage </span><span class="si">{</span><span class="n">percentage</span><span class="si">}</span><span class="s2"> is between 1 and 100. Dividing by 100 to convert to a decimal.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">percentage</span> <span class="o">/</span> <span class="mi">100</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The percentage is out of the acceptable range.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_share_lib">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.load_share_lib">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_share_lib</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;lib_cdrec&quot;</span><span class="p">,</span> <span class="n">lib</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load the shared library based on the operating system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        The name of the shared library (default is &quot;lib_cdrec&quot;).</span>
+<span class="sd">    lib : bool, optional</span>
+<span class="sd">        If True, the function loads the library from the default &#39;imputegap&#39; path; if False, it loads from a local path (default is True).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ctypes.CDLL</span>
+<span class="sd">        The loaded shared library object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">lib</span><span class="p">:</span>
+        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.algorithms.lib&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">local_path_lin</span> <span class="o">=</span> <span class="s1">&#39;./algorithms/lib/&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.so&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">):</span>
+            <span class="n">local_path_lin</span> <span class="o">=</span> <span class="s1">&#39;./imputegap/algorithms/lib/&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.so&#39;</span>
+
+        <span class="n">lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">local_path_lin</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t</span><span class="s2">(SYS) lib loaded from:&quot;</span><span class="p">,</span> <span class="n">lib_path</span><span class="p">)</span>
+
+
+    <span class="k">return</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="n">lib_path</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="save_optimization">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.save_optimization">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_optimization</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save the optimization parameters to a TOML file for later use without recomputing.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    optimal_params : dict</span>
+<span class="sd">        Dictionary of the optimal parameters.</span>
+<span class="sd">    algorithm : str, optional</span>
+<span class="sd">        The name of the imputation algorithm (default is &#39;cdrec&#39;).</span>
+<span class="sd">    dataset : str, optional</span>
+<span class="sd">        The name of the dataset (default is an empty string).</span>
+<span class="sd">    optimizer : str, optional</span>
+<span class="sd">        The name of the optimizer used (default is &#39;b&#39;).</span>
+<span class="sd">    file_name : str, optional</span>
+<span class="sd">        The name of the TOML file to save the results (default is None).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">file_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;../params/optimal_parameters_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="n">dir_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dir_name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;num_iter&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;seq_len&quot;</span><span class="p">:</span> <span class="mi">7</span>  <span class="c1"># Default value</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;window_size&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;learning_neighbors&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;eps&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;iters&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iterative_svd&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;grouse&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span><span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;max_rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;rosl&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;regularization&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;soft_impute&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;max_rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;spirit&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;lvalue&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;svt&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;tau&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;delta&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;dynammo&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;max_iteration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;approximation&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;tkcm&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;brits&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;hidden_layers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;deep_mvi&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;max_epoch&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;patience&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mpin&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;incre_mode&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+            <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+            <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span>
+            <span class="s2">&quot;num_of_iteration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span>
+            <span class="s2">&quot;threshold&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span>
+            <span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pristi&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;target_strategy&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">&quot;unconditional&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>  <span class="c1"># Default seed</span>
+            <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;cpu&quot;</span>  <span class="c1"># Default device</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;weights&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;interpolation&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;poly_order&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mice&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;tol&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;initial_strategy&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_forest&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_forest&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span>
+        <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_net&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;L&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;n_cl&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
+            <span class="s2">&quot;tol&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span>
+            <span class="s2">&quot;random_init&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">(SYS) Algorithm </span><span class="si">{</span><span class="n">algorithm</span><span class="si">}</span><span class="s2"> is not recognized.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">toml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">params_to_save</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">(SYS) Optimization parameters successfully saved to </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">(SYS) An error occurred while saving the file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo of imputegap"/>
+            </a></p>
+<h1 class="logo"><a href="../../../index.html">imputegap</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Quentin Nater.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

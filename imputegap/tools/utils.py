@@ -75,6 +75,8 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.MachineLearning.MissForest(incomp_data)
     elif algorithm == "xgboost":
         imputer = Imputation.MachineLearning.XGBOOST(incomp_data)
+    elif algorithm == "miss_net":
+        imputer = Imputation.DeepLearning.MissNet(incomp_data)
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
@@ -387,6 +389,15 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         n_estimators = int(config[algorithm]['n_estimators'])
         seed = int(config[algorithm]['seed'])
         return (n_estimators, seed)
+    elif algorithm == "miss_net":
+        alpha = float(config[algorithm]['alpha'])
+        beta = float(config[algorithm]['beta'])
+        L = int(config[algorithm]['L'])
+        n_cl = int(config[algorithm]['n_cl'])
+        max_iter = int(config[algorithm]['max_iter'])
+        tol = float(config[algorithm]['tol'])
+        random_init = bool(config[algorithm]['random_init'])
+        return (alpha, beta, L, n_cl, max_iter, tol, random_init)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -664,6 +675,16 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         params_to_save = {
             "n_estimators": int(optimal_params[0]),
             "seed": 42
+        }
+    elif algorithm == "miss_net":
+        params_to_save = {
+            "alpha": float(optimal_params[0]),
+            "beta": float(optimal_params[1]),
+            "L": int(optimal_params[2]),
+            "n_cl": int(optimal_params[3]),
+            "max_iter": int(optimal_params[4]),
+            "tol": float(optimal_params[5]),
+            "random_init": bool(optimal_params[6])
         }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")

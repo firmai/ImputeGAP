@@ -24,4 +24,4 @@ ts_1.print_results(cdrec.metrics)
 ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=cdrec.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
 # 7. save hyperparameters
-utils.save_optimization(optimal_params=cdrec.parameters, algorithm=cdrec.parameters, dataset="eeg", optimizer="t")
+utils.save_optimization(optimal_params=cdrec.parameters, algorithm=cdrec.algorithm, dataset="eeg", optimizer="t")

@@ -49,15 +49,15 @@ class TestPRISTI(unittest.TestCase):
         incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10,
                                               offset=0.1, seed=True)
 
-        algo = Imputation.DeepLearning.DeepMVI(incomp_data).impute(params={"max_epoch": 2, "patience": 1})
+        algo = Imputation.DeepLearning.PRISTI(incomp_data).impute(params={"target_strategy":"hybrid", "unconditional":True, "seed":42, "device":"cpu"})
         algo.score(ts_1.data)
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.1690715526095932,
-            "MAE": 0.13388758439952558,
-            "MI": 0.15434092306173158,
-            "CORRELATION": 0.5149574975210701
+            "RMSE": 56.92715121574767,
+            "MAE": 45.72093928559217,
+            "MI": 0.024087511524174616,
+            "CORRELATION": -0.01583714423419342
         }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 1.1,

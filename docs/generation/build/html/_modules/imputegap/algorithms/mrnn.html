@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>imputegap.algorithms.mrnn &#8212; imputegap 1.0.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=56c4699f" />
+    <script src="../../../_static/documentation_options.js?v=71272d9f"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for imputegap.algorithms.mrnn</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.wrapper.AlgoPython.MRNN.runnerMRNN</span><span class="w"> </span><span class="kn">import</span> <span class="n">mrnn_recov</span>
+
+
+<div class="viewcode-block" id="mrnn">
+<a class="viewcode-back" href="../../../imputegap.mrnn.html#imputegap.algorithms.mrnn.mrnn">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mrnn</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">sequence_length</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform imputation using the Multivariate Recurrent Neural Network (MRNN) algorithm.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    incomp_data : numpy.ndarray</span>
+<span class="sd">        The input matrix with contamination (missing values represented as NaNs).</span>
+<span class="sd">    hidden_dim : int</span>
+<span class="sd">        The number of hidden dimensions in the MRNN model.</span>
+<span class="sd">    learning_rate : float</span>
+<span class="sd">        The learning rate for the training process.</span>
+<span class="sd">    iterations : int</span>
+<span class="sd">        The number of iterations for training the MRNN model.</span>
+<span class="sd">    sequence_length : int</span>
+<span class="sd">        The length of sequences used within the MRNN model.</span>
+<span class="sd">    logs : bool, optional</span>
+<span class="sd">        Whether to log the execution time (default is True).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        The imputed matrix with missing values recovered.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The MRNN algorithm is a machine learning-based approach for time series imputation, where missing values are recovered using a recurrent neural network structure.</span>
+
+<span class="sd">    This function logs the total execution time if `logs` is set to True.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; recov_data = mrnn(incomp_data, hidden_dim=64, learning_rate=0.001, iterations=1000, sequence_length=7)</span>
+<span class="sd">    &gt;&gt;&gt; print(recov_data)</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    J. Yoon, W. R. Zame and M. van der Schaar, &quot;Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks,&quot; in IEEE Transactions on Biomedical Engineering, vol. 66, no. 5, pp. 1477-1490, May 2019, doi: 10.1109/TBME.2018.2874712. keywords: {Time measurement;Interpolation;Estimation;Medical diagnostic imaging;Correlation;Recurrent neural networks;Biomedical measurement;Missing data;temporal data streams;imputation;recurrent neural nets}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
+
+    <span class="n">recov_data</span> <span class="o">=</span> <span class="n">mrnn_recov</span><span class="p">(</span><span class="n">matrix_in</span><span class="o">=</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
+                            <span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span> <span class="n">seq_length</span><span class="o">=</span><span class="n">sequence_length</span><span class="p">)</span>
+
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">logs</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">&gt; logs, imputation mrnn - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">recov_data</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo of imputegap"/>
+            </a></p>
+<h1 class="logo"><a href="../../../index.html">imputegap</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Quentin Nater.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

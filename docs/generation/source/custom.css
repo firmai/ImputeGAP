@@ -1,3 +1,21 @@
-.wy-side-nav-search {
-    background-color: #123456;
+body {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    color: #333;
+    background-color: #ffffff;
+}
+
+.wy-nav-side {
+    background: #f5f5f5;
+}
+
+.wy-menu-vertical a {
+    color: #222;
+    font-weight: bold;
+}
+
+.rst-content .note {
+    background-color: #eef4fc;
+    border-left: 5px solid #3b7ddd;
+    padding: 10px;
 }

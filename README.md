@@ -46,6 +46,40 @@ ImputeGAP is a comprehensive framework designed for time series imputation algor
 
 ---
 
+## Category of Algorithms
+| **CATEGORIES**    | **Algorithms**     | **CONTAMINATION** | **IMPUTATION** | **OPTIMIZATION** | **EXPLAINER** |
+|:------------------|:-------------------|:--------------:|:-----------------:|:----------------:|:-------------:|
+| Matrix Completion | CDRec              |       ✅        |         ✅         |        ✅         |       ✅       |
+| Matrix Completion | IterativeSVD       |       ✅        |         ✅         |        ✅         |       ✅       |
+| Matrix Completion | GROUSE             |       ✅        |         ✅         |        ✅         |       ✅       |
+| Matrix Completion | ROSL               |       ✅        |         ✅         |        ✅         |       ✅       |
+| Matrix Completion | SPIRIT             |       ✅        |         ✅         |        ✅         |       ✅       |
+| Matrix Completion | SoftImpute         |       ✅        |         ✅         |        ✅         |       ✅       |
+| Matrix Completion | SVT                |       ✅        |         ✅         |        ✅         |       ✅       |
+| Matrix Completion | TRMF               |       ✅        |         ✅         |        ✅         |       ✅       |
+| Pattern Search    | ST-MVL             |       ✅        |         ✅         |        ✅         |       ✅       |
+| Pattern Search    | DynaMMo            |       ✅        |         ✅         |        ✅         |       ✅       |
+| Pattern Search    | TKCM               |       ✅        |         ✅         |        ✅         |       ✅       |
+| Machine Learning  | IIM                |       ✅        |         ✅         |        ✅         |       ✅       |
+| Machine Learning  | XGBI               |       ✅        |         ✅         |        ✅         |       ✅       |
+| Machine Learning  | Mice               |       ✅        |         ✅         |        ✅         |       ✅       |
+| Machine Learning  | MissForest         |       ✅        |         ✅         |        ✅         |       ✅       |
+| Statistics        | KNNImpute          |       ✅        |         ✅         |        ✅         |       ✅       |
+| Statistics        | Interpolation      |       ✅        |         ✅         |        ✅         |       ✅       |
+| Statistics        | MinImpute          |       ✅        |         ✅         |        ✅         |       ✅       |
+| Statistics        | MeanImpute         |       ✅        |         ✅         |        ✅         |       ✅       |
+| Statistics        | MeanImputeBySeries |       ✅        |         ✅         |        ✅         |       ✅       |
+| Deep Learning     | MRNN               |       ✅        |         ✅         |        ✅         |       ✅       |
+| Deep Learning     | BRITS              |       ✅        |         ✅         |        ✅         |       ✅       |
+| Deep Learning     | DeepMVI            |       ✅        |         ✅         |        ✅         |       ✅       |
+| Deep Learning     | MPIN               |       ✅        |         ✅         |        ✅         |       ✅       |
+| Deep Learning     | PriSTI             |       ✅        |         ✅         |        ✅         |       ✅       |
+| Deep Learning     | MissNet            |       ✅        |         ✅         |        ✅         |       ✅       |
+
+
+
+---
+
 ## System Requirements
 
 The following prerequisites are required to use ImputeGAP:

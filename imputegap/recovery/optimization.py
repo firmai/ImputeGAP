@@ -605,8 +605,6 @@ class Optimization:
             ----------
             input_data : numpy.ndarray
                 The ground truth time series dataset.
-            incomp_data : numpy.ndarray
-                The contaminated time series dataset to impute.
             metrics : list of str, optional
                 List of selected metrics for optimization (default is ["RMSE"]).
             algorithm : str, optional

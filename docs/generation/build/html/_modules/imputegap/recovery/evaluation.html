@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>imputegap.recovery.evaluation &#8212; imputegap 1.0.4 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=56c4699f" />
+    <script src="../../../_static/documentation_options.js?v=71272d9f"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="https://www.naterscreations.com/imputegap/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for imputegap.recovery.evaluation</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mutual_info_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">pearsonr</span>
+
+
+<div class="viewcode-block" id="Evaluation">
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Evaluation</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    compute_all_metrics():</span>
+<span class="sd">        Compute various evaluation metrics (RMSE, MAE, MI, CORRELATION) for the imputation.</span>
+<span class="sd">    compute_rmse():</span>
+<span class="sd">        Compute the Root Mean Squared Error (RMSE) between the ground truth and the imputed values.</span>
+<span class="sd">    compute_mae():</span>
+<span class="sd">        Compute the Mean Absolute Error (MAE) between the ground truth and the imputed values.</span>
+<span class="sd">    compute_mi():</span>
+<span class="sd">        Compute the Mutual Information (MI) between the ground truth and the imputed values.</span>
+<span class="sd">    compute_correlation():</span>
+<span class="sd">        Compute the Pearson correlation coefficient between the ground truth and the imputed values.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">recov_data</span><span class="p">,</span> <span class="n">incomp_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the Evaluation class with ground truth, imputation, and incomp_data time series.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_data : numpy.ndarray</span>
+<span class="sd">            The original time series without contamination.</span>
+<span class="sd">        recov_data : numpy.ndarray</span>
+<span class="sd">            The imputed time series.</span>
+<span class="sd">        incomp_data : numpy.ndarray</span>
+<span class="sd">            The time series with contamination (NaN values).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span> <span class="o">=</span> <span class="n">input_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">recov_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span> <span class="o">=</span> <span class="n">incomp_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">large_error</span> <span class="o">=</span> <span class="mi">100</span>
+
+<div class="viewcode-block" id="Evaluation.compute_all_metrics">
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_all_metrics">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_all_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.</span>
+
+<span class="sd">        The metrics include RMSE, MAE, Mutual Information (MI), and Pearson Correlation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing the computed metrics:</span>
+<span class="sd">            - &quot;RMSE&quot;: Root Mean Squared Error</span>
+<span class="sd">            - &quot;MAE&quot;: Mean Absolute Error</span>
+<span class="sd">            - &quot;MI&quot;: Mutual Information</span>
+<span class="sd">            - &quot;CORRELATION&quot;: Pearson Correlation Coefficient</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rmse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_rmse</span><span class="p">()</span>
+        <span class="n">mae</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_mae</span><span class="p">()</span>
+        <span class="n">mi_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_mi</span><span class="p">()</span>
+        <span class="n">correlation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_correlation</span><span class="p">()</span>
+
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;RMSE&quot;</span><span class="p">:</span> <span class="n">rmse</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">:</span> <span class="n">mae</span><span class="p">,</span> <span class="s2">&quot;MI&quot;</span><span class="p">:</span> <span class="n">mi_d</span><span class="p">,</span> <span class="s2">&quot;CORRELATION&quot;</span><span class="p">:</span> <span class="n">correlation</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">metrics</span></div>
+
+
+<div class="viewcode-block" id="Evaluation.compute_rmse">
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_rmse">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_rmse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the Root Mean Squared Error (RMSE) between the ground truth and imputed values for NaN positions in contamination.</span>
+
+<span class="sd">        The RMSE measures the average magnitude of the error between the imputed values and the ground truth,</span>
+<span class="sd">        giving higher weight to large errors.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The RMSE value for NaN positions in the contamination dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nan_locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">)</span>
+
+        <span class="n">mse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">rmse</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">large_error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extreme error detected, limited to &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">large_error</span><span class="p">)</span>
+            <span class="n">rmse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">large_error</span>
+
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">rmse</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Evaluation.compute_mae">
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mae">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_mae</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the Mean Absolute Error (MAE) between the ground truth and imputed values for NaN positions in contamination.</span>
+
+<span class="sd">        The MAE measures the average magnitude of the error in absolute terms, making it more robust to outliers than RMSE.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The MAE value for NaN positions in the contamination dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nan_locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">)</span>
+
+        <span class="n">absolute_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">])</span>
+        <span class="n">mean_absolute_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">absolute_error</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mean_absolute_error</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">large_error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extreme error detected, limited to &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">large_error</span><span class="p">)</span>
+            <span class="n">mean_absolute_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">large_error</span>
+
+        <span class="k">return</span> <span class="n">mean_absolute_error</span></div>
+
+
+<div class="viewcode-block" id="Evaluation.compute_mi">
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_mi">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_mi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the Mutual Information (MI) between the ground truth and imputed values for NaN positions in contamination.</span>
+
+<span class="sd">        MI measures the amount of shared information between the ground truth and the imputed values,</span>
+<span class="sd">        indicating how well the imputation preserves the underlying patterns of the data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The mutual information (MI) score for NaN positions in the contamination dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nan_locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">)</span>
+
+        <span class="c1"># Discretize the continuous data into bins</span>
+        <span class="n">input_data_binned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">],</span>
+                                          <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+        <span class="n">imputation_binned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">],</span>
+                                        <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+
+        <span class="n">mi_discrete</span> <span class="o">=</span> <span class="n">mutual_info_score</span><span class="p">(</span><span class="n">input_data_binned</span><span class="p">,</span> <span class="n">imputation_binned</span><span class="p">)</span>
+        <span class="c1"># mi_continuous = mutual_info_score(self.input_data[nan_locations], self.input_data[nan_locations])</span>
+
+        <span class="k">return</span> <span class="n">mi_discrete</span></div>
+
+
+<div class="viewcode-block" id="Evaluation.compute_correlation">
+<a class="viewcode-back" href="../../../imputegap.evaluation.html#imputegap.recovery.evaluation.Evaluation.compute_correlation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_correlation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the Pearson Correlation Coefficient between the ground truth and imputed values for NaN positions in contamination.</span>
+
+<span class="sd">        Pearson Correlation measures the linear relationship between the ground truth and imputed values,</span>
+<span class="sd">        with 1 being a perfect positive correlation and -1 a perfect negative correlation.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The Pearson correlation coefficient for NaN positions in the contamination dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nan_locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">)</span>
+        <span class="n">input_data_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">]</span>
+        <span class="n">imputed_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">]</span>
+
+        <span class="c1"># Check if input data is constant (i.e., no variance)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">input_data_values</span> <span class="o">==</span> <span class="n">input_data_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">imputed_values</span> <span class="o">==</span> <span class="n">imputed_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t\n</span><span class="s2">An input array is constant; the correlation coefficient is not defined, set to 0&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># Return 0 when correlation is not defined</span>
+
+        <span class="n">correlation</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">input_data_values</span><span class="p">,</span> <span class="n">imputed_values</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">correlation</span><span class="p">):</span>
+            <span class="n">correlation</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">correlation</span></div>
+</div>
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo of imputegap"/>
+            </a></p>
+<h1 class="logo"><a href="../../../index.html">imputegap</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../imputegap.html">imputegap package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Quentin Nater.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

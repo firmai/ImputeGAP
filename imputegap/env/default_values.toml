@@ -115,21 +115,20 @@ num_of_iteration = 5
 threshold = 0.25
 base = "SAGE"
 
-[mpin_old]
-incre_mode = "data+state+transfer"
-window = 1
-k = 10
-learning_rate = 0.01
-weight_decay = 0.1
-epochs = 10
-threshold = 0.25
-base = "SAGE"
-
 [pristi]
 target_strategy = "hybrid"
 unconditional = false
 seed = 42
 device = "cpu"
+
+[miss_net]
+alpha = 0.5
+beta = 0.1
+L = 10
+n_cl = 1
+max_iter = 20
+tol = 5
+random_init = false
 
 # OPTIMIZER DEFAULT VALUES ==========================================================================
 [greedy]

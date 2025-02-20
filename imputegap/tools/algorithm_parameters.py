@@ -197,4 +197,14 @@ RAYTUNE_PARAMS = {
         "seed": 42
     },
 
+    "miss_net": {
+        "alpha": tune.grid_search([0.1, 0.5, 1.0]),  # Example search space for alpha
+        "beta": tune.grid_search([0.01, 0.1, 0.5]),  # Example search space for beta
+        "L": tune.grid_search([5, 10, 20]),  # Example search space for L (hidden dimension)
+        "n_cl": 1,  # Number of clusters
+        "max_iter": tune.grid_search([5, 10]),  # Max iterations
+        "tol": tune.grid_search([1, 5, 10]),  # Tolerance values
+        "random_init": False
+    },
+
 }

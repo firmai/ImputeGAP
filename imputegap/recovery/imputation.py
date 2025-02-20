@@ -12,6 +12,7 @@ from imputegap.algorithms.mean_impute import mean_impute
 from imputegap.algorithms.mean_impute_by_series import mean_impute_by_series
 from imputegap.algorithms.mice import mice
 from imputegap.algorithms.miss_forest import miss_forest
+from imputegap.algorithms.miss_net import miss_net
 from imputegap.algorithms.mpin import mpin
 from imputegap.algorithms.pristi import pristi
 from imputegap.algorithms.rosl import rosl
@@ -507,6 +508,14 @@ class Imputation:
                 -------
                 self : Interpolation
                     The object with `recov_data` set.
+
+                Example
+                -------
+                >>> interpolation_imputer = Imputation.Statistics.Interpolation(incomp_data)
+                >>> interpolation_imputer.impute()  # default parameters for imputation > or
+                >>> interpolation_imputer.impute(user_def=True, params={"method":"linear", "poly_order":2})  # user-defined > or
+                >>> interpolation_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
+                >>> recov_data = interpolation_imputer.recov_data
                 """
                 if params is not None:
                     method, poly_order = self._check_params(user_def, params)
@@ -540,10 +549,24 @@ class Imputation:
                 params : dict, optional
                     Parameters of the KNN algorithm, if None, default ones are loaded.
 
+                    **Algorithm parameters:**
+                    k : int, optional
+                        Number of nearest neighbor (default is 5).
+                    weights : str, optional
+                        "uniform" for mean, "distance" for inverse-distance weighting.
+
                 Returns
                 -------
                 self : KNN
                     The object with `recov_data` set.
+
+                Example
+                -------
+                >>> knn_imputer = Imputation.Statistics.KNN(incomp_data)
+                >>> knn_imputer.impute()  # default parameters for imputation > or
+                >>> knn_imputer.impute(user_def=True, params={'k': 5, 'weights': "uniform"})  # user-defined > or
+                >>> knn_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
+                >>> recov_data = knn_imputer.recov_data
                 """
                 if params is not None:
                     k, weights = self._check_params(user_def, params)
@@ -651,6 +674,15 @@ class Imputation:
                         - reduction_factor : int, optional
                             Reduction factor for the number of configurations kept after each iteration.
 
+
+                        **RAY TUNE (ray_tune):**
+
+                        - n_calls : int, optional
+                            Number of calls to the objective function (default is 10).
+                        - max_concurrent_trials : int, optional
+                            Number of trials run in parallel, related to your total memory / cpu / gpu (default is 2).
+                            Please increase the value if you have more resources
+
                 Returns
                 -------
                 self : CDRec
@@ -661,7 +693,7 @@ class Imputation:
                 >>> cdrec_imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
                 >>> cdrec_imputer.impute()  # default parameters for imputation > or
                 >>> cdrec_imputer.impute(user_def=True, params={'rank': 5, 'epsilon': 0.01, 'iterations': 100})  # user-defined > or
-                >>> cdrec_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> cdrec_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # automl with bayesian
                 >>> recov_data = cdrec_imputer.recov_data
 
                 References
@@ -718,7 +750,8 @@ class Imputation:
                 -------
                 >>> i_svd_imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
                 >>> i_svd_imputer.impute()  # default parameters for imputation > or
-                >>> i_svd_imputer.impute(params={'rank': 5})
+                >>> i_svd_imputer.impute(params={'rank': 5}) # user-defined  > or
+                >>> i_svd_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = i_svd_imputer.recov_data
 
                 References
@@ -774,7 +807,8 @@ class Imputation:
                 -------
                 >>> grouse_imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
                 >>> grouse_imputer.impute()  # default parameters for imputation > or
-                >>> grouse_imputer.impute(params={'max_rank': 5})
+                >>> grouse_imputer.impute(params={'max_rank': 5}) # user-defined  > or
+                >>> grouse_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = grouse_imputer.recov_data
 
                 References
@@ -833,7 +867,8 @@ class Imputation:
                 -------
                 >>> rosl_imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
                 >>> rosl_imputer.impute()  # default parameters for imputation > or
-                >>> rosl_imputer.impute(params={'rank': 5, 'regularization': 10})
+                >>> rosl_imputer.impute(params={'rank': 5, 'regularization': 10}) # user-defined  > or
+                >>> rosl_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = rosl_imputer.recov_data
 
                 References
@@ -888,7 +923,8 @@ class Imputation:
                 -------
                 >>> soft_impute_imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
                 >>> soft_impute_imputer.impute()  # default parameters for imputation > or
-                >>> soft_impute_imputer.impute(params={'max_rank': 5})
+                >>> soft_impute_imputer.impute(params={'max_rank': 5}) # user-defined  > or
+                >>> soft_impute_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = soft_impute_imputer.recov_data
 
                 References
@@ -950,7 +986,8 @@ class Imputation:
                 -------
                 >>> spirit_imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
                 >>> spirit_imputer.impute()  # default parameters for imputation > or
-                >>> spirit_imputer.impute(params={'k': 2, 'w': 5, 'lambda_value': 0.85})
+                >>> spirit_imputer.impute(params={'k': 2, 'w': 5, 'lambda_value': 0.85}) # user-defined  > or
+                >>> spirit_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = spirit_imputer.recov_data
 
                 References
@@ -1006,7 +1043,8 @@ class Imputation:
                 -------
                 >>> svt_imputer = Imputation.MatrixCompletion.SVT(incomp_data)
                 >>> svt_imputer.impute()  # default parameters for imputation > or
-                >>> svt_imputer.impute(params={'tau': 1})
+                >>> svt_imputer.impute(params={'tau': 1}) # user-defined  > or
+                >>> svt_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = svt_imputer.recov_data
 
                 References
@@ -1078,7 +1116,8 @@ class Imputation:
                 -------
                 >>> trmf_imputer = Imputation.MatrixCompletion.SVT(incomp_data)
                 >>> trmf_imputer.impute()  # default parameters for imputation > or
-                >>> trmf_imputer.impute(params={"lags":[], "K":-1, "lambda_f":1.0, "lambda_x":1.0, "lambda_w":1.0, "eta":1.0, "alpha":1000.0, "max_iter":100})
+                >>> trmf_imputer.impute(params={"lags":[], "K":-1, "lambda_f":1.0, "lambda_x":1.0, "lambda_w":1.0, "eta":1.0, "alpha":1000.0, "max_iter":100}) # user-defined > or
+                >>> trmf_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = trmf_imputer.recov_data
 
                 References
@@ -1134,6 +1173,24 @@ class Imputation:
                 params : dict, optional
                     Parameters of the miss forest algorithm, if None, default ones are loaded.
 
+                    **Algorithm parameters:**
+
+                    alpha : float, optional
+                        Trade-off parameter controlling the contribution of contextual matrix
+                        and time-series. If alpha = 0, network is ignored. (default 0.5)
+                    beta : float, optional
+                        Regularization parameter for sparsity. (default 0.1)
+                    L : int, optional
+                        Hidden dimension size. (default 10)
+                    n_cl : int, optional
+                        Number of clusters. (default 1)
+                    max_iteration : int, optional
+                        Maximum number of iterations for convergence. (default 20)
+                    tol : float, optional
+                        Tolerance for early stopping criteria.  (default 5)
+                    random_init : bool, optional
+                        Whether to use random initialization for latent variables. (default False)
+
                 Returns
                 -------
                 self : MissForest
@@ -1143,7 +1200,8 @@ class Imputation:
                 -------
                 >>> mf_imputer = Imputation.MachineLearning.MissForest(incomp_data)
                 >>> mf_imputer.impute()  # default parameters for imputation > or
-                >>> mf_imputer.impute(user_def=True, params={"n_estimators":10, "max_iter":3, "max_features":"sqrt", "seed": 42})  # user defined
+                >>> mf_imputer.impute(user_def=True, params={"n_estimators":10, "max_iter":3, "max_features":"sqrt", "seed": 42})  # user defined > or
+                >>> mf_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = mf_imputer.recov_data
 
                 References
@@ -1184,6 +1242,17 @@ class Imputation:
                 params : dict, optional
                     Parameters of the STMVL algorithm, if None, default ones are loaded.
 
+                    **Algorithm parameters:**
+
+                    max_iter : int, optional
+                        Maximum number of imputation rounds to perform before returning the imputations computed during the final round. (default is 3).
+                    tol : float, optional
+                        Tolerance of the stopping condition. (default is 0.001).
+                    initial_strategy : str, optional
+                        Which strategy to use to initialize the missing values. {‘mean’, ‘median’, ‘most_frequent’, ‘constant’} (default is "means").
+                    seed : int, optional
+                        The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).
+
                 Returns
                 -------
                 self : MICE
@@ -1193,7 +1262,8 @@ class Imputation:
                 -------
                 >>> mice_imputer = Imputation.MachineLearning.MICE(incomp_data)
                 >>> mice_imputer.impute()  # default parameters for imputation > or
-                >>> mice_imputer.impute(user_def=True, params={"max_iter":3, "tol":0.001, "initial_strategy":"mean", "seed": 42})  # user defined
+                >>> mice_imputer.impute(user_def=True, params={"max_iter":3, "tol":0.001, "initial_strategy":"mean", "seed": 42})  # user defined > or
+                >>> mice_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = mice_imputer.recov_data
 
                 References
@@ -1234,6 +1304,13 @@ class Imputation:
                 params : dict, optional
                     Parameters of the STMVL algorithm, if None, default ones are loaded.
 
+                    **Algorithm parameters:**
+
+                    n_estimators : int, optional
+                        The number of trees in the Random Forest model used for imputation (default is 10).
+                    seed : int, optional
+                        The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).
+
                 Returns
                 -------
                 self : XGBOOST
@@ -1243,7 +1320,8 @@ class Imputation:
                 -------
                 >>> mxgboost_imputer = Imputation.MachineLearning.MICE(incomp_data)
                 >>> mxgboost_imputer.impute()  # default parameters for imputation > or
-                >>> mxgboost_imputer.impute(user_def=True, params={"n_estimators":3, "seed": 42})  # user defined
+                >>> mxgboost_imputer.impute(user_def=True, params={"n_estimators":3, "seed": 42})  # user defined > or
+                >>> mxgboost_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = mxgboost_imputer.recov_data
 
                 References
@@ -1264,6 +1342,7 @@ class Imputation:
         class IIM(BaseImputer):
             """
             IIM class to impute missing values using Iterative Imputation with Metric Learning (IIM).
+
             Methods
             -------
             impute(self, user_def=True, params=None):
@@ -1297,7 +1376,7 @@ class Imputation:
                 >>> iim_imputer = Imputation.MachineLearning.IIM(incomp_data)
                 >>> iim_imputer.impute()  # default parameters for imputation > or
                 >>> iim_imputer.impute(user_def=True, params={'learning_neighbors': 10})  # user-defined  > or
-                >>> iim_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> iim_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # automl with bayesian
                 >>> recov_data = iim_imputer.recov_data
 
                 References
@@ -1374,7 +1453,7 @@ class Imputation:
                 >>> stmvl_imputer = Imputation.PatternSearch.STMVL(incomp_data)
                 >>> stmvl_imputer.impute()  # default parameters for imputation > or
                 >>> stmvl_imputer.impute(user_def=True, params={'window_size': 7, 'learning_rate':0.01, 'gamma':0.85, 'alpha': 7})  # user-defined  > or
-                >>> stmvl_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> stmvl_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # automl with bayesian
                 >>> recov_data = stmvl_imputer.recov_data
 
                 References
@@ -1433,7 +1512,8 @@ class Imputation:
                 -------
                 >>> dynammo_imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
                 >>> dynammo_imputer.impute()  # default parameters for imputation > or
-                >>> dynammo_imputer.impute(params={'h': 5, 'max_iteration': 100, 'approximation': True})
+                >>> dynammo_imputer.impute(params={'h': 5, 'max_iteration': 100, 'approximation': True}) # user-defined  > or
+                >>> dynammo_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = dynammo_imputer.recov_data
 
                 References
@@ -1487,7 +1567,8 @@ class Imputation:
                 -------
                 >>> tkcm_imputer = Imputation.PatternSearch.TKCM(incomp_data)
                 >>> tkcm_imputer.impute()  # default parameters for imputation > or
-                >>> tkcm_imputer.impute(params={'rank': 5})
+                >>> tkcm_imputer.impute(params={'rank': 5})  # user-defined > or
+                >>> tkcm_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = tkcm_imputer.recov_data
 
                 References
@@ -1535,6 +1616,8 @@ class Imputation:
                 params : dict, optional
                     Parameters of the MRNN algorithm, if None, default ones are loaded.
 
+                     **Algorithm parameters:**
+
                     - hidden_dim : int
                         The number of hidden units in the neural network.
                     - learning_rate : float
@@ -1554,7 +1637,7 @@ class Imputation:
                 >>> mrnn_imputer = Imputation.DeepLearning.MRNN(incomp_data)
                 >>> mrnn_imputer.impute()  # default parameters for imputation > or
                 >>> mrnn_imputer.impute(user_def=True, params={'hidden_dim': 10, 'learning_rate':0.01, 'iterations':50, 'sequence_length': 7})  # user-defined > or
-                >>> mrnn_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # auto-ml with bayesian
+                >>> mrnn_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})  # automl with bayesian
                 >>> recov_data = mrnn_imputer.recov_data
 
                 References
@@ -1594,6 +1677,8 @@ class Imputation:
                 params : dict, optional
                     Parameters of the BRITS algorithm, if None, default ones are loaded.
 
+                     **Algorithm parameters:**
+
                     - model : str
                         Specifies the type of model to use for the imputation. Options may include predefined models like 'brits', 'brits-i' or 'brits_i_univ'.
                     - epoch : int
@@ -1613,7 +1698,9 @@ class Imputation:
                 Example
                 -------
                 >>> brits_imputer = Imputation.DeepLearning.BRITS(incomp_data)
-                >>> brits_imputer.impute()  # default parameters for imputation
+                >>> brits_imputer.impute()  # default parameters for imputation > or
+                >>> brits_imputer.impute(params={"model": "brits", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64})  # user-defined > or
+                >>> brits_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = brits_imputer.recov_data
 
                 References
@@ -1652,6 +1739,15 @@ class Imputation:
                 params : dict, optional
                     Parameters of the BRITS algorithm, if None, default ones are loaded.
 
+                     **Algorithm parameters:**
+
+                     max_epoch : int, optional
+                        Limit of training epoch (default is 1000)
+                    patience : int, optional
+                        Number of threshold error that can be crossed during the training (default is 2)
+                    lr : float, optional
+                        Learning rate of the training (default is 0.001)
+
                 Returns
                 -------
                 self : DeepMVI
@@ -1660,7 +1756,9 @@ class Imputation:
                 Example
                 -------
                 >>> deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
-                >>> deep_mvi_imputer.impute()  # default parameters for imputation
+                >>> deep_mvi_imputer.impute()  # default parameters for imputation > or
+                >>> deep_mvi_imputer.impute(params={"max_epoch": 10, "patience": 2})  # user-defined > or
+                >>> deep_mvi_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = deep_mvi_imputer.recov_data
 
                 References
@@ -1697,6 +1795,27 @@ class Imputation:
                 params : dict, optional
                     Parameters of the BRITS algorithm, if None, default ones are loaded.
 
+                    **Algorithm parameters:**
+
+                    incre_mode : str, optional
+                        The mode of incremental learning. Options are: 'alone',  'data', 'state', 'state+transfer', 'data+state', 'data+state+transfer' (default is "alone").
+                    window : int, optional
+                        The size of the sliding window for processing data streams (default is 2).
+                    k : int, optional
+                        The number of neighbors to consider during message propagation (default is 10).
+                    lr : float, optional
+                        The learning rate for optimizing the message propagation algorithm (default is 0.01).
+                    weight_decay : float, optional
+                        The weight decay (regularization) term to prevent overfitting during training (default is 0.1).
+                    epochs : int, optional
+                        The number of epochs to run the training process (default is 200).
+                    num_of_iteration : int, optional
+                        The number of iteration of the whole training (default is 5).
+                    thre : float, optional
+                        The threshold for considering a missing value as imputed (default is 0.25).
+                    base : str, optional
+                        The base model used for graph representation and message propagation. Common options include "SAGE" and "GCN" (default is "SAGE").
+
 
                 Returns
                 -------
@@ -1706,7 +1825,9 @@ class Imputation:
                 Example
                 -------
                 >>> mpin_imputer = Imputation.DeepLearning.MPIN(incomp_data)
-                >>> mpin_imputer.impute()  # default parameters for imputation
+                >>> mpin_imputer.impute()  # default parameters for imputation > or
+                >>> mpin_imputer.impute(params={"incre_mode": "data+state", "window": 1, "k": 15, "learning_rate": 0.001, "weight_decay": 0.2, "epochs": 6, "num_of_iteration": 6, "threshold": 0.50, "base": "GCN"})  # user-defined > or
+                >>> mpin_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = mpin_imputer.recov_data
 
                 References
@@ -1743,6 +1864,18 @@ class Imputation:
                 params : dict, optional
                     Parameters of the BRITS algorithm, if None, default ones are loaded.
 
+                     **Algorithm parameters:**
+
+                    target_strategy : str, optional
+                        The strategy to use for targeting missing values. Options include: "hybrid", "random", "historical" (default is "hybrid").
+                    unconditional : bool, optional
+                        Whether to use an unconditional imputation model (default is True).
+                        If False, conditional imputation models are used, depending on available data patterns.
+                    seed : int, optional
+                        Random seed for reproducibility (default is 42).
+                    device : str, optional
+                        The device to perform computation on, e.g., "cpu" or "cuda" (default is "cpu").
+
 
                 Returns
                 -------
@@ -1752,7 +1885,9 @@ class Imputation:
                 Example
                 -------
                 >>> pristi_imputer = Imputation.DeepLearning.PRISTI(incomp_data)
-                >>> pristi_imputer.impute()  # default parameters for imputation
+                >>> pristi_imputer.impute()  # default parameters for imputation > or
+                >>> pristi_imputer.impute(params={"target_strategy":"hybrid", "unconditional":True, "seed":42, "device":"cpu"})  # user-defined > or
+                >>> pristi_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # automl with ray_tune
                 >>> recov_data = pristi_imputer.recov_data
 
                 References
@@ -1765,6 +1900,73 @@ class Imputation:
                     target_strategy, unconditional, seed, device = utils.load_parameters(query="default", algorithm=self.algorithm)
 
                 self.recov_data = pristi(incomp_data=self.incomp_data, target_strategy=target_strategy, unconditional=unconditional, seed=seed, device=device, logs=self.logs)
+                return self
+
+        class MissNet(BaseImputer):
+            """
+            MissNet class to impute missing values using Mining of Switching Sparse Networks for Missing Value
+             Imputation in Multivariate Time Series.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the MissNet algorithm.
+            """
+            algorithm = "miss_net"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the MissNet algorithm.
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+                params : dict, optional
+                    Parameters of the MissNet algorithm, if None, default ones are loaded.
+
+                        alpha : float, optional
+                            Trade-off parameter controlling the contribution of contextual matrix
+                            and time-series. If alpha = 0, network is ignored. (default 0.5)
+                        beta : float, optional
+                            Regularization parameter for sparsity. (default 0.1)
+                        L : int, optional
+                            Hidden dimension size. (default 10)
+                        n_cl : int, optional
+                            Number of clusters. (default 1)
+                        max_iteration : int, optional
+                            Maximum number of iterations for convergence. (default 20)
+                        tol : float, optional
+                            Tolerance for early stopping criteria.  (default 5)
+                        random_init : bool, optional
+                            Whether to use random initialization for latent variables. (default False)
+
+                Returns
+                -------
+                self : MissNet
+                    The object with `recov_data` set.
+
+                Example
+                -------
+                >>> miss_net_imputer = Imputation.DeepLearning.MissNet(incomp_data)
+                >>> miss_net_imputer.impute()  # default parameters for imputation > or
+                >>> miss_net_imputer.impute(user_def=True, params={'alpha': 0.5, 'beta':0.1, 'L':10, 'n_cl': 1, 'max_iteration':20, 'tol':5, 'random_init':False})  # user-defined > or
+                >>> miss_net_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
+                >>> recov_data = miss_net_imputer.recov_data
+
+                References
+                ----------
+                Kohei Obata, Koki Kawabata, Yasuko Matsubara, and Yasushi Sakurai. 2024. Mining of Switching Sparse Networks for Missing Value Imputation in Multivariate Time Series. In Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD '24). Association for Computing Machinery, New York, NY, USA, 2296–2306. https://doi.org/10.1145/3637528.3671760
+                https://github.com/KoheiObata/MissNet/tree/main
+                """
+                if params is not None:
+                    alpha, beta, L, n_cl, max_iteration, tol, random_init = self._check_params(user_def, params)
+                else:
+                    alpha, beta, L, n_cl, max_iteration, tol, random_init = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = miss_net(incomp_data=self.incomp_data, alpha=alpha, beta=beta, L=L, n_cl=n_cl,
+                                       max_iteration=max_iteration, tol=tol, random_init=random_init, logs=self.logs)
+
                 return self
 
 
