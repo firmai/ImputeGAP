@@ -49,7 +49,7 @@ class TestDeepMVI(unittest.TestCase):
         incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10,
                                               offset=0.1, seed=True)
 
-        algo = Imputation.DeepLearning.DeepMVI(incomp_data).impute(params={"max_epoch": 2, "patience": 1})
+        algo = Imputation.DeepLearning.DeepMVI(incomp_data).impute(params={"max_epoch": 2, "patience": 1, "lr":0.001})
         algo.score(ts_1.data)
         metrics = algo.metrics
 
