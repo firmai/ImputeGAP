@@ -77,6 +77,10 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.MachineLearning.XGBOOST(incomp_data)
     elif algorithm == "miss_net":
         imputer = Imputation.DeepLearning.MissNet(incomp_data)
+    elif algorithm == "gain":
+        imputer = Imputation.DeepLearning.GAIN(incomp_data)
+    elif algorithm == "grin":
+        imputer = Imputation.DeepLearning.GRIN(incomp_data)
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
@@ -398,6 +402,22 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         tol = float(config[algorithm]['tol'])
         random_init = bool(config[algorithm]['random_init'])
         return (alpha, beta, L, n_cl, max_iter, tol, random_init)
+    elif algorithm == "gain":
+        batch_size = int(config[algorithm]['batch_size'])
+        hint_rate = float(config[algorithm]['hint_rate'])
+        alpha = int(config[algorithm]['alpha'])
+        epoch = int(config[algorithm]['epoch'])
+        return (batch_size, hint_rate, alpha, epoch)
+    elif algorithm == "grin":
+        d_hidden = int(config[algorithm]['d_hidden'])
+        lr = float(config[algorithm]['lr'])
+        batch_size = int(config[algorithm]['batch_size'])
+        window = int(config[algorithm]['window'])
+        alpha = int(config[algorithm]['alpha'])
+        patience = int(config[algorithm]['patience'])
+        epochs = int(config[algorithm]['epochs'])
+        workers = int(config[algorithm]['workers'])
+        return (d_hidden, lr, batch_size, window, alpha, patience, epochs, workers)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -671,7 +691,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "max_features": str(optimal_params[2]),
             "seed": 42
         }
-    elif algorithm == "miss_forest":
+    elif algorithm == "xgboost":
         params_to_save = {
             "n_estimators": int(optimal_params[0]),
             "seed": 42
@@ -686,6 +706,25 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "tol": float(optimal_params[5]),
             "random_init": bool(optimal_params[6])
         }
+    elif algorithm == "gain":
+        params_to_save = {
+            "batch_size": int(optimal_params[0]),
+            "hint_rate": float(optimal_params[1]),
+            "alpha": int(optimal_params[2]),
+            "epoch": int(optimal_params[3])
+        }
+    elif algorithm == "grin":
+        params_to_save = {
+            "d_hidden": int(optimal_params[0]),
+            "lr": float(optimal_params[1]),
+            "batch_size": int(optimal_params[2]),
+            "window": int(optimal_params[3]),
+            "alpha": int(optimal_params[4]),
+            "patience": int(optimal_params[5]),
+            "epochs": int(optimal_params[6]),
+            "workers": int(optimal_params[7])
+        }
+        return params_to_save
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
         return

@@ -207,4 +207,22 @@ RAYTUNE_PARAMS = {
         "random_init": False
     },
 
+    "grin": {
+        "d_hidden": tune.grid_search([16, 32, 64]),  # Example search space for d_hidden
+        "lr": tune.grid_search([0.0001, 0.01]),  # Example search space for learning rate
+        "batch_size": tune.grid_search([1, 32]),  # Example search space for batch size
+        "window": 1,  # Example search space for window size
+        "alpha": tune.grid_search([1, 20]),  # Example search space for alpha
+        "patience": tune.grid_search([2, 6]),  # Patience for early stopping
+        "epochs": 20,  # Max training epochs
+        "workers": tune.grid_search([1, 2])  # Number of workers
+    },
+
+    "gain": {
+        "batch_size": tune.grid_search([1, 5, 10]),
+        "hint_rate": tune.grid_search([0.01, 0.1, 0.5]),
+        "alpha": tune.grid_search([1, 2, 10]),
+        "epoch": 100
+    }
+
 }

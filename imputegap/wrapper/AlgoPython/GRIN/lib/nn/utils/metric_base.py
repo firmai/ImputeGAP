@@ -10,14 +10,12 @@ class MaskedMetric(Metric):
                  metric_fn,
                  mask_nans=False,
                  mask_inf=False,
-                 #compute_on_step=True,
                  dist_sync_on_step=False,
                  process_group=None,
                  dist_sync_fn=None,
                  metric_kwargs=None,
                  at=None):
-        super(MaskedMetric, self).__init__(#compute_on_step=compute_on_step,
-                                           dist_sync_on_step=dist_sync_on_step,
+        super(MaskedMetric, self).__init__(dist_sync_on_step=dist_sync_on_step,
                                            process_group=process_group,
                                            dist_sync_fn=dist_sync_fn)
 

@@ -233,9 +233,6 @@ class TemporalDataset(Dataset):
         indices = np.arange(len(self._indices)) if indices is None else indices
         if 'window' in ds_indices:
             w_idxs = [np.arange(idx, idx + self.window) for idx in self._indices[indices]]
-            print(f"Trainset indices: {self.trainset.indices}")
-            print(f"expand_indices called with: {self.trainset.indices}")
-            print(f"Dataset shape: {self.data.shape}")
             ds_indices['window'] = np.concatenate(w_idxs)
         if 'horizon' in ds_indices:
             h_idxs = [np.arange(idx + self.horizon_offset, idx + self.horizon_offset + self.horizon)

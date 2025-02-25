@@ -3,6 +3,7 @@ import re
 from imputegap.algorithms.brits import brits
 from imputegap.algorithms.deep_mvi import deep_mvi
 from imputegap.algorithms.dynammo import dynammo
+from imputegap.algorithms.gain import gain
 from imputegap.algorithms.grin import grin
 from imputegap.algorithms.grouse import grouse
 from imputegap.algorithms.interpolation import interpolation
@@ -1925,6 +1926,8 @@ class Imputation:
                 params : dict, optional
                     Parameters of the MissNet algorithm, if None, default ones are loaded.
 
+                         **Algorithm parameters:**
+
                         alpha : float, optional
                             Trade-off parameter controlling the contribution of contextual matrix
                             and time-series. If alpha = 0, network is ignored. (default 0.5)
@@ -1970,30 +1973,21 @@ class Imputation:
                 return self
 
 
-    class GraphLearning:
-        """
-        A class containing imputation algorithms for graph-learning-based methods.
-        TO COME SOON...
-
-        Subclasses
-        ----------
-        """
-
-        class GRIN(BaseImputer):
+        class GAIN(BaseImputer):
             """
-            GRIN class to impute missing values using Multivariate Time Series Imputation by Graph Neural Networks.
+            GAIN class to impute missing values using Missing Data Imputation using Generative Adversarial Nets,
 
             Methods
             -------
             impute(self, user_def=True, params=None):
-                Perform imputation using the Iterative SDV algorithm.
+                Perform imputation using the GAIN algorithm.
             """
 
-            algorithm = "grin"
+            algorithm = "gain"
 
             def impute(self, user_def=True, params=None):
                 """
-                Perform imputation using the Iterative SVD algorithm.
+                Perform imputation using the GAIN algorithm.
 
                 Parameters
                 ----------
@@ -2001,7 +1995,99 @@ class Imputation:
                     Whether to use user-defined or default parameters (default is True).
 
                 params : dict, optional
-                    Parameters of the Iterative SVD algorithm or Auto-ML configuration, if None, default ones are loaded.
+                    Parameters of the GAIN algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+
+                    **Algorithm parameters:**
+
+                    batch_size : int, optional
+                        Number of samples in each mini-batch during training. Default is 32.
+                    hint_rate : float, optional
+                        Probability of providing hints for the missing data during training. Default is 0.9.
+                    alpha : float, optional
+                        Hyperparameter that controls the balance between the adversarial loss and the reconstruction loss. Default is 10.
+                    epoch : int, optional
+                        Number of training epochs. Default is 100.
+                    logs : bool, optional
+
+
+                Returns
+                -------
+                self : GAIN
+                    GAIN object with `recov_data` set.
+
+                Example
+                -------
+                >>> gain_imputer = Imputation.DeepLearning.GAIN(incomp_data)
+                >>> gain_imputer.impute()  # default parameters for imputation > or
+                >>> gain_imputer.impute(user_def=True, params={"batch_size":32, "hint_rate":0.9, "alpha":10, "epoch":100})  # user defined> or
+                >>> gain_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
+                >>> recov_data = gain_imputer.recov_data
+
+                References
+                ----------
+                J. Yoon, J. Jordon, and M. van der Schaar, "GAIN: Missing Data Imputation using Generative Adversarial Nets," CoRR, vol. abs/1806.02920, 2018. Available: http://arxiv.org/abs/1806.02920.
+                """
+
+                if params is not None:
+                    batch_size, hint_rate, alpha, epoch = self._check_params(user_def, params)
+                else:
+                    batch_size, hint_rate, alpha, epoch = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = gain(incomp_data=self.incomp_data, batch_size=batch_size, hint_rate=hint_rate, alpha=alpha, epoch=epoch, logs=self.logs)
+
+                return self
+
+
+        class GRIN(BaseImputer):
+            """
+            GRIN class to impute missing values using MULTIVARIATE TIME SERIES IMPUTATION BY GRAPH NEURAL NETWORKS.
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the Iterative GRIN
+            """
+
+            algorithm = "grin"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the Multivariate Time Series Imputation by Graph Neural Networks
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
+                params : dict, optional
+                    Parameters of the GRIN algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                     **Algorithm parameters:**
+
+                    d_hidden : int, optional, default=32
+                        The number of hidden units in the model's recurrent and graph layers.
+
+                    lr : float, optional, default=0.001
+                        Learning rate for the optimizer.
+
+                    batch_size : int, optional, default=32
+                        The number of samples per training batch.
+
+                    window : int, optional, default=10
+                        The size of the time window used for modeling temporal dependencies.
+
+                    alpha : float, optional, default=10.0
+                        The weight assigned to the adversarial loss term during training.
+
+                    patience : int, optional, default=4
+                        Number of epochs without improvement before early stopping is triggered.
+
+                    epochs : int, optional, default=20
+                        The maximum number of training epochs.
+
+                    workers : int, optional, default=2
+                        The number of worker processes for data loading.
 
 
                 Returns
@@ -2013,19 +2099,25 @@ class Imputation:
                 -------
                 >>> grin_imputer = Imputation.GraphLearning.GRIN(incomp_data)
                 >>> grin_imputer.impute()  # default parameters for imputation > or
+                >>> grin_imputer.impute(user_def=True, params={"d_hidden":32, "lr":0.001, "batch_size":32, "window":1, "alpha":10.0, "patience":4, "epochs":20, "workers":2})  # user defined> or
+                >>> grin_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
                 >>> recov_data = grin_imputer.recov_data
 
                 References
                 ----------
-                A. Cini, I. Marisca, and C. Alippi, "Filling the Gaps: Multivariate Time Series Imputation by Graph Neural Networks," International Conference on Learning Representations (ICLR), 2022.
+                A. Cini, I. Marisca, and C. Alippi, "Multivariate Time Series Imputation by Graph Neural Networks," CoRR, vol. abs/2108.00298, 2021
+                https://github.com/Graph-Machine-Learning-Group/grin
                 """
 
                 if params is not None:
-                    _ = self._check_params(user_def, params)[0]
+                    d_hidden, lr, batch_size, window, alpha, patience, epochs, workers = self._check_params(user_def, params)
                 else:
-                    _ = utils.load_parameters(query="default", algorithm=self.algorithm)
+                    d_hidden, lr, batch_size, window, alpha, patience, epochs, workers = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-                self.recov_data = grin(incomp_data=self.incomp_data, logs=self.logs)
+                self.recov_data = grin(incomp_data=self.incomp_data, d_hidden=d_hidden, lr=lr, batch_size=batch_size, window=window, alpha=alpha, patience=patience, epochs=epochs, workers=workers, logs=self.logs)
 
                 return self
+
+
+
 

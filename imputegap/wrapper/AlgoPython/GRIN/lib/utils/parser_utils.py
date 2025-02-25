@@ -13,24 +13,49 @@ def str_to_bool(value):
     raise ValueError(f'{value} is not a valid boolean value')
 
 
-def config_dict_from_args(args):
-    """
-    Extract a dictionary with the experiment configuration from arguments (necessary to filter TestTube arguments)
+from argparse import Namespace
 
-    :param args: TTNamespace
-    :return: hyparams dict
+
+def config_dict_from_args(args: Namespace) -> dict:
     """
-    keys_to_remove = {'hpc_exp_number', 'trials', 'optimize_parallel', 'optimize_parallel_gpu',
-                      'optimize_parallel_cpu', 'generate_trials', 'optimize_trials_parallel_gpu'}
-    hparams = {key: v for key, v in args.__dict__.items() if key not in keys_to_remove}
+    Extracts a dictionary with the experiment configuration from arguments
+    (necessary to filter out TestTube arguments).
+
+    :param args: Namespace (e.g., parsed arguments)
+    :return: Dictionary containing filtered hyperparameters
+    """
+    keys_to_remove = {
+        'hpc_exp_number', 'trials', 'optimize_parallel', 'optimize_parallel_gpu',
+        'optimize_parallel_cpu', 'generate_trials', 'optimize_trials_parallel_gpu'
+    }
+
+    # Convert Namespace to dictionary if necessary
+    if isinstance(args, Namespace):
+        args_dict = vars(args)
+    else:
+        args_dict = args  # If already a dictionary, use it directly
+
+    # Filter out unwanted keys
+    hparams = {key: v for key, v in args_dict.items() if key not in keys_to_remove}
     return hparams
 
 
-def update_from_config(args: Namespace, config: dict):
-    assert set(config.keys()) <= set(vars(args)), f'{set(config.keys()).difference(vars(args))} not in args.'
-    args.__dict__.update(config)
-    return args
+def update_from_config(args: Namespace, config: dict) -> Namespace:
+    """
+    Updates an args Namespace object with values from a given configuration dictionary.
 
+    :param args: Namespace object containing arguments
+    :param config: Dictionary with updated parameters
+    :return: Updated args Namespace object
+    """
+    # Ensure config keys exist in args before updating
+    missing_keys = set(config.keys()).difference(vars(args))
+    if missing_keys:
+        raise ValueError(f"Keys {missing_keys} not found in args.")
+
+    args_dict = vars(args)
+    args_dict.update(config)  # Update only existing keys
+    return args
 
 def parse_by_group(parser):
     """
@@ -65,15 +90,33 @@ def parse_by_group(parser):
     return Namespace(flat=args, **combined_args)
 
 
+import inspect
+from argparse import Namespace
+from typing import Union
+
 def filter_args(args: Union[Namespace, dict], target_cls, return_dict=False):
+    """
+    Filters the given args to only include the arguments required by the target class.
+
+    :param args: A Namespace or dictionary of arguments.
+    :param target_cls: The class whose arguments should be filtered.
+    :param return_dict: If True, return a dictionary instead of a Namespace.
+    :return: A Namespace or dictionary with only relevant arguments.
+    """
+    # Get the argument specification of the target class constructor
     argspec = inspect.getfullargspec(target_cls.__init__)
-    target_args = argspec.args
+    target_args = set(argspec.args)  # Ensure it's a set for fast lookup
+
+    # Convert Namespace to dictionary if needed
     if isinstance(args, Namespace):
         args = vars(args)
-    filtered_args = {k: args[k] for k in target_args if k in args}
-    if return_dict:
-        return filtered_args
-    return Namespace(**filtered_args)
+
+    # Filter only arguments that exist in the target class
+    filtered_args = {k: v for k, v in args.items() if k in target_args}
+
+    # Return as dict or Namespace
+    return filtered_args if return_dict else Namespace(**filtered_args)
+
 
 
 def filter_function_args(args: Union[Namespace, dict], function, return_dict=False):
