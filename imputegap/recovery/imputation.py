@@ -48,7 +48,7 @@ class BaseImputer:
     -------
     impute(params=None):
         Abstract method to perform the imputation.
-    score(input_data, recov_data=None):
+    score(input_data, recov_data=None, downstream=None):
         Compute metrics for the imputed time series.
     _check_params(user_def, params):
         Check and format parameters for imputation.

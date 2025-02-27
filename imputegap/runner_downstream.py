@@ -14,17 +14,17 @@ ts_mask = ts_1.Contamination.missing_percentage(ts_1.data, series_rate=0.8)
 ts_2 = TimeSeries().import_matrix(ts_mask)
 
 # 4. imputation of the contaminated data
-cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
-cdrec.impute()
+imputer = Imputation.MatrixCompletion.CDRec(ts_2.data)
+imputer.impute()
 
 # [OPTIONAL] save your results in a new Time Series object
-ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
+ts_3 = TimeSeries().import_matrix(imputer.recov_data)
 
 # 5. score the imputation with the raw_data
 downstream_options = {"evaluator": "forecaster", "model": "prophet"}
-cdrec.score(ts_1.data, ts_3.data)  # upstream standard analysis
-cdrec.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
+imputer.score(ts_1.data, ts_3.data)  # upstream standard analysis
+imputer.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
 
 # 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
-ts_3.print_results(cdrec.downstream_metrics, algorithm=cdrec.algorithm)
+ts_3.print_results(imputer.metrics, algorithm=imputer.algorithm)
+ts_3.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)

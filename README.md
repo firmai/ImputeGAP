@@ -151,9 +151,13 @@ ts_1.print(limit_series=10)
 ---
 
 ## Contamination
-ImputeGAP allows to contaminate a complete datasets with missing data patterns that mimics real-world scenarios. The available patterns are : `MCAR`, `MISSING POURCENTAGE`, `BLACKOUT`, `DISJOINT`, `OVERLAP`, and `GAUSSIAN`. 
-For more details, please refer to the documentation in this <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >page</a>.
+ImputeGAP allows to contaminate a complete datasets with missing data patterns that mimics real-world scenarios.<br></br>
 
+The available patterns for MONO-BLOCK contamination : `MISSING POURCENTAGE`, `BLACKOUT`, `DISJOINT`, `OVERLAP` <br></br>
+The available patterns for MULTI-BLOCK contamination : `MCAR`, `GAUSSIAN` and `DISTRIBUTION`.  <br></br>
+
+For more details, please refer to the documentation in this <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >page</a>.
+<br></br>
 
 ### Example Contamination
 You can find this example in the file [`runner_contamination.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_contamination.py).
@@ -182,7 +186,7 @@ ts_1.plot(ts_1.data, ts_mask, max_series=9, subplot=True, save_path="./imputegap
 ## Imputation
 
 
-ImputeGAP provides a diverse selection of imputation algorithms, organized into five main categories: Matrix Completion, Deep Learning, Statistical Methods, Pattern Search, and Graph Learning. You can also add your own custom imputation algorithm by following the `min-impute` template and substituting your code to implement your logic.
+ImputeGAP provides a diverse selection of imputation algorithms, organized into five main categories: Matrix Completion, Deep Learning, Statistical Methods, Pattern Search, and Machine Learning. You can also add your own custom imputation algorithm by following the `min-impute` template and substituting your code to implement your logic.
 
 ### Example Imputation
 You can find this example in the file [`runner_imputation.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_imputation.py).
@@ -207,23 +211,22 @@ ts_2 = TimeSeries().import_matrix(ts_mask)
 
 # 4. imputation of the contaminated data
 # choice of the algorithm, and their parameters (default, automl, or defined by the user)
-cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
+imputer = Imputation.MatrixCompletion.CDRec(ts_2.data)
 
 # imputation with default values
-cdrec.impute()
+imputer.impute()
 # OR imputation with user defined values
 # >>> cdrec.impute(params={"rank": 5, "epsilon": 0.01, "iterations": 100})
 
 # [OPTIONAL] save your results in a new Time Series object
-ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
+ts_3 = TimeSeries().import_matrix(imputer.recov_data)
 
 # 5. score the imputation with the raw_data
-cdrec.score(ts_1.data, ts_3.data)
+imputer.score(ts_1.data, ts_3.data)
 
 # 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
-ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True,
-          save_path="./imputegap/assets")
+ts_3.print_results(imputer.metrics, algorithm=imputer.algorithm)
+ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True, save_path="./imputegap/assets")
 ```
 
 ---
@@ -253,20 +256,17 @@ ts_mask = ts_1.Contamination.mcar(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False,
-                                                              params={"input_data": ts_1.data, "optimizer": "bayesian",
-                                                                      "options": {"n_calls": 3}})
+imputer = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
 
 # 5. score the imputation with the raw_data
-cdrec.score(ts_1.data, cdrec.recov_data)
+imputer.score(ts_1.data, imputer.recov_data)
 
 # 6. display the results
-ts_1.print_results(cdrec.metrics)
-ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=cdrec.recov_data, max_series=9, subplot=True,
-          save_path="./imputegap/assets", display=True)
+ts_1.print_results(imputer.metrics)
+ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=imputer.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
 # 7. save hyperparameters
-utils.save_optimization(optimal_params=cdrec.parameters, algorithm=cdrec.algorithm, dataset="eeg", optimizer="t")
+utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg", optimizer="ray_tune")
 ```
 
 ---
@@ -323,24 +323,24 @@ ts_1.load_series(utils.search_path("chlorine"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-ts_mask = ts_1.Contamination.mcar(ts_1.data, series_rate=0.8)
+ts_mask = ts_1.Contamination.missing_percentage(ts_1.data, series_rate=0.8)
 ts_2 = TimeSeries().import_matrix(ts_mask)
 
 # 4. imputation of the contaminated data
-cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
-cdrec.impute()
+imputer = Imputation.MatrixCompletion.CDRec(ts_2.data)
+imputer.impute()
 
 # [OPTIONAL] save your results in a new Time Series object
-ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
+ts_3 = TimeSeries().import_matrix(imputer.recov_data)
 
 # 5. score the imputation with the raw_data
 downstream_options = {"evaluator": "forecaster", "model": "prophet"}
-cdrec.score(ts_1.data, ts_3.data)  # upstream standard analysis
-cdrec.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
+imputer.score(ts_1.data, ts_3.data)  # upstream standard analysis
+imputer.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
 
 # 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
-ts_3.print_results(cdrec.downstream_metrics, algorithm=cdrec.algorithm)
+ts_3.print_results(imputer.metrics, algorithm=imputer.algorithm)
+ts_3.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 ```
 
 

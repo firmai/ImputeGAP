@@ -20,3 +20,7 @@
 2025-02-20 17:32:39,388 - numba.cuda.cudadrv.driver - INFO - init
 2025-02-20 17:51:05,937 - numba.cuda.cudadrv.driver - INFO - init
 2025-02-20 18:15:16,973 - numba.cuda.cudadrv.driver - INFO - init
+2025-02-27 18:31:27,165 - numba.cuda.cudadrv.driver - INFO - init
+2025-02-27 18:37:36,579 - numba.cuda.cudadrv.driver - INFO - init
+2025-02-27 18:39:52,291 - numba.cuda.cudadrv.driver - INFO - init
+2025-02-27 18:41:28,109 - numba.cuda.cudadrv.driver - INFO - init

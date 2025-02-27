@@ -38,6 +38,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.brits</span><span class="w"> </span><span class="kn">import</span> <span class="n">brits</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.deep_mvi</span><span class="w"> </span><span class="kn">import</span> <span class="n">deep_mvi</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.dynammo</span><span class="w"> </span><span class="kn">import</span> <span class="n">dynammo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.gain</span><span class="w"> </span><span class="kn">import</span> <span class="n">gain</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.grin</span><span class="w"> </span><span class="kn">import</span> <span class="n">grin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.grouse</span><span class="w"> </span><span class="kn">import</span> <span class="n">grouse</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.interpolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">interpolation</span>
@@ -84,7 +85,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    impute(params=None):</span>
 <span class="sd">        Abstract method to perform the imputation.</span>
-<span class="sd">    score(input_data, recov_data=None):</span>
+<span class="sd">    score(input_data, recov_data=None, downstream=None):</span>
 <span class="sd">        Compute metrics for the imputed time series.</span>
 <span class="sd">    _check_params(user_def, params):</span>
 <span class="sd">        Check and format parameters for imputation.</span>
@@ -2151,6 +2152,8 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the MissNet algorithm, if None, default ones are loaded.</span>
 
+<span class="sd">                         **Algorithm parameters:**</span>
+
 <span class="sd">                        alpha : float, optional</span>
 <span class="sd">                            Trade-off parameter controlling the contribution of contextual matrix</span>
 <span class="sd">                            and time-series. If alpha = 0, network is ignored. (default 0.5)</span>
@@ -2195,40 +2198,28 @@
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
-</div>
 
 
 
-<div class="viewcode-block" id="Imputation.GraphLearning">
-<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.GraphLearning">[docs]</a>
-    <span class="k">class</span><span class="w"> </span><span class="nc">GraphLearning</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A class containing imputation algorithms for graph-learning-based methods.</span>
-<span class="sd">        TO COME SOON...</span>
-
-<span class="sd">        Subclasses</span>
-<span class="sd">        ----------</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="Imputation.GraphLearning.GRIN">
-<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.GraphLearning.GRIN">[docs]</a>
-        <span class="k">class</span><span class="w"> </span><span class="nc">GRIN</span><span class="p">(</span><span class="n">BaseImputer</span><span class="p">):</span>
+<div class="viewcode-block" id="Imputation.DeepLearning.GAIN">
+<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN">[docs]</a>
+        <span class="k">class</span><span class="w"> </span><span class="nc">GAIN</span><span class="p">(</span><span class="n">BaseImputer</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            GRIN class to impute missing values using Multivariate Time Series Imputation by Graph Neural Networks.</span>
+<span class="sd">            GAIN class to impute missing values using Missing Data Imputation using Generative Adversarial Nets,</span>
 
 <span class="sd">            Methods</span>
 <span class="sd">            -------</span>
 <span class="sd">            impute(self, user_def=True, params=None):</span>
-<span class="sd">                Perform imputation using the Iterative SDV algorithm.</span>
+<span class="sd">                Perform imputation using the GAIN algorithm.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
-            <span class="n">algorithm</span> <span class="o">=</span> <span class="s2">&quot;grin&quot;</span>
+            <span class="n">algorithm</span> <span class="o">=</span> <span class="s2">&quot;gain&quot;</span>
 
-<div class="viewcode-block" id="Imputation.GraphLearning.GRIN.impute">
-<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.GraphLearning.GRIN.impute">[docs]</a>
+<div class="viewcode-block" id="Imputation.DeepLearning.GAIN.impute">
+<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.impute">[docs]</a>
             <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">                Perform imputation using the Iterative SVD algorithm.</span>
+<span class="sd">                Perform imputation using the GAIN algorithm.</span>
 
 <span class="sd">                Parameters</span>
 <span class="sd">                ----------</span>
@@ -2236,7 +2227,105 @@
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 
 <span class="sd">                params : dict, optional</span>
-<span class="sd">                    Parameters of the Iterative SVD algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+<span class="sd">                    Parameters of the GAIN algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+
+
+<span class="sd">                    **Algorithm parameters:**</span>
+
+<span class="sd">                    batch_size : int, optional</span>
+<span class="sd">                        Number of samples in each mini-batch during training. Default is 32.</span>
+<span class="sd">                    hint_rate : float, optional</span>
+<span class="sd">                        Probability of providing hints for the missing data during training. Default is 0.9.</span>
+<span class="sd">                    alpha : float, optional</span>
+<span class="sd">                        Hyperparameter that controls the balance between the adversarial loss and the reconstruction loss. Default is 10.</span>
+<span class="sd">                    epoch : int, optional</span>
+<span class="sd">                        Number of training epochs. Default is 100.</span>
+<span class="sd">                    logs : bool, optional</span>
+
+
+<span class="sd">                Returns</span>
+<span class="sd">                -------</span>
+<span class="sd">                self : GAIN</span>
+<span class="sd">                    GAIN object with `recov_data` set.</span>
+
+<span class="sd">                Example</span>
+<span class="sd">                -------</span>
+<span class="sd">                &gt;&gt;&gt; gain_imputer = Imputation.DeepLearning.GAIN(incomp_data)</span>
+<span class="sd">                &gt;&gt;&gt; gain_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                &gt;&gt;&gt; gain_imputer.impute(user_def=True, params={&quot;batch_size&quot;:32, &quot;hint_rate&quot;:0.9, &quot;alpha&quot;:10, &quot;epoch&quot;:100})  # user defined&gt; or</span>
+<span class="sd">                &gt;&gt;&gt; gain_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                &gt;&gt;&gt; recov_data = gain_imputer.recov_data</span>
+
+<span class="sd">                References</span>
+<span class="sd">                ----------</span>
+<span class="sd">                J. Yoon, J. Jordon, and M. van der Schaar, &quot;GAIN: Missing Data Imputation using Generative Adversarial Nets,&quot; CoRR, vol. abs/1806.02920, 2018. Available: http://arxiv.org/abs/1806.02920.</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+
+                <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">batch_size</span><span class="p">,</span> <span class="n">hint_rate</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epoch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">batch_size</span><span class="p">,</span> <span class="n">hint_rate</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epoch</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">gain</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">hint_rate</span><span class="o">=</span><span class="n">hint_rate</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="bp">self</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Imputation.DeepLearning.GRIN">
+<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN">[docs]</a>
+        <span class="k">class</span><span class="w"> </span><span class="nc">GRIN</span><span class="p">(</span><span class="n">BaseImputer</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            GRIN class to impute missing values using MULTIVARIATE TIME SERIES IMPUTATION BY GRAPH NEURAL NETWORKS.</span>
+
+<span class="sd">            Methods</span>
+<span class="sd">            -------</span>
+<span class="sd">            impute(self, user_def=True, params=None):</span>
+<span class="sd">                Perform imputation using the Iterative GRIN</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="n">algorithm</span> <span class="o">=</span> <span class="s2">&quot;grin&quot;</span>
+
+<div class="viewcode-block" id="Imputation.DeepLearning.GRIN.impute">
+<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.impute">[docs]</a>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Perform imputation using the Multivariate Time Series Imputation by Graph Neural Networks</span>
+
+<span class="sd">                Parameters</span>
+<span class="sd">                ----------</span>
+<span class="sd">                user_def : bool, optional</span>
+<span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
+
+<span class="sd">                params : dict, optional</span>
+<span class="sd">                    Parameters of the GRIN algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+
+<span class="sd">                     **Algorithm parameters:**</span>
+
+<span class="sd">                    d_hidden : int, optional, default=32</span>
+<span class="sd">                        The number of hidden units in the model&#39;s recurrent and graph layers.</span>
+
+<span class="sd">                    lr : float, optional, default=0.001</span>
+<span class="sd">                        Learning rate for the optimizer.</span>
+
+<span class="sd">                    batch_size : int, optional, default=32</span>
+<span class="sd">                        The number of samples per training batch.</span>
+
+<span class="sd">                    window : int, optional, default=10</span>
+<span class="sd">                        The size of the time window used for modeling temporal dependencies.</span>
+
+<span class="sd">                    alpha : float, optional, default=10.0</span>
+<span class="sd">                        The weight assigned to the adversarial loss term during training.</span>
+
+<span class="sd">                    patience : int, optional, default=4</span>
+<span class="sd">                        Number of epochs without improvement before early stopping is triggered.</span>
+
+<span class="sd">                    epochs : int, optional, default=20</span>
+<span class="sd">                        The maximum number of training epochs.</span>
+
+<span class="sd">                    workers : int, optional, default=2</span>
+<span class="sd">                        The number of worker processes for data loading.</span>
 
 
 <span class="sd">                Returns</span>
@@ -2248,24 +2337,30 @@
 <span class="sd">                -------</span>
 <span class="sd">                &gt;&gt;&gt; grin_imputer = Imputation.GraphLearning.GRIN(incomp_data)</span>
 <span class="sd">                &gt;&gt;&gt; grin_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                &gt;&gt;&gt; grin_imputer.impute(user_def=True, params={&quot;d_hidden&quot;:32, &quot;lr&quot;:0.001, &quot;batch_size&quot;:32, &quot;window&quot;:1, &quot;alpha&quot;:10.0, &quot;patience&quot;:4, &quot;epochs&quot;:20, &quot;workers&quot;:2})  # user defined&gt; or</span>
+<span class="sd">                &gt;&gt;&gt; grin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
 <span class="sd">                &gt;&gt;&gt; recov_data = grin_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
-<span class="sd">                A. Cini, I. Marisca, and C. Alippi, &quot;Filling the Gaps: Multivariate Time Series Imputation by Graph Neural Networks,&quot; International Conference on Learning Representations (ICLR), 2022.</span>
+<span class="sd">                A. Cini, I. Marisca, and C. Alippi, &quot;Multivariate Time Series Imputation by Graph Neural Networks,&quot; CoRR, vol. abs/2108.00298, 2021</span>
+<span class="sd">                https://github.com/Graph-Machine-Learning-Group/grin</span>
 <span class="sd">                &quot;&quot;&quot;</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">d_hidden</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">_</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
+                    <span class="n">d_hidden</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">workers</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">grin</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">grin</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">d_hidden</span><span class="o">=</span><span class="n">d_hidden</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="n">patience</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
 </div>
 </div>
+
+
+
 
 
 </pre></div>

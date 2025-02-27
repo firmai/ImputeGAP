@@ -20,6 +20,8 @@ class TestGRIN(unittest.TestCase):
         algo.score(ts_1.data)
         metrics = algo.metrics
 
+        ts_1.print_results(algo.metrics, algo.algorithm)
+
         expected_metrics = { "RMSE": 0.22863432711255152, "MAE": 0.178475889298036, "MI": 0.15910943933971244, "CORRELATION": 0.2949412054264574 }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.1,
@@ -46,6 +48,8 @@ class TestGRIN(unittest.TestCase):
 
         algo.score(ts_1.data)
         metrics = algo.metrics
+
+        ts_1.print_results(algo.metrics, algo.algorithm)
 
         expected_metrics = { "RMSE": 0.22863432711255152, "MAE": 0.178475889298036, "MI": 0.15910943933971244, "CORRELATION": 0.2949412054264574 }
 

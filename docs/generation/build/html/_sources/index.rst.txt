@@ -33,168 +33,156 @@ Algorithms
 .. list-table:: CONT: Contamination; IMP: Imputation; OPT: Optimization; EXP: Explainer
    :header-rows: 1
 
-   * - **CATEGORIES**
-     - **Algorithms**
-     - **CON**
+.. list-table::
+   :header-rows: 1
+
+   * - **ALGORITHMS**
+     - **CATEGORIES**
      - **IMP**
-     - **OPT**
-     - **EXP**
-   * - Matrix Completion
-     - CDRec
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Matrix Completion
-     - IterativeSVD
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Matrix Completion
-     - GROUSE
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Matrix Completion
-     - ROSL
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Matrix Completion
-     - SPIRIT
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Matrix Completion
-     - SoftImpute
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Matrix Completion
-     - SVT
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Matrix Completion
-     - TRMF
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Pattern Search
-     - ST-MVL
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Pattern Search
-     - DynaMMo
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Pattern Search
-     - TKCM
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Machine Learning
-     - IIM
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Machine Learning
-     - XGBI
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Machine Learning
-     - Mice
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Machine Learning
-     - MissForest
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Statistics
-     - KNNImpute
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Statistics
-     - Interpolation
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Statistics
-     - Min Impute
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Statistics
-     - Mean Impute
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Statistics
-     - Mean Impute By Series
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Deep Learning
-     - MRNN
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Deep Learning
-     - BRITS
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Deep Learning
-     - DeepMVI
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Deep Learning
-     - MPIN
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Deep Learning
-     - PriSTI
-     - ✅
-     - ✅
-     - ✅
-     - ✅
-   * - Deep Learning
-     - MissNet
-     - ✅
-     - ✅
-     - ✅
-     - ✅
+     - **CONF**
+     - **REF**
+   * - CDRec
+     - Matrix Completion
+     - ✅
+     - -
+     - -
+   * - IterativeSVD
+     - Matrix Completion
+     - ✅
+     - -
+     - -
+   * - GROUSE
+     - Matrix Completion
+     - ✅
+     - -
+     - -
+   * - ROSL
+     - Matrix Completion
+     - ✅
+     - -
+     - -
+   * - SPIRIT
+     - Matrix Completion
+     - ✅
+     - -
+     - -
+   * - SoftImpute
+     - Matrix Completion
+     - ✅
+     - -
+     - -
+   * - SVT
+     - Matrix Completion
+     - ✅
+     - -
+     - -
+   * - TRMF
+     - Matrix Completion
+     - ✅
+     - -
+     - -
+   * - ST-MVL
+     - Pattern Search
+     - ✅
+     - -
+     - -
+   * - DynaMMo
+     - Pattern Search
+     - ✅
+     - -
+     - -
+   * - TKCM
+     - Pattern Search
+     - ✅
+     - -
+     - -
+   * - IIM
+     - Machine Learning
+     - ✅
+     - -
+     - -
+   * - XGBI
+     - Machine Learning
+     - ✅
+     - -
+     - -
+   * - Mice
+     - Machine Learning
+     - ✅
+     - -
+     - -
+   * - MissForest
+     - Machine Learning
+     - ✅
+     - -
+     - -
+   * - KNNImpute
+     - Statistics
+     - ✅
+     - -
+     - -
+   * - Interpolation
+     - Statistics
+     - ✅
+     - -
+     - -
+   * - Min Impute
+     - Statistics
+     - ✅
+     - -
+     - -
+   * - Mean Impute
+     - Statistics
+     - ✅
+     - -
+     - -
+   * - Mean Impute By Series
+     - Statistics
+     - ✅
+     - -
+     - -
+   * - MRNN
+     - Deep Learning
+     - ✅
+     - -
+     - -
+   * - BRITS
+     - Deep Learning
+     - ✅
+     - -
+     - -
+   * - DeepMVI
+     - Deep Learning
+     - ✅
+     - -
+     - -
+   * - GAIN
+     - Deep Learning
+     - ✅
+     - -
+     - -
+   * - GRIN
+     - Deep Learning
+     - ✅
+     - -
+     - -
+   * - MPIN
+     - Deep Learning
+     - ✅
+     - -
+     - -
+   * - PriSTI
+     - Deep Learning
+     - ✅
+     - -
+     - -
+   * - MissNet
+     - Deep Learning
+     - ✅
+     - -
+     - -
+
+
 
 
 .. _api:

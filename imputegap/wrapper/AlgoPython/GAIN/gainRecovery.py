@@ -21,6 +21,8 @@ from __future__ import division
 from __future__ import print_function
 import warnings
 
+import numpy as np
+
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 from imputegap.wrapper.AlgoPython.GAIN.gain import gain
@@ -45,7 +47,9 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
     - rmse: Root Mean Squared Error
   '''
 
-  print("\t\t(PYTHON) GAIN: Matrix Shape: (", miss_data_x.shape[0], ", ", miss_data_x.shape[1], ") "
+  input_data = np.copy(miss_data_x)
+
+  print("\t\t(PYTHON) GAIN: Matrix Shape: (", input_data.shape[0], ", ", input_data.shape[1], ") "
         "for batch_size ", batch_size, ", hint_rate ", hint_rate, ", alpha ", alpha, ", and epoch ", epoch, "...")
   
   gain_parameters = {'batch_size': batch_size,
@@ -54,11 +58,11 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
                      'iterations': epoch}
 
   if batch_size == -1:
-      batch_size = miss_data_x.shape[1]//1
+      batch_size = input_data.shape[1]//1
   gain_parameters['batch_size'] = batch_size
   # print('Batch size: ', gain_parameters["batch_size"])
 
   # Impute missing data
-  imputed_data_x = gain(miss_data_x, gain_parameters)
+  imputed_data_x = gain(input_data, gain_parameters)
 
   return imputed_data_x

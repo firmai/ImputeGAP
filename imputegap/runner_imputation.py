@@ -17,19 +17,19 @@ ts_2 = TimeSeries().import_matrix(ts_mask)
 
 # 4. imputation of the contaminated data
 # choice of the algorithm, and their parameters (default, automl, or defined by the user)
-cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
+imputer = Imputation.MatrixCompletion.CDRec(ts_2.data)
 
 # imputation with default values
-cdrec.impute()
+imputer.impute()
 # OR imputation with user defined values
 # >>> cdrec.impute(params={"rank": 5, "epsilon": 0.01, "iterations": 100})
 
 # [OPTIONAL] save your results in a new Time Series object
-ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
+ts_3 = TimeSeries().import_matrix(imputer.recov_data)
 
 # 5. score the imputation with the raw_data
-cdrec.score(ts_1.data, ts_3.data)
+imputer.score(ts_1.data, ts_3.data)
 
 # 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
+ts_3.print_results(imputer.metrics, algorithm=imputer.algorithm)
 ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True, save_path="./imputegap/assets")

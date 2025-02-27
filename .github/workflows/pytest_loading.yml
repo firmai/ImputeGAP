@@ -40,6 +40,7 @@ jobs:
         python -m pytest ./tests/test_contamination_gaussian.py
         python -m pytest ./tests/test_contamination_disjoint.py
         python -m pytest ./tests/test_contamination_overlap.py
+        python -m pytest ./tests/test_contamination_distribution.py
         python -m pytest ./tests/test_exception.py
         python -m pytest ./tests/test_benchmarking.py
         python -m pytest ./tests/test_downstream.py

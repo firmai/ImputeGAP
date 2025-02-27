@@ -74,9 +74,9 @@ class TestContaminationOverlap(unittest.TestCase):
                     for series_index, series in enumerate(ts_miss):
                         N = len(series)  # Total number of values in the series
                         O = int(N * P)  # Values to protect at the beginning of the series
-                        W = int((N - O) * S)  # Number of data points to remove
+                        W = int(N * S)  # Number of data points to remove
                         if INC != 0:
-                            X = X - int((N - O) * A)
+                            X = X - int(N * A)
                         L = X + W  # Ending position for contamination in the current series
 
                         print(*[f"({indc} {se})" for indc, se in enumerate(series)], sep=" ")

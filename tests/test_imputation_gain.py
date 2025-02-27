@@ -17,8 +17,11 @@ class TestGAIN(unittest.TestCase):
         incomp_data = ts_1.Contamination.mcar(ts_1.data)
 
         algo = Imputation.DeepLearning.GAIN(incomp_data).impute()
+
         algo.score(ts_1.data)
         metrics = algo.metrics
+
+        ts_1.print_results(algo.metrics, algo.algorithm)
 
         expected_metrics = { "RMSE": 0.0761539386206303, "MAE": 0.05712423616376365, "MI": 0.9379466857213109, "CORRELATION": 0.9277279472406363 }
 
@@ -44,8 +47,10 @@ class TestGAIN(unittest.TestCase):
 
         algo = Imputation.DeepLearning.GAIN(incomp_data).impute(user_def=True, params={"batch_size":32, "hint_rate":0.9, "alpha":10, "epoch":100})
 
-        algo.score(ts_1.data)
+        algo.score(ts_1.data, algo.recov_data)
         metrics = algo.metrics
+
+        ts_1.print_results(algo.metrics, algo.algorithm)
 
         expected_metrics = { "RMSE": 0.0759154033299618, "MAE": 0.05626868163024594, "MI": 0.9158446447304692, "CORRELATION": 0.9279815083698357 }
 

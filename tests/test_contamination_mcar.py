@@ -86,28 +86,35 @@ class TestContaminationMCAR(unittest.TestCase):
             ts_1.load_series(utils.search_path(dataset))
 
 
-            for series_sel in series_impacted:
-                for missing_rate in missing_rates:
+            for S in series_impacted:
+                for R in missing_rates:
                     ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             series_rate=missing_rate,
-                                                             dataset_rate=series_sel,
+                                                             series_rate=R,
+                                                             dataset_rate=S,
                                                              block_size=block_size, offset=offset,
                                                              seed=True)
 
                     # 1) Check if the number of NaN values is correct
                     M, N = ts_contaminate.shape
                     P = int(N * offset)
-                    W = int((N - P) * missing_rate)
-                    expected_contaminated_series = int(np.ceil(M * series_sel))
+                    W = int(N * R)
+                    expected_contaminated_series = int(np.ceil(M * S))
                     B = int(W / block_size)
                     total_expected = (B * block_size) * expected_contaminated_series
                     total_nan = np.isnan(ts_contaminate).sum()
 
-                    self.assertEqual(total_nan, total_expected)
+                    print(f"\nExpected {total_expected} total missing values but found {total_nan}\n\t"
+                          f"for dataset_rate {S * 100}% and series_rate {R * 100}% / ({M},{N})\n\t")
+
+                    self.assertEqual(total_nan, total_expected,
+                                     (f"\nExpected {total_expected} total missing values but found {total_nan}\n\t"
+                                      f"for dataset_rate {S * 100}% and series_rate {R * 100}% / ({M},{N})\n\t"))
 
                     # 2) Check if the correct percentage of series are contaminated
                     contaminated_series = np.isnan(ts_contaminate).any(axis=1).sum()
+
                     self.assertEqual(contaminated_series, expected_contaminated_series, f"Expected {expected_contaminated_series} contaminated series but found {contaminated_series}")
+
 
     def test_mcar_position_datasets(self):
         """
@@ -140,6 +147,8 @@ class TestContaminationMCAR(unittest.TestCase):
 
                     self.assertTrue(check_position, True)
 
+
+
     def test_contaminate_plot(self):
         """
         Verify if the manager of a dataset is working
@@ -154,6 +163,7 @@ class TestContaminationMCAR(unittest.TestCase):
         ts_1.print()
         filepath = ts_1.plot(input_data=ts_1.data, incomp_data=ts_2.data, max_series=10, max_values=100, save_path="./assets/", display=False)
         self.assertTrue(os.path.exists(filepath))
+
 
     def test_mcar_size_of_block(self):
         """
@@ -202,10 +212,15 @@ class TestContaminationMCAR(unittest.TestCase):
                                     block_indices = []
 
                         for block in nan_blocks:
+                            print(f"\t\tDataset: {dataset}, Series: {i} "
+                                  f"\t\tBlock size {block} found, expected at least {block_size}.")
+
                             assert block >= block_size, (
                                 f"Dataset: {dataset}, Series: {i}, "
                                 f"Block size {block} found, expected at least {block_size}."
                             )
+
+
 
     def test_mcar_missing_percentage_total(self):
         """
@@ -213,7 +228,7 @@ class TestContaminationMCAR(unittest.TestCase):
         """
         datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
         series_impacted = [0.4, 0.8]
-        missing_rates = [0.2, 0.6]
+        missing_rates = [0.2, 0.65]
         offset, block_size = 0.1, 10
 
         for dataset in datasets:
@@ -227,36 +242,36 @@ class TestContaminationMCAR(unittest.TestCase):
                                                              dataset_rate=series_sel, block_size=block_size,
                                                              offset=offset, seed=True)
 
-                    #print(*[f"({indc} {se})" for indc, se in enumerate(ts_contaminate)], sep=" ")
+                    #print(*[f"({indc} {se})" for indc, se in enumerate(ts_contaminate)], sep=" ")  # debug
 
                     nbr_series_contaminated = 0
-                    for current_series in ts_contaminate:
+                    for inx, current_series in enumerate(ts_contaminate):
 
                         if np.isnan(current_series).any():
                             nbr_series_contaminated = nbr_series_contaminated+1
 
                             num_missing_values = np.isnan(current_series).sum()
-                            expected_num_missing = int((N-int(N*offset)) * missing_rate)
+                            expected_num_missing = int(N * missing_rate)
                             b_compensation = 0
 
-                            print("\t\tNUMBR OF VALUES : ", num_missing_values)
-                            print("\t\tEXPECTED VALUES : ", expected_num_missing, "\n")
+                            print(f"\t\tNUMBR OF VALUES for series #{inx} : {num_missing_values}")
+                            print(f"\t\tEXPECTED VALUES for series #{inx} : {expected_num_missing}\n")
 
                             if expected_num_missing != num_missing_values:
                                 b_compensation = expected_num_missing - num_missing_values
 
-                                expected_num_missing = int((N - int(N * offset)) * missing_rate)
+                                expected_num_missing = int(N * missing_rate)
                                 B = int(expected_num_missing / block_size)
                                 expected_num_missing = (B * block_size)
-                                print("\t\t\tBLOCK SIZE LIMITATION : ", expected_num_missing, "\n")
+                                print(f"\t\t\tBLOCK SIZE LIMITATION {block_size}: ", expected_num_missing, "\n")
 
                             self.assertEqual(num_missing_values, expected_num_missing,
                                 msg=f"Dataset '{dataset}', Series Index {current_series}: "
                                     f"Expected {expected_num_missing} missing values, but found {num_missing_values}.")
 
-                            percentage = (((expected_num_missing+b_compensation)/(N-int(N*offset)))*100)
-                            print("\t\tPERCENTAGE VALUES : ", percentage)
-                            print("\t\tEXPECTED % VALUES : ", missing_rate*100, "\n")
+                            percentage = ((expected_num_missing+b_compensation)/N)*100
+                            print(f"\t\tPERCENTAGE VALUES for series #{inx} : {percentage}")
+                            print(f"\t\tEXPECTED % VALUES for series #{inx} : {missing_rate * 100}\n")
 
                             if b_compensation == 0:
                                 self.assertEqual(percentage, missing_rate*100,
@@ -266,7 +281,7 @@ class TestContaminationMCAR(unittest.TestCase):
                                 self.assertAlmostEqual(percentage, missing_rate * 100, delta=1,
                                     msg=f"Dataset '{dataset}': Expected {missing_rate * 100}%, but found {percentage}%.")
 
-                            print("\n\n\n===============================\n\n")
+                            print("\n\n\n=inner_loop=============================================================\n\n")
 
                     expected_nbr_series = int(np.ceil(M*series_sel))
                     self.assertEqual(

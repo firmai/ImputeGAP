@@ -14,7 +14,7 @@ class TestContaminationGaussian(unittest.TestCase):
 
         datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
         series_impacted = [0.1, 0.5, 1]  # percentage of series impacted
-        missing_rates = [0.1, 0.5, 1]  # percentage of missing values with NaN
+        missing_rates = [0.1, 0.5, 0.9]  # percentage of missing values with NaN
         P = 0.1  # offset zone
 
         for dataset in datasets:
@@ -24,18 +24,20 @@ class TestContaminationGaussian(unittest.TestCase):
 
             for S in series_impacted:
                 for R in missing_rates:
-                    validation = False
                     incomp_data = ts.Contamination.gaussian(input_data=ts.data, dataset_rate=S, series_rate=R, offset=P)
 
                     n_nan = np.isnan(incomp_data).sum()
                     expected_nan_series = math.ceil(S * M)
-                    expected_nan_values = int((N - int(N * P)) * R)
+                    expected_nan_values = int(N * R)
                     expected_nan = expected_nan_series * expected_nan_values
 
-                    if n_nan <= expected_nan:
-                        validation = True
+                    print(f"\nExpected {expected_nan} total missing values but found {n_nan}\n\t"
+                          f"for dataset_rate {S * 100}% and series_rate {R * 100}% / ({M},{N})\n\t")
 
-                    self.assertTrue(validation, f"Expected {expected_nan} contaminated series but found {n_nan}")
+                    self.assertEqual(expected_nan, n_nan,
+                                     (f"\nExpected {expected_nan} total missing values but found {n_nan}\n\t"
+                                      f"for dataset_rate {S * 100}% and series_rate {R * 100}% / ({M},{N})\n\t"))
+
 
     def test_gaussian_position(self):
         """
@@ -61,6 +63,7 @@ class TestContaminationGaussian(unittest.TestCase):
                     check_position = True
 
                 self.assertTrue(check_position, True)
+
 
     def test_gaussian_logic(self):
         """
@@ -102,6 +105,7 @@ class TestContaminationGaussian(unittest.TestCase):
                         f"Medium deviation density {densities[0.2]} should be more tightly packed than high deviation density {densities[0.5]}, "
                         f"for dataset {dataset}, series impacted {S}, and missing rate {R}. (Center: {center})")
 
+
     def test_gaussian_missing_percentage_total(self):
         """
         Test if the size of the missing percentage in a contaminated time series meets the expected number defined by the user.
@@ -123,24 +127,24 @@ class TestContaminationGaussian(unittest.TestCase):
                                                              offset=offset, seed=True)
 
                     nbr_series_contaminated = 0
-                    for current_series in ts_contaminate:
+                    for inx, current_series in enumerate(ts_contaminate):
 
                         if np.isnan(current_series).any():
                             nbr_series_contaminated = nbr_series_contaminated + 1
 
                             num_missing_values = np.isnan(current_series).sum()
-                            expected_num_missing = int((N - int(N * offset)) * missing_rate)
+                            expected_num_missing = int(N * missing_rate)
 
-                            print("\t\tNUMBR OF VALUES : ", num_missing_values)
-                            print("\t\tEXPECTED VALUES : ", expected_num_missing, "\n")
+                            print(f"\t\tNUMBR OF VALUES for series #{inx} : {num_missing_values}")
+                            print(f"\t\tEXPECTED VALUES for series #{inx} : {expected_num_missing}\n")
 
                             self.assertEqual(num_missing_values, expected_num_missing,
                                              msg=f"Dataset '{dataset}', Series Index {current_series}: "
                                                  f"Expected {expected_num_missing} missing values, but found {num_missing_values}.")
 
-                            percentage = (((expected_num_missing) / (N - int(N * offset))) * 100)
-                            print("\t\tPERCENTAGE VALUES : ", percentage)
-                            print("\t\tEXPECTED % VALUES : ", missing_rate * 100, "\n")
+                            percentage = (expected_num_missing / N) * 100
+                            print(f"\t\tPERCENTAGE VALUES for series #{inx} : {percentage}")
+                            print(f"\t\tEXPECTED % VALUES for series #{inx} : {missing_rate * 100}\n")
 
                             self.assertAlmostEqual(percentage, missing_rate * 100, delta=1,
                                                        msg=f"Dataset '{dataset}': Expected {missing_rate * 100}%, but found {percentage}%.")
