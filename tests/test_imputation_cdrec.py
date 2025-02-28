@@ -13,7 +13,7 @@ class TestCDREC(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("test"))
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=2, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=2, offset=0.1, seed=True)
 
         algo = Imputation.MatrixCompletion.CDRec(incomp_data)
         algo.impute()
@@ -42,7 +42,7 @@ class TestCDREC(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("chlorine"), max_values=200)
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=10, offset=0.1, seed=True)
 
         algo = Imputation.MatrixCompletion.CDRec(incomp_data)
         algo.impute()

@@ -223,6 +223,18 @@ RAYTUNE_PARAMS = {
         "hint_rate": tune.grid_search([0.01, 0.1, 0.5]),
         "alpha": tune.grid_search([1, 2, 10]),
         "epoch": 100
+    },
+
+    "bay_otide": {
+        "K_trend": tune.grid_search([10, 20, 30]),  # Trend factor search space
+        "K_season": tune.grid_search([1, 2, 5]),  # Seasonal factor search space
+        "n_season": tune.grid_search([3, 5, 10]),  # Seasonal components per factor
+        "K_bias": tune.grid_search([0, 1]),  # Bias factor inclusion
+        "time_scale": tune.grid_search([0.5, 1, 2]),  # Time scaling factor
+        "a0": tune.grid_search([0.1, 0.6, 1.0]),  # Prior hyperparameter a0
+        "b0": tune.grid_search([1, 2.5, 5]),  # Prior hyperparameter b0
+        "v": tune.grid_search([0.1, 0.5, 1.0])  # Variance parameter
     }
+
 
 }

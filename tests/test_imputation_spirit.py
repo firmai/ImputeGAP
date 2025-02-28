@@ -15,7 +15,7 @@ class TestSPIRIT(unittest.TestCase):
         ts_x.load_series(utils.search_path("airq"))
         ts_x.data = ts_x.data.T
 
-        miss_ts = ts_x.Contamination.missing_percentage(ts_x.data.T, dataset_rate=0.1, series_rate=0.2)
+        miss_ts = ts_x.Contamination.missing_percentage(ts_x.data.T, dataset_rate=0.1, series_rate=0.18)
         miss_ts = miss_ts.T
 
         algo2 = Imputation.MatrixCompletion.SPIRIT(miss_ts).impute()
@@ -43,7 +43,7 @@ class TestSPIRIT(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=10, offset=0.1, seed=True)
 
         algo = Imputation.MatrixCompletion.SPIRIT(incomp_data).impute(params={"k": 3, "w": 3, "lvalue": 0.5})
         algo.score(ts_1.data)

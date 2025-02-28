@@ -146,6 +146,15 @@ patience = 4
 epochs = 20
 workers = 2
 
+[bay_otide]
+K_trend = 20
+K_season = 2
+n_season = 5
+K_bias = 1
+time_scale = 1
+a0 = 0.6
+b0 = 2.5
+v = 0.5
 
 # OPTIMIZER DEFAULT VALUES ==========================================================================
 [greedy]

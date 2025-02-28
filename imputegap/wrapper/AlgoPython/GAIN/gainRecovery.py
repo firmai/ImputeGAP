@@ -62,7 +62,17 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
   gain_parameters['batch_size'] = batch_size
   # print('Batch size: ', gain_parameters["batch_size"])
 
-  # Impute missing data
-  imputed_data_x = gain(input_data, gain_parameters)
+  max_trials = 3  # Maximum number of retries
+  trial = 0
 
-  return imputed_data_x
+  while trial < max_trials:
+      imputed_data_x = gain(input_data, gain_parameters)
+
+      if not np.all(np.isnan(imputed_data_x)):
+          return imputed_data_x  # Successfully imputed, return result
+
+      print(f"\t\t(PYTHON) GAIN: Trial {trial + 1} failed, reattempting...")
+      trial += 1
+
+  print("\t\t(PYTHON) GAIN: All trials failed, returning last imputed result.")
+  return imputed_data_x  # Return last attempt even if NaN

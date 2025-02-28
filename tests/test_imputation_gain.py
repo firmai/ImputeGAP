@@ -14,7 +14,7 @@ class TestGAIN(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(ts_1.data)
+        incomp_data = ts_1.Contamination.mcar(ts_1.data, series_rate=0.18)
 
         algo = Imputation.DeepLearning.GAIN(incomp_data).impute()
 
@@ -43,7 +43,7 @@ class TestGAIN(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(ts_1.data)
+        incomp_data = ts_1.Contamination.mcar(ts_1.data, series_rate=0.18)
 
         algo = Imputation.DeepLearning.GAIN(incomp_data).impute(user_def=True, params={"batch_size":32, "hint_rate":0.9, "alpha":10, "epoch":100})
 

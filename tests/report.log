@@ -1,0 +1,670 @@
+2025-02-28 12:19:58,624 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:58,643 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:58,677 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:58,727 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:58,743 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:58,775 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:58,819 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:58,836 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:58,886 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:58,931 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:58,946 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,009 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,057 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,071 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,140 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,189 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,206 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,258 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,303 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,319 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,362 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,409 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,428 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,477 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,522 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,537 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,567 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,614 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,629 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,657 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,708 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,729 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,755 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,812 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,832 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,855 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:19:59,909 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:19:59,928 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:19:59,955 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,012 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,032 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:00,087 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,140 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,159 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:00,202 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,257 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,272 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:00,318 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,377 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,396 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:00,427 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,484 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,501 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:00,530 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,586 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,603 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:00,661 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,717 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,736 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:00,781 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,838 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,859 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:00,903 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:00,957 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:00,977 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:01,021 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:01,080 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:01,099 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:01,145 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:01,201 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:01,220 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:01,245 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:01,306 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:01,324 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:01,411 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:01,464 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:01,482 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:01,525 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:01,581 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:01,597 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:01,642 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:01,701 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:01,721 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:01,786 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:01,844 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:01,865 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:01,956 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:02,015 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:02,033 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:02,072 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:02,126 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:02,144 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:02,247 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:02,303 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:02,322 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:02,402 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:02,454 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:02,470 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:02,544 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:02,595 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:02,617 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:02,701 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:02,761 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:02,778 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:02,816 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:02,870 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:02,888 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:02,954 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:03,008 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:03,027 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:03,111 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:03,166 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:03,184 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:03,311 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:03,369 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:03,385 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:03,411 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:03,460 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:03,476 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:03,537 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:03,602 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:03,624 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:03,668 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:03,723 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:03,744 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:03,771 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:03,823 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:03,841 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:03,883 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:03,937 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:03,956 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:03,998 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:04,052 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:04,073 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:04,104 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:04,160 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:04,179 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:04,230 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:04,287 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:04,304 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:04,366 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:04,421 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:04,440 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:04,503 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:04,554 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:04,570 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:04,636 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:04,696 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:04,715 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:04,812 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:04,866 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:04,884 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:04,922 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:04,980 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:05,000 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:05,041 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:05,099 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:05,115 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:05,169 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:05,215 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:05,232 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:05,302 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:05,353 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:05,370 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:05,438 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:05,487 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:05,506 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:05,568 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:05,626 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:05,645 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:05,695 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:05,749 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:05,769 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:05,832 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:06,494 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:06,511 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:06,545 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:06,602 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:06,621 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:06,651 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:06,710 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:06,729 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:06,756 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:06,811 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:06,830 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:06,853 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:06,910 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:06,930 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:06,959 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,018 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,038 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:07,065 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,118 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,138 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:07,185 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,246 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,267 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:07,316 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,378 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,397 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:07,427 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,482 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,505 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:07,542 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,602 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,624 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:07,682 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,737 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,758 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:07,780 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,838 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,858 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:07,908 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:07,962 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:07,981 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:08,024 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:08,082 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:08,098 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:08,144 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:08,199 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:08,219 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:08,244 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:08,300 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:08,316 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:08,401 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:08,458 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:08,475 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:08,509 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:08,570 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:08,591 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:08,657 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:08,705 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:08,721 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:08,776 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:08,822 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:08,838 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:08,914 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:08,968 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:08,986 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:09,023 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:09,079 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:09,097 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:09,140 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:09,200 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:09,222 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:09,295 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:09,356 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:09,375 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:09,432 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:09,487 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:09,508 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:09,595 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:09,651 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:09,669 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:09,709 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:09,766 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:09,784 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:09,854 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:09,910 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:09,929 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:10,017 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:10,077 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:10,093 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:10,223 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:10,280 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:10,299 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:10,332 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:10,390 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:10,408 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:10,464 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:10,523 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:10,541 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:10,586 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:10,644 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:10,665 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:10,692 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:10,748 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:10,769 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:10,809 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:10,867 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:10,886 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:10,936 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:10,994 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:11,015 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:11,050 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:11,112 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:11,133 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:11,280 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:11,340 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:11,357 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:11,422 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:11,477 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:11,496 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:11,561 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:11,617 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:11,636 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:11,712 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:11,766 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:11,782 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:11,871 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:11,919 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:11,935 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:11,967 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:12,026 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:12,044 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:12,083 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:12,143 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:12,163 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:12,230 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:12,287 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:12,305 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:12,384 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:12,437 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:12,456 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:12,535 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:12,588 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:12,607 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:12,673 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:12,726 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:12,743 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:12,795 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:12,850 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:12,868 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:12,925 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:12,975 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:12,990 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,019 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,083 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,099 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,128 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,185 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,206 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,235 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,288 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,308 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,328 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,383 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,403 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,432 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,486 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,505 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,530 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,586 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,603 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,646 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,701 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,719 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,765 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,823 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,840 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,870 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:13,929 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:13,950 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:13,978 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:14,033 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:14,055 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:14,121 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:14,214 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:14,249 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:14,284 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:14,386 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:14,429 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:14,513 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:14,611 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:14,646 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:14,729 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:14,834 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:14,875 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:14,956 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:15,053 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:15,091 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:15,129 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:15,238 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:15,275 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:15,419 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:15,506 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:15,539 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:15,600 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:15,699 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:15,735 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:15,851 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:15,951 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:15,987 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:16,099 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:16,181 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:16,203 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:16,315 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:16,379 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:16,398 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:16,440 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:16,501 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:16,520 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:16,565 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:16,632 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:16,652 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:16,727 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:16,791 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:16,811 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:16,833 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:16,898 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:16,919 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:17,008 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:17,068 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:17,089 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:17,133 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:17,194 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:17,215 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:17,287 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:17,347 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:17,367 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:17,465 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:17,523 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:17,542 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:17,665 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:17,725 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:17,747 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:17,778 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:17,833 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:17,851 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:17,880 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:17,944 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:17,965 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,007 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,064 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,083 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,110 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,172 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,193 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,236 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,295 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,315 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,364 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,412 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,431 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,460 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,513 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,528 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,548 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,599 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,616 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,670 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,730 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,750 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,816 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,876 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,895 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:18,913 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:18,970 - prophet - INFO - Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2025-02-28 12:20:18,992 - cmdstanpy - INFO - Chain [1] start processing
+2025-02-28 12:20:19,099 - cmdstanpy - INFO - Chain [1] done processing
+2025-02-28 12:20:55,917 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:55,920 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:55,922 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:55,935 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:55,958 - shap - INFO - np.sum(w_aug) = 15.999999999999998
+2025-02-28 12:20:55,958 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000004
+2025-02-28 12:20:56,016 - shap - INFO - phi = array([ 0.00000000e+00, -8.88019875e-03,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00, -6.86607862e-05,  6.25857095e-05,  0.00000000e+00,
+        0.00000000e+00,  1.45046191e-04,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00,  0.00000000e+00, -2.11160641e-04,  0.00000000e+00])
+2025-02-28 12:20:56,044 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:56,051 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:56,052 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:56,091 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:56,119 - shap - INFO - np.sum(w_aug) = 16.0
+2025-02-28 12:20:56,121 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:56,164 - shap - INFO - phi = array([ 0.00000000e+00,  3.55240624e-03,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00, -6.86607862e-05,  6.25857095e-05,  0.00000000e+00,
+        0.00000000e+00,  1.45046191e-04,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00,  0.00000000e+00,  1.05580321e-04,  0.00000000e+00])
+2025-02-28 12:20:56,207 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:56,208 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:56,208 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:56,237 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:56,265 - shap - INFO - np.sum(w_aug) = 15.999999999999998
+2025-02-28 12:20:56,266 - shap - INFO - np.sum(self.kernelWeights) = 1.0
+2025-02-28 12:20:56,372 - shap - INFO - phi = array([ 0.00000000e+00,  4.73599708e-03,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00, -6.86607862e-05,  6.25857095e-05,  0.00000000e+00,
+        0.00000000e+00,  1.45046191e-04,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00,  0.00000000e+00,  1.05580321e-04,  0.00000000e+00])
+2025-02-28 12:20:56,386 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:56,388 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:56,392 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:56,424 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:56,463 - shap - INFO - np.sum(w_aug) = 16.0
+2025-02-28 12:20:56,464 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:56,501 - shap - INFO - phi = array([0.00000000e+00, 4.73599708e-03, 0.00000000e+00, 0.00000000e+00,
+       0.00000000e+00, 1.37321572e-04, 6.25857095e-05, 0.00000000e+00,
+       0.00000000e+00, 1.45046191e-04, 0.00000000e+00, 0.00000000e+00,
+       0.00000000e+00, 0.00000000e+00, 1.05580321e-04, 0.00000000e+00])
+2025-02-28 12:20:56,512 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:56,513 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:56,516 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:56,545 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:56,584 - shap - INFO - np.sum(w_aug) = 15.999999999999996
+2025-02-28 12:20:56,585 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000004
+2025-02-28 12:20:56,682 - shap - INFO - phi = array([ 0.        ,  0.004736  ,  0.        ,  0.        ,  0.        ,
+        0.00013732, -0.00031293,  0.        ,  0.        ,  0.00014505,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.00010558,
+        0.        ])
+2025-02-28 12:20:56,717 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:56,719 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:56,720 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:56,772 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:56,797 - shap - INFO - np.sum(w_aug) = 15.999999999999996
+2025-02-28 12:20:56,797 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:56,833 - shap - INFO - phi = array([ 0.00000000e+00, -8.88019875e-03,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00, -6.86607862e-05,  6.25857095e-05,  0.00000000e+00,
+        0.00000000e+00, -7.25230953e-04,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00,  0.00000000e+00, -2.11160641e-04,  0.00000000e+00])
+2025-02-28 12:20:56,847 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:56,854 - shap - INFO - remaining_weight_vector = array([0.23108621, 0.18664656, 0.16176035, 0.14705486, 0.13865173,
+       0.13480029])
+2025-02-28 12:20:56,856 - shap - INFO - num_paired_subset_sizes = 8
+2025-02-28 12:20:56,895 - shap - INFO - weight_left = 0.5181019626448611
+2025-02-28 12:20:56,921 - shap - INFO - np.sum(w_aug) = 17.000000000000007
+2025-02-28 12:20:56,922 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:57,024 - shap - INFO - phi = array([ 0.00000000e+00,  4.78175895e-03,  0.00000000e+00, -8.23870107e-04,
+        3.52707678e-04,  5.84070762e-02, -6.58176070e-05,  4.16744541e-02,
+        1.63386594e-02,  1.27366766e-05, -5.19480170e-04,  2.77921160e-03,
+       -2.78906921e-03,  2.18486196e-04,  4.19067576e-05, -1.61020629e-04,
+       -2.80003094e-04])
+2025-02-28 12:20:57,063 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:57,072 - shap - INFO - remaining_weight_vector = array([0.20732477, 0.16660026, 0.14353254, 0.12957798, 0.12116383,
+       0.11662019, 0.11518043])
+2025-02-28 12:20:57,073 - shap - INFO - num_paired_subset_sizes = 8
+2025-02-28 12:20:57,114 - shap - INFO - weight_left = 0.528623703595323
+2025-02-28 12:20:57,141 - shap - INFO - np.sum(w_aug) = 17.999999999999996
+2025-02-28 12:20:57,142 - shap - INFO - np.sum(self.kernelWeights) = 0.9999999999999998
+2025-02-28 12:20:57,251 - shap - INFO - phi = array([-4.23740400e-03,  4.86594850e-03,  2.03953900e-04, -8.84065259e-04,
+        1.38516632e-03,  7.92636066e-04,  1.59348446e-03, -3.82106791e-04,
+        4.19611966e-04,  1.24311529e-04,  3.39022229e-03,  2.30180720e-04,
+        2.53010519e-03, -4.21856301e-03, -2.20044941e-04,  9.26701278e-04,
+        7.40477018e-04,  4.16044238e-05])
+2025-02-28 12:20:57,278 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:57,282 - shap - INFO - remaining_weight_vector = array([0.23108621, 0.18664656, 0.16176035, 0.14705486, 0.13865173,
+       0.13480029])
+2025-02-28 12:20:57,283 - shap - INFO - num_paired_subset_sizes = 8
+2025-02-28 12:20:57,312 - shap - INFO - weight_left = 0.5181019626448611
+2025-02-28 12:20:57,352 - shap - INFO - np.sum(w_aug) = 17.000000000000004
+2025-02-28 12:20:57,353 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:57,382 - shap - INFO - phi = array([-1.46251498e-02, -9.09576982e-03,  4.25612431e-04, -1.11308778e-03,
+        7.60190988e-04,  3.16631560e-04,  7.77586437e-04,  0.00000000e+00,
+        1.41757456e-04, -4.68811641e-04,  3.00263634e-03, -4.64003818e-03,
+        5.11925711e-04, -4.53961415e-03, -2.28118751e-04,  7.57353258e-04,
+        2.57639654e-05])
+2025-02-28 12:20:57,404 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:57,405 - shap - INFO - remaining_weight_vector = array([0.23108621, 0.18664656, 0.16176035, 0.14705486, 0.13865173,
+       0.13480029])
+2025-02-28 12:20:57,406 - shap - INFO - num_paired_subset_sizes = 8
+2025-02-28 12:20:57,460 - shap - INFO - weight_left = 0.5181019626448611
+2025-02-28 12:20:57,488 - shap - INFO - np.sum(w_aug) = 17.000000000000007
+2025-02-28 12:20:57,489 - shap - INFO - np.sum(self.kernelWeights) = 1.0
+2025-02-28 12:20:57,592 - shap - INFO - phi = array([-1.48965200e-02, -1.01127722e-02,  2.03585575e-04, -1.17224161e-03,
+        7.81832942e-04,  2.82597834e-04,  8.71948585e-04,  0.00000000e+00,
+        5.77036931e-05, -4.76796221e-04, -2.33829883e-04, -4.76516715e-03,
+        4.76501332e-04, -4.53316051e-03, -2.38378566e-04,  7.49106138e-04,
+       -6.34185477e-05])
+2025-02-28 12:20:57,604 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:57,605 - shap - INFO - remaining_weight_vector = array([0.23108621, 0.18664656, 0.16176035, 0.14705486, 0.13865173,
+       0.13480029])
+2025-02-28 12:20:57,608 - shap - INFO - num_paired_subset_sizes = 8
+2025-02-28 12:20:57,638 - shap - INFO - weight_left = 0.5181019626448611
+2025-02-28 12:20:57,685 - shap - INFO - np.sum(w_aug) = 17.000000000000004
+2025-02-28 12:20:57,687 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:57,731 - shap - INFO - phi = array([-1.74825582e-02, -1.27453727e-02,  2.71099426e-04, -5.03192628e-04,
+        6.14453598e-04, -7.77677359e-05,  2.21968340e-05, -8.10889482e-04,
+       -7.61363376e-04, -3.65571534e-04, -2.36984952e-03, -8.16528928e-03,
+        2.76638520e-04, -4.66492905e-03, -3.06599353e-04,  8.52268525e-04,
+       -3.45073031e-04])
+2025-02-28 12:20:57,747 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:57,761 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:57,762 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:57,796 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:57,829 - shap - INFO - np.sum(w_aug) = 15.999999999999996
+2025-02-28 12:20:57,830 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:57,930 - shap - INFO - phi = array([-0.01821529, -0.0130146 ,  0.00022738, -0.00050559,  0.00051753,
+       -0.00023178, -0.00010514, -0.00100915, -0.00078202, -0.00044573,
+       -0.00278685, -0.00925884,  0.00015105, -0.00466223, -0.0002263 ,
+       -0.00069266])
+2025-02-28 12:20:57,953 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:57,958 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:57,959 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:58,011 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:58,040 - shap - INFO - np.sum(w_aug) = 15.999999999999996
+2025-02-28 12:20:58,041 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:58,076 - shap - INFO - phi = array([-1.96253651e-02, -1.39657904e-02, -6.51680781e-05, -4.80932783e-04,
+        0.00000000e+00, -2.83003112e-04, -3.39480117e-04, -1.20421516e-03,
+       -9.47237644e-04, -4.21915560e-04, -3.20497836e-03, -9.94263712e-03,
+       -1.98131879e-05, -4.71469473e-03, -2.74155541e-04, -8.29883198e-04])
+2025-02-28 12:20:58,095 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:58,100 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:58,102 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:58,133 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:58,170 - shap - INFO - np.sum(w_aug) = 15.999999999999996
+2025-02-28 12:20:58,171 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:58,213 - shap - INFO - phi = array([-1.80974611e-02, -1.33876191e-02,  0.00000000e+00,  0.00000000e+00,
+       -1.78947332e-04, -2.79410456e-04, -1.55006965e-04,  1.68559334e-02,
+       -8.76923381e-04, -5.56393706e-04, -3.14028031e-03, -9.47646213e-03,
+        0.00000000e+00,  3.57457310e-05, -2.60980264e-04, -5.54136155e-04])
+2025-02-28 12:20:58,232 - shap - INFO - num_full_subsets = 2
+2025-02-28 12:20:58,232 - shap - INFO - remaining_weight_vector = array([0.22727203, 0.18465852, 0.16115653, 0.14772682, 0.14069221,
+       0.13849389])
+2025-02-28 12:20:58,233 - shap - INFO - num_paired_subset_sizes = 7
+2025-02-28 12:20:58,277 - shap - INFO - weight_left = 0.5063344810024111
+2025-02-28 12:20:58,306 - shap - INFO - np.sum(w_aug) = 15.999999999999996
+2025-02-28 12:20:58,308 - shap - INFO - np.sum(self.kernelWeights) = 1.0000000000000002
+2025-02-28 12:20:58,341 - shap - INFO - phi = array([ 0.00000000e+00, -8.88018310e-03,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00, -7.40321285e-05,  6.26351585e-05, -6.26276553e-04,
+        0.00000000e+00, -7.41192462e-04,  0.00000000e+00,  0.00000000e+00,
+        0.00000000e+00,  0.00000000e+00,  1.05602980e-04,  0.00000000e+00])
+2025-02-28 12:21:05,876 - tsfresh.feature_extraction.settings - WARNING - Dependency not available for matrix_profile, this feature will be disabled!
+2025-02-28 12:32:51,033 - lightning_fabric.utilities.seed - INFO - Seed set to 42
+2025-02-28 12:32:51,200 - lightning.pytorch.utilities.rank_zero - INFO - GPU available: True (cuda), used: True
+2025-02-28 12:32:51,202 - lightning.pytorch.utilities.rank_zero - INFO - TPU available: False, using: 0 TPU cores
+2025-02-28 12:32:51,202 - lightning.pytorch.utilities.rank_zero - INFO - HPU available: False, using: 0 HPUs
+2025-02-28 12:32:51,219 - lightning.pytorch.utilities.rank_zero - INFO - You are using a CUDA device ('NVIDIA GeForce RTX 4070 Laptop GPU') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+2025-02-28 12:32:51,327 - pytorch_lightning.accelerators.cuda - INFO - LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2025-02-28 12:32:51,354 - pytorch_lightning.callbacks.model_summary - INFO - 
+  | Name          | Type             | Params | Mode 
+-----------------------------------------------------------
+0 | loss_fn       | MaskedMetric     | 0      | train
+1 | train_metrics | MetricCollection | 0      | train
+2 | val_metrics   | MetricCollection | 0      | train
+3 | test_metrics  | MetricCollection | 0      | train
+4 | model         | GRINet           | 62.1 K | train
+-----------------------------------------------------------
+62.1 K    Trainable params
+0         Non-trainable params
+62.1 K    Total params
+0.248     Total estimated model params size (MB)
+63        Modules in train mode
+0         Modules in eval mode
+2025-02-28 12:33:04,170 - lightning.pytorch.utilities.rank_zero - INFO - `Trainer.fit` stopped: `max_epochs=20` reached.
+2025-02-28 12:33:04,344 - lightning.pytorch.utilities.rank_zero - INFO - Restoring states from the checkpoint path at /mnt/c/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-28_12-32-51_42/epoch=19-step=20.ckpt
+2025-02-28 12:33:04,405 - pytorch_lightning.accelerators.cuda - INFO - LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2025-02-28 12:33:04,441 - lightning.pytorch.utilities.rank_zero - INFO - Loaded model weights from the checkpoint at /mnt/c/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-28_12-32-51_42/epoch=19-step=20.ckpt
+2025-02-28 12:33:05,004 - lightning_fabric.utilities.seed - INFO - Seed set to 42
+2025-02-28 12:33:05,063 - lightning.pytorch.utilities.rank_zero - INFO - GPU available: True (cuda), used: True
+2025-02-28 12:33:05,064 - lightning.pytorch.utilities.rank_zero - INFO - TPU available: False, using: 0 TPU cores
+2025-02-28 12:33:05,064 - lightning.pytorch.utilities.rank_zero - INFO - HPU available: False, using: 0 HPUs
+2025-02-28 12:33:05,153 - pytorch_lightning.accelerators.cuda - INFO - LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2025-02-28 12:33:05,182 - pytorch_lightning.callbacks.model_summary - INFO - 
+  | Name          | Type             | Params | Mode 
+-----------------------------------------------------------
+0 | loss_fn       | MaskedMetric     | 0      | train
+1 | train_metrics | MetricCollection | 0      | train
+2 | val_metrics   | MetricCollection | 0      | train
+3 | test_metrics  | MetricCollection | 0      | train
+4 | model         | GRINet           | 62.1 K | train
+-----------------------------------------------------------
+62.1 K    Trainable params
+0         Non-trainable params
+62.1 K    Total params
+0.248     Total estimated model params size (MB)
+63        Modules in train mode
+0         Modules in eval mode
+2025-02-28 12:33:16,309 - lightning.pytorch.utilities.rank_zero - INFO - `Trainer.fit` stopped: `max_epochs=20` reached.
+2025-02-28 12:33:16,404 - lightning.pytorch.utilities.rank_zero - INFO - Restoring states from the checkpoint path at /mnt/c/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-28_12-33-05_42/epoch=19-step=20.ckpt
+2025-02-28 12:33:16,428 - pytorch_lightning.accelerators.cuda - INFO - LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+2025-02-28 12:33:16,447 - lightning.pytorch.utilities.rank_zero - INFO - Loaded model weights from the checkpoint at /mnt/c/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-28_12-33-05_42/epoch=19-step=20.ckpt

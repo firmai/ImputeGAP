@@ -1,5 +1,6 @@
 import re
 
+from imputegap.algorithms.bayotide import bay_otide
 from imputegap.algorithms.brits import brits
 from imputegap.algorithms.deep_mvi import deep_mvi
 from imputegap.algorithms.dynammo import dynammo
@@ -2046,7 +2047,7 @@ class Imputation:
             Methods
             -------
             impute(self, user_def=True, params=None):
-                Perform imputation using the Iterative GRIN
+                Perform imputation using the GRIN
             """
 
             algorithm = "grin"
@@ -2097,7 +2098,7 @@ class Imputation:
 
                 Example
                 -------
-                >>> grin_imputer = Imputation.GraphLearning.GRIN(incomp_data)
+                >>> grin_imputer = Imputation.DeepLearning.GRIN(incomp_data)
                 >>> grin_imputer.impute()  # default parameters for imputation > or
                 >>> grin_imputer.impute(user_def=True, params={"d_hidden":32, "lr":0.001, "batch_size":32, "window":1, "alpha":10.0, "patience":4, "epochs":20, "workers":2})  # user defined> or
                 >>> grin_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
@@ -2117,6 +2118,93 @@ class Imputation:
                 self.recov_data = grin(incomp_data=self.incomp_data, d_hidden=d_hidden, lr=lr, batch_size=batch_size, window=window, alpha=alpha, patience=patience, epochs=epochs, workers=workers, logs=self.logs)
 
                 return self
+
+        class BayOTIDE(BaseImputer):
+            """
+            BayOTIDE class to impute missing values using Bayesian Online Multivariate Time series Imputation with functional decomposition
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the BayOTIDE
+            """
+
+            algorithm = "bay_otide"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using the Multivariate Time Series Imputation by Deep Learning
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
+                params : dict, optional
+                    Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                     **Algorithm parameters:**
+
+                    K_trend : int, (optional) (default: 20)
+                        Number of trend factors.
+
+                    K_season : int, (optional) (default: 2)
+                        Number of seasonal factors.
+
+                    n_season : int, (optional) (default: 5)
+                        Number of seasonal components per factor.
+
+                    K_bias : int, (optional) (default: 1)
+                        Number of bias factors.
+
+                    time_scale : float, (optional) (default: 1)
+                        Time scaling factor.
+
+                    a0 : float, (optional) (default: 0.6)
+                        Hyperparameter for prior distribution.
+
+                    b0 : float, (optional) (default: 2.5)
+                        Hyperparameter for prior distribution.
+
+                    v : float, (optional) (default: 0.5)
+                        Variance parameter.
+
+                    config : dict, (optional) (default: None)
+                        Dictionary containing all configuration parameters, that will replace all other parameters (see documentation).
+
+                    args : object, (optional) (default: None)
+                        Arguments containing all configuration parameters, that will replace all other parameters (see documentation).
+
+
+                Returns
+                -------
+                self : BayOTIDE
+                    BayOTIDE object with `recov_data` set.
+
+                Example
+                -------
+                >>> bay_otide_imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
+                >>> bay_otide_imputer.impute()  # default parameters for imputation > or
+                >>> bay_otide_imputer.impute(user_def=True, params={"K_trend":20, "K_season":2, "n_season":5, "K_bias":1, "time_scale":1, "a0":0.6, "b0":2.5, "v":0.5})  # user defined> or
+                >>> bay_otide_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
+                >>> recov_data = bay_otide_imputer.recov_data
+
+                References
+                ----------
+                S. Fang, Q. Wen, Y. Luo, S. Zhe, and L. Sun, "BayOTIDE: Bayesian Online Multivariate Time Series Imputation with Functional Decomposition," CoRR, vol. abs/2308.14906, 2024. [Online]. Available: https://arxiv.org/abs/2308.14906.
+                https://github.com/xuangu-fang/BayOTIDE
+                """
+
+                if params is not None:
+                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v = self._check_params(user_def, params)
+                else:
+                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = bay_otide(incomp_data=self.incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, logs=self.logs)
+
+                return self
+
+
 
 
 

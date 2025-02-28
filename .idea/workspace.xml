@@ -5,21 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c64130a-5955-4091-9d95-7527058d5bd0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/data/GenerateDataset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/data/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/data/metr_la/read.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/images/Framework.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/images/demo.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/images/main_result.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/models/BiaTCGNet/BiaTCGNet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/models/BiaTCGNet/BiaTCGNet_layer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/models/BiaTCGNet/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/test_forecasting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_contamination_distribution.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imputegap/algorithms/bayotide.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BayOTIDE/BayOTIDE.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BayOTIDE/model_BayOTIDE.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BayOTIDE/model_LDS.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BayOTIDE/utils_BayOTIDE.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_imputation_bayotide.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.coverage" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.github/mypy_check.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.github/workflows/pytest_imputation_alpha.yml" beforeDir="false" />
@@ -758,170 +749,59 @@
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/entry_points.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/requires.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/top_level.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pytest_loading.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest_loading.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.algorithms.cdrec.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.algorithms.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.algorithms.iim.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.algorithms.mean_impute.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.algorithms.min_impute.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.algorithms.mrnn.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.algorithms.stmvl.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.algorithms.zero_impute.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.recovery.benchmark.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.recovery.benchmarking.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.recovery.evaluation.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.recovery.explainer.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.recovery.imputation.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.recovery.manager.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.recovery.optimization.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.tools.algorithm_parameters.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.tools.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.tools.utils.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/_autosummary/imputegap.wrapper.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/datasets.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/environment.pickle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/getting_started.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.algorithm_parameters.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.algorithms.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.benchmark.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.cdrec.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.evaluation.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.explainer.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.iim.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.imputation.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.manager.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.mean_impute.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.min_impute.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.mrnn.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.optimization.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.stmvl.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.tools.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.utils.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.wrapper.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/imputegap.zero_impute.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/index.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/modules.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/references.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/doctrees/tutorials.doctree" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/.buildinfo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/.nojekyll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.algorithms.cdrec.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.algorithms.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.algorithms.iim.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.algorithms.mean_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.algorithms.min_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.algorithms.mrnn.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.algorithms.stmvl.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.algorithms.zero_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.recovery.benchmark.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.recovery.benchmarking.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.recovery.evaluation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.recovery.explainer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.recovery.imputation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.recovery.manager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.recovery.optimization.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.tools.algorithm_parameters.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.tools.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.tools.utils.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_autosummary/imputegap.wrapper.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/cdrec.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/iim.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/mean_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/min_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/mrnn.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/stmvl.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/zero_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/benchmark.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/evaluation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/explainer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/imputation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/manager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/optimization.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/tools/utils.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/datasets.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_sources/index.rst.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/alabaster.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/basic.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/custom.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/doctools.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/documentation_options.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/file.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/github-banner.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/language_data.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/minus.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/plus.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/pygments.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/searchtools.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_static/sphinx_highlight.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/datasets.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/genindex.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/getting_started.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.algorithm_parameters.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.algorithms.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.benchmark.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.cdrec.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.evaluation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.explainer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.iim.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.imputation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.manager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.mean_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.min_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.mrnn.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.optimization.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.stmvl.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.tools.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.utils.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.wrapper.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/imputegap.zero_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/modules.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/objects.inv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/py-modindex.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/references.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/search.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/searchindex.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/tutorials.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/report.log" beforeDir="false" afterPath="$PROJECT_DIR$/docs/generation/report.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/source/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/generation/source/index.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/env/default_values.toml" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/env/default_values.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/recovery/imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/imputation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/recovery/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/report.log" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/report.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_benchmark.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_benchmark.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_contamination.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_contamination.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_downstream.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_downstream.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/runner_imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_imputation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_optimization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/tools/algorithm_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/tools/algorithm_parameters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/tools/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/tools/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GAIN/gainRecovery.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GAIN/gainRecovery.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-49-59_42/epoch=1-step=80.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-49-59_42/model/version_0/events.out.tfevents.1740505800.diufpc048844.1092461.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-49-59_42/model/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-09_42/epoch=9-step=10.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-09_42/model/version_0/events.out.tfevents.1740505809.diufpc048844.1099072.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-09_42/model/version_0/events.out.tfevents.1740505847.diufpc048844.1099072.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-09_42/model/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-13_42/epoch=0-step=40.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-13_42/model/version_0/events.out.tfevents.1740505813.diufpc048844.1100732.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-13_42/model/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-21_42/epoch=0-step=40.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-21_42/model/version_0/events.out.tfevents.1740505821.diufpc048844.1101356.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-50-21_42/model/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-51-16_42/epoch=4-step=5.ckpt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-51-16_42/model/version_0/events.out.tfevents.1740505877.diufpc048844.1106914.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/logs/grin/2025-02-25_18-51-16_42/model/version_0/hparams.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_contamination_disjoint.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_contamination_disjoint.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_contamination_gaussian.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_contamination_gaussian.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_contamination_mcar.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_contamination_mcar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_contamination_mp.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_contamination_mp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_contamination_overlap.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_contamination_overlap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/TIDER/TIDER.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/TIDER/TIDER.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params/optimal_parameters_b_eeg_cdrec.toml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params/optimal_parameters_b_eeg_cdrec.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params/optimal_parameters_b_eeg_iim.toml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params/optimal_parameters_b_eeg_iim.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params/optimal_parameters_b_eeg_mrnn.toml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params/optimal_parameters_b_eeg_mrnn.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params/optimal_parameters_b_eeg_stmvl.toml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params/optimal_parameters_b_eeg_stmvl.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params/optimal_parameters_e_eeg-alcohol_cdrec.toml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params/optimal_parameters_e_eeg-alcohol_cdrec.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params/optimal_parameters_e_eeg-alcohol_iim.toml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params/optimal_parameters_e_eeg-alcohol_iim.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params/optimal_parameters_e_eeg-alcohol_mrnn.toml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params/optimal_parameters_e_eeg-alcohol_mrnn.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params/optimal_parameters_e_eeg-alcohol_stmvl.toml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params/optimal_parameters_e_eeg-alcohol_stmvl.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/report.log" beforeDir="false" afterPath="$PROJECT_DIR$/tests/report.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_contamination_blackout.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_contamination_blackout.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_brits.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_brits.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_cdrec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_deepmvi.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_deepmvi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_dynammo.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_dynammo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_imputation_gain.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_gain.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_imputation_grin.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_grin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_grouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_grouse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_iim.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_iim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_interpolation.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_interpolation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_iterative_svd.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_iterative_svd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_knn.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_knn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_mf.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_mf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_mice.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_mice.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_missnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_missnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_mpin.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_mpin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_mrnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_mrnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_pristi.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_pristi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_rosl.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_rosl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_soft_impute.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_soft_impute.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_spirit.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_spirit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_stmvl.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_stmvl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_svt.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_svt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_tkcm.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_tkcm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_imputation_xgboost.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_imputation_xgboost.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_cdrec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_cdrec_eeg.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_cdrec_eeg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_iim.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_iim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_mrnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_mrnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_bayesian_stmvl.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_bayesian_stmvl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_greedy_cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_greedy_cdrec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_pso_cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_pso_cdrec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_ray_cdrec_eeg.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_ray_cdrec_eeg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_ray_whole.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_ray_whole.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_opti_sh_cdrec.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_opti_sh_cdrec.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_pipeline.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mypy.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/about/about.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/installation/README.md" beforeDir="false" />
@@ -1058,6 +938,7 @@
     "Python tests.pytest for test_contamination_overlap.TestContaminationOverlap.test_overlap_logic.executor": "Run",
     "Python tests.pytest for test_contamination_overlap.TestContaminationOverlap.test_overlap_position.executor": "Run",
     "Python tests.pytest for test_explainer_tsfel.TestExplainerTSFEL.test_explainer_tsfel.executor": "Run",
+    "Python tests.pytest for test_imputation_cdrec.TestCDREC.test_imputation_cdrec.executor": "Run",
     "Python tests.pytest for test_imputation_dynammo.TestDynaMMo.test_imputation_dynammo_dft.executor": "Run",
     "Python tests.pytest for test_imputation_grin.TestGRIN.executor": "Run",
     "Python tests.pytest for test_imputation_pristi.TestPRISTI.test_imputation_pristi_udef.executor": "Run",
@@ -1070,6 +951,8 @@
     "Python tests.pytest in test_explainer_pycatch.py.executor": "Run",
     "Python tests.pytest in test_explainer_tsfel.py.executor": "Run",
     "Python tests.pytest in test_explainer_tsfresh.py.executor": "Run",
+    "Python tests.pytest in test_imputation_bayotide.py.executor": "Run",
+    "Python tests.pytest in test_imputation_cdrec.py.executor": "Run",
     "Python tests.pytest in test_imputation_deepmvi.py.executor": "Run",
     "Python tests.pytest in test_imputation_dynammo.py.executor": "Run",
     "Python tests.pytest in test_imputation_gain.py.executor": "Run",
@@ -1087,7 +970,10 @@
     "Python tests.pytest in test_imputation_xgboost.py.executor": "Run",
     "Python tests.pytest in test_opti_ray_cdrec_eeg.py.executor": "Run",
     "Python tests.pytest in tests.executor": "Run",
+    "Python.BayOTIDE.executor": "Run",
     "Python.Experiment.executor": "Run",
+    "Python.TIDER.executor": "Run",
+    "Python.d.executor": "Run",
     "Python.generate.executor": "Run",
     "Python.main.executor": "Run",
     "Python.mourad.executor": "Run",
@@ -1104,6 +990,7 @@
     "Python.runner_imputation.executor": "Run",
     "Python.runner_loading.executor": "Run",
     "Python.runner_optimization.executor": "Run",
+    "Python.t.executor": "Run",
     "Python.tmp.executor": "Run",
     "Python.tmp1.executor": "Run",
     "Python.tmp2.executor": "Run",
@@ -1117,23 +1004,23 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "naterq__pm__contamination__w",
-    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/tests",
+    "last_opened_file_path": "C:/Users/nquen/switchdrive/MST_MasterThesis/imputegap/imputegap",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap" />
-      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\wrapper\AlgoPython\TIDER" />
-      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\wrapper\AlgoPython" />
+      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\tests" />
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\algorithms" />
+      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\wrapper\AlgoPython" />
+      <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\wrapper\AlgoPython\TIDER" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\wrapper\AlgoPython" />
@@ -1142,8 +1029,54 @@
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\docs\generation\docs" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.runner_optimization">
-    <configuration name="runner_downstream" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python tests.pytest in test_imputation_bayotide.py">
+    <configuration name="BayOTIDE" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="imputegap" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BayOTIDE" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BayOTIDE/BayOTIDE.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TIDER" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="imputegap" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/TIDER" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/TIDER/TIDER.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="d" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -1157,7 +1090,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/runner_downstream.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/d.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -1189,30 +1122,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="runner_optimization" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="imputegap" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imputegap" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/runner_optimization.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest in test_contamination_distribution.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest in test_imputation_bayotide.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -1226,35 +1136,17 @@
       <option name="_new_keywords" value="&quot;&quot;" />
       <option name="_new_parameters" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_contamination_distribution.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pytest in test_contamination_gaussian.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="imputegap" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_parameters" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_contamination_gaussian.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_imputation_bayotide.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.runner_optimization" />
-        <item itemvalue="Python.runner_downstream" />
+        <item itemvalue="Python tests.pytest in test_imputation_bayotide.py" />
+        <item itemvalue="Python.d" />
         <item itemvalue="Python.runner_imputation" />
-        <item itemvalue="Python tests.pytest in test_contamination_gaussian.py" />
-        <item itemvalue="Python tests.pytest in test_contamination_distribution.py" />
+        <item itemvalue="Python.BayOTIDE" />
+        <item itemvalue="Python.TIDER" />
       </list>
     </recent_temporary>
   </component>
@@ -1289,7 +1181,8 @@
       <workItem from="1740142294267" duration="6379000" />
       <workItem from="1740402098684" duration="10938000" />
       <workItem from="1740489384733" duration="28788000" />
-      <workItem from="1740666694159" duration="10997000" />
+      <workItem from="1740666694159" duration="11150000" />
+      <workItem from="1740740311696" duration="14352000" />
     </task>
     <servers />
   </component>
@@ -1318,9 +1211,13 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_bayotide_py.coverage" NAME="pytest in test_imputation_bayotide.py Coverage Results" MODIFIED="1740756468031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_explainer_tsfel_TestExplainerTSFEL_test_explainer_tsfel.coverage" NAME="pytest for test_explainer_tsfel.TestExplainerTSFEL.test_explainer_tsfel Coverage Results" MODIFIED="1738155183896" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$tmp3.coverage" NAME="tmp3 Coverage Results" MODIFIED="1739886824561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_mcar_TestContaminationMCAR_test_mcar_selection.coverage" NAME="pytest for test_contamination_mcar.TestContaminationMCAR.test_mcar_selection Coverage Results" MODIFIED="1740669187790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_imputation_cdrec_TestCDREC_test_imputation_cdrec.coverage" NAME="pytest for test_imputation_cdrec.TestCDREC.test_imputation_cdrec Coverage Results" MODIFIED="1740740629284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_cdrec_py.coverage" NAME="pytest in test_imputation_cdrec.py Coverage Results" MODIFIED="1740740797985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$BayOTIDE.coverage" NAME="BayOTIDE Coverage Results" MODIFIED="1740751706818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BayOTIDE" />
     <SUITE FILE_PATH="coverage/imputegap$Experiment.coverage" NAME="Experiment Coverage Results" MODIFIED="1739968741869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/MissNet" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_distribution_TestContaminationDistribution_test_distribution_missing_percentage_total.coverage" NAME="pytest for test_contamination_distribution.TestContaminationDistribution.test_distribution_missing_percentage_total Coverage Results" MODIFIED="1740676296585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$reconverTider.coverage" NAME="reconverTider Coverage Results" MODIFIED="1740587910933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/TIDER" />
@@ -1335,6 +1232,7 @@
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_grouse_py.coverage" NAME="pytest in test_imputation_grouse.py Coverage Results" MODIFIED="1739887130487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$generate.coverage" NAME="generate Coverage Results" MODIFIED="1739968773154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/MissNet/data" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_mcar_TestContaminationMCAR_test_mcar_position_datasets.coverage" NAME="pytest for test_contamination_mcar.TestContaminationMCAR.test_mcar_position_datasets Coverage Results" MODIFIED="1740669421124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$d.coverage" NAME="d Coverage Results" MODIFIED="1740755891865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_interpolation_py.coverage" NAME="pytest in test_imputation_interpolation.py Coverage Results" MODIFIED="1739287478618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$tmrfRecovery.coverage" NAME="tmrfRecovery Coverage Results" MODIFIED="1739549931784" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/trmf" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_grin_py.coverage" NAME="pytest in test_imputation_grin.py Coverage Results" MODIFIED="1740579120634" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
@@ -1352,8 +1250,8 @@
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_imputation_grin_TestGRIN.coverage" NAME="pytest for test_imputation_grin.TestGRIN Coverage Results" MODIFIED="1740505383107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$tmp2.coverage" NAME="tmp2 Coverage Results" MODIFIED="1740505592946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$python_generate_py.coverage" NAME="python generate.py Coverage Results" MODIFIED="1739968759256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/MissNet" />
-    <SUITE FILE_PATH="coverage/imputegap$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1738247456240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$tmpM.coverage" NAME="tmpM Coverage Results" MODIFIED="1739970671333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1740741344240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$tmp1.coverage" NAME="tmp1 Coverage Results" MODIFIED="1739287988496" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$runner_explainer.coverage" NAME="runner_explainer Coverage Results" MODIFIED="1738155472490" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_imputation_dynammo_TestDynaMMo_test_imputation_dynammo_dft.coverage" NAME="pytest for test_imputation_dynammo.TestDynaMMo.test_imputation_dynammo_dft Coverage Results" MODIFIED="1739365096655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
@@ -1365,13 +1263,14 @@
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_tkcm_py.coverage" NAME="pytest in test_imputation_tkcm.py Coverage Results" MODIFIED="1739464480293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_mcar_TestContaminationMCAR_test_mcar_size_of_block.coverage" NAME="pytest for test_contamination_mcar.TestContaminationMCAR.test_mcar_size_of_block Coverage Results" MODIFIED="1740669541606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_contamination_gaussian_py.coverage" NAME="pytest in test_contamination_gaussian.py Coverage Results" MODIFIED="1740676434132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$TIDER.coverage" NAME="TIDER Coverage Results" MODIFIED="1740746237315" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/TIDER" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_imputation_pristi_TestPRISTI_test_imputation_pristi_udef.coverage" NAME="pytest for test_imputation_pristi.TestPRISTI.test_imputation_pristi_udef Coverage Results" MODIFIED="1740062824283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_overlap_TestContaminationOverlap_test_overlap_position.coverage" NAME="pytest for test_contamination_overlap.TestContaminationOverlap.test_overlap_position Coverage Results" MODIFIED="1740670068237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_knn_py.coverage" NAME="pytest in test_imputation_knn.py Coverage Results" MODIFIED="1739281775251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$mourad2.coverage" NAME="mourad2 Coverage Results" MODIFIED="1738774572667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_mf_py.coverage" NAME="pytest in test_imputation_mf.py Coverage Results" MODIFIED="1739896410592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_gaussian_TestContaminationGaussian_test_gaussian_position.coverage" NAME="pytest for test_contamination_gaussian.TestContaminationGaussian.test_gaussian_position Coverage Results" MODIFIED="1740674142327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/imputegap$runner_optimization.coverage" NAME="runner_optimization Coverage Results" MODIFIED="1740677286425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$runner_optimization.coverage" NAME="runner_optimization Coverage Results" MODIFIED="1740740480292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_rosl_py.coverage" NAME="pytest in test_imputation_rosl.py Coverage Results" MODIFIED="1739887115052" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_spirit_py.coverage" NAME="pytest in test_imputation_spirit.py Coverage Results" MODIFIED="1739464804358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$run_imputation.coverage" NAME="recoveryGRIN Coverage Results" MODIFIED="1740500027153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/GRIN/scripts" />
@@ -1379,14 +1278,15 @@
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_distribution_TestContaminationDistribution_test_distribution_logic.coverage" NAME="pytest for test_contamination_distribution.TestContaminationDistribution.test_distribution_logic Coverage Results" MODIFIED="1740676259259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_mcar_TestContaminationMCAR_test_mcar_position.coverage" NAME="pytest for test_contamination_mcar.TestContaminationMCAR.test_mcar_position Coverage Results" MODIFIED="1740669203925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_explainer_tsfel_py.coverage" NAME="pytest in test_explainer_tsfel.py Coverage Results" MODIFIED="1738155400917" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/imputegap$pytest_in_TIDER_py.coverage" NAME="pytest in TIDER.py Coverage Results" MODIFIED="1740583151063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/TIDER" />
+    <SUITE FILE_PATH="coverage/imputegap$t.coverage" NAME="t Coverage Results" MODIFIED="1740740747486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_mp_TestContaminationMP_test_mp_position.coverage" NAME="pytest for test_contamination_mp.TestContaminationMP.test_mp_position Coverage Results" MODIFIED="1740667560693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_TIDER_py.coverage" NAME="pytest in TIDER.py Coverage Results" MODIFIED="1740746062639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/TIDER" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_deepmvi_py.coverage" NAME="pytest in test_imputation_deepmvi.py Coverage Results" MODIFIED="1740143250041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_tests_test_explainer.coverage" NAME="pytest for tests.test_explainer Coverage Results" MODIFIED="1737640201696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_dynammo_py.coverage" NAME="pytest in test_imputation_dynammo.py Coverage Results" MODIFIED="1739806705063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_dynammo_py.coverage" NAME="pytest in test_imputation_dynammo.py Coverage Results" MODIFIED="1740740849635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_gaussian_TestContaminationGaussian_test_gaussian_missing_percentage_total.coverage" NAME="pytest for test_contamination_gaussian.TestContaminationGaussian.test_gaussian_missing_percentage_total Coverage Results" MODIFIED="1740674325730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_overlap_TestContaminationOverlap_test_overlap_logic.coverage" NAME="pytest for test_contamination_overlap.TestContaminationOverlap.test_overlap_logic Coverage Results" MODIFIED="1740670828679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/imputegap$runner_imputation.coverage" NAME="runner_imputation Coverage Results" MODIFIED="1740676953441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
+    <SUITE FILE_PATH="coverage/imputegap$runner_imputation.coverage" NAME="runner_imputation Coverage Results" MODIFIED="1740755818218" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_gaussian_TestContaminationGaussian_test_gaussian_selection.coverage" NAME="pytest for test_contamination_gaussian.TestContaminationGaussian.test_gaussian_selection Coverage Results" MODIFIED="1740674149573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_gaussian_TestContaminationGaussian_test_gaussian_logic.coverage" NAME="pytest for test_contamination_gaussian.TestContaminationGaussian.test_gaussian_logic Coverage Results" MODIFIED="1740674243954" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$mourad.coverage" NAME="mourad Coverage Results" MODIFIED="1738770271650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />

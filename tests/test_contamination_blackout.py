@@ -22,7 +22,7 @@ class TestContaminationBlackout(unittest.TestCase):
 
             n_nan = np.isnan(ts_contaminate).sum()
             expected_nan_series = M
-            expected_nan_values = int((N - int(N * offset)) * missing_rate)
+            expected_nan_values = int(N * missing_rate)
             expected = expected_nan_series * expected_nan_values
 
             self.assertEqual(n_nan, expected, f"Expected {expected} contaminated series but found {n_nan}")

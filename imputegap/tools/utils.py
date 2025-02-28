@@ -81,13 +81,15 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.DeepLearning.GAIN(incomp_data)
     elif algorithm == "grin":
         imputer = Imputation.DeepLearning.GRIN(incomp_data)
+    elif algorithm == "bay_otide":
+        imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
     return imputer
 
 
-def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0, explainer=False):
+def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0, explainer=False, probabilities=None):
     """
     Configure and execute contamination for selected imputation algorithm and pattern.
 
@@ -117,6 +119,8 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
         incomp_data = ts.Contamination.overlap(input_data=ts.data, series_rate=dataset_rate, limit=limit, shift=shift, offset=offset)
     elif pattern == "gaussian":
         incomp_data = ts.Contamination.gaussian(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, std_dev=std_dev, offset=offset, seed=True)
+    elif pattern == "distribution":
+        incomp_data = ts.Contamination.distribution(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, probabilities=probabilities, offset=offset, seed=True)
     else:
         incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset)
 
@@ -418,6 +422,16 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         epochs = int(config[algorithm]['epochs'])
         workers = int(config[algorithm]['workers'])
         return (d_hidden, lr, batch_size, window, alpha, patience, epochs, workers)
+    elif algorithm == "bay_otide":
+        K_trend = int(config[algorithm]['K_trend'])
+        K_season = int(config[algorithm]['K_season'])
+        n_season = int(config[algorithm]['n_season'])
+        K_bias = int(config[algorithm]['K_bias'])
+        time_scale = int(config[algorithm]['time_scale'])
+        a0 = float(config[algorithm]['a0'])
+        b0 = float(config[algorithm]['b0'])
+        v = float(config[algorithm]['v'])
+        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -724,7 +738,17 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "epochs": int(optimal_params[6]),
             "workers": int(optimal_params[7])
         }
-        return params_to_save
+    elif algorithm == "grin":
+        params_to_save = {
+            "K_trend": int(optimal_params[0]),
+            "K_season": int(optimal_params[1]),
+            "n_season": int(optimal_params[2]),
+            "K_bias": int(optimal_params[3]),
+            "time_scale": int(optimal_params[4]),
+            "a0": float(optimal_params[5]),
+            "b0": float(optimal_params[6]),
+            "v": float(optimal_params[7])
+        }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
         return

@@ -14,14 +14,16 @@ from sklearn import metrics
 import time
 import random
 
+
 warnings.filterwarnings("ignore")
+
 
 def evaluated_message(y_test: np.ndarray, y_pred: np.ndarray) -> str:
     rmse = metrics.mean_squared_error(y_test, y_pred, squared=False)
-    mae  = metrics.mean_absolute_error(y_test, y_pred)
-    msk_0=[]
+    mae = metrics.mean_absolute_error(y_test, y_pred)
+    msk_0 = []
     for i in range(len(y_pred)):
-          if y_test[i]!=0:
+        if y_test[i] != 0:
             msk_0.append(i)
     y_test, y_pred = y_test[msk_0], y_pred[msk_0]
     abs_errors = np.abs(y_test - y_pred)
@@ -29,7 +31,6 @@ def evaluated_message(y_test: np.ndarray, y_pred: np.ndarray) -> str:
     msg = (f" RMSE: {rmse:7.4} MAE: {mae:7.4}"
            f" Max Error: {np.max(abs_errors):7.4} MAEP: {mape:7.4}")
     return msg
-
 
 
 class TIDER(nn.Module):
@@ -41,7 +42,7 @@ class TIDER(nn.Module):
         # channel-wise matrix
         self.t_embeddings_trend = nn.Embedding(t, hid_size)
         # trend feature matrix
-        self.t_embeddings_season = nn.Embedding(2*season_num_, hid_size)
+        self.t_embeddings_season = nn.Embedding(2 * season_num_, hid_size)
         # seasonality feature matrix
 
         self.bias_dim = bias_dim_
@@ -58,7 +59,7 @@ class TIDER(nn.Module):
         self.dims = (n, t)
         # num of channels, temporal length
 
-        self.param=torch.nn.Parameter(torch.zeros(2))
+        self.param = torch.nn.Parameter(torch.zeros(2))
         # adaptive weight for trend and seasonality
 
         self.modlst = torch.nn.ModuleList([])
@@ -76,8 +77,7 @@ class TIDER(nn.Module):
         roads (batch_size,): road link ids.
         times (batch_size,): time steps.
         """
-        #ms = self.getu(roads)
-        ms = self.getu(roads.long())
+        ms = self.getu(roads)
         # ms:(batch_size, dim_size+bias_dim)
 
         mt = self.getv(times)
@@ -106,9 +106,8 @@ class TIDER(nn.Module):
 
         roads = torch.arange(n).to(device_)
         # [N]
-        times = torch.arange(t-n_step, t).to(device)
+        times = torch.arange(t - n_step, t).to(device)
         # [n_step]
-
 
         return self._forward(roads, times)
 
@@ -129,23 +128,23 @@ class TIDER(nn.Module):
         else:
             t = int(t)
 
-        tensor_len = t-max_len
+        tensor_len = t - max_len
 
         lst_lag = []
 
         for i in self.lag_list:
-            lst_lag.append(mt_bias[max_len-i:max_len-i+tensor_len].clone())
-            # for every time lag£¬we clone one corresponding part for autoregression
+            lst_lag.append(mt_bias[max_len - i:max_len - i + tensor_len].clone())
+            # for every time lag??we clone one corresponding part for autoregression
             # for example, if temporal length is 50  and time_lag is [1,3,5]
-            # then the sequences we clone are (4.49),(2,47),(0,45)£¬which are all elements effecting (5,50)
+            # then the sequences we clone are (4.49),(2,47),(0,45)??which are all elements effecting (5,50)
 
-        ret_bias_origin = mt_bias[max_len:max_len+tensor_len].clone()
+        ret_bias_origin = mt_bias[max_len:max_len + tensor_len].clone()
 
         ret_var = self.modlst[0](lst_lag[0])
         for i in range(1, self.len_lag):
-            ret_var = ret_var+self.modlst[i](lst_lag[i])
+            ret_var = ret_var + self.modlst[i](lst_lag[i])
 
-        return ret_var-ret_bias_origin
+        return ret_var - ret_bias_origin
         # makes bias feature matrix follow a certain autoregression relationship
 
     @property
@@ -172,15 +171,15 @@ class TIDER(nn.Module):
         mt_season = self.getv_season(times)
         # mt_season :(T,dim_size+bias_dim)
 
-        softmax_res=torch.softmax(self.param,dim=-1)
+        softmax_res = torch.softmax(self.param, dim=-1)
 
-        mt = softmax_res[0]*mt_trend + softmax_res[1]*mt_season
+        mt = softmax_res[0] * mt_trend + softmax_res[1] * mt_season
         # mt: (T, dim_size)
 
         mt_bias = self.bias_t(times)
         # mt_bias:(T,bias_dim)
 
-        mt= torch.cat((mt,mt_bias),1).to(device_)
+        mt = torch.cat((mt, mt_bias), 1).to(device_)
         # mt: (T,dim_size+bias_dim)
 
         return mt
@@ -205,31 +204,31 @@ class TIDER(nn.Module):
             sin_t = sin_t.detach()
             cos_t = cos_t.detach()
 
-            sin_t=sin_t.to(device_)
-            cos_t=cos_t.to(device_)
+            sin_t = sin_t.to(device_)
+            cos_t = cos_t.to(device_)
 
-            emb_a=self.t_embeddings_season(torch.LongTensor([i*2]).to(device_))
-            emb_b=self.t_embeddings_season(torch.LongTensor([i*2+1]).to(device_))
+            emb_a = self.t_embeddings_season(torch.LongTensor([i * 2]).to(device_))
+            emb_b = self.t_embeddings_season(torch.LongTensor([i * 2 + 1]).to(device_))
 
-            ret = ret+torch.einsum('i,zj->ji',
-                                   sin_t,
-                                   emb_a).t()
+            ret = ret + torch.einsum('i,zj->ji',
+                                     sin_t,
+                                     emb_a).t()
             # ret[T,dim_size]
 
-            ret = ret+torch.einsum('i,zj->ji',
-                                   cos_t,
-                                   emb_b).t()
+            ret = ret + torch.einsum('i,zj->ji',
+                                     cos_t,
+                                     emb_b).t()
 
         mt_season = ret
         # mt_season:(T, dim_size)
         return mt_season
 
     def calc_x_vec(self, times, n):
-        # vector sin(¦Øt) and cos(¦Øt) for seasonality feature matrix
-        sin = torch.sin((n*2*np.pi/self.seasonal)*times)
-        # sin(n*2¦°/T*)
-        cos = torch.cos((n*2*np.pi/self.seasonal)*times)
-        # cos(n*2¦°/T*)
+        # vector sin(??t) and cos(??t) for seasonality feature matrix
+        sin = torch.sin((n * 2 * np.pi / self.seasonal) * times)
+        # sin(n*2?¡ã/T*)
+        cos = torch.cos((n * 2 * np.pi / self.seasonal) * times)
+        # cos(n*2?¡ã/T*)
 
         return sin, cos
         # [T],[T]
@@ -272,7 +271,7 @@ def l2loss(model: nn.Module,
     device_ = model.get_device
     u = model.getu(torch.arange(n).to(device_))
     v = model.getv(torch.arange(t).to(device_))
-    return eta_1*torch.linalg.norm(u) + eta_2*torch.linalg.norm(v)
+    return eta_1 * torch.linalg.norm(u) + eta_2 * torch.linalg.norm(v)
 
 
 def arloss_bias(model, lambda_ar_):
@@ -280,7 +279,7 @@ def arloss_bias(model, lambda_ar_):
     n, t = model.dims
     times = torch.arange(t).to(device_)
     y = model.bias_loss(times)
-    loss = lambda_ar_*torch.linalg.norm(y)
+    loss = lambda_ar_ * torch.linalg.norm(y)
     return loss
 
 
@@ -290,28 +289,27 @@ def trend_loss(model, lambda_trend_):
     times = torch.arange(t).to(device_)
     trend = model.t_embeddings_trend(times)
 
-    loss = trend[:, 1:]-trend[:, :-1]
+    loss = trend[:, 1:] - trend[:, :-1]
     loss = torch.linalg.norm(loss)
 
-    return lambda_trend_*loss
+    return lambda_trend_ * loss
 
 
 def train(
-    optimizer: torch.optim.Optimizer,
-    num_epochs_: int,
-    batch_size_: int,
-    model: nn.Module,
-    x: Tensor,
-    x_val_:Tensor,
-    eta_: float,
-    verbose_: bool,
-    lambda_ar_,
-    n_test_,
-    lambda_trend_,
-    x_unobs_
+        optimizer: torch.optim.Optimizer,
+        num_epochs_: int,
+        batch_size_: int,
+        model: nn.Module,
+        x: Tensor,
+        x_val_: Tensor,
+        eta_: float,
+        verbose_: bool,
+        lambda_ar_,
+        n_test_,
+        lambda_trend_,
+        x_unobs_
 ):
-    def train_step(i, roads,x,flag_train):
-
+    def train_step(i, roads, x, flag_train):
 
         if eta_ > 0:
             l2_loss = l2loss(model, eta_, eta_)
@@ -329,19 +327,19 @@ def train(
             loss_trend = trend_loss(model, lambda_trend_)
         else:
             loss_trend = 0.0
-        #loss func for trend feature matrix
+        # loss func for trend feature matrix
 
-        loss = obsloss(model, x, roads)  + l2_loss + loss_bias + loss_trend
-        #print(obsloss(model, x, roads)  ,l2_loss , loss_bias , loss_trend ,loss)
+        loss = obsloss(model, x, roads) + l2_loss + loss_bias + loss_trend
+        # print(obsloss(model, x, roads)  ,l2_loss , loss_bias , loss_trend ,loss)
 
-        if(flag_train):
-          optimizer.zero_grad()
-          loss.backward()
-          optimizer.step()
+        if (flag_train):
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
         return loss.item()
 
-    def train_epoch(idx_,x,flag_train):
+    def train_epoch(idx_, x, flag_train):
         model.train()
         np.random.shuffle(idx_)
         # suffle channels
@@ -351,73 +349,66 @@ def train(
             end_idx = min(st_idx + batch_size_, n)
             roads = torch.LongTensor(idx_[st_idx:end_idx])
             # [batch_size_]
-            loss_this=train_step(st_idx//batch_size_, roads,x,flag_train)
+            loss_this = train_step(st_idx // batch_size_, roads, x, flag_train)
             running_losses.append(loss_this)
 
         return np.nanmean(running_losses)
 
     idx = np.arange(x.shape[0])
 
-    min_val_loss=np.inf
+    min_val_loss = np.inf
 
     for epoch in range(num_epochs_):
-        running_loss = train_epoch(idx,x,True)
+        running_loss = train_epoch(idx, x, True)
 
+        val_loss = train_epoch(idx, x_val_, False)
+        if (val_loss < min_val_loss):
+            min_val_loss = val_loss
+            min_epo = epoch
+            torch.save(model.state_dict(), args.save_path)
+    print('min epo: ', min_epo)
 
-        val_loss=train_epoch(idx,x_val_,False)
-        if(val_loss <min_val_loss):
-          min_val_loss=val_loss
-          min_epo=epoch
-          torch.save(model.state_dict(),args.save_path)
-    print('min epo: ',min_epo)
 
 @torch.no_grad()
-def test(model, x_unobs, n_test):
-
+def t_test(model, x_unobs, n_test):
     model.eval()
 
     xhat = model.infer(n_test)
 
-
-
     x = x_unobs[:, -n_test:].to(xhat.device)
     mask = torch.logical_not(x.isnan())
 
-
     y_test_, y_pred_ = x[mask], xhat[mask]
-
 
     return y_test_.cpu().numpy(), y_pred_.cpu().numpy()
 
 
 def one_snapshot(
-    x_obs_: Tensor,
-    x_val: Tensor,
-    x_unobs_: Tensor,
-    n_test_,
-    num_epochs_: int,
-    batch_size_: int,
-    dim_size_: int,
-    lag_list_,
-    lambda_ar_,
-    bias_dim_,
-    season_num_,
-    seasonality_,
-    lr_,
-    lambda_trend_,
-    device_: torch.device,
-    eta_: Optional[float] = 0.0,
-    verbose: Optional[bool] = False
+        x_obs_: Tensor,
+        x_val: Tensor,
+        x_unobs_: Tensor,
+        n_test_,
+        num_epochs_: int,
+        batch_size_: int,
+        dim_size_: int,
+        lag_list_,
+        lambda_ar_,
+        bias_dim_,
+        season_num_,
+        seasonality_,
+        lr_,
+        lambda_trend_,
+        device_: torch.device,
+        eta_: Optional[float] = 0.0,
+        verbose: Optional[bool] = False
 ):
-
-
     model = TIDER(x_obs_.shape[0],
-               x_obs_.shape[1],
-               dim_size_,
-               lag_list_,
-               bias_dim_,
-               season_num_,
-               seasonality_).to(device_)
+                  x_obs_.shape[1],
+                  dim_size_,
+                  lag_list_,
+                  bias_dim_,
+                  season_num_,
+                  seasonality_).to(device_)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=lr_)
 
@@ -435,20 +426,20 @@ def one_snapshot(
           x_unobs_)
 
     model = TIDER(x_obs_.shape[0],
-               x_obs_.shape[1],
-               dim_size_,
-               lag_list_,
-               bias_dim_,
-               season_num_,
-               seasonality_).to(device_)
+                  x_obs_.shape[1],
+                  dim_size_,
+                  lag_list_,
+                  bias_dim_,
+                  season_num_,
+                  seasonality_).to(device_)
     model.load_state_dict(torch.load(args.save_path))
 
-    softmax_re=torch.softmax(model.param,dim=-1)
-    weight_0=softmax_re[0].item()
-    weight_1=softmax_re[1].item()
-    print(weight_0,weight_1)
+    softmax_re = torch.softmax(model.param, dim=-1)
+    weight_0 = softmax_re[0].item()
+    weight_1 = softmax_re[1].item()
+    print(weight_0, weight_1)
 
-    return test(model, x_unobs_, n_test_)
+    return t_test(model, x_unobs_, n_test_)
 
 
 def update_obs(x_obs_, x_unobs_):
@@ -460,6 +451,7 @@ def update_obs(x_obs_, x_unobs_):
     x_obs_[observed] = x_unobs_[observed]
     return x_obs_
 
+
 def obsLossF(Xhat: Tensor, X: Tensor):
     """
     Xhat (n, m): Inferred matrix.
@@ -468,19 +460,20 @@ def obsLossF(Xhat: Tensor, X: Tensor):
     mask = torch.logical_not(X.isnan())
     return f.mse_loss(Xhat[mask], X[mask])
 
+
 start = time.time()
 
 np.random.seed(123)
 torch.manual_seed(123)
 parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('--save_path',default="TIDER.pt")
-parser.add_argument('--datadir',default='../../dataset/London_6mon.npy')
+parser.add_argument('--save_path', default="TIDER.pt")
+parser.add_argument('--datadir', default='./chlorine.txt')
 parser.add_argument('--device', default='cuda')
-parser.add_argument('--valid', default=0.1,type=float)
-parser.add_argument('--drop_rate', default=0.2,type=float)
-parser.add_argument('--eta', default=1e-2,type=float)
+parser.add_argument('--valid', default=0.1, type=float)
+parser.add_argument('--drop_rate', default=0.2, type=float)
+parser.add_argument('--eta', default=1e-2, type=float)
 parser.add_argument('--n_test', default=4273, type=int)
-parser.add_argument('--num_epochs', default=500, type=int)
+parser.add_argument('--num_epochs', default=10, type=int)
 parser.add_argument('--batch_size', default=32, type=int)
 parser.add_argument('--dim_size', default=50, type=int)
 parser.add_argument('--lag_list', default='list(range(5))')
@@ -495,37 +488,31 @@ args = parser.parse_args()
 if __name__ == "__main__":
     start = time.time()
 
-
-
     data = args.datadir
-    if(os.path.splitext(data)[1]=='.txt'):
-      data_=open(data,'r')
+    if (os.path.splitext(data)[1] == '.txt'):
+        data_ = open(data, 'r')
 
-      x=np.loadtxt(data_,delimiter=',')
-    elif(os.path.splitext(data)[1]=='.npy'):
-      x=np.load(data)
+        x = np.loadtxt(data_, delimiter=',')
+    elif (os.path.splitext(data)[1] == '.npy'):
+        x = np.load(data)
     print(x.shape)
 
-    trn=np.copy(x)
-    val=np.copy(x)
-    tst=np.copy(x)
+    trn = np.copy(x)
+    val = np.copy(x)
+    tst = np.copy(x)
 
-    c_len=list(range(x.shape[1]))
+    c_len = list(range(x.shape[1]))
 
     for i in range(x.shape[0]):
-            random.shuffle(c_len)
-            trn[i][c_len[:int(x.shape[1]*args.valid)]]=np.nan
-            trn[i][c_len[int(x.shape[1]*(1-args.drop_rate)):-1]]=np.nan
+        random.shuffle(c_len)
+        trn[i][c_len[:int(x.shape[1] * args.valid)]] = np.nan
+        trn[i][c_len[int(x.shape[1] * (1 - args.drop_rate)):-1]] = np.nan
 
-            val[i][c_len[int(x.shape[1]*args.valid):-1]]=np.nan
+        val[i][c_len[int(x.shape[1] * args.valid):-1]] = np.nan
 
-            tst[i][c_len[:int(x.shape[1]*(1-args.drop_rate))]]=np.nan
+        tst[i][c_len[:int(x.shape[1] * (1 - args.drop_rate))]] = np.nan
 
-
-
-    X_obs, X_val, X_unobs = torch.FloatTensor(trn), torch.FloatTensor(val),torch.FloatTensor(tst)
-
-
+    X_obs, X_val, X_unobs = torch.FloatTensor(trn), torch.FloatTensor(val), torch.FloatTensor(tst)
 
     device = torch.device(args.device if torch.cuda.is_available() else 'cpu')
 
@@ -542,28 +529,27 @@ if __name__ == "__main__":
     lag_list = eval(args.lag_list)
     lambda_ar = args.lambda_ar
 
-
     y_test, y_pred = one_snapshot(
-            X_obs,
-            X_val,
-            X_unobs,
-            n_test,
-            num_epochs,
-            batch_size,
-            dim_size,
-            lag_list,
-            lambda_ar,
-            bias_dim,
-            season_num,
-            seasonality,
-            lrate,
-            lambda_trend,
-            device,
-            eta
-        )
+        X_obs,
+        X_val,
+        X_unobs,
+        n_test,
+        num_epochs,
+        batch_size,
+        dim_size,
+        lag_list,
+        lambda_ar,
+        bias_dim,
+        season_num,
+        seasonality,
+        lrate,
+        lambda_trend,
+        device,
+        eta
+    )
     print(evaluated_message(y_test, y_pred))
 
     end = time.time()
     print('Running time: %d seconds' % (end - start))
     print(args)
-    print('\n'*10)
+    print('\n' * 10)

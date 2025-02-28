@@ -14,7 +14,7 @@ class TestMICE(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10,
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=10,
                                               offset=0.1, seed=True)
 
         algo = Imputation.MachineLearning.MICE(incomp_data).impute()
@@ -46,7 +46,7 @@ class TestMICE(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=10, offset=0.1, seed=True)
 
         algo = Imputation.MachineLearning.MICE(incomp_data).impute(user_def=True, params={"max_iter":1, "tol":0.1, "initial_strategy": "median", "seed": 42})
         algo.score(ts_1.data)

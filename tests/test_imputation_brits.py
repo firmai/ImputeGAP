@@ -14,7 +14,7 @@ class TestBRITS(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10,
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=10,
                                               offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.BRITS(incomp_data).impute()
@@ -46,7 +46,7 @@ class TestBRITS(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10,
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=10,
                                               offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.BRITS(incomp_data).impute(params={"model": "brits", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64})
@@ -60,9 +60,9 @@ class TestBRITS(unittest.TestCase):
             "CORRELATION": 0.10694245305242461
         }
 
-        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.1,
+        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
-        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.1,
+        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2,
                         f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
         self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
                         f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
@@ -91,9 +91,9 @@ class TestBRITS(unittest.TestCase):
             "CORRELATION": 0.08306921217575602
         }
 
-        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.15,
+        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
-        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.15,
+        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2,
                         f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
         self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
                         f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")

@@ -14,7 +14,7 @@ class TestPRISTI(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10,
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=10,
                                               offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.PRISTI(incomp_data).impute()
@@ -46,7 +46,7 @@ class TestPRISTI(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.4, block_size=10,
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.36, block_size=10,
                                               offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.PRISTI(incomp_data).impute(params={"target_strategy":"hybrid", "unconditional":True, "seed":42, "device":"cpu"})

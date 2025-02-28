@@ -1,4 +1,4 @@
-[mrnn]
 hidden_dim = 12
 learning_rate = 0.02885577718793421
-iterations = 64
+num_iter = 64
+seq_len = 7

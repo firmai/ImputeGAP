@@ -21,7 +21,7 @@ class TestPipeline(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
-        incomp_data = ts_1.Contamination.mcar(ts_1.data)
+        incomp_data = ts_1.Contamination.mcar(ts_1.data, series_rate=0.18)
 
         cdrec = Imputation.MatrixCompletion.CDRec(incomp_data).impute()
         cdrec.score(ts_1.data, cdrec.recov_data)

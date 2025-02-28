@@ -1,4 +1,3 @@
-[cdrec]
 rank = 1
-epsilon = 0.1
-iteration = 10
+eps = 0.1
+iters = 10
