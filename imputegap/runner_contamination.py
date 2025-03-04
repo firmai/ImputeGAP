@@ -9,7 +9,7 @@ ts_1.load_series(utils.search_path("chlorine"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data with MCAR pattern
-miss_data = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.2, offset=0.1)
+miss_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_series=0.2, offset=0.1)
 
 # [OPTIONAL] you can plot your raw data / print the contamination
 ts_1.print(limit_timestamps=12, limit_series=7)

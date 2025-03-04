@@ -56,12 +56,12 @@ class Benchmarking:
         """
 
         if scenario == "mcar":
-            infected_matrix_opti = ts_test.Contamination.mcar(input_data=ts_test.data, dataset_rate=opti_mean,
-                                                              series_rate=opti_mean, block_size=block_size_mcar,
+            infected_matrix_opti = ts_test.Contamination.mcar(input_data=ts_test.data, rate_dataset=opti_mean,
+                                                              rate_series=opti_mean, block_size=block_size_mcar,
                                                               use_seed=True, seed=42)
         elif scenario == "mp":
-            infected_matrix_opti = ts_test.Contamination.missing_percentage(input_data=ts_test.data, dataset_rate=opti_mean,
-                                                                            series_rate=opti_mean)
+            infected_matrix_opti = ts_test.Contamination.missing_percentage(input_data=ts_test.data, rate_dataset=opti_mean,
+                                                                            rate_series=opti_mean)
         else:
             infected_matrix_opti = ts_test.Contamination.blackout(input_data=ts_test.data, series_rate=opti_mean)
 
@@ -458,13 +458,13 @@ class Benchmarking:
 
                             start_time_contamination = time.time()  # Record start time
                             if scenario == "mcar":
-                                infected_matrix = ts_test.Contamination.mcar(input_data=ts_test.data, dataset_rate=x,
-                                                                             series_rate=x, block_size=block_size_mcar,
+                                infected_matrix = ts_test.Contamination.mcar(input_data=ts_test.data, rate_dataset=x,
+                                                                             rate_series=x, block_size=block_size_mcar,
                                                                              use_seed=True, seed=42)
                             elif scenario == "mp":
                                 infected_matrix = ts_test.Contamination.missing_percentage(input_data=ts_test.data,
-                                                                                           dataset_rate=x,
-                                                                                           series_rate=x)
+                                                                                           rate_dataset=x,
+                                                                                           rate_series=x)
                             else:
                                 infected_matrix = ts_test.Contamination.blackout(input_data=ts_test.data, series_rate=x)
                             end_time_contamination = time.time()

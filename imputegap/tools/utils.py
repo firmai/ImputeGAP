@@ -83,6 +83,8 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.DeepLearning.GRIN(incomp_data)
     elif algorithm == "bay_otide":
         imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
+    elif algorithm == "hkmf_t":
+        imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
@@ -110,17 +112,17 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
         TimeSeries object containing contaminated data.
     """
     if pattern == "mcar":
-        incomp_data = ts.Contamination.mcar(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
+        incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
     elif pattern == "mp":
-        incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, offset=offset)
+        incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset)
     elif pattern == "disjoint":
-        incomp_data = ts.Contamination.disjoint(input_data=ts.data, series_rate=dataset_rate, limit=1, offset=offset)
+        incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset)
     elif pattern == "overlap":
-        incomp_data = ts.Contamination.overlap(input_data=ts.data, series_rate=dataset_rate, limit=limit, shift=shift, offset=offset)
+        incomp_data = ts.Contamination.overlap(input_data=ts.data, rate_series=dataset_rate, limit=limit, shift=shift, offset=offset)
     elif pattern == "gaussian":
-        incomp_data = ts.Contamination.gaussian(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, std_dev=std_dev, offset=offset, seed=True)
+        incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=True)
     elif pattern == "distribution":
-        incomp_data = ts.Contamination.distribution(input_data=ts.data, dataset_rate=dataset_rate, series_rate=series_rate, probabilities=probabilities, offset=offset, seed=True)
+        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities=probabilities, offset=offset, seed=True)
     else:
         incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset)
 
@@ -432,35 +434,40 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         b0 = float(config[algorithm]['b0'])
         v = float(config[algorithm]['v'])
         return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v)
+    elif algorithm == "hkmf_t":
+        tags = config[algorithm]['tags']
+        data_names = config[algorithm]['data_names']
+        epoch = int(config[algorithm]['epoch'])
+        return (tags, data_names, epoch)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
         return (n_calls, [metrics])
-    elif algorithm == "bayesian":
-        n_calls = int(config[algorithm]['n_calls'])
-        n_random_starts = int(config[algorithm]['n_random_starts'])
-        acq_func = str(config[algorithm]['acq_func'])
+    elif algorithm.lower() in ["bayesian", "bo", "bayesopt"]:
+        n_calls = int(config['bayesian']['n_calls'])
+        n_random_starts = int(config['bayesian']['n_random_starts'])
+        acq_func = str(config['bayesian']['acq_func'])
         metrics = config['bayesian']['metrics']
         return (n_calls, n_random_starts, acq_func, [metrics])
-    elif algorithm == "pso":
-        n_particles = int(config[algorithm]['n_particles'])
-        c1 = float(config[algorithm]['c1'])
-        c2 = float(config[algorithm]['c2'])
-        w = float(config[algorithm]['w'])
-        iterations = int(config[algorithm]['iterations'])
-        n_processes = int(config[algorithm]['n_processes'])
-        metrics = config[algorithm]['metrics']
+    elif algorithm.lower() in ['pso', "particle_swarm"]:
+        n_particles = int(config['pso']['n_particles'])
+        c1 = float(config['pso']['c1'])
+        c2 = float(config['pso']['c2'])
+        w = float(config['pso']['w'])
+        iterations = int(config['pso']['iterations'])
+        n_processes = int(config['pso']['n_processes'])
+        metrics = config['pso']['metrics']
         return (n_particles, c1, c2, w, iterations, n_processes, [metrics])
-    elif algorithm == "sh":
-        num_configs = int(config[algorithm]['num_configs'])
-        num_iterations = int(config[algorithm]['num_iterations'])
-        reduction_factor = int(config[algorithm]['reduction_factor'])
-        metrics = config[algorithm]['metrics']
+    elif algorithm.lower() in  ['sh', "successive_halving"]:
+        num_configs = int(config['sh']['num_configs'])
+        num_iterations = int(config['sh']['num_iterations'])
+        reduction_factor = int(config['sh']['reduction_factor'])
+        metrics = config['sh']['metrics']
         return (num_configs, num_iterations, reduction_factor, [metrics])
-    elif algorithm == "ray_tune":
-        metrics = config[algorithm]['metrics']
-        n_calls = int(config[algorithm]['n_calls'])
-        max_concurrent_trials = int(config[algorithm]['max_concurrent_trials'])
+    elif algorithm.lower() in ['ray_tune', "ray"]:
+        metrics = config['ray_tune']['metrics']
+        n_calls = int(config['ray_tune']['n_calls'])
+        max_concurrent_trials = int(config['ray_tune']['max_concurrent_trials'])
         return ([metrics], n_calls, max_concurrent_trials)
     elif algorithm == "forecaster-naive":
         strategy = str(config[algorithm]['strategy'])
@@ -748,6 +755,12 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "a0": float(optimal_params[5]),
             "b0": float(optimal_params[6]),
             "v": float(optimal_params[7])
+        }
+    elif algorithm == "hkmf_t":
+        params_to_save = {
+            "tags": optimal_params[0],
+            "data_names": optimal_params[1],
+            "epoch": int(optimal_params[2]),
         }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")

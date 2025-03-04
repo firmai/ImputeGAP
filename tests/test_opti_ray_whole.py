@@ -21,7 +21,7 @@ class TestOptiRAY(unittest.TestCase):
         ts_1.normalize(normalizer="min_max")
 
         # 3. contamination of the data
-        ts_mask = ts_1.Contamination.mcar(ts_1.data, series_rate=0.18)
+        ts_mask = ts_1.Contamination.mcar(ts_1.data, rate_series=0.18)
 
         # 4. imputation of the contaminated data
         # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm

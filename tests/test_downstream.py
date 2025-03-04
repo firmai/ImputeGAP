@@ -17,7 +17,7 @@ class TestDownstream(unittest.TestCase):
         ts_1.normalize(normalizer="min_max")
 
         # Create a mask for contamination
-        ts_mask = ts_1.Contamination.mcar(ts_1.data, dataset_rate=0.2, series_rate=0.8)
+        ts_mask = ts_1.Contamination.mcar(ts_1.data, rate_dataset=0.2, rate_series=0.8)
 
         # Perform imputation
         imputer = Imputation.MatrixCompletion.CDRec(ts_mask)

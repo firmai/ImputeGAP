@@ -24,7 +24,7 @@ class TestContaminationGaussian(unittest.TestCase):
 
             for S in series_impacted:
                 for R in missing_rates:
-                    incomp_data = ts.Contamination.gaussian(input_data=ts.data, dataset_rate=S, series_rate=R, offset=P)
+                    incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=S, rate_series=R, offset=P)
 
                     n_nan = np.isnan(incomp_data).sum()
                     expected_nan_series = math.ceil(S * M)
@@ -54,8 +54,8 @@ class TestContaminationGaussian(unittest.TestCase):
             for missing_rate in missing_rates:
 
                 ts_contaminate = ts_1.Contamination.gaussian(input_data=ts_1.data,
-                                                             dataset_rate=series_sel,
-                                                             series_rate=missing_rate, offset=0.1)
+                                                             rate_dataset=series_sel,
+                                                             rate_series=missing_rate, offset=0.1)
 
                 if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                     check_position = False
@@ -88,7 +88,7 @@ class TestContaminationGaussian(unittest.TestCase):
 
                     for std_dev in std_devs:
                         # Generate contamination with the current standard deviation
-                        contaminated_data = ts.Contamination.gaussian(input_data=ts.data, dataset_rate=S, series_rate=R,
+                        contaminated_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=S, rate_series=R,
                                                                       std_dev=std_dev, offset=P)
 
                         # Calculate positions of NaN values
@@ -122,9 +122,9 @@ class TestContaminationGaussian(unittest.TestCase):
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
-                    ts_contaminate = ts_1.Contamination.gaussian(input_data=ts_1.data, series_rate=missing_rate,
-                                                             dataset_rate=series_sel, std_dev=std_dev,
-                                                             offset=offset, seed=True)
+                    ts_contaminate = ts_1.Contamination.gaussian(input_data=ts_1.data, rate_series=missing_rate,
+                                                                 rate_dataset=series_sel, std_dev=std_dev,
+                                                                 offset=offset, seed=True)
 
                     nbr_series_contaminated = 0
                     for inx, current_series in enumerate(ts_contaminate):

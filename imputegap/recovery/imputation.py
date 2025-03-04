@@ -7,6 +7,7 @@ from imputegap.algorithms.dynammo import dynammo
 from imputegap.algorithms.gain import gain
 from imputegap.algorithms.grin import grin
 from imputegap.algorithms.grouse import grouse
+from imputegap.algorithms.hkmf_t import hkmf_t
 from imputegap.algorithms.interpolation import interpolation
 from imputegap.algorithms.iterative_svd import iterative_svd
 from imputegap.algorithms.knn import knn
@@ -183,7 +184,12 @@ class BaseImputer:
                 "\n\tPlease use update your call :\n\t\t.impute(user_def=False, params={'input_data': ts_1.data, 'optimizer': 'ray_tune'})"
             )
 
-        input_data = parameters.get('input_data')
+        input_data = (
+            parameters.get('input_data') if parameters.get('input_data') is not None else
+            parameters.get('input') if parameters.get('input') is not None else
+            parameters.get('data') if parameters.get('data') is not None else
+            parameters.get('ts_input')
+        )
         if input_data is None:
             raise ValueError(f"Need input_data to be able to adapt the hyper-parameters: {input_data}")
 
@@ -193,7 +199,7 @@ class BaseImputer:
 
         print("\n\t\t\t(OPTI) optimizer", optimizer, "has been called with", self.algorithm, "...\n")
 
-        if optimizer == "bayesian":
+        if optimizer.lower() in ["bayesian", "bo", "bayesopt"]:
             n_calls_d, n_random_starts_d, acq_func_d, selected_metrics_d = defaults
             options = parameters.get('options', {})
 
@@ -216,8 +222,7 @@ class BaseImputer:
                 print("\n\t\t\t(OPTI) optimization does not find results for ", self.algorithm, " > load default params.\n")
                 optimal_params = utils.load_parameters(query="default", algorithm=self.algorithm)
 
-        elif optimizer == "pso":
-
+        elif optimizer.lower() in ["pso", "particle_swarm"]:
             n_particles_d, c1_d, c2_d, w_d, iterations_d, n_processes_d, selected_metrics_d = defaults
             options = parameters.get('options', {})
 
@@ -237,8 +242,7 @@ class BaseImputer:
                                                          n_particles=n_particles, c1=c1, c2=c2, w=w,
                                                          iterations=iterations, n_processes=n_processes)
 
-        elif optimizer == "sh":
-
+        elif optimizer.lower() in ["sh", "successive_halving"]:
             num_configs_d, num_iterations_d, reduction_factor_d, selected_metrics_d = defaults
             options = parameters.get('options', {})
 
@@ -255,8 +259,7 @@ class BaseImputer:
                                                       num_configs=num_configs, num_iterations=num_iterations,
                                                       reduction_factor=reduction_factor)
 
-        elif optimizer == "ray_tune":
-
+        elif optimizer.lower() in ["ray_tune", "ray"]:
             selected_metrics_d, n_calls_d, max_concurrent_trials_d = defaults
 
             options = parameters.get('options', {})
@@ -2203,6 +2206,78 @@ class Imputation:
                 self.recov_data = bay_otide(incomp_data=self.incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, logs=self.logs)
 
                 return self
+
+        class HKMF_T(BaseImputer):
+            """
+            HKMF-T class to impute missing values using Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the HKMF-T
+            """
+
+            algorithm = "hkmf_t"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
+                params : dict, optional
+                    Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                     **Algorithm parameters:**
+
+                     tags : numpy.ndarray, optional
+                        An array containing tags that provide additional structure or metadata about
+                        the input data. If None, no tags are used (default is None).
+
+                    data_names : list of str, optional
+                        List of names corresponding to each row or column of the dataset for interpretability.
+                        If None, names are not used (default is None).
+
+                    epoch : int, optional
+                        The maximum number of training epochs for the Hankel Matrix Factorization algorithm.
+                        If convergence is reached earlier, the process stops (default is 10).
+
+                Returns
+                -------
+                self : HKMF-T
+                    HKMF-T object with `recov_data` set.
+
+                Example
+                -------
+                >>> hkmf_t_imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
+                >>> hkmf_t_imputer.impute()  # default parameters for imputation > or
+                >>> hkmf_t_imputer.impute(user_def=True, params={"tags":None, "data_names":None, "epoch":5})  # user defined> or
+                >>> hkmf_t_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
+                >>> recov_data = hkmf_t_imputer.recov_data
+
+                References
+                ----------
+                L. Wang, S. Wu, T. Wu, X. Tao and J. Lu, "HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization," in IEEE Transactions on Knowledge and Data Engineering, vol. 33, no. 11, pp. 3582-3593, 1 Nov. 2021, doi: 10.1109/TKDE.2020.2971190. keywords: {Time series analysis;Matrix decomposition;Market research;Meteorology;Sparse matrices;Indexes;Software;Tagged time series;missing value imputation;blackouts;hankel matrix factorization}
+                https://github.com/wangliang-cs/hkmf-t?tab=readme-ov-file
+                """
+
+                if params is not None:
+                    tags, data_names, epoch = self._check_params(user_def, params)
+                else:
+                    tags, data_names, epoch = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                if not tags:
+                    tags = None
+                if not data_names:
+                    data_names = None
+
+                self.recov_data = hkmf_t(incomp_data=self.incomp_data, tags=tags, data_names=data_names, epoch=epoch, logs=self.logs)
+
+                return self
+
 
 
 

@@ -18,7 +18,7 @@ class TestContaminationDisjoint(unittest.TestCase):
 
         for series_sel in series_impacted:
 
-            ts_contaminate = ts_1.Contamination.disjoint(input_data=ts_1.data, series_rate=series_sel, limit=1, offset=0.1)
+            ts_contaminate = ts_1.Contamination.disjoint(input_data=ts_1.data, rate_series=series_sel, limit=1, offset=0.1)
 
             if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                 check_position = False
@@ -59,7 +59,7 @@ class TestContaminationDisjoint(unittest.TestCase):
 
             for S in series_rate:
                 # Generate disjoint contamination
-                ts_miss = ts.Contamination.disjoint(input_data=ts.data, series_rate=S, limit=1, offset=P)
+                ts_miss = ts.Contamination.disjoint(input_data=ts.data, rate_series=S, limit=1, offset=P)
 
                 M, _ = ts.data.shape
 

@@ -552,8 +552,8 @@ class Explainer:
             print("\tContamination ", current_series, "...")
 
             if pattern == "mcar":
-                incomp_data = TimeSeries().Contamination.mcar(input_data=input_data, dataset_rate=current_series,
-                                                              series_rate=missing_rate, block_size=block_size,
+                incomp_data = TimeSeries().Contamination.mcar(input_data=input_data, rate_dataset=current_series,
+                                                              rate_series=missing_rate, block_size=block_size,
                                                               offset=offset, seed=seed,
                                                               explainer=True)
             else:

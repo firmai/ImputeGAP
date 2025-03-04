@@ -23,7 +23,7 @@ class TestKNN(unittest.TestCase):
         ts_0 = TimeSeries()
         ts_0.load_series(utils.search_path("chlorine"))
 
-        miss_ts = ts_0.Contamination.missing_percentage(input_data=ts_0.data, series_rate=0.18, offset=0.1)
+        miss_ts = ts_0.Contamination.missing_percentage(input_data=ts_0.data, rate_series=0.18, offset=0.1)
 
         imputer = Imputation.Statistics.KNN(miss_ts)
         imputer.impute(user_def=True, params={"k":k, "weights":weight})

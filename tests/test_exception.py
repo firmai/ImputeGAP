@@ -59,7 +59,7 @@ class TestException(unittest.TestCase):
         percentage = 120
 
         with pytest.raises(ValueError, match=f"The percentage is out of the acceptable range."):
-            ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), series_rate=percentage)
+            ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), rate_series=percentage)
 
 
     def test_load_exc(self):

@@ -13,7 +13,7 @@ class TestContaminationBlackout(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("test"))
 
-        missing_rates = [0.4, 1]
+        missing_rates = [0.4, 0.9]
         offset = 0.1
         M, N = ts_1.data.shape
 

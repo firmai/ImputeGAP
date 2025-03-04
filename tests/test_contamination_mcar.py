@@ -25,8 +25,8 @@ class TestContaminationMCAR(unittest.TestCase):
             for missing_rate in missing_rates:
 
                 ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                         dataset_rate=series_sel,
-                                                         series_rate=missing_rate, block_size=block_size,
+                                                         rate_dataset=series_sel,
+                                                         rate_series=missing_rate, block_size=block_size,
                                                          offset=offset, seed=True)
 
                 check_nan_series = False
@@ -59,8 +59,8 @@ class TestContaminationMCAR(unittest.TestCase):
             for missing_rate in missing_rates:
 
                 ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                         dataset_rate=series_sel,
-                                                         series_rate=missing_rate,
+                                                         rate_dataset=series_sel,
+                                                         rate_series=missing_rate,
                                                          block_size=2, offset=0.1,
                                                          seed=True)
 
@@ -89,8 +89,8 @@ class TestContaminationMCAR(unittest.TestCase):
             for S in series_impacted:
                 for R in missing_rates:
                     ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             series_rate=R,
-                                                             dataset_rate=S,
+                                                             rate_series=R,
+                                                             rate_dataset=S,
                                                              block_size=block_size, offset=offset,
                                                              seed=True)
 
@@ -135,8 +135,8 @@ class TestContaminationMCAR(unittest.TestCase):
                 for missing_rate in missing_rates:
 
                     ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             dataset_rate=series_sel,
-                                                             series_rate=missing_rate,
+                                                             rate_dataset=series_sel,
+                                                             rate_series=missing_rate,
                                                              block_size=block_size, offset=offset,
                                                              seed=True)
 
@@ -157,7 +157,7 @@ class TestContaminationMCAR(unittest.TestCase):
         ts_1.load_series(utils.search_path("chlorine"))
 
         ts_2 = TimeSeries()
-        ts_2.import_matrix(ts_1.Contamination.mcar(input_data=ts_1.data, dataset_rate=0.4, series_rate=0.1,
+        ts_2.import_matrix(ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.1,
                                                    block_size=10, offset=0.1, seed=True))
 
         ts_1.print()
@@ -185,8 +185,8 @@ class TestContaminationMCAR(unittest.TestCase):
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
                     ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             series_rate=missing_rate,
-                                                             dataset_rate=series_sel,
+                                                             rate_series=missing_rate,
+                                                             rate_dataset=series_sel,
                                                              block_size=block_size, offset=offset,
                                                              seed=True)
 
@@ -238,8 +238,8 @@ class TestContaminationMCAR(unittest.TestCase):
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
-                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=missing_rate,
-                                                             dataset_rate=series_sel, block_size=block_size,
+                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data, rate_series=missing_rate,
+                                                             rate_dataset=series_sel, block_size=block_size,
                                                              offset=offset, seed=True)
 
                     #print(*[f"({indc} {se})" for indc, se in enumerate(ts_contaminate)], sep=" ")  # debug

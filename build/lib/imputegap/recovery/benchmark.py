@@ -91,15 +91,15 @@ class Benchmark:
             TimeSeries object containing contaminated data.
         """
         if pattern == "mcar":
-            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, dataset_rate=rate, series_rate=rate, block_size=block_size_mcar, seed=True)
+            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, rate_dataset=rate, rate_series=rate, block_size=block_size_mcar, seed=True)
         elif pattern == "mp":
-            incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, dataset_rate=rate, series_rate=rate)
+            incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, rate_dataset=rate, rate_series=rate)
         elif pattern == "disjoint":
-            incomp_data = ts_test.Contamination.disjoint(input_data=ts_test.data, series_rate=rate)
+            incomp_data = ts_test.Contamination.disjoint(input_data=ts_test.data, rate_series=rate)
         elif pattern == "overlap":
-            incomp_data = ts_test.Contamination.overlap(input_data=ts_test.data, series_rate=rate)
+            incomp_data = ts_test.Contamination.overlap(input_data=ts_test.data, rate_series=rate)
         elif pattern == "gaussian":
-            incomp_data = ts_test.Contamination.gaussian(input_data=ts_test.data, dataset_rate=rate, series_rate=rate, seed=True)
+            incomp_data = ts_test.Contamination.gaussian(input_data=ts_test.data, rate_dataset=rate, rate_series=rate, seed=True)
         else:
             incomp_data = ts_test.Contamination.blackout(input_data=ts_test.data, series_rate=rate)
 

@@ -234,6 +234,12 @@ RAYTUNE_PARAMS = {
         "a0": tune.grid_search([0.1, 0.6, 1.0]),  # Prior hyperparameter a0
         "b0": tune.grid_search([1, 2.5, 5]),  # Prior hyperparameter b0
         "v": tune.grid_search([0.1, 0.5, 1.0])  # Variance parameter
+    },
+
+    "hkmf_t": {
+        "tags": [],
+        "data_names": [],
+        "epoch": tune.grid_search([3, 5, 10])
     }
 
 

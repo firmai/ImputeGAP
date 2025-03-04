@@ -81,11 +81,11 @@ def get_default_config(data_matrix=None):
 
 def get_default_args():
     class Args:
-        seed = 300
+        seed = 42
         num_fold = 1
         dataset = "default"
         task = "impute"
-        r = 0.2
+        r = 0.01
         other_para = ""
 
     return Args()
@@ -109,6 +109,7 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
     :return: Imputed time series matrix (N x T).
     """
     data_matrix = data.copy()
+    final_matrix = data.copy()
     missing_mask = np.isnan(data)
 
 
@@ -194,13 +195,22 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
         model.post_update_U_after_smooth(0)
 
         # **CRITICAL FIX: Ensure each series has unique imputation**
-        W_matrix = model.post_W_m.squeeze().cpu().detach().numpy()  # Shape (N, K)
-        U_matrix = model.post_U_m.squeeze().cpu().detach().numpy()  # Shape (K, T)
+        W_matrix = model.post_W_m.clone().squeeze().cpu().detach().numpy()
+        U_matrix = model.post_U_m.clone().squeeze().cpu().detach().numpy()
+
+        print("\n\t\t\t\tW_matrix shape:", W_matrix.shape)  # Should be (N, K)
+        print("\t\t\t\tU_matrix shape:", U_matrix.shape)  # Should be (K, T)
+
+        # Check for row similarity
+        w_unique_rows = np.unique(W_matrix, axis=0)
+        print(f"\t\t\t\t\t\tUnique W_matrix rows: {w_unique_rows.shape[0]} / {W_matrix.shape[0]}")
+
+        u_unique_rows = np.unique(U_matrix, axis=0)
+        print(f"\t\t\t\t\t\tUnique W_matrix rows: {u_unique_rows.shape[0]} / {U_matrix.shape[0]}")
 
         # Ensure the multiplication preserves individual series variations
         imputed_matrix = np.matmul(W_matrix, U_matrix)  # (N, T)
 
-        final_matrix = data_matrix.copy()
         final_matrix[missing_mask] = imputed_matrix[missing_mask]
 
     return final_matrix
@@ -214,6 +224,6 @@ if __name__ == "__main__":
     ts_1.normalize(normalizer="min_max")
 
     # 3. contamination of the data
-    x = ts_1.Contamination.mcar(ts_1.data, series_rate=0.4)
+    x = ts_1.Contamination.missing_percentage(ts_1.data, rate_series=0.4)
 
     imputation = recoveryBayOTIDE(x)

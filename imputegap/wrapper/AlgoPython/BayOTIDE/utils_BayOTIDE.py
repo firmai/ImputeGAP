@@ -187,6 +187,7 @@ def make_data_dict(hyper_dict, full_data, fold=0, args=None):
     :param args: Additional arguments (optional).
     :return: Dictionary with processed data.
     """
+    import numpy as np
 
     # Ensure full_data is a NumPy array
     if not isinstance(full_data, np.ndarray):
@@ -201,15 +202,41 @@ def make_data_dict(hyper_dict, full_data, fold=0, args=None):
     # Set fixed interval parameter
     data_dict["fix_int"] = hyper_dict.get("fix_int", True)
 
+
+    # Assuming full_data is a NumPy array with missing values (NaNs)
+    num_samples = full_data.shape[0]
+
     # Generate missing value masks
-    mask_train = ~np.isnan(full_data)  # Train mask (True where data exists)
-    mask_test = np.zeros_like(full_data, dtype=bool)  # Initialize empty test mask
-    mask_valid = np.zeros_like(full_data, dtype=bool)  # Initialize empty validation mask
+    mask_train = np.zeros_like(full_data, dtype=bool)
+    mask_test = np.zeros_like(full_data, dtype=bool)
+    mask_valid = np.zeros_like(full_data, dtype=bool)
+
+    # Get indices of non-NaN values
+    non_nan_indices = np.where(~np.isnan(full_data))
+
+    # Shuffle indices to ensure randomness
+    np.random.seed(42)  # For reproducibility
+    shuffled_indices = np.random.permutation(len(non_nan_indices[0]))
+
+    # Compute split sizes
+    train_size = int(0.6 * len(shuffled_indices))
+    test_size = int(0.2 * len(shuffled_indices))
+    valid_size = len(shuffled_indices) - train_size - test_size  # Remaining for validation
+
+    # Split indices
+    train_indices = shuffled_indices[:train_size]
+    test_indices = shuffled_indices[train_size:train_size + test_size]
+    valid_indices = shuffled_indices[train_size + test_size:]
+
+    # Apply masks based on the split
+    mask_train[non_nan_indices[0][train_indices], non_nan_indices[1][train_indices]] = True
+    mask_test[non_nan_indices[0][test_indices], non_nan_indices[1][test_indices]] = True
+    mask_valid[non_nan_indices[0][valid_indices], non_nan_indices[1][valid_indices]] = True
 
     # Store masks in data_dict
     data_dict["mask_train"] = mask_train
-    data_dict["mask_test"] = mask_train
-    data_dict["mask_valid"] = mask_train
+    data_dict["mask_test"] = mask_test
+    data_dict["mask_valid"] = mask_valid
 
     # Generate LDS parameters for trend and seasonality
     data_dict["LDS_paras_trend"] = make_LDS_paras_trend(hyper_dict, data_dict)
@@ -591,7 +618,7 @@ def moment_Hadmard(modes,
                    sum_2_scaler=True,
                    device=torch.device("cpu")):
     """
-    -compute first and second moments of \\Hadmard_prod_{k \in given modes} u_k -CP style
+    -compute first and second moments of \\Hadmard_prod_{k \\in given modes} u_k -CP style
     -can be used to compute full-mode / calibrating-mode of U/gamma ?
 
     :param modes: list of target mode
@@ -692,7 +719,7 @@ def moment_Hadmard_T(
         device=torch.device("cpu"),
 ):
     """
-    -compute first and second moments of \\Hadmard_prod_{k \in given modes} Gamma_k(t) -CP style
+    -compute first and second moments of \\Hadmard_prod_{k \\in given modes} Gamma_k(t) -CP style
     -can be used to compute full-mode / calibrating-mode of gamma ?
 
     :param modes: list of target mode
@@ -820,7 +847,7 @@ def moment_product(
         product_method="hadamard",
 ):
     """
-    -compute first and second moments of \\Hadmard_prod_{k \in given modes} u_k -CP style
+    -compute first and second moments of \\Hadmard_prod_{k \\in given modes} u_k -CP style
     -can be used to compute full-mode / calibrating-mode of U/gamma ?
 
     :param modes: list of target mode
@@ -841,8 +868,8 @@ def moment_product(
         : E_z: first moment of \\Hadmard_prod   : shape (N, R_U, 1)
         : E_z_2: second moment of \\Hadmard_prod: shape (N, R_U, R_U)
         - method is hadamard
-        : E_z: first moment of \kronecker_prod   : shape (N, R_U^{K}, 1)
-        : E_z_2: second moment of \kronecker_prod: shape (N, R_U^{K}, R_U^{K})
+        : E_z: first moment of \\kronecker_prod   : shape (N, R_U^{K}, 1)
+        : E_z_2: second moment of \\kronecker_prod: shape (N, R_U^{K}, R_U^{K})
 
     it's easy to transfer this function to kronecker_product(Tucker form) by changing Hadmard_product_batch to kronecker_product_einsum_batched
 
@@ -947,16 +974,16 @@ def moment_product_T(
 
     retrun:
     --if sum_2_scaler is True
-    : E_z: first moment of 1^T (\prod)  : shape (N, 1)
-    : E_z_2: second moment 1^T (\prod)  : shape (N, 1)
+    : E_z: first moment of 1^T (\\prod)  : shape (N, 1)
+    : E_z_2: second moment 1^T (\\prod)  : shape (N, 1)
 
     --if sum_2_scaler is False
         - method is hadamard
-        : E_z: first moment of \Hadmard_prod   : shape (N, R_U, 1)
-        : E_z_2: second moment of \Hadmard_prod: shape (N, R_U, R_U)
+        : E_z: first moment of \\Hadmard_prod   : shape (N, R_U, 1)
+        : E_z_2: second moment of \\Hadmard_prod: shape (N, R_U, R_U)
         - method is hadamard
-        : E_z: first moment of \kronecker_prod   : shape (N, R_U^{K}, 1)
-        : E_z_2: second moment of \kronecker_prod: shape (N, R_U^{K}, R_U^{K})
+        : E_z: first moment of \\kronecker_prod   : shape (N, R_U^{K}, 1)
+        : E_z_2: second moment of \\kronecker_prod: shape (N, R_U^{K}, R_U^{K})
 
     """
     assert order in {"first", "second"}

@@ -43,7 +43,7 @@ class TestBayOTIDE(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(ts_1.data, series_rate=0.18)
+        incomp_data = ts_1.Contamination.mcar(ts_1.data, rate_series=0.18)
 
         algo = Imputation.DeepLearning.BayOTIDE(incomp_data).impute(user_def=True, params={"K_trend":20, "K_season":2, "n_season":5, "K_bias":1, "time_scale":1, "a0":0.6, "b0":2.5, "v":0.5})
 
