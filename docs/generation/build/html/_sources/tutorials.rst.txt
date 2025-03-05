@@ -16,9 +16,14 @@ The data management module allows loading any time series datasets in text forma
     from imputegap.recovery.manager import TimeSeries
     from imputegap.tools import utils
 
+    # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
     ts_1 = TimeSeries()
+
+    # 2. load the timeseries from file or from the code
     ts_1.load_series(utils.search_path("eeg-alcohol"), max_series=5, max_values=15)
     ts_1.normalize(normalizer="z_score")
+
+    # [OPTIONAL] you can plot your raw data / print the information
     ts_1.plot(input_data=ts_1.data, max_series=10, max_values=100, save_path="./imputegap/assets")
     ts_1.print(limit_series=10)
 
@@ -36,10 +41,17 @@ ImputeGAP allows adding missing data patterns such as `MCAR`, `BLACKOUT`, `GAUSS
     from imputegap.recovery.manager import TimeSeries
     from imputegap.tools import utils
 
+    # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
     ts_1 = TimeSeries()
+
+    # 2. load the timeseries from file or from the code
     ts_1.load_series(utils.search_path("eeg-alcohol"))
     ts_1.normalize(normalizer="min_max")
-    ts_mask = ts_1.Contamination.mcar(ts_1.data, dataset_rate=0.2, series_rate=0.2, seed=True)
+
+    # 3. contamination of the data with MCAR pattern
+    ts_mask = ts_1.Contamination.mcar(ts_1.data, rate_dataset=0.2, rate_series=0.2, seed=True)
+
+    # [OPTIONAL] you can plot your raw data / print the contamination
     ts_1.print(limit_timestamps=12, limit_series=7)
     ts_1.plot(ts_1.data, ts_mask, max_series=9, subplot=True, save_path="./imputegap/assets")
 
@@ -59,18 +71,36 @@ ImputeGAP provides multiple imputation algorithms: Matrix Completion, Deep Learn
     from imputegap.recovery.manager import TimeSeries
     from imputegap.tools import utils
 
+    # 1. initiate the TimeSeries() object that will stay with you throughout the analysis
     ts_1 = TimeSeries()
+
+    # 2. load the timeseries from file or from the code
     ts_1.load_series(utils.search_path("eeg-alcohol"))
     ts_1.normalize(normalizer="min_max")
+
+    # 3. contamination of the data
     ts_mask = ts_1.Contamination.mcar(ts_1.data)
+
+    # [OPTIONAL] save your results in a new Time Series object
     ts_2 = TimeSeries().import_matrix(ts_mask)
-    cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
-    cdrec.impute()
-    ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
-    cdrec.score(ts_1.data, ts_3.data)
-    ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
-    ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True,
-              save_path="./imputegap/assets")
+
+    # 4. imputation of the contaminated data
+    imputer = Imputation.MatrixCompletion.CDRec(ts_2.data)
+
+    # imputation with default values
+    imputer.impute()
+    # OR imputation with user defined values
+    # >>> cdrec.impute(params={"rank": 5, "epsilon": 0.01, "iterations": 100})
+
+    # [OPTIONAL] save your results in a new Time Series object
+    ts_3 = TimeSeries().import_matrix(imputer.recov_data)
+
+    # 5. score the imputation with the raw_data
+    imputer.score(ts_1.data, ts_3.data)
+
+    # 6. display the results
+    ts_3.print_results(imputer.metrics, algorithm=imputer.algorithm)
+    ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True, save_path="./imputegap/assets")
 
 
 
@@ -103,20 +133,17 @@ The available optimizers are: Greedy Optimizer (GO), Bayesian Optimizer (BO), Pa
 
     # 4. imputation of the contaminated data
     # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-    cdrec = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False,
-                                                                  params={"input_data": ts_1.data, "optimizer": "bayesian",
-                                                                          "options": {"n_calls": 3}})
+    imputer = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
 
     # 5. score the imputation with the raw_data
-    cdrec.score(ts_1.data, cdrec.recov_data)
+    imputer.score(ts_1.data, imputer.recov_data)
 
     # 6. display the results
-    ts_1.print_results(cdrec.metrics)
-    ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=cdrec.recov_data, max_series=9, subplot=True,
-              save_path="./imputegap/assets", display=True)
+    ts_1.print_results(imputer.metrics)
+    ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=imputer.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
     # 7. save hyperparameters
-    utils.save_optimization(optimal_params=cdrec.parameters, algorithm=cdrec.algorithm, dataset="eeg", optimizer="t")
+    utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg", optimizer="ray_tune")
 
 
 
@@ -181,25 +208,24 @@ ImputeGAP is a versatile library designed to help users evaluate both the upstre
     ts_1.normalize(normalizer="min_max")
 
     # 3. contamination of the data
-    ts_mask = ts_1.Contamination.mcar(ts_1.data, series_rate=0.8)
+    ts_mask = ts_1.Contamination.missing_percentage(ts_1.data, rate_series=0.8)
     ts_2 = TimeSeries().import_matrix(ts_mask)
 
     # 4. imputation of the contaminated data
-    cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
-    cdrec.impute()
+    imputer = Imputation.MatrixCompletion.CDRec(ts_2.data)
+    imputer.impute()
 
     # [OPTIONAL] save your results in a new Time Series object
-    ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
+    ts_3 = TimeSeries().import_matrix(imputer.recov_data)
 
     # 5. score the imputation with the raw_data
     downstream_options = {"evaluator": "forecaster", "model": "prophet"}
-    cdrec.score(ts_1.data, ts_3.data)  # upstream standard analysis
-    cdrec.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
+    imputer.score(ts_1.data, ts_3.data)  # upstream standard analysis
+    imputer.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
 
     # 6. display the results
-    ts_3.print_results(cdrec.metrics, algorithm=cdrec.algorithm)
-    ts_3.print_results(cdrec.downstream_metrics, algorithm=cdrec.algorithm)
-
+    ts_3.print_results(imputer.metrics, algorithm=imputer.algorithm)
+    ts_3.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 
 
 
@@ -241,6 +267,7 @@ ImputeGAP enables users to comprehensively evaluate the efficiency of algorithms
 
     # START THE ANALYSIS
     list_results, sum_scores = Benchmark().eval(algorithms=algorithms_demo, datasets=datasets_demo, patterns=patterns_demo, x_axis=x_axis, optimizers=optimizers_demo, save_dir=save_dir, runs=nbr_run)
+
 
 
 

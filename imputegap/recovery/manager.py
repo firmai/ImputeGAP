@@ -653,6 +653,75 @@ class TimeSeries:
 
             return ts_contaminated
 
+        def missing_percentage_at_random(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True):
+            """
+            Apply missing percentage contamination with random starting position to the time series data.
+
+            Parameters
+            ----------
+            input_data : numpy.ndarray
+                The time series dataset to contaminate.
+            rate_dataset : float, optional
+                Percentage of series to contaminate (default is 0.2).
+            rate_series : float, optional
+                Percentage of missing values per series (default is 0.2).
+            offset : float, optional
+                Size of the uncontaminated section at the beginning of the series (default is 0.1).
+            seed : bool, optional
+                Whether to use a seed for reproducibility (default is True).
+
+            Returns
+            -------
+            numpy.ndarray
+                The contaminated time series data.
+            """
+
+            if seed:
+                seed_value = 42
+                np.random.seed(seed_value)
+
+            ts_contaminated = input_data.copy()
+            M, NS = ts_contaminated.shape
+
+            rate_series = utils.verification_limitation(rate_series)
+            rate_dataset = utils.verification_limitation(rate_dataset)
+            offset = utils.verification_limitation(offset)
+
+            nbr_series_impacted = int(np.ceil(M * rate_dataset))
+            offset_nbr = int(offset*NS)
+            values_nbr = int(NS * rate_series)
+
+
+            print("\n\n\tMISSING PERCENTAGE AT RANDOM contamination has been called with :"
+                  "\n\t\ta number of series impacted ", rate_dataset * 100, "%",
+                  "\n\t\ta missing rate of ", rate_series * 100, "%",
+                  "\n\t\ta starting position at ", offset,
+                  "\n\t\tshape of the set ", ts_contaminated.shape,
+                  "\n\t\tthis selection of series : ", 1, "->", nbr_series_impacted,
+                  "\n\t\tvalues : ", offset_nbr, "->", offset_nbr + values_nbr, "\n\n")
+
+
+            if offset_nbr + values_nbr > NS:
+                raise ValueError(
+                    f"\n\tError: The sum of offset ({offset_nbr}) and missing values ({values_nbr}) exceeds the limit of of the series."
+                    f" ({offset_nbr+values_nbr} must be smaller than {NS}).")
+
+
+            for series in range(0, nbr_series_impacted):
+                S = int(series)
+                N = len(ts_contaminated[S])  # number of values in the series
+                P = int(N * offset)  # values to protect in the beginning of the series
+                W = int(N * rate_series)  # number of data to remove
+                L = (N - W - P) +1
+
+                start_index = np.random.randint(0, L)  # Random start position
+
+                for to_remove in range(0, W):
+                    index = P + start_index + to_remove
+                    ts_contaminated[S, index] = np.nan
+
+            return ts_contaminated
+
         def blackout(input_data, series_rate=0.2, offset=0.1):
             """
             Apply blackout contamination to the time series data.

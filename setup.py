@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name="imputegap",
-    version="1.0.4",
+    version="1.0.5",
     description="A Library of Imputation Techniques for Time Series Data",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",

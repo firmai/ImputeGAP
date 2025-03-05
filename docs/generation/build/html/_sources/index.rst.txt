@@ -30,158 +30,102 @@ If you use your own datasets, please make sure your data satisfies the following
 Algorithms
 ----------
 
-.. list-table:: CONT: Contamination; IMP: Imputation; OPT: Optimization; EXP: Explainer
-   :header-rows: 1
-
 .. list-table::
    :header-rows: 1
 
    * - **ALGORITHMS**
-     - **CATEGORIES**
-     - **IMP**
+     - **FAMILIES**
      - **CONF**
-     - **REF**
    * - CDRec
      - Matrix Completion
-     - ✅
-     - -
-     - -
+     - KAIS'20
    * - IterativeSVD
      - Matrix Completion
-     - ✅
-     - -
-     - -
+     - BIOINFORMATICS'01
    * - GROUSE
      - Matrix Completion
-     - ✅
-     - -
-     - -
+     - PMLR'16
    * - ROSL
      - Matrix Completion
-     - ✅
-     - -
-     - -
+     - CVPR'14
    * - SPIRIT
      - Matrix Completion
-     - ✅
-     - -
-     - -
+     - VLDB'05
    * - SoftImpute
      - Matrix Completion
-     - ✅
-     - -
-     - -
+     - JMLR'10
    * - SVT
      - Matrix Completion
-     - ✅
-     - -
-     - -
+     - SIAM J. OPTIM'10
    * - TRMF
      - Matrix Completion
-     - ✅
-     - -
-     - -
+     - NeurIPS'16
    * - ST-MVL
      - Pattern Search
-     - ✅
-     - -
-     - -
+     - IJCAI'16
    * - DynaMMo
      - Pattern Search
-     - ✅
-     - -
-     - -
+     - KDD'09
    * - TKCM
      - Pattern Search
-     - ✅
-     - -
-     - -
+     - EDBT'17
    * - IIM
      - Machine Learning
-     - ✅
-     - -
-     - -
+     - ICDE '19
    * - XGBI
      - Machine Learning
-     - ✅
-     - -
-     - -
+     - KDD'16
    * - Mice
      - Machine Learning
-     - ✅
-     - -
-     - -
+     - Statistical Software'11
    * - MissForest
      - Machine Learning
-     - ✅
-     - -
-     - -
+     - BioInformatics'11
    * - KNNImpute
      - Statistics
-     - ✅
-     - -
-     - -
+     - native
    * - Interpolation
      - Statistics
-     - ✅
-     - -
-     - -
+     - native
    * - Min Impute
      - Statistics
-     - ✅
-     - -
-     - -
+     - native
    * - Mean Impute
      - Statistics
-     - ✅
-     - -
-     - -
+     - native
    * - Mean Impute By Series
      - Statistics
-     - ✅
-     - -
-     - -
+     - native
    * - MRNN
      - Deep Learning
-     - ✅
-     - -
-     - -
+     - IEEE Trans on BE'19
    * - BRITS
      - Deep Learning
-     - ✅
-     - -
-     - -
+     - NeurIPS'18
    * - DeepMVI
      - Deep Learning
-     - ✅
-     - -
-     - -
-   * - GAIN
-     - Deep Learning
-     - ✅
-     - -
-     - -
-   * - GRIN
-     - Deep Learning
-     - ✅
-     - -
-     - -
+     - PVLDB'21
    * - MPIN
      - Deep Learning
-     - ✅
-     - -
-     - -
+     - PVLDB'24
    * - PriSTI
      - Deep Learning
-     - ✅
-     - -
-     - -
+     - ICDE'23
    * - MissNet
      - Deep Learning
-     - ✅
-     - -
-     - -
-
+     - KDD'24
+   * - GAIN
+     - Deep Learning
+     - ICML'18
+   * - GRIN
+     - Deep Learning
+     - ICLR'22
+   * - BayOTIDE
+     - Deep Learning
+     - PMLR'24
+   * - HKMF-T
+     - Deep Learning
+     - TKDE'21
 
 
 
