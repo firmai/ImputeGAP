@@ -41,7 +41,7 @@ html_sidebars = {
 html_logo = "https://www.naterscreations.com/imputegap/logo_imputegab.png"
 html_favicon = "https://www.naterscreations.com/imputegap/favicon.png"
 
-html_static_path = ['_static']
+html_static_path = ['static']
 html_css_files = ['custom.css']
 
 # Set the version and release info
