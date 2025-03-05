@@ -1,5 +1,5 @@
 import time
-from imputegap.wrapper.AlgoPython.IIM.testerIIM import impute_with_algorithm
+from imputegap.wrapper.AlgoPython.IIM.runnerIIM import impute_with_algorithm
 
 
 def iim(incomp_data, number_neighbor, algo_code, logs=True):

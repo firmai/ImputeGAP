@@ -26,6 +26,7 @@ jobs:
         sudo apt-get install libopenblas-dev
         sudo apt-get install python3-dev build-essential
         pip install -r requirements.txt
+        pip install -r requirements_dev.txt
         pip install mypy
         pip install pytest
 
@@ -39,3 +40,4 @@ jobs:
         python -m pytest ./tests/test_opti_greedy_cdrec.py
         python -m pytest ./tests/test_opti_pso_cdrec.py
         python -m pytest ./tests/test_opti_sh_cdrec.py
+        python -m pytest ./tests/test_opti_ray_cdrec_eeg.py

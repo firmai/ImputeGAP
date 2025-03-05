@@ -10,9 +10,9 @@ class TestSTMVL(unittest.TestCase):
         the goal is to test if only the simple imputation with ST-MVL has the expected outcome
         """
         ts_1 = TimeSeries()
-        ts_1.load_timeseries(utils.search_path("chlorine"), max_values=200)
+        ts_1.load_series(utils.search_path("chlorine"), max_values=200)
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.4, missing_rate=0.4, block_size=10,
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10,
                                               offset=0.1, seed=True)
 
         algo = Imputation.PatternSearch.STMVL(incomp_data)
@@ -21,10 +21,10 @@ class TestSTMVL(unittest.TestCase):
         _, metrics = algo.recov_data, algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.05795429338869703,
-            "MAE": 0.038205100250362625,
-            "MI": 0.9955907463544946,
-            "CORRELATION": 0.9729604272282141
+            "RMSE": 0.1368300154471035,
+            "MAE": 0.0826527606378556,
+            "MI": 0.9622655017829951,
+            "CORRELATION": 0.9324369637045151
         }
 
         ts_1.print_results(metrics)

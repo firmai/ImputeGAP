@@ -97,6 +97,8 @@ void TKCM::actionTkcm(const arma::mat &ref_ts, arma::vec &ts, uint64_t &offset, 
 
 void TKCM::performRecovery()
 {
+    std::cout << "\t\t(C++) TKCM: Matrix Shape: (" << matrix.n_rows << ", " << matrix.n_cols << ") for rank " << l << " ..." << std::endl;
+
     uint64_t L = matrix.n_rows - 1;
     
     for (uint64_t i = 0; i < matrix.n_rows; ++i)

@@ -1,0 +1,41 @@
+name: Pytest - ImputeGAP - IMPUTATION - BETA - 12
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        lfs: true
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libmlpack-dev libopenblas-dev python3-dev build-essential
+        pip install -r requirements.txt
+        pip install -r requirements_dev.txt
+        pip install mypy pytest
+    - name: Run pytest
+      run: |
+        python -m pytest ./tests/test_imputation_dynammo.py
+        python -m pytest ./tests/test_imputation_grouse.py
+        python -m pytest ./tests/test_imputation_iterative_svd.py
+        python -m pytest ./tests/test_imputation_rosl.py
+        python -m pytest ./tests/test_imputation_soft_impute.py
+        python -m pytest ./tests/test_imputation_spirit.py
+        python -m pytest ./tests/test_imputation_svt.py
+        python -m pytest ./tests/test_imputation_tkcm.py
+        python -m pytest ./tests/test_imputation_deepmvi.py
+        python -m pytest ./tests/test_imputation_brits.py
+        python -m pytest ./tests/test_imputation_mpin.py
+        python -m pytest ./tests/test_imputation_pristi.py
+        python -m pytest ./tests/test_imputation_grin.py
+        python -m pytest ./tests/test_imputation_gain.py
+        python -m pytest ./tests/test_imputation_hkmf_t.py

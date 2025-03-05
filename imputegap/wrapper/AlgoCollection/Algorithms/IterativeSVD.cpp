@@ -48,7 +48,9 @@ void IterativeSVD::recoveryIterativeSVD(arma::mat &X, uint64_t rank)
     bool gradual_rank_increase = true;
     constexpr uint64_t max_iters = 100;
     constexpr double threshold = 0.00001;
-    
+
+    std::cout << "\t\t(C++) Iterative-SVD: Matrix Shape: (" << X.n_rows << ", " << X.n_cols << ") for Rank " << rank << "..." << std::endl;
+
     std::vector<arma::uvec> indices;
     
     for (uint64_t i = 0; i < X.n_cols; ++i)

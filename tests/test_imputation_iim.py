@@ -13,12 +13,12 @@ class TestIIM(unittest.TestCase):
         the goal is to test if only the simple imputation with IIM has the expected outcome
         """
         ts_1 = TimeSeries()
-        ts_1.load_timeseries(utils.search_path("chlorine"), max_values=200)
+        ts_1.load_series(utils.search_path("chlorine"), max_values=200)
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, series_rate=0.4, missing_rate=0.4, block_size=10,
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10,
                                               offset=0.1, seed=True)
 
-        algo = Imputation.Statistics.IIM(incomp_data)
+        algo = Imputation.MachineLearning.IIM(incomp_data)
         algo.impute()
         algo.score(ts_1.data)
 

@@ -59,6 +59,9 @@ arma::mat _svd_step(arma::mat &X, double shrinkage_value, uint64_t max_rank, uin
 
 void SoftImpute::doSoftImpute(arma::mat &X, uint64_t max_rank)
 {
+
+    std::cout << "\t\t(C++) SoftImpute: Matrix Shape: (" << X.n_rows << ", " << X.n_cols << ") for max rank " << max_rank << " ..." << std::endl;
+
     // --defaults for the algorithms from FancyImpute:
     // fill_method="zero"
     // min_value=None

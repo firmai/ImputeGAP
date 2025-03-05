@@ -1,53 +1,7 @@
-import ctypes
 import time
 import ctypes as __native_c_types_import;
-import numpy as __numpy_import;
 
 from imputegap.tools import utils
-
-
-def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
-    """
-    Convert a ctypes container to a numpy array in column-major order.
-
-    Parameters
-    ----------
-    __ctype_container : ctypes.Array
-        The input ctypes container (flattened matrix).
-    __py_sizen : int
-        The number of rows in the numpy array.
-    __py_sizem : int
-        The number of columns in the numpy array.
-
-    Returns
-    -------
-    numpy.ndarray
-        A numpy array reshaped to the original matrix dimensions (row-major order).
-    """
-    __numpy_marshal = __numpy_import.array(__ctype_container).reshape(__py_sizem, __py_sizen).T;
-
-    return __numpy_marshal;
-
-
-def __marshal_as_native_column(__py_matrix):
-    """
-    Convert a numpy array to a ctypes flat container for passing to native code.
-
-    Parameters
-    ----------
-    __py_matrix : numpy.ndarray
-        The input numpy matrix (2D array).
-
-    Returns
-    -------
-    ctypes.Array
-        A ctypes array containing the flattened matrix (in column-major order).
-    """
-    __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
-    __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
-
-    return __ctype_marshal;
-
 
 def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     """
@@ -103,19 +57,14 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     __ctype_alpha = __native_c_types_import.c_double(__py_alpha);
 
     # Native code uses linear matrix layout, and also it's easier to pass it in like this
-    __ctype_input_matrix = __marshal_as_native_column(__py_matrix);
+    __ctype_input_matrix = utils.__marshal_as_native_column(__py_matrix);
 
-    # extern "C" void
-    # stmvl_imputation_parametrized(
-    #         double *matrixNative, size_t dimN, size_t dimM,
-    #         size_t window_size, double gamma, double alpha
-    # )
     shared_lib.stmvl_imputation_parametrized(
         __ctype_input_matrix, __ctype_sizen, __ctype_sizem,
         __ctype_window, __ctype_gamma, __ctype_alpha
     );
 
-    __py_recovered = __marshal_as_numpy_column(__ctype_input_matrix, __py_sizen, __py_sizem);
+    __py_recovered = utils.__marshal_as_numpy_column(__ctype_input_matrix, __py_sizen, __py_sizem);
 
     return __py_recovered;
 

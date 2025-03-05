@@ -1,52 +1,7 @@
-import ctypes
 import time
 import ctypes as __native_c_types_import;
-import numpy as __numpy_import;
 
 from imputegap.tools import utils
-
-
-def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
-    """
-    Marshal a ctypes container as a numpy column-major array.
-
-    Parameters
-    ----------
-    __ctype_container : ctypes.Array
-        The input ctypes container (flattened matrix).
-    __py_sizen : int
-        The number of rows in the numpy array.
-    __py_sizem : int
-        The number of columns in the numpy array.
-
-    Returns
-    -------
-    numpy.ndarray
-        A numpy array reshaped to the original matrix dimensions (row-major order).
-    """
-    __numpy_marshal = __numpy_import.array(__ctype_container).reshape(__py_sizem, __py_sizen).T;
-
-    return __numpy_marshal;
-
-
-def __marshal_as_native_column(__py_matrix):
-    """
-    Marshal a numpy array as a ctypes flat container for passing to native code.
-
-    Parameters
-    ----------
-    __py_matrix : numpy.ndarray
-        The input numpy matrix (2D array).
-
-    Returns
-    -------
-    ctypes.Array
-        A ctypes array containing the flattened matrix (in column-major order).
-    """
-    __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
-    __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
-
-    return __ctype_marshal;
 
 
 def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
@@ -92,11 +47,11 @@ def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
     __ctype_iterations = __native_c_types_import.c_ulonglong(__py_iterations);
 
     # Native code uses linear matrix layout, and also it's easier to pass it in like this
-    __ctype_matrix = __marshal_as_native_column(__py_matrix);
+    __ctype_matrix = utils.__marshal_as_native_column(__py_matrix);
 
     shared_lib.cdrec_imputation_parametrized(__ctype_matrix, __ctype_size_n, __ctype_size_m, __ctype_rank, __ctype_epsilon, __ctype_iterations);
 
-    __py_imputed_matrix = __marshal_as_numpy_column(__ctype_matrix, __py_n, __py_m);
+    __py_imputed_matrix = utils.__marshal_as_numpy_column(__ctype_matrix, __py_n, __py_m);
 
     return __py_imputed_matrix;
 
@@ -131,6 +86,10 @@ def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, lib_path
     >>> print(recov_data)
 
     """
+
+    print(f"\t\t\t\t(PYTHON) CDRec: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for rank {truncation_rank}, "
+          f"epsilon {epsilon}, and iterations {iterations}...")
+
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery

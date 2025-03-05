@@ -26,6 +26,7 @@ jobs:
         sudo apt-get install python3-dev build-essential
         pip install --upgrade google protobuf
         pip install -r requirements.txt
+        pip install -r requirements_dev.txt
         pip install mypy
         pip install pytest
 
@@ -33,5 +34,13 @@ jobs:
     - name: Run pytest
       run: |
         python -m pytest ./tests/test_loading.py
+        python -m pytest ./tests/test_contamination_mcar.py
+        python -m pytest ./tests/test_contamination_mp.py
+        python -m pytest ./tests/test_contamination_blackout.py
+        python -m pytest ./tests/test_contamination_gaussian.py
+        python -m pytest ./tests/test_contamination_disjoint.py
+        python -m pytest ./tests/test_contamination_overlap.py
+        python -m pytest ./tests/test_contamination_distribution.py
         python -m pytest ./tests/test_exception.py
         python -m pytest ./tests/test_benchmarking.py
+        python -m pytest ./tests/test_downstream.py
