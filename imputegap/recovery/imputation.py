@@ -371,6 +371,12 @@ class Imputation:
             Imputation method that replaces missing values with zeros.
         MinImpute :
             Imputation method that replaces missing values with the minimum value of the ground truth.
+        MeanImputeBySeries :
+            Imputation method that replaces missing values with the minimum value of the ground truth by series.
+        Interpolation :
+            Imputation method that replaces missing values with the Interpolation
+        KNN :
+            Imputation method that replaces missing values with KNN logic
         """
 
         class ZeroImpute(BaseImputer):
@@ -594,6 +600,20 @@ class Imputation:
         ----------
         CDRec :
             Imputation method using Centroid Decomposition.
+        IterativeSVD :
+            Imputation method using Iterative Singular Value Decomposition.
+        GROUSE :
+            Imputation method using Grassmannian Rank-One Update Subspace Estimation.
+        ROSL :
+            Imputation method using Robust Online Subspace Learning.
+        SoftImpute :
+            Imputation method using Soft Impute algorithm.
+        SPIRIT :
+            Imputation method using Streaming Pattern Discovery in Multiple Time-Series.
+        SVT :
+            Imputation method using Singular Value Thresholding algorithm.
+        TRMF :
+            Imputation method using Temporal Regularized Matrix Factorization.
         """
 
         class CDRec(BaseImputer):
@@ -1154,6 +1174,8 @@ class Imputation:
             Imputation method using Multivariate imputation of chained equations (MICE).
         IIM :
             Imputation method using Iterative Imputation with Metric Learning (IIM).
+        XGBOOST :
+            Imputation method using Scalable Tree Boosting System (XGBOOST).
         """
 
         class MissForest(BaseImputer):
@@ -1596,7 +1618,25 @@ class Imputation:
         Subclasses
         ----------
         MRNN :
-            Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
+        Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
+        BRITS :
+            Imputation method using Bidirectional Recurrent Imputation for Time Series.
+        DeepMVI :
+            Imputation method using Deep Multivariate Imputation.
+        MPIN :
+            Imputation method using Multi-attribute Sensor Data Streams via Message Propagation.
+        PRISTI :
+            Imputation method using A Conditional Diffusion Framework for Spatiotemporal Imputation.
+        MissNet :
+            Imputation method using Mining of Switching Sparse Networks for Missing Value Imputation.
+        GAIN :
+            Imputation method using Generative Adversarial Nets for missing data imputation.
+        GRIN :
+            Imputation method using Graph Neural Networks for Multivariate Time Series Imputation.
+        BayOTIDE :
+            Imputation method using Bayesian Online Multivariate Time Series Imputation with functional decomposition.
+        HKMF_T :
+            Imputation method using Hankel Matrix Factorization to recover from blackouts in tagged time series.
         """
 
         class MRNN(BaseImputer):
@@ -1769,6 +1809,7 @@ class Imputation:
                 References
                 ----------
                 P. Bansal, P. Deshpande, and S. Sarawagi. Missing value imputation on multidimensional time series. arXiv preprint arXiv:2103.01600, 2023
+                https://github.com/pbansal5/DeepMVI
                 """
                 if params is not None:
                     max_epoch, patience, lr = self._check_params(user_def, params)
@@ -1838,6 +1879,7 @@ class Imputation:
                 References
                 ----------
                 Li, X., Li, H., Lu, H., Jensen, C.S., Pandey, V. & Markl, V. Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). arXiv (2023). https://arxiv.org/abs/2311.07344
+                https://github.com/XLI-2020/MPIN
                 """
                 if params is not None:
                     incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base = self._check_params(user_def, params)
@@ -1898,6 +1940,7 @@ class Imputation:
                 References
                 ----------
                 M. Liu, H. Huang, H. Feng, L. Sun, B. Du and Y. Fu, "PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation," 2023 IEEE 39th International Conference on Data Engineering (ICDE), Anaheim, CA, USA, 2023, pp. 1927-1939, doi: 10.1109/ICDE55515.2023.00150.
+                https://github.com/LMZZML/PriSTI
                 """
                 if params is not None:
                     target_strategy, unconditional, seed, device = self._check_params(user_def, params)

@@ -33,6 +33,7 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True):
     References
     ----------
     P. Bansal, P. Deshpande, and S. Sarawagi. Missing value imputation on multidimensional time series. arXiv preprint arXiv:2103.01600, 2023
+    https://github.com/pbansal5/DeepMVI
     """
     start_time = time.time()  # Record start time
 

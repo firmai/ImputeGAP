@@ -7,8 +7,6 @@
     <list default="true" id="9c64130a-5955-4091-9d95-7527058d5bd0" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/../14_pypots/.idea/14_pypots.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../demo/.idea/demo.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.readthedocs.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/generation/requirements.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../test/.idea/test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.coverage" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.github/mypy_check.yml" beforeDir="false" />
@@ -749,20 +747,12 @@
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/requires.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/top_level.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/cdrec.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/iim.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/mean_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/min_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/mrnn.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/stmvl.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/algorithms/zero_impute.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/benchmark.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/evaluation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/explainer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/imputation.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/manager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/recovery/optimization.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/build/html/_modules/imputegap/tools/utils.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.readthedocs.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.readthedocs.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/algorithms/deep_mvi.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/algorithms/deep_mvi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/algorithms/mpin.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/algorithms/mpin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/algorithms/pristi.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/algorithms/pristi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/recovery/imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/imputation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputegap/recovery/manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/recovery/manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mypy.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/about/about.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/installation/README.md" beforeDir="false" />
@@ -1147,7 +1137,7 @@
       <workItem from="1740740311696" duration="14998000" />
       <workItem from="1741002596550" duration="16054000" />
       <workItem from="1741089589495" duration="17260000" />
-      <workItem from="1741171567711" duration="6432000" />
+      <workItem from="1741171567711" duration="8410000" />
     </task>
     <servers />
   </component>

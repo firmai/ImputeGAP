@@ -36,6 +36,7 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, d
     References
     ----------
     M. Liu, H. Huang, H. Feng, L. Sun, B. Du and Y. Fu, "PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation," 2023 IEEE 39th International Conference on Data Engineering (ICDE), Anaheim, CA, USA, 2023, pp. 1927-1939, doi: 10.1109/ICDE55515.2023.00150.
+    https://github.com/LMZZML/PriSTI
     """
     start_time = time.time()  # Record start time
 

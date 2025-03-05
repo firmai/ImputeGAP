@@ -482,16 +482,22 @@ class TimeSeries:
         missing_percentage(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :
             Apply missing percentage contamination to the time series data.
 
+         missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True) :
+            Apply missing percentage contamination at random to the time series data.
+
         blackout(ts, missing_rate=0.2, offset=0.1) :
             Apply blackout contamination to the time series data.
 
         gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):
             Apply Gaussian contamination to the time series data.
 
-        def disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):
+        distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True):
+            Apply any distribution contamination to the time series data based on their probabilities.
+
+        disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):
             Apply Disjoint contamination to the time series data.
 
-        def overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):
+        overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):
             Apply Overlapping contamination to the time series data.
         """
 

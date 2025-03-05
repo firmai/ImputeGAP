@@ -44,6 +44,7 @@ def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_d
     References
     ----------
     Li, X., Li, H., Lu, H., Jensen, C.S., Pandey, V. & Markl, V. Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). arXiv (2023). https://arxiv.org/abs/2311.07344
+    https://github.com/XLI-2020/MPIN
     """
     start_time = time.time()  # Record start time
 
