@@ -746,6 +746,7 @@
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/entry_points.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/requires.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/generation/source/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/docs/generation/source/conf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mypy.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/about/about.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/installation/README.md" beforeDir="false" />
@@ -1130,7 +1131,7 @@
       <workItem from="1740740311696" duration="14998000" />
       <workItem from="1741002596550" duration="16054000" />
       <workItem from="1741089589495" duration="17260000" />
-      <workItem from="1741171567711" duration="8695000" />
+      <workItem from="1741171567711" duration="9005000" />
     </task>
     <servers />
   </component>
