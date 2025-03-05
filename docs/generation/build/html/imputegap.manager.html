@@ -305,18 +305,26 @@ to contaminate the datasets with missing values and plot results.</p>
 <p>Inner class to apply contamination patterns to the time series data.</p>
 <section id="id1">
 <h4>Methods<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
-<dl class="simple">
+<dl>
 <dt>mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :</dt><dd><p>Apply Missing Completely at Random (MCAR) contamination to the time series data.</p>
 </dd>
-<dt>missing_percentage(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :</dt><dd><p>Apply missing percentage contamination to the time series data.</p>
+<dt>missing_percentage(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :</dt><dd><blockquote>
+<div><p>Apply missing percentage contamination to the time series data.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True) :</dt><dd><p>Apply missing percentage contamination at random to the time series data.</p>
+</dd>
+</dl>
 </dd>
 <dt>blackout(ts, missing_rate=0.2, offset=0.1) :</dt><dd><p>Apply blackout contamination to the time series data.</p>
 </dd>
 <dt>gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):</dt><dd><p>Apply Gaussian contamination to the time series data.</p>
 </dd>
-<dt>def disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):</dt><dd><p>Apply Disjoint contamination to the time series data.</p>
+<dt>distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True):</dt><dd><p>Apply any distribution contamination to the time series data based on their probabilities.</p>
 </dd>
-<dt>def overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):</dt><dd><p>Apply Overlapping contamination to the time series data.</p>
+<dt>disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):</dt><dd><p>Apply Disjoint contamination to the time series data.</p>
+</dd>
+<dt>overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):</dt><dd><p>Apply Overlapping contamination to the time series data.</p>
 </dd>
 </dl>
 <dl class="py method">
