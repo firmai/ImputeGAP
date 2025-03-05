@@ -376,8 +376,28 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <p>A class containing imputation algorithms for deep learning-based methods.</p>
 <section id="subclasses">
 <h4>Subclasses<a class="headerlink" href="#subclasses" title="Link to this heading">¶</a></h4>
+<p>MRNN :
+Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
+BRITS :</p>
+<blockquote>
+<div><p>Imputation method using Bidirectional Recurrent Imputation for Time Series.</p>
+</div></blockquote>
 <dl class="simple">
-<dt>MRNN :</dt><dd><p>Imputation method using Multi-directional Recurrent Neural Networks (MRNN).</p>
+<dt>DeepMVI :</dt><dd><p>Imputation method using Deep Multivariate Imputation.</p>
+</dd>
+<dt>MPIN :</dt><dd><p>Imputation method using Multi-attribute Sensor Data Streams via Message Propagation.</p>
+</dd>
+<dt>PRISTI :</dt><dd><p>Imputation method using A Conditional Diffusion Framework for Spatiotemporal Imputation.</p>
+</dd>
+<dt>MissNet :</dt><dd><p>Imputation method using Mining of Switching Sparse Networks for Missing Value Imputation.</p>
+</dd>
+<dt>GAIN :</dt><dd><p>Imputation method using Generative Adversarial Nets for missing data imputation.</p>
+</dd>
+<dt>GRIN :</dt><dd><p>Imputation method using Graph Neural Networks for Multivariate Time Series Imputation.</p>
+</dd>
+<dt>BayOTIDE :</dt><dd><p>Imputation method using Bayesian Online Multivariate Time Series Imputation with functional decomposition.</p>
+</dd>
+<dt>HKMF_T :</dt><dd><p>Imputation method using Hankel Matrix Factorization to recover from blackouts in tagged time series.</p>
 </dd>
 </dl>
 <dl class="py class">
@@ -700,9 +720,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </section>
 <section id="id23">
 <h6>References<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h6>
-<ol class="upperalpha simple" start="16">
-<li><p>Bansal, P. Deshpande, and S. Sarawagi. Missing value imputation on multidimensional time series. arXiv preprint arXiv:2103.01600, 2023</p></li>
-</ol>
+<p>P. Bansal, P. Deshpande, and S. Sarawagi. Missing value imputation on multidimensional time series. arXiv preprint arXiv:2103.01600, 2023
+https://github.com/pbansal5/DeepMVI</p>
 </section>
 </dd></dl>
 
@@ -1156,7 +1175,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </section>
 <section id="id55">
 <h6>References<a class="headerlink" href="#id55" title="Link to this heading">¶</a></h6>
-<p>Li, X., Li, H., Lu, H., Jensen, C.S., Pandey, V. &amp; Markl, V. Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). arXiv (2023). <a class="reference external" href="https://arxiv.org/abs/2311.07344">https://arxiv.org/abs/2311.07344</a></p>
+<p>Li, X., Li, H., Lu, H., Jensen, C.S., Pandey, V. &amp; Markl, V. Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). arXiv (2023). <a class="reference external" href="https://arxiv.org/abs/2311.07344">https://arxiv.org/abs/2311.07344</a>
+<a class="reference external" href="https://github.com/XLI-2020/MPIN">https://github.com/XLI-2020/MPIN</a></p>
 </section>
 </dd></dl>
 
@@ -1508,9 +1528,8 @@ If False, conditional imputation models are used, depending on available data pa
 </section>
 <section id="id79">
 <h6>References<a class="headerlink" href="#id79" title="Link to this heading">¶</a></h6>
-<ol class="upperalpha simple" start="13">
-<li><p>Liu, H. Huang, H. Feng, L. Sun, B. Du and Y. Fu, “PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation,” 2023 IEEE 39th International Conference on Data Engineering (ICDE), Anaheim, CA, USA, 2023, pp. 1927-1939, doi: 10.1109/ICDE55515.2023.00150.</p></li>
-</ol>
+<p>M. Liu, H. Huang, H. Feng, L. Sun, B. Du and Y. Fu, “PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation,” 2023 IEEE 39th International Conference on Data Engineering (ICDE), Anaheim, CA, USA, 2023, pp. 1927-1939, doi: 10.1109/ICDE55515.2023.00150.
+<a class="reference external" href="https://github.com/LMZZML/PriSTI">https://github.com/LMZZML/PriSTI</a></p>
 </section>
 </dd></dl>
 
@@ -1560,6 +1579,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>MICE :</dt><dd><p>Imputation method using Multivariate imputation of chained equations (MICE).</p>
 </dd>
 <dt>IIM :</dt><dd><p>Imputation method using Iterative Imputation with Metric Learning (IIM).</p>
+</dd>
+<dt>XGBOOST :</dt><dd><p>Imputation method using Scalable Tree Boosting System (XGBOOST).</p>
 </dd>
 </dl>
 <dl class="py class">
@@ -2010,6 +2031,20 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <h4>Subclasses<a class="headerlink" href="#id115" title="Link to this heading">¶</a></h4>
 <dl class="simple">
 <dt>CDRec :</dt><dd><p>Imputation method using Centroid Decomposition.</p>
+</dd>
+<dt>IterativeSVD :</dt><dd><p>Imputation method using Iterative Singular Value Decomposition.</p>
+</dd>
+<dt>GROUSE :</dt><dd><p>Imputation method using Grassmannian Rank-One Update Subspace Estimation.</p>
+</dd>
+<dt>ROSL :</dt><dd><p>Imputation method using Robust Online Subspace Learning.</p>
+</dd>
+<dt>SoftImpute :</dt><dd><p>Imputation method using Soft Impute algorithm.</p>
+</dd>
+<dt>SPIRIT :</dt><dd><p>Imputation method using Streaming Pattern Discovery in Multiple Time-Series.</p>
+</dd>
+<dt>SVT :</dt><dd><p>Imputation method using Singular Value Thresholding algorithm.</p>
+</dd>
+<dt>TRMF :</dt><dd><p>Imputation method using Temporal Regularized Matrix Factorization.</p>
 </dd>
 </dl>
 <dl class="py class">
@@ -3353,6 +3388,12 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>ZeroImpute :</dt><dd><p>Imputation method that replaces missing values with zeros.</p>
 </dd>
 <dt>MinImpute :</dt><dd><p>Imputation method that replaces missing values with the minimum value of the ground truth.</p>
+</dd>
+<dt>MeanImputeBySeries :</dt><dd><p>Imputation method that replaces missing values with the minimum value of the ground truth by series.</p>
+</dd>
+<dt>Interpolation :</dt><dd><p>Imputation method that replaces missing values with the Interpolation</p>
+</dd>
+<dt>KNN :</dt><dd><p>Imputation method that replaces missing values with KNN logic</p>
 </dd>
 </dl>
 <dl class="py class">
