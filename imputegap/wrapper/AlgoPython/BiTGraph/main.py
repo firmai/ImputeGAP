@@ -133,12 +133,6 @@ def train(model, data=None):
         args.seed = np.random.randint(args.seed)
     torch.set_num_threads(1)
 
-    exp_name = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
-    exp_name = f"{exp_name}_{args.seed}"
-    logdir = os.path.join('./log_dir', args.dataset_name, args.model_name, exp_name)
-    # save config for logging
-    os.makedirs(logdir, exist_ok=True)
-
     train_dataloader, val_dataloader, test_dataloader, recov_dataloader, scaler = loaddataset(args.seq_len, args.pred_len, args.mask_ratio, args.dataset, args.batch_size, data)
 
     best_loss=9999999.99
@@ -165,9 +159,6 @@ def train(model, data=None):
         if(loss<best_loss):
             best_loss=loss
             best_model = copy.deepcopy(model.state_dict())
-            os.makedirs('./output_BiaTCGNet_'+args.dataset+'_miss'+str(args.mask_ratio)+'_'+args.task,exist_ok=True)
-            torch.save(best_model, './output_BiaTCGNet_'+args.dataset+'_miss'+str(args.mask_ratio)+'_'+args.task+'/best.pth')
-
             _, imputed_matrix = evaluate(model, recov_dataloader, scaler)
 
             print('\t\t\t\t\t\t\t\tbest_loss:', best_loss)
