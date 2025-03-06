@@ -6,7 +6,7 @@ import numbers
 import torch.nn.functional as F
 import numpy as np
 # torch.set_printoptions(threshold=np.inf)
-from torch.nn.utils import weight_norm
+from torch.nn.utils.parametrizations import weight_norm
 class getweight(nn.Module):
     def __init__(self,inputsize):
         super(getweight, self).__init__()
@@ -51,7 +51,9 @@ class nconv(nn.Module):
         B,C,N,T=x.shape
 
         mask_projection = self.mlp(mask.float())
+
         mask_weight = torch.matmul(mask_projection, mask_projection.transpose(-2, -1))
+
         mask_weight = mask_weight + 0.001 * self.triu_matrix * self.alpha1.triu() + 0.001 * self.tril_matrix * self.alpha2.tril()
 
         mask_weight = torch.sigmoid(mask_weight / torch.sqrt(torch.tensor(10.0)))

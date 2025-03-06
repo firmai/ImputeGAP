@@ -1,14 +1,11 @@
 import os
-import random
-from typing import Optional, Sequence, List
-import math
-import torch
+
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 import numpy as np
 import pandas as pd
-from datetime import datetime
 import torch
+
 
 np.set_printoptions(threshold=np.inf)
 
@@ -55,53 +52,54 @@ def get_0_1_array(array,rate=0.2):
     re_array = new_array.reshape(array.shape)
     return re_array
 
-def synthetic_data(mask_ratio,dataset):
+def synthetic_data(mask_ratio, dataset):
 
-    if(dataset=='Metr'):
-        path = os.path.join('./data/metr_la/', 'metr_la.h5')
-        data = pd.read_hdf(path)
-        data = np.array(data)
-        data = data[:, :, None]
-        mask=get_0_1_array(data,mask_ratio)
+    if isinstance(dataset, np.ndarray):
 
-
-    elif(dataset=='PEMS'):
-        path = os.path.join('./data/pems_bay/', 'pems_bay.h5')
-        data = pd.read_hdf(path)
-        data = np.array(data)
-        data = data[:, :, None]
-        mask = get_0_1_array(data, mask_ratio)
-
-
-    elif(dataset=='ETTh1'):
-        df_raw = pd.read_csv('./data/ETT/ETTh1.csv')
-        data=np.array(df_raw)
-        data=data[::,1:]
-        mask = get_0_1_array(data, mask_ratio)
+        print("\n\t\t\t\timputegap dataset loaded")
+        data = np.array(dataset).astype('float')
+        mask = np.where(np.isnan(data), 0, 1)
+        data[np.isnan(data)] = 0.0
         data = data[:, :, None].astype('float32')
         mask = mask[:, :, None].astype('int32')
 
-    elif (dataset == 'Elec'):
-        data_list = []
-        with open('./data/Electricity/electricity.txt', 'r') as f:
-            reader = f.readlines()
-            for row in reader:
-                data_list.append(row.split(','))
+        print("\t\t\t\tdata shape", data.shape)
+        print("\t\t\t\tmask shape", mask.shape, " \n")
+    else:
+        if(dataset=='Metr'):
+            path = os.path.join('./data/metr_la/', 'metr_la.h5')
+            data = pd.read_hdf(path)
+            data = np.array(data)
+            data = data[:, :, None]
+            mask=get_0_1_array(data,mask_ratio)
 
-        data = np.array(data_list).astype('float')
-        mask = get_0_1_array(data, mask_ratio)
-        data = data[:, :, None].astype('float32')
-        mask = mask[:, :, None].astype('int32')
 
-    elif(dataset=='BeijingAir'):
+        elif(dataset=='PEMS'):
+            path = os.path.join('./data/pems_bay/', 'pems_bay.h5')
+            data = pd.read_hdf(path)
+            data = np.array(data)
+            data = data[:, :, None]
+            mask = get_0_1_array(data, mask_ratio)
 
-        data = pd.DataFrame(pd.read_hdf('./data/air_quality/small36.h5', 'pm25'))
-        data=np.array(data)
-        eval_mask=~np.isnan(data)
-        mask= get_0_1_array(data, mask_ratio)  #   ~np.isnan(data)
-        data[np.isnan(data)]=0.0
-        data = data[:, :, None].astype('float32')
-        mask = mask[:, :, None].astype('int32')
+
+        elif(dataset=='ETTh1'):
+            df_raw = pd.read_csv('./data/ETT/ETTh1.csv')
+            data=np.array(df_raw)
+            data=data[::,1:]
+            mask = get_0_1_array(data, mask_ratio)
+            data = data[:, :, None].astype('float32')
+            mask = mask[:, :, None].astype('int32')
+
+
+        elif(dataset=='BeijingAir'):
+
+            data = pd.DataFrame(pd.read_hdf('./data/air_quality/small36.h5', 'pm25'))
+            data=np.array(data)
+            eval_mask=~np.isnan(data)
+            mask= get_0_1_array(data, mask_ratio)  #   ~np.isnan(data)
+            data[np.isnan(data)]=0.0
+            data = data[:, :, None].astype('float32')
+            mask = mask[:, :, None].astype('int32')
 
 
     return data,mask
@@ -137,7 +135,7 @@ def split_data_by_ratio(x,y, mask,mask_target,val_ratio, test_ratio):
     return train_x,train_y,train_x_mask,train_y_mask,val_x,val_y,val_x_mask,val_y_mask,test_x,test_y,test_x_mask,test_y_mask
 
 
-def Add_Window_Horizon(data, mask, window=1, horizon=1):
+def Add_Window_Horizon(data,mask, window=3, horizon=1):
     '''
     :param data: shape [B, ...]
     :param window:
@@ -163,50 +161,38 @@ def Add_Window_Horizon(data, mask, window=1, horizon=1):
     masks = np.array(masks)
     masks_target=np.array(masks_target)
 
-    return X, Y,masks,masks_target
+    return X, Y, masks, masks_target
 
+def loaddataset(history_len, pred_len, mask_ratio, dataset, batch_size=1, data=None):
 
-def loaddataset(data_matrix, history_len=24, pred_len=16):
-    mask = ~np.isnan(data_matrix)  # Mask where values are observed
-    data_matrix[np.isnan(data_matrix)] = 0  # Replace NaNs with zeros for processing
+    if data is not None:
+        data_numpy, mask = synthetic_data(mask_ratio, data)
+    else:
+        data_numpy,mask = synthetic_data(mask_ratio, dataset)
 
-    x, y, mask, mask_target = Add_Window_Horizon(data_matrix, mask, history_len, pred_len)
+    x, y, mask_s, mask_target = Add_Window_Horizon(data_numpy, mask, history_len, pred_len)
 
-    print(f"Final Shape of x before reshaping: {x.shape}")  # Debugging
-    print(f"Final Shape of y before reshaping: {y.shape}")  # Debugging
-
-    # 🔹 Fix: Expand dimensions if necessary (batch, seq_len, num_nodes) → (batch, 1, seq_len, num_nodes)
-    if x.ndim == 3:
-        x = np.expand_dims(x, axis=1)  # (batch, 1, seq_len, num_nodes)
-        y = np.expand_dims(y, axis=1)  # (batch, 1, horizon, num_nodes)
-        mask = np.expand_dims(mask, axis=1)
-        mask_target = np.expand_dims(mask_target, axis=1)
-
-    print(f"Fixed Shape of x: {x.shape}")  # Debugging
-    print(f"Fixed Shape of y: {y.shape}")  # Debugging
-
-    train_x, train_y, masks_tra, masks_target_tra, \
-        val_x, val_y, masks_val, masks_target_val, \
-        test_x, test_y, masks_test, masks_target_test = split_data_by_ratio(
-        x, y, mask, mask_target, 0.2, 0.2)
-
-    print(f"Train set size: {train_x.shape}, Validation set size: {val_x.shape}, Test set size: {test_x.shape}")
+    train_x,train_y,masks_tra,masks_target_tra,val_x,val_y,masks_val,masks_target_val,test_x,test_y,masks_test,masks_target_test = split_data_by_ratio(x,y, mask_s,mask_target, 0.1, 0.2)
 
     scaler = StandardScaler(mean=train_x.mean(), std=train_x.std())
-    x_tra, y_tra = scaler.transform(train_x), scaler.transform(train_y)
-    x_val, y_val = scaler.transform(val_x), scaler.transform(val_y)
-    x_test, y_test = scaler.transform(test_x), scaler.transform(test_y)
+    x_tra = scaler.transform(train_x)
+    y_tra = scaler.transform(train_y)
+    x_val = scaler.transform(val_x)
+    y_val = scaler.transform(val_y)
+    x_test = scaler.transform(test_x)
+    y_test = scaler.transform(test_y)
 
-    train_dataset = TSDataset(x_tra, y_tra, masks_tra, masks_target_tra)
-    val_dataset = TSDataset(x_val, y_val, masks_val, masks_target_val)
-    test_dataset = TSDataset(x_test, y_test, masks_test, masks_target_test)
+    train_dataset = TSDataset(x_tra, y_tra, mask_s, mask_target)
+    val_dataset = TSDataset(x_val, y_val,masks_val,masks_target_val)
+    test_dataset = TSDataset(x_test, y_test,masks_test,masks_target_test)
+    recov_dataset = TSDataset(x, y, mask_s, mask_target)
 
-    train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=8, drop_last=True)
-    val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=8, drop_last=False)
-    test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=8, drop_last=False)
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False, num_workers=8, drop_last=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=8, drop_last=True)
+    test_dataloader = DataLoader(test_dataset,batch_size=batch_size, shuffle=False, num_workers=8, drop_last=False)
+    recov_dataloader = DataLoader(recov_dataset,batch_size=batch_size, shuffle=False, num_workers=8, drop_last=False)
 
-    return train_dataloader, val_dataloader, test_dataloader, scaler
-
+    return train_dataloader, val_dataloader, test_dataloader, recov_dataloader, scaler
 
 
 if __name__ == '__main__':

@@ -46,35 +46,42 @@ ImputeGAP is a comprehensive framework designed for time series imputation algor
 
 ---
 
-## Category of Algorithms
-| **CATEGORIES**    | **Algorithms**     | **CONTAMINATION** | **IMPUTATION** | **OPTIMIZATION** | **EXPLAINER** |
-|:------------------|:-------------------|:--------------:|:-----------------:|:----------------:|:-------------:|
-| Matrix Completion | CDRec              |       ✅        |         ✅         |        ✅         |       ✅       |
-| Matrix Completion | IterativeSVD       |       ✅        |         ✅         |        ✅         |       ✅       |
-| Matrix Completion | GROUSE             |       ✅        |         ✅         |        ✅         |       ✅       |
-| Matrix Completion | ROSL               |       ✅        |         ✅         |        ✅         |       ✅       |
-| Matrix Completion | SPIRIT             |       ✅        |         ✅         |        ✅         |       ✅       |
-| Matrix Completion | SoftImpute         |       ✅        |         ✅         |        ✅         |       ✅       |
-| Matrix Completion | SVT                |       ✅        |         ✅         |        ✅         |       ✅       |
-| Matrix Completion | TRMF               |       ✅        |         ✅         |        ✅         |       ✅       |
-| Pattern Search    | ST-MVL             |       ✅        |         ✅         |        ✅         |       ✅       |
-| Pattern Search    | DynaMMo            |       ✅        |         ✅         |        ✅         |       ✅       |
-| Pattern Search    | TKCM               |       ✅        |         ✅         |        ✅         |       ✅       |
-| Machine Learning  | IIM                |       ✅        |         ✅         |        ✅         |       ✅       |
-| Machine Learning  | XGBI               |       ✅        |         ✅         |        ✅         |       ✅       |
-| Machine Learning  | Mice               |       ✅        |         ✅         |        ✅         |       ✅       |
-| Machine Learning  | MissForest         |       ✅        |         ✅         |        ✅         |       ✅       |
-| Statistics        | KNNImpute          |       ✅        |         ✅         |        ✅         |       ✅       |
-| Statistics        | Interpolation      |       ✅        |         ✅         |        ✅         |       ✅       |
-| Statistics        | MinImpute          |       ✅        |         ✅         |        ✅         |       ✅       |
-| Statistics        | MeanImpute         |       ✅        |         ✅         |        ✅         |       ✅       |
-| Statistics        | MeanImputeBySeries |       ✅        |         ✅         |        ✅         |       ✅       |
-| Deep Learning     | MRNN               |       ✅        |         ✅         |        ✅         |       ✅       |
-| Deep Learning     | BRITS              |       ✅        |         ✅         |        ✅         |       ✅       |
-| Deep Learning     | DeepMVI            |       ✅        |         ✅         |        ✅         |       ✅       |
-| Deep Learning     | MPIN               |       ✅        |         ✅         |        ✅         |       ✅       |
-| Deep Learning     | PriSTI             |       ✅        |         ✅         |        ✅         |       ✅       |
-| Deep Learning     | MissNet            |       ✅        |         ✅         |        ✅         |       ✅       |
+## Families of Algorithms
+# Algorithms Table
+
+| **ALGORITHMS**        | **FAMILIES**         | **CONF**                |
+|-----------------------|----------------------|-------------------------|
+| CDRec                 | Matrix Completion    | KAIS'20                 |
+| IterativeSVD          | Matrix Completion    | BIOINFORMATICS'01       |
+| GROUSE                | Matrix Completion    | PMLR'16                 |
+| ROSL                  | Matrix Completion    | CVPR'14                 |
+| SPIRIT                | Matrix Completion    | VLDB'05                 |
+| SoftImpute            | Matrix Completion    | JMLR'10                 |
+| SVT                   | Matrix Completion    | SIAM J. OPTIM'10        |
+| TRMF                  | Matrix Completion    | NeurIPS'16              |
+| ST-MVL                | Pattern Search       | IJCAI'16                |
+| DynaMMo               | Pattern Search       | KDD'09                  |
+| TKCM                  | Pattern Search       | EDBT'17                 |
+| IIM                   | Machine Learning     | ICDE '19                |
+| XGBI                  | Machine Learning     | KDD'16                  |
+| Mice                  | Machine Learning     | Statistical Software'11 |
+| MissForest            | Machine Learning     | BioInformatics'11       |
+| KNNImpute             | Statistics           | native                  |
+| Interpolation         | Statistics           | native                  |
+| Min Impute            | Statistics           | native                  |
+| Mean Impute           | Statistics           | native                  |
+| Mean Impute By Series | Statistics           | native                  |
+| MRNN [^1]             | Deep Learning        | IEEE Trans on BE'19     |
+| BRITS                 | Deep Learning        | NeurIPS'18              |
+| DeepMVI               | Deep Learning        | PVLDB'21                |
+| MPIN                  | Deep Learning        | PVLDB'24                |
+| PriSTI                | Deep Learning        | ICDE'23                 |
+| MissNet               | Deep Learning        | KDD'24                  |
+| GAIN                  | Deep Learning        | ICML'18                 |
+| GRIN                  | Deep Learning        | ICLR'22                 |
+| BayOTIDE              | Deep Learning        | PMLR'24                 |
+| HKMF-T                | Deep Learning        | TKDE'21                 |
+
 
 
 
@@ -391,7 +398,7 @@ To add your own imputation algorithm in Python or C++, please refer to the detai
 ---
 
 
-## References
+## Articles
 
 Mourad Khayati, Quentin Nater, and Jacques Pasquier. ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proceedings of the VLDB Endowment (PVLDB). Demo Track 17, no. 1 (2024), 4329 32.
 
@@ -404,4 +411,11 @@ Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudre-Mauroux. Mi
 ## Core Contributors
 - Quentin Nater (<a href="mailto:quentin.nater@unifr.ch">quentin.nater@unifr.ch</a>)
 - Dr. Mourad Khayati (<a href="mailto:mourad.khayati@unifr.ch">mourad.khayati@unifr.ch</a>)
+
+
+---
+
+## References
+
+[^1]: Jinsung Yoon, William R. Zame, Mihaela van der Schaar: *Estimating Missing Data in Temporal Data Streams Using Multi-directional Recurrent Neural Networks.* CoRR abs/1711.08742 (2017)
 

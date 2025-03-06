@@ -85,6 +85,8 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
     elif algorithm == "hkmf_t":
         imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
+    elif algorithm == "bit_graph":
+        imputer = Imputation.DeepLearning.BitGraph(incomp_data)
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
@@ -113,8 +115,10 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
     """
     if pattern == "mcar":
         incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
-    elif pattern == "mp":
+    elif pattern == "mp" or pattern == "missing_percentage":
         incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset)
+    elif pattern == "mpr" or pattern == "missing_percentage_at_random":
+        incomp_data = ts.Contamination.missing_percentage_at_random(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed)
     elif pattern == "disjoint":
         incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset)
     elif pattern == "overlap":
@@ -439,6 +443,17 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         data_names = config[algorithm]['data_names']
         epoch = int(config[algorithm]['epoch'])
         return (tags, data_names, epoch)
+    elif algorithm == "bit_graph":
+        node_number = int(config[algorithm]['node_number'])
+        kernel_set = config[algorithm]['kernel_set']
+        dropout = float(config[algorithm]['dropout'])
+        subgraph_size = int(config[algorithm]['subgraph_size'])
+        node_dim = int(config[algorithm]['node_dim'])
+        seq_len = int(config[algorithm]['seq_len'])
+        lr = float(config[algorithm]['lr'])
+        epoch = int(config[algorithm]['epoch'])
+        seed = int(config[algorithm]['seed'])
+        return (node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -761,6 +776,18 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "tags": optimal_params[0],
             "data_names": optimal_params[1],
             "epoch": int(optimal_params[2]),
+        }
+    elif algorithm == "bit_graph":
+        params_to_save = {
+            "node_number": int(optimal_params[0]),
+            "kernel_set": optimal_params[1],
+            "dropout": float(optimal_params[2]),
+            "subgraph_size": int(optimal_params[3]),
+            "node_dim": int(optimal_params[4]),
+            "seq_len": int(optimal_params[5]),
+            "lr": float(optimal_params[6]),
+            "epoch": int(optimal_params[7]),
+            "seed": int(optimal_params[8]),
         }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")

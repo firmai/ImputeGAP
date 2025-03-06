@@ -1,6 +1,7 @@
 import re
 
 from imputegap.algorithms.bayotide import bay_otide
+from imputegap.algorithms.bit_graph import bit_graph
 from imputegap.algorithms.brits import brits
 from imputegap.algorithms.deep_mvi import deep_mvi
 from imputegap.algorithms.dynammo import dynammo
@@ -2272,7 +2273,7 @@ class Imputation:
                     Whether to use user-defined or default parameters (default is True).
 
                 params : dict, optional
-                    Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.
+                    Parameters of the HKMF-T algorithm or Auto-ML configuration, if None, default ones are loaded.
 
                      **Algorithm parameters:**
 
@@ -2320,6 +2321,89 @@ class Imputation:
                 self.recov_data = hkmf_t(incomp_data=self.incomp_data, tags=tags, data_names=data_names, epoch=epoch, logs=self.logs)
 
                 return self
+
+        class BitGraph(BaseImputer):
+            """
+            BitGraph class to impute missing values using BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the BitGraph
+            """
+
+            algorithm = "bit_graph"
+
+            def impute(self, user_def=True, params=None):
+                """
+                Perform imputation using BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
+                params : dict, optional
+                    Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                     **Algorithm parameters:**
+
+                    node_number : int, optional
+                        The number of nodes (time series variables) in the dataset. If not provided,
+                        it is inferred from `incomp_data`.
+
+                    kernel_set : list, optional
+                        Set of kernel sizes used in the model for graph convolution operations (default: [1]).
+
+                    dropout : float, optional
+                        Dropout rate applied during training to prevent overfitting (default: 0.1).
+
+                    subgraph_size : int, optional
+                        The size of each subgraph used in message passing within the graph network (default: 5).
+
+                    node_dim : int, optional
+                        Dimensionality of the node embeddings in the graph convolution layers (default: 3).
+
+                    seq_len : int, optional
+                        Length of the input sequence for temporal modeling (default: 1).
+
+                    lr : float, optional
+                        Learning rate for model optimization (default: 0.001).
+
+                    epoch : int, optional
+                        Number of training epochs (default: 10).
+
+                    seed : int, optional
+                        Random seed for reproducibility (default: 42).
+
+                Returns
+                -------
+                self : BitGraph
+                    BitGraph object with `recov_data` set.
+
+                Example
+                -------
+                >>> bit_graph_imputer = Imputation.DeepLearning.BitGraph(incomp_data)
+                >>> bit_graph_imputer.impute()  # default parameters for imputation > or
+                >>> bit_graph_imputer.impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "epoch":10, "seed":42})  # user defined> or
+                >>> bit_graph_imputer.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
+                >>> recov_data = bit_graph_imputer.recov_data
+
+                References
+                ----------
+                X. Chen1, X. Li, T. Wu, B. Liu and Z. Li, BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES
+                https://github.com/chenxiaodanhit/BiTGraph
+                """
+
+                if params is not None:
+                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed = self._check_params(user_def, params)
+                else:
+                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed = utils.load_parameters(query="default", algorithm=self.algorithm)
+
+                self.recov_data = bit_graph(incomp_data=self.incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, seed=seed, logs=self.logs)
+
+                return self
+
 
 
 

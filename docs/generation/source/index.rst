@@ -145,7 +145,7 @@ API
 
 .. _tree:
 
-TREE
+Tree
 ----
 
 .. toctree::
