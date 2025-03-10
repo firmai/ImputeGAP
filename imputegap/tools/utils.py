@@ -5,6 +5,7 @@ import importlib.resources
 import numpy as __numpy_import;
 
 
+
 def config_impute_algorithm(incomp_data, algorithm):
     """
     Configure and execute algorithm for selected imputation imputer and pattern.
@@ -218,7 +219,7 @@ def search_path(set_name="test"):
         The correct file path for the dataset.
     """
 
-    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg-reading", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask", "meteo", "test", "test-large"]:
+    if set_name in list_of_datasets():
         return set_name + ".txt"
     else:
         filepath = "../imputegap/dataset/" + set_name + ".txt"
@@ -799,3 +800,82 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         print(f"\n\t\t(SYS) Optimization parameters successfully saved to {file_name}")
     except Exception as e:
         print(f"\n\t\t(SYS) An error occurred while saving the file: {e}")
+
+
+def list_of_algorithms():
+    return [
+        "CDRec",
+        "IterativeSVD",
+        "GROUSE",
+        "ROSL",
+        "SPIRIT",
+        "SoftImpute",
+        "SVT",
+        "TRMF",
+        "STMVL",
+        "DynaMMo",
+        "TKCM",
+        "IIM",
+        "XGBOOST",
+        "MICE",
+        "MissForest",
+        "KNN",
+        "Interpolation",
+        "MinImpute",
+        "MeanImpute",
+        "ZeroImpute",
+        "MeanImputeBySeries",
+        "MRNN",
+        "BRITS",
+        "DeepMVI",
+        "MPIN",
+        "PRISTI",
+        "MissNet",
+        "GAIN",
+        "GRIN",
+        "BayOTIDE",
+        "HKMF_T",
+        "BitGraph"
+    ]
+
+def list_of_patterns():
+    return [
+        "mcar",
+        "missing_percentage",
+        "missing_percentage_at_random",
+        "disjoint",
+        "overlap",
+        "blackout",
+        "gaussian",
+        "distribution"
+    ]
+
+def list_of_datasets(txt=False):
+
+    list = [
+        "airq",
+        "bafu",
+        "chlorine",
+        "climate",
+        "drift",
+        "eeg-alcohol",
+        "eeg-reading",
+        "fmri-objectviewing",
+        "fmri-stoptask",
+        "meteo",
+        "test"
+    ]
+
+    if txt:
+        list = [dataset + ".txt" for dataset in list]
+
+    return list
+
+def list_of_optimizers():
+    return [
+        "ray_tune",
+        "bayesian",
+        "particle_swarm",
+        "successive_halving",
+        "greedy"
+    ]

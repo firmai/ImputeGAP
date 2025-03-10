@@ -70,6 +70,10 @@ class TimeSeries:
         IMPORT FORMAT : (Values,Series) : series are seperated by "SPACE" et values by "\\n"
         """
         self.data = None
+        self.algorithms = utils.list_of_algorithms()
+        self.patterns = utils.list_of_patterns()
+        self.datasets = utils.list_of_datasets()
+        self.optimizers = utils.list_of_optimizers()
 
     def import_matrix(self, data=None):
         """
@@ -132,11 +136,12 @@ class TimeSeries:
             if isinstance(data, str):
                 saved_data = data
 
+                print("\n\n data", data)
+
                 #  update path form inner library datasets
-                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt",
-                            "eeg-reading.txt", "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt",
-                            "fmri-stoptask.txt"]:
+                if data in utils.list_of_datasets(txt=True):
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
+                    print("\n\n IN !!!!", data)
 
                 if not os.path.exists(data):
                     data = ".." + saved_data

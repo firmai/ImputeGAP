@@ -6,15 +6,16 @@ import numpy as np
 
 import imputegap
 from imputegap.recovery.manager import TimeSeries
-import os
 from imputegap.wrapper.AlgoPython.BiTGraph.data.GenerateDataset import loaddataset
-import datetime
 
 from imputegap.wrapper.AlgoPython.BiTGraph.models.BiaTCGNet.BiaTCGNet import Model
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 
 import argparse
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 args = argparse.Namespace(
     epochs=None,
@@ -94,7 +95,7 @@ args = argparse.Namespace(
 )
 
 
-criteron=nn.L1Loss().cuda()
+criteron = nn.L1Loss().to(device)
 
 if(args.dataset=='Metr'):
     node_number=207
@@ -141,7 +142,7 @@ def train(model, data=None):
         model.train()
 
         for i, (x, y, mask, target_mask) in enumerate(train_dataloader):
-            x, y, mask,target_mask =x.cuda(), y.cuda(), mask.cuda(), target_mask.cuda()
+            x, y, mask,target_mask = x.to(device), y.to(device), mask.to(device), target_mask.to(device)
             x=x*mask
             y=y*target_mask
             x_hat=model(x,mask,k)
@@ -221,14 +222,13 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[1], dropout=0.3, su
           f"subgraph_size: {args.subgraph_size}, node_dim: {args.node_dim}, seq_len: {args.seq_len}, "
           f"lr: {args.lr}, epochs: {args.epochs}, pred_len: {args.pred_len}, and seed {args.seed}")
 
-    model=Model(True, True, 2, node_number,args.kernel_set, 'cuda:0',
+    model=Model(True, True, 2, node_number,args.kernel_set, device.type,
                 predefined_A=None, dropout=args.dropout, subgraph_size=args.subgraph_size, node_dim=args.node_dim,
                 dilation_exponential=1, conv_channels=8, residual_channels=8, skip_channels=16, end_channels= 32,
                 seq_length=args.seq_len, in_dim=1,out_len=args.pred_len, out_dim=1, layers=2, propalpha=0.05,
                 tanhalpha=3, layer_norm_affline=True) #2 4 6
 
-    if torch.cuda.is_available():
-        model = model.cuda()
+    model.to(device)
 
     imputed_matrix, best_model = train(model, data=data)
 

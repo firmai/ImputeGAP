@@ -7,10 +7,10 @@
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>imputegap 1.0.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
-    <link rel="stylesheet" type="text/css" href="static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     
     
 
@@ -205,9 +205,13 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -244,7 +248,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="sources/index.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/index.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -266,242 +270,78 @@
         <article role="main" id="furo-main-content">
           <section id="imputegap-documentation">
 <h1>ImputeGAP documentation<a class="headerlink" href="#imputegap-documentation" title="Link to this heading">¶</a></h1>
-<p>ImputeGAP is a unified framework for imputation algorithms that provides a narrow-waist interface between algorithm evaluation and parameterization for datasets issued from various domains ranging from neuroscience, medicine, climate to energy.</p>
-<p>The interface provides advanced imputation algorithms, construction of various missing values patterns, and different evaluation metrics. In addition, the framework offers support for AutoML parameterization techniques, feature extraction, and, potentially, analysis of feature impact using SHAP. The framework should allow a straightforward integration of new algorithms, datasets, and metrics.</p>
-<section id="data-format">
+<p>ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. The library includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.</p>
+<dl class="simple">
+<dt>In detail, the package provides:</dt><dd><ul class="simple">
+<li><p>User-friendly APIs to easily visualize, analyze, and repair your own time series datasets.</p></li>
+<li><p>Access to commonly used datasets in time series research (<a class="reference external" href="datasets.html">Datasets</a>).</p></li>
+<li><p>Configurable contamination module that simulates real-world missingness patterns (<a class="reference external" href="patterns.html">Patterns</a>).</p></li>
+<li><p>Automated preprocessing with built-in methods for normalizing time series (<a class="reference external" href="preprocessing.html">Preprocessing</a>).</p></li>
+<li><p>Parameterized state-of-the-art time series imputation algorithms (<a class="reference external" href="algorithms.html">Algorithms</a>).</p></li>
+<li><p>Modular tools to analyze the behavior of these algorithms and assess their impact on key downstream tasks in time series analysis (<a class="reference external" href="downstream.html">Downstream</a>).</p></li>
+<li><p>Experiment benchmarking, fostering research reproducibility in time series (<a class="reference external" href="benchmark.html">Benchmark</a>).</p></li>
+<li><p>Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.</p></li>
+</ul>
+</dd>
+</dl>
+<br><br><section id="data-format">
 <span id="id1"></span><h2>Data Format<a class="headerlink" href="#data-format" title="Link to this heading">¶</a></h2>
-<p>If you use your own datasets, please make sure your data satisfies the following conditions.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p><strong>Data Type:</strong> Must be a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.</p></li>
-<li><p><strong>Structure:</strong> The data should be a <strong>2D matrix</strong>.</p></li>
-<li><p><strong>Rows:</strong> Each row represents a set of values (e.g., <strong>Timestamp #1</strong>).</p></li>
-<li><p><strong>Columns:</strong> Each column corresponds to a different series (e.g., <strong>Temperature</strong>).</p></li>
-<li><p><strong>Row Separator:</strong> Rows should be separated by a <strong>carriage return</strong> (<code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code>).</p></li>
-<li><p><strong>Column Separator:</strong> Values within columns should be separated by a <strong>space</strong> (<code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&quot;</span></code>).</p></li>
-<li><p><strong>Missing Values:</strong> Can be detected using <code class="docutils literal notranslate"><span class="pre">numpy.isnan()</span></code>.</p></li>
-<li><p><strong>Shape:</strong> The numpy shape of the matrix imported is (series, values)</p></li>
-<li><p><strong>Example:</strong> <a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/dataset/test.txt">Dataset Example</a> - The shape of the time series is (10, 25), the number of series is 10 and the number of values is 25.</p></li>
-</ul>
+<p>Please ensure that your data satisfies the following criteria:
+.. note:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>- 2D Matrix: columns are the series and rows are the timestamps
+- Column separator: empty space, row separator: newline
+- Missing values are NaN
+- Data output uses ``numpy.ndarray``
+</pre></div>
 </div>
-</section>
-<section id="algorithms">
-<span id="id2"></span><h2>Algorithms<a class="headerlink" href="#algorithms" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p><strong>ALGORITHMS</strong></p></th>
-<th class="head"><p><strong>FAMILIES</strong></p></th>
-<th class="head"><p><strong>CONF</strong></p></th>
-</tr>
-</thead>
+<br><br><section id="get-started">
+<span id="id2"></span><h3>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h3>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
+    <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
+    <h3><a href="getting_started.html" style="text-decoration: none; color: #2e86c1;">🚀 Installation</a></h3>
+    <p style="color: #CCCCCC;">Read the guide on how to install <strong>ImputeGAP</strong> on your system.</p>
+    </div>
+
+    <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
+    <h3><a href="tutorials.html" style="text-decoration: none; color: #2e86c1;">📖 Tutorials</a></h3>
+    <p style="color: #CCCCCC;">Check the tutorials to learn how to use <strong>ImputeGAP</strong> efficiently.</p>
+    </div>
+
+    <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
+    <h3><a href="imputegap.html" style="text-decoration: none; color: #2e86c1;">📦 API</a></h3>
+    <p style="color: #CCCCCC;">Find the main API for each submodule in the index.</p>
+    </div>
+
+    <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
+    <h3><a href="algorithms.html" style="text-decoration: none; color: #2e86c1;">🧠 Algorithms</a></h3>
+    <p style="color: #CCCCCC;">Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
+    </div>
+
+</div><br><br></section>
+<section id="contributors">
+<span id="id3"></span><h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-center">
 <tbody>
-<tr class="row-even"><td><p>CDRec</p></td>
-<td><p>Matrix Completion</p></td>
-<td><p>KAIS’20</p></td>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/quentin_nater.png"><img alt="Quentin Nater - ImputeGAP" class="align-center" src="_images/quentin_nater.png" style="width: 100px; height: 100px;" />
+</a>
+</td>
+<td><a class="reference internal image-reference" href="_images/mourad_khayati.png"><img alt="Mourad Khayati - ImputeGAP" class="align-center" src="_images/mourad_khayati.png" style="width: 100px; height: 100px;" />
+</a>
+</td>
 </tr>
-<tr class="row-odd"><td><p>IterativeSVD</p></td>
-<td><p>Matrix Completion</p></td>
-<td><p>BIOINFORMATICS’01</p></td>
-</tr>
-<tr class="row-even"><td><p>GROUSE</p></td>
-<td><p>Matrix Completion</p></td>
-<td><p>PMLR’16</p></td>
-</tr>
-<tr class="row-odd"><td><p>ROSL</p></td>
-<td><p>Matrix Completion</p></td>
-<td><p>CVPR’14</p></td>
-</tr>
-<tr class="row-even"><td><p>SPIRIT</p></td>
-<td><p>Matrix Completion</p></td>
-<td><p>VLDB’05</p></td>
-</tr>
-<tr class="row-odd"><td><p>SoftImpute</p></td>
-<td><p>Matrix Completion</p></td>
-<td><p>JMLR’10</p></td>
-</tr>
-<tr class="row-even"><td><p>SVT</p></td>
-<td><p>Matrix Completion</p></td>
-<td><p>SIAM J. OPTIM’10</p></td>
-</tr>
-<tr class="row-odd"><td><p>TRMF</p></td>
-<td><p>Matrix Completion</p></td>
-<td><p>NeurIPS’16</p></td>
-</tr>
-<tr class="row-even"><td><p>ST-MVL</p></td>
-<td><p>Pattern Search</p></td>
-<td><p>IJCAI’16</p></td>
-</tr>
-<tr class="row-odd"><td><p>DynaMMo</p></td>
-<td><p>Pattern Search</p></td>
-<td><p>KDD’09</p></td>
-</tr>
-<tr class="row-even"><td><p>TKCM</p></td>
-<td><p>Pattern Search</p></td>
-<td><p>EDBT’17</p></td>
-</tr>
-<tr class="row-odd"><td><p>IIM</p></td>
-<td><p>Machine Learning</p></td>
-<td><p>ICDE ‘19</p></td>
-</tr>
-<tr class="row-even"><td><p>XGBI</p></td>
-<td><p>Machine Learning</p></td>
-<td><p>KDD’16</p></td>
-</tr>
-<tr class="row-odd"><td><p>Mice</p></td>
-<td><p>Machine Learning</p></td>
-<td><p>Statistical Software’11</p></td>
-</tr>
-<tr class="row-even"><td><p>MissForest</p></td>
-<td><p>Machine Learning</p></td>
-<td><p>BioInformatics’11</p></td>
-</tr>
-<tr class="row-odd"><td><p>KNNImpute</p></td>
-<td><p>Statistics</p></td>
-<td><p>native</p></td>
-</tr>
-<tr class="row-even"><td><p>Interpolation</p></td>
-<td><p>Statistics</p></td>
-<td><p>native</p></td>
-</tr>
-<tr class="row-odd"><td><p>Min Impute</p></td>
-<td><p>Statistics</p></td>
-<td><p>native</p></td>
-</tr>
-<tr class="row-even"><td><p>Mean Impute</p></td>
-<td><p>Statistics</p></td>
-<td><p>native</p></td>
-</tr>
-<tr class="row-odd"><td><p>Mean Impute By Series</p></td>
-<td><p>Statistics</p></td>
-<td><p>native</p></td>
-</tr>
-<tr class="row-even"><td><p>MRNN</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>IEEE Trans on BE’19</p></td>
-</tr>
-<tr class="row-odd"><td><p>BRITS</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>NeurIPS’18</p></td>
-</tr>
-<tr class="row-even"><td><p>DeepMVI</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>PVLDB’21</p></td>
-</tr>
-<tr class="row-odd"><td><p>MPIN</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>PVLDB’24</p></td>
-</tr>
-<tr class="row-even"><td><p>PriSTI</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>ICDE’23</p></td>
-</tr>
-<tr class="row-odd"><td><p>MissNet</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>KDD’24</p></td>
-</tr>
-<tr class="row-even"><td><p>GAIN</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>ICML’18</p></td>
-</tr>
-<tr class="row-odd"><td><p>GRIN</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>ICLR’22</p></td>
-</tr>
-<tr class="row-even"><td><p>BayOTIDE</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>PMLR’24</p></td>
-</tr>
-<tr class="row-odd"><td><p>HKMF-T</p></td>
-<td><p>Deep Learning</p></td>
-<td><p>TKDE’21</p></td>
+<tr class="row-even"><td><p><strong>Quentin Nater</strong>
+<a class="reference external" href="mailto:quentin&#46;nater&#37;&#52;&#48;unifr&#46;ch">quentin<span>&#46;</span>nater<span>&#64;</span>unifr<span>&#46;</span>ch</a></p></td>
+<td><p><strong>Dr. Mourad Khayati</strong>
+<a class="reference external" href="mailto:mourad&#46;khayati&#37;&#52;&#48;unifr&#46;ch">mourad<span>&#46;</span>khayati<span>&#64;</span>unifr<span>&#46;</span>ch</a></p></td>
 </tr>
 </tbody>
 </table>
 </div>
-</section>
-<section id="api">
-<span id="id3"></span><h2>API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h2>
-<div class="table-wrapper autosummary longtable docutils container">
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.manager.html#module-imputegap.recovery.manager" title="imputegap.recovery.manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.manager</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="imputegap.imputation.html#module-imputegap.recovery.imputation" title="imputegap.recovery.imputation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.imputation</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.optimization.html#module-imputegap.recovery.optimization" title="imputegap.recovery.optimization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.optimization</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="imputegap.explainer.html#module-imputegap.recovery.explainer" title="imputegap.recovery.explainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.explainer</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.evaluation.html#module-0" title="imputegap.recovery.evaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.evaluation</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="imputegap.benchmark.html#module-0" title="imputegap.recovery.benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.recovery.benchmark</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="imputegap.utils.html#module-imputegap.tools.utils" title="imputegap.tools.utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imputegap.tools.utils</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="tree">
-<span id="id4"></span><h2>TREE<a class="headerlink" href="#tree" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#system-requirements">System Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#loading-and-preprocessing">Loading and Preprocessing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#contamination">Contamination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#imputation">Imputation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#parameterization">Parameterization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#explainer">Explainer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#downstream">Downstream</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials.html#benchmark">Benchmark</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="references.html#papers">Papers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references.html#core-contributors">Core Contributors</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1"><a class="reference internal" href="imputegap.html">imputegap package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.mrnn.html">imputegap.algorithms.mrnn package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.mean_impute.html">imputegap.algorithms.mean_impute package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.min_impute.html">imputegap.algorithms.min_impute package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.zero_impute.html">imputegap.algorithms.zero_impute package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="imputegap.evaluation.html">imputegap.recovery.evaluation package</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.html#module-imputegap">Module contents</a></li>
-</ul>
-</li>
-</ul>
 </div>
+</section>
 </section>
 </section>
 
@@ -551,10 +391,11 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">ImputeGAP documentation</a><ul>
-<li><a class="reference internal" href="#data-format">Data Format</a></li>
-<li><a class="reference internal" href="#algorithms">Algorithms</a></li>
-<li><a class="reference internal" href="#api">API</a></li>
-<li><a class="reference internal" href="#tree">TREE</a></li>
+<li><a class="reference internal" href="#data-format">Data Format</a><ul>
+<li><a class="reference internal" href="#get-started">Get Started</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -566,9 +407,9 @@
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=d55fa986"></script>
-    <script src="static/doctools.js?v=9bcbadda"></script>
-    <script src="static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="static/scripts/furo.js?v=5fa4622c"></script>
+</div><script src="_static/documentation_options.js?v=d55fa986"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>

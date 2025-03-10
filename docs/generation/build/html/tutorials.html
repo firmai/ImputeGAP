@@ -3,14 +3,14 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="References" href="references.html" /><link rel="prev" title="Datasets" href="datasets.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Algorithms" href="algorithms.html" /><link rel="prev" title="Getting Started" href="getting_started.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Tutorials - imputegap 1.0.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
-    <link rel="stylesheet" type="text/css" href="static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     
     
 
@@ -205,9 +205,13 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -244,7 +248,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="sources/tutorials.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/tutorials.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -268,85 +272,82 @@
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">¶</a></h1>
 <section id="loading-and-preprocessing">
 <span id="loading-preprocessing"></span><h2>Loading and Preprocessing<a class="headerlink" href="#loading-and-preprocessing" title="Link to this heading">¶</a></h2>
-<p>The data management module allows loading any time series datasets in text format: <em>(values, series)</em>.</p>
+<p>ImputeGAP comes with several time series datasets. You can find them inside the submodule tsl.datasets.</p>
+<p>As an example, we start by using eeg-alcohol, a standard dataset composed of individuals with a genetic predisposition to
+alcoholism. The dataset contains measurements from 64 electrodes placed on subject’s scalps, sampled at 256 Hz (3.9-ms epoch) for 1 second. The dimensions of the dataset are 64 series, each containing 256 values.</p>
 <p><strong>Example Loading</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
-<span class="c1"># 1. initiate the TimeSeries() object that will stay with you throughout the analysis</span>
-<span class="n">ts_1</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+<span class="c1"># initiate the TimeSeries() object that will stay with you throughout the analysis</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
-<span class="c1"># 2. load the timeseries from file or from the code</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">),</span> <span class="n">max_series</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_values</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">)</span>
+<span class="c1"># load the timeseries from file or from the code</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">))</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">)</span>
 
-<span class="c1"># [OPTIONAL] you can plot your raw data / print the information</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">max_series</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_values</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap/assets&quot;</span><span class="p">)</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">limit_series</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># [OPTIONAL] plot a subset of time series</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap/assets&quot;</span><span class="p">)</span>
+
+<span class="c1"># [OPTIONAL] print a subset of time series</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">nbr_series</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="n">nbr_val</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="contamination">
 <span id="id1"></span><h2>Contamination<a class="headerlink" href="#contamination" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP allows adding missing data patterns such as <cite>MCAR</cite>, <cite>BLACKOUT</cite>, <cite>GAUSSIAN</cite>, etc.</p>
-<p><strong>Example Contamination</strong></p>
+<p>We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different
+missingness patterns.  You can find them inside the submodule tsl.patterns.</p>
+<p>As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pattern:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
-<span class="c1"># 1. initiate the TimeSeries() object that will stay with you throughout the analysis</span>
-<span class="n">ts_1</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+<span class="c1"># initialize the TimeSeries() object</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
-<span class="c1"># 2. load the timeseries from file or from the code</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">))</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;min_max&quot;</span><span class="p">)</span>
+<span class="c1"># load and normalize the timeseries</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">))</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">)</span>
 
-<span class="c1"># 3. contamination of the data with MCAR pattern</span>
-<span class="n">ts_mask</span> <span class="o">=</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># contamination of the data with MCAR pattern</span>
+<span class="n">ts_mask</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># [OPTIONAL] you can plot your raw data / print the contamination</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">limit_timestamps</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">limit_series</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ts_mask</span><span class="p">,</span> <span class="n">max_series</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">subplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap/assets&quot;</span><span class="p">)</span>
+<span class="c1"># [OPTIONAL] plot XXXX</span>
+<span class="n">ts_1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ts_mask</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">subplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap/assets&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="imputation">
 <span id="id2"></span><h2>Imputation<a class="headerlink" href="#imputation" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP provides multiple imputation algorithms: Matrix Completion, Deep Learning, and Statistical Methods.</p>
-<p><strong>Example Imputation</strong></p>
+<p>In this section, we will illustrate how to impute the contaminated time series. Our library implements
+five families of imputation algorithms. Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search Methods.
+You can find the list of algorithms inside the submodule XXX.</p>
+<p>Let’s illustrate the imputation using the CDRec Algorithm from the Matrix Completion family.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
-<span class="c1"># 1. initiate the TimeSeries() object that will stay with you throughout the analysis</span>
-<span class="n">ts_1</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+<span class="c1"># initialize the TimeSeries() object</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
-<span class="c1"># 2. load the timeseries from file or from the code</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">))</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;min_max&quot;</span><span class="p">)</span>
+<span class="c1"># load and normalize the timeseries</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">))</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">)</span>
 
-<span class="c1"># 3. contamination of the data</span>
-<span class="n">ts_mask</span> <span class="o">=</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># contaminate the time series</span>
+<span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 
-<span class="c1"># [OPTIONAL] save your results in a new Time Series object</span>
-<span class="n">ts_2</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">import_matrix</span><span class="p">(</span><span class="n">ts_mask</span><span class="p">)</span>
-
-<span class="c1"># 4. imputation of the contaminated data</span>
-<span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">ts_2</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-
-<span class="c1"># imputation with default values</span>
+<span class="c1"># impute the contaminated series</span>
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">ts_m</span><span class="p">)</span>
 <span class="n">imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>
-<span class="c1"># OR imputation with user defined values</span>
-<span class="c1"># &gt;&gt;&gt; cdrec.impute(params={&quot;rank&quot;: 5, &quot;epsilon&quot;: 0.01, &quot;iterations&quot;: 100})</span>
 
-<span class="c1"># [OPTIONAL] save your results in a new Time Series object</span>
-<span class="n">ts_3</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">import_matrix</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">)</span>
 
-<span class="c1"># 5. score the imputation with the raw_data</span>
-<span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ts_3</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># compute and print the imputation metrics</span>
+<span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
 
-<span class="c1"># 6. display the results</span>
-<span class="n">ts_3</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
-<span class="n">ts_3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">=</span><span class="n">ts_2</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">recov_data</span><span class="o">=</span><span class="n">ts_3</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">max_series</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">subplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap/assets&quot;</span><span class="p">)</span>
+<span class="c1"># plot the recovered time series</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">=</span><span class="n">ts_m</span><span class="p">,</span> <span class="n">recov_data</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">subplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap/assets&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -411,74 +412,6 @@ geometry, transformation, correlation, and trend.</p>
 </pre></div>
 </div>
 </section>
-<section id="downstream">
-<span id="id5"></span><h2>Downstream<a class="headerlink" href="#downstream" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP is a versatile library designed to help users evaluate both the upstream aspects (e.g., errors, entropy, correlation) and the downstream impacts of data imputation. By leveraging a built-in Forecaster, users can assess how the imputation process influences the performance of specific tasks.</p>
-<p><strong>Example Downstream</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
-
-<span class="c1"># 1. initiate the TimeSeries() object that will stay with you throughout the analysis</span>
-<span class="n">ts_1</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
-
-<span class="c1"># 2. load the timeseries from file or from the code</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;chlorine&quot;</span><span class="p">))</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;min_max&quot;</span><span class="p">)</span>
-
-<span class="c1"># 3. contamination of the data</span>
-<span class="n">ts_mask</span> <span class="o">=</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-<span class="n">ts_2</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">import_matrix</span><span class="p">(</span><span class="n">ts_mask</span><span class="p">)</span>
-
-<span class="c1"># 4. imputation of the contaminated data</span>
-<span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">ts_2</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-<span class="n">imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>
-
-<span class="c1"># [OPTIONAL] save your results in a new Time Series object</span>
-<span class="n">ts_3</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">import_matrix</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">)</span>
-
-<span class="c1"># 5. score the imputation with the raw_data</span>
-<span class="n">downstream_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;evaluator&quot;</span><span class="p">:</span> <span class="s2">&quot;forecaster&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;prophet&quot;</span><span class="p">}</span>
-<span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ts_3</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># upstream standard analysis</span>
-<span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ts_3</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">downstream</span><span class="o">=</span><span class="n">downstream_options</span><span class="p">)</span>  <span class="c1"># downstream advanced analysis</span>
-
-<span class="c1"># 6. display the results</span>
-<span class="n">ts_3</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
-<span class="n">ts_3</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="benchmark">
-<span id="id6"></span><h2>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP enables users to comprehensively evaluate the efficiency of algorithms across various datasets.</p>
-<p><strong>Example Benchmark</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">Benchmark</span>
-
-<span class="c1"># VARIABLES</span>
-<span class="n">save_dir</span> <span class="o">=</span> <span class="s2">&quot;./analysis&quot;</span>
-<span class="n">nbr_run</span> <span class="o">=</span> <span class="mi">2</span>
-
-<span class="c1"># SELECT YOUR DATASET(S) :</span>
-<span class="n">datasets_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-reading&quot;</span><span class="p">]</span>
-
-<span class="c1"># SELECT YOUR OPTIMIZER :</span>
-<span class="n">optimiser_bayesian</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;n_random_starts&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;acq_func&quot;</span><span class="p">:</span> <span class="s2">&quot;gp_hedge&quot;</span><span class="p">,</span> <span class="s2">&quot;metrics&quot;</span><span class="p">:</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">}}</span>
-<span class="n">optimizers_demo</span> <span class="o">=</span> <span class="p">[</span><span class="n">optimiser_bayesian</span><span class="p">]</span>
-
-<span class="c1"># SELECT YOUR ALGORITHM(S) :</span>
-<span class="n">algorithms_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">,</span> <span class="s2">&quot;iim&quot;</span><span class="p">,</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">]</span>
-
-<span class="c1"># SELECT YOUR CONTAMINATION PATTERN(S) :</span>
-<span class="n">patterns_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mcar&quot;</span><span class="p">]</span>
-
-<span class="c1"># SELECT YOUR MISSING RATE(S) :</span>
-<span class="n">x_axis</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
-
-<span class="c1"># START THE ANALYSIS</span>
-<span class="n">list_results</span><span class="p">,</span> <span class="n">sum_scores</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">algorithms</span><span class="o">=</span><span class="n">algorithms_demo</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">datasets_demo</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns_demo</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers_demo</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">nbr_run</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 </section>
 
         </article>
@@ -486,23 +419,23 @@ geometry, transformation, correlation, and trend.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="references.html">
+          <a class="next-page" href="algorithms.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">References</div>
+                <div class="title">Algorithms</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="datasets.html">
+          <a class="prev-page" href="getting_started.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Datasets</div>
+                <div class="title">Getting Started</div>
                 
               </div>
             </a>
@@ -542,8 +475,6 @@ geometry, transformation, correlation, and trend.</p>
 <li><a class="reference internal" href="#imputation">Imputation</a></li>
 <li><a class="reference internal" href="#parameterization">Parameterization</a></li>
 <li><a class="reference internal" href="#explainer">Explainer</a></li>
-<li><a class="reference internal" href="#downstream">Downstream</a></li>
-<li><a class="reference internal" href="#benchmark">Benchmark</a></li>
 </ul>
 </li>
 </ul>
@@ -555,9 +486,9 @@ geometry, transformation, correlation, and trend.</p>
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=d55fa986"></script>
-    <script src="static/doctools.js?v=9bcbadda"></script>
-    <script src="static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="static/scripts/furo.js?v=5fa4622c"></script>
+</div><script src="_static/documentation_options.js?v=d55fa986"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>
