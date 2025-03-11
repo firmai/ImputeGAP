@@ -7,10 +7,10 @@
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Benchmark - imputegap 1.0.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
     
 
@@ -248,7 +248,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/benchmark.rst.txt" title="View this page">
+  <a class="muted-link" href="sources/benchmark.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -273,30 +273,34 @@
 <p>ImputeGAP offers a Benchmark module that enables users to compare various algorithm families across different dataset types using multiple evaluation metrics.</p>
 <p>The number of runs determines the stability of results for Deep Learning algorithms, which may fluctuate during the imputation training process.
 Users have full control over the analysis by customizing various parameters, including the list of datasets to evaluate, the choice of optimizer for fine-tuning algorithms on specific datasets, the algorithms to compare, the contamination patterns, and a range of missing rates.</p>
+<p>All missing data patterns developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.patterns</span></code> module.
+All algorithms developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.algorithms</span></code> module.
+All datasets provides in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> module.
+All optimizers developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.optimizers</span></code> module.</p>
 <p>The benchmarking module can be utilized as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">Benchmark</span>
 
-<span class="c1"># VARIABLES</span>
+<span class="c1"># define analysis global variables</span>
 <span class="n">save_dir</span> <span class="o">=</span> <span class="s2">&quot;./analysis&quot;</span>
 <span class="n">nbr_run</span> <span class="o">=</span> <span class="mi">2</span>
 
-<span class="c1"># SELECT YOUR DATASET(S) :</span>
+<span class="c1"># define the datasets to evaluate</span>
 <span class="n">datasets_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-reading&quot;</span><span class="p">]</span>
 
-<span class="c1"># SELECT YOUR OPTIMIZER :</span>
+<span class="c1"># define the optimizer to fine-tine the algorithms</span>
 <span class="n">optimiser_bayesian</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;n_random_starts&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;acq_func&quot;</span><span class="p">:</span> <span class="s2">&quot;gp_hedge&quot;</span><span class="p">,</span> <span class="s2">&quot;metrics&quot;</span><span class="p">:</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">}}</span>
 <span class="n">optimizers_demo</span> <span class="o">=</span> <span class="p">[</span><span class="n">optimiser_bayesian</span><span class="p">]</span>
 
-<span class="c1"># SELECT YOUR ALGORITHM(S) :</span>
-<span class="n">algorithms_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">,</span> <span class="s2">&quot;iim&quot;</span><span class="p">,</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">]</span>
+<span class="c1"># define the algorithms for the imputation</span>
+<span class="n">algorithms_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MeanImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;CDRec&quot;</span><span class="p">,</span> <span class="s2">&quot;STMVL&quot;</span><span class="p">,</span> <span class="s2">&quot;IIM&quot;</span><span class="p">,</span> <span class="s2">&quot;MRNN&quot;</span><span class="p">]</span>
 
-<span class="c1"># SELECT YOUR CONTAMINATION PATTERN(S) :</span>
+<span class="c1"># define the missing pattern to contaminate the time series</span>
 <span class="n">patterns_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mcar&quot;</span><span class="p">]</span>
 
-<span class="c1"># SELECT YOUR MISSING RATE(S) :</span>
+<span class="c1"># define missing values percentages to see the evolution of the imputation</span>
 <span class="n">x_axis</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 
-<span class="c1"># START THE ANALYSIS</span>
+<span class="c1"># launch the analysis</span>
 <span class="n">list_results</span><span class="p">,</span> <span class="n">sum_scores</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">algorithms</span><span class="o">=</span><span class="n">algorithms_demo</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">datasets_demo</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns_demo</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers_demo</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">nbr_run</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -351,9 +355,9 @@ Users have full control over the analysis by customizing various parameters, inc
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=d55fa986"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+</div><script src="static/documentation_options.js?v=d55fa986"></script>
+    <script src="static/doctools.js?v=9bcbadda"></script>
+    <script src="static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>

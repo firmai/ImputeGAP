@@ -12,5 +12,5 @@ ts_1.normalize(normalizer="min_max")
 incomp_data = ts_1.Contamination.mcar(ts_1.data, rate_dataset=0.2, rate_series=0.2, seed=True)
 
 # [OPTIONAL] you can plot your raw data / print the contamination
-ts_1.print(limit_timestamps=12, limit_series=7)
-ts_1.plot(ts_1.data, incomp_data, max_series=9, subplot=True, save_path="./imputegap/assets")
+ts_1.print(nbr_val=12, nbr_series=7)
+ts_1.plot(ts_1.data, incomp_data, nbr_series=9, subplot=True, save_path="./imputegap/assets")

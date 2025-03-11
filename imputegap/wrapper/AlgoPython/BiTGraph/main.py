@@ -178,7 +178,7 @@ def evaluate(model, val_iter, scaler):
 
     with torch.no_grad():
         for i, (x,y,mask,target_mask) in enumerate(val_iter):
-            x, y, mask,target_mask = x.cuda(), y.cuda(), mask.cuda(), target_mask.cuda()
+            x, y, mask, target_mask = x.to(device), y.to(device), mask.to(device), target_mask.to(device)
 
             x_hat=model(x,mask,k)
 
@@ -222,7 +222,7 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[1], dropout=0.3, su
           f"subgraph_size: {args.subgraph_size}, node_dim: {args.node_dim}, seq_len: {args.seq_len}, "
           f"lr: {args.lr}, epochs: {args.epochs}, pred_len: {args.pred_len}, and seed {args.seed}")
 
-    model=Model(True, True, 2, node_number,args.kernel_set, device.type,
+    model=Model(True, True, 2, node_number,args.kernel_set, device=device.type,
                 predefined_A=None, dropout=args.dropout, subgraph_size=args.subgraph_size, node_dim=args.node_dim,
                 dilation_exponential=1, conv_channels=8, residual_channels=8, skip_channels=16, end_channels= 32,
                 seq_length=args.seq_len, in_dim=1,out_len=args.pred_len, out_dim=1, layers=2, propalpha=0.05,

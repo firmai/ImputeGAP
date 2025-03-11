@@ -16,7 +16,7 @@ class TestOptiSTMVL(unittest.TestCase):
         dataset = "chlorine"
 
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path(dataset), max_values=200)
+        ts_1.load_series(utils.search_path(dataset), nbr_val=200)
 
 
         incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=2,

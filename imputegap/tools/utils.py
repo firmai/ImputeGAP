@@ -26,67 +26,71 @@ def config_impute_algorithm(incomp_data, algorithm):
     from imputegap.recovery.imputation import Imputation
 
     # 1st generation
-    if algorithm == "cdrec":
+    if algorithm == "cdrec" or algorithm == "CDRec":
         imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
-    elif algorithm == "stmvl":
+    elif algorithm == "stmvl" or algorithm == "STMVL":
         imputer = Imputation.PatternSearch.STMVL(incomp_data)
-    elif algorithm == "iim":
+    elif algorithm == "iim" or algorithm == "IIM":
         imputer = Imputation.MachineLearning.IIM(incomp_data)
-    elif algorithm == "mrnn":
+    elif algorithm == "mrnn" or algorithm == "MRNN":
         imputer = Imputation.DeepLearning.MRNN(incomp_data)
 
     # 2nd generation
-    elif algorithm == "iterative_svd" or algorithm == "iter_svd":
+    elif algorithm == "iterative_svd" or algorithm == "iter_svd" or algorithm == "IterativeSVD":
         imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
-    elif algorithm == "grouse":
+    elif algorithm == "grouse" or algorithm == "GROUSE":
         imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
-    elif algorithm == "dynammo":
+    elif algorithm == "dynammo" or algorithm == "DynaMMo":
         imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
-    elif algorithm == "rosl":
+    elif algorithm == "rosl" or algorithm == "ROSL":
         imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
-    elif algorithm == "soft_impute" or algorithm == "soft_imp":
+    elif algorithm == "soft_impute" or algorithm == "soft_imp" or algorithm == "SoftImpute":
         imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
-    elif algorithm == "spirit":
+    elif algorithm == "spirit" or algorithm == "SPIRIT":
         imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
-    elif algorithm == "svt":
+    elif algorithm == "svt" or algorithm == "SVT":
         imputer = Imputation.MatrixCompletion.SVT(incomp_data)
-    elif algorithm == "tkcm":
+    elif algorithm == "tkcm" or algorithm == "TKCM":
         imputer = Imputation.PatternSearch.TKCM(incomp_data)
-    elif algorithm == "deep_mvi":
+    elif algorithm == "deep_mvi" or algorithm == "DeepMVI":
         imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
-    elif algorithm == "brits":
+    elif algorithm == "brits" or algorithm == "BRITS":
         imputer = Imputation.DeepLearning.BRITS(incomp_data)
-    elif algorithm == "mpin":
+    elif algorithm == "mpin" or algorithm == "MPIN":
         imputer = Imputation.DeepLearning.MPIN(incomp_data)
-    elif algorithm == "pristi":
+    elif algorithm == "pristi" or algorithm == "PRISTI":
         imputer = Imputation.DeepLearning.PRISTI(incomp_data)
 
     # 3rd generation
-    elif algorithm == "knn":
+    elif algorithm == "knn" or algorithm == "KNN":
         imputer = Imputation.Statistics.KNN(incomp_data)
-    elif algorithm == "interpolation":
+    elif algorithm == "interpolation" or algorithm == "Interpolation":
         imputer = Imputation.Statistics.Interpolation(incomp_data)
-    elif algorithm == "mean_series":
+    elif algorithm == "mean_series" or algorithm == "MeanImputeBySeries":
         imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
-    elif algorithm == "trmf":
+    elif algorithm == "min_impute" or algorithm == "MinImpute":
+        imputer = Imputation.Statistics.MinImpute(incomp_data)
+    elif algorithm == "zero_impute" or algorithm == "ZeroImpute":
+        imputer = Imputation.Statistics.ZeroImpute(incomp_data)
+    elif algorithm == "trmf" or algorithm == "TRMF":
         imputer = Imputation.MatrixCompletion.TRMF(incomp_data)
-    elif algorithm == "mice":
+    elif algorithm == "mice" or algorithm == "MICE":
         imputer = Imputation.MachineLearning.MICE(incomp_data)
-    elif algorithm == "miss_forest":
+    elif algorithm == "miss_forest" or algorithm == "MissForest":
         imputer = Imputation.MachineLearning.MissForest(incomp_data)
-    elif algorithm == "xgboost":
+    elif algorithm == "xgboost" or algorithm == "XGBOOST":
         imputer = Imputation.MachineLearning.XGBOOST(incomp_data)
-    elif algorithm == "miss_net":
+    elif algorithm == "miss_net" or algorithm == "MissNet":
         imputer = Imputation.DeepLearning.MissNet(incomp_data)
-    elif algorithm == "gain":
+    elif algorithm == "gain" or algorithm == "GAIN":
         imputer = Imputation.DeepLearning.GAIN(incomp_data)
-    elif algorithm == "grin":
+    elif algorithm == "grin" or algorithm == "GRIN":
         imputer = Imputation.DeepLearning.GRIN(incomp_data)
-    elif algorithm == "bay_otide":
+    elif algorithm == "bay_otide" or algorithm == "BayOTIDE":
         imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
-    elif algorithm == "hkmf_t":
+    elif algorithm == "hkmf_t" or algorithm == "HKMF_T":
         imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
-    elif algorithm == "bit_graph":
+    elif algorithm == "bit_graph" or algorithm == "BitGraph":
         imputer = Imputation.DeepLearning.BitGraph(incomp_data)
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)

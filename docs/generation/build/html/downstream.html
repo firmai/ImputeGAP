@@ -7,10 +7,10 @@
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Downstream - imputegap 1.0.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
     
 
@@ -248,7 +248,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/downstream.rst.txt" title="View this page">
+  <a class="muted-link" href="sources/downstream.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -272,37 +272,33 @@
 <h1>Downstream<a class="headerlink" href="#downstream" title="Link to this heading">¶</a></h1>
 <p>ImputeGAP is a versatile library designed to help users evaluate both the upstream aspects (e.g., errors, entropy, correlation) and the downstream impacts of data imputation.
 By leveraging a built-in Forecaster, users can assess how the imputation process influences the performance of specific tasks.</p>
-<p>Below is an example of how to call the downstream process by defining a dictionary for the evaluator and selecting the model:</p>
+<p>Below is an example of how to call the downstream process for the model Prophet by defining a dictionary for the evaluator and selecting the model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
-<span class="c1"># 1. initiate the TimeSeries() object that will stay with you throughout the analysis</span>
-<span class="n">ts_1</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+<span class="c1"># initialize the TimeSeries() object</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
-<span class="c1"># 2. load the timeseries from file or from the code</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;chlorine&quot;</span><span class="p">))</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;min_max&quot;</span><span class="p">)</span>
+<span class="c1"># load and normalize the timeseries</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;chlorine&quot;</span><span class="p">))</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;min_max&quot;</span><span class="p">)</span>
 
-<span class="c1"># 3. contamination of the data</span>
-<span class="n">ts_mask</span> <span class="o">=</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-<span class="n">ts_2</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">import_matrix</span><span class="p">(</span><span class="n">ts_mask</span><span class="p">)</span>
+<span class="c1"># contaminate the time series</span>
+<span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 
-<span class="c1"># 4. imputation of the contaminated data</span>
-<span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">ts_2</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="c1"># define and impute the contaminated series</span>
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">ts_m</span><span class="p">)</span>
 <span class="n">imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>
 
-<span class="c1"># [OPTIONAL] save your results in a new Time Series object</span>
-<span class="n">ts_3</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">import_matrix</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">)</span>
-
-<span class="c1"># 5. score the imputation with the raw_data</span>
+<span class="c1"># compute and print the imputation metrics with Up and Downstream</span>
 <span class="n">downstream_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;evaluator&quot;</span><span class="p">:</span> <span class="s2">&quot;forecaster&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;prophet&quot;</span><span class="p">}</span>
-<span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ts_3</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># upstream standard analysis</span>
-<span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ts_3</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">downstream</span><span class="o">=</span><span class="n">downstream_options</span><span class="p">)</span>  <span class="c1"># downstream advanced analysis</span>
+<span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">)</span>  <span class="c1"># upstream standard analysis</span>
+<span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="n">downstream</span><span class="o">=</span><span class="n">downstream_options</span><span class="p">)</span>  <span class="c1"># downstream advanced analysis</span>
 
-<span class="c1"># 6. display the results</span>
-<span class="n">ts_3</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
-<span class="n">ts_3</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
+<span class="c1"># print the imputation metrics</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -356,9 +352,9 @@ By leveraging a built-in Forecaster, users can assess how the imputation process
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=d55fa986"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+</div><script src="static/documentation_options.js?v=d55fa986"></script>
+    <script src="static/doctools.js?v=9bcbadda"></script>
+    <script src="static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>

@@ -133,8 +133,10 @@ $ pip install -e .
 ---
 ## Loading and Preprocessing
 
-The data management module allows to load any time series datasets in text format, given they follow this
-format: *(values, series)* with column separator: empty space, row separator: newline.
+ImputeGAP comes with several time series datasets. You can find them inside the submodule ``ts.datasets``.
+
+As an example, we start by using eeg-alcohol, a standard dataset composed of individuals with a genetic predisposition to
+alcoholism. The dataset contains measurements from 64 electrodes placed on subject’s scalps, sampled at 256 Hz (3.9-ms epoch) for 1 second. The dimensions of the dataset are 64 series, each containing 256 values.
 
 ### Example Loading
 You can find this example in the file [`runner_loading.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_loading.py).
@@ -143,97 +145,94 @@ You can find this example in the file [`runner_loading.py`](https://github.com/e
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initiate the TimeSeries() object that will stay with you throughout the analysis
+ts = TimeSeries()
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("eeg-alcohol"), max_series=5, max_values=15)
-ts_1.normalize(normalizer="z_score")
+# load the timeseries from file or from the code
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
-# [OPTIONAL] you can plot your raw data / print the information
-ts_1.plot(input_data=ts_1.data, max_series=10, max_values=100, save_path="./imputegap/assets")
-ts_1.print(limit_series=10)
+# [OPTIONAL] plot a subset of time series
+ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap/assets")
+
+# [OPTIONAL] print a subset of time series
+ts.print(nbr_series=3, nbr_val=20)
 ```
 
 ---
 
 ## Contamination
-ImputeGAP allows to contaminate a complete datasets with missing data patterns that mimics real-world scenarios.<br></br>
+We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. You can find them inside the module ``ts.patterns``.
 
-The available patterns for MONO-BLOCK contamination : `MISSING POURCENTAGE`, `BLACKOUT`, `DISJOINT`, `OVERLAP` <br></br>
-The available patterns for MULTI-BLOCK contamination : `MCAR`, `GAUSSIAN` and `DISTRIBUTION`.  <br></br>
 
-For more details, please refer to the documentation in this <a href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery#readme" >page</a>.
+For more details, please refer to the documentation in this <a href="https://imputegap.readthedocs.io/en/latest/patterns.html" >page</a>.
 <br></br>
 
 ### Example Contamination
 You can find this example in the file [`runner_contamination.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_contamination.py).
 
+
+As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pattern:
+
 ```python
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initialize the TimeSeries() object
+ts = TimeSeries()
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("eeg-alcohol"))
-ts_1.normalize(normalizer="min_max")
+# load and normalize the timeseries
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
-# 3. contamination of the data with MCAR pattern
-ts_mask = ts_1.Contamination.mcar(ts_1.data, rate_dataset=0.2, rate_series=0.2, seed=True)
+# contamination of the data with MCAR pattern
+ts_mask = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)
 
-# [OPTIONAL] you can plot your raw data / print the contamination
-ts_1.print(limit_timestamps=12, limit_series=7)
-ts_1.plot(ts_1.data, ts_mask, max_series=9, subplot=True, save_path="./imputegap/assets")
+# [OPTIONAL] plot the contaminated time series
+ts.plot(ts.data, ts_mask, nbr_series=9, subplot=True, save_path="./imputegap/assets")
 ```
 
 ---
 
 ## Imputation
 
+In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms. Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search Methods.
+You can find the list of algorithms inside the module ``ts.algorithms``.
 
-ImputeGAP provides a diverse selection of imputation algorithms, organized into five main categories: Matrix Completion, Deep Learning, Statistical Methods, Pattern Search, and Machine Learning. You can also add your own custom imputation algorithm by following the `min-impute` template and substituting your code to implement your logic.
+```python
+    params = {"param_1": value_1, "param_2": value_2, ...}
+```
 
 ### Example Imputation
 You can find this example in the file [`runner_imputation.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_imputation.py).
+
+Imputation can be performed using either default values or user-defined values. To specify the parameters, please use a dictionary in the following format:
 
 ```python
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initialize the TimeSeries() object
+ts = TimeSeries()
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("eeg-alcohol"))
-ts_1.normalize(normalizer="min_max")
+# load and normalize the timeseries
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
-# 3. contamination of the data
-ts_mask = ts_1.Contamination.mcar(ts_1.data)
+# contaminate the time series
+ts_m = ts.Contamination.mcar(ts.data)
 
-# [OPTIONAL] save your results in a new Time Series object
-ts_2 = TimeSeries().import_matrix(ts_mask)
-
-# 4. imputation of the contaminated data
-# choice of the algorithm, and their parameters (default, automl, or defined by the user)
-imputer = Imputation.MatrixCompletion.CDRec(ts_2.data)
-
-# imputation with default values
+# impute the contaminated series
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
-# OR imputation with user defined values
-# >>> cdrec.impute(params={"rank": 5, "epsilon": 0.01, "iterations": 100})
 
-# [OPTIONAL] save your results in a new Time Series object
-ts_3 = TimeSeries().import_matrix(imputer.recov_data)
+# compute and print the imputation metrics
+imputer.score(ts.data, imputer.recov_data)
+ts.print_results(imputer.metrics)
 
-# 5. score the imputation with the raw_data
-imputer.score(ts_1.data, ts_3.data)
-
-# 6. display the results
-ts_3.print_results(imputer.metrics, algorithm=imputer.algorithm)
-ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True, save_path="./imputegap/assets")
+# plot the recovered time series
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets")
 ```
 
 ---
@@ -241,70 +240,78 @@ ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max
 
 ## Parameterization
 ImputeGAP provides optimization techniques that automatically identify the optimal hyperparameters for a specific algorithm in relation to a given dataset.
-The available optimizers are: Greedy Optimizer (GO), Bayesian Optimizer (BO), Particle Swarm Optimizer (PSO), and Successive Halving (SH).
+The available optimizers are: Greedy Optimizer (``greedy``), Bayesian Optimizer (``bo``), Particle Swarm Optimizer (``pso``), and Successive Halving (``sh``), Ray-Tune (``ray_tune``).
+
+You can find the list of optimizers inside the module ``ts.optimizers``.
 
 ### Example Auto-ML
 You can find this example in the file [`runner_optimization.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_optimization.py).
+
+Let's illustrate the imputation using the CDRec Algorithm and Ray-Tune AutoML:
 
 ```python
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initialize the TimeSeries() object
+ts = TimeSeries()
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("eeg-alcohol"))
-ts_1.normalize(normalizer="min_max")
+# load and normalize the timeseries
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
-# 3. contamination of the data
-ts_mask = ts_1.Contamination.mcar(ts_1.data)
+# contaminate the time series
+ts_m = ts.Contamination.mcar(ts.data)
 
-# 4. imputation of the contaminated data
-# imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-imputer = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
+# define and impute the contaminated series with a optimizer
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
+imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
 
-# 5. score the imputation with the raw_data
-imputer.score(ts_1.data, imputer.recov_data)
+# compute and print the imputation metrics
+imputer.score(ts.data, imputer.recov_data)
+ts.print_results(imputer.metrics)
 
-# 6. display the results
-ts_1.print_results(imputer.metrics)
-ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=imputer.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
+# plot the recovered time series
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
-# 7. save hyperparameters
-utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg", optimizer="ray_tune")
+# save hyperparameters
+utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune")
 ```
 
 ---
 
 
 ## Explainer
-ImputeGAP allows users to explore the features in the data that impact the imputation results
-through Shapely Additive exPlanations ([**SHAP**](https://shap.readthedocs.io/en/latest/)). To attribute a meaningful interpretation of the SHAP results, ImputeGAP groups the extracted features into four categories: 
-geometry, transformation, correlation, and trend.
+ImputeGAP allows users to explore the features in the data that impact the imputation results through Shapely Additive exPlanations ([**SHAP**](https://shap.readthedocs.io/en/latest/)).
+
+To attribute a meaningful interpretation of the SHAP results, ImputeGAP groups the extracted features into four categories such as: geometry, transformation, correlation, and trend.
 
 
 ### Example Explainer
 You can find this example in the file [`runner_explainer.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_explainer.py).
+
+Let's illustrate the explainer using the CDRec Algorithm and MCAR missing pattern:
+
 
 ```python
 from imputegap.recovery.manager import TimeSeries
 from imputegap.recovery.explainer import Explainer
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initialize the TimeSeries() object
+ts = TimeSeries()
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("eeg-alcohol"))
+# load and normalize the timeseries
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
-# 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
-shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, extractor="pycatch", pattern="mcar",
+# explanation of the imputation with a specific algorithm, pattern of contamination and dataset
+shap_values, shap_details = Explainer.shap_explainer(input_data=ts.data, extractor="pycatch", pattern="mcar",
                                                      missing_rate=0.25, limit_ratio=1, split_ratio=0.7,
                                                      file_name="eeg-alcohol", algorithm="cdrec")
 
-# [OPTIONAL] print the results with the impact of each feature.
+# print the impact of each feature
 Explainer.print(shap_values, shap_details)
 ```
 
@@ -312,42 +319,43 @@ Explainer.print(shap_values, shap_details)
 
 
 ## Downstream
-ImputeGAP is a versatile library designed to help users evaluate both the upstream aspects (e.g., errors, entropy, correlation) and the downstream impacts of data imputation. By leveraging a built-in Forecaster, users can assess how the imputation process influences the performance of specific tasks.
+ImputeGAP is a versatile library designed to help users evaluate both the upstream aspects (e.g., errors, entropy, correlation) and the downstream impacts of data imputation.
+By leveraging a built-in Forecaster, users can assess how the imputation process influences the performance of specific tasks.
 
 ### Example Downstream
 You can find this example in the file [`runner_downstream.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_downstream.py).
+
+Below is an example of how to call the downstream process for the model Prophet by defining a dictionary for the evaluator and selecting the model:
 
 ```python
 from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initialize the TimeSeries() object
+ts = TimeSeries()
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("chlorine"))
-ts_1.normalize(normalizer="min_max")
+# load and normalize the timeseries
+ts.load_series(utils.search_path("chlorine"))
+ts.normalize(normalizer="min_max")
 
-# 3. contamination of the data
-ts_mask = ts_1.Contamination.missing_percentage(ts_1.data, rate_series=0.8)
-ts_2 = TimeSeries().import_matrix(ts_mask)
+# contaminate the time series
+ts_m = ts.Contamination.missing_percentage(ts.data, rate_series=0.8)
 
-# 4. imputation of the contaminated data
-imputer = Imputation.MatrixCompletion.CDRec(ts_2.data)
+# define and impute the contaminated series
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
-# [OPTIONAL] save your results in a new Time Series object
-ts_3 = TimeSeries().import_matrix(imputer.recov_data)
-
-# 5. score the imputation with the raw_data
+# compute and print the imputation metrics with Up and Downstream
 downstream_options = {"evaluator": "forecaster", "model": "prophet"}
-imputer.score(ts_1.data, ts_3.data)  # upstream standard analysis
-imputer.score(ts_1.data, ts_3.data, downstream=downstream_options)  # downstream advanced analysis
+imputer.score(ts.data, imputer.recov_data)  # upstream standard analysis
+imputer.score(ts.data, imputer.recov_data, downstream=downstream_options)  # downstream advanced analysis
 
-# 6. display the results
-ts_3.print_results(imputer.metrics, algorithm=imputer.algorithm)
-ts_3.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
+# print the imputation metrics
+ts.print_results(imputer.metrics, algorithm=imputer.algorithm)
+ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
+
+
 ```
 
 
@@ -356,36 +364,46 @@ ts_3.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 
 
 ## Benchmark
-ImputeGAP enables users to comprehensively evaluate the efficiency of algorithms across various datasets.
 
+ImputeGAP offers a Benchmark module that enables users to compare various algorithm families across different dataset types using multiple evaluation metrics.
+
+The number of runs determines the stability of results for Deep Learning algorithms, which may fluctuate during the imputation training process.
+Users have full control over the analysis by customizing various parameters, including the list of datasets to evaluate, the choice of optimizer for fine-tuning algorithms on specific datasets, the algorithms to compare, the contamination patterns, and a range of missing rates.
+
+All missing data patterns developed in ImputeGAP are available in the ``ts.patterns`` module.
+All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module.
+All datasets provides in ImputeGAP are available in the ``ts.datasets`` module.
+All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module.
 
 ### Example Benchmark
 You can find this example in the file [`runner_benchmark.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_benchmark.py).
 
+The benchmarking module can be utilized as follows:
+
 ```python
 from imputegap.recovery.benchmark import Benchmark
 
-# VARIABLES
+# define analysis global variables
 save_dir = "./analysis"
 nbr_run = 2
 
-# SELECT YOUR DATASET(S) :
+# define the datasets to evaluate
 datasets_demo = ["eeg-alcohol", "eeg-reading"]
 
-# SELECT YOUR OPTIMIZER :
+# define the optimizer to fine-tine the algorithms
 optimiser_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 15, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
 optimizers_demo = [optimiser_bayesian]
 
-# SELECT YOUR ALGORITHM(S) :
-algorithms_demo = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
+# define the algorithms for the imputation
+algorithms_demo = ["MeanImpute", "CDRec", "STMVL", "IIM", "MRNN"]
 
-# SELECT YOUR CONTAMINATION PATTERN(S) :
+# define the missing pattern to contaminate the time series
 patterns_demo = ["mcar"]
 
-# SELECT YOUR MISSING RATE(S) :
+# define missing values percentages to see the evolution of the imputation
 x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
-# START THE ANALYSIS
+# launch the analysis
 list_results, sum_scores = Benchmark().eval(algorithms=algorithms_demo, datasets=datasets_demo, patterns=patterns_demo, x_axis=x_axis, optimizers=optimizers_demo, save_dir=save_dir, runs=nbr_run)
 ```
 

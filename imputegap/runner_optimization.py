@@ -2,26 +2,26 @@ from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initialize the TimeSeries() object
+ts = TimeSeries()
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("eeg-alcohol"))
-ts_1.normalize(normalizer="min_max")
+# load and normalize the timeseries
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
-# 3. contamination of the data
-ts_mask = ts_1.Contamination.mcar(ts_1.data)
+# contaminate the time series
+ts_m = ts.Contamination.mcar(ts.data)
 
-# 4. imputation of the contaminated data
-# imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-imputer = Imputation.MatrixCompletion.CDRec(ts_mask).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "ray_tune"})
+# define and impute the contaminated series with a optimizer
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
+imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
 
-# 5. score the imputation with the raw_data
-imputer.score(ts_1.data, imputer.recov_data)
+# compute and print the imputation metrics
+imputer.score(ts.data, imputer.recov_data)
+ts.print_results(imputer.metrics)
 
-# 6. display the results
-ts_1.print_results(imputer.metrics)
-ts_1.plot(input_data=ts_1.data, incomp_data=ts_mask, recov_data=imputer.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
+# plot the recovered time series
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
-# 7. save hyperparameters
-utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg", optimizer="ray_tune")
+# save hyperparameters
+utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune")

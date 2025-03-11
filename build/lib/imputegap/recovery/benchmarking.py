@@ -434,8 +434,8 @@ class Benchmarking:
                     limitation_values = 110
                     print("TEST LOADED...")
 
-                ts_test.load_series(data=utils.search_path(dataset), max_series=limitation_series,
-                                    max_values=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), nbr_series=limitation_series,
+                                    nbr_val=limitation_values, header=header)
 
                 start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape

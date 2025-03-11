@@ -161,7 +161,7 @@ class TestContaminationMCAR(unittest.TestCase):
                                                    block_size=10, offset=0.1, seed=True))
 
         ts_1.print()
-        filepath = ts_1.plot(input_data=ts_1.data, incomp_data=ts_2.data, max_series=10, max_values=100, save_path="./assets/", display=False)
+        filepath = ts_1.plot(input_data=ts_1.data, incomp_data=ts_2.data, nbr_series=10, nbr_val=100, save_path="./assets/", display=False)
         self.assertTrue(os.path.exists(filepath))
 
 

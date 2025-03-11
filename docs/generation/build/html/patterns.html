@@ -7,10 +7,10 @@
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Patterns - imputegap 1.0.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
     
 
@@ -179,7 +179,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -248,7 +248,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/patterns.rst.txt" title="View this page">
+  <a class="muted-link" href="sources/patterns.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -262,7 +262,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -270,7 +270,98 @@
         <article role="main" id="furo-main-content">
           <section id="patterns">
 <h1>Patterns<a class="headerlink" href="#patterns" title="Link to this heading">¶</a></h1>
-<p>IN CONSTRUCTION : <a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery">https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery</a></p>
+<p>All missing data patterns developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.patterns</span></code> module.</p>
+<section id="setup">
+<span id="id1"></span><h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>N = number of time series</p></li>
+<li><p>M = length of time series</p></li>
+<li><p>R = rate of missing values chosen by the user (%)</p></li>
+<li><p>O = offset of security in the beginning of the series (%)</p></li>
+<li><p>W = R * M (int)</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="scenarios-mono-block">
+<span id="scenario-mono-block"></span><h2>Scenarios MONO-BLOCK<a class="headerlink" href="#scenarios-mono-block" title="Link to this heading">¶</a></h2>
+<p><strong>Missing Percentage</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>N: Ranges from 1% to max.</p></li>
+<li><p>M: Ranges from 1% to max.</p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - O)% of the series length.</p></li>
+<li><p>The starting position begins at O and progresses until W is reached, affecting the first series from the top up to N% of the dataset.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Missing Percentage At Random</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>N: Ranges from 1% to max.</p></li>
+<li><p>M: Ranges from 1% to max.</p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - O)% of the series length.</p></li>
+<li><p>The starting position is randomly shifted by adding a random value to O, then progresses until W is reached, affecting the first series from the top up to N% of the dataset.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Disjoint</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>N: Ranges from 1 to max.</p></li>
+<li><p>M: Ranges from 1% to limit.</p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - O)% of the series length.</p></li>
+<li><p>The starting position of the first missing block begins at O.</p></li>
+<li><p>Each subsequent missing block starts immediately after the previous one ends, continuing this pattern until the limit or M of the dataset is reached.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Overlap</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>N: Ranges from 1 to max.</p></li>
+<li><p>M: Ranges from 1% to limit.</p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - O)% of the series length.</p></li>
+<li><p>The starting position of the first missing block begins at O.</p></li>
+<li><p>Each subsequent missing block starts after the previous one ends, but with a shift back of S%, creating an overlap.</p></li>
+<li><p>This pattern continues until the limit or M is reached.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Blackout</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>N: All series</p></li>
+<li><p>M: Ranges from 1% to max.</p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - O)% of the series length.</p></li>
+<li><p>All series are affected identically, meaning the same missing pattern is applied across all series.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="scenarios-multi-block">
+<span id="scenario-multi-block"></span><h2>Scenarios MULTI-BLOCK<a class="headerlink" href="#scenarios-multi-block" title="Link to this heading">¶</a></h2>
+<p><strong>MCAR (Missing Completely At Random)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>N: Ranges from 1% to max.</p></li>
+<li><p>M: Ranges from 1% to max.</p></li>
+<li><p>Data is removed from random series at a random position between O and M, until a total of W of all time series data points are missing.</p></li>
+<li><p>Data is removed in blocks of a specific size.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Gaussian</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>N: Ranges from 1% to max.</p></li>
+<li><p>M: Ranges from 1% to max.</p></li>
+<li><p>Data is removed following a Gaussian distribution for every values of M, affecting the first series from the top up to N% of the dataset.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Distribution</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>N: Ranges from 1% to max.</p></li>
+<li><p>M: Ranges from 1% to max.</p></li>
+<li><p>Data is removed following a distribution given by the user for every values of M, affecting the first series from the top up to N% of the dataset.</p></li>
+</ul>
+</div></blockquote>
+</section>
 </section>
 
         </article>
@@ -316,15 +407,36 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Patterns</a><ul>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#scenarios-mono-block">Scenarios MONO-BLOCK</a></li>
+<li><a class="reference internal" href="#scenarios-multi-block">Scenarios MULTI-BLOCK</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=d55fa986"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+</div><script src="static/documentation_options.js?v=d55fa986"></script>
+    <script src="static/doctools.js?v=9bcbadda"></script>
+    <script src="static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>
