@@ -3,6 +3,7 @@ from imputegap.tools import utils
 
 # initiate the TimeSeries() object that will stay with you throughout the analysis
 ts = TimeSeries()
+print(f"ImputeGAP datasets : {ts.datasets}")
 
 # load the timeseries from file or from the code
 ts.load_series(utils.search_path("eeg-alcohol"))

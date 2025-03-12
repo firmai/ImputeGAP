@@ -807,7 +807,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
 
 
 def list_of_algorithms():
-    return [
+    return sorted([
         "CDRec",
         "IterativeSVD",
         "GROUSE",
@@ -840,10 +840,10 @@ def list_of_algorithms():
         "BayOTIDE",
         "HKMF_T",
         "BitGraph"
-    ]
+    ])
 
 def list_of_patterns():
-    return [
+    return sorted([
         "mcar",
         "missing_percentage",
         "missing_percentage_at_random",
@@ -852,11 +852,11 @@ def list_of_patterns():
         "blackout",
         "gaussian",
         "distribution"
-    ]
+    ])
 
 def list_of_datasets(txt=False):
 
-    list = [
+    list = sorted([
         "airq",
         "bafu",
         "chlorine",
@@ -868,7 +868,7 @@ def list_of_datasets(txt=False):
         "fmri-stoptask",
         "meteo",
         "test"
-    ]
+    ])
 
     if txt:
         list = [dataset + ".txt" for dataset in list]
@@ -876,10 +876,10 @@ def list_of_datasets(txt=False):
     return list
 
 def list_of_optimizers():
-    return [
+    return sorted([
         "ray_tune",
         "bayesian",
         "particle_swarm",
         "successive_halving",
         "greedy"
-    ]
+    ])

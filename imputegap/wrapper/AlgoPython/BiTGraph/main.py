@@ -1,4 +1,6 @@
 import copy
+import os
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -14,7 +16,10 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 
 import argparse
 
-device = torch.device("cuda" if torch.cuda.is_available() and torch.backends.cudnn.is_available() else "cpu")
+if os.getenv("GITHUB_ACTIONS") == "true":
+    device = torch.device("cpu")
+else:
+    device = torch.device("cuda" if torch.cuda.is_available() and torch.backends.cudnn.is_available() else "cpu")
 
 args = argparse.Namespace(
     epochs=None,

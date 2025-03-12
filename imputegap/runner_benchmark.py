@@ -24,7 +24,7 @@ algorithms_demo = ["MeanImpute", "CDRec", "STMVL", "IIM", "MRNN"]
 
 # define the missing pattern to contaminate the time series
 patterns_full = ["mcar", "mp", "blackout", "disjoint", "overlap", "gaussian"]
-patterns_demo = ["mcar", "mp"]
+patterns_demo = ["mcar"]
 
 # define missing values percentages to see the evolution of the imputation
 x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]

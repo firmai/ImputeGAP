@@ -58,22 +58,22 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
      - BioInformatics -- 2011
    * - Statistics
      - KNNImpute
-     - native
+     - -
    * - Statistics
      - Interpolation
-     - native
+     - -
    * - Statistics
      - Min Impute
-     - native
+     - -
    * - Statistics
      - Zero Impute
-     - native
+     - -
    * - Statistics
      - Mean Impute
-     - native
+     - -
    * - Statistics
      - Mean Impute By Series
-     - native
+     - -
    * - Deep Learning
      - MRNN [22]_
      - IEEE Trans on BE -- 2019

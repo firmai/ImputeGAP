@@ -71,8 +71,7 @@ You can find the list of algorithms inside the module ``ts.algorithms``.
 Imputation can be performed using either default values or user-defined values. To specify the parameters, please use a dictionary in the following format:
 
 .. code-block:: python
-    params = {"param_1": value_1, "param_2": value_2, ...}
-
+    params = {"param_1": 42.1, "param_2": "some_string", "params_3": True}
 
 
 

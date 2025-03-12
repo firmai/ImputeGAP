@@ -48,40 +48,40 @@ ImputeGAP is a comprehensive framework designed for time series imputation algor
 
 ## Families of Algorithms
 # Algorithms Table
-| **Family**         | **Algorithm**               | **Venue -- Year**            |
-|--------------------|-----------------------------|------------------------------|
-| Matrix Completion  | CDRec [^1]                  | KAIS -- 2020                 |
-| Matrix Completion  | IterativeSVD [^2]           | BIOINFORMATICS -- 2001       |
-| Matrix Completion  | GROUSE [^3]                 | PMLR -- 2016                 |
-| Matrix Completion  | ROSL [^4]                   | CVPR -- 2014                 |
-| Matrix Completion  | SPIRIT [^5]                 | VLDB -- 2005                 |
-| Matrix Completion  | SoftImpute [^6]             | JMLR -- 2010                 |
-| Matrix Completion  | SVT [^7]                    | SIAM J. OPTIM -- 2010        |
-| Matrix Completion  | TRMF [^8]                   | NeurIPS -- 2016              |
-| Pattern Search     | ST-MVL [^9]                 | IJCAI -- 2016                |
-| Pattern Search     | DynaMMo [^10]               | KDD -- 2009                  |
-| Pattern Search     | TKCM [^11]                  | EDBT -- 2017                 |
-| Machine Learning   | IIM [^12]                   | ICDE -- 2019                 |
-| Machine Learning   | XGBI [^13]                  | KDD -- 2016                  |
-| Machine Learning   | Mice [^14]                  | Statistical Software -- 2011 |
-| Machine Learning   | MissForest [^15]            | BioInformatics -- 2011       |
-| Statistics         | KNNImpute [^16]             | native                       |
-| Statistics         | Interpolation [^17]         | native                       |
-| Statistics         | Min Impute [^18]            | native                       |
-| Statistics         | Zero Impute [^19]           | native                       |
-| Statistics         | Mean Impute [^20]           | native                       |
-| Statistics         | Mean Impute By Series [^21] | native                       |
-| Deep Learning      | MRNN [^22]                  | IEEE Trans on BE -- 2019     |
-| Deep Learning      | BRITS [^23]                 | NeurIPS -- 2018              |
-| Deep Learning      | DeepMVI [^24]               | PVLDB -- 2021                |
-| Deep Learning      | MPIN [^25]                  | PVLDB -- 2024                |
-| Deep Learning      | PriSTI [^26]                | ICDE -- 2023                 |
-| Deep Learning      | MissNet [^27]               | KDD -- 2024                  |
-| Deep Learning      | GAIN [^28]                  | ICML -- 2018                 |
-| Deep Learning      | GRIN [^29]                  | ICLR -- 2022                 |
-| Deep Learning      | BayOTIDE [^30]              | PMLR -- 2024                 |
-| Deep Learning      | HKMF-T [^31]                | TKDE -- 2021                 |
-| Deep Learning      | BITGraph [^32]              | ICLR -- 2024                 |
+| **Family**         | **Algorithm**             | **Venue -- Year**            |
+|--------------------|---------------------------|------------------------------|
+| Matrix Completion  | CDRec [[1]](#ref1)        | KAIS -- 2020                 |
+| Matrix Completion  | IterativeSVD [[2]](#ref2) | BIOINFORMATICS -- 2001       |
+| Matrix Completion  | GROUSE [[3]](#ref3)       | PMLR -- 2016                 |
+| Matrix Completion  | ROSL [[4]](#ref4)         | CVPR -- 2014                 |
+| Matrix Completion  | SPIRIT [[5]](#ref5)       | VLDB -- 2005                 |
+| Matrix Completion  | SoftImpute [[6]](#ref6)   | JMLR -- 2010                 |
+| Matrix Completion  | SVT [[7]](#ref7)          | SIAM J. OPTIM -- 2010        |
+| Matrix Completion  | TRMF [[8]](#ref8)         | NeurIPS -- 2016              |
+| Pattern Search     | ST-MVL [[9]](#ref9)       | IJCAI -- 2016                |
+| Pattern Search     | DynaMMo [[10]](#ref10)    | KDD -- 2009                  |
+| Pattern Search     | TKCM [[11]](#ref11)       | EDBT -- 2017                 |
+| Machine Learning   | IIM [[12]](#ref12)        | ICDE -- 2019                 |
+| Machine Learning   | XGBI [[13]](#ref13)       | KDD -- 2016                  |
+| Machine Learning   | Mice [[14]](#ref14)       | Statistical Software -- 2011 |
+| Machine Learning   | MissForest [[15]](#ref15) | BioInformatics -- 2011       |
+| Statistics         | KNNImpute                 | -                            |
+| Statistics         | Interpolation             | -                            |
+| Statistics         | Min Impute                | -                            |
+| Statistics         | Zero Impute               | -                            |
+| Statistics         | Mean Impute               | -                            |
+| Statistics         | Mean Impute By Series     | -                            |
+| Deep Learning      | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
+| Deep Learning      | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
+| Deep Learning      | DeepMVI [[24]](#ref24)    | PVLDB -- 2021                |
+| Deep Learning      | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
+| Deep Learning      | PriSTI [[26]](#ref26)     | ICDE -- 2023                 |
+| Deep Learning      | MissNet [[27]](#ref27)    | KDD -- 2024                  |
+| Deep Learning      | GAIN [[28]](#ref28)       | ICML -- 2018                 |
+| Deep Learning      | GRIN [[29]](#ref29)       | ICLR -- 2022                 |
+| Deep Learning      | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
+| Deep Learning      | HKMF-T [[31]](#ref31)     | TKDE -- 2021                 |
+| Deep Learning      | BITGraph [[32]](#ref32)   | ICLR -- 2024                 |
 
 
 
@@ -147,6 +147,7 @@ from imputegap.tools import utils
 
 # initiate the TimeSeries() object that will stay with you throughout the analysis
 ts = TimeSeries()
+print(f"ImputeGAP datasets : {ts.datasets}")
 
 # load the timeseries from file or from the code
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -180,6 +181,7 @@ from imputegap.tools import utils
 
 # initialize the TimeSeries() object
 ts = TimeSeries()
+print(f"Missingness patterns : {ts.patterns}")
 
 # load and normalize the timeseries
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -199,14 +201,16 @@ ts.plot(ts.data, ts_mask, nbr_series=9, subplot=True, save_path="./imputegap/ass
 In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms. Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search Methods.
 You can find the list of algorithms inside the module ``ts.algorithms``.
 
-```python
-    params = {"param_1": value_1, "param_2": value_2, ...}
-```
-
 ### Example Imputation
 You can find this example in the file [`runner_imputation.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_imputation.py).
 
 Imputation can be performed using either default values or user-defined values. To specify the parameters, please use a dictionary in the following format:
+
+```python
+params = {"param_1": 42.1, "param_2": "some_string", "params_3": True}
+```
+
+Let's illustrate the imputation using the CDRec Algorithm from the Matrix Completion family.
 
 ```python
 from imputegap.recovery.imputation import Imputation
@@ -215,6 +219,7 @@ from imputegap.tools import utils
 
 # initialize the TimeSeries() object
 ts = TimeSeries()
+print(f"Imputation algorithms : {ts.algorithms}")
 
 # load and normalize the timeseries
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -256,6 +261,7 @@ from imputegap.tools import utils
 
 # initialize the TimeSeries() object
 ts = TimeSeries()
+print(f"ImputeGAP optimizers : {ts.optimizers}")
 
 # load and normalize the timeseries
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -434,56 +440,80 @@ Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudre-Mauroux. Mi
 ---
 
 
-## References
+<a name="ref1"></a>
+[1]: Mourad Khayati, Philippe Cudré-Mauroux, Michael H. Böhlen: Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl. Inf. Syst. 62(6): 2257-2280 (2020)
 
-[^1] Mourad Khayati, Philippe Cudré-Mauroux, Michael H. Böhlen: Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl. Inf. Syst. 62(6): 2257-2280 (2020)
+<a name="ref2"></a>
+[2]: Olga G. Troyanskaya, Michael N. Cantor, Gavin Sherlock, Patrick O. Brown, Trevor Hastie, Robert Tibshirani, David Botstein, Russ B. Altman: Missing value estimation methods for DNA microarrays. Bioinform. 17(6): 520-525 (2001)
 
-[^2] Olga G. Troyanskaya, Michael N. Cantor, Gavin Sherlock, Patrick O. Brown, Trevor Hastie, Robert Tibshirani, David Botstein, Russ B. Altman: Missing value estimation methods for DNA microarrays. Bioinform. 17(6): 520-525 (2001)
+<a name="ref3"></a>
+[3]: Dejiao Zhang, Laura Balzano: Global Convergence of a Grassmannian Gradient Descent Algorithm for Subspace Estimation. AISTATS 2016: 1460-1468
 
-[^3] Dejiao Zhang, Laura Balzano: Global Convergence of a Grassmannian Gradient Descent Algorithm for Subspace Estimation. AISTATS 2016: 1460-1468
+<a name="ref4"></a>
+[4]: Xianbiao Shu, Fatih Porikli, Narendra Ahuja: Robust Orthonormal Subspace Learning: Efficient Recovery of Corrupted Low-Rank Matrices. CVPR 2014: 3874-3881
 
-[^4] Xianbiao Shu, Fatih Porikli, Narendra Ahuja: Robust Orthonormal Subspace Learning: Efficient Recovery of Corrupted Low-Rank Matrices. CVPR 2014: 3874-3881
+<a name="ref5"></a>
+[5]: Spiros Papadimitriou, Jimeng Sun, Christos Faloutsos: Streaming Pattern Discovery in Multiple Time-Series. VLDB 2005: 697-708
 
-[^5] Spiros Papadimitriou, Jimeng Sun, Christos Faloutsos: Streaming Pattern Discovery in Multiple Time-Series. VLDB 2005: 697-708
+<a name="ref6"></a>
+[6]: Rahul Mazumder, Trevor Hastie, Robert Tibshirani: Spectral Regularization Algorithms for Learning Large Incomplete Matrices. J. Mach. Learn. Res. 11: 2287-2322 (2010)
 
-[^6] Rahul Mazumder, Trevor Hastie, Robert Tibshirani: Spectral Regularization Algorithms for Learning Large Incomplete Matrices. J. Mach. Learn. Res. 11: 2287-2322 (2010)
+<a name="ref7"></a>
+[7]: Jian-Feng Cai, Emmanuel J. Candès, Zuowei Shen: A Singular Value Thresholding Algorithm for Matrix Completion. SIAM J. Optim. 20(4): 1956-1982 (2010)
 
-[^7] Jian-Feng Cai, Emmanuel J. Candès, Zuowei Shen: A Singular Value Thresholding Algorithm for Matrix Completion. SIAM J. Optim. 20(4): 1956-1982 (2010)
+<a name="ref8"></a>
+[8]: Hsiang-Fu Yu, Nikhil Rao, Inderjit S. Dhillon: Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction. NIPS 2016: 847-855
 
-[^8] Hsiang-Fu Yu, Nikhil Rao, Inderjit S. Dhillon: Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction. NIPS 2016: 847-855
+<a name="ref9"></a>
+[9]: Xiuwen Yi, Yu Zheng, Junbo Zhang, Tianrui Li: ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data. IJCAI 2016: 2704-2710
 
-[^9] Xiuwen Yi, Yu Zheng, Junbo Zhang, Tianrui Li: ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data. IJCAI 2016: 2704-2710
+<a name="ref10"></a>
+[10]: Lei Li, James McCann, Nancy S. Pollard, Christos Faloutsos: DynaMMo: mining and summarization of coevolving sequences with missing values. 507-516
 
-[^10] Lei Li, James McCann, Nancy S. Pollard, Christos Faloutsos: DynaMMo: mining and summarization of coevolving sequences with missing values. 507-516
+<a name="ref11"></a>
+[11]: Kevin Wellenzohn, Michael H. Böhlen, Anton Dignös, Johann Gamper, Hannes Mitterer: Continuous Imputation of Missing Values in Streams of Pattern-Determining Time Series. EDBT 2017: 330-341
 
-[^11] Kevin Wellenzohn, Michael H. Böhlen, Anton Dignös, Johann Gamper, Hannes Mitterer: Continuous Imputation of Missing Values in Streams of Pattern-Determining Time Series. EDBT 2017: 330-341
+<a name="ref12"></a>
+[12]: Aoqian Zhang, Shaoxu Song, Yu Sun, Jianmin Wang: Learning Individual Models for Imputation (Technical Report). CoRR abs/2004.03436 (2020)
 
-[^12] Aoqian Zhang, Shaoxu Song, Yu Sun, Jianmin Wang: Learning Individual Models for Imputation (Technical Report). CoRR abs/2004.03436 (2020)
+<a name="ref13"></a>
+[13]: Tianqi Chen, Carlos Guestrin: XGBoost: A Scalable Tree Boosting System. KDD 2016: 785-794
 
-[^13] Tianqi Chen, Carlos Guestrin: XGBoost: A Scalable Tree Boosting System. KDD 2016: 785-794
+<a name="ref14"></a>
+[14]: Royston Patrick , White Ian R.: Multiple Imputation by Chained Equations (MICE): Implementation in Stata. Journal of Statistical Software 2010: 45(4), 1–20.
 
-[^14] Royston Patrick , White Ian R.: Multiple Imputation by Chained Equations (MICE): Implementation in Stata. Journal of Statistical Software 2010: 45(4), 1–20.
+<a name="ref15"></a>
+[15]: Daniel J. Stekhoven, Peter Bühlmann: MissForest - non-parametric missing value imputation for mixed-type data. Bioinform. 28(1): 112-118 (2012)
 
-[^15] Daniel J. Stekhoven, Peter Bühlmann: MissForest - non-parametric missing value imputation for mixed-type data. Bioinform. 28(1): 112-118 (2012)
+<a name="ref22"></a>
+[22]: Jinsung Yoon, William R. Zame, Mihaela van der Schaar: Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks. IEEE Trans. Biomed. Eng. 66(5): 1477-1490 (2019)
 
-[^22] Jinsung Yoon, William R. Zame, Mihaela van der Schaar: Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks. IEEE Trans. Biomed. Eng. 66(5): 1477-1490 (2019)
+<a name="ref23"></a>
+[23]: Wei Cao, Dong Wang, Jian Li, Hao Zhou, Lei Li, Yitan Li: BRITS: Bidirectional Recurrent Imputation for Time Series. NeurIPS 2018: 6776-6786
 
-[^23] Wei Cao, Dong Wang, Jian Li, Hao Zhou, Lei Li, Yitan Li: BRITS: Bidirectional Recurrent Imputation for Time Series. NeurIPS 2018: 6776-6786
+<a name="ref24"></a>
+[24]: Parikshit Bansal, Prathamesh Deshpande, Sunita Sarawagi: Missing Value Imputation on Multidimensional Time Series. Proc. VLDB Endow. 14(11): 2533-2545 (2021)
 
-[^24] Parikshit Bansal, Prathamesh Deshpande, Sunita Sarawagi: Missing Value Imputation on Multidimensional Time Series. Proc. VLDB Endow. 14(11): 2533-2545 (2021)
+<a name="ref25"></a>
+[25]: Xiao Li, Huan Li, Hua Lu, Christian S. Jensen, Varun Pandey, Volker Markl: Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). CoRR abs/2311.07344 (2023)
 
-[^25] Xiao Li, Huan Li, Hua Lu, Christian S. Jensen, Varun Pandey, Volker Markl: Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). CoRR abs/2311.07344 (2023)
+<a name="ref26"></a>
+[26]: Mingzhe Liu, Han Huang, Hao Feng, Leilei Sun, Bowen Du, Yanjie Fu: PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation. ICDE 2023: 1927-1939
 
-[^26] Mingzhe Liu, Han Huang, Hao Feng, Leilei Sun, Bowen Du, Yanjie Fu: PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation. ICDE 2023: 1927-1939
+<a name="ref27"></a>
+[27]: Kohei Obata, Koki Kawabata, Yasuko Matsubara, Yasushi Sakurai: Mining of Switching Sparse Networks for Missing Value Imputation in Multivariate Time Series. KDD 2024: 2296-2306
 
-[^27] Kohei Obata, Koki Kawabata, Yasuko Matsubara, Yasushi Sakurai: Mining of Switching Sparse Networks for Missing Value Imputation in Multivariate Time Series. KDD 2024: 2296-2306
+<a name="ref28"></a>
+[28]: Jinsung Yoon, James Jordon, Mihaela van der Schaar: GAIN: Missing Data Imputation using Generative Adversarial Nets. ICML 2018: 5675-5684
 
-[^28] Jinsung Yoon, James Jordon, Mihaela van der Schaar: GAIN: Missing Data Imputation using Generative Adversarial Nets. ICML 2018: 5675-5684
+<a name="ref29"></a>
+[29]: Andrea Cini, Ivan Marisca, Cesare Alippi: Multivariate Time Series Imputation by Graph Neural Networks. CoRR abs/2108.00298 (2021)
 
-[^29] Andrea Cini, Ivan Marisca, Cesare Alippi: Multivariate Time Series Imputation by Graph Neural Networks. CoRR abs/2108.00298 (2021)
+<a name="ref30"></a>
+[30]: Shikai Fang, Qingsong Wen, Yingtao Luo, Shandian Zhe, Liang Sun: BayOTIDE: Bayesian Online Multivariate Time Series Imputation with Functional Decomposition. ICML 2024
 
-[^30] Shikai Fang, Qingsong Wen, Yingtao Luo, Shandian Zhe, Liang Sun: BayOTIDE: Bayesian Online Multivariate Time Series Imputation with Functional Decomposition. ICML 2024
+<a name="ref31"></a>
+[31]: Liang Wang, Simeng Wu, Tianheng Wu, Xianping Tao, Jian Lu: HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization. IEEE Trans. Knowl. Data Eng. 33(11): 3582-3593 (2021)
 
-[^31] Liang Wang, Simeng Wu, Tianheng Wu, Xianping Tao, Jian Lu: HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization. IEEE Trans. Knowl. Data Eng. 33(11): 3582-3593 (2021)
-
-[^32] Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
+<a name="ref32"></a>
+[32]: Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
