@@ -14,8 +14,7 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 
 import argparse
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+device = torch.device("cuda" if torch.cuda.is_available() and torch.backends.cudnn.is_available() else "cpu")
 
 args = argparse.Namespace(
     epochs=None,

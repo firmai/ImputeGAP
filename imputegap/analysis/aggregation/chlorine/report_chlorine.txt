@@ -1,0 +1,154 @@
+Report for Dataset: chlorine
+Generated on: 2025-03-11 20:47:32
+========================================================================================================================
+
+RMSE: Root Mean Square Error - Measures the average magnitude of error.
+
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|     Dataset     |    Algorithm    |    Optimizer    |     Pattern     |   X Value    |           RMSE            |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.2      |       0.8459202803        |
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.4      |       0.8713050089        |
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.6      |       0.8904846241        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.2      |       0.2441316214        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.4      |       0.3496511469        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.6      |       0.4783106167        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.2      |       0.3616215093        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.4      |       0.3830491214        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.6      |       0.5527602175        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.2      |       0.4484121822        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.4      |       0.5186967848        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.6      |       0.6459326532        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.2      |       1.2533603443        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.4      |       1.5401148043        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.6      |       1.2746145213        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.2      |       0.7533652619        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.4      |       0.9032940412        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.6      |       0.8814462728        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.2      |       0.5196914020        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.4      |       0.9643276009        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.6      |       0.7819078943        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.2      |       0.5113939462        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.4      |       1.1054992249        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.6      |       1.4015712509        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.2      |       0.4861633740        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.4      |       0.6236323168        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.6      |       0.8195607228        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.2      |       1.4603172784        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.4      |       1.5193895473        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.6      |       1.6181818188        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+
+MAE: Mean Absolute Error - Measures the average absolute error.
+
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|     Dataset     |    Algorithm    |    Optimizer    |     Pattern     |   X Value    |            MAE            |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.2      |       0.7292745620        |
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.4      |       0.7493116248        |
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.6      |       0.7665721053        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.2      |       0.1592455957        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.4      |       0.2026783414        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.6      |       0.2422098781        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.2      |       0.2921374607        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.4      |       0.2840839344        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.6      |       0.4088776764        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.2      |       0.3040027389        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.4      |       0.3633549049        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.6      |       0.4820846578        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.2      |       1.0354487806        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.4      |       1.2741388494        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.6      |       1.0487865208        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.2      |       0.6632734980        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.4      |       0.8022018628        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.6      |       0.7775516466        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.2      |       0.4150246420        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.4      |       0.8064969026        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.6      |       0.6324636207        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.2      |       0.4182334766        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.4      |       0.9466458259        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.6      |       1.1175042701        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.2      |       0.3863731157        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.4      |       0.4995048956        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.6      |       0.6703688293        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.2      |       1.1549569529        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.4      |       1.2529630607        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.6      |       1.3138105434        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+
+MI: Mutual Information - Indicates dependency between variables.
+
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|     Dataset     |    Algorithm    |    Optimizer    |     Pattern     |   X Value    |            MI             |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.2      |       0.0000000000        |
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.4      |       0.0000000000        |
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.6      |       0.0000000000        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.2      |       1.0893765772        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.4      |       0.9185802985        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.6      |       0.7259890221        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.2      |       0.8718751284        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.4      |       0.7619902644        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.6      |       0.4620945248        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.2      |       0.7410021144        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.4      |       0.5465224944        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.6      |       0.3476084065        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.2      |       0.1797324303        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.4      |       0.1153961650        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.6      |       0.0840371964        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.2      |       0.0000000000        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.4      |       0.0000000000        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.6      |       0.0000000000        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.2      |       0.8465299154        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.4      |       0.2220307933        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.6      |       0.2305166452        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.2      |       0.6813007564        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.4      |       0.1407416635        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.6      |       0.0339175679        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.2      |       0.6569481851        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.4      |       0.4089314147        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.6      |       0.1828085737        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.2      |       0.2009615126        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.4      |       0.2014739893        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.6      |       0.1090105062        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+
+CORRELATION: Correlation Coefficient - Indicates linear relationship between variables.
+
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|     Dataset     |    Algorithm    |    Optimizer    |     Pattern     |   X Value    |        CORRELATION        |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.2      |       0.0000000000        |
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.4      |       0.0000000000        |
+|    chlorine     |      mcar       |   MeanImpute    |    bayesian     |     0.6      |       0.0000000000        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.2      |       0.9577448133        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.4      |       0.9172979726        |
+|    chlorine     |      mcar       |      CDRec      |    bayesian     |     0.6      |       0.8545043220        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.2      |       0.9146206197        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.4      |       0.8992246105        |
+|    chlorine     |      mcar       |      STMVL      |    bayesian     |     0.6      |       0.7677883954        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.2      |       0.8452567545        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.4      |       0.7947197713        |
+|    chlorine     |      mcar       |       IIM       |    bayesian     |     0.6      |       0.6666095327        |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.2      |       -0.0240862921       |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.4      |       -0.0803554475       |
+|    chlorine     |      mcar       |      MRNN       |    bayesian     |     0.6      |       -0.0201930070       |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.2      |       0.0000000000        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.4      |       0.0000000000        |
+|    chlorine     |       mp        |   MeanImpute    |    bayesian     |     0.6      |       0.0000000000        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.2      |       0.8932656624        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.4      |       0.4600393192        |
+|    chlorine     |       mp        |      CDRec      |    bayesian     |     0.6      |       0.5546119253        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.2      |       0.7385192131        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.4      |       0.3368190421        |
+|    chlorine     |       mp        |      STMVL      |    bayesian     |     0.6      |       0.0186373733        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.2      |       0.8297440239        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.4      |       0.7129993974        |
+|    chlorine     |       mp        |       IIM       |    bayesian     |     0.6      |       0.4178291196        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.2      |       0.0132748449        |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.4      |       -0.0315889692       |
+|    chlorine     |       mp        |      MRNN       |    bayesian     |     0.6      |       -0.0203636148       |
++-----------------+-----------------+-----------------+-----------------+--------------+---------------------------+
+
+Dictionary of Results:
+{'chlorine': {'mcar': {'MeanImpute': {'bayesian': {'0.2': {'scores': {'RMSE': 0.8459202802797242, 'MAE': 0.7292745620243865, 'MI': 0.0, 'CORRELATION': 0.0}, 'times': {'contamination': 0.006293773651123047, 'optimization': 0.0, 'imputation': 0.00046181678771972656, 'log_imputation': -3.3355302838884753}}, '0.4': {'scores': {'RMSE': 0.8713050089430538, 'MAE': 0.7493116248332027, 'MI': 0.0, 'CORRELATION': 0.0}, 'times': {'contamination': 0.023787736892700195, 'optimization': 0.0, 'imputation': 0.0005037784576416016, 'log_imputation': -3.297760407555273}}, '0.6': {'scores': {'RMSE': 0.8904846240906593, 'MAE': 0.7665721052544265, 'MI': 0.0, 'CORRELATION': 0.0}, 'times': {'contamination': 0.09119296073913574, 'optimization': 0.0, 'imputation': 0.0005040168762207031, 'log_imputation': -3.297554921636179}}}}, 'CDRec': {'bayesian': {'0.2': {'scores': {'RMSE': 0.2441316213915182, 'MAE': 0.1592455957078009, 'MI': 1.0893765772078132, 'CORRELATION': 0.957744813292523}, 'times': {'contamination': 0.0028777122497558594, 'optimization': 7.248482942581177, 'imputation': 1.6729485988616943, 'log_imputation': 0.22348259752326394}}, '0.4': {'scores': {'RMSE': 0.34965114691100624, 'MAE': 0.20267834138441207, 'MI': 0.9185802984762904, 'CORRELATION': 0.9172979726052597}, 'times': {'contamination': 0.08819341659545898, 'optimization': 7.248482942581177, 'imputation': 5.295272588729858, 'log_imputation': 0.7238883215226518}}, '0.6': {'scores': {'RMSE': 0.4783106166593322, 'MAE': 0.2422098781317044, 'MI': 0.7259890220582865, 'CORRELATION': 0.8545043220087595}, 'times': {'contamination': 0.16512298583984375, 'optimization': 7.248482942581177, 'imputation': 26.349870681762695, 'log_imputation': 1.4207784881506647}}}}, 'STMVL': {'bayesian': {'0.2': {'scores': {'RMSE': 0.36162150926642994, 'MAE': 0.2921374606894451, 'MI': 0.8718751284038658, 'CORRELATION': 0.914620619738864}, 'times': {'contamination': 0.012103796005249023, 'optimization': 76.63463282585144, 'imputation': 24.693152904510498, 'log_imputation': 1.3925765456471795}}, '0.4': {'scores': {'RMSE': 0.3830491213573068, 'MAE': 0.28408393442274704, 'MI': 0.7619902643861651, 'CORRELATION': 0.8992246105432435}, 'times': {'contamination': 0.020877361297607422, 'optimization': 76.63463282585144, 'imputation': 25.737995862960815, 'log_imputation': 1.4105747267352942}}, '0.6': {'scores': {'RMSE': 0.5527602175499481, 'MAE': 0.40887767636169464, 'MI': 0.46209452475978646, 'CORRELATION': 0.7677883954378031}, 'times': {'contamination': 0.08868980407714844, 'optimization': 76.63463282585144, 'imputation': 18.137092113494873, 'log_imputation': 1.2585676586725163}}}}, 'IIM': {'bayesian': {'0.2': {'scores': {'RMSE': 0.44841218215122564, 'MAE': 0.30400273889440427, 'MI': 0.7410021144173263, 'CORRELATION': 0.8452567545272397}, 'times': {'contamination': 0.003232717514038086, 'optimization': 493.53549313545227, 'imputation': 58.28416562080383, 'log_imputation': 1.76555058361748}}, '0.4': {'scores': {'RMSE': 0.5186967847788541, 'MAE': 0.3633549049012416, 'MI': 0.5465224944053367, 'CORRELATION': 0.79471977126054}, 'times': {'contamination': 0.02047443389892578, 'optimization': 493.53549313545227, 'imputation': 421.10245847702026, 'log_imputation': 2.624387776922253}}, '0.6': {'scores': {'RMSE': 0.6459326531939531, 'MAE': 0.48208465784636734, 'MI': 0.3476084065174426, 'CORRELATION': 0.6666095326571903}, 'times': {'contamination': 0.10776805877685547, 'optimization': 493.53549313545227, 'imputation': 1350.3983037471771, 'log_imputation': 3.1304618837589913}}}}, 'MRNN': {'bayesian': {'0.2': {'scores': {'RMSE': 1.2533603442703198, 'MAE': 1.035448780632948, 'MI': 0.179732430315647, 'CORRELATION': -0.02408629209056455}, 'times': {'contamination': 0.0033681392669677734, 'optimization': 83.1758074760437, 'imputation': 32.561182498931885, 'log_imputation': 1.5127001684357053}}, '0.4': {'scores': {'RMSE': 1.5401148043426822, 'MAE': 1.2741388493849426, 'MI': 0.11539616501126557, 'CORRELATION': -0.08035544749067239}, 'times': {'contamination': 0.01956343650817871, 'optimization': 83.1758074760437, 'imputation': 34.5128276348114, 'log_imputation': 1.5379805424815183}}, '0.6': {'scores': {'RMSE': 1.274614521264042, 'MAE': 1.0487865207985385, 'MI': 0.08403719642185427, 'CORRELATION': -0.02019300700139813}, 'times': {'contamination': 0.09261870384216309, 'optimization': 83.1758074760437, 'imputation': 33.985726833343506, 'log_imputation': 1.5312965623658252}}}}}, 'mp': {'MeanImpute': {'bayesian': {'0.2': {'scores': {'RMSE': 0.7533652619171868, 'MAE': 0.6632734980158423, 'MI': 0.0, 'CORRELATION': 0.0}, 'times': {'contamination': 0.00028324127197265625, 'optimization': 83.1758074760437, 'imputation': 0.0002846717834472656, 'log_imputation': -3.545655577814236}}, '0.4': {'scores': {'RMSE': 0.9032940412098381, 'MAE': 0.8022018627885429, 'MI': 0.0, 'CORRELATION': 0.0}, 'times': {'contamination': 0.0007994174957275391, 'optimization': 83.1758074760437, 'imputation': 0.0002434253692626953, 'log_imputation': -3.6136341625206763}}, '0.6': {'scores': {'RMSE': 0.8814462728354893, 'MAE': 0.7775516466477405, 'MI': 0.0, 'CORRELATION': 0.0}, 'times': {'contamination': 0.0016570091247558594, 'optimization': 83.1758074760437, 'imputation': 0.0001895427703857422, 'log_imputation': -3.722292775951116}}}}, 'CDRec': {'bayesian': {'0.2': {'scores': {'RMSE': 0.5196914020069471, 'MAE': 0.41502464201302824, 'MI': 0.8465299153660264, 'CORRELATION': 0.8932656624267731}, 'times': {'contamination': 0.00021028518676757812, 'optimization': 68.5468008518219, 'imputation': 0.030956029891967773, 'log_imputation': -1.5092547426458058}}, '0.4': {'scores': {'RMSE': 0.9643276008973037, 'MAE': 0.8064969026414295, 'MI': 0.22203079334805262, 'CORRELATION': 0.4600393192495689}, 'times': {'contamination': 0.005852222442626953, 'optimization': 68.5468008518219, 'imputation': 0.03364729881286621, 'log_imputation': -1.4730497949690944}}, '0.6': {'scores': {'RMSE': 0.7819078942717163, 'MAE': 0.6324636207439717, 'MI': 0.23051664517348536, 'CORRELATION': 0.5546119252664721}, 'times': {'contamination': 0.00765681266784668, 'optimization': 68.5468008518219, 'imputation': 0.041005611419677734, 'log_imputation': -1.3871567081132485}}}}, 'STMVL': {'bayesian': {'0.2': {'scores': {'RMSE': 0.511393946216661, 'MAE': 0.41823347659341714, 'MI': 0.6813007563524537, 'CORRELATION': 0.7385192131453348}, 'times': {'contamination': 0.0016341209411621094, 'optimization': 56.828033447265625, 'imputation': 18.007683753967285, 'log_imputation': 1.255457855098143}}, '0.4': {'scores': {'RMSE': 1.1054992249440954, 'MAE': 0.9466458259457039, 'MI': 0.14074166345934247, 'CORRELATION': 0.33681904205858526}, 'times': {'contamination': 0.0007374286651611328, 'optimization': 56.828033447265625, 'imputation': 18.406287908554077, 'log_imputation': 1.2649662109165756}}, '0.6': {'scores': {'RMSE': 1.4015712509250526, 'MAE': 1.1175042700996751, 'MI': 0.033917567894303204, 'CORRELATION': 0.01863737329817237}, 'times': {'contamination': 0.0014607906341552734, 'optimization': 56.828033447265625, 'imputation': 15.808825969696045, 'log_imputation': 1.1988996185840206}}}}, 'IIM': {'bayesian': {'0.2': {'scores': {'RMSE': 0.48616337400813425, 'MAE': 0.38637311568229243, 'MI': 0.656948185103552, 'CORRELATION': 0.829744023948755}, 'times': {'contamination': 0.0002512931823730469, 'optimization': 483.10378217697144, 'imputation': 68.53724026679993, 'log_imputation': 1.835926613063935}}, '0.4': {'scores': {'RMSE': 0.6236323168433648, 'MAE': 0.49950489556797245, 'MI': 0.4089314147446362, 'CORRELATION': 0.7129993974048721}, 'times': {'contamination': 0.0008881092071533203, 'optimization': 483.10378217697144, 'imputation': 492.1332712173462, 'log_imputation': 2.692082726988259}}, '0.6': {'scores': {'RMSE': 0.819560722784086, 'MAE': 0.6703688292730702, 'MI': 0.18280857365348585, 'CORRELATION': 0.4178291195689973}, 'times': {'contamination': 0.0034525394439697266, 'optimization': 483.10378217697144, 'imputation': 1497.9088907241821, 'log_imputation': 3.175485398504256}}}}, 'MRNN': {'bayesian': {'0.2': {'scores': {'RMSE': 1.4603172783545468, 'MAE': 1.1549569528610129, 'MI': 0.20096151264242143, 'CORRELATION': 0.013274844861241052}, 'times': {'contamination': 0.0002453327178955078, 'optimization': 58.846688747406006, 'imputation': 21.73089909553528, 'log_imputation': 1.3370776952184469}}, '0.4': {'scores': {'RMSE': 1.519389547265382, 'MAE': 1.2529630606595417, 'MI': 0.20147398925985113, 'CORRELATION': -0.03158896916841696}, 'times': {'contamination': 0.0007503032684326172, 'optimization': 58.846688747406006, 'imputation': 23.50396490097046, 'log_imputation': 1.3711411299043914}}, '0.6': {'scores': {'RMSE': 1.618181818781467, 'MAE': 1.313810543419139, 'MI': 0.10901050618556703, 'CORRELATION': -0.020363614829279113}, 'times': {'contamination': 0.0015435218811035156, 'optimization': 58.846688747406006, 'imputation': 21.9166259765625, 'log_imputation': 1.340773696137763}}}}}}}
