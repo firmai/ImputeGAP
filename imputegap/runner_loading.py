@@ -7,7 +7,7 @@ print(f"ImputeGAP datasets : {ts.datasets}")
 
 
 # load the timeseries from file or from the code
-ts.load_series(utils.search_path("eeg-alcohol"))
+ts.load_series(utils.search_path("electricity"))
 ts.normalize(normalizer="z_score")
 
 # plot a subset of time series

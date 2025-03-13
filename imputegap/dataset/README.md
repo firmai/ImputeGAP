@@ -463,13 +463,13 @@ Finally, EEG-READING - normalized 20x400 demonstrates the impact of "MIN-MAX" no
 
 ### Summary
 
-| Data info          |                |
-|--------------------|----------------|
-| Dataset codename   | electricity    |
-| Dataset name       | ELECTRICITY    |
-| Dataset source     |                | 
-| Granularity        |                |
-| Dataset dimensions | M=26304 N=370  |
+| Data info          |              |
+|--------------------|--------------|
+| Dataset codename   | electricity  |
+| Dataset name       | ELECTRICITY  |
+| Dataset source     |              | 
+| Granularity        |              |
+| Dataset dimensions | M=20 N=5000  |
 
 
 
