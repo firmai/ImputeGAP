@@ -1,5 +1,3 @@
-torch-geometric==2.6.1
-torch-cluster==1.6.3
-pytorch-lightning==2.5.0
-torchmetrics==1.6.1
-lightning==2.5.0
+version https://git-lfs.github.com/spec/v1
+oid sha256:a2204d1530cfe57ff0605842dd24836d5dfd45811552c6ee1aeb46a392f6754e
+size 111

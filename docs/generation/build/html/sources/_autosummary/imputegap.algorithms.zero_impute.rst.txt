@@ -1,12 +1,3 @@
-imputegap.algorithms.zero\_impute
-=================================
-
-.. automodule:: imputegap.algorithms.zero_impute
-
-   
-   .. rubric:: Functions
-
-   .. autosummary::
-   
-      zero_impute
-   
+version https://git-lfs.github.com/spec/v1
+oid sha256:5ce738cd53fa2628cd9a18e45313861e15503f9f32f05e92f86d989d8bd3f57d
+size 194

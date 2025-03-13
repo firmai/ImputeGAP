@@ -1,35 +1,3 @@
-ImputeGAP Package
-=================
-
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   imputegap.manager
-   imputegap.imputation
-   imputegap.optimization
-   imputegap.explainer
-   imputegap.benchmarking
-   imputegap.cdrec
-   imputegap.stmvl
-   imputegap.iim
-   imputegap.mrnn
-   imputegap.mean_impute
-   imputegap.min_impute
-   imputegap.zero_impute
-   imputegap.utils
-   imputegap.evaluation
-
-
-Submodules
-----------
-
-Module contents
----------------
-
-.. automodule:: imputegap
-   :members:
-   :undoc-members:
-   :show-inheritance:
+version https://git-lfs.github.com/spec/v1
+oid sha256:b08195b6ee4793b8699f316a55e6cfe52373ea70f27f1683318f9ea352c687df
+size 540

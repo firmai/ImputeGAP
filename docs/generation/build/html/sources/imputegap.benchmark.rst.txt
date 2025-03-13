@@ -1,32 +1,3 @@
-imputegap.recovery.benchmark package
-====================================
-
-The `imputegap.recovery.benchmark` package provides various utility functions and tools for test the library
-
-Submodules
-----------
-
-.. autosummary::
-   :toctree: _autosummary
-   :caption: Tools Submodules
-   :recursive:
-
-
-Modules
--------
-
-.. automodule:: imputegap.recovery.benchmark
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Submodule Documentation
------------------------
-
-imputegap.recovery.evaluation module
-------------------------------------
-
-.. automodule:: imputegap.recovery.benchmark
-   :members:
-   :undoc-members:
-   :show-inheritance:
+version https://git-lfs.github.com/spec/v1
+oid sha256:5532debd30d3567e93c40cfe0c3b87df45c25d40b9b72539679466bc771ff782
+size 638

@@ -1,16 +1,3 @@
-imputegap.algorithms.iim package
-===================================
-
-The `imputegap.algorithms.iim` package contains various imputation algorithms used for handling missing values in time series data.
-
-Submodules
-----------
-
-
-Modules
--------
-
-.. automodule:: imputegap.algorithms.iim
-   :members:
-   :undoc-members:
-   :show-inheritance:
+version https://git-lfs.github.com/spec/v1
+oid sha256:3da66deb357e96aefeb8c52585e88e4221a74a9f87f8585f6aa629f11ce6367b
+size 339

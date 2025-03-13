@@ -1,21 +1,3 @@
-imputegap.wrapper package
-=========================
-
-The `imputegap.wrapper` package provides wrapper functions and interfaces for interacting with different algorithms and tools in the `imputegap` framework.
-
-Submodules
-----------
-
-.. autosummary::
-   :toctree: _autosummary
-   :caption: Wrapper Submodules
-   :recursive:
-
-
-Module contents
----------------
-
-.. automodule:: imputegap.wrapper
-   :members:
-   :undoc-members:
-   :show-inheritance:
+version https://git-lfs.github.com/spec/v1
+oid sha256:80c6de91e7187e762981542f602490b607b607a1b3b01fbbf983d91a15933eb6
+size 446

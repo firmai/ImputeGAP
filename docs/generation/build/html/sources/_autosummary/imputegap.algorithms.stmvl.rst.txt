@@ -1,13 +1,3 @@
-﻿imputegap.algorithms.stmvl
-==========================
-
-.. automodule:: imputegap.algorithms.stmvl
-
-   
-   .. rubric:: Functions
-
-   .. autosummary::
-   
-      native_stmvl
-      stmvl
-   
+version https://git-lfs.github.com/spec/v1
+oid sha256:bba8e3e62668cb9483af420f856dfcb67dbed5a063aefccc96b90cbab0f8dfb5
+size 190

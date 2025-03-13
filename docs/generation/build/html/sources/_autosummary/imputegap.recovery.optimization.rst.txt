@@ -1,13 +1,3 @@
-﻿imputegap.recovery.optimization
-===============================
-
-.. automodule:: imputegap.recovery.optimization
-
-   
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      BaseOptimizer
-      Optimization
-   
+version https://git-lfs.github.com/spec/v1
+oid sha256:d769218683cce2ff69a3e1ee672c156022abdf99943c6ef0b17c30710019de59
+size 211
