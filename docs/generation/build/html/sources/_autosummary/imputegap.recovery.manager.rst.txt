@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:189f72984f2634d3bce094ec6c564f264a5183726e0988e0c7c192b7dbaa7e16
-size 171
+imputegap.recovery.manager
+==========================
+
+.. automodule:: imputegap.recovery.manager
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      TimeSeries
+   

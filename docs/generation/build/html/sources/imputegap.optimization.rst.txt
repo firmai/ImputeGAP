@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0f7543687d571367a6aec0c1b95ffc49504ac4dfd7043a2497f4c3f5a4ff1c3a
-size 244
+imputegap.recovery.optimization package
+============================================
+
+Submodules
+----------
+
+
+Module contents
+---------------
+
+.. automodule:: imputegap.recovery.optimization
+   :members:
+   :undoc-members:
+   :show-inheritance:

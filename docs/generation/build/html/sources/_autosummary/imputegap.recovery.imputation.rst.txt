@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a2344353b2a516383b920bf447ef46829c5007ace48743e8a9b8413dadde8b74
-size 198
+imputegap.recovery.imputation
+=============================
+
+.. automodule:: imputegap.recovery.imputation
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BaseImputer
+      Imputation
+   

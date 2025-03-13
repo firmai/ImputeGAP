@@ -1,3 +1,2 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d8928d3a20da876832629821ffc28be2cd097c936ef7fd6c4783be8767517dcc
-size 69
+[console_scripts]
+imputegap = imputegap.runner_display:display_title

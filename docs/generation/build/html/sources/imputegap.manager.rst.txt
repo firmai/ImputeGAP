@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b381256a820068a2e83531b22d762d0e20ab1885d4060896c91afa99e8bfd798
-size 225
+imputegap.recovery.manager package
+===================================
+
+Submodules
+----------
+
+
+Module contents
+---------------
+
+.. automodule:: imputegap.recovery.manager
+   :members:
+   :undoc-members:
+   :show-inheritance:

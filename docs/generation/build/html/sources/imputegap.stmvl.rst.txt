@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b6a1c1b08908b1441bfa921d889d24bb12d2849612169b5c43c84d7abf1fc13b
-size 431
+imputegap.algorithms.stmvl package
+===================================
+
+The `imputegap.algorithms.stmvl` package contains various imputation algorithms used for handling missing values in time series data. This package supports multiple imputation techniques like CDRec, MRNN, IIM, and more.
+
+Submodules
+----------
+
+
+Modules
+-------
+
+.. automodule:: imputegap.algorithms.stmvl
+   :members:
+   :undoc-members:
+   :show-inheritance:

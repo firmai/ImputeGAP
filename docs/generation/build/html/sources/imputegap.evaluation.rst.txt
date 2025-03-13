@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8f1fd1117dfbedee8c38d237d8c78fd5db4df34a4a33d1a7443ef2f6a50de209
-size 717
+imputegap.recovery.evaluation package
+=====================================
+
+The `imputegap.recovery.evaluation` package provides various utility functions and tools for handling algorithm parameters, evaluation, and other operations in the imputation process.
+
+Submodules
+----------
+
+.. autosummary::
+   :toctree: _autosummary
+   :caption: Tools Submodules
+   :recursive:
+
+
+Modules
+-------
+
+.. automodule:: imputegap.recovery.evaluation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodule Documentation
+-----------------------
+
+imputegap.recovery.evaluation module
+------------------------------------
+
+.. automodule:: imputegap.recovery.evaluation
+   :members:
+   :undoc-members:
+   :show-inheritance:

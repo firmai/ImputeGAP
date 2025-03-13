@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c13524070e35f34ecad57d1df4be72633b7b8ad130a8de344f38104d056b47ec
-size 160
+imputegap.algorithms.iim
+========================
+
+.. automodule:: imputegap.algorithms.iim
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      iim
+   

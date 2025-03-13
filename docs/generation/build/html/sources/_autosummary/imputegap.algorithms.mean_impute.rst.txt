@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b6058eaab2595f3b1320a598dfdbb626b7a12d812cd7610f6dcdd4bc52896bdb
-size 197
+﻿imputegap.algorithms.mean\_impute
+=================================
+
+.. automodule:: imputegap.algorithms.mean_impute
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      mean_impute
+   

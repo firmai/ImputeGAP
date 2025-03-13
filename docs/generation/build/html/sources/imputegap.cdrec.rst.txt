@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:528ee3231797935cbc7b19a3745074f24e6acae7911e35e0f5a9f89b8673cbfc
-size 345
+imputegap.algorithms.cdrec package
+===================================
+
+The `imputegap.algorithms.cdrec` package contains various imputation algorithms used for handling missing values in time series data.
+
+Submodules
+----------
+
+
+Modules
+-------
+
+.. automodule:: imputegap.algorithms.cdrec
+   :members:
+   :undoc-members:
+   :show-inheritance:

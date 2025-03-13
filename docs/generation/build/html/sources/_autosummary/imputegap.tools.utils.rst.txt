@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dd07fdbdf87b24000f33c54197229c06659dc251e791f727e7334b6926081c44
-size 336
+﻿imputegap.tools.utils
+=====================
+
+.. automodule:: imputegap.tools.utils
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      config_contamination
+      config_impute_algorithm
+      display_title
+      load_parameters
+      load_share_lib
+      save_optimization
+      search_path
+      verification_limitation
+   

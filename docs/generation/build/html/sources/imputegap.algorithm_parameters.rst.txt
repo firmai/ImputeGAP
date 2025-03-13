@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c1c1900210d9970b6c9dacb761271829d83326895eb0a773085ee8512eb8b720
-size 715
+imputegap.tools.algorithm_parameters package
+============================================
+
+The `imputegap.tools.algorithm_parameters` package provides various utility functions and tools for handling algorithm parameters, evaluation, and other operations in the imputation process.
+
+Submodules
+----------
+
+.. autosummary::
+   :toctree: _autosummary
+   :caption: Tools Submodules
+   :recursive:
+
+
+Modules
+-------
+
+.. automodule:: imputegap.tools
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodule Documentation
+-----------------------
+
+imputegap.tools.utils module
+----------------------------
+
+.. automodule:: imputegap.tools.algorithm_parameters
+   :members:
+   :undoc-members:
+   :show-inheritance:

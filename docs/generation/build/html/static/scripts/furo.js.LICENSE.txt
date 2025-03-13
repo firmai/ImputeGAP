@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3eba718c98abe0ad8dd4401edc9ddfabf979f9bb9b8ac446460b61b03694970d
-size 187
+/*!
+ * gumshoejs v5.1.2 (patched by @pradyunsg)
+ * A simple, framework-agnostic scrollspy script.
+ * (c) 2019 Chris Ferdinandi
+ * MIT License
+ * http://github.com/cferdinandi/gumshoe
+ */

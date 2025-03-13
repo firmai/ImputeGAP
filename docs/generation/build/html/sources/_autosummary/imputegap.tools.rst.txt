@@ -1,3 +1,6 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c8bccf604eb35a07a2feeb4db012086724298ee842b53cc37107c39473c456b0
-size 69
+imputegap.tools
+===============
+
+.. automodule:: imputegap.tools
+
+   

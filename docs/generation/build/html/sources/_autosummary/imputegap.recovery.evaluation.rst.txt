@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3224802de42fa23255ce325af111141cd71356b0fbb2e70fe1a2f18381f0d3ab
-size 180
+imputegap.recovery.evaluation
+=============================
+
+.. automodule:: imputegap.recovery.evaluation
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Evaluation
+   

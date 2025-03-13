@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:506bf5a351285bafaa65c8085466dd8099c49df3187f331938644c835ba7d65a
-size 369
+imputegap.algorithms.mean_impute package
+=========================================
+
+The `imputegap.algorithms.mean_impute` package contains various imputation algorithms used for handling missing values in time series data.
+
+Submodules
+----------
+
+
+Modules
+-------
+
+.. automodule:: imputegap.algorithms.mean_impute
+   :members:
+   :undoc-members:
+   :show-inheritance:

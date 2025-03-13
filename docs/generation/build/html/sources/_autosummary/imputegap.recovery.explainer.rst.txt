@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9035ff87a4d567ff4aeba0563177fee182ab12aa4a8b88913a6d929b1d0a5e16
-size 179
+﻿imputegap.recovery.explainer
+============================
+
+.. automodule:: imputegap.recovery.explainer
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Explainer
+   

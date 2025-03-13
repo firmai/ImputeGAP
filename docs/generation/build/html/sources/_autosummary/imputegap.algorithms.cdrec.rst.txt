@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:35ea9cddc4113a1bfe3b533deab179b59b7d303f5d6d13e02140ae2ee7ee1ba1
-size 190
+﻿imputegap.algorithms.cdrec
+==========================
+
+.. automodule:: imputegap.algorithms.cdrec
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      cdrec
+      native_cdrec
+   

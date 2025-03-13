@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:21f7429e6f1e0553915b92ebc6846a45b75ab5fa81990b646d77ab342493fa4b
-size 164
+imputegap.algorithms.mrnn
+=========================
+
+.. automodule:: imputegap.algorithms.mrnn
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      mrnn
+   

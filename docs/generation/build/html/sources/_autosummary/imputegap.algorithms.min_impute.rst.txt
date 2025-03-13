@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:511cd168f8084af29636d6aac08ae81a0b4e2ef45e53ee55d5b3d3d5f611ddaf
-size 190
+imputegap.algorithms.min\_impute
+================================
+
+.. automodule:: imputegap.algorithms.min_impute
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      min_impute
+   
