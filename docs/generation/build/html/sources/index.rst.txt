@@ -1,17 +1,17 @@
-ImputeGAP documentation
+ImputeGAP Documentation
 =======================
 
-ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. The library includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.
+ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your own time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.
 
 
 In detail, the package provides:
-    - User-friendly APIs to easily visualize, analyze, and repair your own time series datasets.
     - Access to commonly used datasets in time series research (`Datasets <datasets.html>`_).
     - Configurable contamination module that simulates real-world missingness patterns (`Patterns <patterns.html>`_).
-    - Automated preprocessing with built-in methods for normalizing time series (`Preprocessing <preprocessing.html>`_).
+    - Automated preprocessing with built-in methods for normalizing time series (`Pre-processing <preprocessing.html>`_).
     - Parameterized state-of-the-art time series imputation algorithms (`Algorithms <algorithms.html>`_).
-    - Modular tools to analyze the behavior of these algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream <downstream.html>`_).
+    - Modular tools to analyze the behavior of these algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream Evaluation <downstream.html>`_).
     - Experiment benchmarking, fostering research reproducibility in time series (`Benchmark <benchmark.html>`_).
+    - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <explainer.html>`_).
     - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
 
 
@@ -25,10 +25,12 @@ Data Format
 -----------
 
 Please ensure that your data satisfies the following criteria:
+
 .. note::
 
     - 2D Matrix: columns are the series and rows are the timestamps
-    - Column separator: empty space, row separator: newline
+    - Column separator: empty space
+    - Row separator: newline
     - Missing values are NaN
     - Data output uses ``numpy.ndarray``
 
@@ -92,9 +94,9 @@ ____________
           :height: 100px
           :align: center
 
-   * - **Quentin Nater**
+   * - Quentin Nater
        `quentin.nater@unifr.ch <mailto:quentin.nater@unifr.ch>`_
-     - **Dr. Mourad Khayati**
+     - Mourad Khayati
        `mourad.khayati@unifr.ch <mailto:mourad.khayati@unifr.ch>`_
 
 
@@ -114,6 +116,7 @@ ____________
    patterns
    downstream
    benchmark
+   explainer
    GitHub Repository <https://github.com/eXascaleInfolab/ImputeGAP/>
    PyPI Repository <https://pypi.org/project/imputegap/>
    imputegap

@@ -5,9 +5,9 @@ from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 
 
-class TestContaminationMPR(unittest.TestCase):
+class TestContaminationPercentageShift(unittest.TestCase):
 
-    def test_mpr_selection(self):
+    def test_ps_selection(self):
         """
         the goal is to test if the number of NaN values expected are provided in the contamination output
         """
@@ -24,7 +24,7 @@ class TestContaminationMPR(unittest.TestCase):
 
             for S in series_impacted:
                 for R in missing_rates:
-                    incomp_data = ts.Contamination.missing_percentage_at_random(input_data=ts.data, rate_dataset=S, rate_series=R, offset=P)
+                    incomp_data = ts.Contamination.percentage_shift(input_data=ts.data, rate_dataset=S, rate_series=R, offset=P)
 
                     n_nan = np.isnan(incomp_data).sum()
                     expected_nan_series = math.ceil(S * M)
@@ -40,7 +40,7 @@ class TestContaminationMPR(unittest.TestCase):
                           f"expected_nan_series {expected_nan_series}, expected_nan_values {expected_nan_values}\n"))
 
 
-    def test_mpr_position(self):
+    def test_ps_position(self):
         """
         the goal is to test if the starting position is always guaranteed
         """
@@ -54,9 +54,9 @@ class TestContaminationMPR(unittest.TestCase):
         for series_sel in series_impacted:
             for missing_rate in missing_rates:
 
-                ts_contaminate = ts_1.Contamination.missing_percentage_at_random(input_data=ts_1.data,
-                                                                       rate_dataset=series_sel,
-                                                                       rate_series=missing_rate, offset=0.1)
+                ts_contaminate = ts_1.Contamination.percentage_shift(input_data=ts_1.data,
+                                                                     rate_dataset=series_sel,
+                                                                     rate_series=missing_rate, offset=0.1)
 
                 if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                     check_position = False
@@ -65,7 +65,7 @@ class TestContaminationMPR(unittest.TestCase):
 
                 self.assertTrue(check_position, True)
 
-    def test_mp_missing_percentage_at_random_total(self):
+    def test_percentage_shift_total(self):
         """
         Test if the size of the missing percentage at random in a contaminated time series meets the expected number defined by the user.
         """
@@ -82,10 +82,10 @@ class TestContaminationMPR(unittest.TestCase):
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
-                    ts_contaminate = ts_1.Contamination.missing_percentage_at_random(input_data=ts_1.data,
-                                                                           rate_dataset=series_sel,
-                                                                           rate_series=missing_rate,
-                                                                           offset=offset)
+                    ts_contaminate = ts_1.Contamination.percentage_shift(input_data=ts_1.data,
+                                                                         rate_dataset=series_sel,
+                                                                         rate_series=missing_rate,
+                                                                         offset=offset)
 
                     nbr_series_contaminated = 0
                     for inx, current_series in enumerate(ts_contaminate):

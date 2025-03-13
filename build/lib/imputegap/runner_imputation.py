@@ -10,7 +10,7 @@ ts_1.load_series(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-incomp_data = ts_1.Contamination.mcar(ts_1.data)
+incomp_data = ts_1.Contamination.missing_completely_at_random(ts_1.data)
 
 # [OPTIONAL] save your results in a new Time Series object
 ts_2 = TimeSeries().import_matrix(incomp_data)

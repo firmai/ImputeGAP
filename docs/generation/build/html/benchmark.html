@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="imputegap package" href="imputegap.html" /><link rel="prev" title="Downstream" href="downstream.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Explainer" href="explainer.html" /><link rel="prev" title="Downstream Evaluation" href="downstream.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Benchmark - imputegap 1.0.5 documentation</title>
@@ -208,13 +208,14 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
@@ -270,40 +271,34 @@
         <article role="main" id="furo-main-content">
           <section id="benchmark">
 <h1>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h1>
-<p>ImputeGAP offers a Benchmark module that enables users to compare various algorithm families across different dataset types using multiple evaluation metrics.</p>
-<p>The number of runs determines the stability of results for Deep Learning algorithms, which may fluctuate during the imputation training process.
-Users have full control over the analysis by customizing various parameters, including the list of datasets to evaluate, the choice of optimizer for fine-tuning algorithms on specific datasets, the algorithms to compare, the contamination patterns, and a range of missing rates.</p>
-<p>All missing data patterns developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.patterns</span></code> module.
-All algorithms developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.algorithms</span></code> module.
-All datasets provides in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> module.
-All optimizers developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.optimizers</span></code> module.</p>
+<p>ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates.</p>
 <p>The benchmarking module can be utilized as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">Benchmark</span>
 
-<span class="c1"># define analysis global variables</span>
 <span class="n">save_dir</span> <span class="o">=</span> <span class="s2">&quot;./analysis&quot;</span>
 <span class="n">nbr_run</span> <span class="o">=</span> <span class="mi">2</span>
 
-<span class="c1"># define the datasets to evaluate</span>
-<span class="n">datasets_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-reading&quot;</span><span class="p">]</span>
+<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-reading&quot;</span><span class="p">]</span>
 
-<span class="c1"># define the optimizer to fine-tine the algorithms</span>
-<span class="n">optimiser_bayesian</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;n_random_starts&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;acq_func&quot;</span><span class="p">:</span> <span class="s2">&quot;gp_hedge&quot;</span><span class="p">,</span> <span class="s2">&quot;metrics&quot;</span><span class="p">:</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">}}</span>
-<span class="n">optimizers_demo</span> <span class="o">=</span> <span class="p">[</span><span class="n">optimiser_bayesian</span><span class="p">]</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;max_concurrent_trials&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+<span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="n">optimizer</span><span class="p">]</span>
 
-<span class="c1"># define the algorithms for the imputation</span>
-<span class="n">algorithms_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MeanImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;CDRec&quot;</span><span class="p">,</span> <span class="s2">&quot;STMVL&quot;</span><span class="p">,</span> <span class="s2">&quot;IIM&quot;</span><span class="p">,</span> <span class="s2">&quot;MRNN&quot;</span><span class="p">]</span>
+<span class="n">algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MeanImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;CDRec&quot;</span><span class="p">,</span> <span class="s2">&quot;STMVL&quot;</span><span class="p">,</span> <span class="s2">&quot;IIM&quot;</span><span class="p">,</span> <span class="s2">&quot;MRNN&quot;</span><span class="p">]</span>
 
-<span class="c1"># define the missing pattern to contaminate the time series</span>
-<span class="n">patterns_demo</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mcar&quot;</span><span class="p">]</span>
+<span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;missing_completely_at_random&quot;</span><span class="p">]</span>
 
-<span class="c1"># define missing values percentages to see the evolution of the imputation</span>
-<span class="n">x_axis</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
+<span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 
 <span class="c1"># launch the analysis</span>
-<span class="n">list_results</span><span class="p">,</span> <span class="n">sum_scores</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">algorithms</span><span class="o">=</span><span class="n">algorithms_demo</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">datasets_demo</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns_demo</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers_demo</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">nbr_run</span><span class="p">)</span>
+<span class="n">list_results</span><span class="p">,</span> <span class="n">sum_scores</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">algorithms</span><span class="o">=</span><span class="n">algorithms</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="nb">range</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">nbr_run</span><span class="p">)</span>
 </pre></div>
 </div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">33</a><span class="fn-bracket">]</span></span>
+<p>Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux: Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)</p>
+</aside>
+</aside>
 </section>
 
         </article>
@@ -311,12 +306,12 @@ All optimizers developed in ImputeGAP are available in the <code class="docutils
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="imputegap.html">
+          <a class="next-page" href="explainer.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">imputegap package</div>
+                <div class="title">Explainer</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -327,7 +322,7 @@ All optimizers developed in ImputeGAP are available in the <code class="docutils
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Downstream</div>
+                <div class="title">Downstream Evaluation</div>
                 
               </div>
             </a>

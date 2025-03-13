@@ -598,6 +598,6 @@ if __name__ == "__main__":
     ts_1.normalize(normalizer="min_max")
 
     # 3. contamination of the data
-    x = ts_1.Contamination.mcar(ts_1.data)
+    x = ts_1.Contamination.missing_completely_at_random(ts_1.data)
 
     imputation = recoveryTIDER(x)

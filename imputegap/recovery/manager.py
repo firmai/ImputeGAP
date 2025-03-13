@@ -70,10 +70,12 @@ class TimeSeries:
         IMPORT FORMAT : (Values,Series) : series are seperated by "SPACE" et values by "\\n"
         """
         self.data = None
+        self.name = "default"
         self.algorithms = utils.list_of_algorithms()
         self.patterns = utils.list_of_patterns()
         self.datasets = utils.list_of_datasets()
         self.optimizers = utils.list_of_optimizers()
+        self.downstream_models = utils.list_of_downstreams()
 
     def import_matrix(self, data=None):
         """
@@ -138,6 +140,7 @@ class TimeSeries:
 
                 #  update path form inner library datasets
                 if data in utils.list_of_datasets(txt=True):
+                    self.name = data[:-4]
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 
                 if not os.path.exists(data):
@@ -478,7 +481,7 @@ class TimeSeries:
 
         Methods
         -------
-        mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :
+        missing_completely_at_random(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :
             Apply Missing Completely at Random (MCAR) contamination to the time series data.
 
         missing_percentage(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :
@@ -503,7 +506,7 @@ class TimeSeries:
             Apply Overlapping contamination to the time series data.
         """
 
-        def mcar(input_data, rate_dataset=0.2, rate_series=0.2, block_size=10, offset=0.1, seed=True, explainer=False):
+        def missing_completely_at_random(input_data, rate_dataset=0.2, rate_series=0.2, block_size=10, offset=0.1, seed=True, explainer=False):
             """
             Apply Missing Completely at Random (MCAR) contamination to the time series data.
 
@@ -661,9 +664,9 @@ class TimeSeries:
 
             return ts_contaminated
 
-        def missing_percentage_at_random(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True):
+        def percentage_shift(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True):
             """
-            Apply missing percentage contamination with random starting position to the time series data.
+            Apply percentage shift contamination with random starting position to the time series data.
 
             Parameters
             ----------

@@ -552,10 +552,10 @@ class Explainer:
             print("\tContamination ", current_series, "...")
 
             if pattern == "mcar":
-                incomp_data = TimeSeries().Contamination.mcar(input_data=input_data, rate_dataset=current_series,
-                                                              rate_series=missing_rate, block_size=block_size,
-                                                              offset=offset, seed=seed,
-                                                              explainer=True)
+                incomp_data = TimeSeries().Contamination.missing_completely_at_random(input_data=input_data, rate_dataset=current_series,
+                                                                                      rate_series=missing_rate, block_size=block_size,
+                                                                                      offset=offset, seed=seed,
+                                                                                      explainer=True)
             else:
                 print("Contamination proposed not found : ", pattern, " >> BREAK")
                 return None

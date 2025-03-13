@@ -11,7 +11,7 @@ ts.load_series(utils.search_path("eeg-alcohol"))
 ts.normalize(normalizer="z_score")
 
 # contaminate the time series
-ts_m = ts.Contamination.mcar(ts.data)
+ts_m = ts.Contamination.missing_completely_at_random(ts.data)
 
 # impute the contaminated series
 imputer = Imputation.MatrixCompletion.CDRec(ts_m)

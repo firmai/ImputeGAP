@@ -15,8 +15,8 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
      - CDRec [1]_
      - KAIS -- 2020
    * - Matrix Completion
-     - IterativeSVD [2]_
-     - BIOINFORMATICS -- 2001
+     - TRMF [8]_
+     - NeurIPS -- 2016
    * - Matrix Completion
      - GROUSE [3]_
      - PMLR -- 2016
@@ -24,26 +24,26 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
      - ROSL [4]_
      - CVPR -- 2014
    * - Matrix Completion
-     - SPIRIT [5]_
-     - VLDB -- 2005
-   * - Matrix Completion
      - SoftImpute [6]_
      - JMLR -- 2010
    * - Matrix Completion
      - SVT [7]_
      - SIAM J. OPTIM -- 2010
    * - Matrix Completion
-     - TRMF [8]_
-     - NeurIPS -- 2016
+     - SPIRIT [5]_
+     - VLDB -- 2005
+   * - Matrix Completion
+     - IterativeSVD [2]_
+     - BIOINFORMATICS -- 2001
+   * - Pattern Search
+     - TKCM [11]_
+     - EDBT -- 2017
    * - Pattern Search
      - ST-MVL [9]_
      - IJCAI -- 2016
    * - Pattern Search
      - DynaMMo [10]_
      - KDD -- 2009
-   * - Pattern Search
-     - TKCM [11]_
-     - EDBT -- 2017
    * - Machine Learning
      - IIM [12]_
      - ICDE -- 2019
@@ -56,24 +56,30 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
    * - Machine Learning
      - MissForest [15]_
      - BioInformatics -- 2011
-   * - Statistics
-     - KNNImpute
-     - -
-   * - Statistics
-     - Interpolation
-     - -
-   * - Statistics
-     - Min Impute
-     - -
-   * - Statistics
-     - Zero Impute
-     - -
-   * - Statistics
-     - Mean Impute
-     - -
-   * - Statistics
-     - Mean Impute By Series
-     - -
+   * - Deep Learning
+     - MPIN [25]_
+     - PVLDB -- 2024
+   * - Deep Learning
+     - MissNet [27]_
+     - KDD -- 2024
+   * - Deep Learning
+     - BITGraph [32]_
+     - ICLR -- 2024
+   * - Deep Learning
+     - BayOTIDE [30]_
+     - PMLR -- 2024
+   * - Deep Learning
+     - PriSTI [26]_
+     - ICDE -- 2023
+   * - Deep Learning
+     - GRIN [29]_
+     - ICLR -- 2022
+   * - Deep Learning
+     - DeepMVI [24]_
+     - PVLDB -- 2021
+   * - Deep Learning
+     - HKMF-T [31]_
+     - TKDE -- 2021
    * - Deep Learning
      - MRNN [22]_
      - IEEE Trans on BE -- 2019
@@ -81,32 +87,26 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
      - BRITS [23]_
      - NeurIPS -- 2018
    * - Deep Learning
-     - DeepMVI [24]_
-     - PVLDB -- 2021
-   * - Deep Learning
-     - MPIN [25]_
-     - PVLDB -- 2024
-   * - Deep Learning
-     - PriSTI [26]_
-     - ICDE -- 2023
-   * - Deep Learning
-     - MissNet [27]_
-     - KDD -- 2024
-   * - Deep Learning
      - GAIN [28]_
      - ICML -- 2018
-   * - Deep Learning
-     - GRIN [29]_
-     - ICLR -- 2022
-   * - Deep Learning
-     - BayOTIDE [30]_
-     - PMLR -- 2024
-   * - Deep Learning
-     - HKMF-T [31]_
-     - TKDE -- 2021
-   * - Deep Learning
-     - BITGraph [32]_
-     - ICLR -- 2024
+   * - Statistics
+     - KNNImpute
+     - _
+   * - Statistics
+     - Interpolation
+     - _
+   * - Statistics
+     - MinImpute
+     - _
+   * - Statistics
+     - ZeroImpute
+     - _
+   * - Statistics
+     - MeanImpute
+     - _
+   * - Statistics
+     - MeanImputeBySeries
+     - _
 
 
 

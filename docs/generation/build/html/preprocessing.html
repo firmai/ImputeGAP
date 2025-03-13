@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Patterns" href="patterns.html" /><link rel="prev" title="Datasets" href="datasets.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>Pre Processing - imputegap 1.0.5 documentation</title>
+        <title>Pre-processing - imputegap 1.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
@@ -208,13 +208,14 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Pre Processing</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Pre-processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
@@ -269,9 +270,8 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="pre-processing">
-<h1>Pre Processing<a class="headerlink" href="#pre-processing" title="Link to this heading">¶</a></h1>
-<p>ImputeGAP includes several time series datasets, but users can also work with their own data. The library then offers various tools for cleaning and preprocessing, including normalization.</p>
-<p>Users can first specify the number of series and values to adjust according to their needs. Then, they can choose between two normalization methods:</p>
+<h1>Pre-processing<a class="headerlink" href="#pre-processing" title="Link to this heading">¶</a></h1>
+<p>ImputeGAP enables time series normalization as a preprocessing step prior to imputation. Users can select from two normalization techniques to standardize their data distribution.</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>Z-score normalization: Standardizes data by subtracting the mean and dividing by the standard deviation, ensuring a mean of 0 and a standard deviation of 1.</p></li>
@@ -282,11 +282,11 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
-<span class="c1"># initiate the TimeSeries() object that will stay with you throughout the analysis</span>
+<span class="c1"># initialize the TimeSeries() object</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
 <span class="c1"># load the timeseries from file or from the code</span>
-<span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">),</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">),</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">)</span>
 </pre></div>
 </div>

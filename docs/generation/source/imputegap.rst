@@ -1,4 +1,4 @@
-imputegap package
+ImputeGAP Package
 =================
 
 Subpackages

@@ -208,13 +208,14 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
@@ -269,30 +270,33 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="imputegap-documentation">
-<h1>ImputeGAP documentation<a class="headerlink" href="#imputegap-documentation" title="Link to this heading">¶</a></h1>
-<p>ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. The library includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.</p>
+<h1>ImputeGAP Documentation<a class="headerlink" href="#imputegap-documentation" title="Link to this heading">¶</a></h1>
+<p>ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your own time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.</p>
 <dl class="simple">
 <dt>In detail, the package provides:</dt><dd><ul class="simple">
-<li><p>User-friendly APIs to easily visualize, analyze, and repair your own time series datasets.</p></li>
 <li><p>Access to commonly used datasets in time series research (<a class="reference external" href="datasets.html">Datasets</a>).</p></li>
 <li><p>Configurable contamination module that simulates real-world missingness patterns (<a class="reference external" href="patterns.html">Patterns</a>).</p></li>
-<li><p>Automated preprocessing with built-in methods for normalizing time series (<a class="reference external" href="preprocessing.html">Preprocessing</a>).</p></li>
+<li><p>Automated preprocessing with built-in methods for normalizing time series (<a class="reference external" href="preprocessing.html">Pre-processing</a>).</p></li>
 <li><p>Parameterized state-of-the-art time series imputation algorithms (<a class="reference external" href="algorithms.html">Algorithms</a>).</p></li>
-<li><p>Modular tools to analyze the behavior of these algorithms and assess their impact on key downstream tasks in time series analysis (<a class="reference external" href="downstream.html">Downstream</a>).</p></li>
+<li><p>Modular tools to analyze the behavior of these algorithms and assess their impact on key downstream tasks in time series analysis (<a class="reference external" href="downstream.html">Downstream Evaluation</a>).</p></li>
 <li><p>Experiment benchmarking, fostering research reproducibility in time series (<a class="reference external" href="benchmark.html">Benchmark</a>).</p></li>
+<li><p>Fine-grained analysis of the impact of time series features on imputation results (<a class="reference external" href="explainer.html">Explainer</a>).</p></li>
 <li><p>Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.</p></li>
 </ul>
 </dd>
 </dl>
 <br><br><section id="data-format">
 <span id="id1"></span><h2>Data Format<a class="headerlink" href="#data-format" title="Link to this heading">¶</a></h2>
-<p>Please ensure that your data satisfies the following criteria:
-.. note:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>- 2D Matrix: columns are the series and rows are the timestamps
-- Column separator: empty space, row separator: newline
-- Missing values are NaN
-- Data output uses ``numpy.ndarray``
-</pre></div>
+<p>Please ensure that your data satisfies the following criteria:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>2D Matrix: columns are the series and rows are the timestamps</p></li>
+<li><p>Column separator: empty space</p></li>
+<li><p>Row separator: newline</p></li>
+<li><p>Missing values are NaN</p></li>
+<li><p>Data output uses <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p></li>
+</ul>
 </div>
 <br><br><section id="get-started">
 <span id="id2"></span><h3>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h3>
@@ -331,9 +335,9 @@
 </a>
 </td>
 </tr>
-<tr class="row-even"><td><p><strong>Quentin Nater</strong>
+<tr class="row-even"><td><p>Quentin Nater
 <a class="reference external" href="mailto:quentin&#46;nater&#37;&#52;&#48;unifr&#46;ch">quentin<span>&#46;</span>nater<span>&#64;</span>unifr<span>&#46;</span>ch</a></p></td>
-<td><p><strong>Dr. Mourad Khayati</strong>
+<td><p>Mourad Khayati
 <a class="reference external" href="mailto:mourad&#46;khayati&#37;&#52;&#48;unifr&#46;ch">mourad<span>&#46;</span>khayati<span>&#64;</span>unifr<span>&#46;</span>ch</a></p></td>
 </tr>
 </tbody>
@@ -390,7 +394,7 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">ImputeGAP documentation</a><ul>
+<li><a class="reference internal" href="#">ImputeGAP Documentation</a><ul>
 <li><a class="reference internal" href="#data-format">Data Format</a><ul>
 <li><a class="reference internal" href="#get-started">Get Started</a></li>
 <li><a class="reference internal" href="#contributors">Contributors</a></li>

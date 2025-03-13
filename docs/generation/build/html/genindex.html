@@ -206,13 +206,14 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
@@ -830,6 +831,8 @@
 </li>
         <li><a href="imputegap.utils.html#imputegap.tools.utils.list_of_datasets">list_of_datasets() (in module imputegap.tools.utils)</a>
 </li>
+        <li><a href="imputegap.utils.html#imputegap.tools.utils.list_of_downstreams">list_of_downstreams() (in module imputegap.tools.utils)</a>
+</li>
         <li><a href="imputegap.utils.html#imputegap.tools.utils.list_of_optimizers">list_of_optimizers() (in module imputegap.tools.utils)</a>
 </li>
         <li><a href="imputegap.utils.html#imputegap.tools.utils.list_of_patterns">list_of_patterns() (in module imputegap.tools.utils)</a>
@@ -918,15 +921,13 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.mcar">mcar() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
-</li>
         <li><a href="imputegap.mean_impute.html#imputegap.algorithms.mean_impute.mean_impute">mean_impute() (in module imputegap.algorithms.mean_impute)</a>
 </li>
         <li><a href="imputegap.min_impute.html#imputegap.algorithms.min_impute.min_impute">min_impute() (in module imputegap.algorithms.min_impute)</a>
 </li>
-        <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage">missing_percentage() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
+        <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_completely_at_random">missing_completely_at_random() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
 </li>
-        <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage_at_random">missing_percentage_at_random() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
+        <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage">missing_percentage() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
 </li>
         <li>
     module
@@ -1037,16 +1038,18 @@
   <h2>P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.percentage_shift">percentage_shift() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
+</li>
         <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.plot">plot() (imputegap.recovery.manager.TimeSeries method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="imputegap.explainer.html#imputegap.recovery.explainer.Explainer.print">print() (imputegap.recovery.explainer.Explainer method)</a>
 
         <ul>
           <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.print">(imputegap.recovery.manager.TimeSeries method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.print_results">print_results() (imputegap.recovery.manager.TimeSeries method)</a>
 </li>
     </ul></td>

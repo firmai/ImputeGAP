@@ -1,10 +1,8 @@
-==========
-Downstream
-==========
+=====================
+Downstream Evaluation
+=====================
 
-
-ImputeGAP is a versatile library designed to help users evaluate both the upstream aspects (e.g., errors, entropy, correlation) and the downstream impacts of data imputation.
-By leveraging a built-in Forecaster, users can assess how the imputation process influences the performance of specific tasks.
+ImputeGAP includes a dedicated module for systematically evaluating the impact of data imputation on downstream tasks. Currently, forecasting is the primary supported task, with plans to expand to additional applications in the future. The example below demonstrates how to define the forecasting task and specify Prophet as the predictive model
 
 
 Below is an example of how to call the downstream process for the model Prophet by defining a dictionary for the evaluator and selecting the model:
@@ -17,6 +15,7 @@ Below is an example of how to call the downstream process for the model Prophet 
 
     # initialize the TimeSeries() object
     ts = TimeSeries()
+    print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
 
     # load and normalize the timeseries
     ts.load_series(utils.search_path("chlorine"))
@@ -29,13 +28,9 @@ Below is an example of how to call the downstream process for the model Prophet 
     imputer = Imputation.MatrixCompletion.CDRec(ts_m)
     imputer.impute()
 
-    # compute and print the imputation metrics with Up and Downstream
-    downstream_options = {"evaluator": "forecaster", "model": "prophet"}
-    imputer.score(ts.data, imputer.recov_data)  # upstream standard analysis
-    imputer.score(ts.data, imputer.recov_data, downstream=downstream_options)  # downstream advanced analysis
-
-    # print the imputation metrics
-    ts.print_results(imputer.metrics, algorithm=imputer.algorithm)
+    # compute print the downstream results
+    downstream_config = {"evaluator": "forecaster", "model": "prophet"}
+    imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
     ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 
 

@@ -14,8 +14,8 @@ class TestMPIN(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10,
-                                              offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10,
+                                                                      offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.MPIN(incomp_data).impute()
         algo.score(ts_1.data)
@@ -46,8 +46,8 @@ class TestMPIN(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10,
-                                              offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10,
+                                                                      offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.MPIN(incomp_data).impute(params={"incre_mode": "data+state", "window": 1,
             "k": 15, "learning_rate": 0.001, "weight_decay": 0.2, "epochs": 6, "num_of_iteration": 6, "threshold": 0.50, "base": "GCN"})

@@ -91,7 +91,7 @@ class Benchmark:
             TimeSeries object containing contaminated data.
         """
         if pattern == "mcar":
-            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, rate_dataset=rate, rate_series=rate, block_size=block_size_mcar, seed=True)
+            incomp_data = ts_test.Contamination.missing_completely_at_random(input_data=ts_test.data, rate_dataset=rate, rate_series=rate, block_size=block_size_mcar, seed=True)
         elif pattern == "mp":
             incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, rate_dataset=rate, rate_series=rate)
         elif pattern == "disjoint":

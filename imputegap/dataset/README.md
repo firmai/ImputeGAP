@@ -5,6 +5,302 @@
 ImputeGap uses several datasets containing different characteristics to test your implementations.
 
 
+## AIR-QUALITY
+
+
+### Summary
+
+| Data info          |                                                                                                                                        |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| Dataset codename   | airq                                                                                                                                   |
+| Dataset name       | Air Quality                                                                                                                            |
+| Dataset source     | Saverio De Vito (saverio.devito '@' enea.it), ENEA - National Agency for New Technologies, Energy and Sustainable Economic Development | 
+| Granularity        | hourly                                                                                                                                 |
+| Dataset dimensions | M=10 N=1000                                                                                                                            |
+
+
+
+
+
+<br /><hr /><br />
+
+
+
+
+
+## BAFU
+
+The BAFU dataset, kindly provided by the BundesAmt Für Umwelt (the Swiss Federal Office for the Environment)[https://www.bafu.admin.ch], contains water discharge time series collected from different Swiss rivers containing between 200k and 1.3 million values each and covers the time period from 1974 to 2015. The BAFU dataset appeared in [[2]](#ref2).
+
+### Plots
+The plots present a series of plots derived from the BAFU dataset, illustrating various aspects of the data and preprocessing steps.
+BAFU dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+BAFU dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while BAFU dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, BAFU - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
+
+![BAFU dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/01_bafu-rawdata-NxM_graph.jpg)
+![BAFU dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/02_bafu-rawdata20x400_graph.jpg)
+![BAFU dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/03_bafu-rawdata01x400_graph.jpg)
+![BAFU - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/04_bafu-normmin_maxdata01x400_graph.jpg)
+
+### Features
+
+| Category       | Feature                                                            | Value                 |
+|----------------|--------------------------------------------------------------------|-----------------------|
+| Geometry       | 5-bin histogram mode                                               | 10.677826122412835    |
+| Geometry       | 10-bin histogram mode                                              | 4.917292125971148     |
+| Geometry       | Proportion of high incremental changes in the series               | 0.004720104456518018  |
+| Geometry       | Longest stretch of above-mean values                               | 170406.0              |
+| Geometry       | Transition matrix column variance                                  | 0.00591715976331361   |
+| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.014639882988124284  |
+| Geometry       | Positive outlier timing                                            | -0.6863011474556843   |
+| Geometry       | Negative outlier timing                                            | 0.5013873729015802    |
+| Geometry       | Longest stretch of decreasing values                               | 213.0                 |
+| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.2                   |
+| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.82                  |
+| Correlation    | First 1/e crossing of the ACF                                      | 31.923359247023075    |
+| Correlation    | First minimum of the ACF                                           | 60                    |
+| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 0.0006100829700701747 |
+| Correlation    | Time reversibility                                                 | 1.265206120624004e-06 |
+| Correlation    | First minimum of the AMI function                                  | 40.0                  |
+| Correlation    | Change in autocorrelation timescale after incremental differencing | 2.542976299460889e-05 |
+| Trend          | Wangs periodicity metric                                           | 3238                  |
+| Trend          | Entropy of successive pairs in symbolized series                   | 1.1196301017972983    |
+| Trend          | Error of 3-point rolling mean forecast                             | 0.27272853006237263   |
+| Transformation | Power in the lowest 20% of frequencies                             | 0.9838423222377587    |
+| Transformation | Centroid frequency                                                 | 0.03133275601505682   |
+
+
+### Summary
+
+| Data info          |                                             |
+|--------------------|---------------------------------------------|
+| Dataset codename   | BAFU<br/>bafu                               |
+| Dataset name       | Hydrological data across multiple stations  |
+| Url/source         | https://www.bafu.admin.ch/bafu/en/home.html |
+| Granularity        | 30 minutes                                  |
+| Observations       | spans years 1974 to 2015                    |
+| Dataset dimensions | M=12 N=85203                                |
+
+
+
+
+<br /><hr /><br />
+
+
+
+
+
+
+## Chlorine
+
+The Chlorine dataset originates from chlorine residual management aimed at ensuring the security of water distribution systems [Chlorine Residual Management for Water Distribution System Security](https://www.researchgate.net/publication/226930242_Chlorine_Residual_Management_for_Water_Distribution_System_Security), with data sourced from [US EPA Research](https://www.epa.gov/research).
+It consists of 50 time series, each representing a distinct location, with 1,000 data points per series recorded at 5-minute intervals.
+The dataset exhibits a cyclic pattern with recurring peaks, suggesting the presence of periodic characteristics.
+This makes it particularly well-suited for time series imputation methods that are designed to detect and leverage seasonality in data.
+
+### Plots
+The plots present a series of plots derived from the Chlorine dataset, illustrating various aspects of the data and preprocessing steps.
+Chlorine dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+Chlorine dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Chlorine dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, Chlorine - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
+
+![Chlorine dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/01_chlorine-rawdata-NxM_graph.jpg)
+![Chlorine dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/02_chlorine-rawdata20x400_graph.jpg)
+![Chlorine dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/03_chlorine-rawdata01x400_graph.jpg)
+![Chlorine - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/04_chlorine-normmin_maxdata01x400_graph.jpg)
+
+### Features
+
+| Category       | Feature                                                            | Value                 |
+|----------------|--------------------------------------------------------------------|-----------------------|
+| Geometry       | 5-bin histogram mode                                               | -0.7816940400450461   |
+| Geometry       | 10-bin histogram mode                                              | -0.988389310201491    |
+| Geometry       | Proportion of high incremental changes in the series               | 0.123702474049481     |
+| Geometry       | Longest stretch of above-mean values                               | 970.0                 |
+| Geometry       | Transition matrix column variance                                  | 0.06770833333333334   |
+| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.24298075807561495   |
+| Geometry       | Positive outlier timing                                            | -0.86082              |
+| Geometry       | Negative outlier timing                                            | 0.3675600000000001    |
+| Geometry       | Longest stretch of decreasing values                               | 124.0                 |
+| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.24                  |
+| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.32                  |
+| Correlation    | First 1/e crossing of the ACF                                      | 1559.7693638923522    |
+| Correlation    | First minimum of the ACF                                           | 62                    |
+| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 1.150419457226549     |
+| Correlation    | Time reversibility                                                 | -0.004961660957249964 |
+| Correlation    | First minimum of the AMI function                                  | 40.0                  |
+| Correlation    | Change in autocorrelation timescale after incremental differencing | 0.004814305364511692  |
+| Trend          | Wangs periodicity metric                                           | 122                   |
+| Trend          | Entropy of successive pairs in symbolized series                   | 1.186724208570797     |
+| Trend          | Error of 3-point rolling mean forecast                             | 0.08211532856608073   |
+| Transformation | Power in the lowest 20% of frequencies                             | 0.9988700796218077    |
+| Transformation | Centroid frequency                                                 | 0.0004793689962142944 |
+
+
+### Summary
+
+| Data info          |                                                                                                                                                                                    |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dataset codename   | chlorine                                                                                                                                                                           |
+| Dataset name       | Chlorine data                                                                                                                                                                      |
+| Url                | https://www.epa.gov/research                                                                                                                                                       |
+| Source             | United States Environmental Protection Agency, EPANET<br/>Prof. Jeanne M. VanBriesen                                                                                               |
+| Article            | Vanbriesen, Jeanne & Parks, Shannon & Helbling, Damian & Mccoy, Stacia. (2011). Chlorine Residual Management for Water Distribution System Security. 10.1007/978-1-4614-0189-6_11. | 
+| Time granularity   | 5 minutes                                                                                                                                                                          |
+| Dataset dimensions | M=50 N=1000                                                                                                                                                                        |
+
+
+
+
+<br /><hr /><br />
+
+
+
+
+
+
+## Climate
+
+The Climate dataset is an aggregated and processed collection used for climate change attribution studies.
+It contains observations data for 18 climate agents across 125 locations in North America [USC Melady Lab](https://viterbi-web.usc.edu/~liu32/data.html).
+The dataset has a temporal granularity of 1 month, comprising 10 series with 5,000 values each.
+This structure is particularly valuable for spatio-temporal modeling [Spatial-temporal causal modeling for climate change attribution](https://dl.acm.org/doi/10.1145/1557019.1557086), as it enables researchers to account for both spatial and temporal dependencies.
+The dataset exhibits high variability, along with periodic or trend-like behavior and noise, making it suitable for advanced analytical techniques.
+
+### Plots
+The plots present a series of plots derived from the Climate dataset, illustrating various aspects of the data and preprocessing steps.
+Climate dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+Climate dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Climate dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, Climate - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
+
+![Climate dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/01_climate-rawdata-NxM_graph.jpg)
+![Climate dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/02_climate-rawdata20x400_graph.jpg)
+![Climate dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/03_climate-rawdata01x400_graph.jpg)
+![Climate - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/04_climate-normmin_maxdata01x400_graph.jpg)
+
+### Features
+
+| Category       | Feature                                                            | Value                 |
+|----------------|--------------------------------------------------------------------|-----------------------|
+| Geometry       | 5-bin histogram mode                                               | 0.09325838586722446   |
+| Geometry       | 10-bin histogram mode                                              | -0.4947305240048063   |
+| Geometry       | Proportion of high incremental changes in the series               | 0.8884977699553991    |
+| Geometry       | Longest stretch of above-mean values                               | 119.0                 |
+| Geometry       | Transition matrix column variance                                  | 0.0002728894456633256 |
+| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.14380405574828758   |
+| Geometry       | Positive outlier timing                                            | 0.06807999999999992   |
+| Geometry       | Negative outlier timing                                            | -0.20139999999999997  |
+| Geometry       | Longest stretch of decreasing values                               | 10.0                  |
+| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.7                   |
+| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.64                  |
+| Correlation    | First 1/e crossing of the ACF                                      | 3.3379314332379257    |
+| Correlation    | First minimum of the ACF                                           | 6                     |
+| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 0.08356735782752395   |
+| Correlation    | Time reversibility                                                 | -0.019876160881000596 |
+| Correlation    | First minimum of the AMI function                                  | 5.0                   |
+| Correlation    | Change in autocorrelation timescale after incremental differencing | 0.018867924528301886  |
+| Trend          | Wangs periodicity metric                                           | 11                    |
+| Trend          | Entropy of successive pairs in symbolized series                   | 1.8832855664772494    |
+| Trend          | Error of 3-point rolling mean forecast                             | 0.7960326509462264    |
+| Transformation | Power in the lowest 20% of frequencies                             | 0.7973876367136716    |
+| Transformation | Centroid frequency                                                 | 0.4032451996154645    |
+
+
+### Summary
+
+| Data info          |                                                                         |
+|--------------------|-------------------------------------------------------------------------|
+| Dataset codename   | climate                                                                 |
+| Dataset name       | Aggregated and Processed data collection for climate change attribution |
+| Url                | https://viterbi-web.usc.edu/~liu32/data.html                            |
+| Url item           | NA-1990-2002-Monthly.csv                                                |
+| Time granularity   | 1 month                                                                 |
+| Dataset dimensions | M=10 N=5000                                                             |
+
+
+
+
+
+<br /><hr /><br />
+
+
+
+
+## Drift
+The Drift dataset comprises 13,910 measurements collected from 16 chemical sensors exposed to six different gases, with only batch 10 utilized for this dataset [Gas Sensor Array Drift at Different Concentrations](https://archive.ics.uci.edu/dataset/270).
+It includes information on the concentration levels to which the sensors were exposed during each measurement.
+Data was collected over a 36-month period, from January 2008 to February 2011, at a gas delivery platform facility within the ChemoSignals Laboratory at the BioCircuits Institute, University of California, San Diego [On the calibration of sensor arrays for pattern recognition using the minimal number of experiments](https://www.sciencedirect.com/science/article/pii/S0169743913001937).
+The dataset has a time granularity of 6 hours and consists of 100 time series, each containing 1,000 data points. This dataset is particularly valuable for testing algorithms designed to handle drift and outliers.
+
+### Plots
+The plots present a series of plots derived from the Drift dataset, illustrating various aspects of the data and preprocessing steps.
+Drift dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
+Drift dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Drift dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
+Finally, Drift - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
+
+![Drift dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/01_drift-rawdata-NxM_graph.jpg)
+![Drift dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/02_drift-rawdata20x400_graph.jpg)
+![Drift dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/03_drift-rawdata01x400_graph.jpg)
+![Drift - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/04_drift-normmin_maxdata01x400_graph.jpg)
+
+### Features
+
+
+| Category       | Feature                                                            | Value                 |
+|----------------|--------------------------------------------------------------------|-----------------------|
+| Geometry       | 5-bin histogram mode                                               | -1.2468173605295707   |
+| Geometry       | 10-bin histogram mode                                              | 0.8254787327262303    |
+| Geometry       | Proportion of high incremental changes in the series               | 0.965619656196562     |
+| Geometry       | Longest stretch of above-mean values                               | 92.0                  |
+| Geometry       | Transition matrix column variance                                  | 0.0009604922097481461 |
+| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.03029724105804939   |
+| Geometry       | Positive outlier timing                                            | 0.006040000000000045  |
+| Geometry       | Negative outlier timing                                            | 0.008399999999999963  |
+| Geometry       | Longest stretch of decreasing values                               | 7.0                   |
+| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.64                  |
+| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.84                  |
+| Correlation    | First 1/e crossing of the ACF                                      | 0.5531405331698586    |
+| Correlation    | First minimum of the ACF                                           | 1                     |
+| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 0.0030914312919998453 |
+| Correlation    | Time reversibility                                                 | -0.007087613186347406 |
+| Correlation    | First minimum of the AMI function                                  | 4.0                   |
+| Correlation    | Change in autocorrelation timescale after incremental differencing | 1.0                   |
+| Trend          | Wangs periodicity metric                                           | 3                     |
+| Trend          | Entropy of successive pairs in symbolized series                   | 2.188715240115428     |
+| Trend          | Error of 3-point rolling mean forecast                             | 1.1957075487620428    |
+| Transformation | Power in the lowest 20% of frequencies                             | 0.17090456872484874   |
+| Transformation | Centroid frequency                                                 | 1.8841598396202843    |
+
+### Summary
+
+| Data info              |                                                                                                                                                                                        |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dataset codename       | drift                                                                                                                                                                                  |
+| Dataset names          | Gas Sensor Array Drift Dataset at Different Concentrations                                                                                                                             |
+| Source                 | Alexander Vergara (vergara '@' ucsd.edu)<br/>BioCircutis Institute<br/>University of California San DiegoSan Diego, California, USA                                                    |                                                                                                                                    |
+| Donors of the Dataset: | Alexander Vergara (vergara '@' ucsd.edu)<br/>Jordi Fonollosa (fonollosa '@'ucsd.edu)<br/>Irene Rodriguez-Lujan (irrodriguezlujan '@' ucsd.edu)<br/>Ramon Huerta (rhuerta '@' ucsd.edu) |                                                                                                                                                                                    |
+| Time granularity       | 6 hours                                                                                                                                                                                |
+| Dataset dimensions     | M=100  N=1000                                                                                                                                                                          |
+| Remarks                | only batch 10 is taken from the dataset                                                                                                                                                |
+| Url                    | https://archive.ics.uci.edu/ml/datasets/Gas+Sensor+Array+Drift+Dataset+at+Different+Concentrations                                                                                     |
+
+
+
+
+
+
+
+
+
+<br /><hr /><br />
+
+
+
+
+
+
+
 
 ## EEG-ALCOHOL
 
@@ -62,7 +358,7 @@ Finally, EEG-ALCOHOL - normalized 20x400 demonstrates the impact of "MIN-MAX" no
 
 | Data info          | Values                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 |--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Dataset name       | eeg-alcohol                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Dataset name       | eeg-alcohol                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | Dataset codename   | co3a0000458.rd                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | Dataset name       | EEG Database: Genetic Predisposition to Alcoholism                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | Url                | https://kdd.ics.uci.edu/databases/eeg/eeg.data.html                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
@@ -75,9 +371,17 @@ Finally, EEG-ALCOHOL - normalized 20x400 demonstrates the impact of "MIN-MAX" no
 | Samples            | 416 samples (368 post-stim samples)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | Time resolution    | 3.906 ms uV                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | Specific trial     | S2 match, trial 119                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |                                                                                                                                                                                                                                       |
-| Dataset dimensions | N=256 M=64 electrodes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Dataset dimensions | M=64 N=256  electrodes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+
+
+
+
+
 
 <br /><hr /><br />
+
+
+
 
 
 ## EEG-READING
@@ -132,20 +436,50 @@ Finally, EEG-READING - normalized 20x400 demonstrates the impact of "MIN-MAX" no
 
 ### Summary
 
-| Data info          |                                                                                                    |
-|--------------------|----------------------------------------------------------------------------------------------------|
-| Dataset codename   | eeg-reading                                                                                        |
-| Dataset name       | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG                            |
-| Url                | https://doi.org/10.17605/OSF.IO/RKQBU                                                              |
+| Data info          |                                                                                                     |
+|--------------------|-----------------------------------------------------------------------------------------------------|
+| Dataset codename   | eeg-reading                                                                                         |
+| Dataset name       | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG                             |
+| Url                | https://doi.org/10.17605/OSF.IO/RKQBU                                                               |
  | Specific URL       | https://osf.io/tu4zj                                                                               |
-| Source             | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG                            |
-| Article            | https://www.nature.com/articles/s41597-024-03915-8<br/>Boi Mai Quach, Cathal Gurrin & Graham Healy |
-| Time granularity   | 1000.0 Hz                                                                                          |
-| t                  | -200.00 ...    1000.00 ms                                                                          |
-| Epoch              | 1 used on 564                                                                                      |
-| Dataset dimensions | N=1201 M=33                                                                                        |
+| Source             | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG                             |
+| Article            | https://www.nature.com/articles/s41597-024-03915-8<br/>Boi Mai Quach, Cathal Gurrin & Graham Healy  |
+| Time granularity   | 1000.0 Hz                                                                                           |
+| t                  | -200.00 ...    1000.00 ms                                                                           |
+| Epoch              | 1 used on 564                                                                                       |
+| Dataset dimensions | M=33 N=1201                                                                                         |
+
+
+
 
 <br /><hr /><br />
+
+
+
+
+
+
+## ELECTRICITY
+
+### Summary
+
+| Data info          |                |
+|--------------------|----------------|
+| Dataset codename   | electricity    |
+| Dataset name       | ELECTRICITY    |
+| Dataset source     |                | 
+| Granularity        |                |
+| Dataset dimensions | M=26304 N=370  |
+
+
+
+
+
+<br /><hr /><br />
+
+
+
+
 
 ## fMRI-OBJECTVIEWING
 
@@ -206,9 +540,22 @@ Finally, fMRI-OBJECTVIEWING - normalized 20x121 demonstrates the impact of "MIN-
 | Article            | Haxby, J.V., Gobbini, M.I., Furey, M.L., Ishai, A., Schouten, J.L., Pietrini, P. (2001). Distributed and overlapping representations of faces and objects in ventral temporal cortex. Science, 293(5539):2425-30<br/>Hanson, S.J., Matsuka, T., Haxby, J.V. (2004). Combinatorial codes in ventral temporal lobe for object recognition: Haxby (2001) revisited: is there a "face" area? Neuroimage. 23(1):156-66<br/>O'Toole, A.J., Jiang, F., Abdi, H., Haxby, J.V. (2005). Partially distributed representations of objects and faces in ventral temporal cortex. J Cogn Neurosci, 17(4):580-90 |
 | Time granularity   | 500ms                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | Epoch              | 1 used on 36                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| Dataset dimensions | N=121 M=10000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Dataset dimensions | M=121 N=10000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+
+
+
+
+
 
 <br /><hr /><br />
+
+
+
+
+
+
+
+
 
 ## fMRI-STOPTASK
 
@@ -266,196 +613,24 @@ Finally, fMRI-STOPTASK - normalized 20x182 demonstrates the impact of "MIN-MAX" 
 | Source             | OpenfMRI                                                                                                                                                                    |
 | Article            | Xue, G., Aron, A.R., Poldrack, R.A. (2008). Common neural substrates for inhibition of spoken and manual responses. Cereb Cortex, 18(8):1923-32. doi: 10.1093/cercor/bhm220 |
 | Epoch              | 1 used on 120                                                                                                                                                               |
-| Dataset dimensions | N=182 M=10000                                                                                                                                                               |
-
-<br /><hr /><br />
+| Dataset dimensions | M=182 N=10000                                                                                                                                                               |
 
 
-## Drift
-The Drift dataset comprises 13,910 measurements collected from 16 chemical sensors exposed to six different gases, with only batch 10 utilized for this dataset [Gas Sensor Array Drift at Different Concentrations](https://archive.ics.uci.edu/dataset/270).
-It includes information on the concentration levels to which the sensors were exposed during each measurement.
-Data was collected over a 36-month period, from January 2008 to February 2011, at a gas delivery platform facility within the ChemoSignals Laboratory at the BioCircuits Institute, University of California, San Diego [On the calibration of sensor arrays for pattern recognition using the minimal number of experiments](https://www.sciencedirect.com/science/article/pii/S0169743913001937).
-The dataset has a time granularity of 6 hours and consists of 100 time series, each containing 1,000 data points. This dataset is particularly valuable for testing algorithms designed to handle drift and outliers.
-
-### Plots
-The plots present a series of plots derived from the Drift dataset, illustrating various aspects of the data and preprocessing steps.
-Drift dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
-Drift dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Drift dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
-Finally, Drift - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
-
-![Drift dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/01_drift-rawdata-NxM_graph.jpg)
-![Drift dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/02_drift-rawdata20x400_graph.jpg)
-![Drift dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/03_drift-rawdata01x400_graph.jpg)
-![Drift - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/04_drift-normmin_maxdata01x400_graph.jpg)
-
-### Features
 
 
-| Category       | Feature                                                            | Value                 |
-|----------------|--------------------------------------------------------------------|-----------------------|
-| Geometry       | 5-bin histogram mode                                               | -1.2468173605295707   |
-| Geometry       | 10-bin histogram mode                                              | 0.8254787327262303    |
-| Geometry       | Proportion of high incremental changes in the series               | 0.965619656196562     |
-| Geometry       | Longest stretch of above-mean values                               | 92.0                  |
-| Geometry       | Transition matrix column variance                                  | 0.0009604922097481461 |
-| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.03029724105804939   |
-| Geometry       | Positive outlier timing                                            | 0.006040000000000045  |
-| Geometry       | Negative outlier timing                                            | 0.008399999999999963  |
-| Geometry       | Longest stretch of decreasing values                               | 7.0                   |
-| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.64                  |
-| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.84                  |
-| Correlation    | First 1/e crossing of the ACF                                      | 0.5531405331698586    |
-| Correlation    | First minimum of the ACF                                           | 1                     |
-| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 0.0030914312919998453 |
-| Correlation    | Time reversibility                                                 | -0.007087613186347406 |
-| Correlation    | First minimum of the AMI function                                  | 4.0                   |
-| Correlation    | Change in autocorrelation timescale after incremental differencing | 1.0                   |
-| Trend          | Wangs periodicity metric                                           | 3                     |
-| Trend          | Entropy of successive pairs in symbolized series                   | 2.188715240115428     |
-| Trend          | Error of 3-point rolling mean forecast                             | 1.1957075487620428    |
-| Transformation | Power in the lowest 20% of frequencies                             | 0.17090456872484874   |
-| Transformation | Centroid frequency                                                 | 1.8841598396202843    |
 
-### Summary
-
-| Data info              |                                                                                                                                                                                       |
-|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Dataset codename       | drift                                                                                                                                                                                 |
-| Dataset names          | Gas Sensor Array Drift Dataset at Different Concentrations                                                                                                                            |
-| Source                 | Alexander Vergara (vergara '@' ucsd.edu)<br/>BioCircutis Institute<br/>University of California San DiegoSan Diego, California, USA                                                   |                                                                                                                                    |
-| Donors of the Dataset: | Alexander Vergara (vergara '@' ucsd.edu)<br/>Jordi Fonollosa (fonollosa '@'ucsd.edu)<br/>Irene Rodriguez-Lujan (irrodriguezlujan '@' ucsd.edu)<br/>Ramon Huerta (rhuerta '@' ucsd.edu) |                                                                                                                                                                                    |
-| Time granularity       | 6 hours                                                                                                                                                                               |
-| Dataset dimensions     | N=1000 M=100                                                                                                                                                                          |
-| Remarks                | only batch 10 is taken from the dataset                                                                                                                                               |
-| Url                    | https://archive.ics.uci.edu/ml/datasets/Gas+Sensor+Array+Drift+Dataset+at+Different+Concentrations                                                                                    |
 
 
 <br /><hr /><br />
 
 
-## Chlorine
-
-The Chlorine dataset originates from chlorine residual management aimed at ensuring the security of water distribution systems [Chlorine Residual Management for Water Distribution System Security](https://www.researchgate.net/publication/226930242_Chlorine_Residual_Management_for_Water_Distribution_System_Security), with data sourced from [US EPA Research](https://www.epa.gov/research).
-It consists of 50 time series, each representing a distinct location, with 1,000 data points per series recorded at 5-minute intervals.
-The dataset exhibits a cyclic pattern with recurring peaks, suggesting the presence of periodic characteristics.
-This makes it particularly well-suited for time series imputation methods that are designed to detect and leverage seasonality in data.
-
-### Plots
-The plots present a series of plots derived from the Chlorine dataset, illustrating various aspects of the data and preprocessing steps.
-Chlorine dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
-Chlorine dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Chlorine dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
-Finally, Chlorine - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
-
-![Chlorine dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/01_chlorine-rawdata-NxM_graph.jpg)
-![Chlorine dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/02_chlorine-rawdata20x400_graph.jpg)
-![Chlorine dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/03_chlorine-rawdata01x400_graph.jpg)
-![Chlorine - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/04_chlorine-normmin_maxdata01x400_graph.jpg)
-
-### Features
-
-| Category       | Feature                                                            | Value                 |
-|----------------|--------------------------------------------------------------------|-----------------------|
-| Geometry       | 5-bin histogram mode                                               | -0.7816940400450461   |
-| Geometry       | 10-bin histogram mode                                              | -0.988389310201491    |
-| Geometry       | Proportion of high incremental changes in the series               | 0.123702474049481     |
-| Geometry       | Longest stretch of above-mean values                               | 970.0                 |
-| Geometry       | Transition matrix column variance                                  | 0.06770833333333334   |
-| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.24298075807561495   |
-| Geometry       | Positive outlier timing                                            | -0.86082              |
-| Geometry       | Negative outlier timing                                            | 0.3675600000000001    |
-| Geometry       | Longest stretch of decreasing values                               | 124.0                 |
-| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.24                  |
-| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.32                  |
-| Correlation    | First 1/e crossing of the ACF                                      | 1559.7693638923522    |
-| Correlation    | First minimum of the ACF                                           | 62                    |
-| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 1.150419457226549     |
-| Correlation    | Time reversibility                                                 | -0.004961660957249964 |
-| Correlation    | First minimum of the AMI function                                  | 40.0                  |
-| Correlation    | Change in autocorrelation timescale after incremental differencing | 0.004814305364511692  |
-| Trend          | Wangs periodicity metric                                           | 122                   |
-| Trend          | Entropy of successive pairs in symbolized series                   | 1.186724208570797     |
-| Trend          | Error of 3-point rolling mean forecast                             | 0.08211532856608073   |
-| Transformation | Power in the lowest 20% of frequencies                             | 0.9988700796218077    |
-| Transformation | Centroid frequency                                                 | 0.0004793689962142944 |
 
 
-### Summary
 
-| Data info          |                                                                                                                                                                                    |
-|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Dataset codename   | chlorine                                                                                                                                                                           |
-| Dataset name       | Chlorine data                                                                                                                                                                      |
-| Url                | https://www.epa.gov/research                                                                                                                                                       |
-| Source             | United States Environmental Protection Agency, EPANET<br/>Prof. Jeanne M. VanBriesen                                                                                               |
-| Article            | Vanbriesen, Jeanne & Parks, Shannon & Helbling, Damian & Mccoy, Stacia. (2011). Chlorine Residual Management for Water Distribution System Security. 10.1007/978-1-4614-0189-6_11. | 
-| Time granularity   | 5 minutes                                                                                                                                                                          |
-| Dataset dimensions | N=1000 M=50                                                                                                                                                                        |
-
-<br /><hr /><br />
-
-## Climate
-
-The Climate dataset is an aggregated and processed collection used for climate change attribution studies.
-It contains observations data for 18 climate agents across 125 locations in North America [USC Melady Lab](https://viterbi-web.usc.edu/~liu32/data.html).
-The dataset has a temporal granularity of 1 month, comprising 10 series with 5,000 values each.
-This structure is particularly valuable for spatio-temporal modeling [Spatial-temporal causal modeling for climate change attribution](https://dl.acm.org/doi/10.1145/1557019.1557086), as it enables researchers to account for both spatial and temporal dependencies.
-The dataset exhibits high variability, along with periodic or trend-like behavior and noise, making it suitable for advanced analytical techniques.
-
-### Plots
-The plots present a series of plots derived from the Climate dataset, illustrating various aspects of the data and preprocessing steps.
-Climate dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
-Climate dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while Climate dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
-Finally, Climate - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
-
-![Climate dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/01_climate-rawdata-NxM_graph.jpg)
-![Climate dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/02_climate-rawdata20x400_graph.jpg)
-![Climate dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/03_climate-rawdata01x400_graph.jpg)
-![Climate - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/04_climate-normmin_maxdata01x400_graph.jpg)
-
-### Features
-
-| Category       | Feature                                                            | Value                 |
-|----------------|--------------------------------------------------------------------|-----------------------|
-| Geometry       | 5-bin histogram mode                                               | 0.09325838586722446   |
-| Geometry       | 10-bin histogram mode                                              | -0.4947305240048063   |
-| Geometry       | Proportion of high incremental changes in the series               | 0.8884977699553991    |
-| Geometry       | Longest stretch of above-mean values                               | 119.0                 |
-| Geometry       | Transition matrix column variance                                  | 0.0002728894456633256 |
-| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.14380405574828758   |
-| Geometry       | Positive outlier timing                                            | 0.06807999999999992   |
-| Geometry       | Negative outlier timing                                            | -0.20139999999999997  |
-| Geometry       | Longest stretch of decreasing values                               | 10.0                  |
-| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.7                   |
-| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.64                  |
-| Correlation    | First 1/e crossing of the ACF                                      | 3.3379314332379257    |
-| Correlation    | First minimum of the ACF                                           | 6                     |
-| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 0.08356735782752395   |
-| Correlation    | Time reversibility                                                 | -0.019876160881000596 |
-| Correlation    | First minimum of the AMI function                                  | 5.0                   |
-| Correlation    | Change in autocorrelation timescale after incremental differencing | 0.018867924528301886  |
-| Trend          | Wangs periodicity metric                                           | 11                    |
-| Trend          | Entropy of successive pairs in symbolized series                   | 1.8832855664772494    |
-| Trend          | Error of 3-point rolling mean forecast                             | 0.7960326509462264    |
-| Transformation | Power in the lowest 20% of frequencies                             | 0.7973876367136716    |
-| Transformation | Centroid frequency                                                 | 0.4032451996154645    |
-
-
-### Summary
-
-| Data info          |                                                                         |
-|--------------------|-------------------------------------------------------------------------|
-| Dataset codename   | climate                                                                 |
-| Dataset name       | Aggregated and Processed data collection for climate change attribution |
-| Url                | https://viterbi-web.usc.edu/~liu32/data.html                            |
-| Url item           | NA-1990-2002-Monthly.csv                                                |
-| Time granularity   | 1 month                                                                 |
-| Dataset dimensions | N=5000 M=10                                                             |
-
-<br /><hr /><br />
-
-<br /><hr /><br />
 
 ## Meteo
+
+The MeteoSwiss dataset, kindly provided by the Swiss Federal Office of Meteorology and Climatology [http://meteoswiss.admin.ch], contains weather time series recorded in different cities in Switzerland from 1980 to 2018. The MeteoSwiss dataset appeared in [[1]](#ref1).
 
 ### Plots
 The plots present a series of plots derived from the Meteo dataset, illustrating various aspects of the data and preprocessing steps.
@@ -498,14 +673,14 @@ Finally, Meteo - normalized 20x400 demonstrates the impact of "MIN-MAX" normaliz
 
 ### Summary
 
-| Data info          |                                                                                                                              |
-|--------------------|------------------------------------------------------------------------------------------------------------------------------|
-| Dataset codename   | meteo                                                                                                                        |
-| Dataset name       | Meteo Suisse data                                                                                                            |
-| Dataset source     | Federal Office of Meteorology and Climatology, MeteoSwiss<br/>Operation Center 1<br/>Postfach 257<br/>8058 Zürich-Flughafen  | 
-| Granularity        | 10 minutes                                                                                                                   |
-| Dataset dimensions | N=10000 M=10                                                                                                                 |
-|                    | TBA                                                                                                                          |
+| Data info          |                                                                                                                             |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Dataset codename   | meteo                                                                                                                       |
+| Dataset name       | Meteo Suisse data                                                                                                           |
+| Dataset source     | Federal Office of Meteorology and Climatology, MeteoSwiss<br/>Operation Center 1<br/>Postfach 257<br/>8058 Zürich-Flughafen | 
+| Granularity        | 10 minutes                                                                                                                  |
+| Dataset dimensions | M=20 N=10000                                                                                                                |
+|                    | TBA                                                                                                                         |
 
 #### Dataset description
 
@@ -526,56 +701,81 @@ Example: 13 = observation period 12:41 to 13:40
 
 <br /><hr /><br />
 
-## BAFU
 
-### Plots
-The plots present a series of plots derived from the BAFU dataset, illustrating various aspects of the data and preprocessing steps.
-BAFU dataset - raw data 64x256 shows the full raw dataset, consisting of NxM time series.
-BAFU dataset - raw data 20x400 provides a subset of the data, limited to 20 time series over 400 time steps, while BAFU dataset - raw data 01x400 focuses on a single time series extracted from the dataset.
-Finally, BAFU - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
-![BAFU dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/01_bafu-rawdata-NxM_graph.jpg)
-![BAFU dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/02_bafu-rawdata20x400_graph.jpg)
-![BAFU dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/03_bafu-rawdata01x400_graph.jpg)
-![BAFU - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/bafu/04_bafu-normmin_maxdata01x400_graph.jpg)
+<br /><hr /><br />
 
-### Features
 
-| Category       | Feature                                                            | Value                 |
-|----------------|--------------------------------------------------------------------|-----------------------|
-| Geometry       | 5-bin histogram mode                                               | 10.677826122412835    |
-| Geometry       | 10-bin histogram mode                                              | 4.917292125971148     |
-| Geometry       | Proportion of high incremental changes in the series               | 0.004720104456518018  |
-| Geometry       | Longest stretch of above-mean values                               | 170406.0              |
-| Geometry       | Transition matrix column variance                                  | 0.00591715976331361   |
-| Geometry       | Goodness of exponential fit to embedding distance distribution     | 0.014639882988124284  |
-| Geometry       | Positive outlier timing                                            | -0.6863011474556843   |
-| Geometry       | Negative outlier timing                                            | 0.5013873729015802    |
-| Geometry       | Longest stretch of decreasing values                               | 213.0                 |
-| Geometry       | Rescaled range fluctuation analysis (low-scale scaling)            | 0.2                   |
-| Geometry       | Detrended fluctuation analysis (low-scale scaling)                 | 0.82                  |
-| Correlation    | First 1/e crossing of the ACF                                      | 31.923359247023075    |
-| Correlation    | First minimum of the ACF                                           | 60                    |
-| Correlation    | Histogram-based automutual information (lag 2, 5 bins)             | 0.0006100829700701747 |
-| Correlation    | Time reversibility                                                 | 1.265206120624004e-06 |
-| Correlation    | First minimum of the AMI function                                  | 40.0                  |
-| Correlation    | Change in autocorrelation timescale after incremental differencing | 2.542976299460889e-05 |
-| Trend          | Wangs periodicity metric                                           | 3238                  |
-| Trend          | Entropy of successive pairs in symbolized series                   | 1.1196301017972983    |
-| Trend          | Error of 3-point rolling mean forecast                             | 0.27272853006237263   |
-| Transformation | Power in the lowest 20% of frequencies                             | 0.9838423222377587    |
-| Transformation | Centroid frequency                                                 | 0.03133275601505682   |
 
+
+
+
+## Motion
 
 ### Summary
 
-| Data info          |                                             |
-|--------------------|---------------------------------------------|
-| Dataset codename   | BAFU<br/>bafu                                   |
-| Dataset name       | Hydrological data across multiple stations  |
-| Url/source         | https://www.bafu.admin.ch/bafu/en/home.html |
-| Granularity        | 30 minutes                                  |
-| Observations       | spans years 1974 to 2015                    |
-| Dataset dimensions | N=50000 M=10                                |
+| Data info          |               |
+|--------------------|---------------|
+| Dataset codename   | motion        |
+| Dataset name       | Motion        |
+| Dataset source     |               | 
+| Granularity        |               |
+| Dataset dimensions | M=20 N=10000  |
 
+
+<br /><hr /><br />
+
+
+
+
+
+
+## Soccer
+
+### Summary
+
+| Data info          |                |
+|--------------------|----------------|
+| Dataset codename   | soccer         |
+| Dataset name       | Soccer         |
+| Dataset source     |                | 
+| Granularity        |                |
+| Dataset dimensions | M=10 N=501674  |
+
+
+
+
+<br /><hr /><br />
+
+
+
+
+
+
+## Temperature
+
+### Summary
+
+| Data info          |                |
+|--------------------|----------------|
+| Dataset codename   | temperature    |
+| Dataset name       | Temperature    |
+| Dataset source     |                | 
+| Granularity        |                |
+| Dataset dimensions | M=428 N=19358  |
+
+
+
+
+<br /><hr /><br />
+
+
+
+
+## References
+
+<a name="ref1"></a>
+[1] Mourad Khayati, Philippe Cudré-Mauroux, Michael H. Böhlen: Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl. Inf. Syst. 62(6): 2257-2280 (2020)
+
+[2] Ines Arous, Mourad Khayati, Philippe Cudré-Mauroux, Ying Zhang, Martin L. Kersten, Svetlin Stalinlov: RecovDB: Accurate and Efficient Missing Blocks Recovery for Large Time Series. ICDE 2019: 1976-1979
 

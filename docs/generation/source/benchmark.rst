@@ -2,15 +2,8 @@
 Benchmark
 =========
 
-ImputeGAP offers a Benchmark module that enables users to compare various algorithm families across different dataset types using multiple evaluation metrics.
+ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms [33]_.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates.
 
-The number of runs determines the stability of results for Deep Learning algorithms, which may fluctuate during the imputation training process.
-Users have full control over the analysis by customizing various parameters, including the list of datasets to evaluate, the choice of optimizer for fine-tuning algorithms on specific datasets, the algorithms to compare, the contamination patterns, and a range of missing rates.
-
-All missing data patterns developed in ImputeGAP are available in the ``ts.patterns`` module.
-All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module.
-All datasets provides in ImputeGAP are available in the ``ts.datasets`` module.
-All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module.
 
 The benchmarking module can be utilized as follows:
 
@@ -18,28 +11,26 @@ The benchmarking module can be utilized as follows:
 
     from imputegap.recovery.benchmark import Benchmark
 
-    # define analysis global variables
     save_dir = "./analysis"
     nbr_run = 2
 
-    # define the datasets to evaluate
-    datasets_demo = ["eeg-alcohol", "eeg-reading"]
+    datasets = ["eeg-alcohol", "eeg-reading"]
 
-    # define the optimizer to fine-tine the algorithms
-    optimiser_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 15, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
-    optimizers_demo = [optimiser_bayesian]
+    optimizer = {"optimizer": "ray_tune", "options": {"n_calls": 1, "max_concurrent_trials": 1}}
+    optimizers = [optimizer]
 
-    # define the algorithms for the imputation
-    algorithms_demo = ["MeanImpute", "CDRec", "STMVL", "IIM", "MRNN"]
+    algorithms = ["MeanImpute", "CDRec", "STMVL", "IIM", "MRNN"]
 
-    # define the missing pattern to contaminate the time series
-    patterns_demo = ["mcar"]
+    patterns = ["missing_completely_at_random"]
 
-    # define missing values percentages to see the evolution of the imputation
-    x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
+    range = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
     # launch the analysis
-    list_results, sum_scores = Benchmark().eval(algorithms=algorithms_demo, datasets=datasets_demo, patterns=patterns_demo, x_axis=x_axis, optimizers=optimizers_demo, save_dir=save_dir, runs=nbr_run)
+    list_results, sum_scores = Benchmark().eval(algorithms=algorithms, datasets=datasets, patterns=patterns, x_axis=range, optimizers=optimizers, save_dir=save_dir, runs=nbr_run)
+
+
+
+.. [33] Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux: Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)
 
 
 

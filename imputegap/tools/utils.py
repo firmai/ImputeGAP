@@ -118,12 +118,12 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
     TimeSeries
         TimeSeries object containing contaminated data.
     """
-    if pattern == "mcar":
-        incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
+    if pattern == "mcar" or pattern == "missing_completely_at_random":
+        incomp_data = ts.Contamination.missing_completely_at_random(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
     elif pattern == "mp" or pattern == "missing_percentage":
         incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset)
-    elif pattern == "mpr" or pattern == "missing_percentage_at_random":
-        incomp_data = ts.Contamination.missing_percentage_at_random(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed)
+    elif pattern == "ps" or pattern == "percentage_shift":
+        incomp_data = ts.Contamination.percentage_shift(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed)
     elif pattern == "disjoint":
         incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset)
     elif pattern == "overlap":
@@ -844,12 +844,11 @@ def list_of_algorithms():
 
 def list_of_patterns():
     return sorted([
-        "mcar",
+        "missing_completely_at_random",
         "missing_percentage",
-        "missing_percentage_at_random",
+        "percentage_shift",
         "disjoint",
         "overlap",
-        "blackout",
         "gaussian",
         "distribution"
     ])
@@ -867,7 +866,10 @@ def list_of_datasets(txt=False):
         "fmri-objectviewing",
         "fmri-stoptask",
         "meteo",
-        "test"
+        "electricity",
+        "motion",
+        "soccer",
+        "temperature"
     ])
 
     if txt:
@@ -883,3 +885,11 @@ def list_of_optimizers():
         "successive_halving",
         "greedy"
     ])
+
+def list_of_downstreams():
+    return sorted([
+        "prophet",
+        "exp-smoothing",
+        "naive"
+    ])
+
