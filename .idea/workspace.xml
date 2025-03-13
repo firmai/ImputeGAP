@@ -746,81 +746,9 @@
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/entry_points.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/requires.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../imputegap.egg-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pytest_imputation_beta.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pytest_imputation_beta.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/source/algorithms.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/generation/source/algorithms.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/generation/source/tutorials.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/generation/source/tutorials.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mcar_bayesian_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mcar_bayesian_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mcar_bayesian_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mcar_bayesian_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mcar_bayesian_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mcar_bayesian_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mcar_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mp_bayesian_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mp_bayesian_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mp_bayesian_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mp_bayesian_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mp_bayesian_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mp_bayesian_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/chlorine_mp_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/report_chlorine.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/chlorine/report_chlorine.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mcar_bayesian_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mcar_bayesian_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mcar_bayesian_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mcar_bayesian_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mcar_bayesian_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mcar_bayesian_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mcar_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mp_bayesian_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mp_bayesian_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mp_bayesian_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mp_bayesian_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mp_bayesian_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mp_bayesian_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/eegreading_mp_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/report_eegreading.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/aggregation/eegreading/report_eegreading.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/benchmarking_rmse.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mcar_bayesian_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mcar_bayesian_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mcar_bayesian_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mcar_bayesian_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mcar_bayesian_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mcar_bayesian_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mcar_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mp_bayesian_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mp_bayesian_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mp_bayesian_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mp_bayesian_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mp_bayesian_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mp_bayesian_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/chlorine_mp_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/report_chlorine.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/chlorine/report_chlorine.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mcar_bayesian_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mcar_bayesian_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mcar_bayesian_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mcar_bayesian_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mcar_bayesian_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mcar_bayesian_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mcar_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mp_bayesian_CORRELATION.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mp_bayesian_MAE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mp_bayesian_MI.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mp_bayesian_RMSE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mp_bayesian_imputation_time.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mp_bayesian_log_imputation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/eegreading_mp_metrics_subplot.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/report_eeg-reading.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/analysis/run_0/eeg-reading/report_eeg-reading.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_benchmark.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_benchmark.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_contamination.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_contamination.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_imputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_imputation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_loading.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_loading.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/runner_optimization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/runner_optimization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputegap/tools/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/tools/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputegap/wrapper/AlgoPython/BiTGraph/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mypy.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../procedure/about/about.md" beforeDir="false" />
@@ -1058,7 +986,7 @@
       <recent name="C:\Users\nquen\switchdrive\MST_MasterThesis\imputegap\imputegap\wrapper\AlgoPython\GRIN" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.runner_contamination">
+  <component name="RunManager" selected="Python tests.pytest in test_imputation_bit_graph.py">
     <configuration name="runner_contamination" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="ENV_FILES" value="" />
@@ -1151,36 +1079,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="tmp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="pytest in test_imputation_bit_graph.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="imputegap" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imputegap" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputegap/tmp.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_imputation_bit_graph.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest in test_imputation_bit_graph.py" />
         <item itemvalue="Python.runner_contamination" />
         <item itemvalue="Python.runner_imputation" />
         <item itemvalue="Python.runner_optimization" />
         <item itemvalue="Python.runner_loading" />
-        <item itemvalue="Python.tmp" />
       </list>
     </recent_temporary>
   </component>
@@ -1224,7 +1147,9 @@
       <workItem from="1741348344747" duration="10433000" />
       <workItem from="1741618597642" duration="10159000" />
       <workItem from="1741707340669" duration="6621000" />
-      <workItem from="1741771566430" duration="6855000" />
+      <workItem from="1741771566430" duration="6907000" />
+      <workItem from="1741789599599" duration="25000" />
+      <workItem from="1741864615813" duration="885000" />
     </task>
     <servers />
   </component>
@@ -1304,7 +1229,7 @@
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_missnet_py.coverage" NAME="pytest in test_imputation_missnet.py Coverage Results" MODIFIED="1739974489487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$runner_benchmark.coverage" NAME="runner_benchmark Coverage Results" MODIFIED="1741712840768" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputegap" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_mp_TestContaminationMP_test_mp_missing_percentage_total.coverage" NAME="pytest for test_contamination_mp.TestContaminationMP.test_mp_missing_percentage_total Coverage Results" MODIFIED="1740668906476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_bit_graph_py.coverage" NAME="pytest in test_imputation_bit_graph.py Coverage Results" MODIFIED="1741622462358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_bit_graph_py.coverage" NAME="pytest in test_imputation_bit_graph.py Coverage Results" MODIFIED="1741865364538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_imputation_tkcm_py.coverage" NAME="pytest in test_imputation_tkcm.py Coverage Results" MODIFIED="1739464480293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_for_test_contamination_mcar_TestContaminationMCAR_test_mcar_size_of_block.coverage" NAME="pytest for test_contamination_mcar.TestContaminationMCAR.test_mcar_size_of_block Coverage Results" MODIFIED="1740669541606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/imputegap$pytest_in_test_contamination_gaussian_py.coverage" NAME="pytest in test_contamination_gaussian.py Coverage Results" MODIFIED="1740676434132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />

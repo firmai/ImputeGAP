@@ -16,10 +16,10 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 
 import argparse
 
-if os.getenv("GITHUB_ACTIONS") == "true":
+if os.getenv("GITHUB_ACTIONS") == "true" or not torch.cuda.is_available():
     device = torch.device("cpu")
 else:
-    device = torch.device("cuda" if torch.cuda.is_available() and torch.backends.cudnn.is_available() else "cpu")
+    device = torch.device("cuda")
 
 args = argparse.Namespace(
     epochs=None,
