@@ -867,7 +867,9 @@ def list_of_datasets(txt=False):
         "fmri-stoptask",
         "meteo",
         "electricity",
-        "motion"
+        "motion",
+        "soccer",
+        "temperature"
     ])
 
     if txt:
