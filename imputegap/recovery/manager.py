@@ -70,6 +70,12 @@ class TimeSeries:
         IMPORT FORMAT : (Values,Series) : series are seperated by "SPACE" et values by "\\n"
         """
         self.data = None
+        self.name = "default"
+        self.algorithms = utils.list_of_algorithms()
+        self.patterns = utils.list_of_patterns()
+        self.datasets = utils.list_of_datasets()
+        self.optimizers = utils.list_of_optimizers()
+        self.downstream_models = utils.list_of_downstreams()
 
     def import_matrix(self, data=None):
         """
@@ -101,7 +107,7 @@ class TimeSeries:
 
             return self
 
-    def load_series(self, data, max_series=None, max_values=None, header=False, replace_nan=False):
+    def load_series(self, data, nbr_series=None, nbr_val=None, header=False, replace_nan=False):
         """
         Loads time series data from a file or predefined dataset.
 
@@ -112,9 +118,9 @@ class TimeSeries:
         ----------
         data : str
             The file path or name of a predefined dataset (e.g., 'bafu.txt').
-        max_series : int, optional
+        nbr_series : int, optional
             The maximum number of series to load.
-        max_values : int, optional
+        nbr_val : int, optional
             The maximum number of values per series.
         header : bool, optional
             Whether the dataset has a header. Default is False.
@@ -133,9 +139,8 @@ class TimeSeries:
                 saved_data = data
 
                 #  update path form inner library datasets
-                if data in ["bafu.txt", "chlorine.txt", "climate.txt", "drift.txt", "eeg-alcohol.txt",
-                            "eeg-reading.txt", "meteo.txt", "test.txt", "test-large.txt", "fmri-objectviewing.txt",
-                            "fmri-stoptask.txt"]:
+                if data in utils.list_of_datasets(txt=True):
+                    self.name = data[:-4]
                     data = importlib.resources.files('imputegap.dataset').joinpath(data)
 
                 if not os.path.exists(data):
@@ -143,12 +148,12 @@ class TimeSeries:
                     if not os.path.exists(data):
                         data = data[1:]
 
-                self.data = np.genfromtxt(data, delimiter=' ', max_rows=max_values, skip_header=int(header))
+                self.data = np.genfromtxt(data, delimiter=' ', max_rows=nbr_val, skip_header=int(header))
 
                 print("\nThe time series have been loaded from " + str(data) + "\n")
 
-                if max_series is not None:
-                    self.data = self.data[:, :max_series]
+                if nbr_series is not None:
+                    self.data = self.data[:, :nbr_series]
             else:
                 print("\nThe time series have not been loaded, format unknown\n")
                 self.data = None
@@ -162,15 +167,15 @@ class TimeSeries:
 
             return self
 
-    def print(self, limit_timestamps=10, limit_series=7, view_by_series=False):
+    def print(self, nbr_val=10, nbr_series=7, view_by_series=False):
         """
         Prints a limited number of time series from the dataset.
 
         Parameters
         ----------
-        limit_timestamps : int, optional
+        nbr_val : int, optional
         The number of timestamps to print. Default is 15. Use -1 for no restriction.
-        limit_series : int, optional
+        nbr_series : int, optional
         The number of series to print. Default is 10. Use -1 for no restriction.
         view_by_series : bool, optional
         Whether to view by series (True) or by values (False).
@@ -182,14 +187,14 @@ class TimeSeries:
         print("\nTime Series set :")
 
         to_print = self.data
-        nbr_series, nbr_values = to_print.shape
+        nbr_tot_series, nbr_tot_values = to_print.shape
         print_col, print_row = "Timestamp", "Series"
 
-        if limit_timestamps == -1:
-            limit_timestamps = to_print.shape[1]
-        if limit_series == -1:
-            limit_series = to_print.shape[0]
-        to_print = to_print[:limit_series, :limit_timestamps]
+        if nbr_val == -1:
+            nbr_val = to_print.shape[1]
+        if nbr_series == -1:
+            nbr_series = to_print.shape[0]
+        to_print = to_print[:nbr_series, :nbr_val]
 
         if not view_by_series:
             to_print = to_print.T
@@ -208,11 +213,11 @@ class TimeSeries:
             print(header_format.format(f"{print_row} {i + 1}"), end="")
             print("".join([value_format.format(elem) for elem in series]))
 
-        if limit_series < nbr_series:
+        if nbr_series < nbr_tot_series:
             print("...")
 
-        print("\nshape of the time series :", self.data.shape, "\n\tnumber of series =", nbr_series,
-              "\n\tnumber of values =", nbr_values, "\n\n")
+        print("\nshape of the time series :", self.data.shape, "\n\tnumber of series =", nbr_tot_series,
+              "\n\tnumber of values =", nbr_tot_values, "\n\n")
 
     def print_results(self, metrics, algorithm="", text="Imputation Results of"):
         """
@@ -308,7 +313,7 @@ class TimeSeries:
 
         print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    def plot(self, input_data, incomp_data=None, recov_data=None, max_series=None, max_values=None, series_range=None,
+    def plot(self, input_data, incomp_data=None, recov_data=None, nbr_series=None, nbr_val=None, series_range=None,
              subplot=False, size=(16, 8), save_path="./imputegap/assets", display=True):
         """
         Plot the time series data, including raw, contaminated, or imputed data.
@@ -321,9 +326,9 @@ class TimeSeries:
             The contaminated time series data.
         recov_data : numpy.ndarray, optional
             The imputed time series data.
-        max_series : int, optional
+        nbr_series : int, optional
             The maximum number of series to plot.
-        max_values : int, optional
+        nbr_val : int, optional
             The maximum number of values per series to plot.
         series_range : int, optional
             The index of a specific series to plot. If set, only this series will be plotted.
@@ -343,21 +348,21 @@ class TimeSeries:
         """
         number_of_series = 0
 
-        if max_series is None or max_series == -1:
-            max_series = input_data.shape[0]
-        if max_values is None or max_values == -1:
-            max_values = input_data.shape[1]
+        if nbr_series is None or nbr_series == -1:
+            nbr_series = input_data.shape[0]
+        if nbr_val is None or nbr_val == -1:
+            nbr_val = input_data.shape[1]
 
         if subplot:
             series_indices = [i for i in range(incomp_data.shape[0]) if np.isnan(incomp_data[i]).any()]
-            nbr_series = [series_range] if series_range is not None else range(min(len(series_indices), max_series))
-            n_series_to_plot = len(nbr_series)
+            count_series = [series_range] if series_range is not None else range(min(len(series_indices), nbr_series))
+            n_series_to_plot = len(count_series)
         else:
-            series_indices = [series_range] if series_range is not None else range(min(input_data.shape[0], max_series))
+            series_indices = [series_range] if series_range is not None else range(min(input_data.shape[0], nbr_series))
             n_series_to_plot = len(series_indices)
 
         if n_series_to_plot == 0:
-            n_series_to_plot = min(max_series, incomp_data.shape[0])
+            n_series_to_plot = min(nbr_series, incomp_data.shape[0])
 
         if subplot:
             n_cols = min(3, n_series_to_plot)
@@ -391,7 +396,7 @@ class TimeSeries:
                 else:
                     color = colors[i % len(colors)]
 
-                timestamps = np.arange(min(input_data.shape[1], max_values))
+                timestamps = np.arange(min(input_data.shape[1], nbr_val))
 
                 # Select the current axes if using subplots
                 if subplot:
@@ -401,28 +406,28 @@ class TimeSeries:
                     ax = plt
 
                 if incomp_data is None and recov_data is None:  # plot only raw matrix
-                    ax.plot(timestamps, input_data[i, :max_values], linewidth=2.5,
+                    ax.plot(timestamps, input_data[i, :nbr_val], linewidth=2.5,
                             color=color, linestyle='-', label=f'TS {i + 1}')
 
                 if incomp_data is not None and recov_data is None:  # plot infected matrix
                     if np.isnan(incomp_data[i, :]).any():
-                        ax.plot(timestamps, input_data[i, :max_values], linewidth=1.5,
+                        ax.plot(timestamps, input_data[i, :nbr_val], linewidth=1.5,
                                 color=color, linestyle='--', label=f'TS-INCOMP {i + 1}')
 
                     if np.isnan(incomp_data[i, :]).any() or not subplot:
-                        ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
-                            color=color, linewidth=2.5, linestyle='-', label=f'TS-INPUT {i + 1}')
+                        ax.plot(np.arange(min(incomp_data.shape[1], nbr_val)), incomp_data[i, :nbr_val],
+                                color=color, linewidth=2.5, linestyle='-', label=f'TS-INPUT {i + 1}')
 
                 if recov_data is not None:  # plot imputed matrix
                     if np.isnan(incomp_data[i, :]).any():
-                        ax.plot(np.arange(min(recov_data.shape[1], max_values)), recov_data[i, :max_values],
+                        ax.plot(np.arange(min(recov_data.shape[1], nbr_val)), recov_data[i, :nbr_val],
                                 linestyle='-', color="r", label=f'TS-RECOV {i + 1}')
 
-                        ax.plot(timestamps, input_data[i, :max_values], linewidth=1.5,
+                        ax.plot(timestamps, input_data[i, :nbr_val], linewidth=1.5,
                                 linestyle='--', color=color, label=f'TS-INCOM {i + 1}')
 
                     if np.isnan(incomp_data[i, :]).any() or not subplot:
-                        ax.plot(np.arange(min(incomp_data.shape[1], max_values)), incomp_data[i, :max_values],
+                        ax.plot(np.arange(min(incomp_data.shape[1], nbr_val)), incomp_data[i, :nbr_val],
                                 color=color, linewidth=2.5, linestyle='-', label=f'TS-INPUT {i + 1}')
 
                 # Label and legend for subplot
@@ -434,7 +439,7 @@ class TimeSeries:
                     plt.tight_layout()
 
                 number_of_series += 1
-                if number_of_series == max_series:
+                if number_of_series == nbr_series:
                     break
 
         if subplot:
@@ -476,7 +481,7 @@ class TimeSeries:
 
         Methods
         -------
-        mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :
+        missing_completely_at_random(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :
             Apply Missing Completely at Random (MCAR) contamination to the time series data.
 
         missing_percentage(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :
@@ -501,7 +506,7 @@ class TimeSeries:
             Apply Overlapping contamination to the time series data.
         """
 
-        def mcar(input_data, rate_dataset=0.2, rate_series=0.2, block_size=10, offset=0.1, seed=True, explainer=False):
+        def missing_completely_at_random(input_data, rate_dataset=0.2, rate_series=0.2, block_size=10, offset=0.1, seed=True, explainer=False):
             """
             Apply Missing Completely at Random (MCAR) contamination to the time series data.
 
@@ -659,9 +664,9 @@ class TimeSeries:
 
             return ts_contaminated
 
-        def missing_percentage_at_random(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True):
+        def percentage_shift(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True):
             """
-            Apply missing percentage contamination with random starting position to the time series data.
+            Apply percentage shift contamination with random starting position to the time series data.
 
             Parameters
             ----------

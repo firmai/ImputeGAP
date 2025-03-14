@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Tutorials" href="tutorials.html" /><link rel="prev" title="Getting Started" href="getting_started.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Pre-processing" href="preprocessing.html" /><link rel="prev" title="Algorithms" href="algorithms.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Datasets - imputegap 1.0.5 documentation</title>
@@ -205,12 +205,17 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
@@ -266,15 +271,26 @@
         <article role="main" id="furo-main-content">
           <section id="datasets">
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
-<p>The library provides a diverse collection of datasets, each exhibiting specific patterns, trends, fields, challenges, or exceptions. These datasets can be loaded as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
-<span class="n">ts_1</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
-<span class="n">ts_1</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">),</span> <span class="n">max_series</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_values</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>You can find the complete list of available datasets at the following link: <a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset">Datasets</a></p>
-<p>Alternatively, you can import your own dataset by specifying its local path, ensuring that it meets the specific requirements of ImputeGAP.</p>
+<p>The module <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> contains all the publicly available datasets provided by the library.</p>
+<p>DATASETS in ImputeGAP</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#AIR-QUALITY">airq</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#bafu">bafu</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#chlorine">chlorine</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#climate">climate</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#drift">drift</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#EEG-ALCOHOL">eeg-alcohol</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#EEG-READING">eeg-reading</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#electricity">electricity</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#fMRI-OBJECTVIEWING">fmri-objectviewing</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#fMRI-STOPTASK">fmri-stoptask</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#meteo">meteo</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#motion">motion</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#soccer">soccer</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#temperature">temperature</a></p></li>
+</ul>
+</div></blockquote>
 </section>
 
         </article>
@@ -282,23 +298,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="tutorials.html">
+          <a class="next-page" href="preprocessing.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Tutorials</div>
+                <div class="title">Pre-processing</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="getting_started.html">
+          <a class="prev-page" href="algorithms.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Getting Started</div>
+                <div class="title">Algorithms</div>
                 
               </div>
             </a>

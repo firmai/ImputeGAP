@@ -24,10 +24,10 @@ class TestContaminationMCAR(unittest.TestCase):
         for series_sel in series_impacted:
             for missing_rate in missing_rates:
 
-                ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                         rate_dataset=series_sel,
-                                                         rate_series=missing_rate, block_size=block_size,
-                                                         offset=offset, seed=True)
+                ts_contaminate = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data,
+                                                                                 rate_dataset=series_sel,
+                                                                                 rate_series=missing_rate, block_size=block_size,
+                                                                                 offset=offset, seed=True)
 
                 check_nan_series = False
 
@@ -58,11 +58,11 @@ class TestContaminationMCAR(unittest.TestCase):
         for series_sel in series_impacted:
             for missing_rate in missing_rates:
 
-                ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                         rate_dataset=series_sel,
-                                                         rate_series=missing_rate,
-                                                         block_size=2, offset=0.1,
-                                                         seed=True)
+                ts_contaminate = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data,
+                                                                                 rate_dataset=series_sel,
+                                                                                 rate_series=missing_rate,
+                                                                                 block_size=2, offset=0.1,
+                                                                                 seed=True)
 
                 if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                     check_position = False
@@ -88,11 +88,11 @@ class TestContaminationMCAR(unittest.TestCase):
 
             for S in series_impacted:
                 for R in missing_rates:
-                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             rate_series=R,
-                                                             rate_dataset=S,
-                                                             block_size=block_size, offset=offset,
-                                                             seed=True)
+                    ts_contaminate = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data,
+                                                                                     rate_series=R,
+                                                                                     rate_dataset=S,
+                                                                                     block_size=block_size, offset=offset,
+                                                                                     seed=True)
 
                     # 1) Check if the number of NaN values is correct
                     M, N = ts_contaminate.shape
@@ -134,11 +134,11 @@ class TestContaminationMCAR(unittest.TestCase):
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
 
-                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             rate_dataset=series_sel,
-                                                             rate_series=missing_rate,
-                                                             block_size=block_size, offset=offset,
-                                                             seed=True)
+                    ts_contaminate = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data,
+                                                                                     rate_dataset=series_sel,
+                                                                                     rate_series=missing_rate,
+                                                                                     block_size=block_size, offset=offset,
+                                                                                     seed=True)
 
                     if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                         check_position = False
@@ -157,11 +157,11 @@ class TestContaminationMCAR(unittest.TestCase):
         ts_1.load_series(utils.search_path("chlorine"))
 
         ts_2 = TimeSeries()
-        ts_2.import_matrix(ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.1,
-                                                   block_size=10, offset=0.1, seed=True))
+        ts_2.import_matrix(ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.1,
+                                                                           block_size=10, offset=0.1, seed=True))
 
         ts_1.print()
-        filepath = ts_1.plot(input_data=ts_1.data, incomp_data=ts_2.data, max_series=10, max_values=100, save_path="./assets/", display=False)
+        filepath = ts_1.plot(input_data=ts_1.data, incomp_data=ts_2.data, nbr_series=10, nbr_val=100, save_path="./assets/", display=False)
         self.assertTrue(os.path.exists(filepath))
 
 
@@ -184,11 +184,11 @@ class TestContaminationMCAR(unittest.TestCase):
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
-                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data,
-                                                             rate_series=missing_rate,
-                                                             rate_dataset=series_sel,
-                                                             block_size=block_size, offset=offset,
-                                                             seed=True)
+                    ts_contaminate = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data,
+                                                                                     rate_series=missing_rate,
+                                                                                     rate_dataset=series_sel,
+                                                                                     block_size=block_size, offset=offset,
+                                                                                     seed=True)
 
                     for i, series in enumerate(ts_contaminate):
                         nan_blocks = []
@@ -238,9 +238,9 @@ class TestContaminationMCAR(unittest.TestCase):
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
-                    ts_contaminate = ts_1.Contamination.mcar(input_data=ts_1.data, rate_series=missing_rate,
-                                                             rate_dataset=series_sel, block_size=block_size,
-                                                             offset=offset, seed=True)
+                    ts_contaminate = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data, rate_series=missing_rate,
+                                                                                     rate_dataset=series_sel, block_size=block_size,
+                                                                                     offset=offset, seed=True)
 
                     #print(*[f"({indc} {se})" for indc, se in enumerate(ts_contaminate)], sep=" ")  # debug
 

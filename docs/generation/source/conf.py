@@ -21,7 +21,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",
-    "sphinx.ext.githubpages",
+    "sphinx.ext.githubpages"
 ]
 
 autosummary_generate = True  # Automatically generate method summaries

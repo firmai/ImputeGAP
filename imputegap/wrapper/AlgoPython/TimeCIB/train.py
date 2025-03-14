@@ -196,6 +196,6 @@ if __name__ == "__main__":
     ts_1.load_series(imputegap.tools.utils.search_path("eeg-alcohol"))  # shape (64, 256)
     ts_1.normalize(normalizer="min_max")
 
-    miss_data = ts_1.Contamination.mcar(ts_1.data, rate_series=0.4)
+    miss_data = ts_1.Contamination.missing_completely_at_random(ts_1.data, rate_series=0.4)
 
     recoveryTimeCIB(miss_data)

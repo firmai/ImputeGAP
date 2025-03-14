@@ -10,7 +10,7 @@ ts_1.load_series(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-miss_matrix = ts_1.Contamination.mcar(ts_1.data)
+miss_matrix = ts_1.Contamination.missing_completely_at_random(ts_1.data)
 
 # 4. imputation of the contaminated data
 # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
@@ -21,7 +21,7 @@ cdrec.score(ts_1.data, cdrec.recov_data)
 
 # 6. display the results
 ts_1.print_results(cdrec.metrics)
-ts_1.plot(input_data=ts_1.data, incomp_data=miss_matrix, recov_data=cdrec.recov_data, max_series=9, subplot=True, save_path="./imputegap/assets", display=True)
+ts_1.plot(input_data=ts_1.data, incomp_data=miss_matrix, recov_data=cdrec.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets", display=True)
 
 # 7. save hyperparameters
 utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")

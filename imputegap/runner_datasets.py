@@ -2,16 +2,16 @@ from imputegap.recovery.explainer import Explainer
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-datasets = ["eeg-alcohol", "eeg-reading"]
+datasets = ["electricity", "soccer", "temperature", "motion"]
 
 for dataset in datasets:
     # small one
     data_n = TimeSeries()
-    data_n.load_series(data=utils.search_path(dataset), max_series=20, max_values=400, header=False)
-    data_n.plot(input_data=data_n.data, max_series=20, save_path="./dataset/docs/" + dataset + "", display=False)
-    data_n.plot(input_data=data_n.data, max_series=1, save_path="./dataset/docs/" + dataset + "", display=False)
+    data_n.load_series(data=utils.search_path(dataset), nbr_series=20, nbr_val=400, header=False)
+    data_n.plot(input_data=data_n.data, nbr_series=20, save_path="./dataset/docs/" + dataset + "", display=False)
+    data_n.plot(input_data=data_n.data, nbr_series=1, save_path="./dataset/docs/" + dataset + "", display=False)
     data_n.normalize(normalizer="min_max")
-    data_n.plot(input_data=data_n.data, max_series=20, save_path="./dataset/docs/" + dataset + "", display=False)
+    data_n.plot(input_data=data_n.data, nbr_series=20, save_path="./dataset/docs/" + dataset + "", display=False)
 
     # 5x one
     data_n = TimeSeries()
@@ -28,7 +28,7 @@ for dataset in datasets:
     elif dataset == "drift":
         max_value = 400
 
-    data_n.load_series(data=utils.search_path(dataset), max_series=max_series, max_values=max_value, header=False)
+    data_n.load_series(data=utils.search_path(dataset), nbr_series=max_series, nbr_val=max_value, header=False)
     data_n.plot(input_data=data_n.data, save_path="./dataset/docs/" + dataset + "", display=False)
     data_n.normalize(normalizer="min_max")
     data_n.plot(input_data=data_n.data, save_path="./dataset/docs/" + dataset + "", display=False)
@@ -38,7 +38,7 @@ for dataset in datasets:
     data_n.load_series(data=utils.search_path(dataset), header=False)
     data_n.plot(input_data=data_n.data, save_path="./dataset/docs/" + dataset + "", display=False)
 
-    categories, features = Explainer.load_configuration()
+    categories, features, _ = Explainer.load_configuration()
     characteristics, descriptions = Explainer.extractor_pycatch(data=data_n.data, features_categories=categories, features_list=features, do_catch24=False)
 
     p = "./dataset/docs/"+dataset+"/features_"+dataset+".txt"

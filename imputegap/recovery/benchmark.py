@@ -598,6 +598,7 @@ class Benchmark:
         print("Initialization of the comprehensive evaluation. It can take time...\n")
         run_storage = []
         not_optimized = ["none"]
+        mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]
 
         for i_run in range(0, abs(runs)):
             for dataset in datasets:
@@ -624,8 +625,8 @@ class Benchmark:
                     limitation_series = 10
                     limitation_values = 110
 
-                ts_test.load_series(data=utils.search_path(dataset), max_series=limitation_series,
-                                    max_values=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), nbr_series=limitation_series,
+                                    nbr_val=limitation_values, header=header)
 
                 start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape
@@ -658,7 +659,7 @@ class Benchmark:
                                     optimizer_gt = {"input_data": ts_test.data, **optimizer}
                                     optimizer_value = optimizer.get('optimizer')  # or optimizer['optimizer']
 
-                                    if not has_been_optimized and algorithm != "mean" and algorithm not in not_optimized:
+                                    if not has_been_optimized and algorithm not in mean_group and algorithm not in not_optimized:
                                         print("\n\t\t5. AutoML to set the parameters", optimizer, "\n")
                                         start_time_opti = time.time()  # Record start time
                                         i_opti = self._config_optimization(0.25, ts_test, pattern, algorithm, block_size_mcar)
@@ -670,7 +671,7 @@ class Benchmark:
                                     else:
                                         print("\n\t\t5. AutoML already optimized...\n")
 
-                                    if algorithm != "mean" and algorithm not in not_optimized:
+                                    if algorithm not in mean_group and algorithm not in not_optimized:
                                         if i_opti.parameters is None:
                                             opti_params = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="e")
                                             print("\n\t\t6. imputation", algorithm, "with optimal parameters from files", *opti_params)

@@ -1,11 +1,7 @@
+from imputegap.wrapper.AlgoPython.BiTGraph.models.BiaTCGNet.BiaTCGNet_layer import *
 import torch.nn as nn
 import torch
-from torch.nn.utils import weight_norm
-
-from imputegap.wrapper.AlgoPython.BiTGraph.models.BiaTCGNet.BiaTCGNet_layer import graph_constructor, dilated_inception, \
-    mixprop, LayerNorm
-
-
+from torch.nn.utils.parametrizations import weight_norm
 class Model(nn.Module):
     def __init__(self, gcn_true, buildA_true, gcn_depth, num_nodes,kernel_set, device, predefined_A=None, static_feat=None, dropout=0.3, subgraph_size=5, node_dim=40, dilation_exponential=1, conv_channels=32, residual_channels=32, skip_channels=64, end_channels=128, seq_length=12, in_dim=2, out_len=12, out_dim=1, layers=3, propalpha=0.05, tanhalpha=3, layer_norm_affline=True):
         super(Model, self).__init__()
@@ -46,7 +42,7 @@ class Model(nn.Module):
                     rf_size_j = int(rf_size_i + (kernel_size-1)*(dilation_exponential**j-1)/(dilation_exponential-1))
                 else:
                     rf_size_j = rf_size_i+j*(kernel_size-1)
-                assert (seq_length-(kernel_size-1)*j) >0, f'Please decrease the kernel size or increase the input length seq_length={seq_length} kernel_size={(kernel_size-1)} j={j} >> {(seq_length-(kernel_size-1)*j)}'
+                assert (seq_length-(kernel_size-1)*j) >0, 'Please decrease the kernel size or increase the input length'
                 dilationsize.append(seq_length-(kernel_size-1)*j)
 
                 self.filter_convs.append(dilated_inception(residual_channels, conv_channels,kernel_set, dilation_factor=new_dilation))
@@ -92,17 +88,17 @@ class Model(nn.Module):
             self.skipE = weight_norm(nn.Conv2d(in_channels=residual_channels, out_channels=skip_channels, kernel_size=(1, 1), bias=True))
 
 
-        self.idx = torch.arange(self.num_nodes).cuda()#to(device)
+        self.idx = torch.arange(self.num_nodes).to(device)
 
 
-    def forward(self, input, mask, k, idx=None):#tx,id
+    def forward(self, input,mask, k, idx=None):#tx,id
 
         input=input.transpose(1,3)
         mask=mask.transpose(1,3).float()
 
         input=input*mask
-        seq_len = input.size(2)
-        assert seq_len==self.seq_length, f'input sequence length not equal to preset sequence length sl{seq_len}, self.seq_length={self.seq_length} / size {input.size()}'
+        seq_len = input.size(3)
+        assert seq_len==self.seq_length, 'input sequence length not equal to preset sequence length'
         if self.seq_length<self.receptive_field:
             input = nn.functional.pad(input,(self.receptive_field-self.seq_length,0,0,0))
         if self.gcn_true:

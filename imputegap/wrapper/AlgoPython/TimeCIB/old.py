@@ -232,14 +232,14 @@ def main():
             if epoch==0:
                 idx, batch = next(enumerate(test_dataset.loader))
                 x_full, x_miss, m_miss, m_artificial, y, t = batch
-                np.save(os.path.join(wandb.run.dir, f"x_full"), x_full)
-                np.save(os.path.join(wandb.run.dir, f"x_miss"), x_miss)
-                np.save(os.path.join(wandb.run.dir, f"m_miss"), m_miss)
+                np.save(os.path.join(wandb.recoveryBitGRAPH.dir, f"x_full"), x_full)
+                np.save(os.path.join(wandb.recoveryBitGRAPH.dir, f"x_miss"), x_miss)
+                np.save(os.path.join(wandb.recoveryBitGRAPH.dir, f"m_miss"), m_miss)
                 x_miss, m_miss, t = x_miss.to(device), m_miss.to(device), t.to(device)
                 (x_z, x_z_nott) = model.sample(x_miss, t, m_miss)
                 x_z, x_z_nott = x_z.detach().cpu().numpy(), x_z_nott.detach().cpu().numpy()
-                np.save(os.path.join(wandb.run.dir, f"x_0"), x_z)
-                np.save(os.path.join(wandb.run.dir, f"x_0_nott"), x_z_nott)
+                np.save(os.path.join(wandb.recoveryBitGRAPH.dir, f"x_0"), x_z)
+                np.save(os.path.join(wandb.recoveryBitGRAPH.dir, f"x_0_nott"), x_z_nott)
 
             ### Train
             model.train()
@@ -294,13 +294,13 @@ def main():
             model.sample_size = args.batch_size
             (x_z, x_z_nott) = model.sample(x_miss, t,  m_miss)
             x_z, x_z_nott = x_z.detach().cpu().numpy(), x_z_nott.detach().cpu().numpy()
-            np.save(os.path.join(wandb.run.dir, f"x_{epoch+1}"), x_z)
-            np.save(os.path.join(wandb.run.dir, f"x_{epoch+1}_nott"), x_z_nott)
-            torch.save(model.state_dict(), os.path.join(wandb.run.dir, "model.pth"))
+            np.save(os.path.join(wandb.recoveryBitGRAPH.dir, f"x_{epoch + 1}"), x_z)
+            np.save(os.path.join(wandb.recoveryBitGRAPH.dir, f"x_{epoch + 1}_nott"), x_z_nott)
+            torch.save(model.state_dict(), os.path.join(wandb.recoveryBitGRAPH.dir, "model.pth"))
 
         
         if best_valid_renew or args.test:
-            torch.save(model.state_dict(), os.path.join(wandb.run.dir, "model_best.pth"))
+            torch.save(model.state_dict(), os.path.join(wandb.recoveryBitGRAPH.dir, "model_best.pth"))
             # Get the reconstruction score (Reconstruct each timestep given all timesteps.)
             test_loss, test_nll, test_kl, test_smi, test_mae, test_mse, test_rmse, test_mre, test_nll, test_mnll, test_auroc, num_samples, num_missing = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
             for idx, batch in enumerate(test_dataset.loader):

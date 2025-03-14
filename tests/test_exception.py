@@ -49,7 +49,7 @@ class TestException(unittest.TestCase):
         with pytest.raises(ValueError, match="The number of block to remove must be greater than 0. "
                                              "The dataset or the number of blocks may not be appropriate."):
             # Call the function or method that raises the ValueError
-            ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), block_size=5)
+            ts_01.Contamination.missing_completely_at_random(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), block_size=5)
 
     def test_percentage_exc(self):
         """
@@ -59,7 +59,7 @@ class TestException(unittest.TestCase):
         percentage = 120
 
         with pytest.raises(ValueError, match=f"The percentage is out of the acceptable range."):
-            ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), rate_series=percentage)
+            ts_01.Contamination.missing_completely_at_random(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), rate_series=percentage)
 
 
     def test_load_exc(self):

@@ -10,7 +10,7 @@ ts_1.load_series(utils.search_path("eeg-alcohol"))
 ts_1.normalize(normalizer="min_max")
 
 # 3. contamination of the data
-incomp_data = ts_1.Contamination.mcar(ts_1.data)
+incomp_data = ts_1.Contamination.missing_completely_at_random(ts_1.data)
 
 # [OPTIONAL] save your results in a new Time Series object
 ts_2 = TimeSeries().import_matrix(incomp_data)
@@ -32,4 +32,4 @@ cdrec.score(ts_1.data, ts_3.data)
 
 # 6. display the results
 ts_3.print_results(cdrec.metrics, algorithm="cdrec")
-ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, max_series=9, subplot=True, save_path="./imputegap/assets")
+ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, nbr_series=9, subplot=True, save_path="./imputegap/assets")

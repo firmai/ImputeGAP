@@ -236,11 +236,21 @@ RAYTUNE_PARAMS = {
         "v": tune.grid_search([0.1, 0.5, 1.0])  # Variance parameter
     },
 
+    "bit_graph": {
+            "node_number": -1,  # Trend factor search space
+            "kernel_set": [1],  # Seasonal factor search space
+            "dropout": tune.grid_search([0.3, 0.7]),  # Seasonal components per factor
+            "subgraph_size": tune.grid_search([5, 10]),  # Bias factor inclusion
+            "node_dim": tune.grid_search([3, 10]),  # Time scaling factor
+            "seq_len": 1,  # Prior hyperparameter a0
+            "lr": tune.grid_search([0.001, 0.1]),  # Prior hyperparameter b0
+            "epoch": tune.grid_search([2, 10]),  # Variance parameter
+            "seed": 42 # Variance parameter
+        },
+
     "hkmf_t": {
         "tags": [],
         "data_names": [],
         "epoch": tune.grid_search([3, 5, 10])
     }
-
-
 }

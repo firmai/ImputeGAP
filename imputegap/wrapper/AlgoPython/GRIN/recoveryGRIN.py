@@ -264,6 +264,6 @@ if __name__ == '__main__':
     ts_1.normalize(normalizer="min_max")
 
     # 3. contamination of the data
-    ts_mask = ts_1.Contamination.mcar(ts_1.data)
+    ts_mask = ts_1.Contamination.missing_completely_at_random(ts_1.data)
 
     imputation, imputation_2 = recoveryGRIN(ts_mask)

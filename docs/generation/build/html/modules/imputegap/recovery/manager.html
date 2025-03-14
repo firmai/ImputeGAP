@@ -204,12 +204,17 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
@@ -332,6 +337,12 @@
 <span class="sd">        IMPORT FORMAT : (Values,Series) : series are seperated by &quot;SPACE&quot; et values by &quot;\\n&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithms</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_algorithms</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_patterns</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_datasets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_optimizers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downstream_models</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_downstreams</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TimeSeries.import_matrix">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.import_matrix">[docs]</a>
@@ -368,7 +379,7 @@
 
 <div class="viewcode-block" id="TimeSeries.load_series">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.load_series">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">max_series</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">replace_nan</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_series</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">replace_nan</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads time series data from a file or predefined dataset.</span>
 
@@ -379,9 +390,9 @@
 <span class="sd">        ----------</span>
 <span class="sd">        data : str</span>
 <span class="sd">            The file path or name of a predefined dataset (e.g., &#39;bafu.txt&#39;).</span>
-<span class="sd">        max_series : int, optional</span>
+<span class="sd">        nbr_series : int, optional</span>
 <span class="sd">            The maximum number of series to load.</span>
-<span class="sd">        max_values : int, optional</span>
+<span class="sd">        nbr_val : int, optional</span>
 <span class="sd">            The maximum number of values per series.</span>
 <span class="sd">        header : bool, optional</span>
 <span class="sd">            Whether the dataset has a header. Default is False.</span>
@@ -400,9 +411,8 @@
                 <span class="n">saved_data</span> <span class="o">=</span> <span class="n">data</span>
 
                 <span class="c1">#  update path form inner library datasets</span>
-                <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bafu.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;chlorine.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;climate.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;drift.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-alcohol.txt&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;eeg-reading.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;meteo.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;test.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;test-large.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;fmri-objectviewing.txt&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;fmri-stoptask.txt&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_datasets</span><span class="p">(</span><span class="n">txt</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
                     <span class="n">data</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s1">&#39;imputegap.dataset&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
@@ -410,12 +420,12 @@
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
                         <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">max_rows</span><span class="o">=</span><span class="n">max_values</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">max_rows</span><span class="o">=</span><span class="n">nbr_val</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">))</span>
 
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The time series have been loaded from &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="n">max_series</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">max_series</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">nbr_series</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">nbr_series</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The time series have not been loaded, format unknown</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
@@ -432,15 +442,15 @@
 
 <div class="viewcode-block" id="TimeSeries.print">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.print">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit_timestamps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">limit_series</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">view_by_series</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">view_by_series</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Prints a limited number of time series from the dataset.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        limit_timestamps : int, optional</span>
+<span class="sd">        nbr_val : int, optional</span>
 <span class="sd">        The number of timestamps to print. Default is 15. Use -1 for no restriction.</span>
-<span class="sd">        limit_series : int, optional</span>
+<span class="sd">        nbr_series : int, optional</span>
 <span class="sd">        The number of series to print. Default is 10. Use -1 for no restriction.</span>
 <span class="sd">        view_by_series : bool, optional</span>
 <span class="sd">        Whether to view by series (True) or by values (False).</span>
@@ -452,14 +462,14 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Time Series set :&quot;</span><span class="p">)</span>
 
         <span class="n">to_print</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
-        <span class="n">nbr_series</span><span class="p">,</span> <span class="n">nbr_values</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">nbr_tot_series</span><span class="p">,</span> <span class="n">nbr_tot_values</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">print_col</span><span class="p">,</span> <span class="n">print_row</span> <span class="o">=</span> <span class="s2">&quot;Timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;Series&quot;</span>
 
-        <span class="k">if</span> <span class="n">limit_timestamps</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">limit_timestamps</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">limit_series</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">limit_series</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">to_print</span> <span class="o">=</span> <span class="n">to_print</span><span class="p">[:</span><span class="n">limit_series</span><span class="p">,</span> <span class="p">:</span><span class="n">limit_timestamps</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">nbr_val</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">nbr_val</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">nbr_series</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">nbr_series</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">to_print</span> <span class="o">=</span> <span class="n">to_print</span><span class="p">[:</span><span class="n">nbr_series</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">view_by_series</span><span class="p">:</span>
             <span class="n">to_print</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">T</span>
@@ -478,11 +488,11 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">header_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">print_row</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">value_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">series</span><span class="p">]))</span>
 
-        <span class="k">if</span> <span class="n">limit_series</span> <span class="o">&lt;</span> <span class="n">nbr_series</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">nbr_series</span> <span class="o">&lt;</span> <span class="n">nbr_tot_series</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">shape of the time series :&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">number of series =&quot;</span><span class="p">,</span> <span class="n">nbr_series</span><span class="p">,</span>
-              <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">number of values =&quot;</span><span class="p">,</span> <span class="n">nbr_values</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">shape of the time series :&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">number of series =&quot;</span><span class="p">,</span> <span class="n">nbr_tot_series</span><span class="p">,</span>
+              <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">number of values =&quot;</span><span class="p">,</span> <span class="n">nbr_tot_values</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TimeSeries.print_results">
@@ -587,7 +597,7 @@
 
 <div class="viewcode-block" id="TimeSeries.plot">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.plot">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recov_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_series</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">series_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recov_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">series_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">subplot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap/assets&quot;</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plot the time series data, including raw, contaminated, or imputed data.</span>
@@ -600,9 +610,9 @@
 <span class="sd">            The contaminated time series data.</span>
 <span class="sd">        recov_data : numpy.ndarray, optional</span>
 <span class="sd">            The imputed time series data.</span>
-<span class="sd">        max_series : int, optional</span>
+<span class="sd">        nbr_series : int, optional</span>
 <span class="sd">            The maximum number of series to plot.</span>
-<span class="sd">        max_values : int, optional</span>
+<span class="sd">        nbr_val : int, optional</span>
 <span class="sd">            The maximum number of values per series to plot.</span>
 <span class="sd">        series_range : int, optional</span>
 <span class="sd">            The index of a specific series to plot. If set, only this series will be plotted.</span>
@@ -622,21 +632,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">number_of_series</span> <span class="o">=</span> <span class="mi">0</span>
 
-        <span class="k">if</span> <span class="n">max_series</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">max_series</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">max_series</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">max_values</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">max_values</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">max_values</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">nbr_series</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">nbr_series</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">nbr_series</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">nbr_val</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">nbr_val</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">nbr_val</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">subplot</span><span class="p">:</span>
             <span class="n">series_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">()]</span>
-            <span class="n">nbr_series</span> <span class="o">=</span> <span class="p">[</span><span class="n">series_range</span><span class="p">]</span> <span class="k">if</span> <span class="n">series_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">series_indices</span><span class="p">),</span> <span class="n">max_series</span><span class="p">))</span>
-            <span class="n">n_series_to_plot</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nbr_series</span><span class="p">)</span>
+            <span class="n">count_series</span> <span class="o">=</span> <span class="p">[</span><span class="n">series_range</span><span class="p">]</span> <span class="k">if</span> <span class="n">series_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">series_indices</span><span class="p">),</span> <span class="n">nbr_series</span><span class="p">))</span>
+            <span class="n">n_series_to_plot</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">count_series</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">series_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">series_range</span><span class="p">]</span> <span class="k">if</span> <span class="n">series_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">max_series</span><span class="p">))</span>
+            <span class="n">series_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">series_range</span><span class="p">]</span> <span class="k">if</span> <span class="n">series_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nbr_series</span><span class="p">))</span>
             <span class="n">n_series_to_plot</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">series_indices</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">n_series_to_plot</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">n_series_to_plot</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_series</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">n_series_to_plot</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">nbr_series</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">subplot</span><span class="p">:</span>
             <span class="n">n_cols</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_series_to_plot</span><span class="p">)</span>
@@ -670,7 +680,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)]</span>
 
-                <span class="n">timestamps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">max_values</span><span class="p">))</span>
+                <span class="n">timestamps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nbr_val</span><span class="p">))</span>
 
                 <span class="c1"># Select the current axes if using subplots</span>
                 <span class="k">if</span> <span class="n">subplot</span><span class="p">:</span>
@@ -680,28 +690,28 @@
                     <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span>
 
                 <span class="k">if</span> <span class="n">incomp_data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">recov_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># plot only raw matrix</span>
-                    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">max_values</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span>
                             <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;TS </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">incomp_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">recov_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># plot infected matrix</span>
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">max_values</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
                                 <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;TS-INCOMP </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">subplot</span><span class="p">:</span>
-                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">max_values</span><span class="p">)),</span> <span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">max_values</span><span class="p">],</span>
-                            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;TS-INPUT </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nbr_val</span><span class="p">)),</span> <span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span>
+                                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;TS-INPUT </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">recov_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># plot imputed matrix</span>
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">recov_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">max_values</span><span class="p">)),</span> <span class="n">recov_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">max_values</span><span class="p">],</span>
+                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">recov_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nbr_val</span><span class="p">)),</span> <span class="n">recov_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span>
                                 <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;TS-RECOV </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">max_values</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
                                 <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;TS-INCOM </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">subplot</span><span class="p">:</span>
-                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">max_values</span><span class="p">)),</span> <span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">max_values</span><span class="p">],</span>
+                        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nbr_val</span><span class="p">)),</span> <span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span>
                                 <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;TS-INPUT </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
                 <span class="c1"># Label and legend for subplot</span>
@@ -713,7 +723,7 @@
                     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
                 <span class="n">number_of_series</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">if</span> <span class="n">number_of_series</span> <span class="o">==</span> <span class="n">max_series</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">number_of_series</span> <span class="o">==</span> <span class="n">nbr_series</span><span class="p">:</span>
                     <span class="k">break</span>
 
         <span class="k">if</span> <span class="n">subplot</span><span class="p">:</span>
@@ -758,7 +768,7 @@
 
 <span class="sd">        Methods</span>
 <span class="sd">        -------</span>
-<span class="sd">        mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :</span>
+<span class="sd">        missing_completely_at_random(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :</span>
 <span class="sd">            Apply Missing Completely at Random (MCAR) contamination to the time series data.</span>
 
 <span class="sd">        missing_percentage(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :</span>
@@ -783,9 +793,9 @@
 <span class="sd">            Apply Overlapping contamination to the time series data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TimeSeries.Contamination.mcar">
-<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.mcar">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">mcar</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSeries.Contamination.missing_completely_at_random">
+<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_completely_at_random">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="nf">missing_completely_at_random</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply Missing Completely at Random (MCAR) contamination to the time series data.</span>
 
@@ -947,11 +957,11 @@
             <span class="k">return</span> <span class="n">ts_contaminated</span></div>
 
 
-<div class="viewcode-block" id="TimeSeries.Contamination.missing_percentage_at_random">
-<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage_at_random">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">missing_percentage_at_random</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSeries.Contamination.percentage_shift">
+<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.percentage_shift">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="nf">percentage_shift</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Apply missing percentage contamination with random starting position to the time series data.</span>
+<span class="sd">            Apply percentage shift contamination with random starting position to the time series data.</span>
 
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>

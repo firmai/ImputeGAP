@@ -204,12 +204,17 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
@@ -265,6 +270,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">__numpy_import</span><span class="p">;</span>
 
 
+
 <div class="viewcode-block" id="config_impute_algorithm">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.config_impute_algorithm">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">config_impute_algorithm</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">):</span>
@@ -287,66 +293,72 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
 
     <span class="c1"># 1st generation</span>
-    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;CDRec&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">CDRec</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;stmvl&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;STMVL&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">STMVL</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iim&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;IIM&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">IIM</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;MRNN&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MRNN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 
     <span class="c1"># 2nd generation</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iterative_svd&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iter_svd&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iterative_svd&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iter_svd&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;IterativeSVD&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">IterativeSVD</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;grouse&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;grouse&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;GROUSE&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">GROUSE</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;dynammo&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;dynammo&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;DynaMMo&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">DynaMMo</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;rosl&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;rosl&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;ROSL&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">ROSL</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;soft_impute&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;soft_imp&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;soft_impute&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;soft_imp&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;SoftImpute&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">SoftImpute</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;spirit&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;spirit&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;SPIRIT&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">SPIRIT</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;svt&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;svt&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;SVT&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">SVT</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;tkcm&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;tkcm&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;TKCM&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">PatternSearch</span><span class="o">.</span><span class="n">TKCM</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;deep_mvi&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;deep_mvi&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;DeepMVI&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">DeepMVI</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;brits&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;brits&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;BRITS&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">BRITS</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mpin&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mpin&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;MPIN&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MPIN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pristi&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pristi&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;PRISTI&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">PRISTI</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 
     <span class="c1"># 3rd generation</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;KNN&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">KNN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;interpolation&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;interpolation&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;Interpolation&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">Interpolation</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mean_series&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mean_series&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;MeanImputeBySeries&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">MeanImputeBySeries</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;trmf&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;min_impute&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;MinImpute&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">MinImpute</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;zero_impute&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;ZeroImpute&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">ZeroImpute</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;trmf&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;TRMF&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">TRMF</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mice&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mice&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;MICE&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">MICE</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_forest&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_forest&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;MissForest&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">MissForest</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;xgboost&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;xgboost&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;XGBOOST&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">XGBOOST</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_net&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;miss_net&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;MissNet&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">MissNet</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;gain&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;gain&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;GAIN&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">GAIN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;grin&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;grin&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;GRIN&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">GRIN</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bay_otide&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bay_otide&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;BayOTIDE&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">BayOTIDE</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;hkmf_t&quot;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;hkmf_t&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;HKMF_T&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">HKMF_T</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bit_graph&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;BitGraph&quot;</span><span class="p">:</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">DeepLearning</span><span class="o">.</span><span class="n">BitGraph</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">Statistics</span><span class="o">.</span><span class="n">MeanImpute</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 
@@ -376,10 +388,12 @@
 <span class="sd">    TimeSeries</span>
 <span class="sd">        TimeSeries object containing contaminated data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span><span class="p">:</span>
-        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="n">explainer</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mp&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;missing_completely_at_random&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_completely_at_random</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="n">explainer</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mp&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;missing_percentage&quot;</span><span class="p">:</span>
         <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;ps&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;percentage_shift&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">percentage_shift</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;disjoint&quot;</span><span class="p">:</span>
         <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">disjoint</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;overlap&quot;</span><span class="p">:</span>
@@ -485,7 +499,7 @@
 <span class="sd">        The correct file path for the dataset.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">set_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bafu&quot;</span><span class="p">,</span> <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span> <span class="s2">&quot;climate&quot;</span><span class="p">,</span> <span class="s2">&quot;drift&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-reading&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="s2">&quot;fmri-objectviewing&quot;</span><span class="p">,</span> <span class="s2">&quot;fmri-stoptask&quot;</span><span class="p">,</span> <span class="s2">&quot;meteo&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;test-large&quot;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">set_name</span> <span class="ow">in</span> <span class="n">list_of_datasets</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">set_name</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;../imputegap/dataset/&quot;</span> <span class="o">+</span> <span class="n">set_name</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
@@ -713,6 +727,17 @@
         <span class="n">data_names</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;data_names&#39;</span><span class="p">]</span>
         <span class="n">epoch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;epoch&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">data_names</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bit_graph&quot;</span><span class="p">:</span>
+        <span class="n">node_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;node_number&#39;</span><span class="p">])</span>
+        <span class="n">kernel_set</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;kernel_set&#39;</span><span class="p">]</span>
+        <span class="n">dropout</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;dropout&#39;</span><span class="p">])</span>
+        <span class="n">subgraph_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;subgraph_size&#39;</span><span class="p">])</span>
+        <span class="n">node_dim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;node_dim&#39;</span><span class="p">])</span>
+        <span class="n">seq_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seq_len&#39;</span><span class="p">])</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lr&#39;</span><span class="p">])</span>
+        <span class="n">epoch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;epoch&#39;</span><span class="p">])</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;greedy&quot;</span><span class="p">:</span>
         <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
         <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
@@ -1045,6 +1070,18 @@
             <span class="s2">&quot;data_names&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
             <span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
         <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bit_graph&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;node_number&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;kernel_set&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;subgraph_size&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="s2">&quot;node_dim&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
+            <span class="s2">&quot;seq_len&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span>
+            <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span>
+            <span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">7</span><span class="p">]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">8</span><span class="p">]),</span>
+        <span class="p">}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">(SYS) Algorithm </span><span class="si">{</span><span class="n">algorithm</span><span class="si">}</span><span class="s2"> is not recognized.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
@@ -1055,6 +1092,110 @@
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">(SYS) Optimization parameters successfully saved to </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">(SYS) An error occurred while saving the file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="list_of_algorithms">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_algorithms">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_of_algorithms</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
+        <span class="s2">&quot;CDRec&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;IterativeSVD&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GROUSE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ROSL&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SPIRIT&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SoftImpute&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SVT&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TRMF&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;STMVL&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;DynaMMo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TKCM&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;IIM&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;XGBOOST&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MICE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MissForest&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;KNN&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Interpolation&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MinImpute&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MeanImpute&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ZeroImpute&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MeanImputeBySeries&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MRNN&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BRITS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;DeepMVI&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MPIN&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;PRISTI&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;MissNet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GAIN&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GRIN&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BayOTIDE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;HKMF_T&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BitGraph&quot;</span>
+    <span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="list_of_patterns">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_patterns">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_of_patterns</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
+        <span class="s2">&quot;missing_completely_at_random&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;missing_percentage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;percentage_shift&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;disjoint&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;overlap&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gaussian&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;distribution&quot;</span>
+    <span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="list_of_datasets">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_datasets">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_of_datasets</span><span class="p">(</span><span class="n">txt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+    <span class="nb">list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span>
+        <span class="s2">&quot;airq&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bafu&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;climate&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;drift&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eeg-reading&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fmri-objectviewing&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fmri-stoptask&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;meteo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;electricity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;motion&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;soccer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;temperature&quot;</span>
+    <span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">txt</span><span class="p">:</span>
+        <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="nb">list</span></div>
+
+
+<div class="viewcode-block" id="list_of_optimizers">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_optimizers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_of_optimizers</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
+        <span class="s2">&quot;ray_tune&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bayesian&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;particle_swarm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;successive_halving&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;greedy&quot;</span>
+    <span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="list_of_downstreams">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_downstreams">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_of_downstreams</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
+        <span class="s2">&quot;prophet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;exp-smoothing&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;naive&quot;</span>
+    <span class="p">])</span></div>
+
 
 </pre></div>
         </article>

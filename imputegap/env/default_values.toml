@@ -38,6 +38,17 @@ eta = 1
 alpha = 10
 max_iter = 100
 
+[bit_graph]
+node_number = -1
+kernel_set = [1]
+dropout = 0.1
+subgraph_size = 5
+node_dim = 3
+seq_len = 1
+lr = 0.001
+epoch = 10
+seed = 42
+
 # ALGORITHM DEFAULT VALUES : MACHINE LEARNING
 [iim]
 learning_neighbors = 10

@@ -204,12 +204,17 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">imputegap package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of imputegap package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
@@ -261,6 +266,7 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.bayotide</span><span class="w"> </span><span class="kn">import</span> <span class="n">bay_otide</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.bit_graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">bit_graph</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.brits</span><span class="w"> </span><span class="kn">import</span> <span class="n">brits</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.deep_mvi</span><span class="w"> </span><span class="kn">import</span> <span class="n">deep_mvi</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.dynammo</span><span class="w"> </span><span class="kn">import</span> <span class="n">dynammo</span>
@@ -2747,7 +2753,7 @@
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 
 <span class="sd">                params : dict, optional</span>
-<span class="sd">                    Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+<span class="sd">                    Parameters of the HKMF-T algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
 
 <span class="sd">                     **Algorithm parameters:**</span>
 
@@ -2796,8 +2802,97 @@
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
+
+
+<div class="viewcode-block" id="Imputation.DeepLearning.BitGraph">
+<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph">[docs]</a>
+        <span class="k">class</span><span class="w"> </span><span class="nc">BitGraph</span><span class="p">(</span><span class="n">BaseImputer</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            BitGraph class to impute missing values using BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES</span>
+
+<span class="sd">            Methods</span>
+<span class="sd">            -------</span>
+<span class="sd">            impute(self, user_def=True, params=None):</span>
+<span class="sd">                Perform imputation using the BitGraph</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="n">algorithm</span> <span class="o">=</span> <span class="s2">&quot;bit_graph&quot;</span>
+
+<div class="viewcode-block" id="Imputation.DeepLearning.BitGraph.impute">
+<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.impute">[docs]</a>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Perform imputation using BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES</span>
+
+<span class="sd">                Parameters</span>
+<span class="sd">                ----------</span>
+<span class="sd">                user_def : bool, optional</span>
+<span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
+
+<span class="sd">                params : dict, optional</span>
+<span class="sd">                    Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+
+<span class="sd">                     **Algorithm parameters:**</span>
+
+<span class="sd">                    node_number : int, optional</span>
+<span class="sd">                        The number of nodes (time series variables) in the dataset. If not provided,</span>
+<span class="sd">                        it is inferred from `incomp_data`.</span>
+
+<span class="sd">                    kernel_set : list, optional</span>
+<span class="sd">                        Set of kernel sizes used in the model for graph convolution operations (default: [1]).</span>
+
+<span class="sd">                    dropout : float, optional</span>
+<span class="sd">                        Dropout rate applied during training to prevent overfitting (default: 0.1).</span>
+
+<span class="sd">                    subgraph_size : int, optional</span>
+<span class="sd">                        The size of each subgraph used in message passing within the graph network (default: 5).</span>
+
+<span class="sd">                    node_dim : int, optional</span>
+<span class="sd">                        Dimensionality of the node embeddings in the graph convolution layers (default: 3).</span>
+
+<span class="sd">                    seq_len : int, optional</span>
+<span class="sd">                        Length of the input sequence for temporal modeling (default: 1).</span>
+
+<span class="sd">                    lr : float, optional</span>
+<span class="sd">                        Learning rate for model optimization (default: 0.001).</span>
+
+<span class="sd">                    epoch : int, optional</span>
+<span class="sd">                        Number of training epochs (default: 10).</span>
+
+<span class="sd">                    seed : int, optional</span>
+<span class="sd">                        Random seed for reproducibility (default: 42).</span>
+
+<span class="sd">                Returns</span>
+<span class="sd">                -------</span>
+<span class="sd">                self : BitGraph</span>
+<span class="sd">                    BitGraph object with `recov_data` set.</span>
+
+<span class="sd">                Example</span>
+<span class="sd">                -------</span>
+<span class="sd">                &gt;&gt;&gt; bit_graph_imputer = Imputation.DeepLearning.BitGraph(incomp_data)</span>
+<span class="sd">                &gt;&gt;&gt; bit_graph_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                &gt;&gt;&gt; bit_graph_imputer.impute(user_def=True, params={&quot;node_number&quot;:-1, &quot;kernel_set&quot;:[1], &quot;dropout&quot;:0.1, &quot;subgraph_size&quot;:5, &quot;node_dim&quot;:3, &quot;seq_len&quot;:1, &quot;lr&quot;:0.001, &quot;epoch&quot;:10, &quot;seed&quot;:42})  # user defined&gt; or</span>
+<span class="sd">                &gt;&gt;&gt; bit_graph_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                &gt;&gt;&gt; recov_data = bit_graph_imputer.recov_data</span>
+
+<span class="sd">                References</span>
+<span class="sd">                ----------</span>
+<span class="sd">                X. Chen1, X. Li, T. Wu, B. Liu and Z. Li, BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES</span>
+<span class="sd">                https://github.com/chenxiaodanhit/BiTGraph</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+
+                <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">bit_graph</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">node_number</span><span class="o">=</span><span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="o">=</span><span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="o">=</span><span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="o">=</span><span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="bp">self</span></div>
 </div>
 </div>
+</div>
+
 
 
 

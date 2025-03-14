@@ -15,11 +15,11 @@ class TestOptiIMM(unittest.TestCase):
         dataset = "chlorine"
 
         ts_1 = TimeSeries()
-        ts_1.load_series(data=utils.search_path(), max_values=100)
+        ts_1.load_series(data=utils.search_path(), nbr_val=100)
 
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=2,
-                                              offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=2,
+                                                                      offset=0.1, seed=True)
 
         params = utils.load_parameters(query="default", algorithm=algorithm)
         params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")

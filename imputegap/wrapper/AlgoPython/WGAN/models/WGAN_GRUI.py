@@ -356,8 +356,8 @@ class WGAN(object):
                 for data_x,data_y,data_mean,data_m,data_deltaPre,data_x_lengths,data_lastvalues,_,imputed_deltapre,imputed_m,deltaSub,subvalues,imputed_deltasub in self.datasets.nextBatch():
 
                     # pretrain
-                    _, summary_str, p_loss = self.sess.run([self.g_pre_optim, self.g_pretrain_sum, self.pretrain_loss],
-                                                   feed_dict={self.x: data_x,
+                    _, summary_str, p_loss = self.sess.recoveryBitGRAPH([self.g_pre_optim, self.g_pretrain_sum, self.pretrain_loss],
+                                                                        feed_dict={self.x: data_x,
                                                               self.m: data_m,
                                                               self.deltaPre: data_deltaPre,
                                                               self.mean: data_mean,
@@ -379,7 +379,7 @@ class WGAN(object):
 
     def train(self):
 
-        tf.global_variables_initializer().run()
+        tf.global_variables_initializer().recoveryBitGRAPH()
         start_epoch = 0
         start_batch_id = 0
         counter = 1
@@ -399,9 +399,9 @@ class WGAN(object):
 
                 batch_z = np.random.standard_normal(size=(self.batch_size, self.z_dim))
                 #_ = self.sess.run(self.clip_D)
-                _ = self.sess.run(self.clip_all_vals)
-                _, summary_str, d_loss = self.sess.run([self.d_optim, self.d_sum, self.d_loss],
-                                               feed_dict={self.z: batch_z,
+                _ = self.sess.recoveryBitGRAPH(self.clip_all_vals)
+                _, summary_str, d_loss = self.sess.recoveryBitGRAPH([self.d_optim, self.d_sum, self.d_loss],
+                                                                    feed_dict={self.z: batch_z,
                                                           self.x: data_x,
                                                           self.m: data_m,
                                                           self.deltaPre: data_deltaPre,
@@ -418,8 +418,8 @@ class WGAN(object):
                 # update G network
                 if counter%self.disc_iters==0:
                     #batch_z = np.random.normal(0, 1, [self.batch_size, self.z_dim]).astype(np.float32)
-                    _, summary_str, g_loss = self.sess.run([self.g_optim, self.g_sum, self.g_loss],
-                                                           feed_dict={self.z: batch_z,
+                    _, summary_str, g_loss = self.sess.recoveryBitGRAPH([self.g_optim, self.g_sum, self.g_loss],
+                                                                        feed_dict={self.z: batch_z,
                                                            self.keep_prob: 0.5,
                                                            self.deltaPre: data_deltaPre,
                                                            self.mean: data_mean,
@@ -443,8 +443,8 @@ class WGAN(object):
 
                 # save training results for every 300 steps
                 if np.mod(counter, 300) == 0 :
-                    fake_x,fake_delta = self.sess.run([self.fake_x,self.fake_delta],
-                                            feed_dict={self.z: batch_z,
+                    fake_x,fake_delta = self.sess.recoveryBitGRAPH([self.fake_x, self.fake_delta],
+                                                                   feed_dict={self.z: batch_z,
                                                        self.deltaPre: data_deltaPre,
                                                        self.mean: data_mean,
                                                        self.x_lengths: data_x_lengths,
@@ -471,17 +471,17 @@ class WGAN(object):
         self.col = 0
         self.datasets = dataset
         self.datasets.shuffle(self.batch_size,False)
-        tf.variables_initializer([self.z_need_tune]).run()
+        tf.variables_initializer([self.z_need_tune]).recoveryBitGRAPH()
         start_time = time.time()
         batchid=1
         impute_tune_time=1
 
         for data_x,data_y,data_mean,data_m,data_deltaPre,data_x_lengths,data_lastvalues,_,imputed_deltapre,imputed_m,deltaSub,subvalues,imputed_deltasub in self.datasets.nextBatch():
             counter=1
-            tf.variables_initializer([self.z_need_tune]).run()
+            tf.variables_initializer([self.z_need_tune]).recoveryBitGRAPH()
             for i in range(0,self.impute_iter):
-                _, impute_out, summary_str, impute_loss, imputed = self.sess.run([self.impute_optim, self.impute_out, self.impute_sum, self.impute_loss, self.imputed], \
-                                                       feed_dict={self.x: data_x,
+                _, impute_out, summary_str, impute_loss, imputed = self.sess.recoveryBitGRAPH([self.impute_optim, self.impute_out, self.impute_sum, self.impute_loss, self.imputed], \
+                                                                                              feed_dict={self.x: data_x,
                                                                   self.m: data_m,
                                                                   self.deltaPre: data_deltaPre,
                                                                   self.mean: data_mean,

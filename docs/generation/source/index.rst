@@ -1,161 +1,122 @@
-ImputeGAP documentation
+ImputeGAP Documentation
 =======================
 
-ImputeGAP is a unified framework for imputation algorithms that provides a narrow-waist interface between algorithm evaluation and parameterization for datasets issued from various domains ranging from neuroscience, medicine, climate to energy.
+ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your own time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.
 
-The interface provides advanced imputation algorithms, construction of various missing values patterns, and different evaluation metrics. In addition, the framework offers support for AutoML parameterization techniques, feature extraction, and, potentially, analysis of feature impact using SHAP. The framework should allow a straightforward integration of new algorithms, datasets, and metrics.
+
+In detail, the package provides:
+    - Access to commonly used datasets in time series research (`Datasets <datasets.html>`_).
+    - Configurable contamination module that simulates real-world missingness patterns (`Patterns <patterns.html>`_).
+    - Automated preprocessing with built-in methods for normalizing time series (`Pre-processing <preprocessing.html>`_).
+    - Parameterized state-of-the-art time series imputation algorithms (`Algorithms <algorithms.html>`_).
+    - Modular tools to analyze the behavior of these algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream Evaluation <downstream.html>`_).
+    - Experiment benchmarking, fostering research reproducibility in time series (`Benchmark <benchmark.html>`_).
+    - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <explainer.html>`_).
+    - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
+
+
+.. raw:: html
+
+   <br><br>
 
 .. _data-format:
 
 Data Format
 -----------
 
-If you use your own datasets, please make sure your data satisfies the following conditions.
+Please ensure that your data satisfies the following criteria:
 
 .. note::
 
-    - **Data Type:** Must be a ``numpy.ndarray``.
-    - **Structure:** The data should be a **2D matrix**.
-    - **Rows:** Each row represents a set of values (e.g., **Timestamp #1**).
-    - **Columns:** Each column corresponds to a different series (e.g., **Temperature**).
-    - **Row Separator:** Rows should be separated by a **carriage return** (``"\n"``).
-    - **Column Separator:** Values within columns should be separated by a **space** (``" "``).
-    - **Missing Values:** Can be detected using ``numpy.isnan()``.
-    - **Shape:** The numpy shape of the matrix imported is (series, values)
-    - **Example:** `Dataset Example <https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/dataset/test.txt>`_ - The shape of the time series is (10, 25), the number of series is 10 and the number of values is 25.
+    - 2D Matrix: columns are the series and rows are the timestamps
+    - Column separator: empty space
+    - Row separator: newline
+    - Missing values are NaN
+    - Data output uses ``numpy.ndarray``
 
 
-.. _algorithms:
 
-Algorithms
-----------
+.. raw:: html
+
+   <br><br>
+
+
+.. _get_started:
+
+Get Started
+___________
+
+.. raw:: html
+
+   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
+       <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
+       <h3><a href="getting_started.html" style="text-decoration: none; color: #2e86c1;">🚀 Installation</a></h3>
+       <p style="color: #CCCCCC;">Read the guide on how to install <strong>ImputeGAP</strong> on your system.</p>
+       </div>
+
+       <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
+       <h3><a href="tutorials.html" style="text-decoration: none; color: #2e86c1;">📖 Tutorials</a></h3>
+       <p style="color: #CCCCCC;">Check the tutorials to learn how to use <strong>ImputeGAP</strong> efficiently.</p>
+       </div>
+
+       <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
+       <h3><a href="imputegap.html" style="text-decoration: none; color: #2e86c1;">📦 API</a></h3>
+       <p style="color: #CCCCCC;">Find the main API for each submodule in the index.</p>
+       </div>
+
+       <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
+       <h3><a href="algorithms.html" style="text-decoration: none; color: #2e86c1;">🧠 Algorithms</a></h3>
+       <p style="color: #CCCCCC;">Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
+       </div>
+
+   </div><br><br>
+
+
+.. _contributors:
+
+Contributors
+____________
 
 .. list-table::
-   :header-rows: 1
+   :widths: auto
+   :align: center
+   :header-rows: 0
 
-   * - **ALGORITHMS**
-     - **FAMILIES**
-     - **CONF**
-   * - CDRec
-     - Matrix Completion
-     - KAIS'20
-   * - IterativeSVD
-     - Matrix Completion
-     - BIOINFORMATICS'01
-   * - GROUSE
-     - Matrix Completion
-     - PMLR'16
-   * - ROSL
-     - Matrix Completion
-     - CVPR'14
-   * - SPIRIT
-     - Matrix Completion
-     - VLDB'05
-   * - SoftImpute
-     - Matrix Completion
-     - JMLR'10
-   * - SVT
-     - Matrix Completion
-     - SIAM J. OPTIM'10
-   * - TRMF
-     - Matrix Completion
-     - NeurIPS'16
-   * - ST-MVL
-     - Pattern Search
-     - IJCAI'16
-   * - DynaMMo
-     - Pattern Search
-     - KDD'09
-   * - TKCM
-     - Pattern Search
-     - EDBT'17
-   * - IIM
-     - Machine Learning
-     - ICDE '19
-   * - XGBI
-     - Machine Learning
-     - KDD'16
-   * - Mice
-     - Machine Learning
-     - Statistical Software'11
-   * - MissForest
-     - Machine Learning
-     - BioInformatics'11
-   * - KNNImpute
-     - Statistics
-     - native
-   * - Interpolation
-     - Statistics
-     - native
-   * - Min Impute
-     - Statistics
-     - native
-   * - Mean Impute
-     - Statistics
-     - native
-   * - Mean Impute By Series
-     - Statistics
-     - native
-   * - MRNN
-     - Deep Learning
-     - IEEE Trans on BE'19
-   * - BRITS
-     - Deep Learning
-     - NeurIPS'18
-   * - DeepMVI
-     - Deep Learning
-     - PVLDB'21
-   * - MPIN
-     - Deep Learning
-     - PVLDB'24
-   * - PriSTI
-     - Deep Learning
-     - ICDE'23
-   * - MissNet
-     - Deep Learning
-     - KDD'24
-   * - GAIN
-     - Deep Learning
-     - ICML'18
-   * - GRIN
-     - Deep Learning
-     - ICLR'22
-   * - BayOTIDE
-     - Deep Learning
-     - PMLR'24
-   * - HKMF-T
-     - Deep Learning
-     - TKDE'21
+   * - .. image:: _img/quentin_nater.png
+          :alt: Quentin Nater - ImputeGAP
+          :width: 100px
+          :height: 100px
+          :align: center
+     - .. image:: _img/mourad_khayati.png
+          :alt: Mourad Khayati - ImputeGAP
+          :width: 100px
+          :height: 100px
+          :align: center
+
+   * - Quentin Nater
+       `quentin.nater@unifr.ch <mailto:quentin.nater@unifr.ch>`_
+     - Mourad Khayati
+       `mourad.khayati@unifr.ch <mailto:mourad.khayati@unifr.ch>`_
 
 
-
-.. _api:
-
-API
----
-.. autosummary::
-   imputegap.recovery.manager
-   imputegap.recovery.imputation
-   imputegap.recovery.optimization
-   imputegap.recovery.explainer
-   imputegap.recovery.evaluation
-   imputegap.recovery.benchmark
-   imputegap.tools.utils
-
-
-.. _tree:
-
-TREE
-----
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 0
    :caption: Contents:
+   :hidden:
 
+
+   index
    getting_started
-   datasets
    tutorials
-   references
+   algorithms
+   datasets
+   preprocessing
+   patterns
+   downstream
+   benchmark
+   explainer
    GitHub Repository <https://github.com/eXascaleInfolab/ImputeGAP/>
    PyPI Repository <https://pypi.org/project/imputegap/>
    imputegap

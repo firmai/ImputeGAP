@@ -5,6 +5,7 @@ import importlib.resources
 import numpy as __numpy_import;
 
 
+
 def config_impute_algorithm(incomp_data, algorithm):
     """
     Configure and execute algorithm for selected imputation imputer and pattern.
@@ -25,66 +26,72 @@ def config_impute_algorithm(incomp_data, algorithm):
     from imputegap.recovery.imputation import Imputation
 
     # 1st generation
-    if algorithm == "cdrec":
+    if algorithm == "cdrec" or algorithm == "CDRec":
         imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
-    elif algorithm == "stmvl":
+    elif algorithm == "stmvl" or algorithm == "STMVL":
         imputer = Imputation.PatternSearch.STMVL(incomp_data)
-    elif algorithm == "iim":
+    elif algorithm == "iim" or algorithm == "IIM":
         imputer = Imputation.MachineLearning.IIM(incomp_data)
-    elif algorithm == "mrnn":
+    elif algorithm == "mrnn" or algorithm == "MRNN":
         imputer = Imputation.DeepLearning.MRNN(incomp_data)
 
     # 2nd generation
-    elif algorithm == "iterative_svd" or algorithm == "iter_svd":
+    elif algorithm == "iterative_svd" or algorithm == "iter_svd" or algorithm == "IterativeSVD":
         imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
-    elif algorithm == "grouse":
+    elif algorithm == "grouse" or algorithm == "GROUSE":
         imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
-    elif algorithm == "dynammo":
+    elif algorithm == "dynammo" or algorithm == "DynaMMo":
         imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
-    elif algorithm == "rosl":
+    elif algorithm == "rosl" or algorithm == "ROSL":
         imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
-    elif algorithm == "soft_impute" or algorithm == "soft_imp":
+    elif algorithm == "soft_impute" or algorithm == "soft_imp" or algorithm == "SoftImpute":
         imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
-    elif algorithm == "spirit":
+    elif algorithm == "spirit" or algorithm == "SPIRIT":
         imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
-    elif algorithm == "svt":
+    elif algorithm == "svt" or algorithm == "SVT":
         imputer = Imputation.MatrixCompletion.SVT(incomp_data)
-    elif algorithm == "tkcm":
+    elif algorithm == "tkcm" or algorithm == "TKCM":
         imputer = Imputation.PatternSearch.TKCM(incomp_data)
-    elif algorithm == "deep_mvi":
+    elif algorithm == "deep_mvi" or algorithm == "DeepMVI":
         imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
-    elif algorithm == "brits":
+    elif algorithm == "brits" or algorithm == "BRITS":
         imputer = Imputation.DeepLearning.BRITS(incomp_data)
-    elif algorithm == "mpin":
+    elif algorithm == "mpin" or algorithm == "MPIN":
         imputer = Imputation.DeepLearning.MPIN(incomp_data)
-    elif algorithm == "pristi":
+    elif algorithm == "pristi" or algorithm == "PRISTI":
         imputer = Imputation.DeepLearning.PRISTI(incomp_data)
 
     # 3rd generation
-    elif algorithm == "knn":
+    elif algorithm == "knn" or algorithm == "KNN":
         imputer = Imputation.Statistics.KNN(incomp_data)
-    elif algorithm == "interpolation":
+    elif algorithm == "interpolation" or algorithm == "Interpolation":
         imputer = Imputation.Statistics.Interpolation(incomp_data)
-    elif algorithm == "mean_series":
+    elif algorithm == "mean_series" or algorithm == "MeanImputeBySeries":
         imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
-    elif algorithm == "trmf":
+    elif algorithm == "min_impute" or algorithm == "MinImpute":
+        imputer = Imputation.Statistics.MinImpute(incomp_data)
+    elif algorithm == "zero_impute" or algorithm == "ZeroImpute":
+        imputer = Imputation.Statistics.ZeroImpute(incomp_data)
+    elif algorithm == "trmf" or algorithm == "TRMF":
         imputer = Imputation.MatrixCompletion.TRMF(incomp_data)
-    elif algorithm == "mice":
+    elif algorithm == "mice" or algorithm == "MICE":
         imputer = Imputation.MachineLearning.MICE(incomp_data)
-    elif algorithm == "miss_forest":
+    elif algorithm == "miss_forest" or algorithm == "MissForest":
         imputer = Imputation.MachineLearning.MissForest(incomp_data)
-    elif algorithm == "xgboost":
+    elif algorithm == "xgboost" or algorithm == "XGBOOST":
         imputer = Imputation.MachineLearning.XGBOOST(incomp_data)
-    elif algorithm == "miss_net":
+    elif algorithm == "miss_net" or algorithm == "MissNet":
         imputer = Imputation.DeepLearning.MissNet(incomp_data)
-    elif algorithm == "gain":
+    elif algorithm == "gain" or algorithm == "GAIN":
         imputer = Imputation.DeepLearning.GAIN(incomp_data)
-    elif algorithm == "grin":
+    elif algorithm == "grin" or algorithm == "GRIN":
         imputer = Imputation.DeepLearning.GRIN(incomp_data)
-    elif algorithm == "bay_otide":
+    elif algorithm == "bay_otide" or algorithm == "BayOTIDE":
         imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
-    elif algorithm == "hkmf_t":
+    elif algorithm == "hkmf_t" or algorithm == "HKMF_T":
         imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
+    elif algorithm == "bit_graph" or algorithm == "BitGraph":
+        imputer = Imputation.DeepLearning.BitGraph(incomp_data)
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
@@ -111,10 +118,12 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
     TimeSeries
         TimeSeries object containing contaminated data.
     """
-    if pattern == "mcar":
-        incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
-    elif pattern == "mp":
+    if pattern == "mcar" or pattern == "missing_completely_at_random":
+        incomp_data = ts.Contamination.missing_completely_at_random(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
+    elif pattern == "mp" or pattern == "missing_percentage":
         incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset)
+    elif pattern == "ps" or pattern == "percentage_shift":
+        incomp_data = ts.Contamination.percentage_shift(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed)
     elif pattern == "disjoint":
         incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset)
     elif pattern == "overlap":
@@ -214,7 +223,7 @@ def search_path(set_name="test"):
         The correct file path for the dataset.
     """
 
-    if set_name in ["bafu", "chlorine", "climate", "drift", "eeg-reading", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask", "meteo", "test", "test-large"]:
+    if set_name in list_of_datasets():
         return set_name + ".txt"
     else:
         filepath = "../imputegap/dataset/" + set_name + ".txt"
@@ -439,6 +448,17 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         data_names = config[algorithm]['data_names']
         epoch = int(config[algorithm]['epoch'])
         return (tags, data_names, epoch)
+    elif algorithm == "bit_graph":
+        node_number = int(config[algorithm]['node_number'])
+        kernel_set = config[algorithm]['kernel_set']
+        dropout = float(config[algorithm]['dropout'])
+        subgraph_size = int(config[algorithm]['subgraph_size'])
+        node_dim = int(config[algorithm]['node_dim'])
+        seq_len = int(config[algorithm]['seq_len'])
+        lr = float(config[algorithm]['lr'])
+        epoch = int(config[algorithm]['epoch'])
+        seed = int(config[algorithm]['seed'])
+        return (node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -762,6 +782,18 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "data_names": optimal_params[1],
             "epoch": int(optimal_params[2]),
         }
+    elif algorithm == "bit_graph":
+        params_to_save = {
+            "node_number": int(optimal_params[0]),
+            "kernel_set": optimal_params[1],
+            "dropout": float(optimal_params[2]),
+            "subgraph_size": int(optimal_params[3]),
+            "node_dim": int(optimal_params[4]),
+            "seq_len": int(optimal_params[5]),
+            "lr": float(optimal_params[6]),
+            "epoch": int(optimal_params[7]),
+            "seed": int(optimal_params[8]),
+        }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
         return
@@ -772,3 +804,92 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         print(f"\n\t\t(SYS) Optimization parameters successfully saved to {file_name}")
     except Exception as e:
         print(f"\n\t\t(SYS) An error occurred while saving the file: {e}")
+
+
+def list_of_algorithms():
+    return sorted([
+        "CDRec",
+        "IterativeSVD",
+        "GROUSE",
+        "ROSL",
+        "SPIRIT",
+        "SoftImpute",
+        "SVT",
+        "TRMF",
+        "STMVL",
+        "DynaMMo",
+        "TKCM",
+        "IIM",
+        "XGBOOST",
+        "MICE",
+        "MissForest",
+        "KNN",
+        "Interpolation",
+        "MinImpute",
+        "MeanImpute",
+        "ZeroImpute",
+        "MeanImputeBySeries",
+        "MRNN",
+        "BRITS",
+        "DeepMVI",
+        "MPIN",
+        "PRISTI",
+        "MissNet",
+        "GAIN",
+        "GRIN",
+        "BayOTIDE",
+        "HKMF_T",
+        "BitGraph"
+    ])
+
+def list_of_patterns():
+    return sorted([
+        "missing_completely_at_random",
+        "missing_percentage",
+        "percentage_shift",
+        "disjoint",
+        "overlap",
+        "gaussian",
+        "distribution"
+    ])
+
+def list_of_datasets(txt=False):
+
+    list = sorted([
+        "airq",
+        "bafu",
+        "chlorine",
+        "climate",
+        "drift",
+        "eeg-alcohol",
+        "eeg-reading",
+        "fmri-objectviewing",
+        "fmri-stoptask",
+        "meteo",
+        "electricity",
+        "motion",
+        "soccer",
+        "temperature"
+    ])
+
+    if txt:
+        list = [dataset + ".txt" for dataset in list]
+
+    return list
+
+def list_of_optimizers():
+    return sorted([
+        "ray_tune",
+        "bayesian",
+        "particle_swarm",
+        "successive_halving",
+        "greedy"
+    ])
+
+def list_of_downstreams():
+    return sorted([
+        "prophet",
+        "exp-smoothing",
+        "naive"
+    ])
+

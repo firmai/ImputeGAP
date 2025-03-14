@@ -42,7 +42,7 @@ class TestTKCM(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10, offset=0.1, seed=True)
 
         algo = Imputation.PatternSearch.TKCM(incomp_data).impute(params={"rank": 5})
         algo.score(ts_1.data)

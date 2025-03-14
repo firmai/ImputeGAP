@@ -17,16 +17,16 @@ class TestDownstream(unittest.TestCase):
         ts_1.normalize(normalizer="min_max")
 
         # Create a mask for contamination
-        ts_mask = ts_1.Contamination.mcar(ts_1.data, rate_dataset=0.2, rate_series=0.8)
+        ts_mask = ts_1.Contamination.missing_completely_at_random(ts_1.data, rate_dataset=0.2, rate_series=0.8)
 
         # Perform imputation
         imputer = Imputation.MatrixCompletion.CDRec(ts_mask)
         imputer.impute()
 
         # Configure downstream options
-        downstream_options = [{"evaluator": "forecaster", "model": "prophet", "params": None, "plots": False},
-                              {"evaluator": "forecaster", "model": "naive", "params": None, "plots": False},
-                              {"evaluator": "forecaster", "model": "exp-smoothing", "params": None, "plots": False}]
+        downstream_options = [{"task": "forecast", "model": "prophet", "params": None, "plots": False},
+                              {"task": "forecast", "model": "naive", "params": None, "plots": False},
+                              {"task": "forecast", "model": "exp-smoothing", "params": None, "plots": False}]
 
         for options in downstream_options:
             model = options.get("model")

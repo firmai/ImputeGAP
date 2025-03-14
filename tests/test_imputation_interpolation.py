@@ -16,7 +16,7 @@ class TestInterpolation(unittest.TestCase):
         the goal is to test if only the simple imputation with interpolation has the expected outcome
         """
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("chlorine"), max_values=200)
+        ts_1.load_series(utils.search_path("chlorine"), nbr_val=200)
 
         incomp_data = ts_1.Contamination.missing_percentage(input_data=ts_1.data, rate_series=0.18)
 

@@ -56,9 +56,9 @@ class Benchmarking:
         """
 
         if scenario == "mcar":
-            infected_matrix_opti = ts_test.Contamination.mcar(input_data=ts_test.data, rate_dataset=opti_mean,
-                                                              rate_series=opti_mean, block_size=block_size_mcar,
-                                                              use_seed=True, seed=42)
+            infected_matrix_opti = ts_test.Contamination.missing_completely_at_random(input_data=ts_test.data, rate_dataset=opti_mean,
+                                                                                      rate_series=opti_mean, block_size=block_size_mcar,
+                                                                                      use_seed=True, seed=42)
         elif scenario == "mp":
             infected_matrix_opti = ts_test.Contamination.missing_percentage(input_data=ts_test.data, rate_dataset=opti_mean,
                                                                             rate_series=opti_mean)
@@ -434,8 +434,8 @@ class Benchmarking:
                     limitation_values = 110
                     print("TEST LOADED...")
 
-                ts_test.load_series(data=utils.search_path(dataset), max_series=limitation_series,
-                                    max_values=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), nbr_series=limitation_series,
+                                    nbr_val=limitation_values, header=header)
 
                 start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape
@@ -458,9 +458,9 @@ class Benchmarking:
 
                             start_time_contamination = time.time()  # Record start time
                             if scenario == "mcar":
-                                infected_matrix = ts_test.Contamination.mcar(input_data=ts_test.data, rate_dataset=x,
-                                                                             rate_series=x, block_size=block_size_mcar,
-                                                                             use_seed=True, seed=42)
+                                infected_matrix = ts_test.Contamination.missing_completely_at_random(input_data=ts_test.data, rate_dataset=x,
+                                                                                                     rate_series=x, block_size=block_size_mcar,
+                                                                                                     use_seed=True, seed=42)
                             elif scenario == "mp":
                                 infected_matrix = ts_test.Contamination.missing_percentage(input_data=ts_test.data,
                                                                                            rate_dataset=x,

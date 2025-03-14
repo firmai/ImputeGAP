@@ -91,7 +91,7 @@ class Benchmark:
             TimeSeries object containing contaminated data.
         """
         if pattern == "mcar":
-            incomp_data = ts_test.Contamination.mcar(input_data=ts_test.data, rate_dataset=rate, rate_series=rate, block_size=block_size_mcar, seed=True)
+            incomp_data = ts_test.Contamination.missing_completely_at_random(input_data=ts_test.data, rate_dataset=rate, rate_series=rate, block_size=block_size_mcar, seed=True)
         elif pattern == "mp":
             incomp_data = ts_test.Contamination.missing_percentage(input_data=ts_test.data, rate_dataset=rate, rate_series=rate)
         elif pattern == "disjoint":
@@ -678,8 +678,8 @@ class Benchmark:
                     limitation_series = 10
                     limitation_values = 110
 
-                ts_test.load_series(data=utils.search_path(dataset), max_series=limitation_series,
-                                    max_values=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), nbr_series=limitation_series,
+                                    nbr_val=limitation_values, header=header)
 
                 start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape
