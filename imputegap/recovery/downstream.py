@@ -74,7 +74,7 @@ class Downstream:
         dict or None
             Metrics from the downstream analysis or None if no valid evaluator is provided.
         """
-        evaluator = self.downstream.get("evaluator", "forecaster")
+        evaluator = self.downstream.get("task", "forecast")
         model = self.downstream.get("model", "naive")
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
@@ -87,7 +87,7 @@ class Downstream:
         print("\n\t\t\t\tDownstream analysis launched for <", evaluator, "> on the model <", model,
               "> with parameters :\n\t\t\t\t\t", params)
 
-        if evaluator == "forecaster":
+        if evaluator == "forecast" or evaluator == "forecaster"or evaluator == "forecasting":
             y_train_all, y_test_all, y_pred_all = [], [], []
             mae, mse = [], []
 

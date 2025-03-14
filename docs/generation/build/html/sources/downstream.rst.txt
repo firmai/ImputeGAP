@@ -29,7 +29,7 @@ Below is an example of how to call the downstream process for the model Prophet 
     imputer.impute()
 
     # compute print the downstream results
-    downstream_config = {"evaluator": "forecaster", "model": "prophet"}
+    downstream_config = {"task": "forecast", "model": "prophet"}
     imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
     ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 

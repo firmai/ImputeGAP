@@ -2,7 +2,7 @@ from imputegap.recovery.explainer import Explainer
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-datasets = ["eeg-alcohol", "eeg-reading"]
+datasets = ["electricity", "soccer", "temperature", "motion"]
 
 for dataset in datasets:
     # small one
@@ -38,7 +38,7 @@ for dataset in datasets:
     data_n.load_series(data=utils.search_path(dataset), header=False)
     data_n.plot(input_data=data_n.data, save_path="./dataset/docs/" + dataset + "", display=False)
 
-    categories, features = Explainer.load_configuration()
+    categories, features, _ = Explainer.load_configuration()
     characteristics, descriptions = Explainer.extractor_pycatch(data=data_n.data, features_categories=categories, features_list=features, do_catch24=False)
 
     p = "./dataset/docs/"+dataset+"/features_"+dataset+".txt"

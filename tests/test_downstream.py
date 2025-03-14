@@ -24,9 +24,9 @@ class TestDownstream(unittest.TestCase):
         imputer.impute()
 
         # Configure downstream options
-        downstream_options = [{"evaluator": "forecaster", "model": "prophet", "params": None, "plots": False},
-                              {"evaluator": "forecaster", "model": "naive", "params": None, "plots": False},
-                              {"evaluator": "forecaster", "model": "exp-smoothing", "params": None, "plots": False}]
+        downstream_options = [{"task": "forecast", "model": "prophet", "params": None, "plots": False},
+                              {"task": "forecast", "model": "naive", "params": None, "plots": False},
+                              {"task": "forecast", "model": "exp-smoothing", "params": None, "plots": False}]
 
         for options in downstream_options:
             model = options.get("model")
