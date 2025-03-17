@@ -6,10 +6,13 @@ import matplotlib.pyplot as plt
 
 from imputegap.tools import utils
 
-from sktime.forecasting.exp_smoothing import ExponentialSmoothing
-from sktime.forecasting.fbprophet import Prophet
-from sktime.forecasting.naive import NaiveForecaster
-from sktime.performance_metrics.forecasting import mean_absolute_error, mean_squared_error
+from darts import TimeSeries
+from darts.metrics import mae as darts_mae, mse as darts_mse
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+
+
+
+
 
 class Downstream:
     """
@@ -64,6 +67,7 @@ class Downstream:
         self.incomp_data = incomp_data
         self.downstream = downstream
         self.split = 0.8
+        self.sktime_models = utils.list_of_downstreams_sktime()
 
     def downstream_analysis(self):
         """
@@ -85,9 +89,9 @@ class Downstream:
             params = utils.load_parameters(query="default", algorithm=loader)
 
         print("\n\t\t\t\tDownstream analysis launched for <", evaluator, "> on the model <", model,
-              "> with parameters :\n\t\t\t\t\t", params)
+              "> with parameters :\n\t\t\t\t\t", params, " \n\n")
 
-        if evaluator == "forecast" or evaluator == "forecaster"or evaluator == "forecasting":
+        if evaluator in ["forecast", "forecaster", "forecasting"]:
             y_train_all, y_test_all, y_pred_all = [], [], []
             mae, mse = [], []
 
@@ -106,35 +110,57 @@ class Downstream:
 
                 y_train = data[:, :train_len]
                 y_test = data[:, train_len:]
-                y_pred = np.zeros_like(y_test)
 
-                # Forecast for each series
-                for series_idx in range(data.shape[0]):
-                    series_train = y_train[series_idx, :]
+                forecaster = utils.config_forecaster(model, params)
 
-                    # Initialize and fit the forecasting model
-                    if model == "prophet":
-                        forecaster = Prophet(**params)
-                    elif model == "exp-smoothing":
-                        forecaster = ExponentialSmoothing(**params)
-                    else:
-                        forecaster = NaiveForecaster(**params)
+                if model in self.sktime_models:
+                    # --- SKTIME APPROACH ---
+                    y_pred = np.zeros_like(y_test)
 
-                    forecaster.fit(series_train)
-                    fh = np.arange(1, y_test.shape[1] + 1)  # Forecast horizon
-                    series_pred = forecaster.predict(fh=fh)
-                    series_pred = series_pred.ravel()
+                    for series_idx in range(data.shape[0]):
+                        series_train = y_train[series_idx, :]
+                        forecaster.fit(series_train)
+                        fh = np.arange(1, y_test.shape[1] + 1)  # Forecast horizon
+                        series_pred = forecaster.predict(fh=fh)
+                        y_pred[series_idx, :] = series_pred.ravel()
 
-                    # Store predictions
-                    y_pred[series_idx, :] = series_pred
+                    # Compute metrics using sktime
+                    mae.append(mean_absolute_error(y_test, y_pred))
+                    mse.append(mean_squared_error(y_test, y_pred))
 
-                # Validate shapes
-                if y_pred.shape != y_test.shape:
-                    raise ValueError(f"Shape mismatch: y_pred={y_pred.shape}, y_test={y_test.shape}, y_train={y_train.shape}")
+                else:
+                    # --- DARTS APPROACH ---
+                    # Convert entire matrix to a Darts multivariate TimeSeries object
+                    y_train_ts = TimeSeries.from_values(y_train.T)  # Shape: (time_steps, n_series)
+                    y_test_ts = TimeSeries.from_values(y_test.T)  # Shape: (time_steps, n_series)
 
-                # Calculate metrics
-                mae.append(mean_absolute_error(y_test, y_pred))
-                mse.append(mean_squared_error(y_test, y_pred))
+                    # Fit the model
+                    forecaster.fit(y_train_ts)
+
+                    # Predict for the entire series at once
+                    forecast_horizon = y_test.shape[1]
+                    y_pred_ts = forecaster.predict(n=forecast_horizon)
+
+                    # Convert predictions back to NumPy
+                    y_pred = y_pred_ts.values().T  # Shape: (n_series, time_steps)
+
+
+
+                    # Ensure y_pred_ts has the same components as y_test_ts
+                    y_pred_ts = y_pred_ts.with_columns_renamed(y_pred_ts.components, y_test_ts.components)
+
+                    # Shift time index to match
+                    if y_pred_ts.start_time() != y_test_ts.start_time():
+                        y_pred_ts = y_pred_ts.shift(y_test_ts.start_time() - y_pred_ts.start_time())
+
+                    # Compute metrics safely
+                    mae_score = darts_mae(y_test_ts, y_pred_ts)
+                    mse_score = darts_mse(y_test_ts, y_pred_ts)
+
+
+                    # Compute metrics using Darts
+                    mae.append(mae_score)
+                    mse.append(mse_score)
 
                 # Store for plotting
                 y_train_all.append(y_train)
@@ -150,7 +176,7 @@ class Downstream:
                        "DOWNSTREAM-MEANI-MAE": mae[2], "DOWNSTREAM-RECOV-MSE": mse[0],
                        "DOWNSTREAM-INPUT-MSE": mse[1], "DOWNSTREAM-MEANI-MSE": mse[2]}
 
-            print("\t\t\t\tDownstream analysis complete. " + "*" * 58 + "\n")
+            print("\n\t\t\t\tDownstream analysis complete. " + "*" * 58 + "\n")
 
             return metrics
         else:

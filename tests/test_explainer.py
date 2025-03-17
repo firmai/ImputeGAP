@@ -22,7 +22,7 @@ class TestExplainer(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path(filename))
 
-        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, limit_ratio=0.3,
+        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, rate_dataset=0.3,
                                                              seed=True, verbose=True)
 
         self.assertTrue(shap_values is not None)

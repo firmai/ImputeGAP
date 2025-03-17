@@ -121,10 +121,13 @@ class Benchmark:
 
                                     # Add scores and times
                                     for score_key, v in level_value["scores"].items():
+                                        if v is None :
+                                            v = 0
                                         merger["scores"][score_key] = (merger["scores"].get(score_key, 0) + v / count)
                                     for time_key, time_value in level_value["times"].items():
-                                        merger["times"][time_key] = (
-                                                    merger["times"].get(time_key, 0) + time_value / count)
+                                        if time_value is None :
+                                            time_value = 0
+                                        merger["times"][time_key] = (merger["times"].get(time_key, 0) + time_value / count)
 
             results_avg.append(merged_dict)
 

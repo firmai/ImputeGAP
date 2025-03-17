@@ -138,6 +138,85 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
     return incomp_data
 
 
+def config_forecaster(model, params):
+        """
+        Configure and execute forecaster model for downstream analytics
+
+        Parameters
+        ----------
+        model : str
+            name of the forcaster model
+        params : list of params
+            List of paramaters for a forcaster model
+
+        Returns
+        -------
+        Forecaster object (SKTIME/DART)
+            Forecaster object for downstream analytics
+        """
+
+        if model == "prophet":
+            from sktime.forecasting.fbprophet import Prophet
+            forecaster = Prophet(**params)
+        elif model == "exp-smoothing":
+            from sktime.forecasting.exp_smoothing import ExponentialSmoothing
+            forecaster = ExponentialSmoothing(**params)
+        elif model == "nbeats":
+            from darts.models import NBEATSModel
+            forecaster = NBEATSModel(**params)
+        elif model == "xgboost":
+            from darts.models.forecasting.xgboost import XGBModel
+            forecaster = XGBModel(**params)
+        elif model == "lightgbm":
+            from darts.models.forecasting.lgbm import LightGBMModel
+            forecaster = LightGBMModel(**params)
+        elif model == "lstm":
+            from darts.models.forecasting.rnn_model import RNNModel
+            forecaster = RNNModel(**params)
+        elif model == "deepar":
+            from darts.models.forecasting.rnn_model import RNNModel
+            forecaster = RNNModel(**params)
+        elif model == "transformer":
+            from darts.models.forecasting.transformer_model import TransformerModel
+            forecaster = TransformerModel(**params)
+        elif model == "hw-add":
+            from sktime.forecasting.exp_smoothing import ExponentialSmoothing
+            forecaster = ExponentialSmoothing(**params)
+        elif model == "arima":
+            from sktime.forecasting.arima import AutoARIMA
+            forecaster = AutoARIMA(**params)
+        elif model == "sf-arima":
+            from sktime.forecasting.statsforecast import StatsForecastAutoARIMA
+            forecaster = StatsForecastAutoARIMA(**params)
+            forecaster.set_config(warnings='off')
+        elif model == "bats":
+            from sktime.forecasting.bats import BATS
+            forecaster = BATS(**params)
+        elif model == "ets":
+            from sktime.forecasting.ets import AutoETS
+            forecaster = AutoETS(**params)
+        elif model == "croston":
+            from sktime.forecasting.croston import Croston
+            forecaster = Croston()
+        elif model == "theta":
+            from sktime.forecasting.theta import ThetaForecaster
+            forecaster = ThetaForecaster(**params)
+        elif model == "unobs":
+            from sktime.forecasting.structural import UnobservedComponents
+            forecaster = UnobservedComponents()
+        elif model == "rnn":
+            from sktime.forecasting.neuralforecast import NeuralForecastRNN
+            forecaster = NeuralForecastRNN(**params)
+
+
+        else:
+            from sktime.forecasting.naive import NaiveForecaster
+            forecaster = NaiveForecaster(**params)
+
+        return forecaster
+
+
+
 def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
     """
     Marshal a ctypes container as a numpy column-major array.
@@ -503,6 +582,116 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         seasonality_mode = str(config[algorithm]['seasonality_mode'])
         n_changepoints = int(config[algorithm]['n_changepoints'])
         return {"seasonality_mode": seasonality_mode, "n_changepoints": n_changepoints}
+    elif algorithm == "forecaster-nbeats":
+        input_chunk_length = int(config[algorithm]['input_chunk_length'])
+        output_chunk_length = int(config[algorithm]['output_chunk_length'])
+        num_blocks = int(config[algorithm]['num_blocks'])
+        layer_widths = int(config[algorithm]['layer_widths'])
+        random_state = int(config[algorithm]['random_state'])
+        n_epochs = int(config[algorithm]['n_epochs'])
+        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
+        if pl_trainer_kwargs == "cpu":
+            drive = {"accelerator": pl_trainer_kwargs}
+        else:
+            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
+        return {"input_chunk_length": input_chunk_length, "output_chunk_length": output_chunk_length, "num_blocks": num_blocks,
+                "layer_widths": layer_widths, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
+    elif algorithm == "forecaster-xgboost":
+        lags = int(config[algorithm]['lags'])
+        return {"lags": lags}
+    elif algorithm == "forecaster-lightgbm":
+        lags = int(config[algorithm]['lags'])
+        verbose = int(config[algorithm]['verbose'])
+        return {"lags": lags, "verbose": verbose}
+    elif algorithm == "forecaster-lstm":
+        input_chunk_length = int(config[algorithm]['input_chunk_length'])
+        model = str(config[algorithm]['model'])
+        random_state = int(config[algorithm]['random_state'])
+        n_epochs = int(config[algorithm]['n_epochs'])
+        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
+        if pl_trainer_kwargs == "cpu":
+            drive = {"accelerator": pl_trainer_kwargs}
+        else:
+            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
+        return {"input_chunk_length": input_chunk_length, "model": model, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
+    elif algorithm == "forecaster-deepar":
+        input_chunk_length = int(config[algorithm]['input_chunk_length'])
+        model = str(config[algorithm]['model'])
+        random_state = int(config[algorithm]['random_state'])
+        n_epochs = int(config[algorithm]['n_epochs'])
+        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
+        if pl_trainer_kwargs == "cpu":
+            drive = {"accelerator": pl_trainer_kwargs}
+        else:
+            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
+        return {"input_chunk_length": input_chunk_length, "model": model, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
+    elif algorithm == "forecaster-transformer":
+        input_chunk_length = int(config[algorithm]['input_chunk_length'])
+        output_chunk_length = int(config[algorithm]['output_chunk_length'])
+        random_state = int(config[algorithm]['random_state'])
+        n_epochs = int(config[algorithm]['n_epochs'])
+        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
+        if pl_trainer_kwargs == "cpu":
+            drive = {"accelerator": pl_trainer_kwargs}
+        else:
+            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
+        return {"input_chunk_length": input_chunk_length, "output_chunk_length": output_chunk_length, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
+
+    elif algorithm == "forecaster-hw-add":
+        sp = int(config[algorithm]['sp'])
+        trend = str(config[algorithm]['trend'])
+        seasonal = str(config[algorithm]['seasonal'])
+        return {"sp": sp, "trend": trend, "seasonal": seasonal}
+    elif algorithm == "forecaster-arima":
+        sp = int(config[algorithm]['sp'])
+        suppress_warnings = bool(config[algorithm]['suppress_warnings'])
+        start_p = int(config[algorithm]['start_p'])
+        start_q = int(config[algorithm]['start_q'])
+        max_p = int(config[algorithm]['max_p'])
+        max_q = int(config[algorithm]['max_q'])
+        start_P = int(config[algorithm]['start_P'])
+        seasonal = int(config[algorithm]['seasonal'])
+        d = int(config[algorithm]['d'])
+        D = int(config[algorithm]['D'])
+        return {"sp": sp, "suppress_warnings": suppress_warnings, "start_p": start_p, "start_q": start_q,
+                "max_p": max_p, "max_q": max_q, "start_P": start_P, "seasonal": seasonal, "d": d, "D": D}
+    elif algorithm == "forecaster-sf-arima":
+        sp = int(config[algorithm]['sp'])
+        suppress_warnings = bool(config[algorithm]['suppress_warnings'])
+        start_p = int(config[algorithm]['start_p'])
+        start_q = int(config[algorithm]['start_q'])
+        max_p = int(config[algorithm]['max_p'])
+        max_q = int(config[algorithm]['max_q'])
+        start_P = int(config[algorithm]['start_P'])
+        seasonal = int(config[algorithm]['seasonal'])
+        d = int(config[algorithm]['d'])
+        D = int(config[algorithm]['D'])
+        return {"sp": sp, "suppress_warnings": suppress_warnings, "start_p": start_p, "start_q": start_q,
+                "max_p": max_p, "max_q": max_q, "start_P": start_P, "seasonal": seasonal, "d": d, "D": D}
+    elif algorithm == "forecaster-bats":
+        sp = int(config[algorithm]['sp'])
+        use_trend = bool(config[algorithm]['use_trend'])
+        use_box_cox = bool(config[algorithm]['use_box_cox'])
+        return {"sp": sp, "use_trend": use_trend, "use_box_cox": use_box_cox}
+    elif algorithm == "forecaster-ets":
+        sp = int(config[algorithm]['sp'])
+        auto = bool(config[algorithm]['auto'])
+        return {"sp": sp, "auto": auto}
+    elif algorithm == "forecaster-croston":
+        tag = bool(config[algorithm]['tag'])
+        return {"tag": tag}
+    elif algorithm == "forecaster-unobs":
+        tag = bool(config[algorithm]['tag'])
+        return {"tag": tag}
+    elif algorithm == "forecaster-theta":
+        sp = int(config[algorithm]['sp'])
+        deseasonalize = bool(config[algorithm]['deseasonalize'])
+        return {"sp": sp, "deseasonalize": deseasonalize}
+    elif algorithm == "forecaster-rnn":
+        input_size = int(config[algorithm]['input_size'])
+        inference_input_size = int(config[algorithm]['inference_input_size'])
+        return {"input_size": input_size, "inference_input_size": inference_input_size}
+
     elif algorithm == "colors":
         colors = config[algorithm]['plot']
         return colors
@@ -869,7 +1058,8 @@ def list_of_datasets(txt=False):
         "electricity",
         "motion",
         "soccer",
-        "temperature"
+        "temperature",
+        "forecast-economy"
     ])
 
     if txt:
@@ -887,9 +1077,31 @@ def list_of_optimizers():
     ])
 
 def list_of_downstreams():
+    return sorted(list_of_downstreams_sktime() + list_of_downstreams_darts())
+
+
+def list_of_downstreams_sktime():
     return sorted([
         "prophet",
         "exp-smoothing",
+        "hw-add",
+        "arima",
+        "sf-arima",
+        "bats",
+        "ets",
+        "croston",
+        "theta",
+        "unobs",
+        "rnn",
         "naive"
     ])
 
+def list_of_downstreams_darts():
+    return sorted([
+        "nbeats",
+        "xgboost",
+        "lightgbm",
+        "lstm",
+        "deepar",
+        "transformer"
+    ])

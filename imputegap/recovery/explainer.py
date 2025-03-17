@@ -635,7 +635,7 @@ class Explainer:
         return results_shap
 
     def shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch", pattern="mcar", missing_rate=0.4,
-                       block_size=10, offset=0.1, seed=True, limit_ratio=1, split_ratio=0.6,
+                       block_size=10, offset=0.1, seed=True, rate_dataset=1, training_ratio=0.6,
                        file_name="ts", display=False, verbose=False):
         """
         Handle parameters and set variables to launch the SHAP model.
@@ -660,9 +660,9 @@ class Explainer:
             Size of the uncontaminated section at the beginning of the time series (default is 0.1).
         seed : bool, optional
             Whether to use a seed for reproducibility (default is True).
-        limit_ratio : flaot, optional
+        rate_dataset : flaot, optional
             Limitation on the number of series for the model (default is 1).
-        split_ratio : flaot, optional
+        training_ratio : flaot, optional
             Limitation on the training series for the model (default is 0.6).
         file_name : str, optional
             Name of the dataset file (default is 'ts').
@@ -688,18 +688,18 @@ class Explainer:
         """
         start_time = time.time()  # Record start time
 
-        if limit_ratio < 0.05 or limit_ratio > 1:
+        if rate_dataset < 0.05 or rate_dataset > 1:
             print("\nlimit percentage higher than 100%, reduce to 100% of the dataset")
-            limit_ratio = 1
+            rate_dataset = 1
 
         M = input_data.shape[0]
-        limit = math.ceil(M * limit_ratio)
+        limit = math.ceil(M * rate_dataset)
 
-        if split_ratio < 0.05 or split_ratio > 0.95:
+        if training_ratio < 0.05 or training_ratio > 0.95:
             print("\nsplit ratio to small or to high, reduce to 60% of the dataset")
-            split_ratio = 0.6
+            training_ratio = 0.6
 
-        training_ratio = int(limit * split_ratio)
+        training_ratio = int(limit * training_ratio)
 
         if limit > M:
             limit = M
@@ -718,7 +718,7 @@ class Explainer:
         input_data_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
 
-        if extractor == "pycatch":
+        if extractor == "pycatch" or extractor == "pycatch22":
             categories, features, _ = Explainer.load_configuration()
 
         for current_series in range(0, limit):
@@ -733,7 +733,7 @@ class Explainer:
             input_data_matrices.append(input_data)
             obfuscated_matrices.append(incomp_data)
 
-            if extractor == "pycatch":
+            if extractor == "pycatch" or extractor == "pycatch22":
                 catch_fct, descriptions = Explainer.extractor_pycatch(incomp_data, categories, features, False)
                 extracted_features = np.array(list(catch_fct.values()))
             elif extractor == "tsfel":

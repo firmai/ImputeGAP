@@ -42,7 +42,7 @@ class TestPipeline(unittest.TestCase):
         # explainer
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("chlorine"))
-        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, algorithm="cdrec", missing_rate=0.25, limit_ratio=0.4, split_ratio=0.6, file_name="eeg-alcohol")
+        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, algorithm="cdrec", missing_rate=0.25, rate_dataset=0.4, training_ratio=0.6, file_name="eeg-alcohol")
         Explainer.print(shap_values, shap_details)
 
         # benchmark
