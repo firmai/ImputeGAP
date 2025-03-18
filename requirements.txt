@@ -31,7 +31,7 @@ darts<0.34.0
 torch==2.5.1
 torchvision==0.20.1
 torchaudio==2.5.1
-neuralforecast==1.6.4
+# neuralforecast==1.6.4
 
 
 # PyTorch Geometric and Extensions (use prebuilt binaries)

@@ -209,52 +209,52 @@ max_concurrent_trials = -1
 [forecaster-naive]
 strategy = "mean"
 window_length = 10
-sp = 5
+sp = 7
 
 [forecaster-exp-smoothing]
 trend = "additive"
 seasonal = "additive"
-sp = 5
+sp = 7
 
 [forecaster-prophet]
 seasonality_mode = "additive"
 n_changepoints = 25
 
 [forecaster-nbeats]
-input_chunk_length = 100
-output_chunk_length = 50
+input_chunk_length = 12
+output_chunk_length = 12
 num_blocks = 3
 layer_widths = 20
 random_state = 42
-n_epochs = 5
+n_epochs = 10
 pl_trainer_kwargs = "cpu"
 
 [forecaster-xgboost]
-lags = 5
+lags = 7
 
 [forecaster-lightgbm]
-lags = 5
+lags = 7
 verbose = -1
 
 [forecaster-lstm]
-input_chunk_length = 20
+input_chunk_length = 12
 model = 'LSTM'
 random_state = 42
-n_epochs = 5
+n_epochs = 10
 pl_trainer_kwargs = "cpu"
 
 [forecaster-deepar]
-input_chunk_length = 20
+input_chunk_length = 12
 model = 'RNN'
 random_state = 42
-n_epochs = 5
+n_epochs = 10
 pl_trainer_kwargs = "cpu"
 
 [forecaster-transformer]
-input_chunk_length = 20
-output_chunk_length = 20
+input_chunk_length = 12
+output_chunk_length = 12
 random_state = 42
-n_epochs = 5
+n_epochs = 10
 pl_trainer_kwargs = "cpu"
 
 [forecaster-hw-add]
@@ -276,7 +276,6 @@ D = 1
 
 [forecaster-sf-arima]
 sp= 7
-suppress_warnings = true
 start_p = 1
 start_q = 1
 max_p = 3
@@ -297,14 +296,16 @@ sp= 7
 auto = true
 
 [forecaster-croston]
-tag = true
+smoothing = 0.1
 
 [forecaster-theta]
 sp = 7
 deseasonalize = false
 
 [forecaster-unobs]
-tag = true
+level = true
+trend = true
+sp = 7
 
 [forecaster-rnn]
 input_size = 20

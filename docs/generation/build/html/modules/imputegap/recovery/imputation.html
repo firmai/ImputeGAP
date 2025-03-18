@@ -835,11 +835,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; interpolation_imputer = Imputation.Statistics.Interpolation(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; interpolation_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; interpolation_imputer.impute(user_def=True, params={&quot;method&quot;:&quot;linear&quot;, &quot;poly_order&quot;:2})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; interpolation_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = interpolation_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; interpolation_imputer = Imputation.Statistics.Interpolation(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; interpolation_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; interpolation_imputer.impute(user_def=True, params={&quot;method&quot;:&quot;linear&quot;, &quot;poly_order&quot;:2})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; interpolation_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = interpolation_imputer.recov_data</span>
 <span class="sd">                &quot;&quot;&quot;</span>
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">method</span><span class="p">,</span> <span class="n">poly_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -892,11 +892,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; knn_imputer = Imputation.Statistics.KNN(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; knn_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; knn_imputer.impute(user_def=True, params={&#39;k&#39;: 5, &#39;weights&#39;: &quot;uniform&quot;})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; knn_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = knn_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; knn_imputer = Imputation.Statistics.KNN(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; knn_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; knn_imputer.impute(user_def=True, params={&#39;k&#39;: 5, &#39;weights&#39;: &quot;uniform&quot;})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; knn_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = knn_imputer.recov_data</span>
 <span class="sd">                &quot;&quot;&quot;</span>
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">k</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -1043,11 +1043,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; cdrec_imputer = Imputation.MatrixCompletion.CDRec(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; cdrec_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; cdrec_imputer.impute(user_def=True, params={&#39;rank&#39;: 5, &#39;epsilon&#39;: 0.01, &#39;iterations&#39;: 100})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; cdrec_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = cdrec_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; cdrec_imputer = Imputation.MatrixCompletion.CDRec(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; cdrec_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; cdrec_imputer.impute(user_def=True, params={&#39;rank&#39;: 5, &#39;epsilon&#39;: 0.01, &#39;iterations&#39;: 100})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; cdrec_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = cdrec_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1107,11 +1107,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; i_svd_imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; i_svd_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; i_svd_imputer.impute(params={&#39;rank&#39;: 5}) # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; i_svd_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = i_svd_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; i_svd_imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; i_svd_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; i_svd_imputer.impute(params={&#39;rank&#39;: 5}) # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; i_svd_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = i_svd_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1170,11 +1170,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; grouse_imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; grouse_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; grouse_imputer.impute(params={&#39;max_rank&#39;: 5}) # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; grouse_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = grouse_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; grouse_imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; grouse_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; grouse_imputer.impute(params={&#39;max_rank&#39;: 5}) # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; grouse_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = grouse_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1236,11 +1236,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; rosl_imputer = Imputation.MatrixCompletion.ROSL(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; rosl_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; rosl_imputer.impute(params={&#39;rank&#39;: 5, &#39;regularization&#39;: 10}) # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; rosl_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = rosl_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; rosl_imputer = Imputation.MatrixCompletion.ROSL(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; rosl_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; rosl_imputer.impute(params={&#39;rank&#39;: 5, &#39;regularization&#39;: 10}) # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; rosl_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = rosl_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1298,11 +1298,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; soft_impute_imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; soft_impute_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; soft_impute_imputer.impute(params={&#39;max_rank&#39;: 5}) # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; soft_impute_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = soft_impute_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; soft_impute_imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; soft_impute_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; soft_impute_imputer.impute(params={&#39;max_rank&#39;: 5}) # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; soft_impute_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = soft_impute_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1367,11 +1367,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; spirit_imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; spirit_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; spirit_imputer.impute(params={&#39;k&#39;: 2, &#39;w&#39;: 5, &#39;lambda_value&#39;: 0.85}) # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; spirit_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = spirit_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; spirit_imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; spirit_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; spirit_imputer.impute(params={&#39;k&#39;: 2, &#39;w&#39;: 5, &#39;lambda_value&#39;: 0.85}) # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; spirit_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = spirit_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1430,11 +1430,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; svt_imputer = Imputation.MatrixCompletion.SVT(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; svt_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; svt_imputer.impute(params={&#39;tau&#39;: 1}) # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; svt_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = svt_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; svt_imputer = Imputation.MatrixCompletion.SVT(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; svt_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; svt_imputer.impute(params={&#39;tau&#39;: 1}) # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; svt_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = svt_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1509,18 +1509,18 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; trmf_imputer = Imputation.MatrixCompletion.SVT(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; trmf_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; trmf_imputer.impute(params={&quot;lags&quot;:[], &quot;K&quot;:-1, &quot;lambda_f&quot;:1.0, &quot;lambda_x&quot;:1.0, &quot;lambda_w&quot;:1.0, &quot;eta&quot;:1.0, &quot;alpha&quot;:1000.0, &quot;max_iter&quot;:100}) # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; trmf_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = trmf_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; trmf_imputer = Imputation.MatrixCompletion.TRMF(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; trmf_imputer.impute()</span>
+<span class="sd">                    &gt;&gt;&gt; trmf_imputer.impute(params={&quot;lags&quot;:[], &quot;K&quot;:-1, &quot;lambda_f&quot;:1.0, &quot;lambda_x&quot;:1.0, &quot;lambda_w&quot;:1.0, &quot;eta&quot;:1.0, &quot;alpha&quot;:1000.0, &quot;max_iter&quot;:100})</span>
+<span class="sd">                    &gt;&gt;&gt; trmf_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = trmf_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                H.-F. Yu, N. Rao, and I. S. Dhillon, &quot;Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction,&quot; in *Advances in Neural Information Processing Systems*, vol. 29, 2016. [Online]. Available: https://proceedings.neurips.cc/paper_files/paper/2016/file/85422afb467e9456013a2a51d4dff702-Paper.pdf</span>
 <span class="sd">                &quot;&quot;&quot;</span>
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">lags</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambda_f</span><span class="p">,</span> <span class="n">lambda_x</span><span class="p">,</span> <span class="n">lambda_w</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">lags</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambda_f</span><span class="p">,</span> <span class="n">lambda_x</span><span class="p">,</span> <span class="n">lambda_w</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">lags</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambda_f</span><span class="p">,</span> <span class="n">lambda_x</span><span class="p">,</span> <span class="n">lambda_w</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
 
@@ -1604,11 +1604,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; mf_imputer = Imputation.MachineLearning.MissForest(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; mf_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mf_imputer.impute(user_def=True, params={&quot;n_estimators&quot;:10, &quot;max_iter&quot;:3, &quot;max_features&quot;:&quot;sqrt&quot;, &quot;seed&quot;: 42})  # user defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mf_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = mf_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; mf_imputer = Imputation.MachineLearning.MissForest(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; mf_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mf_imputer.impute(user_def=True, params={&quot;n_estimators&quot;:10, &quot;max_iter&quot;:3, &quot;max_features&quot;:&quot;sqrt&quot;, &quot;seed&quot;: 42})  # user defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mf_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = mf_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1637,7 +1637,7 @@
 <span class="sd">            Methods</span>
 <span class="sd">            -------</span>
 <span class="sd">            impute(self, user_def=True, params=None):</span>
-<span class="sd">                Perform imputation using the STMVL algorithm.</span>
+<span class="sd">                Perform imputation using the MICE algorithm.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">algorithm</span> <span class="o">=</span> <span class="s2">&quot;mice&quot;</span>
 
@@ -1650,33 +1650,33 @@
 <span class="sd">                Parameters</span>
 <span class="sd">                ----------</span>
 <span class="sd">                user_def : bool, optional</span>
-<span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
+<span class="sd">                    Whether to use user-defined or default parameters (default is True). \n</span>
 <span class="sd">                params : dict, optional</span>
-<span class="sd">                    Parameters of the STMVL algorithm, if None, default ones are loaded.</span>
+<span class="sd">                    Parameters of the MICE algorithm, if None, default ones are loaded. \n</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
 <span class="sd">                    max_iter : int, optional</span>
-<span class="sd">                        Maximum number of imputation rounds to perform before returning the imputations computed during the final round. (default is 3).</span>
+<span class="sd">                        Maximum number of imputation rounds to perform before returning the imputations computed during the final round. (default is 3). \n</span>
 <span class="sd">                    tol : float, optional</span>
-<span class="sd">                        Tolerance of the stopping condition. (default is 0.001).</span>
+<span class="sd">                        Tolerance of the stopping condition. (default is 0.001). \n</span>
 <span class="sd">                    initial_strategy : str, optional</span>
-<span class="sd">                        Which strategy to use to initialize the missing values. {‘mean’, ‘median’, ‘most_frequent’, ‘constant’} (default is &quot;means&quot;).</span>
+<span class="sd">                        Which strategy to use to initialize the missing values. {‘mean’, ‘median’, ‘most_frequent’, ‘constant’} (default is &quot;means&quot;). \n</span>
 <span class="sd">                    seed : int, optional</span>
-<span class="sd">                        The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).</span>
+<span class="sd">                        The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42). \n</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
-<span class="sd">                self : MICE</span>
-<span class="sd">                    The object with `recov_data` set.</span>
+<span class="sd">                    self : MICE</span>
+<span class="sd">                        The object with `recov_data` set.</span>
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; mice_imputer = Imputation.MachineLearning.MICE(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; mice_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mice_imputer.impute(user_def=True, params={&quot;max_iter&quot;:3, &quot;tol&quot;:0.001, &quot;initial_strategy&quot;:&quot;mean&quot;, &quot;seed&quot;: 42})  # user defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mice_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = mice_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; mice_imputer = Imputation.MachineLearning.MICE(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; mice_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mice_imputer.impute(user_def=True, params={&quot;max_iter&quot;:3, &quot;tol&quot;:0.001, &quot;initial_strategy&quot;:&quot;mean&quot;, &quot;seed&quot;: 42})  # user defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mice_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = mice_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1736,11 +1736,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; mxgboost_imputer = Imputation.MachineLearning.MICE(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; mxgboost_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mxgboost_imputer.impute(user_def=True, params={&quot;n_estimators&quot;:3, &quot;seed&quot;: 42})  # user defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mxgboost_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = mxgboost_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; mxgboost_imputer = Imputation.MachineLearning.XGBOOST(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; mxgboost_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mxgboost_imputer.impute(user_def=True, params={&quot;n_estimators&quot;:3, &quot;seed&quot;: 42})  # user defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mxgboost_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = mxgboost_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1797,11 +1797,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; iim_imputer = Imputation.MachineLearning.IIM(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; iim_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; iim_imputer.impute(user_def=True, params={&#39;learning_neighbors&#39;: 10})  # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; iim_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = iim_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; iim_imputer = Imputation.MachineLearning.IIM(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; iim_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; iim_imputer.impute(user_def=True, params={&#39;learning_neighbors&#39;: 10})  # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; iim_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = iim_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1883,11 +1883,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; stmvl_imputer = Imputation.PatternSearch.STMVL(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; stmvl_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; stmvl_imputer.impute(user_def=True, params={&#39;window_size&#39;: 7, &#39;learning_rate&#39;:0.01, &#39;gamma&#39;:0.85, &#39;alpha&#39;: 7})  # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; stmvl_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = stmvl_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; stmvl_imputer = Imputation.PatternSearch.STMVL(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; stmvl_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; stmvl_imputer.impute(user_def=True, params={&#39;window_size&#39;: 7, &#39;learning_rate&#39;:0.01, &#39;gamma&#39;:0.85, &#39;alpha&#39;: 7})  # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; stmvl_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = stmvl_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -1949,11 +1949,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; dynammo_imputer = Imputation.PatternSearch.DynaMMo(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; dynammo_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; dynammo_imputer.impute(params={&#39;h&#39;: 5, &#39;max_iteration&#39;: 100, &#39;approximation&#39;: True}) # user-defined  &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; dynammo_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = dynammo_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; dynammo_imputer = Imputation.PatternSearch.DynaMMo(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; dynammo_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; dynammo_imputer.impute(params={&#39;h&#39;: 5, &#39;max_iteration&#39;: 100, &#39;approximation&#39;: True}) # user-defined  &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; dynammo_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = dynammo_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2010,11 +2010,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; tkcm_imputer = Imputation.PatternSearch.TKCM(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; tkcm_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; tkcm_imputer.impute(params={&#39;rank&#39;: 5})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; tkcm_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = tkcm_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; tkcm_imputer = Imputation.PatternSearch.TKCM(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; tkcm_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; tkcm_imputer.impute(params={&#39;rank&#39;: 5})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; tkcm_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = tkcm_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2106,11 +2106,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; mrnn_imputer = Imputation.DeepLearning.MRNN(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; mrnn_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mrnn_imputer.impute(user_def=True, params={&#39;hidden_dim&#39;: 10, &#39;learning_rate&#39;:0.01, &#39;iterations&#39;:50, &#39;sequence_length&#39;: 7})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mrnn_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = mrnn_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; mrnn_imputer = Imputation.DeepLearning.MRNN(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; mrnn_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mrnn_imputer.impute(user_def=True, params={&#39;hidden_dim&#39;: 10, &#39;learning_rate&#39;:0.01, &#39;iterations&#39;:50, &#39;sequence_length&#39;: 7})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mrnn_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = mrnn_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2175,11 +2175,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; brits_imputer = Imputation.DeepLearning.BRITS(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; brits_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; brits_imputer.impute(params={&quot;model&quot;: &quot;brits&quot;, &quot;epoch&quot;: 2, &quot;batch_size&quot;: 10, &quot;nbr_features&quot;: 1, &quot;hidden_layer&quot;: 64})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; brits_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = brits_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; brits_imputer = Imputation.DeepLearning.BRITS(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; brits_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; brits_imputer.impute(params={&quot;model&quot;: &quot;brits&quot;, &quot;epoch&quot;: 2, &quot;batch_size&quot;: 10, &quot;nbr_features&quot;: 1, &quot;hidden_layer&quot;: 64})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; brits_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = brits_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2239,11 +2239,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; deep_mvi_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; deep_mvi_imputer.impute(params={&quot;max_epoch&quot;: 10, &quot;patience&quot;: 2})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; deep_mvi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = deep_mvi_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute(params={&quot;max_epoch&quot;: 10, &quot;patience&quot;: 2})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = deep_mvi_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2315,11 +2315,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; mpin_imputer = Imputation.DeepLearning.MPIN(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; mpin_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mpin_imputer.impute(params={&quot;incre_mode&quot;: &quot;data+state&quot;, &quot;window&quot;: 1, &quot;k&quot;: 15, &quot;learning_rate&quot;: 0.001, &quot;weight_decay&quot;: 0.2, &quot;epochs&quot;: 6, &quot;num_of_iteration&quot;: 6, &quot;threshold&quot;: 0.50, &quot;base&quot;: &quot;GCN&quot;})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; mpin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = mpin_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; mpin_imputer = Imputation.DeepLearning.MPIN(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; mpin_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mpin_imputer.impute(params={&quot;incre_mode&quot;: &quot;data+state&quot;, &quot;window&quot;: 1, &quot;k&quot;: 15, &quot;learning_rate&quot;: 0.001, &quot;weight_decay&quot;: 0.2, &quot;epochs&quot;: 6, &quot;num_of_iteration&quot;: 6, &quot;threshold&quot;: 0.50, &quot;base&quot;: &quot;GCN&quot;})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; mpin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = mpin_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2382,11 +2382,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; pristi_imputer = Imputation.DeepLearning.PRISTI(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; pristi_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; pristi_imputer.impute(params={&quot;target_strategy&quot;:&quot;hybrid&quot;, &quot;unconditional&quot;:True, &quot;seed&quot;:42, &quot;device&quot;:&quot;cpu&quot;})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; pristi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = pristi_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; pristi_imputer = Imputation.DeepLearning.PRISTI(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; pristi_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; pristi_imputer.impute(params={&quot;target_strategy&quot;:&quot;hybrid&quot;, &quot;unconditional&quot;:True, &quot;seed&quot;:42, &quot;device&quot;:&quot;cpu&quot;})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; pristi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = pristi_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2455,11 +2455,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; miss_net_imputer = Imputation.DeepLearning.MissNet(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; miss_net_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; miss_net_imputer.impute(user_def=True, params={&#39;alpha&#39;: 0.5, &#39;beta&#39;:0.1, &#39;L&#39;:10, &#39;n_cl&#39;: 1, &#39;max_iteration&#39;:20, &#39;tol&#39;:5, &#39;random_init&#39;:False})  # user-defined &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; miss_net_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = miss_net_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; miss_net_imputer = Imputation.DeepLearning.MissNet(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; miss_net_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; miss_net_imputer.impute(user_def=True, params={&#39;alpha&#39;: 0.5, &#39;beta&#39;:0.1, &#39;L&#39;:10, &#39;n_cl&#39;: 1, &#39;max_iteration&#39;:20, &#39;tol&#39;:5, &#39;random_init&#39;:False})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; miss_net_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = miss_net_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2528,11 +2528,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; gain_imputer = Imputation.DeepLearning.GAIN(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; gain_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; gain_imputer.impute(user_def=True, params={&quot;batch_size&quot;:32, &quot;hint_rate&quot;:0.9, &quot;alpha&quot;:10, &quot;epoch&quot;:100})  # user defined&gt; or</span>
-<span class="sd">                &gt;&gt;&gt; gain_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = gain_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; gain_imputer = Imputation.DeepLearning.GAIN(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; gain_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; gain_imputer.impute(user_def=True, params={&quot;batch_size&quot;:32, &quot;hint_rate&quot;:0.9, &quot;alpha&quot;:10, &quot;epoch&quot;:100})  # user defined&gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; gain_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = gain_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2613,11 +2613,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; grin_imputer = Imputation.DeepLearning.GRIN(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; grin_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; grin_imputer.impute(user_def=True, params={&quot;d_hidden&quot;:32, &quot;lr&quot;:0.001, &quot;batch_size&quot;:32, &quot;window&quot;:1, &quot;alpha&quot;:10.0, &quot;patience&quot;:4, &quot;epochs&quot;:20, &quot;workers&quot;:2})  # user defined&gt; or</span>
-<span class="sd">                &gt;&gt;&gt; grin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = grin_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; grin_imputer = Imputation.DeepLearning.GRIN(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; grin_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; grin_imputer.impute(user_def=True, params={&quot;d_hidden&quot;:32, &quot;lr&quot;:0.001, &quot;batch_size&quot;:32, &quot;window&quot;:1, &quot;alpha&quot;:10.0, &quot;patience&quot;:4, &quot;epochs&quot;:20, &quot;workers&quot;:2})  # user defined&gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; grin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = grin_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2704,11 +2704,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; bay_otide_imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; bay_otide_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; bay_otide_imputer.impute(user_def=True, params={&quot;K_trend&quot;:20, &quot;K_season&quot;:2, &quot;n_season&quot;:5, &quot;K_bias&quot;:1, &quot;time_scale&quot;:1, &quot;a0&quot;:0.6, &quot;b0&quot;:2.5, &quot;v&quot;:0.5})  # user defined&gt; or</span>
-<span class="sd">                &gt;&gt;&gt; bay_otide_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = bay_otide_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; bay_otide_imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; bay_otide_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; bay_otide_imputer.impute(user_def=True, params={&quot;K_trend&quot;:20, &quot;K_season&quot;:2, &quot;n_season&quot;:5, &quot;K_bias&quot;:1, &quot;time_scale&quot;:1, &quot;a0&quot;:0.6, &quot;b0&quot;:2.5, &quot;v&quot;:0.5})  # user defined&gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; bay_otide_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = bay_otide_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2776,11 +2776,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; hkmf_t_imputer = Imputation.DeepLearning.HKMF_T(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; hkmf_t_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; hkmf_t_imputer.impute(user_def=True, params={&quot;tags&quot;:None, &quot;data_names&quot;:None, &quot;epoch&quot;:5})  # user defined&gt; or</span>
-<span class="sd">                &gt;&gt;&gt; hkmf_t_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = hkmf_t_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer = Imputation.DeepLearning.HKMF_T(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer.impute(user_def=True, params={&quot;tags&quot;:None, &quot;data_names&quot;:None, &quot;epoch&quot;:5})  # user defined&gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = hkmf_t_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
@@ -2869,11 +2869,11 @@
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                &gt;&gt;&gt; bit_graph_imputer = Imputation.DeepLearning.BitGraph(incomp_data)</span>
-<span class="sd">                &gt;&gt;&gt; bit_graph_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                &gt;&gt;&gt; bit_graph_imputer.impute(user_def=True, params={&quot;node_number&quot;:-1, &quot;kernel_set&quot;:[1], &quot;dropout&quot;:0.1, &quot;subgraph_size&quot;:5, &quot;node_dim&quot;:3, &quot;seq_len&quot;:1, &quot;lr&quot;:0.001, &quot;epoch&quot;:10, &quot;seed&quot;:42})  # user defined&gt; or</span>
-<span class="sd">                &gt;&gt;&gt; bit_graph_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
-<span class="sd">                &gt;&gt;&gt; recov_data = bit_graph_imputer.recov_data</span>
+<span class="sd">                    &gt;&gt;&gt; bit_graph_imputer = Imputation.DeepLearning.BitGraph(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; bit_graph_imputer.impute()  # default parameters for imputation &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; bit_graph_imputer.impute(user_def=True, params={&quot;node_number&quot;:-1, &quot;kernel_set&quot;:[1], &quot;dropout&quot;:0.1, &quot;subgraph_size&quot;:5, &quot;node_dim&quot;:3, &quot;seq_len&quot;:1, &quot;lr&quot;:0.001, &quot;epoch&quot;:10, &quot;seed&quot;:42})  # user defined&gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; bit_graph_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; recov_data = bit_graph_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>

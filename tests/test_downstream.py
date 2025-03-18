@@ -13,7 +13,7 @@ class TestDownstream(unittest.TestCase):
         """
         # Load and normalize the series
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("forecaster-economy"))
+        ts_1.load_series(utils.search_path("forecast-economy"))
         ts_1.normalize(normalizer="min_max")
 
         # Create a mask for contamination

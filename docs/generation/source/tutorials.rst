@@ -27,7 +27,7 @@ alcoholism. The dataset contains measurements from 64 electrodes placed on subje
     ts.normalize(normalizer="z_score")
 
     # plot a subset of time series
-    ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap/assets")
+    ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
 
     # print a subset of time series
     ts.print(nbr_series=6, nbr_val=20)
@@ -58,7 +58,7 @@ As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pat
     ts_m = ts.Contamination.missing_completely_at_random(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)
 
     # plot the contaminated time series
-    ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap/assets")
+    ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets")
 
 
 
@@ -109,7 +109,7 @@ Let's illustrate the imputation using the CDRec Algorithm from the Matrix Comple
     ts.print_results(imputer.metrics)
 
     # plot the recovered time series
-    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets")
+    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets")
 
 
 
@@ -147,7 +147,7 @@ The Optimizer component manages algorithm configuration and hyperparameter tunin
     ts.print_results(imputer.metrics)
 
     # plot the recovered time series
-    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets", display=True)
+    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets", display=True)
 
     # save hyperparameters
     utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune")

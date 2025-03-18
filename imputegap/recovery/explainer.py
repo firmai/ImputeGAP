@@ -409,7 +409,7 @@ class Explainer:
         _, _, config = Explainer.load_configuration()
         plots_categories = config[extractor]['categories']
 
-        path_file = "./assets/shap/"
+        path_file = "./imputegap_assets/shap/"
         if not os.path.exists(path_file):
             path_file = "./imputegap" + path_file[1:]
 

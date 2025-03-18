@@ -314,7 +314,7 @@ class TimeSeries:
         print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     def plot(self, input_data, incomp_data=None, recov_data=None, nbr_series=None, nbr_val=None, series_range=None,
-             subplot=False, size=(16, 8), save_path="./imputegap/assets", display=True):
+             subplot=False, size=(16, 8), save_path="./imputegap_assets", display=True):
         """
         Plot the time series data, including raw, contaminated, or imputed data.
 
@@ -435,7 +435,7 @@ class TimeSeries:
                     ax.set_title('Series ' + str(i+1), fontsize=9)
                     ax.set_xlabel('Timestamp', fontsize=7)
                     ax.set_ylabel('Values', fontsize=7)
-                    ax.legend(loc='upper left', fontsize=7)
+                    ax.legend(loc='upper left', fontsize=6, frameon=True, fancybox=True, framealpha=0.8)
                     plt.tight_layout()
 
                 number_of_series += 1

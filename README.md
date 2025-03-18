@@ -152,7 +152,7 @@ ts.load_series(utils.search_path("eeg-alcohol"))
 ts.normalize(normalizer="z_score")
 
 # plot a subset of time series
-ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap/assets")
+ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
 
 # print a subset of time series
 ts.print(nbr_series=6, nbr_val=20)
@@ -190,7 +190,7 @@ ts.normalize(normalizer="z_score")
 ts_m = ts.Contamination.missing_completely_at_random(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)
 
 # [OPTIONAL] plot the contaminated time series
-ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap/assets")
+ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets")
 ```
 
 ---
@@ -236,7 +236,7 @@ imputer.score(ts.data, imputer.recov_data)
 ts.print_results(imputer.metrics)
 
 # plot the recovered time series
-ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets")
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets")
 ```
 
 ---
@@ -275,7 +275,7 @@ imputer.score(ts.data, imputer.recov_data)
 ts.print_results(imputer.metrics)
 
 # plot the recovered time series
-ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets", display=True)
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets", display=True)
 
 # save hyperparameters
 utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune")
@@ -343,7 +343,7 @@ ts = TimeSeries()
 print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
 
 # load and normalize the timeseries
-ts.load_series(utils.search_path("chlorine"))
+ts.load_series(utils.search_path("forecast-economy"))
 ts.normalize(normalizer="min_max")
 
 # contaminate the time series
@@ -354,7 +354,7 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute print the downstream results
-downstream_config = {"task": "forecast", "model": "prophet"}
+downstream_config = {"task": "forecast", "model": "hw-add"}
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
 ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 ```

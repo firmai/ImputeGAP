@@ -92,6 +92,9 @@ class Downstream:
         model = self.downstream.get("model", "naive")
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
+        
+        model = model.lower()
+        evaluator = evaluator.lower()
 
         if not params:
             print("\n\t\t\t\tThe params for model of downstream analysis are empty or missing. Default ones loaded...")
@@ -201,7 +204,7 @@ class Downstream:
             return None
 
     @staticmethod
-    def _plot_downstream(y_train, y_test, y_pred, incomp_data, model=None, type=None, title="Ground Truth vs Predictions", max_series=1, save_path="./imputegap/assets"):
+    def _plot_downstream(y_train, y_test, y_pred, incomp_data, model=None, type=None, title="Ground Truth vs Predictions", max_series=1, save_path="./imputegap_assets"):
         """
         Plot ground truth vs. predictions for contaminated series (series with NaN values).
 

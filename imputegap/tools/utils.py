@@ -197,13 +197,13 @@ def config_forecaster(model, params):
             forecaster = AutoETS(**params)
         elif model == "croston":
             from sktime.forecasting.croston import Croston
-            forecaster = Croston()
+            forecaster = Croston(**params)
         elif model == "theta":
             from sktime.forecasting.theta import ThetaForecaster
             forecaster = ThetaForecaster(**params)
         elif model == "unobs":
             from sktime.forecasting.structural import UnobservedComponents
-            forecaster = UnobservedComponents()
+            forecaster = UnobservedComponents(**params)
 
 
         else:
@@ -654,7 +654,6 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
                 "max_p": max_p, "max_q": max_q, "start_P": start_P, "seasonal": seasonal, "d": d, "D": D}
     elif algorithm == "forecaster-sf-arima":
         sp = int(config[algorithm]['sp'])
-        suppress_warnings = bool(config[algorithm]['suppress_warnings'])
         start_p = int(config[algorithm]['start_p'])
         start_q = int(config[algorithm]['start_q'])
         max_p = int(config[algorithm]['max_p'])
@@ -663,7 +662,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         seasonal = int(config[algorithm]['seasonal'])
         d = int(config[algorithm]['d'])
         D = int(config[algorithm]['D'])
-        return {"sp": sp, "suppress_warnings": suppress_warnings, "start_p": start_p, "start_q": start_q,
+        return {"sp": sp, "start_p": start_p, "start_q": start_q,
                 "max_p": max_p, "max_q": max_q, "start_P": start_P, "seasonal": seasonal, "d": d, "D": D}
     elif algorithm == "forecaster-bats":
         sp = int(config[algorithm]['sp'])
@@ -675,11 +674,13 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         auto = bool(config[algorithm]['auto'])
         return {"sp": sp, "auto": auto}
     elif algorithm == "forecaster-croston":
-        tag = bool(config[algorithm]['tag'])
-        return {"tag": tag}
+        smoothing = float(config[algorithm]['smoothing'])
+        return {"smoothing": smoothing}
     elif algorithm == "forecaster-unobs":
-        tag = bool(config[algorithm]['tag'])
-        return {"tag": tag}
+        level = bool(config[algorithm]['level'])
+        trend = bool(config[algorithm]['trend'])
+        sp = int(config[algorithm]['sp'])
+        return {"level": level, "trend": trend, "seasonal": sp}
     elif algorithm == "forecaster-theta":
         sp = int(config[algorithm]['sp'])
         deseasonalize = bool(config[algorithm]['deseasonalize'])

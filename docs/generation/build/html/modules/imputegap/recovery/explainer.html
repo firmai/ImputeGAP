@@ -696,7 +696,7 @@
         <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">config</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">load_configuration</span><span class="p">()</span>
         <span class="n">plots_categories</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">extractor</span><span class="p">][</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span>
 
-        <span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;./assets/shap/&quot;</span>
+        <span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;./imputegap_assets/shap/&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_file</span><span class="p">):</span>
             <span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;./imputegap&quot;</span> <span class="o">+</span> <span class="n">path_file</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
@@ -925,7 +925,7 @@
 <div class="viewcode-block" id="Explainer.shap_explainer">
 <a class="viewcode-back" href="../../../imputegap.explainer.html#imputegap.recovery.explainer.Explainer.shap_explainer">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">shap_explainer</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;cdrec&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extractor</span><span class="o">=</span><span class="s2">&quot;pycatch&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;mcar&quot;</span><span class="p">,</span> <span class="n">missing_rate</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
-                       <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">limit_ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+                       <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">training_ratio</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
                        <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;ts&quot;</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle parameters and set variables to launch the SHAP model.</span>
@@ -950,9 +950,9 @@
 <span class="sd">            Size of the uncontaminated section at the beginning of the time series (default is 0.1).</span>
 <span class="sd">        seed : bool, optional</span>
 <span class="sd">            Whether to use a seed for reproducibility (default is True).</span>
-<span class="sd">        limit_ratio : flaot, optional</span>
+<span class="sd">        rate_dataset : flaot, optional</span>
 <span class="sd">            Limitation on the number of series for the model (default is 1).</span>
-<span class="sd">        split_ratio : flaot, optional</span>
+<span class="sd">        training_ratio : flaot, optional</span>
 <span class="sd">            Limitation on the training series for the model (default is 0.6).</span>
 <span class="sd">        file_name : str, optional</span>
 <span class="sd">            Name of the dataset file (default is &#39;ts&#39;).</span>
@@ -978,18 +978,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
 
-        <span class="k">if</span> <span class="n">limit_ratio</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">or</span> <span class="n">limit_ratio</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rate_dataset</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">or</span> <span class="n">rate_dataset</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">limit percentage higher than 100%, reduce to 100</span><span class="si">% o</span><span class="s2">f the dataset&quot;</span><span class="p">)</span>
-            <span class="n">limit_ratio</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">rate_dataset</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="n">M</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">limit</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">limit_ratio</span><span class="p">)</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">split_ratio</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">or</span> <span class="n">split_ratio</span> <span class="o">&gt;</span> <span class="mf">0.95</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">training_ratio</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="ow">or</span> <span class="n">training_ratio</span> <span class="o">&gt;</span> <span class="mf">0.95</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">split ratio to small or to high, reduce to 60</span><span class="si">% o</span><span class="s2">f the dataset&quot;</span><span class="p">)</span>
-            <span class="n">split_ratio</span> <span class="o">=</span> <span class="mf">0.6</span>
+            <span class="n">training_ratio</span> <span class="o">=</span> <span class="mf">0.6</span>
 
-        <span class="n">training_ratio</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">limit</span> <span class="o">*</span> <span class="n">split_ratio</span><span class="p">)</span>
+        <span class="n">training_ratio</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">limit</span> <span class="o">*</span> <span class="n">training_ratio</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="n">M</span><span class="p">:</span>
             <span class="n">limit</span> <span class="o">=</span> <span class="n">M</span>
@@ -1008,7 +1008,7 @@
         <span class="n">input_data_matrices</span><span class="p">,</span> <span class="n">obfuscated_matrices</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="n">output_metrics</span><span class="p">,</span> <span class="n">output_rmse</span><span class="p">,</span> <span class="n">input_params</span><span class="p">,</span> <span class="n">input_params_full</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
 
-        <span class="k">if</span> <span class="n">extractor</span> <span class="o">==</span> <span class="s2">&quot;pycatch&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">extractor</span> <span class="o">==</span> <span class="s2">&quot;pycatch&quot;</span> <span class="ow">or</span> <span class="n">extractor</span> <span class="o">==</span> <span class="s2">&quot;pycatch22&quot;</span><span class="p">:</span>
             <span class="n">categories</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">load_configuration</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">current_series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
@@ -1023,7 +1023,7 @@
             <span class="n">input_data_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
             <span class="n">obfuscated_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">extractor</span> <span class="o">==</span> <span class="s2">&quot;pycatch&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">extractor</span> <span class="o">==</span> <span class="s2">&quot;pycatch&quot;</span> <span class="ow">or</span> <span class="n">extractor</span> <span class="o">==</span> <span class="s2">&quot;pycatch22&quot;</span><span class="p">:</span>
                 <span class="n">catch_fct</span><span class="p">,</span> <span class="n">descriptions</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">extractor_pycatch</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
                 <span class="n">extracted_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">catch_fct</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
             <span class="k">elif</span> <span class="n">extractor</span> <span class="o">==</span> <span class="s2">&quot;tsfel&quot;</span><span class="p">:</span>
