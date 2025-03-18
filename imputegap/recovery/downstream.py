@@ -9,6 +9,8 @@ from imputegap.tools import utils
 from darts import TimeSeries
 from darts.metrics import mae as darts_mae, mse as darts_mse
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sktime.forecasting.base import ForecastingHorizon
+
 
 
 
@@ -21,6 +23,10 @@ class Downstream:
     This class provides tools to assess the quality of imputed time series data by analyzing
     the performance of downstream forecasting models. It computes metrics such as Mean Absolute
     Error (MAE) and Mean Squared Error (MSE) and visualizes the results for better interpretability.
+
+    ImputeGAP downstream models for forcasting : ['arima', 'bats', 'croston', 'deepar', 'ets', 'exp-smoothing',
+    'hw-add', 'lightgbm', 'lstm', 'naive', 'nbeats', 'prophet', 'sf-arima', 'theta',
+    'transformer', 'unobs', 'xgboost']
 
     Attributes
     ----------
@@ -73,6 +79,10 @@ class Downstream:
         """
         Compute a set of evaluation metrics with a downstream analysis
 
+        ImputeGAP downstream models for forcasting : ['arima', 'bats', 'croston', 'deepar', 'ets', 'exp-smoothing',
+        'hw-add', 'lightgbm', 'lstm', 'naive', 'nbeats', 'prophet', 'sf-arima', 'theta',
+        'transformer', 'unobs', 'xgboost']
+
         Returns
         -------
         dict or None
@@ -119,9 +129,15 @@ class Downstream:
 
                     for series_idx in range(data.shape[0]):
                         series_train = y_train[series_idx, :]
-                        forecaster.fit(series_train)
                         fh = np.arange(1, y_test.shape[1] + 1)  # Forecast horizon
-                        series_pred = forecaster.predict(fh=fh)
+
+                        if model == "ltsf" or model == "rnn":
+                            forecaster.fit(series_train, fh=ForecastingHorizon(fh))
+                            series_pred = forecaster.predict()
+                        else:
+                            forecaster.fit(series_train)
+                            series_pred = forecaster.predict(fh=fh)
+
                         y_pred[series_idx, :] = series_pred.ravel()
 
                     # Compute metrics using sktime
@@ -169,7 +185,7 @@ class Downstream:
 
             if plots:
                 # Global plot with all rows and columns
-                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data)
+                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, model, evaluator)
 
             # Save metrics in a dictionary
             metrics = {"DOWNSTREAM-RECOV-MAE": mae[0], "DOWNSTREAM-INPUT-MAE": mae[1],
@@ -185,7 +201,7 @@ class Downstream:
             return None
 
     @staticmethod
-    def _plot_downstream(y_train, y_test, y_pred, incomp_data, title="Ground Truth vs Predictions", max_series=4, save_path="./imputegap/assets"):
+    def _plot_downstream(y_train, y_test, y_pred, incomp_data, model=None, type=None, title="Ground Truth vs Predictions", max_series=1, save_path="./imputegap/assets"):
         """
         Plot ground truth vs. predictions for contaminated series (series with NaN values).
 
@@ -199,6 +215,10 @@ class Downstream:
             Forecasted data array of shape (n_series, test_len).
         incomp_data : np.ndarray
             Incomplete data array of shape (n_series, total_len), used to identify contaminated series.
+        model : str
+            Name of the current model used
+        type : str
+            Name of the current type used
         title : str
             Title of the plot.
         max_series : int
@@ -207,6 +227,9 @@ class Downstream:
         # Create a 3x3 subplot grid (3 rows for data types, 3 columns for valid series)
 
         x_size = max_series * 5
+
+        if max_series == 1:
+            x_size = 24
 
         fig, axs = plt.subplots(3, max_series, figsize=(x_size, 15))
         fig.suptitle(title, fontsize=16)
@@ -218,7 +241,10 @@ class Downstream:
 
             for col_idx, series_idx in enumerate(valid_indices):
                 # Access the correct subplot
-                ax = axs[row_idx, col_idx]
+                if max_series > 1:
+                    ax = axs[row_idx, col_idx]
+                else:
+                    ax = axs[row_idx]
 
                 # Extract the corresponding data for this data type and series
                 s_y_train = y_train[row_idx]
@@ -273,7 +299,7 @@ class Downstream:
 
             now = datetime.datetime.now()
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
-            file_path = os.path.join(save_path + "/" + current_time + "_downstream.jpg")
+            file_path = os.path.join(save_path + "/" + current_time + "_" + type + "_" + model + "_downstream.jpg")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)
 

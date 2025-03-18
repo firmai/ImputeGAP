@@ -204,9 +204,6 @@ def config_forecaster(model, params):
         elif model == "unobs":
             from sktime.forecasting.structural import UnobservedComponents
             forecaster = UnobservedComponents()
-        elif model == "rnn":
-            from sktime.forecasting.neuralforecast import NeuralForecastRNN
-            forecaster = NeuralForecastRNN(**params)
 
 
         else:
@@ -1092,7 +1089,6 @@ def list_of_downstreams_sktime():
         "croston",
         "theta",
         "unobs",
-        "rnn",
         "naive"
     ])
 
