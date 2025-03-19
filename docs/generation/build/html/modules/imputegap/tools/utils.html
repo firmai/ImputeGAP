@@ -409,6 +409,85 @@
 
 
 
+<div class="viewcode-block" id="config_forecaster">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.config_forecaster">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">config_forecaster</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Configure and execute forecaster model for downstream analytics</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : str</span>
+<span class="sd">            name of the forcaster model</span>
+<span class="sd">        params : list of params</span>
+<span class="sd">            List of paramaters for a forcaster model</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Forecaster object (SKTIME/DART)</span>
+<span class="sd">            Forecaster object for downstream analytics</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;prophet&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.fbprophet</span><span class="w"> </span><span class="kn">import</span> <span class="n">Prophet</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;exp-smoothing&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.exp_smoothing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;nbeats&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">darts.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">NBEATSModel</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">NBEATSModel</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;xgboost&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">darts.models.forecasting.xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">XGBModel</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">XGBModel</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;lightgbm&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">darts.models.forecasting.lgbm</span><span class="w"> </span><span class="kn">import</span> <span class="n">LightGBMModel</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">LightGBMModel</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;lstm&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">darts.models.forecasting.rnn_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">RNNModel</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">RNNModel</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;deepar&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">darts.models.forecasting.rnn_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">RNNModel</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">RNNModel</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;transformer&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">darts.models.forecasting.transformer_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformerModel</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">TransformerModel</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;hw-add&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.exp_smoothing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;arima&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.arima</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoARIMA</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">AutoARIMA</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;sf-arima&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.statsforecast</span><span class="w"> </span><span class="kn">import</span> <span class="n">StatsForecastAutoARIMA</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">StatsForecastAutoARIMA</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">forecaster</span><span class="o">.</span><span class="n">set_config</span><span class="p">(</span><span class="n">warnings</span><span class="o">=</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;bats&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.bats</span><span class="w"> </span><span class="kn">import</span> <span class="n">BATS</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">BATS</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;ets&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.ets</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoETS</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">AutoETS</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;croston&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.croston</span><span class="w"> </span><span class="kn">import</span> <span class="n">Croston</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">Croston</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;theta&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.theta</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThetaForecaster</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">ThetaForecaster</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;unobs&quot;</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.structural</span><span class="w"> </span><span class="kn">import</span> <span class="n">UnobservedComponents</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">UnobservedComponents</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sktime.forecasting.naive</span><span class="w"> </span><span class="kn">import</span> <span class="n">NaiveForecaster</span>
+            <span class="n">forecaster</span> <span class="o">=</span> <span class="n">NaiveForecaster</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">forecaster</span></div>
+
+
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">__marshal_as_numpy_column</span><span class="p">(</span><span class="n">__ctype_container</span><span class="p">,</span> <span class="n">__py_sizen</span><span class="p">,</span> <span class="n">__py_sizem</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Marshal a ctypes container as a numpy column-major array.</span>
@@ -782,6 +861,117 @@
         <span class="n">seasonality_mode</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seasonality_mode&#39;</span><span class="p">])</span>
         <span class="n">n_changepoints</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_changepoints&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;seasonality_mode&quot;</span><span class="p">:</span> <span class="n">seasonality_mode</span><span class="p">,</span> <span class="s2">&quot;n_changepoints&quot;</span><span class="p">:</span> <span class="n">n_changepoints</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-nbeats&quot;</span><span class="p">:</span>
+        <span class="n">input_chunk_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;input_chunk_length&#39;</span><span class="p">])</span>
+        <span class="n">output_chunk_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;output_chunk_length&#39;</span><span class="p">])</span>
+        <span class="n">num_blocks</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_blocks&#39;</span><span class="p">])</span>
+        <span class="n">layer_widths</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;layer_widths&#39;</span><span class="p">])</span>
+        <span class="n">random_state</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;random_state&#39;</span><span class="p">])</span>
+        <span class="n">n_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_epochs&#39;</span><span class="p">])</span>
+        <span class="n">pl_trainer_kwargs</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;pl_trainer_kwargs&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">pl_trainer_kwargs</span> <span class="o">==</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
+            <span class="n">drive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accelerator&quot;</span><span class="p">:</span> <span class="n">pl_trainer_kwargs</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">drive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accelerator&quot;</span><span class="p">:</span> <span class="n">pl_trainer_kwargs</span><span class="p">,</span> <span class="s2">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;input_chunk_length&quot;</span><span class="p">:</span> <span class="n">input_chunk_length</span><span class="p">,</span> <span class="s2">&quot;output_chunk_length&quot;</span><span class="p">:</span> <span class="n">output_chunk_length</span><span class="p">,</span> <span class="s2">&quot;num_blocks&quot;</span><span class="p">:</span> <span class="n">num_blocks</span><span class="p">,</span>
+                <span class="s2">&quot;layer_widths&quot;</span><span class="p">:</span> <span class="n">layer_widths</span><span class="p">,</span> <span class="s2">&quot;random_state&quot;</span><span class="p">:</span> <span class="n">random_state</span><span class="p">,</span> <span class="s2">&quot;n_epochs&quot;</span><span class="p">:</span> <span class="n">n_epochs</span><span class="p">,</span> <span class="s2">&quot;pl_trainer_kwargs&quot;</span><span class="p">:</span> <span class="n">drive</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-xgboost&quot;</span><span class="p">:</span>
+        <span class="n">lags</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lags&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;lags&quot;</span><span class="p">:</span> <span class="n">lags</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-lightgbm&quot;</span><span class="p">:</span>
+        <span class="n">lags</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lags&#39;</span><span class="p">])</span>
+        <span class="n">verbose</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;verbose&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;lags&quot;</span><span class="p">:</span> <span class="n">lags</span><span class="p">,</span> <span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="n">verbose</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-lstm&quot;</span><span class="p">:</span>
+        <span class="n">input_chunk_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;input_chunk_length&#39;</span><span class="p">])</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">])</span>
+        <span class="n">random_state</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;random_state&#39;</span><span class="p">])</span>
+        <span class="n">n_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_epochs&#39;</span><span class="p">])</span>
+        <span class="n">pl_trainer_kwargs</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;pl_trainer_kwargs&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">pl_trainer_kwargs</span> <span class="o">==</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
+            <span class="n">drive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accelerator&quot;</span><span class="p">:</span> <span class="n">pl_trainer_kwargs</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">drive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accelerator&quot;</span><span class="p">:</span> <span class="n">pl_trainer_kwargs</span><span class="p">,</span> <span class="s2">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;input_chunk_length&quot;</span><span class="p">:</span> <span class="n">input_chunk_length</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model</span><span class="p">,</span> <span class="s2">&quot;random_state&quot;</span><span class="p">:</span> <span class="n">random_state</span><span class="p">,</span> <span class="s2">&quot;n_epochs&quot;</span><span class="p">:</span> <span class="n">n_epochs</span><span class="p">,</span> <span class="s2">&quot;pl_trainer_kwargs&quot;</span><span class="p">:</span> <span class="n">drive</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-deepar&quot;</span><span class="p">:</span>
+        <span class="n">input_chunk_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;input_chunk_length&#39;</span><span class="p">])</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">])</span>
+        <span class="n">random_state</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;random_state&#39;</span><span class="p">])</span>
+        <span class="n">n_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_epochs&#39;</span><span class="p">])</span>
+        <span class="n">pl_trainer_kwargs</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;pl_trainer_kwargs&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">pl_trainer_kwargs</span> <span class="o">==</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
+            <span class="n">drive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accelerator&quot;</span><span class="p">:</span> <span class="n">pl_trainer_kwargs</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">drive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accelerator&quot;</span><span class="p">:</span> <span class="n">pl_trainer_kwargs</span><span class="p">,</span> <span class="s2">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;input_chunk_length&quot;</span><span class="p">:</span> <span class="n">input_chunk_length</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model</span><span class="p">,</span> <span class="s2">&quot;random_state&quot;</span><span class="p">:</span> <span class="n">random_state</span><span class="p">,</span> <span class="s2">&quot;n_epochs&quot;</span><span class="p">:</span> <span class="n">n_epochs</span><span class="p">,</span> <span class="s2">&quot;pl_trainer_kwargs&quot;</span><span class="p">:</span> <span class="n">drive</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-transformer&quot;</span><span class="p">:</span>
+        <span class="n">input_chunk_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;input_chunk_length&#39;</span><span class="p">])</span>
+        <span class="n">output_chunk_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;output_chunk_length&#39;</span><span class="p">])</span>
+        <span class="n">random_state</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;random_state&#39;</span><span class="p">])</span>
+        <span class="n">n_epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_epochs&#39;</span><span class="p">])</span>
+        <span class="n">pl_trainer_kwargs</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;pl_trainer_kwargs&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">pl_trainer_kwargs</span> <span class="o">==</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
+            <span class="n">drive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accelerator&quot;</span><span class="p">:</span> <span class="n">pl_trainer_kwargs</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">drive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;accelerator&quot;</span><span class="p">:</span> <span class="n">pl_trainer_kwargs</span><span class="p">,</span> <span class="s2">&quot;devices&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;input_chunk_length&quot;</span><span class="p">:</span> <span class="n">input_chunk_length</span><span class="p">,</span> <span class="s2">&quot;output_chunk_length&quot;</span><span class="p">:</span> <span class="n">output_chunk_length</span><span class="p">,</span> <span class="s2">&quot;random_state&quot;</span><span class="p">:</span> <span class="n">random_state</span><span class="p">,</span> <span class="s2">&quot;n_epochs&quot;</span><span class="p">:</span> <span class="n">n_epochs</span><span class="p">,</span> <span class="s2">&quot;pl_trainer_kwargs&quot;</span><span class="p">:</span> <span class="n">drive</span><span class="p">}</span>
+
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-hw-add&quot;</span><span class="p">:</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;trend&#39;</span><span class="p">])</span>
+        <span class="n">seasonal</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seasonal&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sp&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">,</span> <span class="s2">&quot;trend&quot;</span><span class="p">:</span> <span class="n">trend</span><span class="p">,</span> <span class="s2">&quot;seasonal&quot;</span><span class="p">:</span> <span class="n">seasonal</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-arima&quot;</span><span class="p">:</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="n">suppress_warnings</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;suppress_warnings&#39;</span><span class="p">])</span>
+        <span class="n">start_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;start_p&#39;</span><span class="p">])</span>
+        <span class="n">start_q</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;start_q&#39;</span><span class="p">])</span>
+        <span class="n">max_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_p&#39;</span><span class="p">])</span>
+        <span class="n">max_q</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_q&#39;</span><span class="p">])</span>
+        <span class="n">start_P</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;start_P&#39;</span><span class="p">])</span>
+        <span class="n">seasonal</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seasonal&#39;</span><span class="p">])</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;d&#39;</span><span class="p">])</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;D&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sp&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">,</span> <span class="s2">&quot;suppress_warnings&quot;</span><span class="p">:</span> <span class="n">suppress_warnings</span><span class="p">,</span> <span class="s2">&quot;start_p&quot;</span><span class="p">:</span> <span class="n">start_p</span><span class="p">,</span> <span class="s2">&quot;start_q&quot;</span><span class="p">:</span> <span class="n">start_q</span><span class="p">,</span>
+                <span class="s2">&quot;max_p&quot;</span><span class="p">:</span> <span class="n">max_p</span><span class="p">,</span> <span class="s2">&quot;max_q&quot;</span><span class="p">:</span> <span class="n">max_q</span><span class="p">,</span> <span class="s2">&quot;start_P&quot;</span><span class="p">:</span> <span class="n">start_P</span><span class="p">,</span> <span class="s2">&quot;seasonal&quot;</span><span class="p">:</span> <span class="n">seasonal</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">D</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-sf-arima&quot;</span><span class="p">:</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="n">start_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;start_p&#39;</span><span class="p">])</span>
+        <span class="n">start_q</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;start_q&#39;</span><span class="p">])</span>
+        <span class="n">max_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_p&#39;</span><span class="p">])</span>
+        <span class="n">max_q</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;max_q&#39;</span><span class="p">])</span>
+        <span class="n">start_P</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;start_P&#39;</span><span class="p">])</span>
+        <span class="n">seasonal</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seasonal&#39;</span><span class="p">])</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;d&#39;</span><span class="p">])</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;D&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sp&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">,</span> <span class="s2">&quot;start_p&quot;</span><span class="p">:</span> <span class="n">start_p</span><span class="p">,</span> <span class="s2">&quot;start_q&quot;</span><span class="p">:</span> <span class="n">start_q</span><span class="p">,</span>
+                <span class="s2">&quot;max_p&quot;</span><span class="p">:</span> <span class="n">max_p</span><span class="p">,</span> <span class="s2">&quot;max_q&quot;</span><span class="p">:</span> <span class="n">max_q</span><span class="p">,</span> <span class="s2">&quot;start_P&quot;</span><span class="p">:</span> <span class="n">start_P</span><span class="p">,</span> <span class="s2">&quot;seasonal&quot;</span><span class="p">:</span> <span class="n">seasonal</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="n">D</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-bats&quot;</span><span class="p">:</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="n">use_trend</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;use_trend&#39;</span><span class="p">])</span>
+        <span class="n">use_box_cox</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;use_box_cox&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sp&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">,</span> <span class="s2">&quot;use_trend&quot;</span><span class="p">:</span> <span class="n">use_trend</span><span class="p">,</span> <span class="s2">&quot;use_box_cox&quot;</span><span class="p">:</span> <span class="n">use_box_cox</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-ets&quot;</span><span class="p">:</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="n">auto</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;auto&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sp&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span> <span class="n">auto</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-croston&quot;</span><span class="p">:</span>
+        <span class="n">smoothing</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;smoothing&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;smoothing&quot;</span><span class="p">:</span> <span class="n">smoothing</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-unobs&quot;</span><span class="p">:</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;level&#39;</span><span class="p">])</span>
+        <span class="n">trend</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;trend&#39;</span><span class="p">])</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span> <span class="s2">&quot;trend&quot;</span><span class="p">:</span> <span class="n">trend</span><span class="p">,</span> <span class="s2">&quot;seasonal&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-theta&quot;</span><span class="p">:</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;sp&#39;</span><span class="p">])</span>
+        <span class="n">deseasonalize</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;deseasonalize&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sp&quot;</span><span class="p">:</span> <span class="n">sp</span><span class="p">,</span> <span class="s2">&quot;deseasonalize&quot;</span><span class="p">:</span> <span class="n">deseasonalize</span><span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;forecaster-rnn&quot;</span><span class="p">:</span>
+        <span class="n">input_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;input_size&#39;</span><span class="p">])</span>
+        <span class="n">inference_input_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;inference_input_size&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;input_size&quot;</span><span class="p">:</span> <span class="n">input_size</span><span class="p">,</span> <span class="s2">&quot;inference_input_size&quot;</span><span class="p">:</span> <span class="n">inference_input_size</span><span class="p">}</span>
+
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;colors&quot;</span><span class="p">:</span>
         <span class="n">colors</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">colors</span>
@@ -1166,7 +1356,8 @@
         <span class="s2">&quot;electricity&quot;</span><span class="p">,</span>
         <span class="s2">&quot;motion&quot;</span><span class="p">,</span>
         <span class="s2">&quot;soccer&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;temperature&quot;</span>
+        <span class="s2">&quot;temperature&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;forecast-economy&quot;</span>
     <span class="p">])</span>
 
     <span class="k">if</span> <span class="n">txt</span><span class="p">:</span>
@@ -1190,12 +1381,39 @@
 <div class="viewcode-block" id="list_of_downstreams">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_downstreams">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">list_of_downstreams</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">list_of_downstreams_sktime</span><span class="p">()</span> <span class="o">+</span> <span class="n">list_of_downstreams_darts</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="list_of_downstreams_sktime">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_downstreams_sktime">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_of_downstreams_sktime</span><span class="p">():</span>
     <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
         <span class="s2">&quot;prophet&quot;</span><span class="p">,</span>
         <span class="s2">&quot;exp-smoothing&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hw-add&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;arima&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sf-arima&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bats&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ets&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;croston&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;theta&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;unobs&quot;</span><span class="p">,</span>
         <span class="s2">&quot;naive&quot;</span>
     <span class="p">])</span></div>
 
+
+<div class="viewcode-block" id="list_of_downstreams_darts">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_downstreams_darts">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_of_downstreams_darts</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
+        <span class="s2">&quot;nbeats&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;xgboost&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lightgbm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lstm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;deepar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;transformer&quot;</span>
+    <span class="p">])</span></div>
 
 </pre></div>
         </article>

@@ -13,7 +13,7 @@ class TestDownstream(unittest.TestCase):
         """
         # Load and normalize the series
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("chlorine"))
+        ts_1.load_series(utils.search_path("forecast-economy"))
         ts_1.normalize(normalizer="min_max")
 
         # Create a mask for contamination
@@ -26,7 +26,8 @@ class TestDownstream(unittest.TestCase):
         # Configure downstream options
         downstream_options = [{"task": "forecast", "model": "prophet", "params": None, "plots": False},
                               {"task": "forecast", "model": "naive", "params": None, "plots": False},
-                              {"task": "forecast", "model": "exp-smoothing", "params": None, "plots": False}]
+                              {"task": "forecast", "model": "exp-smoothing", "params": None, "plots": False},
+                              {"task": "forecast", "model": "nbeats", "params": None, "plots": False}]
 
         for options in downstream_options:
             model = options.get("model")

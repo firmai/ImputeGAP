@@ -74,9 +74,9 @@ RAYTUNE_PARAMS = {
         #"keep_prob": tune.loguniform(1e-6, 1)  # Dropout keep probability
     },
     "stmvl": {
-        "window_size": tune.grid_search([i for i in range(2, 100)]),  # Window size
+        "window_size": tune.grid_search([i for i in range(10, 100)]),  # Window size
         "gamma": tune.loguniform(1e-6, 1),  # Smoothing parameter gamma
-        "alpha": tune.grid_search([i for i in range(1, 10)])  # Smoothing parameter alpha
+        "alpha": tune.grid_search([i for i in range(2, 10)]),  # Window size
     },
 
     # --- New Algorithms ---

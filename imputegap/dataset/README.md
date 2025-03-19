@@ -9,8 +9,8 @@ ImputeGap uses several complete datasets containing different characteristics to
 
 This dataset, which has been sampled, defines the air quality for 10 series and 1000 values.
 
-![AIR-QUALITY dataset - raw data](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/01_airq_m.jpg)
-![AIR-QUALITY dataset - one series](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/03_airq_1.jpg)
+![AIR-QUALITY dataset - raw data](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/airq/01_airq_m.jpg)
+![AIR-QUALITY dataset - one series](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/airq/03_airq_1.jpg)
 
 ### Features
 | Category       | Feature                                                           | Value                 |
@@ -136,7 +136,6 @@ Chlorine dataset - raw data 20x400 provides a subset of the data, limited to 20 
 Finally, Chlorine - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
 ![Chlorine dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/01_chlorine-rawdata-NxM_graph.jpg)
-![Chlorine dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/02_chlorine-rawdata20x400_graph.jpg)
 ![Chlorine dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/chlorine/03_chlorine-rawdata01x400_graph.jpg)
 
 ### Features
@@ -204,7 +203,6 @@ Climate dataset - raw data 20x400 provides a subset of the data, limited to 20 t
 Finally, Climate - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
 ![Climate dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/01_climate-rawdata-NxM_graph.jpg)
-![Climate dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/02_climate-rawdata20x400_graph.jpg)
 ![Climate dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/climate/03_climate-rawdata01x400_graph.jpg)
 
 
@@ -269,7 +267,6 @@ Drift dataset - raw data 20x400 provides a subset of the data, limited to 20 tim
 Finally, Drift - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
 ![Drift dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/01_drift-rawdata-NxM_graph.jpg)
-![Drift dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/02_drift-rawdata20x400_graph.jpg)
 ![Drift dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/drift/03_drift-rawdata01x400_graph.jpg)
 
 ### Features
@@ -347,7 +344,6 @@ EEG-ALCOHOL dataset - raw data 20x400 provides a subset of the data, limited to 
 Finally, EEG-ALCOHOL - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
 ![EEG-ALCOHOL dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/01_eeg-alcohol-rawdata-NxM_graph.jpg)
-![EEG-ALCOHOL dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/02_eeg-alcohol-rawdata20x400_graph.jpg)
 ![EEG-ALCOHOL dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-alcohol/03_eeg-alcohol-rawdata01x400_graph.jpg)
 
 
@@ -492,8 +488,8 @@ Finally, EEG-READING - normalized 20x400 demonstrates the impact of "MIN-MAX" no
 This dataset records the electricity consumption of 370 individual points or clients. The data has already been normalized and reduced to a certain size.
 
 
-![ELECTRICITY dataset - raw data 20x5000](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/01_electricity_M.jpg)
-![ELECTRICITY dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/eeg-reading/03_electricity_1.jpg)
+![ELECTRICITY dataset - raw data 20x5000](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/electricity/01_electricity_M.jpg)
+![ELECTRICITY dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/electricity/03_electricity_1.jpg)
 
 
 
@@ -630,7 +626,6 @@ fMRI-STOPTASK dataset - raw data 360x182 shows the full raw dataset, consisting 
 fMRI-STOPTASK dataset - raw data 20x182 provides a subset of the data, limited to 20 time series over 182 time steps, while fMRI-STOPTASK dataset - raw data 01x182 focuses on a single time series extracted from the dataset.
 Finally, fMRI-STOPTASK - normalized 20x182 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x182 subset.
 
-![fMRI-STOPTASK dataset - raw data 360x182](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-stoptask/01_fmri-stoptask-rawdata-NxM_plot.jpg)
 ![fMRI-STOPTASK dataset - raw data 20x182](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-stoptask/02_fmri-stoptask-rawdata20x182_plot.jpg)
 ![fMRI-STOPTASK dataset - raw data 01x182](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/fmri-stoptask/03_fmri-stoptask-rawdata01x182_plot.jpg)
 
@@ -684,6 +679,62 @@ Finally, fMRI-STOPTASK - normalized 20x182 demonstrates the impact of "MIN-MAX" 
 <br /><hr /><br />
 
 
+## FORECAST-ECONOMY
+
+This economic dataset is used for testing downstream forecasting. It exhibits a seasonality of 7 and consists of 16 time series, each containing 931 values.
+
+
+![FORECAST-ECONOMY dataset - raw data M](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/forecast-economy/forecast-economy_M.jpg)
+![FORECAST-ECONOMY dataset - raw data 1](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/forecast-economy/forecast-economy_1.jpg)
+
+
+
+### Features
+| Category       | Feature                                                           | Value                 |
+|---------------|-------------------------------------------------------------------|-----------------------|
+| Geometry      | 5-bin histogram mode                                              | -0.5710874806115164   |
+| Geometry      | 10-bin histogram mode                                             | -0.9082987200476134   |
+| Geometry      | Proportion of high incremental changes in the series              | 0.7816717019133937    |
+| Geometry      | Longest stretch of above-mean values                              | 357.0                 |
+| Geometry      | Transition matrix column variance                                 | 0.011316872427983538  |
+| Geometry      | Goodness of exponential fit to embedding distance distribution    | 0.12664898312226522   |
+| Geometry      | Positive outlier timing                                           | 0.18958109559613323   |
+| Geometry      | Negative outlier timing                                           | -0.2299274973147154   |
+| Geometry      | Longest stretch of decreasing values                              | 7.0                   |
+| Geometry      | Rescaled range fluctuation analysis (low-scale scaling)           | 0.3                   |
+| Geometry      | Detrended fluctuation analysis (low-scale scaling)                | 0.22                  |
+| Correlation   | First 1/e crossing of the ACF                                     | 124.60446764082629    |
+| Correlation   | First minimum of the ACF                                          | 1                     |
+| Correlation   | Histogram-based automutual information (lag 2, 5 bins)            | 0.22074051585149523   |
+| Correlation   | Time reversibility                                                | 0.28049126008447584   |
+| Correlation   | First minimum of the AMI function                                 | 5.0                   |
+| Correlation   | Change in autocorrelation timescale after incremental differencing| 0.0012224938875305623 |
+| Trend         | Wangs periodicity metric                                          | 6                     |
+| Trend         | Entropy of successive pairs in symbolized series                  | 1.8906454432766748    |
+| Trend         | Error of 3-point rolling mean forecast                            | 0.7191953107910503    |
+| Transformation| Power in the lowest 20% of frequencies                            | 0.6678786769493903    |
+| Transformation| Centroid frequency                                                | 0.009203884727314454  |
+
+
+
+
+### Summary
+
+| Data info          |                                                                                          |
+|--------------------|------------------------------------------------------------------------------------------|
+| Dataset codename   | forecast-economy                                                                         |
+| Dataset name       | ECONOMY                                                                              |
+| Dataset source     | https://zenodo.org/records/14023107                                                      | 
+| Dataset dimensions | M=16 N=931                                                                               |
+
+
+
+
+
+<br /><hr /><br />
+
+
+
 
 
 
@@ -699,9 +750,7 @@ Meteo dataset - raw data 20x400 provides a subset of the data, limited to 20 tim
 Finally, Meteo - normalized 20x400 demonstrates the impact of "MIN-MAX" normalization on the raw data, applied to the same 20x400 subset.
 
 ![Meteo dataset - raw data 64x256](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/01_meteo-rawdata-NxM_graph.jpg)
-![Meteo dataset - raw data 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/02_meteo-rawdata20x400_graph.jpg)
 ![Meteo dataset - raw data 01x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/03_meteo-rawdata01x400_graph.jpg)
-![Meteo - normalized 20x400](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/04_meteo-normmin_maxdata01x400_graph.jpg)
 
 ### Features
 
@@ -774,8 +823,8 @@ Example: 13 = observation period 12:41 to 13:40
 
 This dataset consists of time series data collected from accelerometer and gyroscope sensors, capturing attributes such as attitude, gravity, user acceleration, and rotation rate [[4]](#ref4). Recorded at a high sampling rate of 50Hz using an iPhone 6s placed in users' front pockets, the data reflects various human activities. While the motion time series are non-periodic, they display partial trend similarities.
 
-![Motion dataset - raw data](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/01_motion_M.jpg)
-![Motion dataset - one series](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/03_motion_1.jpg)
+![Motion dataset - raw data](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/motion/01_motion_M.jpg)
+![Motion dataset - one series](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/motion/03_motion_1.jpg)
 
 ### Features
 | Category       | Feature                                                           | Value                 |
@@ -824,8 +873,35 @@ This dataset consists of time series data collected from accelerometer and gyros
 
 This dataset, initially presented in the DEBS Challenge 2013 [[3]](#ref3), captures player positions during a football match. The data is collected from sensors placed near players' shoes and the goalkeeper's hands. With a high tracking frequency of 200Hz, it generates 15,000 position events per second. Soccer time series exhibit bursty behavior and contain numerous outliers.
 
-![Soccer dataset - raw data](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/01_soccer_M.jpg)
-![Soccer dataset - one series](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/03_soccer_1.jpg)
+![Soccer dataset - raw data](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/soccer/01_soccer_M.jpg)
+![Soccer dataset - one series](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/soccer/03_soccer_1.jpg)
+
+### Features
+| Category       | Feature                                                           | Value                 |
+|---------------|-------------------------------------------------------------------|-----------------------|
+| Geometry      | 5-bin histogram mode                                              | 0.09084722786947164   |
+| Geometry      | 10-bin histogram mode                                             | -0.2583118928950434   |
+| Geometry      | Proportion of high incremental changes in the series              | 0.0011092863312203406 |
+| Geometry      | Longest stretch of above-mean values                              | 71757.0               |
+| Geometry      | Transition matrix column variance                                 | 0.006802721088435373  |
+| Geometry      | Goodness of exponential fit to embedding distance distribution    | 0.3417367925024475    |
+| Geometry      | Positive outlier timing                                           | 0.1377957597962023    |
+| Geometry      | Negative outlier timing                                           | 0.05898850648030396   |
+| Geometry      | Longest stretch of decreasing values                              | 1096.0                |
+| Geometry      | Rescaled range fluctuation analysis (low-scale scaling)           | 0.48                  |
+| Geometry      | Detrended fluctuation analysis (low-scale scaling)                | 0.46                  |
+| Correlation   | First 1/e crossing of the ACF                                     | 17792.5919437391      |
+| Correlation   | First minimum of the ACF                                          | 5221                  |
+| Correlation   | Histogram-based automutual information (lag 2, 5 bins)            | 1.1086843892176654    |
+| Correlation   | Time reversibility                                                | 6.552378315312122e-06 |
+| Correlation   | First minimum of the AMI function                                 | 40.0                  |
+| Correlation   | Change in autocorrelation timescale after incremental differencing| 0.0006084989404959624 |
+| Trend         | Wangs periodicity metric                                          | 11198                 |
+| Trend         | Entropy of successive pairs in symbolized series                  | 1.1035630861406998    |
+| Trend         | Error of 3-point rolling mean forecast                            | 0.01179174759304637   |
+| Transformation| Power in the lowest 20% of frequencies                            | 0.9999572395164824    |
+| Transformation| Centroid frequency                                                | 0.0001370695723550248 |
+
 
 
 ### Summary
@@ -849,8 +925,35 @@ This dataset, initially presented in the DEBS Challenge 2013 [[3]](#ref3), captu
 
 ## Temperature
 
-![Temperature dataset - raw data](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/01_temperature_20.jpg)
-![Temperature dataset - one series](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/meteo/03_temperature_1.jpg)
+![Temperature dataset - raw data](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/temperature/01_temperature_20.jpg)
+![Temperature dataset - one series](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/temperature/03_temperature_1.jpg)
+
+### Features
+| Category       | Feature                                                           | Value                 |
+|---------------|-------------------------------------------------------------------|-----------------------|
+| Geometry      | 5-bin histogram mode                                              | 22.045650551725167    |
+| Geometry      | 10-bin histogram mode                                             | 8.743492676833597     |
+| Geometry      | Proportion of high incremental changes in the series              | 0.7958665687091343    |
+| Geometry      | Longest stretch of above-mean values                              | 21931.0               |
+| Geometry      | Transition matrix column variance                                 | 0.0008670367268468369 |
+| Geometry      | Goodness of exponential fit to embedding distance distribution    | 0.0037844314057919114 |
+| Geometry      | Positive outlier timing                                           | 0.4030755233654515    |
+| Geometry      | Negative outlier timing                                           | -0.572629720089644    |
+| Geometry      | Longest stretch of decreasing values                              | 15.0                  |
+| Geometry      | Rescaled range fluctuation analysis (low-scale scaling)           | 0.4                   |
+| Geometry      | Detrended fluctuation analysis (low-scale scaling)                | 0.38                  |
+| Correlation   | First 1/e crossing of the ACF                                     | 81.7405995576158      |
+| Correlation   | First minimum of the ACF                                          | 183                   |
+| Correlation   | Histogram-based automutual information (lag 2, 5 bins)            | 1.439425719697347e-06 |
+| Correlation   | Time reversibility                                                | 0.005588686797775345  |
+| Correlation   | First minimum of the AMI function                                 | 40.0                  |
+| Correlation   | Change in autocorrelation timescale after incremental differencing| 0.00847457627118644   |
+| Trend         | Wangs periodicity metric                                          | 365                   |
+| Trend         | Entropy of successive pairs in symbolized series                  | 1.4530196005684877    |
+| Trend         | Error of 3-point rolling mean forecast                            | 0.3145083996285715    |
+| Transformation| Power in the lowest 20% of frequencies                            | 0.9542560901714987    |
+| Transformation| Centroid frequency                                                | 0.017202605837583908  |
+
 
 
 ### Summary

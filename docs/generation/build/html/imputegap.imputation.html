@@ -1824,7 +1824,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <section id="id99">
 <h5>Methods<a class="headerlink" href="#id99" title="Link to this heading">¶</a></h5>
 <dl class="simple">
-<dt>impute(self, user_def=True, params=None):</dt><dd><p>Perform imputation using the STMVL algorithm.</p>
+<dt>impute(self, user_def=True, params=None):</dt><dd><p>Perform imputation using the MICE algorithm.</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -1854,7 +1854,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
-<dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the STMVL algorithm, if None, default ones are loaded.</p>
+<dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the MICE algorithm, if None, default ones are loaded.</p>
 <p><strong>Algorithm parameters:</strong></p>
 <dl class="simple">
 <dt>max_iter<span class="classifier">int, optional</span></dt><dd><p>Maximum number of imputation rounds to perform before returning the imputations computed during the final round. (default is 3).</p>
@@ -1871,10 +1871,12 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </section>
 <section id="id102">
 <h6>Returns<a class="headerlink" href="#id102" title="Link to this heading">¶</a></h6>
-<dl class="simple">
+<blockquote>
+<div><dl class="simple">
 <dt>self<span class="classifier">MICE</span></dt><dd><p>The object with <cite>recov_data</cite> set.</p>
 </dd>
 </dl>
+</div></blockquote>
 </section>
 <section id="id103">
 <h6>Example<a class="headerlink" href="#id103" title="Link to this heading">¶</a></h6>
@@ -2098,7 +2100,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </section>
 <section id="id119">
 <h6>Example<a class="headerlink" href="#id119" title="Link to this heading">¶</a></h6>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mxgboost_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">MICE</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mxgboost_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MachineLearning</span><span class="o">.</span><span class="n">XGBOOST</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mxgboost_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>  <span class="c1"># default parameters for imputation &gt; or</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mxgboost_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>  <span class="c1"># user defined &gt; or</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mxgboost_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;input_data&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">})</span>  <span class="c1"># automl with ray_tune</span>
@@ -3114,10 +3116,10 @@ That helps to avoid big deviations when forecasting.</p>
 </section>
 <section id="id184">
 <h6>Example<a class="headerlink" href="#id184" title="Link to this heading">¶</a></h6>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trmf_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">SVT</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">trmf_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>  <span class="c1"># default parameters for imputation &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">trmf_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lags&quot;</span><span class="p">:[],</span> <span class="s2">&quot;K&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;lambda_f&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;lambda_x&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;lambda_w&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;eta&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span><span class="mf">1000.0</span><span class="p">,</span> <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">})</span> <span class="c1"># user-defined &gt; or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">trmf_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;input_data&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">})</span>  <span class="c1"># automl with ray_tune</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trmf_imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MatrixCompletion</span><span class="o">.</span><span class="n">TRMF</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trmf_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trmf_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lags&quot;</span><span class="p">:[],</span> <span class="s2">&quot;K&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;lambda_f&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;lambda_x&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;lambda_w&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;eta&quot;</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span><span class="mf">1000.0</span><span class="p">,</span> <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trmf_imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">user_def</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;input_data&quot;</span><span class="p">:</span> <span class="n">ts_1</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">trmf_imputer</span><span class="o">.</span><span class="n">recov_data</span>
 </pre></div>
 </div>

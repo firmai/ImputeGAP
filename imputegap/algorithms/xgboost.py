@@ -3,7 +3,7 @@ import time
 import numpy as np
 import pandas as pd
 
-from xgboost import XGBRegressor, XGBClassifier
+from xgboost import XGBRegressor
 
 
 def xgboost(incomp_data, n_estimators=10, seed=42, logs=True):

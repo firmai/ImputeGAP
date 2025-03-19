@@ -9,7 +9,7 @@ ts_1 = TimeSeries()
 ts_1.load_series(utils.search_path("eeg-alcohol"))
 
 # 3. call the explanation of your dataset with a specific algorithm to gain insight on the Imputation results
-shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, extractor="pycatch22", pattern="mcar", missing_rate=0.25, limit_ratio=1, split_ratio=0.7, file_name="eeg-alcohol", algorithm="cdrec")
+shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, extractor="pycatch22", pattern="mcar", missing_rate=0.25, rate_dataset=1, training_ratio=0.7, file_name="eeg-alcohol", algorithm="cdrec")
 
 # [OPTIONAL] print the results with the impact of each feature.
 Explainer.print(shap_values, shap_details)

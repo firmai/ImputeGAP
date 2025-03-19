@@ -6,10 +6,15 @@ import matplotlib.pyplot as plt
 
 from imputegap.tools import utils
 
-from sktime.forecasting.exp_smoothing import ExponentialSmoothing
-from sktime.forecasting.fbprophet import Prophet
-from sktime.forecasting.naive import NaiveForecaster
-from sktime.performance_metrics.forecasting import mean_absolute_error, mean_squared_error
+from darts import TimeSeries
+from darts.metrics import mae as darts_mae, mse as darts_mse
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sktime.forecasting.base import ForecastingHorizon
+
+
+
+
+
 
 class Downstream:
     """
@@ -18,6 +23,10 @@ class Downstream:
     This class provides tools to assess the quality of imputed time series data by analyzing
     the performance of downstream forecasting models. It computes metrics such as Mean Absolute
     Error (MAE) and Mean Squared Error (MSE) and visualizes the results for better interpretability.
+
+    ImputeGAP downstream models for forcasting : ['arima', 'bats', 'croston', 'deepar', 'ets', 'exp-smoothing',
+    'hw-add', 'lightgbm', 'lstm', 'naive', 'nbeats', 'prophet', 'sf-arima', 'theta',
+    'transformer', 'unobs', 'xgboost']
 
     Attributes
     ----------
@@ -64,10 +73,15 @@ class Downstream:
         self.incomp_data = incomp_data
         self.downstream = downstream
         self.split = 0.8
+        self.sktime_models = utils.list_of_downstreams_sktime()
 
     def downstream_analysis(self):
         """
         Compute a set of evaluation metrics with a downstream analysis
+
+        ImputeGAP downstream models for forcasting : ['arima', 'bats', 'croston', 'deepar', 'ets', 'exp-smoothing',
+        'hw-add', 'lightgbm', 'lstm', 'naive', 'nbeats', 'prophet', 'sf-arima', 'theta',
+        'transformer', 'unobs', 'xgboost']
 
         Returns
         -------
@@ -78,6 +92,9 @@ class Downstream:
         model = self.downstream.get("model", "naive")
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
+        
+        model = model.lower()
+        evaluator = evaluator.lower()
 
         if not params:
             print("\n\t\t\t\tThe params for model of downstream analysis are empty or missing. Default ones loaded...")
@@ -85,9 +102,9 @@ class Downstream:
             params = utils.load_parameters(query="default", algorithm=loader)
 
         print("\n\t\t\t\tDownstream analysis launched for <", evaluator, "> on the model <", model,
-              "> with parameters :\n\t\t\t\t\t", params)
+              "> with parameters :\n\t\t\t\t\t", params, " \n\n")
 
-        if evaluator == "forecast" or evaluator == "forecaster"or evaluator == "forecasting":
+        if evaluator in ["forecast", "forecaster", "forecasting"]:
             y_train_all, y_test_all, y_pred_all = [], [], []
             mae, mse = [], []
 
@@ -106,35 +123,63 @@ class Downstream:
 
                 y_train = data[:, :train_len]
                 y_test = data[:, train_len:]
-                y_pred = np.zeros_like(y_test)
 
-                # Forecast for each series
-                for series_idx in range(data.shape[0]):
-                    series_train = y_train[series_idx, :]
+                forecaster = utils.config_forecaster(model, params)
 
-                    # Initialize and fit the forecasting model
-                    if model == "prophet":
-                        forecaster = Prophet(**params)
-                    elif model == "exp-smoothing":
-                        forecaster = ExponentialSmoothing(**params)
-                    else:
-                        forecaster = NaiveForecaster(**params)
+                if model in self.sktime_models:
+                    # --- SKTIME APPROACH ---
+                    y_pred = np.zeros_like(y_test)
 
-                    forecaster.fit(series_train)
-                    fh = np.arange(1, y_test.shape[1] + 1)  # Forecast horizon
-                    series_pred = forecaster.predict(fh=fh)
-                    series_pred = series_pred.ravel()
+                    for series_idx in range(data.shape[0]):
+                        series_train = y_train[series_idx, :]
+                        fh = np.arange(1, y_test.shape[1] + 1)  # Forecast horizon
 
-                    # Store predictions
-                    y_pred[series_idx, :] = series_pred
+                        if model == "ltsf" or model == "rnn":
+                            forecaster.fit(series_train, fh=ForecastingHorizon(fh))
+                            series_pred = forecaster.predict()
+                        else:
+                            forecaster.fit(series_train)
+                            series_pred = forecaster.predict(fh=fh)
 
-                # Validate shapes
-                if y_pred.shape != y_test.shape:
-                    raise ValueError(f"Shape mismatch: y_pred={y_pred.shape}, y_test={y_test.shape}, y_train={y_train.shape}")
+                        y_pred[series_idx, :] = series_pred.ravel()
 
-                # Calculate metrics
-                mae.append(mean_absolute_error(y_test, y_pred))
-                mse.append(mean_squared_error(y_test, y_pred))
+                    # Compute metrics using sktime
+                    mae.append(mean_absolute_error(y_test, y_pred))
+                    mse.append(mean_squared_error(y_test, y_pred))
+
+                else:
+                    # --- DARTS APPROACH ---
+                    # Convert entire matrix to a Darts multivariate TimeSeries object
+                    y_train_ts = TimeSeries.from_values(y_train.T)  # Shape: (time_steps, n_series)
+                    y_test_ts = TimeSeries.from_values(y_test.T)  # Shape: (time_steps, n_series)
+
+                    # Fit the model
+                    forecaster.fit(y_train_ts)
+
+                    # Predict for the entire series at once
+                    forecast_horizon = y_test.shape[1]
+                    y_pred_ts = forecaster.predict(n=forecast_horizon)
+
+                    # Convert predictions back to NumPy
+                    y_pred = y_pred_ts.values().T  # Shape: (n_series, time_steps)
+
+
+
+                    # Ensure y_pred_ts has the same components as y_test_ts
+                    y_pred_ts = y_pred_ts.with_columns_renamed(y_pred_ts.components, y_test_ts.components)
+
+                    # Shift time index to match
+                    if y_pred_ts.start_time() != y_test_ts.start_time():
+                        y_pred_ts = y_pred_ts.shift(y_test_ts.start_time() - y_pred_ts.start_time())
+
+                    # Compute metrics safely
+                    mae_score = darts_mae(y_test_ts, y_pred_ts)
+                    mse_score = darts_mse(y_test_ts, y_pred_ts)
+
+
+                    # Compute metrics using Darts
+                    mae.append(mae_score)
+                    mse.append(mse_score)
 
                 # Store for plotting
                 y_train_all.append(y_train)
@@ -143,14 +188,14 @@ class Downstream:
 
             if plots:
                 # Global plot with all rows and columns
-                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data)
+                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, model, evaluator)
 
             # Save metrics in a dictionary
             metrics = {"DOWNSTREAM-RECOV-MAE": mae[0], "DOWNSTREAM-INPUT-MAE": mae[1],
                        "DOWNSTREAM-MEANI-MAE": mae[2], "DOWNSTREAM-RECOV-MSE": mse[0],
                        "DOWNSTREAM-INPUT-MSE": mse[1], "DOWNSTREAM-MEANI-MSE": mse[2]}
 
-            print("\t\t\t\tDownstream analysis complete. " + "*" * 58 + "\n")
+            print("\n\t\t\t\tDownstream analysis complete. " + "*" * 58 + "\n")
 
             return metrics
         else:
@@ -159,7 +204,7 @@ class Downstream:
             return None
 
     @staticmethod
-    def _plot_downstream(y_train, y_test, y_pred, incomp_data, title="Ground Truth vs Predictions", max_series=4, save_path="./imputegap/assets"):
+    def _plot_downstream(y_train, y_test, y_pred, incomp_data, model=None, type=None, title="Ground Truth vs Predictions", max_series=1, save_path="./imputegap_assets"):
         """
         Plot ground truth vs. predictions for contaminated series (series with NaN values).
 
@@ -173,6 +218,10 @@ class Downstream:
             Forecasted data array of shape (n_series, test_len).
         incomp_data : np.ndarray
             Incomplete data array of shape (n_series, total_len), used to identify contaminated series.
+        model : str
+            Name of the current model used
+        type : str
+            Name of the current type used
         title : str
             Title of the plot.
         max_series : int
@@ -181,6 +230,9 @@ class Downstream:
         # Create a 3x3 subplot grid (3 rows for data types, 3 columns for valid series)
 
         x_size = max_series * 5
+
+        if max_series == 1:
+            x_size = 24
 
         fig, axs = plt.subplots(3, max_series, figsize=(x_size, 15))
         fig.suptitle(title, fontsize=16)
@@ -192,7 +244,10 @@ class Downstream:
 
             for col_idx, series_idx in enumerate(valid_indices):
                 # Access the correct subplot
-                ax = axs[row_idx, col_idx]
+                if max_series > 1:
+                    ax = axs[row_idx, col_idx]
+                else:
+                    ax = axs[row_idx]
 
                 # Extract the corresponding data for this data type and series
                 s_y_train = y_train[row_idx]
@@ -247,7 +302,7 @@ class Downstream:
 
             now = datetime.datetime.now()
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
-            file_path = os.path.join(save_path + "/" + current_time + "_downstream.jpg")
+            file_path = os.path.join(save_path + "/" + current_time + "_" + type + "_" + model + "_downstream.jpg")
             plt.savefig(file_path, bbox_inches='tight')
             print("plots saved in ", file_path)
 

@@ -7,7 +7,7 @@ ts = TimeSeries()
 print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
 
 # load and normalize the timeseries
-ts.load_series(utils.search_path("chlorine"))
+ts.load_series(utils.search_path("forecast-economy"))
 ts.normalize(normalizer="min_max")
 
 # contaminate the time series
@@ -18,6 +18,6 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute print the downstream results
-downstream_config = {"task": "forecast", "model": "prophet"}
+downstream_config = {"task": "forecast", "model": "hw-add"}
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
 ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
