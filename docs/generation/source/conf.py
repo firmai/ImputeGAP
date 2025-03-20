@@ -46,8 +46,8 @@ html_static_path = ['static']
 html_css_files = ['custom.css']
 
 # Set the version and release info
-version = '1.0.5'
-release = '1.0.5'
+version = '1.0.6'
+release = '1.0.6'
 
 
 html_theme_options = {

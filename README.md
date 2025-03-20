@@ -20,7 +20,7 @@ Access to commonly used datasets in time series research (Datasets).
 <br>
 
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
-![Release](https://img.shields.io/badge/Release-v1.0.5-brightgreen) 
+![Release](https://img.shields.io/badge/Release-v1.0.6-brightgreen) 
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
 ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
@@ -161,10 +161,10 @@ ts.print(nbr_series=9, nbr_val=100)
 ---
 
 ## Contamination
-We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. The list of patterns is described [here](https://imputegap.readthedocs.io/en/latest/patterns.html).
+We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns.
 
 
-For more details, please refer to the documentation in this <a href="https://imputegap.readthedocs.io/en/latest/patterns.html" >page</a>.
+For more details, please refer to the documentation in this [page](https://imputegap.readthedocs.io/en/latest/patterns.html).
 <br></br>
 
 ### Example Contamination
@@ -425,18 +425,17 @@ Mourad Khayati, Quentin Nater, Jacques Pasquier: ImputeVIS: An Interactive Evalu
 
 If you use ImputeGAP in your research, please cite the paper:
 
-.. code-block:: bash
-
-    @article{nater2025imputegap,
-      title = {ImputeGAP: A Comprehensive Library for Time Series Imputation},
-      author = {Nater, Quentin and Khayati, Mourad and Pasquier, Jacques},
-      year = {2025},
-      eprint = {2503.15250},
-      archiveprefix = {arXiv},
-      primaryclass = {cs.LG},
-      url = {https://arxiv.org/abs/2503.15250}
-    }
-
+```
+@article{nater2025imputegap,
+  title = {ImputeGAP: A Comprehensive Library for Time Series Imputation},
+  author = {Nater, Quentin and Khayati, Mourad and Pasquier, Jacques},
+  year = {2025},
+  eprint = {2503.15250},
+  archiveprefix = {arXiv},
+  primaryclass = {cs.LG},
+  url = {https://arxiv.org/abs/2503.15250}
+}
+```
 ---
 
 ## Core Contributors
