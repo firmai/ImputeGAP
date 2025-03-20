@@ -8,8 +8,11 @@ from imputegap.tools import utils
 
 from darts import TimeSeries
 from darts.metrics import mae as darts_mae, mse as darts_mse
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error
 from sktime.forecasting.base import ForecastingHorizon
+from darts.metrics import smape as darts_smape
+from sktime.performance_metrics.forecasting import MeanAbsolutePercentageError
+
 
 
 
@@ -53,7 +56,7 @@ class Downstream:
 
 
 
-    def __init__(self, input_data, recov_data, incomp_data, downstream):
+    def __init__(self, input_data, recov_data, incomp_data, algorithm, downstream):
         """
         Initialize the Downstream class
 
@@ -65,6 +68,8 @@ class Downstream:
             The imputed time series.
         incomp_data : numpy.ndarray
             The time series with contamination (NaN values).
+        algorithm : str
+            Name of the algorithm to analyse.
         downstream : dict
             Information about the model to launch with its parameters
         """
@@ -72,6 +77,7 @@ class Downstream:
         self.recov_data = recov_data
         self.incomp_data = incomp_data
         self.downstream = downstream
+        self.algorithm = algorithm
         self.split = 0.8
         self.sktime_models = utils.list_of_downstreams_sktime()
 
@@ -106,13 +112,13 @@ class Downstream:
 
         if evaluator in ["forecast", "forecaster", "forecasting"]:
             y_train_all, y_test_all, y_pred_all = [], [], []
-            mae, mse = [], []
+            mae, mse, smape = [], [], []
 
             for x in range(3):  # Iterate over recov_data, input_data, and mean_impute
                 if x == 0:
-                    data = self.recov_data
-                elif x == 1:
                     data = self.input_data
+                elif x == 1:
+                    data = self.recov_data
                 elif x == 2:
                     from imputegap.recovery.imputation import Imputation
                     zero_impute = Imputation.Statistics.ZeroImpute(self.incomp_data).impute()
@@ -146,6 +152,9 @@ class Downstream:
                     # Compute metrics using sktime
                     mae.append(mean_absolute_error(y_test, y_pred))
                     mse.append(mean_squared_error(y_test, y_pred))
+                    scoring_m = MeanAbsolutePercentageError(symmetric=True)
+                    smape.append(scoring_m.evaluate(y_test, y_pred)*100)  # Compute SMAPE
+
 
                 else:
                     # --- DARTS APPROACH ---
@@ -175,11 +184,12 @@ class Downstream:
                     # Compute metrics safely
                     mae_score = darts_mae(y_test_ts, y_pred_ts)
                     mse_score = darts_mse(y_test_ts, y_pred_ts)
-
+                    smape_score = darts_smape(y_test_ts, y_pred_ts)
 
                     # Compute metrics using Darts
                     mae.append(mae_score)
                     mse.append(mse_score)
+                    smape.append(smape_score)
 
                 # Store for plotting
                 y_train_all.append(y_train)
@@ -188,12 +198,13 @@ class Downstream:
 
             if plots:
                 # Global plot with all rows and columns
-                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, model, evaluator)
+                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, model, evaluator)
 
             # Save metrics in a dictionary
-            metrics = {"DOWNSTREAM-RECOV-MAE": mae[0], "DOWNSTREAM-INPUT-MAE": mae[1],
-                       "DOWNSTREAM-MEANI-MAE": mae[2], "DOWNSTREAM-RECOV-MSE": mse[0],
-                       "DOWNSTREAM-INPUT-MSE": mse[1], "DOWNSTREAM-MEANI-MSE": mse[2]}
+            al_name = "DOWNSTREAM-" + self.algorithm.upper() + "-MSE"
+            al_name_s = "DOWNSTREAM-" + self.algorithm.upper() + "-SMAPE"
+            metrics = {"DOWNSTREAM-ORIGIN-MSE": mse[0], al_name: mse[1], "DOWNSTREAM-ZERO_IMPUTE-MSE": mse[2],
+                       "DOWNSTREAM-ORIGIN-SMAPE": smape[0], al_name_s: smape[1], "DOWNSTREAM-ZERO_IMPUTE-SMAPE": smape[2] }
 
             print("\n\t\t\t\tDownstream analysis complete. " + "*" * 58 + "\n")
 
@@ -204,7 +215,7 @@ class Downstream:
             return None
 
     @staticmethod
-    def _plot_downstream(y_train, y_test, y_pred, incomp_data, model=None, type=None, title="Ground Truth vs Predictions", max_series=1, save_path="./imputegap_assets"):
+    def _plot_downstream(y_train, y_test, y_pred, incomp_data, algorithm, model=None, type=None, title="", max_series=1, save_path="./imputegap_assets"):
         """
         Plot ground truth vs. predictions for contaminated series (series with NaN values).
 
@@ -220,6 +231,8 @@ class Downstream:
             Incomplete data array of shape (n_series, total_len), used to identify contaminated series.
         model : str
             Name of the current model used
+        algorithm : str
+            Name of the current algorithm used
         type : str
             Name of the current type used
         title : str
@@ -258,40 +271,41 @@ class Downstream:
                 full_series = np.concatenate([s_y_train[series_idx], s_y_test[series_idx]])
 
                 # Plot training data
-                ax.plot(range(len(s_y_train[series_idx])), s_y_train[series_idx], label="Training Data", color="green")
+                ax.plot(range(len(s_y_train[series_idx])), s_y_train[series_idx], color="green")
 
                 # Plot ground truth (testing data)
                 ax.plot(
                     range(len(s_y_train[series_idx]), len(full_series)),
                     s_y_test[series_idx],
-                    label="Ground Truth",
+                    label="ground truth",
                     color="green"
                 )
 
+                label = type + " " + model
                 # Plot forecasted data
                 ax.plot(
                     range(len(s_y_train[series_idx]), len(full_series)),
                     s_y_pred[series_idx],
-                    label="Forecast",
+                    label=label,
                     linestyle="--",
                     marker=None,
                     color="red"
                 )
 
                 # Add a vertical line at the split point
-                ax.axvline(x=len(s_y_train[series_idx]), color="orange", linestyle="--", label="Split Point")
+                ax.axvline(x=len(s_y_train[series_idx]), color="orange", linestyle="--")
 
                 # Add labels, title, and grid
                 if row_idx == 0:
-                    ax.set_title(f"IMPUTATED DATA (RECOVERY), series {series_idx}")
+                    ax.set_title(f"ORIGINAL DATA, series_{series_idx}")
                 elif row_idx == 1:
-                    ax.set_title(f"ORIGINAL DATA (GROUND TRUTH), series {series_idx}")
+                    ax.set_title(f"IMPUTED DATA WITH {algorithm.upper()}, series_{series_idx}")
                 else:
-                    ax.set_title(f"BAD IMPUTER (ZERO IMP), series {series_idx}")
+                    ax.set_title(f"ZERO-IMPUTE DATA, series_{series_idx}")
 
                 ax.set_xlabel("Timestamp")
                 ax.set_ylabel("Value")
-                ax.legend()
+                ax.legend(loc="upper left", bbox_to_anchor=(1.05, -0.1), ncol=1)
                 ax.grid()
 
         # Adjust layout

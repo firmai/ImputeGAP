@@ -224,7 +224,7 @@ class TimeSeries:
         print("\nshape of the time series :", self.data.shape, "\n\tnumber of series =", nbr_tot_series,
               "\n\tnumber of values =", nbr_tot_values, "\n\n")
 
-    def print_results(self, metrics, algorithm="", text="Imputation Results of"):
+    def print_results(self, metrics, algorithm="", text="Results of the analysis"):
         """
         Prints the results of the imputation process.
 
@@ -1132,4 +1132,9 @@ class TimeSeries:
                 S = S + 1
 
             return ts_contaminated
+
+        missing_completely_at_random = mcar
+        mp = aligned
+        missing_percentage = aligned
+
 

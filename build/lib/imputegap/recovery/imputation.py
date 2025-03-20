@@ -108,6 +108,11 @@ class BaseImputer:
         Returns
         -------
         None
+
+        Example
+        -------
+            >>> imputer.score(ts.data, imputer.recov_data) # upstream
+            >>> imputer.score(ts.data, imputer.recov_data, downstream={"task": "forecast", "model": "hw-add"}) # downstream
         """
         if self.recov_data is None:
             self.recov_data = recov_data

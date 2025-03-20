@@ -132,6 +132,11 @@ class TimeSeries:
         -------
         TimeSeries
             The TimeSeries object with the loaded data.
+
+        Example
+        -------
+            >>> ts.load_series(utils.search_path("eeg-alcohol"), nbr_series=50, nbr_val=100)
+
         """
 
         if data is not None:
@@ -235,6 +240,10 @@ class TimeSeries:
         Returns
         -------
         None
+
+        Example
+        -------
+            >>> ts.print_results(imputer.metrics, imputer.algorithm)
         """
 
         if algorithm != "":
@@ -262,6 +271,10 @@ class TimeSeries:
         -------
         numpy.ndarray
             The normalized time series data.
+
+        Example
+        -------
+            >>> ts.normalize(normalizer="z_score")
         """
         print("Normalization of the original time series dataset with ", normalizer)
         self.data = self.data.T
@@ -345,6 +358,12 @@ class TimeSeries:
         -------
         str or None
             The file path of the saved plot, if applicable.
+
+        Example
+        -------
+            >>> ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets") # plain data
+            >>> ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets") # contamination
+            >>> ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets") # imputation
         """
         number_of_series = 0
 
@@ -481,13 +500,13 @@ class TimeSeries:
 
         Methods
         -------
-        missing_completely_at_random(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :
+        mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :
             Apply Missing Completely at Random (MCAR) contamination to the time series data.
 
-        missing_percentage(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :
+        aligned(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :
             Apply missing percentage contamination to the time series data.
 
-         missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True) :
+        missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True) :
             Apply missing percentage contamination at random to the time series data.
 
         blackout(ts, missing_rate=0.2, offset=0.1) :
@@ -506,7 +525,7 @@ class TimeSeries:
             Apply Overlapping contamination to the time series data.
         """
 
-        def missing_completely_at_random(input_data, rate_dataset=0.2, rate_series=0.2, block_size=10, offset=0.1, seed=True, explainer=False):
+        def mcar(input_data, rate_dataset=0.2, rate_series=0.2, block_size=10, offset=0.1, seed=True, explainer=False):
             """
             Apply Missing Completely at Random (MCAR) contamination to the time series data.
 
@@ -531,6 +550,14 @@ class TimeSeries:
             -------
             numpy.ndarray
                 The contaminated time series data.
+
+            Example
+            -------
+                >>> ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)
+
+            References
+            ----------
+                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             if seed:
@@ -604,9 +631,9 @@ class TimeSeries:
 
             return ts_contaminated
 
-        def missing_percentage(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1):
+        def aligned(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1):
             """
-            Apply missing percentage contamination to the time series data.
+            Apply aligned missing blocks contamination to the time series data.
 
             Parameters
             ----------
@@ -623,6 +650,14 @@ class TimeSeries:
             -------
             numpy.ndarray
                 The contaminated time series data.
+
+            Example
+            -------
+                >>> ts_m = ts.Contamination.aligned(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1)
+
+            References
+            ----------
+                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             ts_contaminated = input_data.copy()
@@ -637,7 +672,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
 
-            print("\n\n\tMISSING PERCENTAGE contamination has been called with :"
+            print("\n\n\tALIGNED (missing percentage) contamination has been called with :"
                   "\n\t\ta number of series impacted ", rate_dataset * 100, "%",
                   "\n\t\ta missing rate of ", rate_series * 100, "%",
                   "\n\t\ta starting position at ", offset,
@@ -664,7 +699,7 @@ class TimeSeries:
 
             return ts_contaminated
 
-        def percentage_shift(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True):
+        def scattered(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True):
             """
             Apply percentage shift contamination with random starting position to the time series data.
 
@@ -685,6 +720,14 @@ class TimeSeries:
             -------
             numpy.ndarray
                 The contaminated time series data.
+
+            Example
+            -------
+                >>> ts_m = ts.Contamination.scattered(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1)
+
+            References
+            ----------
+                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             if seed:
@@ -703,7 +746,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
 
-            print("\n\n\tMISSING PERCENTAGE AT RANDOM contamination has been called with :"
+            print("\n\n\tSCATTER (missing percentage AT RANDOM) contamination has been called with :"
                   "\n\t\ta number of series impacted ", rate_dataset * 100, "%",
                   "\n\t\ta missing rate of ", rate_series * 100, "%",
                   "\n\t\ta starting position at ", offset,
@@ -750,8 +793,16 @@ class TimeSeries:
             -------
             numpy.ndarray
                 The contaminated time series data.
+
+            Example
+            -------
+                >>> ts_m = ts.Contamination.blackout(ts.data, series_rate=0.2)
+
+            References
+            ----------
+                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
-            return TimeSeries.Contamination.missing_percentage(input_data, rate_dataset=1, rate_series=series_rate, offset=offset)
+            return TimeSeries.Contamination.aligned(input_data, rate_dataset=1, rate_series=series_rate, offset=offset)
 
         def gaussian(input_data, rate_dataset=0.2, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True):
             """
@@ -776,6 +827,14 @@ class TimeSeries:
             -------
             numpy.ndarray
                 The contaminated time series data.
+
+            Example
+            -------
+                >>> ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True)
+
+            References
+            ----------
+                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             ts_contaminated = input_data.copy()
@@ -859,6 +918,14 @@ class TimeSeries:
             -------
             numpy.ndarray
                 The contaminated time series data.
+
+            Example
+            -------
+                >>> ts_m = ts.Contamination.distribution(ts.data, rate_dataset=0.2, rate_series=0.2, probabilities=probabilities, offset=0.1, seed=True)
+
+            References
+            ----------
+                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             ts_contaminated = input_data.copy()
@@ -878,7 +945,7 @@ class TimeSeries:
             offset_nbr = int(offset * NS)
             values_nbr = int(NS * rate_series)
 
-            print(f"\n\n\tGAUSSIAN contamination has been called with :"
+            print(f"\n\n\tDISTRIBUTION contamination has been called with :"
                   f"\n\t\ta number of series impacted {rate_dataset * 100}%"
                   f"\n\t\ta missing rate of {rate_series * 100}%"
                   f"\n\t\ta starting position at {offset_nbr}"
@@ -932,6 +999,14 @@ class TimeSeries:
             -------
             numpy.ndarray
                 The contaminated time series data.
+
+            Example
+            -------
+                >>> ts_m = ts.Contamination.disjoint(ts.data, rate_series=0.1, limit=1, offset=0.1)
+
+            References
+            ----------
+                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape
@@ -998,6 +1073,14 @@ class TimeSeries:
             -------
             numpy.ndarray
                 The contaminated time series data.
+
+            Example
+            -------
+                >>> ts_m = ts.Contamination.overlap(ts.data, rate_series=0.1, limit=1, shift=0.05, offset=0.1)
+
+            References
+            ----------
+                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape
@@ -1049,4 +1132,7 @@ class TimeSeries:
                 S = S + 1
 
             return ts_contaminated
+
+        missing_completely_at_random = mcar
+
 

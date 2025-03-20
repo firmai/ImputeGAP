@@ -1,6 +1,18 @@
 import pathlib
-
 import setuptools
+
+# Ensure Torch is Installed First
+TORCH_REQUIREMENT = ["torch==2.5.1", "torchvision==0.20.1", "torchaudio==2.5.1"]
+
+with open("requirements.txt") as f:
+    install_requires = f.read().splitlines()
+
+# Remove Torch if it's already in install_requires
+install_requires = [pkg for pkg in install_requires if not pkg.startswith("torch")]
+
+# Install Torch First
+install_requires = TORCH_REQUIREMENT + install_requires
+
 
 setuptools.setup(
     name="imputegap",
@@ -24,10 +36,8 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
     ],
     python_requires=">=3.10, <3.13",
-    install_requires=(
-            open('requirements.txt').read().splitlines() +
-            open('requirements_dev.txt').read().splitlines()
-    ),    packages=setuptools.find_packages(),
+    install_requires=install_requires,
+    packages=setuptools.find_packages(),
     include_package_data=True,
     package_data={
         'imputegap': [
