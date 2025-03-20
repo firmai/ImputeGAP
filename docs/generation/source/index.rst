@@ -4,13 +4,13 @@ ImputeGAP Documentation
 ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your own time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.
 
 
-In detail, the package provides:
+In detail, the library provides:
     - Access to commonly used datasets in time series research (`Datasets <datasets.html>`_).
+    - Automated preprocessing with built-in methods for normalizing time series (`Preprocessing <preprocessing.html>`_).
     - Configurable contamination module that simulates real-world missingness patterns (`Patterns <patterns.html>`_).
-    - Automated preprocessing with built-in methods for normalizing time series (`Pre-processing <preprocessing.html>`_).
-    - Parameterized state-of-the-art time series imputation algorithms (`Algorithms <algorithms.html>`_).
-    - Modular tools to analyze the behavior of these algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream Evaluation <downstream.html>`_).
-    - Experiment benchmarking, fostering research reproducibility in time series (`Benchmark <benchmark.html>`_).
+    - Parameterizable state-of-the-art time series imputation algorithms (`Algorithms <algorithms.html>`_).
+    - Benchmarking to foster reproducibility in time series imputation (`Benchmark <benchmark.html>`_).
+    - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream Evaluation <downstream.html>`_).
     - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <explainer.html>`_).
     - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
 
@@ -73,13 +73,38 @@ ___________
    </div><br><br>
 
 
+.. _citing:
+
+Citing
+------
+
+If you use ImputeGAP in your research, please cite the paper:
+
+.. code-block:: bash
+
+    @article{nater2025imputegap,
+      title = {ImputeGAP: A Comprehensive Library for Time Series Imputation},
+      author = {Nater, Quentin and Khayati, Mourad and Pasquier, Jacques},
+      year = {2025},
+      eprint = {2503.15250},
+      archiveprefix = {arXiv},
+      primaryclass = {cs.LG},
+      url = {https://arxiv.org/abs/2503.15250}
+    }
+
+
+.. raw:: html
+
+   <br><br>
+
+
 .. _contributors:
 
 Contributors
 ____________
 
 .. list-table::
-   :widths: auto
+   :widths: 100 100
    :align: center
    :header-rows: 0
 
@@ -88,16 +113,21 @@ ____________
           :width: 100px
           :height: 100px
           :align: center
+          :target: https://exascale.info/members/quentin-nater/
      - .. image:: _img/mourad_khayati.png
           :alt: Mourad Khayati - ImputeGAP
           :width: 100px
           :height: 100px
           :align: center
+          :target: https://exascale.info/members/mourad-khayati/
 
    * - Quentin Nater
-       `quentin.nater@unifr.ch <mailto:quentin.nater@unifr.ch>`_
      - Mourad Khayati
-       `mourad.khayati@unifr.ch <mailto:mourad.khayati@unifr.ch>`_
+
+
+
+
+
 
 
 
@@ -110,12 +140,12 @@ ____________
    index
    getting_started
    tutorials
-   algorithms
    datasets
    preprocessing
    patterns
-   downstream
+   algorithms
    benchmark
+   downstream
    explainer
    GitHub Repository <https://github.com/eXascaleInfolab/ImputeGAP/>
    PyPI Repository <https://pypi.org/project/imputegap/>

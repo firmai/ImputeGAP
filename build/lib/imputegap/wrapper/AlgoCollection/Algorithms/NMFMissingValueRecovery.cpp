@@ -12,11 +12,14 @@
 
 #include <mlpack/methods/amf/amf.hpp>
 
+
 namespace Algorithms
 {
 
 void NMFMissingValueRecovery::doNMFRecovery(arma::mat &matrix, uint64_t truncation)
 {
+    std::cout << "\t\t(C++) NMF Missing Value: Matrix Shape: (" << matrix.n_rows << ", " << matrix.n_cols << ") for rank " << truncation << "..." << std::endl;
+
     arma::arma_rng::set_seed(18931); // code here doesn't use RNG, but AMF<> uses randomized start
     
     arma::mat input(matrix);

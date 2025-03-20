@@ -13,7 +13,7 @@ setuptools.setup(
     author_email="quentin.nater@unifr.ch",
     license="MIT License",
     project_urls = {
-        "Documentation": "https://exascaleinfolab.github.io/ImputeGAP/",
+        "Documentation": "https://imputegap.readthedocs.io/",
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"
     },
     classifiers=[

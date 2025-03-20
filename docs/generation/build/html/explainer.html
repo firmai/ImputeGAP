@@ -3,12 +3,13 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ImputeGAP Package" href="imputegap.html" /><link rel="prev" title="Benchmark" href="benchmark.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ImputeGAP Package" href="imputegap.html" /><link rel="prev" title="Downstream Evaluation" href="downstream.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Explainer - imputegap 1.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
@@ -206,12 +207,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
@@ -272,12 +273,12 @@
           <section id="explainer">
 <h1>Explainer<a class="headerlink" href="#explainer" title="Link to this heading">¶</a></h1>
 <p>ImputeGAP provides insights into the algorithm’s behavior by identifying the features that impact the most the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (<a class="reference external" href="https://shap.readthedocs.io/en/latest/">SHAP</a>) to reveal how different time series features influence the model’s predictions.</p>
-<p>Let’s illustrate the explainer using the CDRec Algorithm and MCAR missingness pattern:</p>
+<p>Let’s illustrate the explainer using the cdrec Algorithm and MCAR missingness pattern:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.explainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Explainer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
-<span class="c1"># initialize the TimeSeries() object</span>
+<span class="c1"># initialize the time series object</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
 <span class="c1"># load and normalize the timeseries</span>
@@ -285,7 +286,7 @@
 <span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">)</span>
 
 <span class="c1"># configure the explanation</span>
-<span class="n">shap_values</span><span class="p">,</span> <span class="n">shap_details</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">shap_explainer</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">extractor</span><span class="o">=</span><span class="s2">&quot;pycatch&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;missing_completely_at_random&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;CDRec&quot;</span><span class="p">)</span>
+<span class="n">shap_values</span><span class="p">,</span> <span class="n">shap_details</span> <span class="o">=</span> <span class="n">Explainer</span><span class="o">.</span><span class="n">shap_explainer</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">extractor</span><span class="o">=</span><span class="s2">&quot;pycatch&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;mcar&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;CDRec&quot;</span><span class="p">)</span>
 
 <span class="c1"># print the impact of each feature</span>
 <span class="n">Explainer</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">shap_values</span><span class="p">,</span> <span class="n">shap_details</span><span class="p">)</span>
@@ -307,14 +308,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="benchmark.html">
+          <a class="prev-page" href="downstream.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Benchmark</div>
+                <div class="title">Downstream Evaluation</div>
                 
               </div>
             </a>
@@ -346,5 +347,7 @@
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="static/copybutton.js?v=f281be69"></script>
     </body>
 </html>

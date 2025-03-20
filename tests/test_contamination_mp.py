@@ -24,7 +24,7 @@ class TestContaminationMP(unittest.TestCase):
 
             for S in series_impacted:
                 for R in missing_rates:
-                    incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, rate_dataset=S, rate_series=R, offset=P)
+                    incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=S, rate_series=R, offset=P)
 
                     n_nan = np.isnan(incomp_data).sum()
                     expected_nan_series = math.ceil(S * M)
@@ -54,9 +54,9 @@ class TestContaminationMP(unittest.TestCase):
         for series_sel in series_impacted:
             for missing_rate in missing_rates:
 
-                ts_contaminate = ts_1.Contamination.missing_percentage(input_data=ts_1.data,
-                                                                       rate_dataset=series_sel,
-                                                                       rate_series=missing_rate, offset=0.1)
+                ts_contaminate = ts_1.Contamination.aligned(input_data=ts_1.data,
+                                                            rate_dataset=series_sel,
+                                                            rate_series=missing_rate, offset=0.1)
 
                 if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                     check_position = False
@@ -82,10 +82,10 @@ class TestContaminationMP(unittest.TestCase):
 
             for series_sel in series_impacted:
                 for missing_rate in missing_rates:
-                    ts_contaminate = ts_1.Contamination.missing_percentage(input_data=ts_1.data,
-                                                                           rate_dataset=series_sel,
-                                                                           rate_series=missing_rate,
-                                                                           offset=offset)
+                    ts_contaminate = ts_1.Contamination.aligned(input_data=ts_1.data,
+                                                                rate_dataset=series_sel,
+                                                                rate_series=missing_rate,
+                                                                offset=offset)
 
                     nbr_series_contaminated = 0
                     for inx, current_series in enumerate(ts_contaminate):

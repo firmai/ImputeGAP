@@ -9,6 +9,7 @@
         <title>imputegap 1.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
@@ -206,12 +207,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
@@ -273,13 +274,13 @@
 <h1>ImputeGAP Documentation<a class="headerlink" href="#imputegap-documentation" title="Link to this heading">¶</a></h1>
 <p>ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your own time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.</p>
 <dl class="simple">
-<dt>In detail, the package provides:</dt><dd><ul class="simple">
+<dt>In detail, the library provides:</dt><dd><ul class="simple">
 <li><p>Access to commonly used datasets in time series research (<a class="reference external" href="datasets.html">Datasets</a>).</p></li>
+<li><p>Automated preprocessing with built-in methods for normalizing time series (<a class="reference external" href="preprocessing.html">Preprocessing</a>).</p></li>
 <li><p>Configurable contamination module that simulates real-world missingness patterns (<a class="reference external" href="patterns.html">Patterns</a>).</p></li>
-<li><p>Automated preprocessing with built-in methods for normalizing time series (<a class="reference external" href="preprocessing.html">Pre-processing</a>).</p></li>
-<li><p>Parameterized state-of-the-art time series imputation algorithms (<a class="reference external" href="algorithms.html">Algorithms</a>).</p></li>
-<li><p>Modular tools to analyze the behavior of these algorithms and assess their impact on key downstream tasks in time series analysis (<a class="reference external" href="downstream.html">Downstream Evaluation</a>).</p></li>
-<li><p>Experiment benchmarking, fostering research reproducibility in time series (<a class="reference external" href="benchmark.html">Benchmark</a>).</p></li>
+<li><p>Parameterizable state-of-the-art time series imputation algorithms (<a class="reference external" href="algorithms.html">Algorithms</a>).</p></li>
+<li><p>Benchmarking to foster reproducibility in time series imputation (<a class="reference external" href="benchmark.html">Benchmark</a>).</p></li>
+<li><p>Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (<a class="reference external" href="downstream.html">Downstream Evaluation</a>).</p></li>
 <li><p>Fine-grained analysis of the impact of time series features on imputation results (<a class="reference external" href="explainer.html">Explainer</a>).</p></li>
 <li><p>Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.</p></li>
 </ul>
@@ -323,22 +324,39 @@
     </div>
 
 </div><br><br></section>
-<section id="contributors">
-<span id="id3"></span><h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h3>
-<div class="table-wrapper colwidths-auto docutils container">
+</section>
+<section id="citing">
+<span id="id3"></span><h2>Citing<a class="headerlink" href="#citing" title="Link to this heading">¶</a></h2>
+<p>If you use ImputeGAP in your research, please cite the paper:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>@article<span class="o">{</span>nater2025imputegap,
+<span class="w">  </span><span class="nv">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>ImputeGAP:<span class="w"> </span>A<span class="w"> </span>Comprehensive<span class="w"> </span>Library<span class="w"> </span><span class="k">for</span><span class="w"> </span>Time<span class="w"> </span>Series<span class="w"> </span>Imputation<span class="o">}</span>,
+<span class="w">  </span><span class="nv">author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>Nater,<span class="w"> </span>Quentin<span class="w"> </span>and<span class="w"> </span>Khayati,<span class="w"> </span>Mourad<span class="w"> </span>and<span class="w"> </span>Pasquier,<span class="w"> </span>Jacques<span class="o">}</span>,
+<span class="w">  </span><span class="nv">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="m">2025</span><span class="o">}</span>,
+<span class="w">  </span><span class="nv">eprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="m">2503</span>.15250<span class="o">}</span>,
+<span class="w">  </span><span class="nv">archiveprefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>arXiv<span class="o">}</span>,
+<span class="w">  </span><span class="nv">primaryclass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>cs.LG<span class="o">}</span>,
+<span class="w">  </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>https://arxiv.org/abs/2503.15250<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<br><br><section id="contributors">
+<span id="id4"></span><h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given docutils container">
 <table class="docutils align-center">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
 <tbody>
-<tr class="row-odd"><td><a class="reference internal image-reference" href="images/quentin_nater.png"><img alt="Quentin Nater - ImputeGAP" class="align-center" src="images/quentin_nater.png" style="width: 100px; height: 100px;" />
+<tr class="row-odd"><td><a class="reference external image-reference" href="https://exascale.info/members/quentin-nater/"><img alt="Quentin Nater - ImputeGAP" class="align-center" src="images/quentin_nater.png" style="width: 100px; height: 100px;" />
 </a>
 </td>
-<td><a class="reference internal image-reference" href="images/mourad_khayati.png"><img alt="Mourad Khayati - ImputeGAP" class="align-center" src="images/mourad_khayati.png" style="width: 100px; height: 100px;" />
+<td><a class="reference external image-reference" href="https://exascale.info/members/mourad-khayati/"><img alt="Mourad Khayati - ImputeGAP" class="align-center" src="images/mourad_khayati.png" style="width: 100px; height: 100px;" />
 </a>
 </td>
 </tr>
-<tr class="row-even"><td><p>Quentin Nater
-<a class="reference external" href="mailto:quentin&#46;nater&#37;&#52;&#48;unifr&#46;ch">quentin<span>&#46;</span>nater<span>&#64;</span>unifr<span>&#46;</span>ch</a></p></td>
-<td><p>Mourad Khayati
-<a class="reference external" href="mailto:mourad&#46;khayati&#37;&#52;&#48;unifr&#46;ch">mourad<span>&#46;</span>khayati<span>&#64;</span>unifr<span>&#46;</span>ch</a></p></td>
+<tr class="row-even"><td><p>Quentin Nater</p></td>
+<td><p>Mourad Khayati</p></td>
 </tr>
 </tbody>
 </table>
@@ -397,6 +415,9 @@
 <li><a class="reference internal" href="#">ImputeGAP Documentation</a><ul>
 <li><a class="reference internal" href="#data-format">Data Format</a><ul>
 <li><a class="reference internal" href="#get-started">Get Started</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#citing">Citing</a><ul>
 <li><a class="reference internal" href="#contributors">Contributors</a></li>
 </ul>
 </li>
@@ -415,5 +436,7 @@
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="static/copybutton.js?v=f281be69"></script>
     </body>
 </html>

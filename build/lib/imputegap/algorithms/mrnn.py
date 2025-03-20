@@ -1,5 +1,5 @@
 import time
-from imputegap.wrapper.AlgoPython.MRNN.testerMRNN import mrnn_recov
+from imputegap.wrapper.AlgoPython.MRNN.runnerMRNN import mrnn_recov
 
 
 def mrnn(incomp_data, hidden_dim, learning_rate, iterations, sequence_length, logs=True):

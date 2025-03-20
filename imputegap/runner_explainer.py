@@ -2,10 +2,10 @@ from imputegap.recovery.manager import TimeSeries
 from imputegap.recovery.explainer import Explainer
 from imputegap.tools import utils
 
-# initialize the TimeSeries() object
+# initialize the time series object
 ts = TimeSeries()
 
-# load and normalize the timeseries
+# load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))
 ts.normalize(normalizer="z_score")
 

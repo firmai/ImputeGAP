@@ -18,7 +18,7 @@ class TestInterpolation(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("chlorine"), nbr_val=200)
 
-        incomp_data = ts_1.Contamination.missing_percentage(input_data=ts_1.data, rate_series=0.18)
+        incomp_data = ts_1.Contamination.aligned(input_data=ts_1.data, rate_series=0.18)
 
         algo = Imputation.Statistics.Interpolation(incomp_data)
         algo.impute()

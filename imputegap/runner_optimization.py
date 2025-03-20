@@ -2,16 +2,16 @@ from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# initialize the TimeSeries() object
+# initialize the time series object
 ts = TimeSeries()
 print(f"AutoML Optimizers : {ts.optimizers}")
 
-# load and normalize the timeseries
+# load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))
 ts.normalize(normalizer="z_score")
 
 # contaminate and impute the time series
-ts_m = ts.Contamination.missing_completely_at_random(ts.data)
+ts_m = ts.Contamination.mcar(ts.data)
 imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 
 # use Ray Tune to fine tune the imputation algorithm

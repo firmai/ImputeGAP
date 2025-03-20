@@ -8,6 +8,7 @@
         <title>imputegap.recovery.manager - imputegap 1.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
     
@@ -205,12 +206,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
@@ -404,6 +405,11 @@
 <span class="sd">        -------</span>
 <span class="sd">        TimeSeries</span>
 <span class="sd">            The TimeSeries object with the loaded data.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt;&gt;&gt; ts.load_series(utils.search_path(&quot;eeg-alcohol&quot;), nbr_series=50, nbr_val=100)</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -513,6 +519,10 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        None</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt;&gt;&gt; ts.print_results(imputer.metrics, imputer.algorithm)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">algorithm</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -543,6 +553,10 @@
 <span class="sd">        -------</span>
 <span class="sd">        numpy.ndarray</span>
 <span class="sd">            The normalized time series data.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt;&gt;&gt; ts.normalize(normalizer=&quot;z_score&quot;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalization of the original time series dataset with &quot;</span><span class="p">,</span> <span class="n">normalizer</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span>
@@ -629,6 +643,12 @@
 <span class="sd">        -------</span>
 <span class="sd">        str or None</span>
 <span class="sd">            The file path of the saved plot, if applicable.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt;&gt;&gt; ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path=&quot;./imputegap_assets&quot;) # plain data</span>
+<span class="sd">            &gt;&gt;&gt; ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path=&quot;./imputegap_assets&quot;) # contamination</span>
+<span class="sd">            &gt;&gt;&gt; ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path=&quot;./imputegap_assets&quot;) # imputation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">number_of_series</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -768,13 +788,13 @@
 
 <span class="sd">        Methods</span>
 <span class="sd">        -------</span>
-<span class="sd">        missing_completely_at_random(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :</span>
+<span class="sd">        mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :</span>
 <span class="sd">            Apply Missing Completely at Random (MCAR) contamination to the time series data.</span>
 
-<span class="sd">        missing_percentage(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :</span>
+<span class="sd">        aligned(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :</span>
 <span class="sd">            Apply missing percentage contamination to the time series data.</span>
 
-<span class="sd">         missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True) :</span>
+<span class="sd">        missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True) :</span>
 <span class="sd">            Apply missing percentage contamination at random to the time series data.</span>
 
 <span class="sd">        blackout(ts, missing_rate=0.2, offset=0.1) :</span>
@@ -793,9 +813,9 @@
 <span class="sd">            Apply Overlapping contamination to the time series data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TimeSeries.Contamination.missing_completely_at_random">
-<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_completely_at_random">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">missing_completely_at_random</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSeries.Contamination.mcar">
+<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.mcar">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="nf">mcar</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply Missing Completely at Random (MCAR) contamination to the time series data.</span>
 
@@ -820,6 +840,14 @@
 <span class="sd">            -------</span>
 <span class="sd">            numpy.ndarray</span>
 <span class="sd">                The contaminated time series data.</span>
+
+<span class="sd">            Example</span>
+<span class="sd">            -------</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="k">if</span> <span class="n">seed</span><span class="p">:</span>
@@ -894,11 +922,11 @@
             <span class="k">return</span> <span class="n">ts_contaminated</span></div>
 
 
-<div class="viewcode-block" id="TimeSeries.Contamination.missing_percentage">
-<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">missing_percentage</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSeries.Contamination.aligned">
+<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.aligned">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="nf">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Apply missing percentage contamination to the time series data.</span>
+<span class="sd">            Apply aligned missing blocks contamination to the time series data.</span>
 
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>
@@ -915,6 +943,14 @@
 <span class="sd">            -------</span>
 <span class="sd">            numpy.ndarray</span>
 <span class="sd">                The contaminated time series data.</span>
+
+<span class="sd">            Example</span>
+<span class="sd">            -------</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.aligned(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1)</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -929,7 +965,7 @@
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n\t</span><span class="s2">MISSING PERCENTAGE contamination has been called with :&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n\t</span><span class="s2">ALIGNED (missing percentage) contamination has been called with :&quot;</span>
                   <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a number of series impacted &quot;</span><span class="p">,</span> <span class="n">rate_dataset</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a missing rate of &quot;</span><span class="p">,</span> <span class="n">rate_series</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a starting position at &quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span>
@@ -957,9 +993,9 @@
             <span class="k">return</span> <span class="n">ts_contaminated</span></div>
 
 
-<div class="viewcode-block" id="TimeSeries.Contamination.percentage_shift">
-<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.percentage_shift">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">percentage_shift</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSeries.Contamination.scattered">
+<a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.scattered">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="nf">scattered</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply percentage shift contamination with random starting position to the time series data.</span>
 
@@ -980,6 +1016,14 @@
 <span class="sd">            -------</span>
 <span class="sd">            numpy.ndarray</span>
 <span class="sd">                The contaminated time series data.</span>
+
+<span class="sd">            Example</span>
+<span class="sd">            -------</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.scattered(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1)</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="k">if</span> <span class="n">seed</span><span class="p">:</span>
@@ -998,7 +1042,7 @@
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
 
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n\t</span><span class="s2">MISSING PERCENTAGE AT RANDOM contamination has been called with :&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n\t</span><span class="s2">SCATTER (missing percentage AT RANDOM) contamination has been called with :&quot;</span>
                   <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a number of series impacted &quot;</span><span class="p">,</span> <span class="n">rate_dataset</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a missing rate of &quot;</span><span class="p">,</span> <span class="n">rate_series</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
                   <span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a starting position at &quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span>
@@ -1048,8 +1092,16 @@
 <span class="sd">            -------</span>
 <span class="sd">            numpy.ndarray</span>
 <span class="sd">                The contaminated time series data.</span>
+
+<span class="sd">            Example</span>
+<span class="sd">            -------</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.blackout(ts.data, series_rate=0.2)</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
-            <span class="k">return</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TimeSeries.Contamination.gaussian">
@@ -1077,6 +1129,14 @@
 <span class="sd">            -------</span>
 <span class="sd">            numpy.ndarray</span>
 <span class="sd">                The contaminated time series data.</span>
+
+<span class="sd">            Example</span>
+<span class="sd">            -------</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True)</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1163,6 +1223,14 @@
 <span class="sd">            -------</span>
 <span class="sd">            numpy.ndarray</span>
 <span class="sd">                The contaminated time series data.</span>
+
+<span class="sd">            Example</span>
+<span class="sd">            -------</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.distribution(ts.data, rate_dataset=0.2, rate_series=0.2, probabilities=probabilities, offset=0.1, seed=True)</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1182,7 +1250,7 @@
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n\t</span><span class="s2">GAUSSIAN contamination has been called with :&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n\t</span><span class="s2">DISTRIBUTION contamination has been called with :&quot;</span>
                   <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a number of series impacted </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
                   <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
                   <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -1239,6 +1307,14 @@
 <span class="sd">            -------</span>
 <span class="sd">            numpy.ndarray</span>
 <span class="sd">                The contaminated time series data.</span>
+
+<span class="sd">            Example</span>
+<span class="sd">            -------</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.disjoint(ts.data, rate_series=0.1, limit=1, offset=0.1)</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">M</span><span class="p">,</span> <span class="n">NS</span> <span class="o">=</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span>
@@ -1308,6 +1384,14 @@
 <span class="sd">            -------</span>
 <span class="sd">            numpy.ndarray</span>
 <span class="sd">                The contaminated time series data.</span>
+
+<span class="sd">            Example</span>
+<span class="sd">            -------</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.overlap(ts.data, rate_series=0.1, limit=1, shift=0.05, offset=0.1)</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">M</span><span class="p">,</span> <span class="n">NS</span> <span class="o">=</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span>
@@ -1399,5 +1483,7 @@
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../../../static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../static/copybutton.js?v=f281be69"></script>
     </body>
 </html>

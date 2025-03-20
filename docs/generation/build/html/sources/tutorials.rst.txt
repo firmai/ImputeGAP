@@ -7,7 +7,7 @@ Tutorials
 Loading and Preprocessing
 -------------------------
 
-ImputeGAP comes with several time series datasets. You can find them inside the submodule ``ts.datasets``.
+ImputeGAP comes with several time series datasets. The list of datasets is described `here <datasets.html>`_.
 
 As an example, we start by using eeg-alcohol, a standard dataset composed of individuals with a genetic predisposition to
 alcoholism. The dataset contains measurements from 64 electrodes placed on subject’s scalps, sampled at 256 Hz (3.9-ms epoch) for 1 second. The dimensions of the dataset are 64 series, each containing 256 values.
@@ -18,26 +18,23 @@ alcoholism. The dataset contains measurements from 64 electrodes placed on subje
     from imputegap.recovery.manager import TimeSeries
     from imputegap.tools import utils
 
-    # initialize the TimeSeries()
+    # initialize the time series object
     ts = TimeSeries()
-    print(f"ImputeGAP datasets : {ts.datasets}")
 
-    # load the timeseries from file or from the code
+    # load and normalize the dataset from file or from the code
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
-    # plot a subset of time series
+    # plot and print a subset of time series
     ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
-
-    # print a subset of time series
-    ts.print(nbr_series=6, nbr_val=20)
+    ts.print(nbr_series=9, nbr_val=100)
 
 
 .. _contamination:
 
 Contamination
 -------------
-We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. You can find them inside the module ``ts.patterns``.
+We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. The list of patterns is described `here <patterns.html>`_.
 
 As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pattern:
 
@@ -46,23 +43,21 @@ As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pat
     from imputegap.recovery.manager import TimeSeries
     from imputegap.tools import utils
 
-    # initialize the TimeSeries() object
+    # initialize the time series object
     ts = TimeSeries()
-    print(f"Missingness patterns : {ts.patterns}")
 
-    # load and normalize the timeseries
+    # load and normalize the dataset
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
     # contaminate the time series with MCAR pattern
-    ts_m = ts.Contamination.missing_completely_at_random(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)
+    ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)
 
     # plot the contaminated time series
     ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets")
 
 
 
-If you need to remove data following a specific distribution, please refer to this `tutorial <tutorials_distribution.html>`_.
 
 
 
@@ -72,11 +67,12 @@ Imputation
 ----------
 
 In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms. Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search Methods.
-You can find the list of algorithms inside the module ``ts.algorithms``.
+The list of algorithms is described `here <algorithms.html>`_.
 
 Imputation can be performed using either default values or user-defined values. To specify the parameters, please use a dictionary in the following format:
 
 .. code-block:: python
+
     params = {"param_1": 42.1, "param_2": "some_string", "params_3": True}
 
 
@@ -89,16 +85,15 @@ Let's illustrate the imputation using the CDRec Algorithm from the Matrix Comple
     from imputegap.recovery.manager import TimeSeries
     from imputegap.tools import utils
 
-    # initialize the TimeSeries() object
+    # initialize the time series object
     ts = TimeSeries()
-    print(f"Imputation algorithms : {ts.algorithms}")
 
-    # load and normalize the timeseries
+    # load and normalize the dataset
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
     # contaminate the time series
-    ts_m = ts.Contamination.missing_completely_at_random(ts.data)
+    ts_m = ts.Contamination.mcar(ts.data)
 
     # impute the contaminated series
     imputer = Imputation.MatrixCompletion.CDRec(ts_m)
@@ -119,7 +114,7 @@ Let's illustrate the imputation using the CDRec Algorithm from the Matrix Comple
 Parameterization
 ----------------
 
-The Optimizer component manages algorithm configuration and hyperparameter tuning. To invoke the tuning process, users need to specify the optimization option during the Impute call by selecting the appropriate input for the algorithm. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by (`Ray Tune <https://docs.ray.io/en/latest/tune/index.html>`_).
+The Optimizer component manages algorithm configuration and hyperparameter tuning. To invoke the tuning process, users need to specify the optimization option during the Impute call by selecting the appropriate input for the algorithm. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by `Ray Tune <https://docs.ray.io/en/latest/tune/index.html>`_.
 
 .. code-block:: python
 
@@ -127,16 +122,15 @@ The Optimizer component manages algorithm configuration and hyperparameter tunin
     from imputegap.recovery.manager import TimeSeries
     from imputegap.tools import utils
 
-    # initialize the TimeSeries() object
+    # initialize the time series object
     ts = TimeSeries()
-    print(f"AutoML Optimizers : {ts.optimizers}")
 
-    # load and normalize the timeseries
+    # load and normalize the dataset
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
     # contaminate and impute the time series
-    ts_m = ts.Contamination.missing_completely_at_random(ts.data)
+    ts_m = ts.Contamination.mcar(ts.data)
     imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 
     # use Ray Tune to fine tune the imputation algorithm

@@ -11,8 +11,8 @@ ImputeGAP is compatible with Python>=3.10 (except 3.13) and Unix-compatible envi
 
 .. _installation:
 
-Installation
-------------
+Installation/Update
+-------------------
 
 
 To install the latest version of ImputeGAP from PyPI, run the following command:
@@ -31,28 +31,13 @@ Alternatively, you can install the library from source:
     pip install -e .
 
 
+To create and set up an environment with Python 3.12, please refer to the `installation guide <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation>`_.
+
+
+
 
 Troubleshooting
 ---------------
 If you face any problems, please open an issue here: https://github.com/eXascaleInfolab/ImputeGAP/issues
-
-
-
-Citing
-------
-
-If you use ImputeGAP in your research, please cite the library
-
-.. code-block:: bash
-
-    @software{ImputeGAP_2025,
-        author = {Nater, Quentin and Khayati, Mourad},
-        license = {MIT},
-        title = {{ImputeGAP Library}},
-        url = {https://github.com/eXascaleInfolab/ImputeGAP},
-        year = {2025}
-    }
-
-
 
 

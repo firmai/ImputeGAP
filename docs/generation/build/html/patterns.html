@@ -3,12 +3,13 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Downstream Evaluation" href="downstream.html" /><link rel="prev" title="Pre-processing" href="preprocessing.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Algorithms" href="algorithms.html" /><link rel="prev" title="Preprocessing" href="preprocessing.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Patterns - imputegap 1.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
@@ -206,12 +207,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
@@ -272,79 +273,93 @@
           <section id="patterns">
 <h1>Patterns<a class="headerlink" href="#patterns" title="Link to this heading">¶</a></h1>
 <p>All missingness patterns developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.patterns</span></code> module.</p>
+<p>To list all the available patterns, you can use this command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missingness patterns : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">patterns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <section id="setup">
 <span id="id1"></span><h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>M = number of time series</p></li>
-<li><p>N = length of time series</p></li>
-<li><p>R = rate of missing values chosen by the user (%); default = 0.2</p></li>
-<li><p>S = offset in the beginning of the series (%); default = 0.1</p></li>
-<li><p>W = R * N</p></li>
+<li><p>M : number of time series</p></li>
+<li><p>N : length of time series</p></li>
+<li><p>R : rate of missing values chosen by the user (%); default = 0.2</p></li>
+<li><p>W : offset window in the beginning of the series (%); default = 0.1</p></li>
 </ul>
 </div>
 <br><br></section>
 <section id="mono-block">
 <span id="scenario-mono-block"></span><h2>MONO-BLOCK<a class="headerlink" href="#mono-block" title="Link to this heading">¶</a></h2>
-<p><strong>Missing Percentage</strong></p>
+<p>One missing block per series</p>
+<br><br><p><strong>Aligned</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max]</span></code></p></li>
-<li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">S</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
-<li><p>The starting position is the same and begins at <code class="docutils literal notranslate"><span class="pre">S</span></code> and progresses until <code class="docutils literal notranslate"><span class="pre">W</span></code> is reached, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">M%</span></code> of the dataset.</p></li>
+<li><p>The missing blocks are aligned.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">W</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
+<li><p>The starting position is the same and begins at <code class="docutils literal notranslate"><span class="pre">W</span></code> and progresses until the size of the missing block is reached, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">S%</span></code> of the dataset.</p></li>
 </ul>
 </div>
 <br><br><p><strong>Disjoint</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">∈</span> <span class="pre">[1,</span> <span class="pre">max];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max]</span></code></p></li>
-<li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">S</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
-<li><p>The starting position of the first missing block begins at <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p></li>
+<li><p>The missing blocks are disjoint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">W</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
+<li><p>The starting position of the first missing block begins at <code class="docutils literal notranslate"><span class="pre">W</span></code>.</p></li>
 <li><p>Each subsequent missing block starts immediately after the previous one ends, continuing this pattern until the limit of the dataset or <code class="docutils literal notranslate"><span class="pre">N</span></code> is reached.</p></li>
 </ul>
 </div>
-<br><br><p><strong>Overlap</strong></p>
+<br><br><p><strong>Overlap</strong>:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">∈</span> <span class="pre">[1,</span> <span class="pre">max];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max]</span></code></p></li>
-<li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">S</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
-<li><p>The starting position of the first missing block begins at <code class="docutils literal notranslate"><span class="pre">S</span></code>.</p></li>
+<li><p>The missing blocks are overlapping.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">W</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
+<li><p>The starting position of the first missing block begins at <code class="docutils literal notranslate"><span class="pre">W</span></code>.</p></li>
 <li><p>Each subsequent missing block starts after the previous one ends, but with a shift back of <code class="docutils literal notranslate"><span class="pre">X%</span></code>, creating an overlap.</p></li>
 <li><p>This pattern continues until the limit or <code class="docutils literal notranslate"><span class="pre">N</span></code> is reached.</p></li>
 </ul>
 </div>
-<br><br><p><strong>Percentage Shift</strong></p>
+<br><br><p><strong>Scattered</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max]</span></code></p></li>
-<li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">S</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
-<li><p>The starting position is randomly shifted by adding a random value to <code class="docutils literal notranslate"><span class="pre">S</span></code>, then progresses until <code class="docutils literal notranslate"><span class="pre">W</span> <span class="pre">``</span> <span class="pre">is</span> <span class="pre">reached,</span> <span class="pre">affecting</span> <span class="pre">the</span> <span class="pre">first</span> <span class="pre">series</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">top</span> <span class="pre">up</span> <span class="pre">to</span> <span class="pre">``M%</span></code> of the dataset.</p></li>
+<li><p>The missing blocks are scattered.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">W</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
+<li><p>The starting position is randomly shifted by adding a random value to <code class="docutils literal notranslate"><span class="pre">W</span></code>, then progresses until the size of the missing block is reached, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">S%</span></code> of the dataset.</p></li>
 </ul>
 </div>
 <br><br></section>
 <section id="multi-block">
 <span id="scenario-multi-block"></span><h2>MULTI-BLOCK<a class="headerlink" href="#multi-block" title="Link to this heading">¶</a></h2>
-<p><strong>Missing Completely At Random</strong></p>
+<p>Multiple missing blocks per series</p>
+<br><br><p><strong>MCAR</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max]</span></code></p></li>
-<li><p>Data blocks of the same size are removed from arbitrary series at a random position between <code class="docutils literal notranslate"><span class="pre">S</span></code> and <code class="docutils literal notranslate"><span class="pre">N</span></code>, until a total of <code class="docutils literal notranslate"><span class="pre">W</span></code> per series is missing.</p></li>
+<li><p>The blocks are missing completely at random</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p>Data blocks of the same size are removed from arbitrary series at a random position between <code class="docutils literal notranslate"><span class="pre">W</span></code> and <code class="docutils literal notranslate"><span class="pre">N</span></code>, until the total number of missing values per series is reached.</p></li>
 </ul>
 </div>
 <br><br><p><strong>Block Distribution</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">max]</span></code></p></li>
-<li><p>Data is removed following a distribution given by the user for every values of <code class="docutils literal notranslate"><span class="pre">N</span></code>, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">M%</span></code> of the dataset.</p></li>
+<li><p>The missing blocks follow a distribution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p>Data is removed following a distribution given by the user for every values of the series, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">S%</span></code> of the dataset.</p></li>
 </ul>
 </div>
+<p>If you need to remove data following a specific distribution, please refer to this <a class="reference external" href="tutorials_distribution.html">tutorial</a>.</p>
 </section>
 </section>
 
@@ -353,12 +368,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="downstream.html">
+          <a class="next-page" href="algorithms.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Downstream Evaluation</div>
+                <div class="title">Algorithms</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -369,7 +384,7 @@
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Pre-processing</div>
+                <div class="title">Preprocessing</div>
                 
               </div>
             </a>
@@ -422,5 +437,7 @@
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="static/copybutton.js?v=f281be69"></script>
     </body>
 </html>

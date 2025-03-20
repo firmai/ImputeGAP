@@ -1,187 +1,82 @@
-<img align="right" width="140" height="140" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
-<br /> <br />
+# Patterns
 
-# CONTAMINATION
-## Patterns
-<table>
-    <tr>
-        <td>M</td><td>Number of time series</td>
-    </tr>
-    <tr>
-        <td>N</td><td>Lentgh of time series</td>
-    </tr>
-    <tr>
-        <td>P</td><td>Starting position (protection)</td>
-    </tr>
-    <tr>
-        <td>R</td><td>Missing rate of the pattern</td>
-    </tr>
-    <tr>
-        <td>S</td><td>percentage of series selected</td>
-    </tr>
-    <tr>
-        <td>W</td><td>Total number of values to remove</td>
-    </tr>
-    <tr>
-        <td>B</td><td>Block size</td>
-    </tr>
-</table><br />
+All missingness patterns developed in ImputeGAP are available in the `ts.patterns` module.
 
-### MCAR
-MCAR selects random series and remove block at random positions until a total of W of all points of time series are missing.
-This pattern uses random number generator with fixed seed and will produce the same blocks every run.
+## Setup
 
-<table>
-    <tbody>Definition</tbody>
-    <tr>
-        <td>N</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>M</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>R</td><td>1 - 100%</td>
-    </tr>
-    <tr>
-        <td>S</td><td>1 - 100%</td>
-    </tr>
-    <tr>
-        <td>W</td><td>(N-P) * R</td>
-    </tr>
-    <tr>
-        <td>B</td><td>2 - 20</td>
-    </tr>
- </table>
+> **Note:**
+>
+> - **M** = number of time series
+> - **N** = length of time series
+> - **R** = rate of missing values chosen by the user (%); default = 0.2
+> - **S** = offset in the beginning of the series (%); default = 0.1
+> - **W** = R * N
+<br>
+> - 
+---
 
-<br />
+## MONO-BLOCK
 
-### MISSING PERCENTAGE
-**MISSING PERCENTAGE** selects a percentage of time series to contaminate, applying the desired percentage of missing values from the beginning to the end of each selected series.
+<br>
 
+### Missing Percentage
 
+> **Note:**
+>
+> - `M ∈ [1%, max]; R ∈ [1%, max]`
+> - The size of a single missing block varies between 1% and (100 - `S`)% of `N`.
+> - The starting position is the same and begins at `S` and progresses until `W` is reached, affecting the first series from the top up to `M%` of the dataset.
 
-<table>
-    <tbody>Definition</tbody>
-    <tr>
-        <td>N</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>M</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>R</td><td>1 - 100%</td>
-    </tr>
-    <tr>
-        <td>S</td><td>1 - 100%</td>
-    </tr>
-    <tr>
-        <td>W</td><td>(N-P) * R</td>
-    </tr>
-    <tr>
-        <td>B</td><td>R</td>
-    </tr>
- </table><br />
+<br>
 
+### Disjoint
 
-### BLACKOUT
-The **BLACKOUT** pattern introduces missing values across all time series by removing a specified percentage of data points from each series, creating uniform gaps for analysis.
+> **Note:**
+>
+> - `M ∈ [1, max]; R ∈ [1%, max]`
+> - The size of a single missing block varies between 1% and (100 - `S`)% of `N`.
+> - The starting position of the first missing block begins at `S`.
+> - Each subsequent missing block starts immediately after the previous one ends, continuing this pattern until the limit of the dataset or `N` is reached.
 
+<br>
 
-<table>
-    <tbody>Definition</tbody>
-    <tr>
-        <td>N</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>M</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>R</td><td>1 - 100%</td>
-    </tr>
-    <tr>
-        <td>S</td><td>100%</td>
-    </tr>
-    <tr>
-        <td>W</td><td>(N-P) * R</td>
-    </tr>
-    <tr>
-        <td>B</td><td>R</td>
-    </tr>
- </table><br />
+### Overlap
 
+> **Note:**
+>
+> - `M ∈ [1, max]; R ∈ [1%, max]`
+> - The size of a single missing block varies between 1% and (100 - `S`)% of `N`.
+> - The starting position of the first missing block begins at `S`.
+> - Each subsequent missing block starts after the previous one ends, but with a shift back of `X%`, creating an overlap.
+> - This pattern continues until the limit or `N` is reached.
 
-### GAUSSIAN
-The **GAUSSIAN** pattern introduces missing values into a percentage of time series, determined based on probabilities derived from a Gaussian distribution.
+<br>
 
-<table>
-    <tbody>Definition</tbody>
-    <tr>
-        <td>N</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>M</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>R</td><td>1 - 100%</td>
-    </tr>
-    <tr>
-        <td>S</td><td>100%</td>
-    </tr>
-    <tr>
-        <td>W</td><td>(N-P) * R * probability</td>
-    </tr>
-    <tr>
-        <td>B</td><td>R</td>
-    </tr>
- </table><br />
+### Percentage Shift
 
-### DISJOINT
-The **DISJOINT** pattern introduces missing values into time series by selecting segments with non-overlapping intervals. This process continues until either the missing rate limit is reached or the series length is exhausted.
+> **Note:**
+>
+> - `M ∈ [1%, max]; R ∈ [1%, max]`
+> - The size of a single missing block varies between 1% and (100 - `S`)% of `N`.
+> - The starting position is randomly shifted by adding a random value to `S`, then progresses until `W` is reached, affecting the first series from the top up to `M%` of the dataset.
 
-<table>
-    <tbody>Definition</tbody>
-    <tr>
-        <td>N</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>M</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>R</td><td>1 - 100%</td>
-    </tr>
-    <tr>
-        <td>S</td><td>100%</td>
-    </tr>
-    <tr>
-        <td>W</td><td>(N-P) * R</td>
-    </tr>
-    <tr>
-        <td>B</td><td>R</td>
-    </tr>
- </table><br />
+--- 
+<br>
 
-### OVERLAP
-The **OVERLAP** pattern selects time series segments for introducing missing values by using a disjoint interval that is shifted by a specified percentage. This process continues until either the missing rate limit is reached or the series length is exhausted.
+## MULTI-BLOCK
 
+### Missing Completely At Random
 
-<table>
-    <tbody>Definition</tbody>
-    <tr>
-        <td>N</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>M</td><td>MAX</td>
-    </tr>
-    <tr>
-        <td>R</td><td>1 - 100%</td>
-    </tr>
-    <tr>
-        <td>S</td><td>100%</td>
-    </tr>
-    <tr>
-        <td>W</td><td>(N-P) * R</td>
-    </tr>
-    <tr>
-        <td>B</td><td>R</td>
-    </tr>
- </table><br />
+> **Note:**
+>
+> - `M ∈ [1%, max]; R ∈ [1%, max]`
+> - Data blocks of the same size are removed from arbitrary series at a random position between `S` and `N`, until a total of `W` per series is missing.
+
+<br>
+
+### Block Distribution
+
+> **Note:**
+>
+> - `M ∈ [1%, max]; R ∈ [1%, max]`
+> - Data is removed following a distribution given by the user for every value of `N`, affecting the first series from the top up to `M%` of the dataset.

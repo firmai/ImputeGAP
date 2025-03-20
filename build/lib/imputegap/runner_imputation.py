@@ -2,34 +2,24 @@ from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initialize the TimeSeries() object
+ts = TimeSeries()
+print(f"Imputation algorithms : {ts.algorithms}")
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("eeg-alcohol"))
-ts_1.normalize(normalizer="min_max")
+# load and normalize the timeseries
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
-# 3. contamination of the data
-incomp_data = ts_1.Contamination.missing_completely_at_random(ts_1.data)
+# contaminate the time series
+ts_m = ts.Contamination.mcar(ts.data)
 
-# [OPTIONAL] save your results in a new Time Series object
-ts_2 = TimeSeries().import_matrix(incomp_data)
+# impute the contaminated series
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
+imputer.impute() # could also use a dictionary for params: params={"rank": 5, "epsilon": 0.01, "iterations": 100}
 
-# 4. imputation of the contaminated data
-# choice of the algorithm, and their parameters (default, automl, or defined by the user)
-cdrec = Imputation.MatrixCompletion.CDRec(ts_2.data)
+# compute and print the imputation metrics
+imputer.score(ts.data, imputer.recov_data)
+ts.print_results(imputer.metrics)
 
-# imputation with default values
-cdrec.impute()
-# OR imputation with user defined values
-# >>> cdrec.impute(params={"rank": 5, "epsilon": 0.01, "iterations": 100})
-
-# [OPTIONAL] save your results in a new Time Series object
-ts_3 = TimeSeries().import_matrix(cdrec.recov_data)
-
-# 5. score the imputation with the raw_data
-cdrec.score(ts_1.data, ts_3.data)
-
-# 6. display the results
-ts_3.print_results(cdrec.metrics, algorithm="cdrec")
-ts_3.plot(input_data=ts_1.data, incomp_data=ts_2.data, recov_data=ts_3.data, nbr_series=9, subplot=True, save_path="./imputegap/assets")
+# plot the recovered time series
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets")

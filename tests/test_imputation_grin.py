@@ -14,7 +14,7 @@ class TestGRIN(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.missing_completely_at_random(ts_1.data, rate_series=0.18)
+        incomp_data = ts_1.Contamination.mcar(ts_1.data, rate_series=0.18)
 
         algo = Imputation.DeepLearning.GRIN(incomp_data).impute()
         algo.score(ts_1.data)
@@ -42,7 +42,7 @@ class TestGRIN(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.missing_completely_at_random(ts_1.data, rate_series=0.18)
+        incomp_data = ts_1.Contamination.mcar(ts_1.data, rate_series=0.18)
 
         algo = Imputation.DeepLearning.GRIN(incomp_data).impute(user_def=True, params={"d_hidden":32, "lr":0.001, "batch_size":32, "window":1, "alpha":10.0, "patience":4, "epochs":20, "workers":2})
 
