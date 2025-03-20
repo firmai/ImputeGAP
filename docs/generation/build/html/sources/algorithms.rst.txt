@@ -4,6 +4,20 @@ Algorithms
 
 All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module.
 
+To list all the available algorithms and their optimizers, you can use this command:
+
+.. code-block:: python
+
+    from imputegap.recovery.manager import TimeSeries
+    ts = TimeSeries()
+    print(f"Imputation algorithms : {ts.algorithms}")
+    print(f"AutoML Optimizers : {ts.optimizers}")
+
+
+.. raw:: html
+
+   <br><br>
+
 
 .. list-table::
    :header-rows: 1
@@ -11,6 +25,39 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
    * - **Family**
      - **Algorithm**
      - **Venue -- Year**
+   * - Deep Learning
+     - MPIN [25]_
+     - PVLDB -- 2024
+   * - Deep Learning
+     - MissNet [27]_
+     - KDD -- 2024
+   * - Deep Learning
+     - BITGraph [32]_
+     - ICLR -- 2024
+   * - Deep Learning
+     - BayOTIDE [30]_
+     - PMLR -- 2024
+   * - Deep Learning
+     - PriSTI [26]_
+     - ICDE -- 2023
+   * - Deep Learning
+     - GRIN [29]_
+     - ICLR -- 2022
+   * - Deep Learning
+     - DeepMVI [24]_
+     - PVLDB -- 2021
+   * - Deep Learning
+     - HKMF-T [31]_
+     - TKDE -- 2021
+   * - Deep Learning
+     - MRNN [22]_
+     - IEEE Trans on BE -- 2019
+   * - Deep Learning
+     - BRITS [23]_
+     - NeurIPS -- 2018
+   * - Deep Learning
+     - GAIN [28]_
+     - ICML -- 2018
    * - Matrix Completion
      - CDRec [1]_
      - KAIS -- 2020
@@ -56,39 +103,6 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
    * - Machine Learning
      - MissForest [15]_
      - BioInformatics -- 2011
-   * - Deep Learning
-     - MPIN [25]_
-     - PVLDB -- 2024
-   * - Deep Learning
-     - MissNet [27]_
-     - KDD -- 2024
-   * - Deep Learning
-     - BITGraph [32]_
-     - ICLR -- 2024
-   * - Deep Learning
-     - BayOTIDE [30]_
-     - PMLR -- 2024
-   * - Deep Learning
-     - PriSTI [26]_
-     - ICDE -- 2023
-   * - Deep Learning
-     - GRIN [29]_
-     - ICLR -- 2022
-   * - Deep Learning
-     - DeepMVI [24]_
-     - PVLDB -- 2021
-   * - Deep Learning
-     - HKMF-T [31]_
-     - TKDE -- 2021
-   * - Deep Learning
-     - MRNN [22]_
-     - IEEE Trans on BE -- 2019
-   * - Deep Learning
-     - BRITS [23]_
-     - NeurIPS -- 2018
-   * - Deep Learning
-     - GAIN [28]_
-     - ICML -- 2018
    * - Statistics
      - KNNImpute
      - _

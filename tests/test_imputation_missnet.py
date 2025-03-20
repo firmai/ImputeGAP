@@ -14,7 +14,7 @@ class TestMissNet(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.missing_completely_at_random(ts_1.data, rate_series=0.18)
+        incomp_data = ts_1.Contamination.mcar(ts_1.data, rate_series=0.18)
 
         algo = Imputation.DeepLearning.MissNet(incomp_data).impute()
         algo.score(ts_1.data)
@@ -40,7 +40,7 @@ class TestMissNet(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10, offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.MissNet(incomp_data).impute(user_def=True, params={'alpha': 0.1, 'beta':0.01, 'L':5, 'n_cl': 1, 'max_iteration':1, 'tol':1, 'random_init':False})
         algo.score(ts_1.data)

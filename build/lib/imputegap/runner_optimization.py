@@ -2,26 +2,27 @@ from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
-# 1. initiate the TimeSeries() object that will stay with you throughout the analysis
-ts_1 = TimeSeries()
+# initialize the TimeSeries() object
+ts = TimeSeries()
+print(f"AutoML Optimizers : {ts.optimizers}")
 
-# 2. load the timeseries from file or from the code
-ts_1.load_series(utils.search_path("eeg-alcohol"))
-ts_1.normalize(normalizer="min_max")
+# load and normalize the timeseries
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
-# 3. contamination of the data
-miss_matrix = ts_1.Contamination.missing_completely_at_random(ts_1.data)
+# contaminate and impute the time series
+ts_m = ts.Contamination.mcar(ts.data)
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 
-# 4. imputation of the contaminated data
-# imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
-cdrec = Imputation.MatrixCompletion.CDRec(miss_matrix).impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 3}})
+# use Ray Tune to fine tune the imputation algorithm
+imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
 
-# 5. score the imputation with the raw_data
-cdrec.score(ts_1.data, cdrec.recov_data)
+# compute and print the imputation metrics
+imputer.score(ts.data, imputer.recov_data)
+ts.print_results(imputer.metrics)
 
-# 6. display the results
-ts_1.print_results(cdrec.metrics)
-ts_1.plot(input_data=ts_1.data, incomp_data=miss_matrix, recov_data=cdrec.recov_data, nbr_series=9, subplot=True, save_path="./imputegap/assets", display=True)
+# plot the recovered time series
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets", display=True)
 
-# 7. save hyperparameters
-utils.save_optimization(optimal_params=cdrec.parameters, algorithm="cdrec", dataset="eeg", optimizer="t")
+# save hyperparameters
+utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune")

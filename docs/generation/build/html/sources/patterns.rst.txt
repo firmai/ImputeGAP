@@ -4,6 +4,15 @@ Patterns
 
 All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module.
 
+To list all the available patterns, you can use this command:
+
+.. code-block:: python
+
+    from imputegap.recovery.manager import TimeSeries
+    ts = TimeSeries()
+    print(f"Missingness patterns : {ts.patterns}")
+
+
 
 .. _setup:
 
@@ -12,13 +21,10 @@ Setup
 
 .. note::
 
-    -   M = number of time series
-    -   N = length of time series
-    -   R = rate of missing values chosen by the user (%); default = 0.2
-    -   S = offset in the beginning of the series (%); default = 0.1
-
-    -   W = R * N
-
+    -   M : number of time series
+    -   N : length of time series
+    -   R : rate of missing values chosen by the user (%); default = 0.2
+    -   W : offset window in the beginning of the series (%); default = 0.1
 
 .. raw:: html
 
@@ -29,14 +35,20 @@ Setup
 
 MONO-BLOCK
 ----------
+One missing block per series
 
-**Missing Percentage**
+.. raw:: html
+
+   <br><br>
+
+**Aligned**
 
 .. note::
 
-    -   ``M ∈ [1%, max]; R ∈ [1%, max]``
-    -   The size of a single missing block varies between 1% and (100 - ``S``)% of ``N``.
-    -   The starting position is the same and begins at ``S`` and progresses until ``W`` is reached, affecting the first series from the top up to ``M%`` of the dataset.
+    -   The missing blocks are aligned.
+    -   ``S ∈ [1%, M]; R ∈ [1%, (100-W)%]``
+    -   The size of a single missing block varies between 1% and (100 - ``W``)% of ``N``.
+    -   The starting position is the same and begins at ``W`` and progresses until the size of the missing block is reached, affecting the first series from the top up to ``S%`` of the dataset.
 
 
 .. raw:: html
@@ -48,9 +60,10 @@ MONO-BLOCK
 
 .. note::
 
-    -   ``M ∈ [1, max]; R ∈ [1%, max]``
-    -   The size of a single missing block varies between 1% and (100 - ``S``)% of ``N``.
-    -   The starting position of the first missing block begins at ``S``.
+    -   The missing blocks are disjoint.
+    -   ``S ∈ [1, M]; R ∈ [1%, (100-W)%]``
+    -   The size of a single missing block varies between 1% and (100 - ``W``)% of ``N``.
+    -   The starting position of the first missing block begins at ``W``.
     -   Each subsequent missing block starts immediately after the previous one ends, continuing this pattern until the limit of the dataset or ``N`` is reached.
 
 
@@ -59,13 +72,14 @@ MONO-BLOCK
    <br><br>
 
 
-**Overlap**
+**Overlap**:
 
 .. note::
 
-    -   ``M ∈ [1, max]; R ∈ [1%, max]``
-    -   The size of a single missing block varies between 1% and (100 - ``S``)% of ``N``.
-    -   The starting position of the first missing block begins at ``S``.
+    -   The missing blocks are overlapping.
+    -   ``S ∈ [1, M]; R ∈ [1%, (100-W)%]``
+    -   The size of a single missing block varies between 1% and (100 - ``W``)% of ``N``.
+    -   The starting position of the first missing block begins at ``W``.
     -   Each subsequent missing block starts after the previous one ends, but with a shift back of ``X%``, creating an overlap.
     -   This pattern continues until the limit or ``N`` is reached.
 
@@ -75,13 +89,14 @@ MONO-BLOCK
    <br><br>
 
 
-**Percentage Shift**
+**Scattered**
 
 .. note::
 
-    -   ``M ∈ [1%, max]; R ∈ [1%, max]``
-    -   The size of a single missing block varies between 1% and (100 - ``S``)% of ``N``.
-    -   The starting position is randomly shifted by adding a random value to ``S``, then progresses until ``W `` is reached, affecting the first series from the top up to ``M%`` of the dataset.
+    -   The missing blocks are scattered.
+    -   ``S ∈ [1%, M]; R ∈ [1%, (100-W)%]``
+    -   The size of a single missing block varies between 1% and (100 - ``W``)% of ``N``.
+    -   The starting position is randomly shifted by adding a random value to ``W``, then progresses until the size of the missing block is reached, affecting the first series from the top up to ``S%`` of the dataset.
 
 
 .. raw:: html
@@ -94,12 +109,20 @@ MONO-BLOCK
 MULTI-BLOCK
 -----------
 
-**Missing Completely At Random**
+Multiple missing blocks per series
+
+.. raw:: html
+
+   <br><br>
+
+
+**MCAR**
 
 .. note::
 
-    -   ``M ∈ [1%, max]; R ∈ [1%, max]``
-    -   Data blocks of the same size are removed from arbitrary series at a random position between ``S`` and ``N``, until a total of ``W`` per series is missing.
+    -   The blocks are missing completely at random
+    -   ``S ∈ [1%, M]; R ∈ [1%, (100-W)%]``
+    -   Data blocks of the same size are removed from arbitrary series at a random position between ``W`` and ``N``, until the total number of missing values per series is reached.
 
 
 .. raw:: html
@@ -111,6 +134,9 @@ MULTI-BLOCK
 
 .. note::
 
-    -   ``M ∈ [1%, max]; R ∈ [1%, max]``
-    -   Data is removed following a distribution given by the user for every values of ``N``, affecting the first series from the top up to ``M%`` of the dataset.
+    -   The missing blocks follow a distribution.
+    -   ``S ∈ [1%, M]; R ∈ [1%, (100-W)%]``
+    -   Data is removed following a distribution given by the user for every values of the series, affecting the first series from the top up to ``S%`` of the dataset.
+
+If you need to remove data following a specific distribution, please refer to this `tutorial <tutorials_distribution.html>`_.
 

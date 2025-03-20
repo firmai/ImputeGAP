@@ -14,7 +14,7 @@ class TestHKMF_T(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.missing_percentage(ts_1.data, rate_dataset=0.2)
+        incomp_data = ts_1.Contamination.aligned(ts_1.data, rate_dataset=0.2)
 
         algo = Imputation.DeepLearning.HKMF_T(incomp_data).impute()
 
@@ -43,7 +43,7 @@ class TestHKMF_T(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.missing_percentage(ts_1.data, rate_dataset=0.2)
+        incomp_data = ts_1.Contamination.aligned(ts_1.data, rate_dataset=0.2)
 
         algo = Imputation.DeepLearning.HKMF_T(incomp_data).impute(user_def=True, params={"tags":None, "data_names":None, "epoch":2})
 

@@ -14,6 +14,8 @@ namespace Algorithms
 
 void DynaMMo::doDynaMMo(arma::mat &X, uint64_t H, uint64_t maxIter, bool FAST)
 {
+    std::cout << "\t\t(C++) DynaMMo: Matrix Shape: (" << X.n_rows << ", " << X.n_cols << ") for H " << H << ", maxIter " << maxIter << ", and FAST " << FAST << "..." << std::endl;
+
     arma::arma_rng::set_seed(18931);
     
     uint64_t N = X.n_cols;

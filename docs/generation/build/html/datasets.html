@@ -3,12 +3,13 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Pre-processing" href="preprocessing.html" /><link rel="prev" title="Algorithms" href="algorithms.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Preprocessing" href="preprocessing.html" /><link rel="prev" title="Tutorials" href="tutorials.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Datasets - imputegap 1.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
@@ -206,12 +207,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
@@ -272,6 +273,12 @@
           <section id="datasets">
 <h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h1>
 <p>The module <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> contains all the publicly available datasets provided by the library.</p>
+<p>To list all the datasets, you can use this command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP datasets : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">datasets</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>DATASETS in ImputeGAP</p>
 <blockquote>
 <div><ul class="simple">
@@ -285,6 +292,7 @@
 <li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#electricity">electricity</a></p></li>
 <li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#fMRI-OBJECTVIEWING">fmri-objectviewing</a></p></li>
 <li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#fMRI-STOPTASK">fmri-stoptask</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#FORECAST-ECONOMY">forecast-economy</a></p></li>
 <li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#meteo">meteo</a></p></li>
 <li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#motion">motion</a></p></li>
 <li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#soccer">soccer</a></p></li>
@@ -303,18 +311,18 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Pre-processing</div>
+                <div class="title">Preprocessing</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="algorithms.html">
+          <a class="prev-page" href="tutorials.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Algorithms</div>
+                <div class="title">Tutorials</div>
                 
               </div>
             </a>
@@ -346,5 +354,7 @@
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="static/copybutton.js?v=f281be69"></script>
     </body>
 </html>

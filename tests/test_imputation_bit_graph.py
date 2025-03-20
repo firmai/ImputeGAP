@@ -14,7 +14,7 @@ class TestBitGraph(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data)
 
 
         algo = Imputation.DeepLearning.BitGraph(incomp_data).impute()  # user defined> or
@@ -52,7 +52,7 @@ class TestBitGraph(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.missing_completely_at_random(input_data=ts_1.data)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data)
 
         algo = Imputation.DeepLearning.BitGraph(incomp_data).impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "epoch":2, "seed":42})  # user defined> or
 

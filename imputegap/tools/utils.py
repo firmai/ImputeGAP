@@ -119,11 +119,11 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
         TimeSeries object containing contaminated data.
     """
     if pattern == "mcar" or pattern == "missing_completely_at_random":
-        incomp_data = ts.Contamination.missing_completely_at_random(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
-    elif pattern == "mp" or pattern == "missing_percentage":
-        incomp_data = ts.Contamination.missing_percentage(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset)
-    elif pattern == "ps" or pattern == "percentage_shift":
-        incomp_data = ts.Contamination.percentage_shift(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed)
+        incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
+    elif pattern == "mp" or pattern == "missing_percentage" or pattern == "aligned":
+        incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset)
+    elif pattern == "ps" or pattern == "percentage_shift" or pattern == "scattered":
+        incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed)
     elif pattern == "disjoint":
         incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset)
     elif pattern == "overlap":
@@ -1031,9 +1031,9 @@ def list_of_algorithms():
 
 def list_of_patterns():
     return sorted([
-        "missing_completely_at_random",
-        "missing_percentage",
-        "percentage_shift",
+        "mcar",
+        "aligned",
+        "scattered",
         "disjoint",
         "overlap",
         "gaussian",

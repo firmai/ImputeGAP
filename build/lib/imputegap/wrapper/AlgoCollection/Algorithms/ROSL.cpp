@@ -17,6 +17,8 @@ namespace Algorithms
 
 void ROSL::ROSL_Recovery(arma::mat &input, uint64_t rank, double reg)
 {
+    std::cout << "\t\t(C++) ROSL: Matrix Shape: (" << input.n_rows << ", " << input.n_cols << ") for rank " << rank << " and, reg " << reg << "..." << std::endl;
+
     uint64_t m = input.n_rows;
     uint64_t n = input.n_cols;
     
@@ -179,7 +181,7 @@ void ROSL::InexactALM_ROSL(arma::mat *X)
     rho = 1.5;
     mubar = mu * 1E7;
     
-    double stopcrit;
+    double stopcrit = 0.0;
     
     for (uint64_t i = 0; i < maxIter; i++)
     {
@@ -253,7 +255,7 @@ void ROSL::InexactALM_RLR(arma::mat *X)
     rho = 1.5;
     mubar = mu * 1E7;
     
-    double stopcrit;
+    double stopcrit = 0.0;
     
     for (uint64_t i = 0; i < maxIter; i++)
     {

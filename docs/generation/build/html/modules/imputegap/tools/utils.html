@@ -8,6 +8,7 @@
         <title>imputegap.tools.utils - imputegap 1.0.5 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../../static/custom.css" />
     
@@ -205,12 +206,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Pre-processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
@@ -389,11 +390,11 @@
 <span class="sd">        TimeSeries object containing contaminated data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mcar&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;missing_completely_at_random&quot;</span><span class="p">:</span>
-        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_completely_at_random</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="n">explainer</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mp&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;missing_percentage&quot;</span><span class="p">:</span>
-        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">missing_percentage</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;ps&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;percentage_shift&quot;</span><span class="p">:</span>
-        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">percentage_shift</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="n">block_size</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="n">explainer</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;mp&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;missing_percentage&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;aligned&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;ps&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;percentage_shift&quot;</span> <span class="ow">or</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;scattered&quot;</span><span class="p">:</span>
+        <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">scattered</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;disjoint&quot;</span><span class="p">:</span>
         <span class="n">incomp_data</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">disjoint</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">dataset_rate</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">pattern</span> <span class="o">==</span> <span class="s2">&quot;overlap&quot;</span><span class="p">:</span>
@@ -1328,9 +1329,9 @@
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_patterns">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">list_of_patterns</span><span class="p">():</span>
     <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span>
-        <span class="s2">&quot;missing_completely_at_random&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;missing_percentage&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;percentage_shift&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mcar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;aligned&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scattered&quot;</span><span class="p">,</span>
         <span class="s2">&quot;disjoint&quot;</span><span class="p">,</span>
         <span class="s2">&quot;overlap&quot;</span><span class="p">,</span>
         <span class="s2">&quot;gaussian&quot;</span><span class="p">,</span>
@@ -1451,5 +1452,7 @@
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../../../static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../static/copybutton.js?v=f281be69"></script>
     </body>
 </html>
