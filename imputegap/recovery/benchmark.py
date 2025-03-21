@@ -317,7 +317,7 @@ class Benchmark:
                 column_widths = [15, 15, 15, 18, 12, 25]
 
                 # Create a table header
-                headers = ["Dataset", "Pattern", "Algorithm", "Optimizer", "X Value", metric]
+                headers = ["Dataset", "Pattern", "Algorithm", "Optimizer", "Rate", metric]
                 header_row = "|".join(f" {header:^{width}} " for header, width in zip(headers, column_widths))
                 separator_row = "+" + "+".join(f"{'-' * (width + 2)}" for width in column_widths) + "+"
                 file.write(f"{separator_row}\n")

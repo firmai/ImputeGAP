@@ -994,9 +994,9 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     try:
         with open(file_name, 'w') as file:
             toml.dump(params_to_save, file)
-        print(f"\n\t\t(SYS) Optimization parameters successfully saved to {file_name}")
+        print(f"\n(SYS) Optimization parameters successfully saved to {file_name}")
     except Exception as e:
-        print(f"\n\t\t(SYS) An error occurred while saving the file: {e}")
+        print(f"\n(SYS) An error occurred while saving the file: {e}")
 
 
 def list_of_algorithms():

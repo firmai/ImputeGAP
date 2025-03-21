@@ -206,11 +206,11 @@ class TimeSeries:
         -------
         None
         """
-        print(f"\n{self.name} dataset")
-
         to_print = self.data
         nbr_tot_series, nbr_tot_values = to_print.shape
         print_col, print_row = "timestamp", "Series"
+
+        print(f"\nshape of {self.name} : {self.data.shape}\n\tnumber of series = { nbr_tot_series}\n\tnumber of values = {nbr_tot_values}\n")
 
         if nbr_val == -1:
             nbr_val = to_print.shape[1]
@@ -237,9 +237,6 @@ class TimeSeries:
 
         if nbr_series < nbr_tot_series:
             print("...")
-
-        print("\nshape of the time series :", self.data.shape, "\n\tnumber of series =", nbr_tot_series,
-              "\n\tnumber of values =", nbr_tot_values, "\n\n")
 
     def print_results(self, metrics, algorithm="", text="Results of the analysis"):
         """
