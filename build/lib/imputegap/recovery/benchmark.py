@@ -4,7 +4,6 @@ import math
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-
 import xlsxwriter
 
 from imputegap.tools import utils
@@ -187,9 +186,9 @@ class Benchmark:
             for j, algo in enumerate(algorithms_list):
                 comprehensive_matrix[i, j] = average_rmse_matrix[dataset].get(algo, np.nan)
 
-        print("\nVisualization of datasets:", datasets_list)
-        print("Visualization of algorithms:", algorithms_list)
-        print("Visualization of matrix:\n", comprehensive_matrix, "\n\n")
+        print("\nvisualization of datasets:", *datasets_list)
+        print("visualization of algorithms:", *algorithms_list)
+        print(f"visualization of aggregate matrix :\n {comprehensive_matrix}\n\n")
 
         return comprehensive_matrix, algorithms_list, datasets_list
 
@@ -215,6 +214,7 @@ class Benchmark:
         Bool
             True if the matrix has been generated
         """
+        save_dir = save_dir + "/_heatmap/"
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
@@ -226,6 +226,7 @@ class Benchmark:
         y_size = cell_size*nbr_datasets
 
         fig, ax = plt.subplots(figsize=(x_size, y_size))
+        fig.canvas.manager.set_window_title("benchmark heatmap")
         cmap = plt.cm.Greys
         norm = plt.Normalize(vmin=0, vmax=2)  # Normalizing values between 0 and 2 (RMSE)
 
@@ -307,20 +308,27 @@ class Benchmark:
                 "MI": "Mutual Information - Indicates dependency between variables.",
                 "CORRELATION": "Correlation Coefficient - Indicates linear relationship between variables."
             }
+            first_metric = True
 
             for metric, description in metrics.items():
                 # Write the metric description
                 file.write(f"{metric}: {description}\n\n")
 
-                column_widths = [15, 15, 15, 15, 12, 25]
+                column_widths = [15, 15, 15, 18, 12, 25]
 
                 # Create a table header
-                headers = ["Dataset", "Algorithm", "Optimizer", "Pattern", "X Value", metric]
+                headers = ["Dataset", "Pattern", "Algorithm", "Optimizer", "X Value", metric]
                 header_row = "|".join(f" {header:^{width}} " for header, width in zip(headers, column_widths))
                 separator_row = "+" + "+".join(f"{'-' * (width + 2)}" for width in column_widths) + "+"
                 file.write(f"{separator_row}\n")
                 file.write(f"|{header_row}|\n")
                 file.write(f"{separator_row}\n")
+
+                if first_metric and run ==-1 :
+                    print(f"\n{metric}: {description}\n")
+                    print(separator_row)
+                    print(f"|{header_row}|")
+                    print(separator_row)
 
                 # Extract and write results for the current metric
                 for dataset, algo_items in runs_plots_scores.items():
@@ -335,12 +343,17 @@ class Benchmark:
                                         row = "|".join(
                                             f" {value:^{width}} " for value, width in zip(row_values, column_widths))
                                         file.write(f"|{row}|\n")
+                                        if first_metric and run ==-1 :
+                                            print(f"|{row}|")
                 file.write(f"{separator_row}\n\n")
+                if first_metric and run ==-1 :
+                    print(separator_row + "\n")
+                    first_metric = False
 
             file.write("Dictionary of Results:\n")
             file.write(str(runs_plots_scores) + "\n")
 
-        print(f"\nReport recorded in {save_path}")
+        print(f"\nreports recorded in the following directory : {save_path}")
 
     def generate_reports_excel(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1):
         """
@@ -440,9 +453,8 @@ class Benchmark:
         # Close the workbook
         workbook.close()
 
-        print(f"\nExcel report recorded in {save_path}")
 
-    def generate_plots(self, runs_plots_scores, ticks, subplot=False, y_size=4, save_dir="./reports"):
+    def generate_plots(self, runs_plots_scores, ticks, subplot=False, y_size=4, save_dir="./reports", display=False):
         """
         Generate and save plots for each metric and pattern based on provided scores.
 
@@ -456,6 +468,8 @@ class Benchmark:
             If True, generates a single figure with subplots for all metrics (default is False).
         save_dir : str, optional
             Directory to save generated plots (default is "./reports").
+        display : bool, optional
+            Display or not the plots (default is False).
 
         Returns
         -------
@@ -475,6 +489,8 @@ class Benchmark:
 
                 if subplot:
                     fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(x_size*1.90, y_size*2.90))  # Adjusted figsize
+                    fig.canvas.manager.set_window_title("benchmark analysis")
+
                     axes = axes.ravel()  # Flatten the 2D array of axes to a 1D array
 
                 # Iterate over each metric, generating separate plots, including new timing metrics
@@ -522,8 +538,8 @@ class Benchmark:
                     # Save plot only if there is data to display
                     if has_data:
                         ylabel_metric = {
-                            "imputation_time": "Imputation Time (sec)",
-                            "log_imputation": "Imputation Time (log)",
+                            "imputation_time": "Runtime Linear Scale (sec)",
+                            "log_imputation": "Runtime Log Scale",
                         }.get(metric, metric)
 
                         ax.set_title(metric)
@@ -534,8 +550,10 @@ class Benchmark:
                         # Set y-axis limits with padding below 0 for visibility
                         if metric == "imputation_time":
                             ax.set_ylim(-10, 90)
+                            ax.set_title("Runtime Linear Scale")
                         elif metric == "log_imputation":
                             ax.set_ylim(-4.5, 2.5)
+                            ax.set_title("Runtime Log Scale")
                         elif metric == "MAE":
                             ax.set_ylim(-0.1, 2.4)
                         elif metric == "MI":
@@ -544,12 +562,13 @@ class Benchmark:
                             ax.set_ylim(-0.1, 2.6)
                         elif metric == "CORRELATION":
                             ax.set_ylim(-0.75, 1.1)
+                            ax.set_title("Pearson Correlation")
 
                         # Customize x-axis ticks
                         ax.set_xticks(ticks)
                         ax.set_xticklabels([f"{int(tick * 100)}%" for tick in ticks])
                         ax.grid(True, zorder=0)
-                        ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
+                        ax.legend(loc='upper left', fontsize=7, frameon=True, fancybox=True, framealpha=0.8)
 
                     if not subplot:
                         filename = f"{dataset}_{pattern}_{optimizer}_{metric}.jpg"
@@ -562,12 +581,14 @@ class Benchmark:
                     filename = f"{dataset}_{pattern}_metrics_subplot.jpg"
                     filepath = os.path.join(save_dir, filename)
                     plt.savefig(filepath)
-                    plt.close()
 
-        print("\nAll plots recorded in", save_dir)
+                    if display:
+                        plt.show()
+
+        print("\nplots recorded in the following directory : ", save_dir)
 
     def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"],
-             x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["user_def"], save_dir="./reports", runs=1):
+             x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], save_dir="./reports", runs=1):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.
 
@@ -602,6 +623,9 @@ class Benchmark:
         run_storage = []
         not_optimized = ["none"]
         mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]
+
+        if "mpin" in algorithms or "MPIN" in algorithms:
+            raise ValueError("The 'mpin' algorithm is not compatible with this setup.")
 
         for i_run in range(0, abs(runs)):
             for dataset in datasets:
@@ -714,33 +738,34 @@ class Benchmark:
                                     "times": dic_timing
                                 }
 
-                save_dir_runs = save_dir + "/run_" + str(i_run) + "/" + dataset
-                print("\n\truns saved in : ", save_dir_runs)
+                save_dir_runs = save_dir + "/_details/run_" + str(i_run) + "/" + dataset
+                print("\nruns saved in : ", save_dir_runs)
                 self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_runs)
                 self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_runs)
                 self.generate_reports_txt(runs_plots_scores, save_dir_runs, dataset, i_run)
                 self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run)
                 run_storage.append(runs_plots_scores)
 
-                print("============================================================================\n\n\n\n\n\n")
+                print("\n\n\n\n\n\n\n\n\n\n\n\n=end_of_the_evaluation==============================================="
+                      "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nresults of the analysis:\n")
 
         scores_list, algos, sets = self.avg_results(*run_storage)
-        _ = self.generate_heatmap(scores_list, algos, sets, save_dir=save_dir, display=False)
+        _ = self.generate_heatmap(scores_list, algos, sets, save_dir=save_dir, display=True)
 
         run_averaged = self.average_runs_by_names(run_storage)
 
-        save_dir_agg = save_dir + "/aggregation"
-        print("\n\n\taggragation of results saved in : ", save_dir_agg)
+        print("\n\nthe results of the analysis has been saved in : ", save_dir, "\n\n")
 
         for scores in run_averaged:
             all_keys = list(scores.keys())
             dataset_name = str(all_keys[0])
 
-            save_dir_agg_set = save_dir_agg + "/" + dataset_name
+            save_dir_agg_set = save_dir + "/" + dataset_name
 
-            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set)
-            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_agg_set)
             self.generate_reports_txt(scores, save_dir_agg_set, dataset_name, -1)
+            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set)
+            # self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_agg_set)
             self.generate_reports_excel(scores, save_dir_agg_set, dataset_name, -1)
+            print("\n\n")
 
         return run_averaged, scores_list

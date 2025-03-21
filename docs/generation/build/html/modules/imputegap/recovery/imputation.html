@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>imputegap.recovery.imputation - imputegap 1.0.5 documentation</title>
+        <title>imputegap.recovery.imputation - imputegap 1.0.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">imputegap 1.0.5 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">imputegap 1.0.7 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">imputegap 1.0.5 documentation</span>
+  <span class="sidebar-brand-text">imputegap 1.0.7 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -265,45 +265,13 @@
         <article role="main" id="furo-main-content">
           <h1>Source code for imputegap.recovery.imputation</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.bayotide</span><span class="w"> </span><span class="kn">import</span> <span class="n">bay_otide</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.bit_graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">bit_graph</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.brits</span><span class="w"> </span><span class="kn">import</span> <span class="n">brits</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.deep_mvi</span><span class="w"> </span><span class="kn">import</span> <span class="n">deep_mvi</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.dynammo</span><span class="w"> </span><span class="kn">import</span> <span class="n">dynammo</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.gain</span><span class="w"> </span><span class="kn">import</span> <span class="n">gain</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.grin</span><span class="w"> </span><span class="kn">import</span> <span class="n">grin</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.grouse</span><span class="w"> </span><span class="kn">import</span> <span class="n">grouse</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.hkmf_t</span><span class="w"> </span><span class="kn">import</span> <span class="n">hkmf_t</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.interpolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">interpolation</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.iterative_svd</span><span class="w"> </span><span class="kn">import</span> <span class="n">iterative_svd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.knn</span><span class="w"> </span><span class="kn">import</span> <span class="n">knn</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mean_impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_impute</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mean_impute_by_series</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_impute_by_series</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mice</span><span class="w"> </span><span class="kn">import</span> <span class="n">mice</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.miss_forest</span><span class="w"> </span><span class="kn">import</span> <span class="n">miss_forest</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.miss_net</span><span class="w"> </span><span class="kn">import</span> <span class="n">miss_net</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mpin</span><span class="w"> </span><span class="kn">import</span> <span class="n">mpin</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.pristi</span><span class="w"> </span><span class="kn">import</span> <span class="n">pristi</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.rosl</span><span class="w"> </span><span class="kn">import</span> <span class="n">rosl</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.soft_impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">soft_impute</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.spirit</span><span class="w"> </span><span class="kn">import</span> <span class="n">spirit</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.svt</span><span class="w"> </span><span class="kn">import</span> <span class="n">svt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.tkcm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tkcm</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.trmf</span><span class="w"> </span><span class="kn">import</span> <span class="n">trmf</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">xgboost</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.downstream</span><span class="w"> </span><span class="kn">import</span> <span class="n">Downstream</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Evaluation</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.cdrec</span><span class="w"> </span><span class="kn">import</span> <span class="n">cdrec</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.iim</span><span class="w"> </span><span class="kn">import</span> <span class="n">iim</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.min_impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">min_impute</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mrnn</span><span class="w"> </span><span class="kn">import</span> <span class="n">mrnn</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.stmvl</span><span class="w"> </span><span class="kn">import</span> <span class="n">stmvl</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.zero_impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">zero_impute</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
-<span class="n">not_optimized</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="s2">&quot;interpolation&quot;</span><span class="p">,</span> <span class="s2">&quot;iterative_svd&quot;</span><span class="p">,</span> <span class="s2">&quot;grouse&quot;</span><span class="p">,</span> <span class="s2">&quot;dynammo&quot;</span><span class="p">,</span> <span class="s2">&quot;rosl&quot;</span><span class="p">,</span> <span class="s2">&quot;soft_impute&quot;</span><span class="p">,</span> <span class="s2">&quot;spirit&quot;</span><span class="p">,</span> <span class="s2">&quot;svt&quot;</span><span class="p">,</span> <span class="s2">&quot;tkcm&quot;</span><span class="p">,</span> <span class="s2">&quot;deep_mvi&quot;</span><span class="p">,</span> <span class="s2">&quot;brits&quot;</span><span class="p">,</span> <span class="s2">&quot;mpin&quot;</span><span class="p">,</span> <span class="s2">&quot;pristi&quot;</span><span class="p">]</span>
-
+<span class="n">not_optimized</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="s2">&quot;interpolation&quot;</span><span class="p">,</span> <span class="s2">&quot;iterative_svd&quot;</span><span class="p">,</span> <span class="s2">&quot;grouse&quot;</span><span class="p">,</span> <span class="s2">&quot;dynammo&quot;</span><span class="p">,</span> <span class="s2">&quot;rosl&quot;</span><span class="p">,</span> <span class="s2">&quot;soft_impute&quot;</span><span class="p">,</span> <span class="s2">&quot;spirit&quot;</span><span class="p">,</span> <span class="s2">&quot;svt&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;tkcm&quot;</span><span class="p">,</span> <span class="s2">&quot;deep_mvi&quot;</span><span class="p">,</span> <span class="s2">&quot;brits&quot;</span><span class="p">,</span> <span class="s2">&quot;mpin&quot;</span><span class="p">,</span> <span class="s2">&quot;pristi&quot;</span><span class="p">,</span> <span class="s2">&quot;bay_otide&quot;</span><span class="p">,</span> <span class="s2">&quot;bit_graph&quot;</span><span class="p">,</span> <span class="s2">&quot;gain&quot;</span><span class="p">,</span> <span class="s2">&quot;grin&quot;</span><span class="p">,</span> <span class="s2">&quot;hkmf_t&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;mice&quot;</span><span class="p">,</span> <span class="s2">&quot;miss_forest&quot;</span><span class="p">,</span> <span class="s2">&quot;miss_net&quot;</span><span class="p">,</span> <span class="s2">&quot;trmf&quot;</span><span class="p">,</span> <span class="s2">&quot;xgboost&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="BaseImputer">
@@ -394,7 +362,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">recov_data</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">downstream</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">downstream</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">downstream_metrics</span> <span class="o">=</span> <span class="n">Downstream</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">downstream</span><span class="p">)</span><span class="o">.</span><span class="n">downstream_analysis</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">downstream_metrics</span> <span class="o">=</span> <span class="n">Downstream</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">downstream</span><span class="p">)</span><span class="o">.</span><span class="n">downstream_analysis</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">Evaluation</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">)</span><span class="o">.</span><span class="n">compute_all_metrics</span><span class="p">()</span></div>
 
@@ -464,7 +432,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">This algorithm &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="si">}</span><span class="s2">&#39; is not optimized for this optimizer. &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Please use `run_tune` to optimize the hyperparameters for:</span><span class="se">\n\t\t</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">not_optimized</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Please use update your call :</span><span class="se">\n\t\t</span><span class="s2">.impute(user_def=False, params={&#39;input_data&#39;: ts_1.data, &#39;optimizer&#39;: &#39;ray_tune&#39;})&quot;</span>
+                <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Please use update your call :</span><span class="se">\n\t\t</span><span class="s2">.impute(user_def=False, params={&#39;input_data&#39;: ts.data, &#39;optimizer&#39;: &#39;ray_tune&#39;})&quot;</span>
             <span class="p">)</span>
 
         <span class="n">input_data</span> <span class="o">=</span> <span class="p">(</span>
@@ -666,8 +634,8 @@
 <span class="sd">            Imputation method that replaces missing values with the minimum value of the ground truth by series.</span>
 <span class="sd">        Interpolation :</span>
 <span class="sd">            Imputation method that replaces missing values with the Interpolation</span>
-<span class="sd">        KNN :</span>
-<span class="sd">            Imputation method that replaces missing values with KNN logic</span>
+<span class="sd">        KNNImpute :</span>
+<span class="sd">            Imputation method that replaces missing values with KNNImpute logic</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Imputation.Statistics.ZeroImpute">
@@ -700,6 +668,8 @@
 <span class="sd">                self : ZeroImpute</span>
 <span class="sd">                    The object with `recov_data` set.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.zero_impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">zero_impute</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">zero_impute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
@@ -736,6 +706,8 @@
 <span class="sd">                self : MinImpute</span>
 <span class="sd">                    The object with `recov_data` set.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mean_impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_impute</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">mean_impute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
@@ -772,6 +744,8 @@
 <span class="sd">                self : MinImpute</span>
 <span class="sd">                    The object with `recov_data` set.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.min_impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">min_impute</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">min_impute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
@@ -802,6 +776,8 @@
 <span class="sd">                self : MeanImputeBySeries</span>
 <span class="sd">                    The object with `recov_data` set.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mean_impute_by_series</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_impute_by_series</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">mean_impute_by_series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
@@ -844,9 +820,11 @@
 <span class="sd">                    &gt;&gt;&gt; interpolation_imputer = Imputation.Statistics.Interpolation(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; interpolation_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; interpolation_imputer.impute(user_def=True, params={&quot;method&quot;:&quot;linear&quot;, &quot;poly_order&quot;:2})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; interpolation_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; interpolation_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = interpolation_imputer.recov_data</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.interpolation</span><span class="w"> </span><span class="kn">import</span> <span class="n">interpolation</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">method</span><span class="p">,</span> <span class="n">poly_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -859,21 +837,21 @@
 
 
 
-<div class="viewcode-block" id="Imputation.Statistics.KNN">
-<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.KNN">[docs]</a>
-        <span class="k">class</span><span class="w"> </span><span class="nc">KNN</span><span class="p">(</span><span class="n">BaseImputer</span><span class="p">):</span>
+<div class="viewcode-block" id="Imputation.Statistics.KNNImpute">
+<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute">[docs]</a>
+        <span class="k">class</span><span class="w"> </span><span class="nc">KNNImpute</span><span class="p">(</span><span class="n">BaseImputer</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            KNN class to impute missing values with K-Nearest Neighbor algorithm</span>
+<span class="sd">            KNNImpute class to impute missing values with K-Nearest Neighbor algorithm</span>
 
 <span class="sd">            Methods</span>
 <span class="sd">            -------</span>
 <span class="sd">            impute(self, params=None):</span>
 <span class="sd">                Perform imputation by replacing missing values with K-Nearest Neighbor</span>
 <span class="sd">            &quot;&quot;&quot;</span>
-            <span class="n">algorithm</span> <span class="o">=</span> <span class="s2">&quot;knn&quot;</span>
+            <span class="n">algorithm</span> <span class="o">=</span> <span class="s2">&quot;knn_impute&quot;</span>
 
-<div class="viewcode-block" id="Imputation.Statistics.KNN.impute">
-<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.KNN.impute">[docs]</a>
+<div class="viewcode-block" id="Imputation.Statistics.KNNImpute.impute">
+<a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.impute">[docs]</a>
             <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Impute missing values by replacing them with the K-Nearest Neighbor value</span>
@@ -883,7 +861,7 @@
 <span class="sd">                user_def : bool, optional</span>
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
-<span class="sd">                    Parameters of the KNN algorithm, if None, default ones are loaded.</span>
+<span class="sd">                    Parameters of the KNNImpute algorithm, if None, default ones are loaded.</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 <span class="sd">                    k : int, optional</span>
@@ -893,17 +871,19 @@
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
-<span class="sd">                self : KNN</span>
+<span class="sd">                self : KNNImpute</span>
 <span class="sd">                    The object with `recov_data` set.</span>
 
 <span class="sd">                Example</span>
 <span class="sd">                -------</span>
-<span class="sd">                    &gt;&gt;&gt; knn_imputer = Imputation.Statistics.KNN(incomp_data)</span>
+<span class="sd">                    &gt;&gt;&gt; knn_imputer = Imputation.Statistics.KNNImpute(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; knn_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; knn_imputer.impute(user_def=True, params={&#39;k&#39;: 5, &#39;weights&#39;: &quot;uniform&quot;})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; knn_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; knn_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = knn_imputer.recov_data</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.knn</span><span class="w"> </span><span class="kn">import</span> <span class="n">knn</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">k</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1052,13 +1032,14 @@
 <span class="sd">                    &gt;&gt;&gt; cdrec_imputer = Imputation.MatrixCompletion.CDRec(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; cdrec_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; cdrec_imputer.impute(user_def=True, params={&#39;rank&#39;: 5, &#39;epsilon&#39;: 0.01, &#39;iterations&#39;: 100})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; cdrec_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
+<span class="sd">                    &gt;&gt;&gt; cdrec_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = cdrec_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                Khayati, M., Cudré-Mauroux, P. &amp; Böhlen, M.H. Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl Inf Syst 62, 2257–2280 (2020). https://doi.org/10.1007/s10115-019-01421-7</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.cdrec</span><span class="w"> </span><span class="kn">import</span> <span class="n">cdrec</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">rank</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">iterations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -1116,13 +1097,14 @@
 <span class="sd">                    &gt;&gt;&gt; i_svd_imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; i_svd_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; i_svd_imputer.impute(params={&#39;rank&#39;: 5}) # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; i_svd_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; i_svd_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = i_svd_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                Olga Troyanskaya, Michael Cantor, Gavin Sherlock, Pat Brown, Trevor Hastie, Robert Tibshirani, David Botstein, Russ B. Altman, Missing value estimation methods for DNA microarrays , Bioinformatics, Volume 17, Issue 6, June 2001, Pages 520–525, https://doi.org/10.1093/bioinformatics/17.6.520</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.iterative_svd</span><span class="w"> </span><span class="kn">import</span> <span class="n">iterative_svd</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">rank</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -1179,13 +1161,14 @@
 <span class="sd">                    &gt;&gt;&gt; grouse_imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; grouse_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; grouse_imputer.impute(params={&#39;max_rank&#39;: 5}) # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; grouse_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; grouse_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = grouse_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                D. Zhang and L. Balzano. Global convergence of a grassmannian gradient descent algorithm for subspace estimation. In Proceedings of the 19th International Conference on Artificial Intelligence and Statistics, AISTATS 2016, Cadiz, Spain, May 9-11, 2016, pages 1460–1468, 2016.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.grouse</span><span class="w"> </span><span class="kn">import</span> <span class="n">grouse</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">max_rank</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -1245,13 +1228,15 @@
 <span class="sd">                    &gt;&gt;&gt; rosl_imputer = Imputation.MatrixCompletion.ROSL(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; rosl_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; rosl_imputer.impute(params={&#39;rank&#39;: 5, &#39;regularization&#39;: 10}) # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; rosl_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; rosl_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = rosl_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                X. Shu, F. Porikli, and N. Ahuja. Robust orthonormal subspace learning: Efficient recovery of corrupted low-rank matrices. In 2014 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2014, Columbus, OH, USA, June 23-28, 2014, pages 3874–3881, 2014.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.rosl</span><span class="w"> </span><span class="kn">import</span> <span class="n">rosl</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">rank</span><span class="p">,</span> <span class="n">regularization</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1307,13 +1292,15 @@
 <span class="sd">                    &gt;&gt;&gt; soft_impute_imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; soft_impute_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; soft_impute_imputer.impute(params={&#39;max_rank&#39;: 5}) # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; soft_impute_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; soft_impute_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = soft_impute_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                R. Mazumder, T. Hastie, and R. Tibshirani. Spectral regularization algorithms for learning large incomplete matrices. Journal of Machine Learning Research, 11:2287–2322, 2010.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.soft_impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">soft_impute</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">max_rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1376,13 +1363,15 @@
 <span class="sd">                    &gt;&gt;&gt; spirit_imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; spirit_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; spirit_imputer.impute(params={&#39;k&#39;: 2, &#39;w&#39;: 5, &#39;lambda_value&#39;: 0.85}) # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; spirit_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; spirit_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = spirit_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                S. Papadimitriou, J. Sun, and C. Faloutsos. Streaming pattern discovery in multiple time-series. In Proceedings of the 31st International Conference on Very Large Data Bases, Trondheim, Norway, August 30 - September 2, 2005, pages 697–708, 2005.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.spirit</span><span class="w"> </span><span class="kn">import</span> <span class="n">spirit</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">k</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">lambda_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1439,13 +1428,15 @@
 <span class="sd">                    &gt;&gt;&gt; svt_imputer = Imputation.MatrixCompletion.SVT(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; svt_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; svt_imputer.impute(params={&#39;tau&#39;: 1}) # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; svt_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; svt_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = svt_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                J. Cai, E. J. Candès, and Z. Shen. A singular value thresholding algorithm for matrix completion. SIAM Journal on Optimization, 20(4):1956–1982, 2010. [8] J. Cambronero, J. K. Feser, M. J. Smith, and</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.svt</span><span class="w"> </span><span class="kn">import</span> <span class="n">svt</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">tau</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1518,13 +1509,15 @@
 <span class="sd">                    &gt;&gt;&gt; trmf_imputer = Imputation.MatrixCompletion.TRMF(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; trmf_imputer.impute()</span>
 <span class="sd">                    &gt;&gt;&gt; trmf_imputer.impute(params={&quot;lags&quot;:[], &quot;K&quot;:-1, &quot;lambda_f&quot;:1.0, &quot;lambda_x&quot;:1.0, &quot;lambda_w&quot;:1.0, &quot;eta&quot;:1.0, &quot;alpha&quot;:1000.0, &quot;max_iter&quot;:100})</span>
-<span class="sd">                    &gt;&gt;&gt; trmf_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})</span>
+<span class="sd">                    &gt;&gt;&gt; trmf_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = trmf_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                H.-F. Yu, N. Rao, and I. S. Dhillon, &quot;Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction,&quot; in *Advances in Neural Information Processing Systems*, vol. 29, 2016. [Online]. Available: https://proceedings.neurips.cc/paper_files/paper/2016/file/85422afb467e9456013a2a51d4dff702-Paper.pdf</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.trmf</span><span class="w"> </span><span class="kn">import</span> <span class="n">trmf</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">lags</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">lambda_f</span><span class="p">,</span> <span class="n">lambda_x</span><span class="p">,</span> <span class="n">lambda_w</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1613,7 +1606,7 @@
 <span class="sd">                    &gt;&gt;&gt; mf_imputer = Imputation.MachineLearning.MissForest(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; mf_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; mf_imputer.impute(user_def=True, params={&quot;n_estimators&quot;:10, &quot;max_iter&quot;:3, &quot;max_features&quot;:&quot;sqrt&quot;, &quot;seed&quot;: 42})  # user defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; mf_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; mf_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = mf_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -1622,6 +1615,8 @@
 <span class="sd">                https://github.com/yuenshingyan/MissForest</span>
 <span class="sd">                https://pypi.org/project/MissForest/</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.miss_forest</span><span class="w"> </span><span class="kn">import</span> <span class="n">miss_forest</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">n_estimators</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">max_features</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1681,7 +1676,7 @@
 <span class="sd">                    &gt;&gt;&gt; mice_imputer = Imputation.MachineLearning.MICE(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; mice_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; mice_imputer.impute(user_def=True, params={&quot;max_iter&quot;:3, &quot;tol&quot;:0.001, &quot;initial_strategy&quot;:&quot;mean&quot;, &quot;seed&quot;: 42})  # user defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; mice_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; mice_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = mice_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -1691,6 +1686,8 @@
 <span class="sd">                S. F. Buck, (1960). “A Method of Estimation of Missing Values in Multivariate Data Suitable for use with an Electronic Computer”. Journal of the Royal Statistical Society 22(2): 302-306.</span>
 <span class="sd">                https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html#sklearn.impute.IterativeImputer</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mice</span><span class="w"> </span><span class="kn">import</span> <span class="n">mice</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">max_iter</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">initial_strategy</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1745,7 +1742,7 @@
 <span class="sd">                    &gt;&gt;&gt; mxgboost_imputer = Imputation.MachineLearning.XGBOOST(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; mxgboost_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; mxgboost_imputer.impute(user_def=True, params={&quot;n_estimators&quot;:3, &quot;seed&quot;: 42})  # user defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; mxgboost_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; mxgboost_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = mxgboost_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -1754,6 +1751,8 @@
 <span class="sd">                https://dl.acm.org/doi/10.1145/2939672.2939785</span>
 <span class="sd">                https://medium.com/@tzhaonj/imputing-missing-data-using-xgboost-802757cace6d</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">xgboost</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">n_estimators</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1806,7 +1805,7 @@
 <span class="sd">                    &gt;&gt;&gt; iim_imputer = Imputation.MachineLearning.IIM(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; iim_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; iim_imputer.impute(user_def=True, params={&#39;learning_neighbors&#39;: 10})  # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; iim_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
+<span class="sd">                    &gt;&gt;&gt; iim_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = iim_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -1814,6 +1813,8 @@
 <span class="sd">                A. Zhang, S. Song, Y. Sun and J. Wang, &quot;Learning Individual Models for Imputation,&quot; 2019 IEEE 35th International Conference on Data Engineering (ICDE), Macao, China, 2019, pp. 160-171, doi: 10.1109/ICDE.2019.00023.</span>
 <span class="sd">                keywords: {Data models;Adaptation models;Computational modeling;Predictive models;Numerical models;Aggregates;Regression tree analysis;Missing values;Data imputation}</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.iim</span><span class="w"> </span><span class="kn">import</span> <span class="n">iim</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">learning_neighbours</span><span class="p">,</span> <span class="n">algo_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1892,7 +1893,7 @@
 <span class="sd">                    &gt;&gt;&gt; stmvl_imputer = Imputation.PatternSearch.STMVL(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; stmvl_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; stmvl_imputer.impute(user_def=True, params={&#39;window_size&#39;: 7, &#39;learning_rate&#39;:0.01, &#39;gamma&#39;:0.85, &#39;alpha&#39;: 7})  # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; stmvl_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
+<span class="sd">                    &gt;&gt;&gt; stmvl_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = stmvl_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -1900,6 +1901,8 @@
 <span class="sd">                Yi, X., Zheng, Y., Zhang, J., &amp; Li, T. ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data.</span>
 <span class="sd">                School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.stmvl</span><span class="w"> </span><span class="kn">import</span> <span class="n">stmvl</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">window_size</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1958,13 +1961,15 @@
 <span class="sd">                    &gt;&gt;&gt; dynammo_imputer = Imputation.PatternSearch.DynaMMo(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; dynammo_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; dynammo_imputer.impute(params={&#39;h&#39;: 5, &#39;max_iteration&#39;: 100, &#39;approximation&#39;: True}) # user-defined  &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; dynammo_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; dynammo_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = dynammo_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                L. Li, J. McCann, N. S. Pollard, and C. Faloutsos. Dynammo: mining and summarization of coevolving sequences with missing values. In Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Paris, France, June 28 - July 1, 2009, pages 507–516, 2009.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.dynammo</span><span class="w"> </span><span class="kn">import</span> <span class="n">dynammo</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">h</span><span class="p">,</span> <span class="n">max_iteration</span><span class="p">,</span> <span class="n">approximation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2019,13 +2024,15 @@
 <span class="sd">                    &gt;&gt;&gt; tkcm_imputer = Imputation.PatternSearch.TKCM(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; tkcm_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; tkcm_imputer.impute(params={&#39;rank&#39;: 5})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; tkcm_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; tkcm_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = tkcm_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                K. Wellenzohn, M. H. Böhlen, A. Dignös, J. Gamper, and H. Mitterer. Continuous imputation of missing values in streams of pattern-determining time series. In Proceedings of the 20th International Conference on Extending Database Technology, EDBT 2017, Venice, Italy, March 21-24, 2017., pages 330–341, 2017.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.tkcm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tkcm</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">rank</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2115,13 +2122,15 @@
 <span class="sd">                    &gt;&gt;&gt; mrnn_imputer = Imputation.DeepLearning.MRNN(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; mrnn_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; mrnn_imputer.impute(user_def=True, params={&#39;hidden_dim&#39;: 10, &#39;learning_rate&#39;:0.01, &#39;iterations&#39;:50, &#39;sequence_length&#39;: 7})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; mrnn_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
+<span class="sd">                    &gt;&gt;&gt; mrnn_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;bayesian&quot;, &quot;options&quot;: {&quot;n_calls&quot;: 2}})  # automl with bayesian</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = mrnn_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                J. Yoon, W. R. Zame and M. van der Schaar, &quot;Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks,&quot; in IEEE Transactions on Biomedical Engineering, vol. 66, no. 5, pp. 1477-1490, May 2019, doi: 10.1109/TBME.2018.2874712. keywords: {Time measurement;Interpolation;Estimation;Medical diagnostic imaging;Correlation;Recurrent neural networks;Biomedical measurement;Missing data;temporal data streams;imputation;recurrent neural nets}</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mrnn</span><span class="w"> </span><span class="kn">import</span> <span class="n">mrnn</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">sequence_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2184,13 +2193,15 @@
 <span class="sd">                    &gt;&gt;&gt; brits_imputer = Imputation.DeepLearning.BRITS(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; brits_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; brits_imputer.impute(params={&quot;model&quot;: &quot;brits&quot;, &quot;epoch&quot;: 2, &quot;batch_size&quot;: 10, &quot;nbr_features&quot;: 1, &quot;hidden_layer&quot;: 64})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; brits_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; brits_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = brits_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                Cao, W., Wang, D., Li, J., Zhou, H., Li, L. &amp; Li, Y. BRITS: Bidirectional Recurrent Imputation for Time Series. Advances in Neural Information Processing Systems, 31 (2018). https://proceedings.neurips.cc/paper_files/paper/2018/file/734e6bfcd358e25ac1db0a4241b95651-Paper.pdf</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.brits</span><span class="w"> </span><span class="kn">import</span> <span class="n">brits</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">model</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">nbr_features</span><span class="p">,</span> <span class="n">hidden_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2248,7 +2259,7 @@
 <span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute(params={&quot;max_epoch&quot;: 10, &quot;patience&quot;: 2})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = deep_mvi_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -2256,6 +2267,8 @@
 <span class="sd">                P. Bansal, P. Deshpande, and S. Sarawagi. Missing value imputation on multidimensional time series. arXiv preprint arXiv:2103.01600, 2023</span>
 <span class="sd">                https://github.com/pbansal5/DeepMVI</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.deep_mvi</span><span class="w"> </span><span class="kn">import</span> <span class="n">deep_mvi</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">max_epoch</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2271,6 +2284,7 @@
         <span class="k">class</span><span class="w"> </span><span class="nc">MPIN</span><span class="p">(</span><span class="n">BaseImputer</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            MPIN class to impute missing values using Multi-attribute Sensor Data Streams via Message Propagation algorithm.</span>
+<span class="sd">            Need torch-cluster to work.</span>
 
 <span class="sd">            Methods</span>
 <span class="sd">            -------</span>
@@ -2284,6 +2298,7 @@
             <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the MPIN algorithm.</span>
+<span class="sd">                Need torch-cluster to work.</span>
 
 <span class="sd">                Parameters</span>
 <span class="sd">                ----------</span>
@@ -2324,7 +2339,7 @@
 <span class="sd">                    &gt;&gt;&gt; mpin_imputer = Imputation.DeepLearning.MPIN(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; mpin_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; mpin_imputer.impute(params={&quot;incre_mode&quot;: &quot;data+state&quot;, &quot;window&quot;: 1, &quot;k&quot;: 15, &quot;learning_rate&quot;: 0.001, &quot;weight_decay&quot;: 0.2, &quot;epochs&quot;: 6, &quot;num_of_iteration&quot;: 6, &quot;threshold&quot;: 0.50, &quot;base&quot;: &quot;GCN&quot;})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; mpin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; mpin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = mpin_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -2332,6 +2347,8 @@
 <span class="sd">                Li, X., Li, H., Lu, H., Jensen, C.S., Pandey, V. &amp; Markl, V. Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). arXiv (2023). https://arxiv.org/abs/2311.07344</span>
 <span class="sd">                https://github.com/XLI-2020/MPIN</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mpin</span><span class="w"> </span><span class="kn">import</span> <span class="n">mpin</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">incre_mode</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">weight_decay</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">num_of_iteration</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2391,7 +2408,7 @@
 <span class="sd">                    &gt;&gt;&gt; pristi_imputer = Imputation.DeepLearning.PRISTI(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; pristi_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; pristi_imputer.impute(params={&quot;target_strategy&quot;:&quot;hybrid&quot;, &quot;unconditional&quot;:True, &quot;seed&quot;:42, &quot;device&quot;:&quot;cpu&quot;})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; pristi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; pristi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = pristi_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -2399,6 +2416,8 @@
 <span class="sd">                M. Liu, H. Huang, H. Feng, L. Sun, B. Du and Y. Fu, &quot;PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation,&quot; 2023 IEEE 39th International Conference on Data Engineering (ICDE), Anaheim, CA, USA, 2023, pp. 1927-1939, doi: 10.1109/ICDE55515.2023.00150.</span>
 <span class="sd">                https://github.com/LMZZML/PriSTI</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.pristi</span><span class="w"> </span><span class="kn">import</span> <span class="n">pristi</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2464,7 +2483,7 @@
 <span class="sd">                    &gt;&gt;&gt; miss_net_imputer = Imputation.DeepLearning.MissNet(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; miss_net_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; miss_net_imputer.impute(user_def=True, params={&#39;alpha&#39;: 0.5, &#39;beta&#39;:0.1, &#39;L&#39;:10, &#39;n_cl&#39;: 1, &#39;max_iteration&#39;:20, &#39;tol&#39;:5, &#39;random_init&#39;:False})  # user-defined &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; miss_net_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; miss_net_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = miss_net_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -2472,6 +2491,8 @@
 <span class="sd">                Kohei Obata, Koki Kawabata, Yasuko Matsubara, and Yasushi Sakurai. 2024. Mining of Switching Sparse Networks for Missing Value Imputation in Multivariate Time Series. In Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD &#39;24). Association for Computing Machinery, New York, NY, USA, 2296–2306. https://doi.org/10.1145/3637528.3671760</span>
 <span class="sd">                https://github.com/KoheiObata/MissNet/tree/main</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.miss_net</span><span class="w"> </span><span class="kn">import</span> <span class="n">miss_net</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">n_cl</span><span class="p">,</span> <span class="n">max_iteration</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">random_init</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2537,13 +2558,15 @@
 <span class="sd">                    &gt;&gt;&gt; gain_imputer = Imputation.DeepLearning.GAIN(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; gain_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; gain_imputer.impute(user_def=True, params={&quot;batch_size&quot;:32, &quot;hint_rate&quot;:0.9, &quot;alpha&quot;:10, &quot;epoch&quot;:100})  # user defined&gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; gain_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; gain_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = gain_imputer.recov_data</span>
 
 <span class="sd">                References</span>
 <span class="sd">                ----------</span>
 <span class="sd">                J. Yoon, J. Jordon, and M. van der Schaar, &quot;GAIN: Missing Data Imputation using Generative Adversarial Nets,&quot; CoRR, vol. abs/1806.02920, 2018. Available: http://arxiv.org/abs/1806.02920.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.gain</span><span class="w"> </span><span class="kn">import</span> <span class="n">gain</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">batch_size</span><span class="p">,</span> <span class="n">hint_rate</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epoch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -2622,7 +2645,7 @@
 <span class="sd">                    &gt;&gt;&gt; grin_imputer = Imputation.DeepLearning.GRIN(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; grin_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; grin_imputer.impute(user_def=True, params={&quot;d_hidden&quot;:32, &quot;lr&quot;:0.001, &quot;batch_size&quot;:32, &quot;window&quot;:1, &quot;alpha&quot;:10.0, &quot;patience&quot;:4, &quot;epochs&quot;:20, &quot;workers&quot;:2})  # user defined&gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; grin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; grin_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = grin_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -2630,6 +2653,7 @@
 <span class="sd">                A. Cini, I. Marisca, and C. Alippi, &quot;Multivariate Time Series Imputation by Graph Neural Networks,&quot; CoRR, vol. abs/2108.00298, 2021</span>
 <span class="sd">                https://github.com/Graph-Machine-Learning-Group/grin</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.grin</span><span class="w"> </span><span class="kn">import</span> <span class="n">grin</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">d_hidden</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -2713,7 +2737,7 @@
 <span class="sd">                    &gt;&gt;&gt; bay_otide_imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; bay_otide_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; bay_otide_imputer.impute(user_def=True, params={&quot;K_trend&quot;:20, &quot;K_season&quot;:2, &quot;n_season&quot;:5, &quot;K_bias&quot;:1, &quot;time_scale&quot;:1, &quot;a0&quot;:0.6, &quot;b0&quot;:2.5, &quot;v&quot;:0.5})  # user defined&gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; bay_otide_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; bay_otide_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = bay_otide_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -2721,6 +2745,7 @@
 <span class="sd">                S. Fang, Q. Wen, Y. Luo, S. Zhe, and L. Sun, &quot;BayOTIDE: Bayesian Online Multivariate Time Series Imputation with Functional Decomposition,&quot; CoRR, vol. abs/2308.14906, 2024. [Online]. Available: https://arxiv.org/abs/2308.14906.</span>
 <span class="sd">                https://github.com/xuangu-fang/BayOTIDE</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.bayotide</span><span class="w"> </span><span class="kn">import</span> <span class="n">bay_otide</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">K_trend</span><span class="p">,</span> <span class="n">K_season</span><span class="p">,</span> <span class="n">n_season</span><span class="p">,</span> <span class="n">K_bias</span><span class="p">,</span> <span class="n">time_scale</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">b0</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -2785,7 +2810,7 @@
 <span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer = Imputation.DeepLearning.HKMF_T(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer.impute(user_def=True, params={&quot;tags&quot;:None, &quot;data_names&quot;:None, &quot;epoch&quot;:5})  # user defined&gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; hkmf_t_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = hkmf_t_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -2793,6 +2818,7 @@
 <span class="sd">                L. Wang, S. Wu, T. Wu, X. Tao and J. Lu, &quot;HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization,&quot; in IEEE Transactions on Knowledge and Data Engineering, vol. 33, no. 11, pp. 3582-3593, 1 Nov. 2021, doi: 10.1109/TKDE.2020.2971190. keywords: {Time series analysis;Matrix decomposition;Market research;Meteorology;Sparse matrices;Indexes;Software;Tagged time series;missing value imputation;blackouts;hankel matrix factorization}</span>
 <span class="sd">                https://github.com/wangliang-cs/hkmf-t?tab=readme-ov-file</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.hkmf_t</span><span class="w"> </span><span class="kn">import</span> <span class="n">hkmf_t</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">tags</span><span class="p">,</span> <span class="n">data_names</span><span class="p">,</span> <span class="n">epoch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -2878,7 +2904,7 @@
 <span class="sd">                    &gt;&gt;&gt; bit_graph_imputer = Imputation.DeepLearning.BitGraph(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; bit_graph_imputer.impute()  # default parameters for imputation &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; bit_graph_imputer.impute(user_def=True, params={&quot;node_number&quot;:-1, &quot;kernel_set&quot;:[1], &quot;dropout&quot;:0.1, &quot;subgraph_size&quot;:5, &quot;node_dim&quot;:3, &quot;seq_len&quot;:1, &quot;lr&quot;:0.001, &quot;epoch&quot;:10, &quot;seed&quot;:42})  # user defined&gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; bit_graph_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts_1.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
+<span class="sd">                    &gt;&gt;&gt; bit_graph_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # auto-ml with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = bit_graph_imputer.recov_data</span>
 
 <span class="sd">                References</span>
@@ -2886,6 +2912,8 @@
 <span class="sd">                X. Chen1, X. Li, T. Wu, B. Liu and Z. Li, BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES</span>
 <span class="sd">                https://github.com/chenxiaodanhit/BiTGraph</span>
 <span class="sd">                &quot;&quot;&quot;</span>
+
+                <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.bit_graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">bit_graph</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -2939,7 +2967,7 @@
       
     </aside>
   </div>
-</div><script src="../../../static/documentation_options.js?v=d55fa986"></script>
+</div><script src="../../../static/documentation_options.js?v=46dfa7f5"></script>
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>

@@ -1,7 +1,4 @@
 import numpy as np
-from sklearn.metrics import mutual_info_score
-from scipy.stats import pearsonr
-
 
 class Evaluation:
     """
@@ -126,6 +123,8 @@ class Evaluation:
         float
             The mutual information (MI) score for NaN positions in the contamination dataset.
         """
+        from sklearn.metrics import mutual_info_score
+
         nan_locations = np.isnan(self.incomp_data)
 
         # Discretize the continuous data into bins
@@ -151,6 +150,8 @@ class Evaluation:
         float
             The Pearson correlation coefficient for NaN positions in the contamination dataset.
         """
+        from scipy.stats import pearsonr
+
         nan_locations = np.isnan(self.incomp_data)
         input_data_values = self.input_data[nan_locations]
         imputed_values = self.recov_data[nan_locations]

@@ -25,7 +25,7 @@ class TestKNN(unittest.TestCase):
 
         miss_ts = ts_0.Contamination.aligned(input_data=ts_0.data, rate_series=0.18, offset=0.1)
 
-        imputer = Imputation.Statistics.KNN(miss_ts)
+        imputer = Imputation.Statistics.KNNImpute(miss_ts)
         imputer.impute(user_def=True, params={"k":k, "weights":weight})
         imputer.score(ts_0.data, imputer.recov_data)
 
@@ -36,7 +36,7 @@ class TestKNN(unittest.TestCase):
         knn = KNNImputer(n_neighbors=k, weights=weight)
         recov = knn.fit_transform(miss_ts)
 
-        imputer2 = Imputation.Statistics.KNN(miss_ts)
+        imputer2 = Imputation.Statistics.KNNImpute(miss_ts)
         imputer2.recov_data = None
         imputer2.metrics = None
 

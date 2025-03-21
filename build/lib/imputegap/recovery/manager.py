@@ -324,7 +324,7 @@ class TimeSeries:
 
         self.data = self.data.T
 
-        print(f"\n\t\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     def plot(self, input_data, incomp_data=None, recov_data=None, nbr_series=None, nbr_val=None, series_range=None,
              subplot=False, size=(16, 8), save_path="./imputegap_assets", display=True):

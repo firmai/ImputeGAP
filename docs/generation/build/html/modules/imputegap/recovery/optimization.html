@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>imputegap.recovery.optimization - imputegap 1.0.5 documentation</title>
+        <title>imputegap.recovery.optimization - imputegap 1.0.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">imputegap 1.0.5 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">imputegap 1.0.7 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">imputegap 1.0.5 documentation</span>
+  <span class="sidebar-brand-text">imputegap 1.0.7 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -264,27 +264,13 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for imputegap.recovery.optimization</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools.algorithm_parameters</span><span class="w"> </span><span class="kn">import</span> <span class="n">SEARCH_SPACES</span><span class="p">,</span> <span class="n">ALL_ALGO_PARAMS</span><span class="p">,</span> <span class="n">PARAM_NAMES</span><span class="p">,</span> <span class="n">SEARCH_SPACES_PSO</span><span class="p">,</span> <span class="n">RAYTUNE_PARAMS</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">imputegap.tools.algorithm_parameters</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sh_params</span>
-
-<span class="c1"># RAY TUNE IMPORT</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">ray</span><span class="w"> </span><span class="kn">import</span> <span class="n">tune</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
-
-<span class="c1"># PSO IMPORT</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pyswarms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
-
-<span class="c1"># BAYESIAN IMPORT</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">skopt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">skopt.space</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integer</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyswarms.utils.reporter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reporter</span>
 <span class="n">reporter</span> <span class="o">=</span> <span class="n">Reporter</span><span class="p">()</span>
@@ -573,6 +559,10 @@
 <span class="sd">            tuple</span>
 <span class="sd">                A tuple containing the best parameters and their corresponding score.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
+            <span class="c1"># BAYESIAN IMPORT</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">skopt</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">skopt.space</span><span class="w"> </span><span class="kn">import</span> <span class="n">Integer</span>
+
             <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
 
             <span class="n">search_spaces</span> <span class="o">=</span> <span class="n">SEARCH_SPACES</span>
@@ -706,6 +696,9 @@
 <span class="sd">            tuple</span>
 <span class="sd">                A tuple containing the best parameters and their corresponding score.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">pyswarms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+
             <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -922,6 +915,9 @@
 <span class="sd">            tuple</span>
 <span class="sd">                A tuple containing the best parameters and their corresponding score.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">ray</span><span class="w"> </span><span class="kn">import</span> <span class="n">tune</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">ray</span>
+
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ray</span><span class="o">.</span><span class="n">is_initialized</span><span class="p">():</span>
                 <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
             <span class="n">used_metric</span> <span class="o">=</span> <span class="n">metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1007,7 +1003,7 @@
       
     </aside>
   </div>
-</div><script src="../../../static/documentation_options.js?v=d55fa986"></script>
+</div><script src="../../../static/documentation_options.js?v=46dfa7f5"></script>
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>

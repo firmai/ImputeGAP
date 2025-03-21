@@ -31,7 +31,7 @@ def native_rosl(__py_matrix, __py_rank, __py_regularization):
     ----------
     X. Shu, F. Porikli, and N. Ahuja. Robust orthonormal subspace learning: Efficient recovery of corrupted low-rank matrices. In 2014 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2014, Columbus, OH, USA, June 23-28, 2014, pages 3874–3881, 2014.
     """
-    shared_lib = utils.load_share_lib("lib_rosl.so")
+    shared_lib = utils.load_share_lib("lib_rosl")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -96,6 +96,6 @@ def rosl(incomp_data, rank, regularization, logs=True, lib_path=None):
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation ROSL - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation ROSL - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

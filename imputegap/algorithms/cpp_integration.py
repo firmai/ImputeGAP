@@ -25,7 +25,7 @@ def native_algo(__py_matrix, __py_param):
 
     """
 
-    shared_lib = utils.load_share_lib("to_adapt.so")
+    shared_lib = utils.load_share_lib("to_adapt")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -79,6 +79,6 @@ def your_algo(contamination, param, logs=True):
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation algo - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation algo - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

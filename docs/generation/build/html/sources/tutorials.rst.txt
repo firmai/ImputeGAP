@@ -104,7 +104,7 @@ Let's illustrate the imputation using the CDRec Algorithm from the Matrix Comple
     ts.print_results(imputer.metrics)
 
     # plot the recovered time series
-    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets")
+    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets")
 
 
 

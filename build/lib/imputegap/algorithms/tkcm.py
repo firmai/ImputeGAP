@@ -24,7 +24,7 @@ def native_tkcm(__py_matrix, __py_rank):
     K. Wellenzohn, M. H. Böhlen, A. Dignös, J. Gamper, and H. Mitterer. Continuous imputation of missing values in streams of pattern-determining time series. In Proceedings of the 20th International Conference on Extending Database Technology, EDBT 2017, Venice, Italy, March 21-24, 2017., pages 330–341, 2017.
     """
 
-    shared_lib = utils.load_share_lib("lib_tkcm.so")
+    shared_lib = utils.load_share_lib("lib_tkcm")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -81,6 +81,6 @@ def tkcm(incomp_data, rank, logs=True, lib_path=None):
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation TKCM - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation TKCM - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

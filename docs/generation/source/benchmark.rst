@@ -2,7 +2,7 @@
 Benchmark
 =========
 
-ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms [33]_.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates.
+ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms [33]_.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates. The default metrics evaluated include "RMSE", "MAE", "MI", "Pearson", and the runtime.
 
 
 The benchmarking module can be utilized as follows:
@@ -11,15 +11,15 @@ The benchmarking module can be utilized as follows:
 
     from imputegap.recovery.benchmark import Benchmark
 
-    save_dir = "./analysis"
+    save_dir = "./imputegap_assets/benchmark"
     nbr_run = 2
 
-    datasets = ["eeg-alcohol", "eeg-reading"]
+    datasets = ["eeg-alcohol"]
 
     optimizer = {"optimizer": "ray_tune", "options": {"n_calls": 1, "max_concurrent_trials": 1}}
-    optimizers = [optimizer]
+    optimizers = ["default_params"]
 
-    algorithms = ["MeanImpute", "CDRec", "STMVL", "IIM", "MRNN"]
+    algorithms = ["SoftImpute", "KNNImpute"]
 
     patterns = ["mcar"]
 

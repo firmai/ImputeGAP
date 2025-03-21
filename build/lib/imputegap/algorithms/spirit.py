@@ -31,7 +31,7 @@ def native_spirit(__py_matrix, __py_k, __py_w, __py_lambda):
     S. Papadimitriou, J. Sun, and C. Faloutsos. Streaming pattern discovery in multiple time-series. In Proceedings of the 31st International Conference on Very Large Data Bases, Trondheim, Norway, August 30 - September 2, 2005, pages 697–708, 2005.
     """
 
-    shared_lib = utils.load_share_lib("lib_spirit.so")
+    shared_lib = utils.load_share_lib("lib_spirit")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -98,6 +98,6 @@ def spirit(incomp_data, k, w, lambda_value, logs=True, lib_path=None):
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation SPIRIT - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation SPIRIT - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

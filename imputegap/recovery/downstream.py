@@ -6,17 +6,6 @@ import matplotlib.pyplot as plt
 
 from imputegap.tools import utils
 
-from darts import TimeSeries
-from darts.metrics import mae as darts_mae, mse as darts_mse
-from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error
-from sktime.forecasting.base import ForecastingHorizon
-from darts.metrics import smape as darts_smape
-from sktime.performance_metrics.forecasting import MeanAbsolutePercentageError
-
-
-
-
-
 
 
 class Downstream:
@@ -103,11 +92,11 @@ class Downstream:
         evaluator = evaluator.lower()
 
         if not params:
-            print("\n\t\t\t\tThe params for model of downstream analysis are empty or missing. Default ones loaded...")
+            print("\n\t(DOWNSTREAM) The params for model of downstream analysis are empty or missing. Default ones loaded...")
             loader = "forecaster-" + str(model)
             params = utils.load_parameters(query="default", algorithm=loader)
 
-        print("\n\t\t\t\tDownstream analysis launched for <", evaluator, "> on the model <", model,
+        print("\n(DOWNSTREAM) Analysis launched for <", evaluator, "> on the model <", model,
               "> with parameters :\n\t\t\t\t\t", params, " \n\n")
 
         if evaluator in ["forecast", "forecaster", "forecasting"]:
@@ -134,6 +123,10 @@ class Downstream:
 
                 if model in self.sktime_models:
                     # --- SKTIME APPROACH ---
+                    from sklearn.metrics import mean_absolute_error, mean_squared_error
+                    from sktime.forecasting.base import ForecastingHorizon
+                    from sktime.performance_metrics.forecasting import MeanAbsolutePercentageError
+
                     y_pred = np.zeros_like(y_test)
 
                     for series_idx in range(data.shape[0]):
@@ -159,6 +152,10 @@ class Downstream:
                 else:
                     # --- DARTS APPROACH ---
                     # Convert entire matrix to a Darts multivariate TimeSeries object
+                    from darts import TimeSeries
+                    from darts.metrics import mae as darts_mae, mse as darts_mse
+                    from darts.metrics import smape as darts_smape
+
                     y_train_ts = TimeSeries.from_values(y_train.T)  # Shape: (time_steps, n_series)
                     y_test_ts = TimeSeries.from_values(y_test.T)  # Shape: (time_steps, n_series)
 
@@ -206,16 +203,14 @@ class Downstream:
             metrics = {"DOWNSTREAM-ORIGIN-MSE": mse[0], al_name: mse[1], "DOWNSTREAM-ZERO_IMPUTE-MSE": mse[2],
                        "DOWNSTREAM-ORIGIN-SMAPE": smape[0], al_name_s: smape[1], "DOWNSTREAM-ZERO_IMPUTE-SMAPE": smape[2] }
 
-            print("\n\t\t\t\tDownstream analysis complete. " + "*" * 58 + "\n")
-
             return metrics
         else:
-            print("\t\t\t\tNo evaluator found... list possible : 'forecaster'" + "*" * 30 + "\n")
+            print("\tNo evaluator found... list possible : 'forecaster'" + "*" * 30 + "\n")
 
             return None
 
     @staticmethod
-    def _plot_downstream(y_train, y_test, y_pred, incomp_data, algorithm, model=None, type=None, title="", max_series=1, save_path="./imputegap_assets"):
+    def _plot_downstream(y_train, y_test, y_pred, incomp_data, algorithm, model=None, type=None, title="", max_series=1, save_path="./imputegap_assets/downstream"):
         """
         Plot ground truth vs. predictions for contaminated series (series with NaN values).
 
@@ -248,6 +243,7 @@ class Downstream:
             x_size = 24
 
         fig, axs = plt.subplots(3, max_series, figsize=(x_size, 15))
+        fig.canvas.manager.set_window_title("downstream evaluation")
         fig.suptitle(title, fontsize=16)
 
         # Iterate over the three data types (recov_data, input_data, mean_impute)
@@ -305,7 +301,7 @@ class Downstream:
 
                 ax.set_xlabel("Timestamp")
                 ax.set_ylabel("Value")
-                ax.legend(loc="upper left", bbox_to_anchor=(1.05, -0.1), ncol=1)
+                ax.legend(loc='upper left', fontsize=7, frameon=True, fancybox=True, framealpha=0.8)
                 ax.grid()
 
         # Adjust layout

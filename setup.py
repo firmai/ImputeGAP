@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name="imputegap",
-    version="1.0.5",
+    version="1.0.7",
     description="A Library of Imputation Techniques for Time Series Data",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
@@ -36,6 +36,7 @@ setuptools.setup(
             'dataset/*.txt',  # Include TXT files from dataset
             'algorithms/lib/*.dll',  # Include DLL files from algorithms/lib (for Windows)
             'algorithms/lib/*.so'  # Include SO files from algorithms/lib (for Linux/Unix)
+            'algorithms/lib/*.dylib'  # Include dylib files from algorithms/lib (for MACOS)
         ],
     },
     entry_points={"console_scripts": ["imputegap = imputegap.runner_display:display_title"]}

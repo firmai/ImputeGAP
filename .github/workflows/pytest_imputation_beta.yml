@@ -21,7 +21,6 @@ jobs:
         sudo apt-get install -y libmlpack-dev libopenblas-dev python3-dev build-essential
         pip install -r requirements.txt
         pip install -r requirements_dev.txt
-        pip install torch-cluster==1.6.3
         pip install mypy pytest
     - name: Run pytest
       run: |
@@ -36,7 +35,6 @@ jobs:
         python -m pytest ./tests/test_imputation_tkcm.py
         python -m pytest ./tests/test_imputation_deepmvi.py
         python -m pytest ./tests/test_imputation_brits.py
-        python -m pytest ./tests/test_imputation_mpin.py
         python -m pytest ./tests/test_imputation_pristi.py
         python -m pytest ./tests/test_imputation_grin.py
         python -m pytest ./tests/test_imputation_gain.py

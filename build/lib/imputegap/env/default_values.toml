@@ -87,7 +87,7 @@ approximation = true
 rank = 4
 
 # ALGORITHM DEFAULT VALUES : STATISTICS
-[knn]
+[knn_impute]
 k = 5
 weights = "uniform"
 

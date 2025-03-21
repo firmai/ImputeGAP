@@ -64,6 +64,6 @@ def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation bit graph - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation bit graph - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data
