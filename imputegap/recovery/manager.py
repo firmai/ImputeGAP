@@ -7,6 +7,9 @@ import matplotlib
 import importlib.resources
 from imputegap.tools import utils
 
+from matplotlib import pyplot as plt  # type: ignore
+
+
 def select_backend():
     system = platform.system()
     headless = os.getenv('DISPLAY') is None or os.getenv('CI') is not None
@@ -37,8 +40,6 @@ def select_backend():
 
 # Call the backend selector
 select_backend()
-
-from matplotlib import pyplot as plt  # type: ignore
 
 
 class TimeSeries:
