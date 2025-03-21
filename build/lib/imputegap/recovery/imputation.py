@@ -80,7 +80,7 @@ class BaseImputer:
         Example
         -------
             >>> imputer.score(ts.data, imputer.recov_data) # upstream
-            >>> imputer.score(ts.data, imputer.recov_data, downstream={"task": "forecast", "model": "hw-add"}) # downstream
+            >>> imputer.score(ts.data, imputer.recov_data, {"task": "forecast", "model": "hw-add", "comparator": "ZeroImputation"}) # downstream
         """
         if self.recov_data is None:
             self.recov_data = recov_data

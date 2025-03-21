@@ -388,7 +388,7 @@ The benchmarking module can be utilized as follows:
 from imputegap.recovery.benchmark import Benchmark
 
 save_dir = "./imputegap_assets/benchmark"
-nbr_run = 1
+nbr_runs = 1
 
 datasets = ["eeg-alcohol"]
 
@@ -401,7 +401,7 @@ patterns = ["mcar"]
 range = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
 # launch the evaluation
-list_results, sum_scores = Benchmark().eval(algorithms=algorithms, datasets=datasets, patterns=patterns, x_axis=range, optimizers=optimizers, save_dir=save_dir, runs=nbr_run)
+list_results, sum_scores = Benchmark().eval(algorithms=algorithms, datasets=datasets, patterns=patterns, x_axis=range, optimizers=optimizers, save_dir=save_dir, runs=nbr_runs)
 ```
 
 You can change the optimizer using the following command:

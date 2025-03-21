@@ -273,6 +273,9 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">importlib.resources</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>  <span class="c1"># type: ignore</span>
+
+
 <div class="viewcode-block" id="select_backend">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.select_backend">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">select_backend</span><span class="p">():</span>
@@ -306,8 +309,6 @@
 
 <span class="c1"># Call the backend selector</span>
 <span class="n">select_backend</span><span class="p">()</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>  <span class="c1"># type: ignore</span>
 
 
 <div class="viewcode-block" id="TimeSeries">
@@ -484,11 +485,11 @@
 <span class="sd">        -------</span>
 <span class="sd">        None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> dataset&quot;</span><span class="p">)</span>
-
         <span class="n">to_print</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
         <span class="n">nbr_tot_series</span><span class="p">,</span> <span class="n">nbr_tot_values</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">print_col</span><span class="p">,</span> <span class="n">print_row</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;Series&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">shape of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> : </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="se">\n\t</span><span class="s2">number of series = </span><span class="si">{</span><span class="w"> </span><span class="n">nbr_tot_series</span><span class="si">}</span><span class="se">\n\t</span><span class="s2">number of values = </span><span class="si">{</span><span class="n">nbr_tot_values</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">nbr_val</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">nbr_val</span> <span class="o">=</span> <span class="n">to_print</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -514,10 +515,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">value_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">series</span><span class="p">]))</span>
 
         <span class="k">if</span> <span class="n">nbr_series</span> <span class="o">&lt;</span> <span class="n">nbr_tot_series</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
-
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">shape of the time series :&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">number of series =&quot;</span><span class="p">,</span> <span class="n">nbr_tot_series</span><span class="p">,</span>
-              <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">number of values =&quot;</span><span class="p">,</span> <span class="n">nbr_tot_values</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TimeSeries.print_results">

@@ -162,6 +162,12 @@ RAYTUNE_PARAMS = {
         "weights": tune.choice(["uniform", "distance"])
     },
 
+
+    "knn": {
+        "k": tune.grid_search([1, 12, 1]),
+        "weights": tune.choice(["uniform", "distance"])
+    },
+
     "interpolation": {
         "method": tune.choice(["nearest", "spline", "polynomial", "linear"]),
         "poly_order": tune.grid_search([2, 10, 1])

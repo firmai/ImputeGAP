@@ -87,7 +87,8 @@ class Downstream:
         model = self.downstream.get("model", "naive")
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
-        
+        comparator = self.downstream.get("comparator", None)
+
         model = model.lower()
         evaluator = evaluator.lower()
 
@@ -110,8 +111,15 @@ class Downstream:
                     data = self.recov_data
                 elif x == 2:
                     from imputegap.recovery.imputation import Imputation
-                    zero_impute = Imputation.Statistics.ZeroImpute(self.incomp_data).impute()
-                    data = zero_impute.recov_data
+
+                    if comparator is not None:
+                        impt = utils.config_impute_algorithm(self.incomp_data, algorithm=comparator)
+                        impt.impute()
+                        data = impt.recov_data
+                    else:
+                        comparator = "zero-impute"
+                        zero_impute = Imputation.Statistics.ZeroImpute(self.incomp_data).impute()
+                        data = zero_impute.recov_data
 
                 data_len = data.shape[1]
                 train_len = int(data_len * self.split)
@@ -195,13 +203,15 @@ class Downstream:
 
             if plots:
                 # Global plot with all rows and columns
-                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, model, evaluator)
+                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, comparator, model, evaluator)
 
             # Save metrics in a dictionary
             al_name = "DOWNSTREAM-" + self.algorithm.upper() + "-MSE"
             al_name_s = "DOWNSTREAM-" + self.algorithm.upper() + "-SMAPE"
-            metrics = {"DOWNSTREAM-ORIGIN-MSE": mse[0], al_name: mse[1], "DOWNSTREAM-ZERO_IMPUTE-MSE": mse[2],
-                       "DOWNSTREAM-ORIGIN-SMAPE": smape[0], al_name_s: smape[1], "DOWNSTREAM-ZERO_IMPUTE-SMAPE": smape[2] }
+            al_name_c = "DOWNSTREAM-" + comparator.upper() + "-MSE"
+            al_name_cs = "DOWNSTREAM-" + comparator.upper() + "-SMAPE"
+            metrics = {"DOWNSTREAM-ORIGIN-MSE": mse[0], al_name: mse[1], al_name_c: mse[2],
+                       "DOWNSTREAM-ORIGIN-SMAPE": smape[0], al_name_s: smape[1], al_name_cs: smape[2] }
 
             return metrics
         else:
@@ -210,7 +220,7 @@ class Downstream:
             return None
 
     @staticmethod
-    def _plot_downstream(y_train, y_test, y_pred, incomp_data, algorithm, model=None, type=None, title="", max_series=1, save_path="./imputegap_assets/downstream"):
+    def _plot_downstream(y_train, y_test, y_pred, incomp_data, algorithm, comparison, model=None, type=None, title="", max_series=1, save_path="./imputegap_assets/downstream"):
         """
         Plot ground truth vs. predictions for contaminated series (series with NaN values).
 
@@ -228,6 +238,8 @@ class Downstream:
             Name of the current model used
         algorithm : str
             Name of the current algorithm used
+        comparison : str
+            Name of the current algorithm used as comparison
         type : str
             Name of the current type used
         title : str
@@ -293,11 +305,11 @@ class Downstream:
 
                 # Add labels, title, and grid
                 if row_idx == 0:
-                    ax.set_title(f"ORIGINAL DATA, series_{series_idx}")
+                    ax.set_title(f"original data, series_{series_idx}")
                 elif row_idx == 1:
-                    ax.set_title(f"IMPUTED DATA WITH {algorithm.upper()}, series_{series_idx}")
+                    ax.set_title(f"{algorithm.lower()} imputation, series_{series_idx}")
                 else:
-                    ax.set_title(f"ZERO-IMPUTE DATA, series_{series_idx}")
+                    ax.set_title(f"{comparison.lower()} imputation, series_{series_idx}")
 
                 ax.set_xlabel("Timestamp")
                 ax.set_ylabel("Value")

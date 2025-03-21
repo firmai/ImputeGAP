@@ -27,7 +27,7 @@ alcoholism. The dataset contains measurements from 64 electrodes placed on subje
 
     # plot and print a subset of time series
     ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
-    ts.print(nbr_series=9, nbr_val=100)
+    ts.print(nbr_series=9, nbr_val=20)
 
 
 .. _contamination:
@@ -136,9 +136,16 @@ The Optimizer component manages algorithm configuration and hyperparameter tunin
     # use Ray Tune to fine tune the imputation algorithm
     imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
 
-    # compute and print the imputation metrics
+    # compute the imputation metrics with optimized parameter values
     imputer.score(ts.data, imputer.recov_data)
-    ts.print_results(imputer.metrics)
+
+    # compute the imputation metrics with default parameter values
+    imputer_def = Imputation.MatrixCompletion.CDRec(ts_m).impute()
+    imputer_def.score(ts.data, imputer_def.recov_data)
+
+    # print the imputation metrics with default and optimized parameter values
+    ts.print_results(imputer_def.metrics, text="Imputation metrics with default parameter values")
+    ts.print_results(imputer.metrics, text="Imputation metrics with optimized parameter values")
 
     # plot the recovered time series
     ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets", display=True)

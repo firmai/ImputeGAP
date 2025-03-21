@@ -193,6 +193,7 @@ imputegap/env/default_explainer.toml
 imputegap/env/default_values.toml
 imputegap/imputegap_assets/.gitkeep
 imputegap/imputegap_assets/benchmark/.gitkeep
+imputegap/imputegap_assets/benchmark/_heatmap/.gitkeep
 imputegap/imputegap_assets/downstream/.gitkeep
 imputegap/imputegap_assets/shap/grouped/.gitkeep
 imputegap/imputegap_assets/shap/per_categories/.gitkeep

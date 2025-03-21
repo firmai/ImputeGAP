@@ -111,40 +111,40 @@ Access to commonly used datasets in time series research (Datasets).
 
 
 # List of available imputation algorithms
-| **Family**         | **Algorithm**               | **Venue -- Year**            |
-|--------------------|-----------------------------|------------------------------|
-| Deep Learning      | BitGraph [[32]](#ref32)     | ICLR -- 2024                 |
-| Deep Learning      | BayOTIDE [[30]](#ref30)     | PMLR -- 2024                 |
-| Deep Learning      | MissNet [[27]](#ref27)      | KDD -- 2024                  |
-| Deep Learning      | MPIN [[25]](#ref25)         | PVLDB -- 2024                |
-| Deep Learning      | PRISTI [[26]](#ref26)       | ICDE -- 2023                 |
-| Deep Learning      | GRIN [[29]](#ref29)         | ICLR -- 2022                 |
-| Deep Learning      | HKMF_T [[31]](#ref31)       | TKDE -- 2021                 |
-| Deep Learning      | DeepMVI [[24]](#ref24)      | PVLDB -- 2021                |
-| Deep Learning      | MRNN [[22]](#ref22)         | IEEE Trans on BE -- 2019     |
-| Deep Learning      | BRITS [[23]](#ref23)        | NeurIPS -- 2018              |
-| Deep Learning      | GAIN [[28]](#ref28)         | ICML -- 2018                 |
-| Matrix Completion  | CDRec [[1]](#ref1)          | KAIS -- 2020                 |
-| Matrix Completion  | TRMF [[8]](#ref8)           | NeurIPS -- 2016              |
-| Matrix Completion  | GROUSE [[3]](#ref3)         | PMLR -- 2016                 |
-| Matrix Completion  | ROSL [[4]](#ref4)           | CVPR -- 2014                 |
-| Matrix Completion  | SoftImpute [[6]](#ref6)     | JMLR -- 2010                 |
-| Matrix Completion  | SVT [[7]](#ref7)            | SIAM J. OPTIM -- 2010        |
-| Matrix Completion  | SPIRIT [[5]](#ref5)         | VLDB -- 2005                 |
-| Matrix Completion  | IterativeSVD [[2]](#ref2)   | BIOINFORMATICS -- 2001       |
-| Pattern Search     | TKCM [[11]](#ref11)         | EDBT -- 2017                 |
-| Pattern Search     | STMVL [[9]](#ref9)          | IJCAI -- 2016                |
-| Pattern Search     | DynaMMo [[10]](#ref10)      | KDD -- 2009                  |
-| Machine Learning   | IIM [[12]](#ref12)          | ICDE -- 2019                 |
-| Machine Learning   | XGBOOST [[13]](#ref13)      | KDD -- 2016                  |
-| Machine Learning   | MICE [[14]](#ref14)         | Statistical Software -- 2011 |
-| Machine Learning   | MissForest [[15]](#ref15)   | BioInformatics -- 2011       |
-| Statistics         | KNNImpute                   | -                            |
-| Statistics         | Interpolation               | -                            |
-| Statistics         | MinImpute                   | -                            |
-| Statistics         | Zero Impute                 | -                            |
-| Statistics         | MeanImpute                  | -                            |
-| Statistics         | MeanImputeBySeries          | -                            |
+| **Family**         | **Algorithm**             | **Venue -- Year**            |
+|--------------------|---------------------------|------------------------------|
+| Deep Learning      | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
+| Deep Learning      | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
+| Deep Learning      | MissNet [[27]](#ref27)    | KDD -- 2024                  |
+| Deep Learning      | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
+| Deep Learning      | PRISTI [[26]](#ref26)     | ICDE -- 2023                 |
+| Deep Learning      | GRIN [[29]](#ref29)       | ICLR -- 2022                 |
+| Deep Learning      | HKMF_T [[31]](#ref31)     | TKDE -- 2021                 |
+| Deep Learning      | DeepMVI [[24]](#ref24)    | PVLDB -- 2021                |
+| Deep Learning      | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
+| Deep Learning      | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
+| Deep Learning      | GAIN [[28]](#ref28)       | ICML -- 2018                 |
+| Matrix Completion  | CDRec [[1]](#ref1)        | KAIS -- 2020                 |
+| Matrix Completion  | TRMF [[8]](#ref8)         | NeurIPS -- 2016              |
+| Matrix Completion  | GROUSE [[3]](#ref3)       | PMLR -- 2016                 |
+| Matrix Completion  | ROSL [[4]](#ref4)         | CVPR -- 2014                 |
+| Matrix Completion  | SoftImpute [[6]](#ref6)   | JMLR -- 2010                 |
+| Matrix Completion  | SVT [[7]](#ref7)          | SIAM J. OPTIM -- 2010        |
+| Matrix Completion  | SPIRIT [[5]](#ref5)       | VLDB -- 2005                 |
+| Matrix Completion  | IterativeSVD [[2]](#ref2) | BIOINFORMATICS -- 2001       |
+| Pattern Search     | TKCM [[11]](#ref11)       | EDBT -- 2017                 |
+| Pattern Search     | STMVL [[9]](#ref9)        | IJCAI -- 2016                |
+| Pattern Search     | DynaMMo [[10]](#ref10)    | KDD -- 2009                  |
+| Machine Learning   | IIM [[12]](#ref12)        | ICDE -- 2019                 |
+| Machine Learning   | XGBOOST [[13]](#ref13)    | KDD -- 2016                  |
+| Machine Learning   | MICE [[14]](#ref14)       | Statistical Software -- 2011 |
+| Machine Learning   | MissForest [[15]](#ref15) | BioInformatics -- 2011       |
+| Statistics         | KNNImpute                 | -                            |
+| Statistics         | Interpolation             | -                            |
+| Statistics         | MinImpute                 | -                            |
+| Statistics         | ZeroImpute                | -                            |
+| Statistics         | MeanImpute                | -                            |
+| Statistics         | MeanImputeBySeries        | -                            |
 
 ---
 
@@ -228,7 +228,7 @@ ts.normalize(normalizer="z_score")
 
 # plot and print a subset of time series
 ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
-ts.print(nbr_series=9, nbr_val=100)
+ts.print(nbr_series=9, nbr_val=20)
 ```
 
 ---
@@ -342,9 +342,16 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 # use Ray Tune to fine tune the imputation algorithm
 imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
 
-# compute and print the imputation metrics
+# compute the imputation metrics with optimized parameter values
 imputer.score(ts.data, imputer.recov_data)
-ts.print_results(imputer.metrics)
+
+# compute the imputation metrics with default parameter values
+imputer_def = Imputation.MatrixCompletion.CDRec(ts_m).impute()
+imputer_def.score(ts.data, imputer_def.recov_data)
+
+# print the imputation metrics with default and optimized parameter values
+ts.print_results(imputer_def.metrics, text="Imputation metrics with default parameter values")
+ts.print_results(imputer.metrics, text="Imputation metrics with optimized parameter values")
 
 # plot the recovered time series
 ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True,
@@ -429,7 +436,7 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute and print the downstream results
-downstream_config = {"task": "forecast", "model": "hw-add"}
+downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
 ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 ```
