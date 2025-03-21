@@ -25,7 +25,7 @@ def native_svt(__py_matrix, __py_tau):
     J. Cai, E. J. Candès, and Z. Shen. A singular value thresholding algorithm for matrix completion. SIAM Journal on Optimization, 20(4):1956–1982, 2010. [8] J. Cambronero, J. K. Feser, M. J. Smith, and
     """
 
-    shared_lib = utils.load_share_lib("lib_svt.so")
+    shared_lib = utils.load_share_lib("lib_svt")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -80,6 +80,6 @@ def svt(incomp_data, tau, logs=True, lib_path=None):
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation SVT - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation SVT - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

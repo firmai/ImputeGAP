@@ -25,7 +25,7 @@ def native_iterative_svd(__py_matrix, __py_rank):
     Olga Troyanskaya, Michael Cantor, Gavin Sherlock, Pat Brown, Trevor Hastie, Robert Tibshirani, David Botstein, Russ B. Altman, Missing value estimation methods for DNA microarrays , Bioinformatics, Volume 17, Issue 6, June 2001, Pages 520–525, https://doi.org/10.1093/bioinformatics/17.6.520
     """
 
-    shared_lib = utils.load_share_lib("lib_iterative_svd.so")
+    shared_lib = utils.load_share_lib("lib_iterative_svd")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -82,6 +82,6 @@ def iterative_svd(incomp_data, truncation_rank, logs=True, lib_path=None):
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation iterative svd - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation iterative svd - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

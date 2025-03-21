@@ -30,7 +30,7 @@ def interpolation(incomp_data, method="linear", poly_order=2, logs=True):
 
     """
 
-    print(f"\t\t\t\t(PYTHON) interpolation : ({incomp_data.shape[0]},{incomp_data.shape[1]}) for method {method}"
+    print(f"(PYTHON) interpolation : ({incomp_data.shape[0]},{incomp_data.shape[1]}) for method {method}"
           f", and polynomial order {poly_order}...")
 
     start_time = time.time()  # Record start time
@@ -70,6 +70,6 @@ def interpolation(incomp_data, method="linear", poly_order=2, logs=True):
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation with interpolation - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation with interpolation - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

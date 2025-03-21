@@ -26,19 +26,19 @@ To list all the available algorithms and their optimizers, you can use this comm
      - **Algorithm**
      - **Venue -- Year**
    * - Deep Learning
-     - MPIN [25]_
-     - PVLDB -- 2024
-   * - Deep Learning
      - MissNet [27]_
      - KDD -- 2024
    * - Deep Learning
-     - BITGraph [32]_
+     - BitGraph [32]_
      - ICLR -- 2024
    * - Deep Learning
      - BayOTIDE [30]_
      - PMLR -- 2024
    * - Deep Learning
-     - PriSTI [26]_
+     - MPIN* [25]_
+     - PVLDB -- 2024
+   * - Deep Learning
+     - PRISTI [26]_
      - ICDE -- 2023
    * - Deep Learning
      - GRIN [29]_
@@ -47,7 +47,7 @@ To list all the available algorithms and their optimizers, you can use this comm
      - DeepMVI [24]_
      - PVLDB -- 2021
    * - Deep Learning
-     - HKMF-T [31]_
+     - HKMF_T [31]_
      - TKDE -- 2021
    * - Deep Learning
      - MRNN [22]_
@@ -86,7 +86,7 @@ To list all the available algorithms and their optimizers, you can use this comm
      - TKCM [11]_
      - EDBT -- 2017
    * - Pattern Search
-     - ST-MVL [9]_
+     - STMVL [9]_
      - IJCAI -- 2016
    * - Pattern Search
      - DynaMMo [10]_
@@ -95,10 +95,10 @@ To list all the available algorithms and their optimizers, you can use this comm
      - IIM [12]_
      - ICDE -- 2019
    * - Machine Learning
-     - XGBI [13]_
+     - XGBOOST [13]_
      - KDD -- 2016
    * - Machine Learning
-     - Mice [14]_
+     - MICE [14]_
      - Statistical Software -- 2011
    * - Machine Learning
      - MissForest [15]_
@@ -180,3 +180,5 @@ References
 .. [31] Liang Wang, Simeng Wu, Tianheng Wu, Xianping Tao, Jian Lu: HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization. IEEE Trans. Knowl. Data Eng. 33(11): 3582-3593 (2021)
 
 .. [32] Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
+
+* need torch-cluster to work

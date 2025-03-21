@@ -1,24 +1,10 @@
-import os
 import time
 from itertools import product
 import numpy as np
-
 from imputegap.recovery.imputation import Imputation
 from imputegap.tools import utils
 from imputegap.tools.algorithm_parameters import SEARCH_SPACES, ALL_ALGO_PARAMS, PARAM_NAMES, SEARCH_SPACES_PSO, RAYTUNE_PARAMS
 import imputegap.tools.algorithm_parameters as sh_params
-
-# RAY TUNE IMPORT
-from ray import tune
-import ray
-
-# PSO IMPORT
-from functools import partial
-import pyswarms as ps
-
-# BAYESIAN IMPORT
-import skopt
-from skopt.space import Integer
 
 from pyswarms.utils.reporter import Reporter
 reporter = Reporter()
@@ -289,6 +275,10 @@ class Optimization:
             tuple
                 A tuple containing the best parameters and their corresponding score.
             """
+            # BAYESIAN IMPORT
+            import skopt
+            from skopt.space import Integer
+
             start_time = time.time()  # Record start time
 
             search_spaces = SEARCH_SPACES
@@ -416,6 +406,9 @@ class Optimization:
             tuple
                 A tuple containing the best parameters and their corresponding score.
             """
+            from functools import partial
+            import pyswarms as ps
+
             start_time = time.time()  # Record start time
 
             if not isinstance(metrics, list):
@@ -620,6 +613,9 @@ class Optimization:
             tuple
                 A tuple containing the best parameters and their corresponding score.
             """
+            from ray import tune
+            import ray
+
             if not ray.is_initialized():
                 ray.init()
             used_metric = metrics[0]

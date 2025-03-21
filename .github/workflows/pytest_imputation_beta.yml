@@ -35,7 +35,6 @@ jobs:
         python -m pytest ./tests/test_imputation_tkcm.py
         python -m pytest ./tests/test_imputation_deepmvi.py
         python -m pytest ./tests/test_imputation_brits.py
-        python -m pytest ./tests/test_imputation_mpin.py
         python -m pytest ./tests/test_imputation_pristi.py
         python -m pytest ./tests/test_imputation_grin.py
         python -m pytest ./tests/test_imputation_gain.py

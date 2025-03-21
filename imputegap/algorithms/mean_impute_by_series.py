@@ -38,7 +38,7 @@ def mean_impute_by_series(incomp_data, logs=True):
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation mean impute (by series) - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation mean impute (by series) - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
 
     return recov_data

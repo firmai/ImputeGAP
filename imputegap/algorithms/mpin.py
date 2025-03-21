@@ -52,6 +52,6 @@ def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_d
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation mpin - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation mpin - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

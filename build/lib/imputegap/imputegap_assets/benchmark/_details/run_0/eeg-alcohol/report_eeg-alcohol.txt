@@ -1,0 +1,83 @@
+Report for Dataset: eeg-alcohol
+Generated on: 2025-03-21 15:54:48
+Run number: 0
+========================================================================================================================
+
+RMSE: Root Mean Square Error - Measures the average magnitude of error.
+
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+|     Dataset     |     Pattern     |    Algorithm    |     Optimizer      |   X Value    |           RMSE            |
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.05     |       0.4359915238        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.1      |       0.3665001858        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.2      |       0.3983300622        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.4      |       0.4355910162        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.6      |       0.4500113662        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.8      |       0.4655442240        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.05     |       0.2410259540        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.1      |       0.2889085181        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.2      |       0.3252384253        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.4      |       0.3382458476        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.6      |       0.3656435952        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.8      |       0.4985193265        |
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+
+MAE: Mean Absolute Error - Measures the average absolute error.
+
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+|     Dataset     |     Pattern     |    Algorithm    |     Optimizer      |   X Value    |            MAE            |
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.05     |       0.3725965559        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.1      |       0.2989983613        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.2      |       0.3082464402        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.4      |       0.3335144216        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.6      |       0.3380858657        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.8      |       0.3508926604        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.05     |       0.1898483284        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.1      |       0.2299862373        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.2      |       0.2398150375        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.4      |       0.2509197576        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.6      |       0.2663072460        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.8      |       0.3727407178        |
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+
+MI: Mutual Information - Indicates dependency between variables.
+
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+|     Dataset     |     Pattern     |    Algorithm    |     Optimizer      |   X Value    |            MI             |
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.05     |       1.4169232776        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.1      |       0.9078918431        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.2      |       0.8483406827        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.4      |       0.7286325588        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.6      |       0.6481512577        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.8      |       0.6150677913        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.05     |       1.5477828628        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.1      |       0.9934511614        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.2      |       1.0141220941        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.4      |       0.9534836632        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.6      |       0.7933983583        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.8      |       0.5872198066        |
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+
+CORRELATION: Correlation Coefficient - Indicates linear relationship between variables.
+
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+|     Dataset     |     Pattern     |    Algorithm    |     Optimizer      |   X Value    |        CORRELATION        |
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.05     |       0.9530448037        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.1      |       0.9049909723        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.2      |       0.9161465703        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.4      |       0.9021032587        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.6      |       0.8893263437        |
+|   eegalcohol    |      mcar       |   SoftImpute    |   default_params   |     0.8      |       0.8791443563        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.05     |       0.9810468571        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.1      |       0.9429448316        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.2      |       0.9441733384        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.4      |       0.9418540692        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.6      |       0.9285706344        |
+|   eegalcohol    |      mcar       |    KNNImpute    |   default_params   |     0.8      |       0.8588039019        |
++-----------------+-----------------+-----------------+--------------------+--------------+---------------------------+
+
+Dictionary of Results:
+{'eegalcohol': {'mcar': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.4359915238078244, 'MAE': 0.3725965559420608, 'MI': 1.4169232775678364, 'CORRELATION': 0.9530448037164908}, 'times': {'contamination': 0.00027561187744140625, 'optimization': 0, 'imputation': 0.15315723419189453, 'log_imputation': -0.8148624850120225}}, '0.1': {'scores': {'RMSE': 0.3665001858394363, 'MAE': 0.2989983612840734, 'MI': 0.9078918430616858, 'CORRELATION': 0.9049909722894052}, 'times': {'contamination': 0.0004036426544189453, 'optimization': 0, 'imputation': 0.10621070861816406, 'log_imputation': -0.9738316936187855}}, '0.2': {'scores': {'RMSE': 0.39833006221984, 'MAE': 0.30824644022807457, 'MI': 0.8483406827418594, 'CORRELATION': 0.9161465703422209}, 'times': {'contamination': 0.0015327930450439453, 'optimization': 0, 'imputation': 0.08952975273132324, 'log_imputation': -1.048032614966155}}, '0.4': {'scores': {'RMSE': 0.435591016228979, 'MAE': 0.3335144215651955, 'MI': 0.7286325588353783, 'CORRELATION': 0.9021032587324183}, 'times': {'contamination': 0.03658604621887207, 'optimization': 0, 'imputation': 0.12557768821716309, 'log_imputation': -0.9010875162113435}}, '0.6': {'scores': {'RMSE': 0.4500113661547204, 'MAE': 0.338085865703361, 'MI': 0.6481512576687939, 'CORRELATION': 0.8893263437029546}, 'times': {'contamination': 0.08436226844787598, 'optimization': 0, 'imputation': 0.11329030990600586, 'log_imputation': -0.945807235187996}}, '0.8': {'scores': {'RMSE': 0.46554422402146944, 'MAE': 0.3508926604243284, 'MI': 0.6150677913271478, 'CORRELATION': 0.8791443563129441}, 'times': {'contamination': 0.13154006004333496, 'optimization': 0, 'imputation': 0.33798837661743164, 'log_imputation': -0.4710982348043248}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.24102595399583507, 'MAE': 0.18984832836399548, 'MI': 1.547782862758484, 'CORRELATION': 0.9810468571465141}, 'times': {'contamination': 0.0008156299591064453, 'optimization': 0, 'imputation': 0.051076412200927734, 'log_imputation': -1.291779616813155}}, '0.1': {'scores': {'RMSE': 0.28890851809839135, 'MAE': 0.22998623733608023, 'MI': 0.9934511613817691, 'CORRELATION': 0.942944831550703}, 'times': {'contamination': 0.0005509853363037109, 'optimization': 0, 'imputation': 0.02433300018310547, 'log_imputation': -1.6138043406113736}}, '0.2': {'scores': {'RMSE': 0.32523842533021824, 'MAE': 0.2398150375225743, 'MI': 1.0141220941333857, 'CORRELATION': 0.9441733384102147}, 'times': {'contamination': 0.0013000965118408203, 'optimization': 0, 'imputation': 0.03016376495361328, 'log_imputation': -1.5205144520419687}}, '0.4': {'scores': {'RMSE': 0.33824584758611187, 'MAE': 0.2509197576351218, 'MI': 0.9534836631617412, 'CORRELATION': 0.9418540692188737}, 'times': {'contamination': 0.005934953689575195, 'optimization': 0, 'imputation': 0.08333516120910645, 'log_imputation': -1.0791717201157554}}, '0.6': {'scores': {'RMSE': 0.3656435952078159, 'MAE': 0.26630724595251076, 'MI': 0.7933983583413302, 'CORRELATION': 0.9285706343976159}, 'times': {'contamination': 0.03005695343017578, 'optimization': 0, 'imputation': 0.09784293174743652, 'log_imputation': -1.0094705426576025}}, '0.8': {'scores': {'RMSE': 0.49851932645867886, 'MAE': 0.3727407177987301, 'MI': 0.5872198065951101, 'CORRELATION': 0.8588039019214768}, 'times': {'contamination': 0.06295108795166016, 'optimization': 0, 'imputation': 0.1400442123413086, 'log_imputation': -0.8537348347173945}}}}}}}

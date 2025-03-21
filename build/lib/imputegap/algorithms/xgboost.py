@@ -37,7 +37,7 @@ def xgboost(incomp_data, n_estimators=10, seed=42, logs=True):
     https://medium.com/@tzhaonj/imputing-missing-data-using-xgboost-802757cace6d
     """
 
-    print("\t\t(PYTHON) XGBOOST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ")"
+    print("(PYTHON) XGBOOST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ")"
         " for n_estimators ", n_estimators, ", and seed ", seed, "...")
 
     if isinstance(incomp_data, np.ndarray):
@@ -68,6 +68,6 @@ def xgboost(incomp_data, n_estimators=10, seed=42, logs=True):
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation XGBOOST - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation XGBOOST - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return np.array(recov_data)

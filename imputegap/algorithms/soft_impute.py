@@ -24,7 +24,7 @@ def native_soft_impute(__py_matrix, __py_max_rank):
     R. Mazumder, T. Hastie, and R. Tibshirani. Spectral regularization algorithms for learning large incomplete matrices. Journal of Machine Learning Research, 11:2287–2322, 2010.
     """
 
-    shared_lib = utils.load_share_lib("lib_soft_impute.so")
+    shared_lib = utils.load_share_lib("lib_soft_impute")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -81,6 +81,6 @@ def soft_impute(incomp_data, max_rank, logs=True, lib_path=None):
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation Soft Impute - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation Soft Impute - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

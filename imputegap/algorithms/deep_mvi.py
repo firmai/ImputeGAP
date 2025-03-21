@@ -41,6 +41,6 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True):
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation deep mvi - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation deep mvi - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

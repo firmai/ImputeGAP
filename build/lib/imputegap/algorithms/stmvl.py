@@ -39,7 +39,7 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.
     """
 
-    shared_lib = utils.load_share_lib("lib_stmvl.so")
+    shared_lib = utils.load_share_lib("lib_stmvl")
 
     __py_sizen = len(__py_matrix);
     __py_sizem = len(__py_matrix[0]);
@@ -84,6 +84,9 @@ def stmvl(incomp_data, window_size, gamma, alpha, logs=True):
     :return: recov_data, metrics : all time series with imputation data and their metrics
 
     """
+    print(f"(PYTHON) ST-MVL: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for window_size {window_size}, "
+          f"gamma {gamma}, and alpha {alpha}...")
+
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
@@ -91,6 +94,6 @@ def stmvl(incomp_data, window_size, gamma, alpha, logs=True):
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation stvml - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation stvml - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

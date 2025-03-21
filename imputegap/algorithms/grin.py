@@ -60,6 +60,6 @@ def grin(incomp_data, d_hidden=32, lr=0.001, batch_size=32, window=10, alpha=10.
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation grin - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation grin - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

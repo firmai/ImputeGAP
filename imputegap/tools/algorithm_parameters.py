@@ -61,7 +61,7 @@ RAYTUNE_PARAMS = {
     'cdrec': {
         "rank": tune.grid_search([i for i in range(2, 16, 1)]),
         "eps": tune.loguniform(1e-6, 1),
-        "iters": tune.grid_search([i * 100 for i in range(1, 3)])
+        "iters": tune.grid_search([i * 50 for i in range(1, 4)])
     },
     "iim": {
         "learning_neighbors": tune.grid_search([i for i in range(1, 20)])  # Up to 100 learning neighbors
@@ -156,6 +156,12 @@ RAYTUNE_PARAMS = {
         "seed": 42,  #tune.grid_search([42, 1234, 5678]),  # Different seeds for reproducibility
         "device": tune.choice(["cpu"])  # Allow switching between CPU and GPU
     },
+
+    "knn_impute": {
+        "k": tune.grid_search([1, 12, 1]),
+        "weights": tune.choice(["uniform", "distance"])
+    },
+
 
     "knn": {
         "k": tune.grid_search([1, 12, 1]),

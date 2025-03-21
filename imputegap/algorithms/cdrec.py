@@ -29,7 +29,7 @@ def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
     Khayati, M., Cudré-Mauroux, P. & Böhlen, M.H. Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl Inf Syst 62, 2257–2280 (2020). https://doi.org/10.1007/s10115-019-01421-7
     """
 
-    shared_lib = utils.load_share_lib("lib_cdrec.so")
+    shared_lib = utils.load_share_lib("lib_cdrec")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -87,7 +87,7 @@ def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, lib_path
 
     """
 
-    print(f"\t\t\t\t(PYTHON) CDRec: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for rank {truncation_rank}, "
+    print(f"(PYTHON) CDRec: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for rank {truncation_rank}, "
           f"epsilon {epsilon}, and iterations {iterations}...")
 
     start_time = time.time()  # Record start time
@@ -98,6 +98,6 @@ def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, lib_path
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation cdrec - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation cdrec - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

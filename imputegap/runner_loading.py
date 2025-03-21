@@ -11,4 +11,4 @@ ts.normalize(normalizer="z_score")
 
 # plot and print a subset of time series
 ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
-ts.print(nbr_series=9, nbr_val=100)
+ts.print(nbr_series=9, nbr_val=20)

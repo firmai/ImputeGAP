@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Downstream Evaluation" href="downstream.html" /><link rel="prev" title="Algorithms" href="algorithms.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>Benchmark - imputegap 1.0.5 documentation</title>
+        <title>Benchmark - imputegap 1.0.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">imputegap 1.0.5 documentation</div></a>
+      <a href="index.html"><div class="brand">imputegap 1.0.7 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">imputegap 1.0.5 documentation</span>
+  <span class="sidebar-brand-text">imputegap 1.0.7 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -272,26 +272,25 @@
         <article role="main" id="furo-main-content">
           <section id="benchmark">
 <h1>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h1>
-<p>ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates.</p>
+<p>ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates. The default metrics evaluated include “RMSE”, “MAE”, “MI”, “Pearson”, and the runtime.</p>
 <p>The benchmarking module can be utilized as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">Benchmark</span>
 
-<span class="n">save_dir</span> <span class="o">=</span> <span class="s2">&quot;./analysis&quot;</span>
-<span class="n">nbr_run</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">save_dir</span> <span class="o">=</span> <span class="s2">&quot;./imputegap_assets/benchmark&quot;</span>
+<span class="n">nbr_runs</span> <span class="o">=</span> <span class="mi">1</span>
 
-<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="s2">&quot;eeg-reading&quot;</span><span class="p">]</span>
+<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">]</span>
 
-<span class="n">optimizer</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;max_concurrent_trials&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
-<span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="n">optimizer</span><span class="p">]</span>
+<span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;default_params&quot;</span><span class="p">]</span>
 
-<span class="n">algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MeanImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;CDRec&quot;</span><span class="p">,</span> <span class="s2">&quot;STMVL&quot;</span><span class="p">,</span> <span class="s2">&quot;IIM&quot;</span><span class="p">,</span> <span class="s2">&quot;MRNN&quot;</span><span class="p">]</span>
+<span class="n">algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SoftImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;KNNImpute&quot;</span><span class="p">]</span>
 
 <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mcar&quot;</span><span class="p">]</span>
 
 <span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 
 <span class="c1"># launch the evaluation</span>
-<span class="n">list_results</span><span class="p">,</span> <span class="n">sum_scores</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">algorithms</span><span class="o">=</span><span class="n">algorithms</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="nb">range</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">nbr_run</span><span class="p">)</span>
+<span class="n">list_results</span><span class="p">,</span> <span class="n">sum_scores</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">algorithms</span><span class="o">=</span><span class="n">algorithms</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="nb">range</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">nbr_runs</span><span class="p">)</span>
 </pre></div>
 </div>
 <aside class="footnote-list brackets">
@@ -351,7 +350,7 @@
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=d55fa986"></script>
+</div><script src="static/documentation_options.js?v=46dfa7f5"></script>
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>

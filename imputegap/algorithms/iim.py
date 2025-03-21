@@ -45,6 +45,6 @@ def iim(incomp_data, number_neighbor, algo_code, logs=True):
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation iim - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation iim - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

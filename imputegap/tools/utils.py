@@ -2,9 +2,8 @@ import ctypes
 import os
 import toml
 import importlib.resources
-import numpy as __numpy_import;
-
-
+import numpy as __numpy_import
+import platform
 
 def config_impute_algorithm(incomp_data, algorithm):
     """
@@ -62,8 +61,8 @@ def config_impute_algorithm(incomp_data, algorithm):
         imputer = Imputation.DeepLearning.PRISTI(incomp_data)
 
     # 3rd generation
-    elif algorithm == "knn" or algorithm == "KNN":
-        imputer = Imputation.Statistics.KNN(incomp_data)
+    elif algorithm == "knn" or algorithm == "KNN" or algorithm == "knn_impute" or algorithm == "KNNImpute":
+        imputer = Imputation.Statistics.KNNImpute(incomp_data)
     elif algorithm == "interpolation" or algorithm == "Interpolation":
         imputer = Imputation.Statistics.Interpolation(incomp_data)
     elif algorithm == "mean_series" or algorithm == "MeanImputeBySeries":
@@ -364,7 +363,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     with open(filepath, "r") as _:
         config = toml.load(filepath)
 
-    print("\n\t\t\t\t(SYS) Inner files loaded : ", filepath, "\n")
+    print("\n(SYS) Inner files loaded : ", filepath, "\n")
 
     if algorithm == "cdrec":
         truncation_rank = int(config[algorithm]['rank'])
@@ -450,7 +449,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         seed = int(config[algorithm]['seed'])
         device = str(config[algorithm]['device'])
         return (target_strategy, unconditional, seed, device)
-    elif algorithm == "knn":
+    elif algorithm == "knn" or algorithm == "knn_impute":
         k = int(config[algorithm]['k'])
         weights = str(config[algorithm]['weights'])
         return (k, weights)
@@ -755,18 +754,25 @@ def load_share_lib(name="lib_cdrec", lib=True):
     ctypes.CDLL
         The loaded shared library object.
     """
+    system = platform.system()
+    if system == "Windows":
+        ext = ".so"
+    elif system == "Darwin":
+        ext = ".dylib"  # macOS uses .dylib for dynamic libraries
+    else:
+        ext = ".so"
 
     if lib:
-        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./" + str(name))
+        lib_path = importlib.resources.files('imputegap.algorithms.lib').joinpath("./" + str(name) + ext)
     else:
-        local_path_lin = './algorithms/lib/' + name + '.so'
+        local_path_lin = './algorithms/lib/' + name + ext
 
         if not os.path.exists(local_path_lin):
-            local_path_lin = './imputegap/algorithms/lib/' + name + '.so'
+            local_path_lin = './imputegap/algorithms/lib/' + name + ext
 
         lib_path = os.path.join(local_path_lin)
-        print("\t\t(SYS) lib loaded from:", lib_path)
 
+    print("\n(SYS) Wrapper files loaded for C++ : ", lib_path, "\n")
 
     return ctypes.CDLL(lib_path)
 
@@ -895,7 +901,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "seed": 42,  # Default seed
             "device": "cpu"  # Default device
         }
-    elif algorithm == "knn":
+    elif algorithm == "knn" or algorithm == "knn_impute":
         params_to_save = {
             "k": int(optimal_params[0]),
             "weights": str(optimal_params[1])
@@ -988,9 +994,9 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     try:
         with open(file_name, 'w') as file:
             toml.dump(params_to_save, file)
-        print(f"\n\t\t(SYS) Optimization parameters successfully saved to {file_name}")
+        print(f"\n(SYS) Optimization parameters successfully saved to {file_name}")
     except Exception as e:
-        print(f"\n\t\t(SYS) An error occurred while saving the file: {e}")
+        print(f"\n(SYS) An error occurred while saving the file: {e}")
 
 
 def list_of_algorithms():
@@ -1010,7 +1016,7 @@ def list_of_algorithms():
         "XGBOOST",
         "MICE",
         "MissForest",
-        "KNN",
+        "KNNImpute",
         "Interpolation",
         "MinImpute",
         "MeanImpute",

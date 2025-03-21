@@ -13,7 +13,6 @@ import tsfresh
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 
-from imputegap.recovery.imputation import Imputation
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
 
@@ -366,7 +365,7 @@ class Explainer:
 
         result_display = sorted(result_display, key=lambda tup: (tup[1], tup[2]), reverse=True)
 
-        with open(to_save + "_results.txt", 'w') as file_output:
+        with open(to_save + "_values.txt", 'w') as file_output:
             for (x, algo, rate, description, feature, category, mean_features) in result_display:
                 file_output.write(
                     f"Feature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<65} {feature}\n")
@@ -410,8 +409,12 @@ class Explainer:
         plots_categories = config[extractor]['categories']
 
         path_file = "./imputegap_assets/shap/"
-        if not os.path.exists(path_file):
-            path_file = "./imputegap" + path_file[1:]
+        path_file_details = "./imputegap_assets/shap/grouped/"
+        path_file_categories = "./imputegap_assets/shap/per_categories/"
+
+        os.makedirs(path_file, exist_ok=True)
+        os.makedirs(path_file_details, exist_ok=True)
+        os.makedirs(path_file_categories, exist_ok=True)
 
         x_features, x_categories, x_descriptions = [], [], []
         x_fs, x_cs, x_ds, alphas = [], [], [], []
@@ -451,8 +454,7 @@ class Explainer:
             print("\t SHAP_MODEL >> descriptions shape:", x_descriptions.shape, "\n")
             print("\t SHAP_MODEL >> features OK:", np.all(np.all(x_features == x_features[0, :], axis=1)))
             print("\t SHAP_MODEL >> categories OK:", np.all(np.all(x_categories == x_categories[0, :], axis=1)))
-            print("\t SHAP_MODEL >> descriptions OK:", np.all(np.all(x_descriptions == x_descriptions[0, :], axis=1)),
-                  "\n\n")
+            print("\t SHAP_MODEL >> descriptions OK:", np.all(np.all(x_descriptions == x_descriptions[0, :], axis=1)), "\n\n")
 
         model = RandomForestRegressor()
         model.fit(x_train, y_train)
@@ -470,7 +472,7 @@ class Explainer:
             series_names.append("Series " + str(names + np.array(x_train).shape[0]))
 
         shap.summary_plot(shval, x_test, plot_size=(25, 10), feature_names=optimal_display, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_plot.png")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_all.png")
         plt.title("SHAP Details Results")
         os.makedirs(path_file, exist_ok=True)
         plt.savefig(alpha)
@@ -478,14 +480,14 @@ class Explainer:
         alphas.append(alpha)
 
         shap.summary_plot(np.array(shval).T, np.array(x_test).T, feature_names=series_names, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_reverse_plot.png")
+        alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_shap_reverse.png")
         plt.title("SHAP Features by Series")
         plt.savefig(alpha)
         plt.close()
         alphas.append(alpha)
 
         shap.plots.waterfall(shval_x[0], show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_DTL_Waterfall.png")
+        alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_DTL_Waterfall.png")
         plt.title("SHAP Waterfall Results")
         fig = plt.gcf()  # Get the current figure created by SHAP
         fig.set_size_inches(20, 10)  # Ensure the size is correct
@@ -494,7 +496,7 @@ class Explainer:
         alphas.append(alpha)
 
         shap.plots.beeswarm(shval_x, show=display, plot_size=(22, 10))
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_DTL_Beeswarm.png")
+        alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_DTL_Beeswarm.png")
         plt.title("SHAP Beeswarm Results")
         plt.savefig(alpha)
         plt.close()
@@ -550,7 +552,7 @@ class Explainer:
         mean_features = np.array(mean_features)
 
         shap.summary_plot(np.array(geometry).T, np.array(geometryT).T, plot_size=(20, 10), feature_names=geometryDesc, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[0].lower() + "_plot.png")
+        alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[0].lower() + ".png")
         plt.title("SHAP details of " + plots_categories[0].lower())
         plt.savefig(alpha)
         plt.close()
@@ -558,7 +560,7 @@ class Explainer:
 
         shap.summary_plot(np.array(transformation).T, np.array(transformationT).T, plot_size=(20, 10),
                           feature_names=transformationDesc, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[2].lower() + "_plot.png")
+        alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[2].lower() + ".png")
         plt.title("SHAP details of " + plots_categories[1].lower())
         plt.savefig(alpha)
         plt.close()
@@ -566,7 +568,7 @@ class Explainer:
 
         shap.summary_plot(np.array(correlation).T, np.array(correlationT).T, plot_size=(20, 10),
                           feature_names=correlationDesc, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[1].lower() + "_plot.png")
+        alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[1].lower() + ".png")
         plt.title("SHAP details of " + plots_categories[1].lower())
         plt.savefig(alpha)
         plt.close()
@@ -574,7 +576,7 @@ class Explainer:
 
         shap.summary_plot(np.array(trend).T, np.array(trendT).T, plot_size=(20, 8), feature_names=trendDesc,
                           show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[3].lower() + "_plot.png")
+        alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[3].lower() + ".png")
         plt.title("SHAP details of " + plots_categories[3].lower())
         plt.savefig(alpha)
         plt.close()
@@ -594,7 +596,7 @@ class Explainer:
         aggregation_test = np.array(aggregation_test).T
 
         shap.summary_plot(aggregation_features, aggregation_test, feature_names=plots_categories, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_aggregate_plot.png")
+        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_cat.png")
         plt.title("SHAP Aggregation Results")
         plt.gca().axes.get_xaxis().set_visible(False)
         plt.savefig(alpha)
@@ -602,7 +604,7 @@ class Explainer:
         alphas.append(alpha)
 
         shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names, show=display)
-        alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_aggregate_reverse_plot.png")
+        alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_shap_agg_reverse.png")
         plt.title("SHAP Aggregation Features by Series")
         plt.savefig(alpha)
         plt.close()

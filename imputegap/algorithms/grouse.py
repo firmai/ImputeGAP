@@ -24,7 +24,7 @@ def native_grouse(__py_matrix, __py_rank):
     D. Zhang and L. Balzano. Global convergence of a grassmannian gradient descent algorithm for subspace estimation. In Proceedings of the 19th International Conference on Artificial Intelligence and Statistics, AISTATS 2016, Cadiz, Spain, May 9-11, 2016, pages 1460–1468, 2016.
     """
 
-    shared_lib = utils.load_share_lib("lib_grouse.so")
+    shared_lib = utils.load_share_lib("lib_grouse")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -80,6 +80,6 @@ def grouse(incomp_data, max_rank, logs=True, lib_path=None):
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation GROUSE - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation GROUSE - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

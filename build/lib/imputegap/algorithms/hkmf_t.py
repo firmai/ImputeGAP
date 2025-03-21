@@ -48,6 +48,6 @@ def hkmf_t(incomp_data, tags=None, data_names=None, epoch=10, logs=True):
 
     end_time = time.time()
     if logs:
-        print(f"\n\t\t> logs, imputation hkmf_t - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation hkmf_t - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

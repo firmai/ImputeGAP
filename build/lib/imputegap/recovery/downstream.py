@@ -6,14 +6,6 @@ import matplotlib.pyplot as plt
 
 from imputegap.tools import utils
 
-from darts import TimeSeries
-from darts.metrics import mae as darts_mae, mse as darts_mse
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sktime.forecasting.base import ForecastingHorizon
-
-
-
-
 
 
 class Downstream:
@@ -53,7 +45,7 @@ class Downstream:
 
 
 
-    def __init__(self, input_data, recov_data, incomp_data, downstream):
+    def __init__(self, input_data, recov_data, incomp_data, algorithm, downstream):
         """
         Initialize the Downstream class
 
@@ -65,6 +57,8 @@ class Downstream:
             The imputed time series.
         incomp_data : numpy.ndarray
             The time series with contamination (NaN values).
+        algorithm : str
+            Name of the algorithm to analyse.
         downstream : dict
             Information about the model to launch with its parameters
         """
@@ -72,6 +66,7 @@ class Downstream:
         self.recov_data = recov_data
         self.incomp_data = incomp_data
         self.downstream = downstream
+        self.algorithm = algorithm
         self.split = 0.8
         self.sktime_models = utils.list_of_downstreams_sktime()
 
@@ -92,31 +87,39 @@ class Downstream:
         model = self.downstream.get("model", "naive")
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
-        
+        comparator = self.downstream.get("comparator", None)
+
         model = model.lower()
         evaluator = evaluator.lower()
 
         if not params:
-            print("\n\t\t\t\tThe params for model of downstream analysis are empty or missing. Default ones loaded...")
+            print("\n\t(DOWNSTREAM) The params for model of downstream analysis are empty or missing. Default ones loaded...")
             loader = "forecaster-" + str(model)
             params = utils.load_parameters(query="default", algorithm=loader)
 
-        print("\n\t\t\t\tDownstream analysis launched for <", evaluator, "> on the model <", model,
+        print("\n(DOWNSTREAM) Analysis launched for <", evaluator, "> on the model <", model,
               "> with parameters :\n\t\t\t\t\t", params, " \n\n")
 
         if evaluator in ["forecast", "forecaster", "forecasting"]:
             y_train_all, y_test_all, y_pred_all = [], [], []
-            mae, mse = [], []
+            mae, mse, smape = [], [], []
 
             for x in range(3):  # Iterate over recov_data, input_data, and mean_impute
                 if x == 0:
-                    data = self.recov_data
-                elif x == 1:
                     data = self.input_data
+                elif x == 1:
+                    data = self.recov_data
                 elif x == 2:
                     from imputegap.recovery.imputation import Imputation
-                    zero_impute = Imputation.Statistics.ZeroImpute(self.incomp_data).impute()
-                    data = zero_impute.recov_data
+
+                    if comparator is not None:
+                        impt = utils.config_impute_algorithm(self.incomp_data, algorithm=comparator)
+                        impt.impute()
+                        data = impt.recov_data
+                    else:
+                        comparator = "zero-impute"
+                        zero_impute = Imputation.Statistics.ZeroImpute(self.incomp_data).impute()
+                        data = zero_impute.recov_data
 
                 data_len = data.shape[1]
                 train_len = int(data_len * self.split)
@@ -128,6 +131,10 @@ class Downstream:
 
                 if model in self.sktime_models:
                     # --- SKTIME APPROACH ---
+                    from sklearn.metrics import mean_absolute_error, mean_squared_error
+                    from sktime.forecasting.base import ForecastingHorizon
+                    from sktime.performance_metrics.forecasting import MeanAbsolutePercentageError
+
                     y_pred = np.zeros_like(y_test)
 
                     for series_idx in range(data.shape[0]):
@@ -146,10 +153,17 @@ class Downstream:
                     # Compute metrics using sktime
                     mae.append(mean_absolute_error(y_test, y_pred))
                     mse.append(mean_squared_error(y_test, y_pred))
+                    scoring_m = MeanAbsolutePercentageError(symmetric=True)
+                    smape.append(scoring_m.evaluate(y_test, y_pred)*100)  # Compute SMAPE
+
 
                 else:
                     # --- DARTS APPROACH ---
                     # Convert entire matrix to a Darts multivariate TimeSeries object
+                    from darts import TimeSeries
+                    from darts.metrics import mae as darts_mae, mse as darts_mse
+                    from darts.metrics import smape as darts_smape
+
                     y_train_ts = TimeSeries.from_values(y_train.T)  # Shape: (time_steps, n_series)
                     y_test_ts = TimeSeries.from_values(y_test.T)  # Shape: (time_steps, n_series)
 
@@ -175,11 +189,12 @@ class Downstream:
                     # Compute metrics safely
                     mae_score = darts_mae(y_test_ts, y_pred_ts)
                     mse_score = darts_mse(y_test_ts, y_pred_ts)
-
+                    smape_score = darts_smape(y_test_ts, y_pred_ts)
 
                     # Compute metrics using Darts
                     mae.append(mae_score)
                     mse.append(mse_score)
+                    smape.append(smape_score)
 
                 # Store for plotting
                 y_train_all.append(y_train)
@@ -188,23 +203,24 @@ class Downstream:
 
             if plots:
                 # Global plot with all rows and columns
-                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, model, evaluator)
+                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, comparator, model, evaluator)
 
             # Save metrics in a dictionary
-            metrics = {"DOWNSTREAM-RECOV-MAE": mae[0], "DOWNSTREAM-INPUT-MAE": mae[1],
-                       "DOWNSTREAM-MEANI-MAE": mae[2], "DOWNSTREAM-RECOV-MSE": mse[0],
-                       "DOWNSTREAM-INPUT-MSE": mse[1], "DOWNSTREAM-MEANI-MSE": mse[2]}
-
-            print("\n\t\t\t\tDownstream analysis complete. " + "*" * 58 + "\n")
+            al_name = "DOWNSTREAM-" + self.algorithm.upper() + "-MSE"
+            al_name_s = "DOWNSTREAM-" + self.algorithm.upper() + "-SMAPE"
+            al_name_c = "DOWNSTREAM-" + comparator.upper() + "-MSE"
+            al_name_cs = "DOWNSTREAM-" + comparator.upper() + "-SMAPE"
+            metrics = {"DOWNSTREAM-ORIGIN-MSE": mse[0], al_name: mse[1], al_name_c: mse[2],
+                       "DOWNSTREAM-ORIGIN-SMAPE": smape[0], al_name_s: smape[1], al_name_cs: smape[2] }
 
             return metrics
         else:
-            print("\t\t\t\tNo evaluator found... list possible : 'forecaster'" + "*" * 30 + "\n")
+            print("\tNo evaluator found... list possible : 'forecaster'" + "*" * 30 + "\n")
 
             return None
 
     @staticmethod
-    def _plot_downstream(y_train, y_test, y_pred, incomp_data, model=None, type=None, title="Ground Truth vs Predictions", max_series=1, save_path="./imputegap_assets"):
+    def _plot_downstream(y_train, y_test, y_pred, incomp_data, algorithm, comparison, model=None, type=None, title="", max_series=1, save_path="./imputegap_assets/downstream"):
         """
         Plot ground truth vs. predictions for contaminated series (series with NaN values).
 
@@ -220,6 +236,10 @@ class Downstream:
             Incomplete data array of shape (n_series, total_len), used to identify contaminated series.
         model : str
             Name of the current model used
+        algorithm : str
+            Name of the current algorithm used
+        comparison : str
+            Name of the current algorithm used as comparison
         type : str
             Name of the current type used
         title : str
@@ -235,6 +255,7 @@ class Downstream:
             x_size = 24
 
         fig, axs = plt.subplots(3, max_series, figsize=(x_size, 15))
+        fig.canvas.manager.set_window_title("downstream evaluation")
         fig.suptitle(title, fontsize=16)
 
         # Iterate over the three data types (recov_data, input_data, mean_impute)
@@ -258,40 +279,41 @@ class Downstream:
                 full_series = np.concatenate([s_y_train[series_idx], s_y_test[series_idx]])
 
                 # Plot training data
-                ax.plot(range(len(s_y_train[series_idx])), s_y_train[series_idx], label="Training Data", color="green")
+                ax.plot(range(len(s_y_train[series_idx])), s_y_train[series_idx], color="green")
 
                 # Plot ground truth (testing data)
                 ax.plot(
                     range(len(s_y_train[series_idx]), len(full_series)),
                     s_y_test[series_idx],
-                    label="Ground Truth",
+                    label="ground truth",
                     color="green"
                 )
 
+                label = type + " " + model
                 # Plot forecasted data
                 ax.plot(
                     range(len(s_y_train[series_idx]), len(full_series)),
                     s_y_pred[series_idx],
-                    label="Forecast",
+                    label=label,
                     linestyle="--",
                     marker=None,
                     color="red"
                 )
 
                 # Add a vertical line at the split point
-                ax.axvline(x=len(s_y_train[series_idx]), color="orange", linestyle="--", label="Split Point")
+                ax.axvline(x=len(s_y_train[series_idx]), color="orange", linestyle="--")
 
                 # Add labels, title, and grid
                 if row_idx == 0:
-                    ax.set_title(f"IMPUTATED DATA (RECOVERY), series {series_idx}")
+                    ax.set_title(f"original data, series_{series_idx}")
                 elif row_idx == 1:
-                    ax.set_title(f"ORIGINAL DATA (GROUND TRUTH), series {series_idx}")
+                    ax.set_title(f"{algorithm.lower()} imputation, series_{series_idx}")
                 else:
-                    ax.set_title(f"BAD IMPUTER (ZERO IMP), series {series_idx}")
+                    ax.set_title(f"{comparison.lower()} imputation, series_{series_idx}")
 
                 ax.set_xlabel("Timestamp")
                 ax.set_ylabel("Value")
-                ax.legend()
+                ax.legend(loc='upper left', fontsize=7, frameon=True, fancybox=True, framealpha=0.8)
                 ax.grid()
 
         # Adjust layout

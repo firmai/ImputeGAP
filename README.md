@@ -20,7 +20,7 @@ Access to commonly used datasets in time series research (Datasets).
 <br>
 
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
-![Release](https://img.shields.io/badge/Release-v1.0.6-brightgreen) 
+![Release](https://img.shields.io/badge/Release-v1.0.7-brightgreen) 
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
 ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
@@ -40,13 +40,13 @@ Access to commonly used datasets in time series research (Datasets).
 # List of available imputation algorithms
 | **Family**         | **Algorithm**             | **Venue -- Year**            |
 |--------------------|---------------------------|------------------------------|
-| Deep Learning      | BITGraph [[32]](#ref32)   | ICLR -- 2024                 |
+| Deep Learning      | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
 | Deep Learning      | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
-| Deep Learning      | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
 | Deep Learning      | MissNet [[27]](#ref27)    | KDD -- 2024                  |
-| Deep Learning      | PriSTI [[26]](#ref26)     | ICDE -- 2023                 |
+| Deep Learning      | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
+| Deep Learning      | PRISTI [[26]](#ref26)     | ICDE -- 2023                 |
 | Deep Learning      | GRIN [[29]](#ref29)       | ICLR -- 2022                 |
-| Deep Learning      | HKMF-T [[31]](#ref31)     | TKDE -- 2021                 |
+| Deep Learning      | HKMF_T [[31]](#ref31)     | TKDE -- 2021                 |
 | Deep Learning      | DeepMVI [[24]](#ref24)    | PVLDB -- 2021                |
 | Deep Learning      | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
 | Deep Learning      | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
@@ -60,18 +60,18 @@ Access to commonly used datasets in time series research (Datasets).
 | Matrix Completion  | SPIRIT [[5]](#ref5)       | VLDB -- 2005                 |
 | Matrix Completion  | IterativeSVD [[2]](#ref2) | BIOINFORMATICS -- 2001       |
 | Pattern Search     | TKCM [[11]](#ref11)       | EDBT -- 2017                 |
-| Pattern Search     | ST-MVL [[9]](#ref9)       | IJCAI -- 2016                |
+| Pattern Search     | STMVL [[9]](#ref9)        | IJCAI -- 2016                |
 | Pattern Search     | DynaMMo [[10]](#ref10)    | KDD -- 2009                  |
 | Machine Learning   | IIM [[12]](#ref12)        | ICDE -- 2019                 |
-| Machine Learning   | XGBI [[13]](#ref13)       | KDD -- 2016                  |
-| Machine Learning   | Mice [[14]](#ref14)       | Statistical Software -- 2011 |
+| Machine Learning   | XGBOOST [[13]](#ref13)    | KDD -- 2016                  |
+| Machine Learning   | MICE [[14]](#ref14)       | Statistical Software -- 2011 |
 | Machine Learning   | MissForest [[15]](#ref15) | BioInformatics -- 2011       |
 | Statistics         | KNNImpute                 | -                            |
 | Statistics         | Interpolation             | -                            |
-| Statistics         | Min Impute                | -                            |
-| Statistics         | Zero Impute               | -                            |
-| Statistics         | Mean Impute               | -                            |
-| Statistics         | Mean Impute By Series     | -                            |
+| Statistics         | MinImpute                 | -                            |
+| Statistics         | ZeroImpute                | -                            |
+| Statistics         | MeanImpute                | -                            |
+| Statistics         | MeanImputeBySeries        | -                            |
 
 ---
 
@@ -155,7 +155,7 @@ ts.normalize(normalizer="z_score")
 
 # plot and print a subset of time series
 ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
-ts.print(nbr_series=9, nbr_val=100)
+ts.print(nbr_series=9, nbr_val=20)
 ```
 
 ---
@@ -235,8 +235,7 @@ imputer.score(ts.data, imputer.recov_data)
 ts.print_results(imputer.metrics)
 
 # plot the recovered time series
-ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True,
-        save_path="./imputegap_assets")
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets")
 ```
 
 ---
@@ -270,9 +269,16 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 # use Ray Tune to fine tune the imputation algorithm
 imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
 
-# compute and print the imputation metrics
+# compute the imputation metrics with optimized parameter values
 imputer.score(ts.data, imputer.recov_data)
-ts.print_results(imputer.metrics)
+
+# compute the imputation metrics with default parameter values
+imputer_def = Imputation.MatrixCompletion.CDRec(ts_m).impute()
+imputer_def.score(ts.data, imputer_def.recov_data)
+
+# print the imputation metrics with default and optimized parameter values
+ts.print_results(imputer_def.metrics, text="Imputation metrics with default parameter values")
+ts.print_results(imputer.metrics, text="Imputation metrics with optimized parameter values")
 
 # plot the recovered time series
 ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True,
@@ -357,7 +363,7 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute and print the downstream results
-downstream_config = {"task": "forecast", "model": "hw-add"}
+downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
 ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 ```
@@ -369,7 +375,7 @@ ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 
 ## Benchmark
 
-ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms[[33]](#ref33) . Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates.
+ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms[[33]](#ref33) . Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates. The default metrics evaluated include "RMSE", "MAE", "MI", "Pearson", and the runtime.
 The documentation for the benchmark is described [here](https://imputegap.readthedocs.io/en/latest/benchmark.html).
 
 
@@ -381,22 +387,27 @@ The benchmarking module can be utilized as follows:
 ```python
 from imputegap.recovery.benchmark import Benchmark
 
-save_dir = "./analysis"
-nbr_run = 2
+save_dir = "./imputegap_assets/benchmark"
+nbr_runs = 1
 
-datasets = ["eeg-alcohol", "eeg-reading"]
+datasets = ["eeg-alcohol"]
 
-optimizer = {"optimizer": "ray_tune", "options": {"n_calls": 1, "max_concurrent_trials": 1}}
-optimizers = [optimizer]
+optimizers = ["default_params"]
 
-algorithms = ["MeanImpute", "CDRec", "STMVL", "IIM", "MRNN"]
+algorithms = ["SoftImpute", "KNNImpute"]
 
 patterns = ["mcar"]
 
 range = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
 # launch the evaluation
-list_results, sum_scores = Benchmark().eval(algorithms=algorithms, datasets=datasets, patterns=patterns, x_axis=range, optimizers=optimizers, save_dir=save_dir, runs=nbr_run)
+list_results, sum_scores = Benchmark().eval(algorithms=algorithms, datasets=datasets, patterns=patterns, x_axis=range, optimizers=optimizers, save_dir=save_dir, runs=nbr_runs)
+```
+
+You can change the optimizer using the following command:
+```python
+optimizer = {"optimizer": "ray_tune", "options": {"n_calls": 1, "max_concurrent_trials": 1}}
+optimizers = [optimizer]
 ```
 
 ---
@@ -406,20 +417,6 @@ To add your own imputation algorithm in Python or C++, please refer to the detai
 
 
 ---
-
-
-## Articles
-
-
-Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudre-Mauroux: Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)
-
-Mourad Khayati, Quentin Nater, Jacques Pasquier: ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proc. VLDB Endow. 17(12): 4329-4332 (2024)
-
----
-
-
-
-
 
 ## Citing
 

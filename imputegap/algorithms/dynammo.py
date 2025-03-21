@@ -29,7 +29,7 @@ def native_dynammo(__py_matrix, __py_h, __py_maxIter, __py_fast):
     L. Li, J. McCann, N. S. Pollard, and C. Faloutsos. Dynammo: mining and summarization of coevolving sequences with missing values. In Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Paris, France, June 28 - July 1, 2009, pages 507–516, 2009.
     """
 
-    shared_lib = utils.load_share_lib("lib_dynammo.so")
+    shared_lib = utils.load_share_lib("lib_dynammo")
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -92,6 +92,6 @@ def dynammo(incomp_data, h, max_iteration, approximation, logs=True, lib_path=No
     end_time = time.time()
 
     if logs:
-        print(f"\n\t\t> logs, imputation DynaMMo - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n\t> logs, imputation DynaMMo - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data
