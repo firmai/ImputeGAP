@@ -1,22 +1,9 @@
 import pathlib
 import setuptools
 
-# Ensure Torch is Installed First
-TORCH_REQUIREMENT = ["torch==2.5.1", "torchvision==0.20.1", "torchaudio==2.5.1"]
-
-with open("requirements.txt") as f:
-    install_requires = f.read().splitlines()
-
-# Remove Torch if it's already in install_requires
-install_requires = [pkg for pkg in install_requires if not pkg.startswith("torch")]
-
-# Install Torch First
-install_requires = TORCH_REQUIREMENT + install_requires
-
-
 setuptools.setup(
     name="imputegap",
-    version="1.0.6",
+    version="1.0.5",
     description="A Library of Imputation Techniques for Time Series Data",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
@@ -25,7 +12,7 @@ setuptools.setup(
     author_email="quentin.nater@unifr.ch",
     license="MIT License",
     project_urls = {
-        "Documentation": "https://imputegap.readthedocs.io/",
+        "Documentation": "https://exascaleinfolab.github.io/ImputeGAP/",
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"
     },
     classifiers=[
@@ -36,8 +23,10 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
     ],
     python_requires=">=3.10, <3.13",
-    install_requires=install_requires,
-    packages=setuptools.find_packages(),
+    install_requires=(
+            open('requirements.txt').read().splitlines() +
+            open('requirements_dev.txt').read().splitlines()
+    ),    packages=setuptools.find_packages(),
     include_package_data=True,
     package_data={
         'imputegap': [
