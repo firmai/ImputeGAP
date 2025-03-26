@@ -3,7 +3,7 @@ import ctypes as __native_c_types_import;
 
 from imputegap.tools import utils
 
-def native_tkcm(__py_matrix, __py_rank):
+def native_tkcm(__py_matrix, __py_rank, __verbose=True):
     """
     Perform matrix imputation using the TKCM algorithm with native C++ support.
 
@@ -13,6 +13,8 @@ def native_tkcm(__py_matrix, __py_rank):
         The input matrix with missing values (NaNs).
     __py_rank : int
         The truncation rank for matrix decomposition (must be greater than 0 and less than the number of columns).
+    __verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -24,7 +26,7 @@ def native_tkcm(__py_matrix, __py_rank):
     K. Wellenzohn, M. H. Böhlen, A. Dignös, J. Gamper, and H. Mitterer. Continuous imputation of missing values in streams of pattern-determining time series. In Proceedings of the 20th International Conference on Extending Database Technology, EDBT 2017, Venice, Italy, March 21-24, 2017., pages 330–341, 2017.
     """
 
-    shared_lib = utils.load_share_lib("lib_tkcm")
+    shared_lib = utils.load_share_lib("lib_tkcm", verbose=__verbose)
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -47,7 +49,7 @@ def native_tkcm(__py_matrix, __py_rank):
     return __py_imputed_matrix;
 
 
-def tkcm(incomp_data, rank, logs=True, lib_path=None):
+def tkcm(incomp_data, rank, logs=True, verbose=True, lib_path=None):
     """
     TKM algorithm for matrix imputation.
 
@@ -59,6 +61,8 @@ def tkcm(incomp_data, rank, logs=True, lib_path=None):
         The rank for matrix decomposition (must be greater than 1 and smaller than the number of series).
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
     lib_path : str, optional
         Custom path to the shared library file (default is None).
 
@@ -69,18 +73,18 @@ def tkcm(incomp_data, rank, logs=True, lib_path=None):
 
     Example
     -------
-    >>> recov_data = tkcm(incomp_data=incomp_data, rank=5, logs=True)
-    >>> print(recov_data)
+        >>> recov_data = tkcm(incomp_data=incomp_data, rank=5, logs=True)
+        >>> print(recov_data)
 
     """
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_tkcm(incomp_data, rank)
+    recov_data = native_tkcm(incomp_data, rank, verbose)
 
     end_time = time.time()
 
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation TKCM - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.priSTI.runnerPRISTI import recovPRISTI
 
 
-def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, device="cpu", logs=True):
+def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, device="cpu", logs=True, verbose=True):
     """
     Perform imputation using the priSTI (Probabilistic Imputation via Sequential Targeted Imputation) algorithm.
 
@@ -22,6 +22,8 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, d
         The device to perform computation on, e.g., "cpu" or "cuda" (default is "cpu").
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -30,8 +32,8 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, d
 
     Example
     -------
-    >>> recov_data = priSTI(incomp_data=ts_input, target_strategy="hybrid", unconditional=True, seed=42, device="cpu")
-    >>> print(recov_data)
+        >>> recov_data = priSTI(incomp_data=ts_input, target_strategy="hybrid", unconditional=True, seed=42, device="cpu")
+        >>> print(recov_data)
 
     References
     ----------
@@ -40,10 +42,10 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, d
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recovPRISTI(data=incomp_data, target_strategy=target_strategy, unconditional=unconditional, seed=seed, device=device, num_workers=1)
+    recov_data = recovPRISTI(data=incomp_data, target_strategy=target_strategy, unconditional=unconditional, seed=seed, device=device, num_workers=1, verbose=verbose)
 
     end_time = time.time()
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation priSTI - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

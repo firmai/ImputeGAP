@@ -9,13 +9,16 @@ In detail, the package provides:
 Access to commonly used datasets in time series research (Datasets).
 
   - Access to commonly used datasets in time series research ([Datasets](https://imputegap.readthedocs.io/en/latest/datasets.html)).
-  - Automated preprocessing with built-in methods for normalizing time series ([PreProcessing](https://imputegap.readthedocs.io/en/latest/preprocessing.html)).
+  - Automated preprocessing with built-in methods for normalizing time series ([PreProcessing](https://imputegap.readthedocs.io/en/latest/tutorials.html#loading-preprocessing)).
   - Configurable contamination module that simulates real-world missingness patterns ([Patterns](https://imputegap.readthedocs.io/en/latest/patterns.html)).
   - Parameterizable state-of-the-art time series imputation algorithms ([Algorithms](https://imputegap.readthedocs.io/en/latest/algorithms.html)).
-  - Benchmarking to foster reproducibility in time series imputation ([Benchmark](https://imputegap.readthedocs.io/en/latest/benchmark.html)).
-  - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis ([Downstream](https://imputegap.readthedocs.io/en/latest/downstream.html)).
-  - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](https://imputegap.readthedocs.io/en/latest/explainer.html)).
+  - Benchmarking to foster reproducibility in time series imputation ([Benchmark](https://imputegap.readthedocs.io/en/latest/tutorials.html#benchmark)).
+  - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis ([Downstream](https://imputegap.readthedocs.io/en/latest/tutorials.html#downstream)).
+  - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](https://imputegap.readthedocs.io/en/latest/tutorials.html#explainer)).
   - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
+
+
+If you like our library, please star our GitHub repository.
 
 <br>
 
@@ -26,13 +29,22 @@ Access to commonly used datasets in time series research (Datasets).
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
 ![Language](https://img.shields.io/badge/Language-English-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
-[![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://exascaleinfolab.github.io/ImputeGAP/generation/build/html/index.html)
+[![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/en/latest/)
+
 
 <br>
 
-- **Documentation**: [https://imputegap.readthedocs.io/en/latest/](https://imputegap.readthedocs.io/en/latest/)
-- **PyPI**: [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)
-- **Datasets**: [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)
+| Tools                | URL                                                                                        |
+|----------------------|--------------------------------------------------------------------------------------------|
+| 📚 **Documentation** | [https://imputegap.readthedocs.io/en/latest/](https://imputegap.readthedocs.io/en/latest/) |
+| 📦 **PyPI**          | [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)                 |
+| 📁 **Datasets**      | [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)     |
+
+
+
+
+
+
 - ---
 
 
@@ -85,7 +97,7 @@ Access to commonly used datasets in time series research (Datasets).
   - [Data Preprocessing](#loading-and-preprocessing)  
   - [Contamination](#contamination)  
   - [Imputation](#imputation)  
-  - [Auto-ML](#parameterization)  
+  - [Auto-ML](#Parameter-Tuning)  
   - [Explainer](#explainer)  
   - [Downstream Evaluation](#downstream)
   - [Benchmark](#benchmark)  
@@ -96,7 +108,6 @@ Access to commonly used datasets in time series research (Datasets).
 - **Additional Information**  
   - [References](#references)  
   - [Core Contributors](#core-contributors)  
-
 
 
 ---
@@ -179,7 +190,6 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"Missingness patterns : {ts.patterns}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -189,8 +199,17 @@ ts.normalize(normalizer="z_score")
 ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)
 
 # [OPTIONAL] plot the contaminated time series
-ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets")
+ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets/contamination")
 ```
+
+All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module. To list all the available patterns, you can use this command:
+```python
+from imputegap.recovery.manager import TimeSeries
+ts = TimeSeries()
+print(f"Missingness patterns : {ts.patterns}")
+```
+
+
 
 ---
 
@@ -202,12 +221,6 @@ The list of algorithms and their optimizers is described [here](https://imputega
 ### Example Imputation
 You can find this example in the file [`runner_imputation.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_imputation.py).
 
-Imputation can be performed using either default values or user-defined values. To specify the parameters, please use a dictionary in the following format:
-
-```python
-params = {"param_1": 42.1, "param_2": "some_string", "params_3": True}
-```
-
 Let's illustrate the imputation using the CDRec Algorithm from the Matrix Completion family.
 
 ```python
@@ -217,7 +230,6 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"Imputation algorithms : {ts.algorithms}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -235,13 +247,27 @@ imputer.score(ts.data, imputer.recov_data)
 ts.print_results(imputer.metrics)
 
 # plot the recovered time series
-ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets")
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets/imputation")
+```
+
+Imputation can be performed using either default values or user-defined values. To specify the parameters, please use a dictionary in the following format:
+
+```python
+config = {"rank": 5, "epsilon": 0.01, "iterations": 100}
+imputer.impute(params=config)
+```
+
+All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module. To list all the available algorithms, you can use this command:
+```python
+from imputegap.recovery.manager import TimeSeries
+ts = TimeSeries()
+print(f"Imputation algorithms : {ts.algorithms}")
 ```
 
 ---
 
 
-## Parameterization
+## Parameter Tuning
 The Optimizer component manages algorithm configuration and hyperparameter tuning. To invoke the tuning process, users need to specify the optimization option during the Impute call by selecting the appropriate input for the algorithm. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by [Ray Tune](https://docs.ray.io/en/latest/tune/index.html>).
 
 ### Example Auto-ML
@@ -277,17 +303,25 @@ imputer_def = Imputation.MatrixCompletion.CDRec(ts_m).impute()
 imputer_def.score(ts.data, imputer_def.recov_data)
 
 # print the imputation metrics with default and optimized parameter values
-ts.print_results(imputer_def.metrics, text="Imputation metrics with default parameter values")
-ts.print_results(imputer.metrics, text="Imputation metrics with optimized parameter values")
+ts.print_results(imputer_def.metrics, text="Default values")
+ts.print_results(imputer.metrics, text="Optimized values")
 
 # plot the recovered time series
-ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True,
-        save_path="./imputegap_assets", display=True)
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets/imputation", display=True)
 
 # save hyperparameters
-utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol",
-                        optimizer="ray_tune")
+utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune", file_name="./imputegap_assets/params")
 ```
+All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module.
+
+To list all the available optimizers, you can use this command:
+
+```python
+from imputegap.recovery.manager import TimeSeries
+ts = TimeSeries()
+print(f"AutoML Optimizers : {ts.optimizers}")
+```
+
 
 ---
 
@@ -295,7 +329,7 @@ utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.alg
 ## Explainer
 
 ImputeGAP provides insights into the algorithm’s behavior by identifying the features that impact the most the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations ([SHAP](https://shap.readthedocs.io/en/latest/)) to reveal how different time series features influence the model’s predictions.
-The documentation for the explainer is described [here](https://imputegap.readthedocs.io/en/latest/explainer.html).
+The documentation for the explainer is described [here](https://imputegap.readthedocs.io/en/latest/tutorials.html#explainer).
 
 
 ### Example Explainer
@@ -327,12 +361,22 @@ shap_values, shap_details = Explainer.shap_explainer(input_data=ts.data,
 Explainer.print(shap_values, shap_details)
 ```
 
+To list all the available features extractors, you can use this command:
+
+```python
+from imputegap.recovery.manager import TimeSeries
+ts = TimeSeries()
+print(f"ImputeGAP features extractors : {ts.extractors}")
+```
+
+
+
 ---
 
 
 ## Downstream
 ImputeGAP includes a dedicated module for systematically evaluating the impact of data imputation on downstream tasks. Currently, forecasting is the primary supported task, with plans to expand to additional applications in the future. The example below demonstrates how to define the forecasting task and specify Prophet as the predictive model
-The documentation for the downstream evaluation is described [here](https://imputegap.readthedocs.io/en/latest/downstream.html).
+The documentation for the downstream evaluation is described [here](https://imputegap.readthedocs.io/en/latest/tutorials.html#downstream).
 
 Below is an example of how to call the downstream process for the model Prophet by defining a dictionary for the evaluator and selecting the model:
 
@@ -367,6 +411,13 @@ downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroI
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
 ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 ```
+To list all the available downstream models, you can use this command:
+
+```python
+from imputegap.recovery.manager import TimeSeries
+ts = TimeSeries()
+print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
+```
 
 
 
@@ -376,7 +427,7 @@ ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
 ## Benchmark
 
 ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms[[33]](#ref33) . Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates. The default metrics evaluated include "RMSE", "MAE", "MI", "Pearson", and the runtime.
-The documentation for the benchmark is described [here](https://imputegap.readthedocs.io/en/latest/benchmark.html).
+The documentation for the benchmark is described [here](https://imputegap.readthedocs.io/en/latest/tutorials.html#benchmark).
 
 
 ### Example Benchmark

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="imputegap.recovery.manager package" href="imputegap.manager.html" /><link rel="prev" title="Explainer" href="explainer.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="imputegap.recovery.manager package" href="imputegap.manager.html" /><link rel="prev" title="Algorithms" href="algorithms.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>ImputeGAP Package - imputegap 1.0.7 documentation</title>
@@ -208,12 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">ImputeGAP Package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -303,6 +299,7 @@
 <li class="toctree-l4"><a class="reference internal" href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.impute"><code class="docutils literal notranslate"><span class="pre">BaseImputer.impute()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.logs"><code class="docutils literal notranslate"><span class="pre">BaseImputer.logs</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.score"><code class="docutils literal notranslate"><span class="pre">BaseImputer.score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.verbose"><code class="docutils literal notranslate"><span class="pre">BaseImputer.verbose</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation"><code class="docutils literal notranslate"><span class="pre">Imputation</span></code></a><ul>
@@ -427,6 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html#imputegap.tools.utils.list_of_downstreams"><code class="docutils literal notranslate"><span class="pre">list_of_downstreams()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html#imputegap.tools.utils.list_of_downstreams_darts"><code class="docutils literal notranslate"><span class="pre">list_of_downstreams_darts()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html#imputegap.tools.utils.list_of_downstreams_sktime"><code class="docutils literal notranslate"><span class="pre">list_of_downstreams_sktime()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html#imputegap.tools.utils.list_of_extractors"><code class="docutils literal notranslate"><span class="pre">list_of_extractors()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html#imputegap.tools.utils.list_of_optimizers"><code class="docutils literal notranslate"><span class="pre">list_of_optimizers()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html#imputegap.tools.utils.list_of_patterns"><code class="docutils literal notranslate"><span class="pre">list_of_patterns()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="imputegap.utils.html#imputegap.tools.utils.load_parameters"><code class="docutils literal notranslate"><span class="pre">load_parameters()</span></code></a></li>
@@ -490,14 +488,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="explainer.html">
+          <a class="prev-page" href="algorithms.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Explainer</div>
+                <div class="title">Algorithms</div>
                 
               </div>
             </a>

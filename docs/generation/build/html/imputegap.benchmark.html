@@ -208,12 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -353,7 +349,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.eval">
-<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cdrec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['eeg-alcohol']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['mcar']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.05,</span> <span class="pre">0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6,</span> <span class="pre">0.8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['default_params']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.eval" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cdrec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['eeg-alcohol']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['mcar']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.05,</span> <span class="pre">0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6,</span> <span class="pre">0.8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['default_params']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.eval" title="Link to this definition">¶</a></dt>
 <dd><p>Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.</p>
 <section id="id3">
 <h4>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
@@ -371,6 +367,8 @@
 <dt>save_dir<span class="classifier">str, optional</span></dt><dd><p>Directory to save reports and plots (default is “./reports”).</p>
 </dd>
 <dt>runs<span class="classifier">int, optional</span></dt><dd><p>Number of executions with a view to averaging them</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is False).</p>
 </dd>
 </dl>
 </section>
@@ -417,7 +415,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.generate_plots">
-<span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subplot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_plots" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subplot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_plots" title="Link to this definition">¶</a></dt>
 <dd><p>Generate and save plots for each metric and pattern based on provided scores.</p>
 <section id="id7">
 <h4>Parameters<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h4>
@@ -431,6 +429,8 @@
 <dt>save_dir<span class="classifier">str, optional</span></dt><dd><p>Directory to save generated plots (default is “./reports”).</p>
 </dd>
 <dt>display<span class="classifier">bool, optional</span></dt><dd><p>Display or not the plots (default is False).</p>
+</dd>
+<dt>__verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -446,7 +446,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.generate_reports_excel">
-<span class="sig-name descname"><span class="pre">generate_reports_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_excel" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_reports_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_excel" title="Link to this definition">¶</a></dt>
 <dd><p>Generate and save an Excel-like text report of metrics and timing for each dataset, algorithm, and pattern.</p>
 <section id="id10">
 <h4>Parameters<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h4>
@@ -459,6 +459,8 @@
 </dd>
 <dt>run<span class="classifier">int, optional</span></dt><dd><p>Number of the run</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id11">
@@ -469,7 +471,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.generate_reports_txt">
-<span class="sig-name descname"><span class="pre">generate_reports_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_txt" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_reports_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_txt" title="Link to this definition">¶</a></dt>
 <dd><p>Generate and save a text report of metrics and timing for each dataset, algorithm, and pattern.</p>
 <section id="id12">
 <h4>Parameters<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h4>
@@ -482,6 +484,8 @@
 </dd>
 <dt>run<span class="classifier">int, optional</span></dt><dd><p>Number of the run.</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id13">
@@ -493,6 +497,11 @@
 <p>The report is saved in a “report.txt” file in <cite>save_dir</cite>, organized in sections with headers and results.</p>
 </section>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.benchmark.Benchmark.generate_reports_txt_tmp">
+<span class="sig-name descname"><span class="pre">generate_reports_txt_tmp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_txt_tmp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_txt_tmp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -572,7 +581,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id23">
-<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cdrec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['eeg-alcohol']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['mcar']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.05,</span> <span class="pre">0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6,</span> <span class="pre">0.8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['default_params']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id23" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cdrec']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['eeg-alcohol']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['mcar']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.05,</span> <span class="pre">0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6,</span> <span class="pre">0.8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['default_params']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id23" title="Link to this definition">¶</a></dt>
 <dd><p>Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.</p>
 <section id="id24">
 <h4>Parameters<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h4>
@@ -590,6 +599,8 @@
 <dt>save_dir<span class="classifier">str, optional</span></dt><dd><p>Directory to save reports and plots (default is “./reports”).</p>
 </dd>
 <dt>runs<span class="classifier">int, optional</span></dt><dd><p>Number of executions with a view to averaging them</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is False).</p>
 </dd>
 </dl>
 </section>
@@ -636,7 +647,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id30">
-<span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subplot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id30" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subplot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id30" title="Link to this definition">¶</a></dt>
 <dd><p>Generate and save plots for each metric and pattern based on provided scores.</p>
 <section id="id31">
 <h4>Parameters<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h4>
@@ -650,6 +661,8 @@
 <dt>save_dir<span class="classifier">str, optional</span></dt><dd><p>Directory to save generated plots (default is “./reports”).</p>
 </dd>
 <dt>display<span class="classifier">bool, optional</span></dt><dd><p>Display or not the plots (default is False).</p>
+</dd>
+<dt>__verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -665,7 +678,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id34">
-<span class="sig-name descname"><span class="pre">generate_reports_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id34" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_reports_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id34" title="Link to this definition">¶</a></dt>
 <dd><p>Generate and save an Excel-like text report of metrics and timing for each dataset, algorithm, and pattern.</p>
 <section id="id35">
 <h4>Parameters<a class="headerlink" href="#id35" title="Link to this heading">¶</a></h4>
@@ -678,6 +691,8 @@
 </dd>
 <dt>run<span class="classifier">int, optional</span></dt><dd><p>Number of the run</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id36">
@@ -688,7 +703,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id37">
-<span class="sig-name descname"><span class="pre">generate_reports_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id37" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_reports_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id37" title="Link to this definition">¶</a></dt>
 <dd><p>Generate and save a text report of metrics and timing for each dataset, algorithm, and pattern.</p>
 <section id="id38">
 <h4>Parameters<a class="headerlink" href="#id38" title="Link to this heading">¶</a></h4>
@@ -701,6 +716,8 @@
 </dd>
 <dt>run<span class="classifier">int, optional</span></dt><dd><p>Number of the run.</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id39">
@@ -712,6 +729,11 @@
 <p>The report is saved in a “report.txt” file in <cite>save_dir</cite>, organized in sections with headers and results.</p>
 </section>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id41">
+<span class="sig-name descname"><span class="pre">generate_reports_txt_tmp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs_plots_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./reports'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/benchmark.html#Benchmark.generate_reports_txt_tmp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id41" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -767,6 +789,7 @@
 <li><a class="reference internal" href="#imputegap.recovery.benchmark.Benchmark.generate_plots"><code class="docutils literal notranslate"><span class="pre">Benchmark.generate_plots()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_excel"><code class="docutils literal notranslate"><span class="pre">Benchmark.generate_reports_excel()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_txt"><code class="docutils literal notranslate"><span class="pre">Benchmark.generate_reports_txt()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.benchmark.Benchmark.generate_reports_txt_tmp"><code class="docutils literal notranslate"><span class="pre">Benchmark.generate_reports_txt_tmp()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -781,6 +804,7 @@
 <li><a class="reference internal" href="#id30"><code class="docutils literal notranslate"><span class="pre">Benchmark.generate_plots()</span></code></a></li>
 <li><a class="reference internal" href="#id34"><code class="docutils literal notranslate"><span class="pre">Benchmark.generate_reports_excel()</span></code></a></li>
 <li><a class="reference internal" href="#id37"><code class="docutils literal notranslate"><span class="pre">Benchmark.generate_reports_txt()</span></code></a></li>
+<li><a class="reference internal" href="#id41"><code class="docutils literal notranslate"><span class="pre">Benchmark.generate_reports_txt_tmp()</span></code></a></li>
 </ul>
 </li>
 </ul>

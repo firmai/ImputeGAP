@@ -56,7 +56,7 @@ def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
     return __py_imputed_matrix;
 
 
-def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, lib_path=None):
+def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, verbose=True, lib_path=None):
     """
     CDRec algorithm for matrix imputation of missing values using Centroid Decomposition.
 
@@ -72,6 +72,8 @@ def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, lib_path
         The maximum number of iterations allowed for the algorithm.
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
     lib_path : str, optional
         Custom path to the shared library file (default is None).
 
@@ -82,22 +84,23 @@ def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, lib_path
 
     Example
     -------
-    >>> recov_data = cdrec(incomp_data=incomp_data, truncation_rank=1, iterations=100, epsilon=0.000001, logs=True)
-    >>> print(recov_data)
+        >>> recov_data = cdrec(incomp_data=incomp_data, truncation_rank=1, iterations=100, epsilon=0.000001, logs=True)
+        >>> print(recov_data)
 
     """
 
-    print(f"(PYTHON) CDRec: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for rank {truncation_rank}, "
-          f"epsilon {epsilon}, and iterations {iterations}...")
+    if verbose:
+        print(f"(PYTHON) CDRec: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for rank {truncation_rank}, "
+              f"epsilon {epsilon}, and iterations {iterations}...")
 
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_cdrec(incomp_data, truncation_rank, epsilon, iterations)
+    recov_data = native_cdrec(incomp_data, truncation_rank, epsilon, iterations, verbose)
 
     end_time = time.time()
 
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation cdrec - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

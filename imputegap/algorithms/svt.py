@@ -3,7 +3,7 @@ import ctypes as __native_c_types_import;
 
 from imputegap.tools import utils
 
-def native_svt(__py_matrix, __py_tau):
+def native_svt(__py_matrix, __py_tau, __verbose=True):
     """
     Perform matrix imputation using the SVT algorithm with native C++ support.
 
@@ -14,6 +14,8 @@ def native_svt(__py_matrix, __py_tau):
     __py_tau : float
         The thresholding parameter for singular values. Controls how singular values are shrunk during the decomposition process.
         Larger values encourage a sparser, lower-rank solution, while smaller values retain more detail.
+    __verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -25,7 +27,7 @@ def native_svt(__py_matrix, __py_tau):
     J. Cai, E. J. Candès, and Z. Shen. A singular value thresholding algorithm for matrix completion. SIAM Journal on Optimization, 20(4):1956–1982, 2010. [8] J. Cambronero, J. K. Feser, M. J. Smith, and
     """
 
-    shared_lib = utils.load_share_lib("lib_svt")
+    shared_lib = utils.load_share_lib("lib_svt", verbose=__verbose)
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -45,7 +47,7 @@ def native_svt(__py_matrix, __py_tau):
     return __py_imputed_matrix;
 
 
-def svt(incomp_data, tau, logs=True, lib_path=None):
+def svt(incomp_data, tau, logs=True, verbose=True, lib_path=None):
     """
     SVT algorithm for matrix imputation.
 
@@ -58,6 +60,8 @@ def svt(incomp_data, tau, logs=True, lib_path=None):
         Larger values encourage a sparser, lower-rank solution, while smaller values retain more detail.
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
     lib_path : str, optional
         Custom path to the shared library file (default is None).
 
@@ -68,18 +72,18 @@ def svt(incomp_data, tau, logs=True, lib_path=None):
 
     Example
     -------
-    >>> recov_data = svt(incomp_data=incomp_data, tau=0.5, logs=True)
-    >>> print(recov_data)
+        >>> recov_data = svt(incomp_data=incomp_data, tau=0.5, logs=True)
+        >>> print(recov_data)
 
     """
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_svt(incomp_data, tau)
+    recov_data = native_svt(incomp_data, tau, verbose)
 
     end_time = time.time()
 
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation SVT - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

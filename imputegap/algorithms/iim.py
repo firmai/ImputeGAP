@@ -2,7 +2,7 @@ import time
 from imputegap.wrapper.AlgoPython.IIM.runnerIIM import impute_with_algorithm
 
 
-def iim(incomp_data, number_neighbor, algo_code, logs=True):
+def iim(incomp_data, number_neighbor, algo_code, logs=True, verbose=True):
     """
     Perform imputation using the Iterative Imputation Method (IIM) algorithm.
 
@@ -16,6 +16,8 @@ def iim(incomp_data, number_neighbor, algo_code, logs=True):
         The specific action code for the IIM output. This determines the behavior of the algorithm.
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -31,8 +33,8 @@ def iim(incomp_data, number_neighbor, algo_code, logs=True):
 
     Example
     -------
-    >>> recov_data = iim(incomp_data, number_neighbor=10, algo_code="iim 2")
-    >>> print(recov_data)
+        >>> recov_data = iim(incomp_data, number_neighbor=10, algo_code="iim 2")
+        >>> print(recov_data)
 
     References
     ----------
@@ -44,7 +46,7 @@ def iim(incomp_data, number_neighbor, algo_code, logs=True):
     recov_data = impute_with_algorithm(algo_code, incomp_data.copy(), number_neighbor)
 
     end_time = time.time()
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation iim - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

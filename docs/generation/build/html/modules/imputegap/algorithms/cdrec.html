@@ -207,12 +207,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -327,7 +323,7 @@
 
 <div class="viewcode-block" id="cdrec">
 <a class="viewcode-back" href="../../../imputegap.cdrec.html#imputegap.algorithms.cdrec.cdrec">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">cdrec</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lib_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cdrec</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lib_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    CDRec algorithm for matrix imputation of missing values using Centroid Decomposition.</span>
 
@@ -343,6 +339,8 @@
 <span class="sd">        The maximum number of iterations allowed for the algorithm.</span>
 <span class="sd">    logs : bool, optional</span>
 <span class="sd">        Whether to log the execution time (default is True).</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        Whether to display the contamination information (default is True).</span>
 <span class="sd">    lib_path : str, optional</span>
 <span class="sd">        Custom path to the shared library file (default is None).</span>
 
@@ -353,22 +351,23 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; recov_data = cdrec(incomp_data=incomp_data, truncation_rank=1, iterations=100, epsilon=0.000001, logs=True)</span>
-<span class="sd">    &gt;&gt;&gt; print(recov_data)</span>
+<span class="sd">        &gt;&gt;&gt; recov_data = cdrec(incomp_data=incomp_data, truncation_rank=1, iterations=100, epsilon=0.000001, logs=True)</span>
+<span class="sd">        &gt;&gt;&gt; print(recov_data)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(PYTHON) CDRec: (</span><span class="si">{</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">) for rank </span><span class="si">{</span><span class="n">truncation_rank</span><span class="si">}</span><span class="s2">, &quot;</span>
-          <span class="sa">f</span><span class="s2">&quot;epsilon </span><span class="si">{</span><span class="n">epsilon</span><span class="si">}</span><span class="s2">, and iterations </span><span class="si">{</span><span class="n">iterations</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(PYTHON) CDRec: (</span><span class="si">{</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">) for rank </span><span class="si">{</span><span class="n">truncation_rank</span><span class="si">}</span><span class="s2">, &quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;epsilon </span><span class="si">{</span><span class="n">epsilon</span><span class="si">}</span><span class="s2">, and iterations </span><span class="si">{</span><span class="n">iterations</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
 
     <span class="c1"># Call the C++ function to perform recovery</span>
-    <span class="n">recov_data</span> <span class="o">=</span> <span class="n">native_cdrec</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+    <span class="n">recov_data</span> <span class="o">=</span> <span class="n">native_cdrec</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
     <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">logs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">logs</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&gt; logs, imputation cdrec - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">recov_data</span></div>

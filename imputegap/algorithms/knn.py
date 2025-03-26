@@ -2,7 +2,7 @@ import time
 import numpy as np
 from sklearn.metrics.pairwise import nan_euclidean_distances
 
-def knn(incomp_data, k=5, weights="uniform", logs=True):
+def knn(incomp_data, k=5, weights="uniform", logs=True, verbose=True):
     """
     Perform imputation using the K-Nearest Neighbor (KNN) algorithm.
 
@@ -16,6 +16,8 @@ def knn(incomp_data, k=5, weights="uniform", logs=True):
         "uniform" for mean, "distance" for inverse-distance weighting.
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -24,13 +26,14 @@ def knn(incomp_data, k=5, weights="uniform", logs=True):
 
     Example
     -------
-    >>> recov_data = knn(incomp_data, k=5)
-    >>> print(recov_data)
+        >>> recov_data = knn(incomp_data, k=5)
+        >>> print(recov_data)
 
     """
 
-    print(f"(PYTHON) KNNImpute: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for k {k}, "
-          f", and weights {weights}...")
+    if verbose:
+        print(f"(PYTHON) KNNImpute: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for k {k}, "
+              f", and weights {weights}...")
 
     start_time = time.time()  # Record start time
 
@@ -73,7 +76,7 @@ def knn(incomp_data, k=5, weights="uniform", logs=True):
 
 
     end_time = time.time()
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation knn_impute - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

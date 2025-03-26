@@ -4,7 +4,7 @@ import ctypes as __native_c_types_import;
 from imputegap.tools import utils
 
 
-def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
+def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations, __verbose=True):
     """
     Perform matrix imputation using the CDRec algorithm with native C++ support.
 
@@ -18,6 +18,8 @@ def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
         The epsilon value, used as the threshold for stopping iterations based on difference.
     __py_iterations : int
         The maximum number of allowed iterations for the algorithm.
+    __verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -29,7 +31,7 @@ def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
     Khayati, M., Cudré-Mauroux, P. & Böhlen, M.H. Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl Inf Syst 62, 2257–2280 (2020). https://doi.org/10.1007/s10115-019-01421-7
     """
 
-    shared_lib = utils.load_share_lib("lib_cdrec")
+    shared_lib = utils.load_share_lib("lib_cdrec", verbose=__verbose)
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);

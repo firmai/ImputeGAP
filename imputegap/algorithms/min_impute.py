@@ -24,11 +24,11 @@ def min_impute(incomp_data, params=None):
 
     Example
     -------
-    >>> incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])
-    >>> recov_data = min_impute(incomp_data)
-    >>> print(recov_data)
-    array([[1., 2., 1.],
-           [4., 1., 6.]])
+        >>> incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])
+        >>> recov_data = min_impute(incomp_data)
+        >>> print(recov_data)
+        array([[1., 2., 1.],
+               [4., 1., 6.]])
 
     """
 

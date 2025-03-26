@@ -24,11 +24,11 @@ imputer_def = Imputation.MatrixCompletion.CDRec(ts_m).impute()
 imputer_def.score(ts.data, imputer_def.recov_data)
 
 # print the imputation metrics with default and optimized parameter values
-ts.print_results(imputer_def.metrics, text="Imputation metrics with default parameter values")
-ts.print_results(imputer.metrics, text="Imputation metrics with optimized parameter values")
+ts.print_results(imputer_def.metrics, text="Default values")
+ts.print_results(imputer.metrics, text="Optimized values")
 
 # plot the recovered time series
-ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets", display=True)
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets/imputation", display=True)
 
 # save hyperparameters
-utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune")
+utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune", file_name="./imputegap_assets/params")

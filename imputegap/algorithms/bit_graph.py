@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.BiTGraph.main import recoveryBitGRAPH
 
 
-def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph_size=5, node_dim=3, seq_len=1, lr=0.001, epoch=10, seed=42, logs=True):
+def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph_size=5, node_dim=3, seq_len=1, lr=0.001, epoch=10, seed=42, logs=True, verbose=True):
     """
     Perform imputation using Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization
 
@@ -43,6 +43,9 @@ def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph
     logs : bool, optional
         Whether to log the execution time (default is True).
 
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
+
     Returns
     -------
     numpy.ndarray
@@ -50,8 +53,8 @@ def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph
 
     Example
     -------
-    >>> recov_data = bit_graph(incomp_data, tags=None, data_names=None, epoch=10)
-    >>> print(recov_data)
+        >>> recov_data = bit_graph(incomp_data, tags=None, data_names=None, epoch=10)
+        >>> print(recov_data)
 
     References
     ----------
@@ -60,10 +63,10 @@ def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoveryBitGRAPH(input=incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, seed=seed)
+    recov_data = recoveryBitGRAPH(input=incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, seed=seed, verbose=verbose)
 
     end_time = time.time()
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation bit graph - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

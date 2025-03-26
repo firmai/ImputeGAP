@@ -12,11 +12,11 @@ setuptools.setup(
     author_email="quentin.nater@unifr.ch",
     license="MIT License",
     project_urls = {
-        "Documentation": "https://exascaleinfolab.github.io/ImputeGAP/",
+        "Documentation": "https://imputegap.readthedocs.io/",
         "Source" : "https://github.com/eXascaleInfolab/ImputeGAP"
     },
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3.12",
         "Topic :: Scientific/Engineering :: Information Analysis",
@@ -24,8 +24,7 @@ setuptools.setup(
     ],
     python_requires=">=3.10, <3.13",
     install_requires=(
-            open('requirements.txt').read().splitlines() +
-            open('requirements_dev.txt').read().splitlines()
+            open('requirements.txt').read().splitlines()
     ),    packages=setuptools.find_packages(),
     include_package_data=True,
     package_data={

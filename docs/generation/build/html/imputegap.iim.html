@@ -208,12 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -280,7 +276,7 @@
 <span id="modules"></span><h2>Modules<a class="headerlink" href="#module-imputegap.algorithms.iim" title="Link to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.iim.iim">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.iim.</span></span><span class="sig-name descname"><span class="pre">iim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_neighbor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/iim.html#iim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.iim.iim" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.iim.</span></span><span class="sig-name descname"><span class="pre">iim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_neighbor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/iim.html#iim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.iim.iim" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the Iterative Imputation Method (IIM) algorithm.</p>
 <section id="parameters">
 <h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h3>
@@ -292,6 +288,8 @@
 <dt>algo_code<span class="classifier">str</span></dt><dd><p>The specific action code for the IIM output. This determines the behavior of the algorithm.</p>
 </dd>
 <dt>logs<span class="classifier">bool, optional</span></dt><dd><p>Whether to log the execution time (default is True).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>

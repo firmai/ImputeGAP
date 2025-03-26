@@ -207,12 +207,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -363,6 +359,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_patterns</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_datasets</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_optimizers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extractors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_extractors</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">downstream_models</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_downstreams</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TimeSeries.import_matrix">
@@ -554,7 +551,7 @@
 
 <div class="viewcode-block" id="TimeSeries.normalize">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.normalize">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Normalize the time series dataset.</span>
 
@@ -565,6 +562,8 @@
 <span class="sd">        ----------</span>
 <span class="sd">        normalizer : str, optional</span>
 <span class="sd">            The normalization technique to use. Options are &quot;z_score&quot; or &quot;min_max&quot;. Default is &quot;z_score&quot;.</span>
+<span class="sd">        verbose : bool, optional</span>
+<span class="sd">        Whether to display the contamination information (default is False).</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -575,7 +574,8 @@
 <span class="sd">        -------</span>
 <span class="sd">            &gt;&gt;&gt; ts.normalize(normalizer=&quot;z_score&quot;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalization of the original time series dataset with &quot;</span><span class="p">,</span> <span class="n">normalizer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Normalization of the original time series dataset with &quot;</span><span class="p">,</span> <span class="n">normalizer</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span>
 
         <span class="k">if</span> <span class="n">normalizer</span> <span class="o">==</span> <span class="s2">&quot;min_max&quot;</span><span class="p">:</span>
@@ -627,7 +627,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&gt; logs, normalization </span><span class="si">{</span><span class="n">normalizer</span><span class="si">}</span><span class="s2"> - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&gt; logs, normalization </span><span class="si">{</span><span class="n">normalizer</span><span class="si">}</span><span class="s2"> - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TimeSeries.plot">
@@ -815,34 +816,34 @@
 
 <span class="sd">        Methods</span>
 <span class="sd">        -------</span>
-<span class="sd">        mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :</span>
+<span class="sd">        mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False, verbose=True) :</span>
 <span class="sd">            Apply Missing Completely at Random (MCAR) contamination to the time series data.</span>
 
 <span class="sd">        aligned(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :</span>
 <span class="sd">            Apply missing percentage contamination to the time series data.</span>
 
-<span class="sd">        missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True) :</span>
+<span class="sd">        missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True, verbose=True) :</span>
 <span class="sd">            Apply missing percentage contamination at random to the time series data.</span>
 
 <span class="sd">        blackout(ts, missing_rate=0.2, offset=0.1) :</span>
 <span class="sd">            Apply blackout contamination to the time series data.</span>
 
-<span class="sd">        gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):</span>
+<span class="sd">        gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True, verbose=True):</span>
 <span class="sd">            Apply Gaussian contamination to the time series data.</span>
 
-<span class="sd">        distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True):</span>
+<span class="sd">        distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True, verbose=True):</span>
 <span class="sd">            Apply any distribution contamination to the time series data based on their probabilities.</span>
 
-<span class="sd">        disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):</span>
+<span class="sd">        disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1, verbose=True):</span>
 <span class="sd">            Apply Disjoint contamination to the time series data.</span>
 
-<span class="sd">        overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):</span>
+<span class="sd">        overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1, verbose=True):</span>
 <span class="sd">            Apply Overlapping contamination to the time series data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TimeSeries.Contamination.mcar">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.mcar">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">mcar</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">mcar</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply Missing Completely at Random (MCAR) contamination to the time series data.</span>
 
@@ -862,6 +863,8 @@
 <span class="sd">                Whether to use a seed for reproducibility (default is True).</span>
 <span class="sd">            explainer : bool, optional</span>
 <span class="sd">                Whether to apply MCAR to specific series for explanation purposes (default is False).</span>
+<span class="sd">            verbose : bool, optional</span>
+<span class="sd">                Whether to display the contamination information (default is True).</span>
 
 <span class="sd">            Returns</span>
 <span class="sd">            -------</span>
@@ -870,7 +873,7 @@
 
 <span class="sd">            Example</span>
 <span class="sd">            -------</span>
-<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True, verbose=True):</span>
 
 <span class="sd">            References</span>
 <span class="sd">            ----------</span>
@@ -898,7 +901,7 @@
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">MCAR contamination has been called with :&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
@@ -951,7 +954,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.aligned">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.aligned">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply aligned missing blocks contamination to the time series data.</span>
 
@@ -965,6 +968,8 @@
 <span class="sd">                Percentage of missing values per series (default is 0.2).</span>
 <span class="sd">            offset : float, optional</span>
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
+<span class="sd">            verbose : bool, optional</span>
+<span class="sd">                Whether to display the contamination information (default is True).</span>
 
 <span class="sd">            Returns</span>
 <span class="sd">            -------</span>
@@ -973,7 +978,7 @@
 
 <span class="sd">            Example</span>
 <span class="sd">            -------</span>
-<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.aligned(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1)</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.aligned(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1, verbose=True):</span>
 
 <span class="sd">            References</span>
 <span class="sd">            ----------</span>
@@ -991,14 +996,14 @@
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="o">*</span><span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">ALIGNED (missing percentage) contamination has been called with :&quot;</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted &quot;</span><span class="p">,</span> <span class="n">rate_dataset</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of &quot;</span><span class="p">,</span> <span class="n">rate_series</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at &quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set &quot;</span><span class="p">,</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">this selection of series : &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values : &quot;</span><span class="p">,</span> <span class="n">offset_nbr</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">ALIGNED (missing percentage) contamination has been called with :&quot;</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted &quot;</span><span class="p">,</span> <span class="n">rate_dataset</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of &quot;</span><span class="p">,</span> <span class="n">rate_series</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at &quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set &quot;</span><span class="p">,</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">this selection of series : &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values : &quot;</span><span class="p">,</span> <span class="n">offset_nbr</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
             <span class="k">if</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span> <span class="o">&gt;</span> <span class="n">NS</span><span class="p">:</span>
@@ -1022,7 +1027,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.scattered">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.scattered">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">scattered</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">scattered</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply percentage shift contamination with random starting position to the time series data.</span>
 
@@ -1038,6 +1043,8 @@
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
 <span class="sd">            seed : bool, optional</span>
 <span class="sd">                Whether to use a seed for reproducibility (default is True).</span>
+<span class="sd">            verbose : bool, optional</span>
+<span class="sd">                Whether to display the contamination information (default is True).</span>
 
 <span class="sd">            Returns</span>
 <span class="sd">            -------</span>
@@ -1068,14 +1075,14 @@
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="o">*</span><span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">SCATTER (missing percentage AT RANDOM) contamination has been called with :&quot;</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted &quot;</span><span class="p">,</span> <span class="n">rate_dataset</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of &quot;</span><span class="p">,</span> <span class="n">rate_series</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at &quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set &quot;</span><span class="p">,</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">this selection of series : &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">,</span>
-                  <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values : &quot;</span><span class="p">,</span> <span class="n">offset_nbr</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">SCATTER (missing percentage AT RANDOM) contamination has been called with :&quot;</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted &quot;</span><span class="p">,</span> <span class="n">rate_dataset</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of &quot;</span><span class="p">,</span> <span class="n">rate_series</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at &quot;</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set &quot;</span><span class="p">,</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">this selection of series : &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values : &quot;</span><span class="p">,</span> <span class="n">offset_nbr</span><span class="p">,</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
             <span class="k">if</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span> <span class="o">&gt;</span> <span class="n">NS</span><span class="p">:</span>
@@ -1102,7 +1109,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.blackout">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.blackout">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">blackout</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">blackout</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">series_rate</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply blackout contamination to the time series data.</span>
 
@@ -1114,6 +1121,8 @@
 <span class="sd">                Percentage of missing values per series (default is 0.2).</span>
 <span class="sd">            offset : float, optional</span>
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
+<span class="sd">            verbose : bool, optional</span>
+<span class="sd">                Whether to display the contamination information (default is True).</span>
 
 <span class="sd">            Returns</span>
 <span class="sd">            -------</span>
@@ -1128,12 +1137,12 @@
 <span class="sd">            ----------</span>
 <span class="sd">                https://imputegap.readthedocs.io/en/latest/patterns.html</span>
 <span class="sd">            &quot;&quot;&quot;</span>
-            <span class="k">return</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="n">series_rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TimeSeries.Contamination.gaussian">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.gaussian">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">gaussian</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">std_dev</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">gaussian</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">std_dev</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply contamination with a Gaussian distribution to the time series data.</span>
 
@@ -1151,6 +1160,8 @@
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
 <span class="sd">            seed : bool, optional</span>
 <span class="sd">                Whether to use a seed for reproducibility (default is True).</span>
+<span class="sd">            verbose : bool, optional</span>
+<span class="sd">                Whether to display the contamination information (default is True).</span>
 
 <span class="sd">            Returns</span>
 <span class="sd">            -------</span>
@@ -1159,7 +1170,7 @@
 
 <span class="sd">            Example</span>
 <span class="sd">            -------</span>
-<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True)</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True, verbose=True):</span>
 
 <span class="sd">            References</span>
 <span class="sd">            ----------</span>
@@ -1184,16 +1195,17 @@
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">GAUSSIAN contamination has been called with :&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values to remove by series </span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">with a seed option set to </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">with a seed value set to </span><span class="si">{</span><span class="n">seed_value</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Gaussian std_dev </span><span class="si">{</span><span class="n">std_dev</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set </span><span class="si">{</span><span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">this selection of series </span><span class="si">{</span><span class="n">nbr_series_impacted</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">GAUSSIAN contamination has been called with :&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values to remove by series </span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">with a seed option set to </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">with a seed value set to </span><span class="si">{</span><span class="n">seed_value</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Gaussian std_dev </span><span class="si">{</span><span class="n">std_dev</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set </span><span class="si">{</span><span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">this selection of series </span><span class="si">{</span><span class="n">nbr_series_impacted</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span> <span class="o">&gt;</span> <span class="n">NS</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1227,7 +1239,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.distribution">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.distribution">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">distribution</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">probabilities</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">distribution</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">probabilities</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply contamination with a probabilistic distribution to the time series data.</span>
 
@@ -1246,6 +1258,8 @@
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
 <span class="sd">            seed : bool, optional</span>
 <span class="sd">                Whether to use a seed for reproducibility (default is True).</span>
+<span class="sd">            verbose : bool, optional</span>
+<span class="sd">                Whether to display the contamination information (default is True).</span>
 
 <span class="sd">            Returns</span>
 <span class="sd">            -------</span>
@@ -1278,16 +1292,17 @@
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">DISTRIBUTION contamination has been called with :&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values to remove by series </span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">with a seed option set to </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">with a seed value set to </span><span class="si">{</span><span class="n">seed_value</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set </span><span class="si">{</span><span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">probabilities list </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">this selection of series </span><span class="si">{</span><span class="n">nbr_series_impacted</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">DISTRIBUTION contamination has been called with :&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a number of series impacted </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values to remove by series </span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">with a seed option set to </span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">with a seed value set to </span><span class="si">{</span><span class="n">seed_value</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set </span><span class="si">{</span><span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">probabilities list </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">this selection of series </span><span class="si">{</span><span class="n">nbr_series_impacted</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span> <span class="o">&gt;</span> <span class="n">NS</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1316,7 +1331,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.disjoint">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.disjoint">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">disjoint</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">disjoint</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply disjoint contamination to the time series data.</span>
 
@@ -1330,6 +1345,8 @@
 <span class="sd">                Percentage expressing the limit index of the end of the contamination (default is 1: all length).</span>
 <span class="sd">            offset : float, optional</span>
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
+<span class="sd">            verbose : bool, optional</span>
+<span class="sd">                Whether to display the contamination information (default is True).</span>
 
 <span class="sd">            Returns</span>
 <span class="sd">            -------</span>
@@ -1353,13 +1370,13 @@
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">DISJOINT contamination has been called with :&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values to remove by series </span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">limit to stop </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set </span><span class="si">{</span><span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">DISJOINT contamination has been called with :&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values to remove by series </span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">limit to stop </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set </span><span class="si">{</span><span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
             <span class="k">if</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span> <span class="o">&gt;</span> <span class="n">NS</span><span class="p">:</span>
@@ -1391,7 +1408,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.overlap">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.overlap">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">overlap</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">overlap</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply overlap contamination to the time series data.</span>
 
@@ -1407,6 +1424,8 @@
 <span class="sd">                Percentage of shift inside each the last disjoint contamination.</span>
 <span class="sd">            offset : float, optional</span>
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
+<span class="sd">            verbose : bool, optional</span>
+<span class="sd">                Whether to display the contamination information (default is True).</span>
 
 <span class="sd">            Returns</span>
 <span class="sd">            -------</span>
@@ -1430,15 +1449,16 @@
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">OVERLAP contamination has been called with :&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a offset of </span><span class="si">{</span><span class="n">offset</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values to remove by series </span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a shift overlap of </span><span class="si">{</span><span class="n">shift</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2"> %&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a shift in number </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">shift</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">NS</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">limit to stop </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
-                  <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set </span><span class="si">{</span><span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">OVERLAP contamination has been called with :&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a missing rate of </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a offset of </span><span class="si">{</span><span class="n">offset</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a starting position at </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">values to remove by series </span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a shift overlap of </span><span class="si">{</span><span class="n">shift</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2"> %&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">a shift in number </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">shift</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">NS</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">limit to stop </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shape of the set </span><span class="si">{</span><span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span> <span class="o">&gt;</span> <span class="n">NS</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Benchmark" href="benchmark.html" /><link rel="prev" title="Patterns" href="patterns.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ImputeGAP Package" href="imputegap.html" /><link rel="prev" title="Patterns" href="patterns.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Algorithms - imputegap 1.0.7 documentation</title>
@@ -208,12 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -272,7 +268,7 @@
         <article role="main" id="furo-main-content">
           <section id="algorithms">
 <h1>Algorithms<a class="headerlink" href="#algorithms" title="Link to this heading">¶</a></h1>
-<p>All algorithms developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.algorithms</span></code> module.</p>
+<p>All algorithms developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.algorithms</span></code> module. To learn how to implement imputation, please refer to the <a class="reference external" href="tutorials.html#imputation">tutorial</a>.</p>
 <p>To list all the available algorithms and their optimizers, you can use this command:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
@@ -528,9 +524,6 @@
 <p>Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024</p>
 </aside>
 </aside>
-<ul class="simple">
-<li><p>need torch-cluster to work</p></li>
-</ul>
 </section>
 </section>
 
@@ -539,12 +532,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="benchmark.html">
+          <a class="next-page" href="imputegap.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Benchmark</div>
+                <div class="title">ImputeGAP Package</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

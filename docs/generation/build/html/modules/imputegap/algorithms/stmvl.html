@@ -207,12 +207,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -271,7 +267,7 @@
 
 <div class="viewcode-block" id="native_stmvl">
 <a class="viewcode-back" href="../../../imputegap.stmvl.html#imputegap.algorithms.stmvl.native_stmvl">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">native_stmvl</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">,</span> <span class="n">__py_window</span><span class="p">,</span> <span class="n">__py_gamma</span><span class="p">,</span> <span class="n">__py_alpha</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">native_stmvl</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">,</span> <span class="n">__py_window</span><span class="p">,</span> <span class="n">__py_gamma</span><span class="p">,</span> <span class="n">__py_alpha</span><span class="p">,</span> <span class="n">__verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform matrix imputation using the STMVL algorithm with native C++ support.</span>
 
@@ -285,6 +281,8 @@
 <span class="sd">        The smoothing parameter for temporal weight (0 &lt; gamma &lt; 1).</span>
 <span class="sd">    __py_alpha : float</span>
 <span class="sd">        The power for the spatial weight.</span>
+<span class="sd">    __verbose : bool, optional</span>
+<span class="sd">        Whether to display the contamination information (default is False).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -298,8 +296,8 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; recov_data = stmvl(incomp_data=incomp_data, window_size=2, gamma=0.85, alpha=7)</span>
-<span class="sd">    &gt;&gt;&gt; print(recov_data)</span>
+<span class="sd">        &gt;&gt;&gt; recov_data = stmvl(incomp_data=incomp_data, window_size=2, gamma=0.85, alpha=7)</span>
+<span class="sd">        &gt;&gt;&gt; print(recov_data)</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
@@ -307,7 +305,7 @@
 <span class="sd">    School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">shared_lib</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_share_lib</span><span class="p">(</span><span class="s2">&quot;lib_stmvl&quot;</span><span class="p">)</span>
+    <span class="n">shared_lib</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_share_lib</span><span class="p">(</span><span class="s2">&quot;lib_stmvl&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">__verbose</span><span class="p">)</span>
 
     <span class="n">__py_sizen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">);</span>
     <span class="n">__py_sizem</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
@@ -340,31 +338,57 @@
 
 <div class="viewcode-block" id="stmvl">
 <a class="viewcode-back" href="../../../imputegap.stmvl.html#imputegap.algorithms.stmvl.stmvl">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">stmvl</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">stmvl</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    CDREC algorithm for imputation of missing data</span>
-<span class="sd">    :author: Quentin Nater</span>
+<span class="sd">    ST-MVL algorithm for imputation of missing data</span>
 
-<span class="sd">    :param incomp_data: time series with contamination</span>
-<span class="sd">    :param window_size: window size for temporal component</span>
-<span class="sd">    :param gamma: smoothing parameter for temporal weight</span>
-<span class="sd">    :param alpha: power for spatial weight</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    incomp_data : numpy.ndarray</span>
+<span class="sd">        The input matrix with contamination (missing values represented as NaNs).</span>
+<span class="sd">    window_size : int</span>
+<span class="sd">        window size for temporal component</span>
+<span class="sd">    gamma : float</span>
+<span class="sd">        smoothing parameter for temporal weight</span>
+<span class="sd">    alpha : float</span>
+<span class="sd">        power for spatial weight</span>
+<span class="sd">    logs : bool, optional</span>
+<span class="sd">        Whether to log the execution time (default is True).</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        Whether to display the contamination information (default is False).</span>
+<span class="sd">    lib_path : str, optional</span>
+<span class="sd">        Custom path to the shared library file (default is None).</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        Whether to display the contamination information (default is True).</span>
 
-<span class="sd">    :param logs: print logs of time execution</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        The imputed matrix with missing values recovered.</span>
 
-<span class="sd">    :return: recov_data, metrics : all time series with imputation data and their metrics</span>
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt;&gt;&gt; recov_data = stmvl(incomp_data=incomp_data, window_size=7, gamma=0.85, alpha=7, logs=True)</span>
+<span class="sd">        &gt;&gt;&gt; print(recov_data)</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Yi, X., Zheng, Y., Zhang, J., &amp; Li, T. ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data.</span>
+<span class="sd">    School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(PYTHON) ST-MVL: (</span><span class="si">{</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">) for window_size </span><span class="si">{</span><span class="n">window_size</span><span class="si">}</span><span class="s2">, &quot;</span>
-          <span class="sa">f</span><span class="s2">&quot;gamma </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s2">, and alpha </span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(PYTHON) ST-MVL: (</span><span class="si">{</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">) for window_size </span><span class="si">{</span><span class="n">window_size</span><span class="si">}</span><span class="s2">, &quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;gamma </span><span class="si">{</span><span class="n">gamma</span><span class="si">}</span><span class="s2">, and alpha </span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1"># Record start time</span>
 
     <span class="c1"># Call the C++ function to perform recovery</span>
-    <span class="n">recov_data</span> <span class="o">=</span> <span class="n">native_stmvl</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="n">recov_data</span> <span class="o">=</span> <span class="n">native_stmvl</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
     <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">logs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">logs</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&gt; logs, imputation stvml - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">recov_data</span></div>

@@ -208,12 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -280,7 +276,7 @@
 <span id="modules"></span><h2>Modules<a class="headerlink" href="#module-imputegap.algorithms.stmvl" title="Link to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.stmvl.native_stmvl">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">native_stmvl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/stmvl.html#native_stmvl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.stmvl.native_stmvl" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">native_stmvl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/stmvl.html#native_stmvl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.stmvl.native_stmvl" title="Link to this definition">¶</a></dt>
 <dd><p>Perform matrix imputation using the STMVL algorithm with native C++ support.</p>
 <section id="parameters">
 <h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h3>
@@ -292,6 +288,8 @@
 <dt>__py_gamma<span class="classifier">float</span></dt><dd><p>The smoothing parameter for temporal weight (0 &lt; gamma &lt; 1).</p>
 </dd>
 <dt>__py_alpha<span class="classifier">float</span></dt><dd><p>The power for the spatial weight.</p>
+</dd>
+<dt>__verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is False).</p>
 </dd>
 </dl>
 </section>
@@ -323,23 +321,48 @@ School of Information Science and Technology, Southwest Jiaotong University; Mic
 
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.stmvl.stmvl">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">stmvl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/stmvl.html#stmvl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.stmvl.stmvl" title="Link to this definition">¶</a></dt>
-<dd><p>CDREC algorithm for imputation of missing data
-:author: Quentin Nater</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>incomp_data</strong> – time series with contamination</p></li>
-<li><p><strong>window_size</strong> – window size for temporal component</p></li>
-<li><p><strong>gamma</strong> – smoothing parameter for temporal weight</p></li>
-<li><p><strong>alpha</strong> – power for spatial weight</p></li>
-<li><p><strong>logs</strong> – print logs of time execution</p></li>
-</ul>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.stmvl.</span></span><span class="sig-name descname"><span class="pre">stmvl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/stmvl.html#stmvl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.stmvl.stmvl" title="Link to this definition">¶</a></dt>
+<dd><p>ST-MVL algorithm for imputation of missing data</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>incomp_data<span class="classifier">numpy.ndarray</span></dt><dd><p>The input matrix with contamination (missing values represented as NaNs).</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>recov_data, metrics : all time series with imputation data and their metrics</p>
+<dt>window_size<span class="classifier">int</span></dt><dd><p>window size for temporal component</p>
+</dd>
+<dt>gamma<span class="classifier">float</span></dt><dd><p>smoothing parameter for temporal weight</p>
+</dd>
+<dt>alpha<span class="classifier">float</span></dt><dd><p>power for spatial weight</p>
+</dd>
+<dt>logs<span class="classifier">bool, optional</span></dt><dd><p>Whether to log the execution time (default is True).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is False).</p>
+</dd>
+<dt>lib_path<span class="classifier">str, optional</span></dt><dd><p>Custom path to the shared library file (default is None).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
+</section>
+<section id="id2">
+<h3>Returns<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>numpy.ndarray</dt><dd><p>The imputed matrix with missing values recovered.</p>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h3>Example<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">stmvl</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">recov_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>References<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>Yi, X., Zheng, Y., Zhang, J., &amp; Li, T. ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data.
+School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.</p>
+</section>
 </dd></dl>
 
 </section>
