@@ -64,3 +64,11 @@ ray[tune]==2.41.0
 
 fire==0.7.0
 fastdtw==0.3.4
+
+
+# dev
+torch-geometric==2.6.1
+pytorch-lightning==2.5.0
+torchmetrics==1.6.1
+lightning==2.5.0
+

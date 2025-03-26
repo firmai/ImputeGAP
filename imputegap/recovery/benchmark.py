@@ -2,6 +2,8 @@ import datetime
 import os
 import math
 import time
+from collections import defaultdict
+
 import numpy as np
 import matplotlib.pyplot as plt
 import xlsxwriter
@@ -267,7 +269,7 @@ class Benchmark:
 
         return True
 
-    def generate_reports_txt(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1):
+    def generate_reports_txt(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
         """
         Generate and save a text report of metrics and timing for each dataset, algorithm, and pattern.
 
@@ -281,6 +283,8 @@ class Benchmark:
             Name of the data for the report name.
         run : int, optional
             Number of the run.
+        verbose : bool, optional
+            Whether to display the contamination information (default is True).
 
         Returns
         -------
@@ -353,9 +357,84 @@ class Benchmark:
             file.write("Dictionary of Results:\n")
             file.write(str(runs_plots_scores) + "\n")
 
-        print(f"\nreports recorded in the following directory : {save_path}")
+        if verbose:
+            print(f"\nreports recorded in the following directory : {save_path}")
 
-    def generate_reports_excel(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1):
+
+    def generate_reports_txt_tmp(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
+        os.makedirs(save_dir, exist_ok=True)
+        save_path = os.path.join(save_dir, f"report_{dataset}.txt")
+        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        with open(save_path, "w") as file:
+            file.write(f"Report for Dataset: {dataset}\n")
+            file.write(f"Generated on: {current_time}\n")
+            if run >= 0:
+                file.write(f"Run number: {run}\n")
+            file.write("=" * 120 + "\n\n")
+
+            metrics = {
+                "RMSE": "Root Mean Square Error - Measures the average magnitude of error.",
+                "MAE": "Mean Absolute Error - Measures the average absolute error.",
+                "MI": "Mutual Information - Indicates dependency between variables.",
+                "CORRELATION": "Correlation Coefficient - Indicates linear relationship between variables."
+            }
+
+            for metric, description in metrics.items():
+                # tables[pattern][rate][algorithm+optimizer] = value
+                tables = defaultdict(lambda: defaultdict(dict))
+
+                for _, algo_items in runs_plots_scores.items():
+                    for algorithm, optimizer_items in algo_items.items():
+                        for optimizer, pattern_data in optimizer_items.items():
+                            for pattern, x_data_items in pattern_data.items():
+                                for rate, values in x_data_items.items():
+                                    score = values.get("scores", {}).get(metric)
+                                    if score is not None:
+                                        algo_name = f"{algorithm}_{optimizer}"
+                                        tables[pattern][rate][algo_name] = f"{score:.10f}"
+
+                # For each pattern, create one table per metric (all algorithms as columns)
+                for pattern in sorted(tables.keys()):
+                    rate_to_algos = tables[pattern]
+                    all_algos = sorted({algo for rate_data in rate_to_algos.values() for algo in rate_data})
+                    all_rates = sorted(rate_to_algos.keys(), key=float)
+
+                    print(f"\n***{dataset}***\n{metric}: {description}\nAlgorithms run with <{pattern}>")
+                    file.write(f"{dataset} > {metric} <with {pattern}>\n")
+
+                    col_widths = [15] + [22] * len(all_algos)
+                    separator = "+" + "+".join("-" * (w + 2) for w in col_widths) + "+"
+                    header = ["Rate"] + all_algos
+                    header_row = "|".join(f" {h:^{w}} " for h, w in zip(header, col_widths))
+
+                    file.write(f"{separator}\n")
+                    file.write(f"|{header_row}|\n")
+                    file.write(f"{separator}\n")
+
+                    print(f"{separator}")
+                    print(f"|{header_row}|")
+                    print(f"{separator}")
+
+                    for rate in all_rates:
+                        row = [str(rate)]
+                        for algo in all_algos:
+                            val = rate_to_algos[rate].get(algo, "N/A")
+                            row.append(val)
+                        row_line = "|".join(f" {v:^{w}} " for v, w in zip(row, col_widths))
+                        file.write(f"|{row_line}|\n")
+                        print(f"|{row_line}|")
+
+                    file.write(f"{separator}\n\n\n")
+                    print(f"{separator}\n")
+
+            file.write("Raw Dictionary of Results:\n")
+            file.write(str(runs_plots_scores) + "\n")
+
+        if verbose:
+            print(f"\nReports recorded in: {save_path}")
+
+    def generate_reports_excel(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
         """
         Generate and save an Excel-like text report of metrics and timing for each dataset, algorithm, and pattern.
 
@@ -369,6 +448,8 @@ class Benchmark:
             Name of the data for the Excel-like file name.
         run : int, optional
             Number of the run
+        verbose : bool, optional
+            Whether to display the contamination information (default is True).
 
         Returns
         -------
@@ -454,7 +535,7 @@ class Benchmark:
         workbook.close()
 
 
-    def generate_plots(self, runs_plots_scores, ticks, subplot=False, y_size=4, save_dir="./reports", display=False):
+    def generate_plots(self, runs_plots_scores, ticks, subplot=False, y_size=4, save_dir="./reports", display=False, verbose=True):
         """
         Generate and save plots for each metric and pattern based on provided scores.
 
@@ -470,6 +551,8 @@ class Benchmark:
             Directory to save generated plots (default is "./reports").
         display : bool, optional
             Display or not the plots (default is False).
+        __verbose : bool, optional
+            Whether to display the contamination information (default is True).
 
         Returns
         -------
@@ -585,10 +668,11 @@ class Benchmark:
                     if display:
                         plt.show()
 
-        print("\nplots recorded in the following directory : ", save_dir)
+        if verbose:
+            print("\nplots recorded in the following directory : ", save_dir)
 
     def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"],
-             x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], save_dir="./reports", runs=1):
+             x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], save_dir="./reports", runs=1, verbose=False):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.
 
@@ -608,6 +692,8 @@ class Benchmark:
             Directory to save reports and plots (default is "./reports").
         runs : int, optional
             Number of executions with a view to averaging them
+        verbose : bool, optional
+                Whether to display the contamination information (default is False).
 
         Returns
         -------
@@ -634,8 +720,8 @@ class Benchmark:
                 block_size_mcar = 10
                 y_p_size = max(4, len(algorithms)*0.275)
 
-                print("\n1. evaluation launch for", dataset,
-                      "========================================================\n\n\n")
+                if verbose:
+                    print("\n1. evaluation launch for", dataset, "\n")
                 ts_test = TimeSeries()
 
                 header = False
@@ -652,8 +738,7 @@ class Benchmark:
                     limitation_series = 10
                     limitation_values = 110
 
-                ts_test.load_series(data=utils.search_path(dataset), nbr_series=limitation_series,
-                                    nbr_val=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), nbr_series=limitation_series, nbr_val=limitation_values, header=header)
 
                 start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape
@@ -661,33 +746,38 @@ class Benchmark:
                 if N < 250:
                     block_size_mcar = 2
 
-                print("\n1. normalization of ", dataset, "\n")
-                ts_test.normalize()
+                ts_test.normalize(verbose=verbose)
 
                 for pattern in patterns:
-                    print("\n\t2. contamination of", dataset, "with pattern", pattern, "\n")
+                    if verbose:
+                        print("\n2. contamination of", dataset, "with pattern", pattern, "\n")
 
                     for algorithm in algorithms:
                         has_been_optimized = False
-                        print("\n\t3. algorithm selected", algorithm, "\n")
+                        if verbose:
+                            print("\n3. algorithm evaluated", algorithm, "\n")
+                        else:
+                            print("algorithm evaluated:", algorithm)
 
                         for incx, x in enumerate(x_axis):
-                            print("\n\t\t4. missing values (series&values) set to", x, "for x_axis\n")
+                            if verbose:
+                                print("\n4. missing values (series&values) set to", x, "for x_axis\n")
 
                             start_time_contamination = time.time()  # Record start time
                             incomp_data = utils.config_contamination(ts=ts_test, pattern=pattern, dataset_rate=x,
-                                series_rate=x, block_size=block_size_mcar)
+                                series_rate=x, block_size=block_size_mcar, verbose=verbose)
                             end_time_contamination = time.time()
 
                             for optimizer in optimizers:
-                                algo = utils.config_impute_algorithm(incomp_data=incomp_data, algorithm=algorithm)
+                                algo = utils.config_impute_algorithm(incomp_data=incomp_data, algorithm=algorithm, verbose=verbose)
 
                                 if isinstance(optimizer, dict):
                                     optimizer_gt = {"input_data": ts_test.data, **optimizer}
                                     optimizer_value = optimizer.get('optimizer')  # or optimizer['optimizer']
 
                                     if not has_been_optimized and algorithm not in mean_group and algorithm not in not_optimized:
-                                        print("\n\t\t5. AutoML to set the parameters", optimizer, "\n")
+                                        if verbose:
+                                            print("\n5. AutoML to set the parameters", optimizer, "\n")
                                         start_time_opti = time.time()  # Record start time
                                         i_opti = self._config_optimization(0.25, ts_test, pattern, algorithm, block_size_mcar)
                                         i_opti.impute(user_def=False, params=optimizer_gt)
@@ -696,20 +786,25 @@ class Benchmark:
                                         has_been_optimized = True
                                         end_time_opti = time.time()
                                     else:
-                                        print("\n\t\t5. AutoML already optimized...\n")
+                                        if verbose:
+                                            print("\n5. AutoML already optimized...\n")
 
                                     if algorithm not in mean_group and algorithm not in not_optimized:
                                         if i_opti.parameters is None:
                                             opti_params = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="e")
-                                            print("\n\t\t6. imputation", algorithm, "with optimal parameters from files", *opti_params)
+                                            if verbose:
+                                                print("\n6. imputation", algorithm, "with optimal parameters from files", *opti_params)
                                         else:
                                             opti_params = i_opti.parameters
-                                            print("\n\t\t6. imputation", algorithm, "with optimal parameters from object", *opti_params)
+                                            if verbose:
+                                                print("\n6. imputation", algorithm, "with optimal parameters from object", *opti_params)
                                     else:
-                                        print("\n\t\t5. No AutoML launches without optimal params for", algorithm, "\n")
+                                        if verbose:
+                                            print("\n5. No AutoML launches without optimal params for", algorithm, "\n")
                                         opti_params = None
                                 else:
-                                    print("\n\t\t5. Default parameters have been set the parameters", optimizer, "for", algorithm, "\n")
+                                    if verbose:
+                                        print("\n5. Default parameters have been set the parameters", optimizer, "for", algorithm, "\n")
                                     optimizer_value = optimizer
                                     opti_params = None
 
@@ -739,15 +834,15 @@ class Benchmark:
                                 }
 
                 save_dir_runs = save_dir + "/_details/run_" + str(i_run) + "/" + dataset
-                print("\nruns saved in : ", save_dir_runs)
-                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_runs)
-                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_runs)
-                self.generate_reports_txt(runs_plots_scores, save_dir_runs, dataset, i_run)
-                self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run)
+                if verbose:
+                    print("\nruns saved in : ", save_dir_runs)
+                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_runs, verbose=verbose)
+                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_runs, verbose=verbose)
+                self.generate_reports_txt(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
+                self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
                 run_storage.append(runs_plots_scores)
 
-                print("\n\n\n\n\n\n\n\n\n\n\n\n=end_of_the_evaluation==============================================="
-                      "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nresults of the analysis:\n")
+                print("\n**Results of the analysis**\n")
 
         scores_list, algos, sets = self.avg_results(*run_storage)
         _ = self.generate_heatmap(scores_list, algos, sets, save_dir=save_dir, display=True)

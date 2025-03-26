@@ -208,12 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -312,26 +308,26 @@ to contaminate the datasets with missing values and plot results.</p>
 <section id="id1">
 <h4>Methods<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
 <dl class="simple">
-<dt>mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False) :</dt><dd><p>Apply Missing Completely at Random (MCAR) contamination to the time series data.</p>
+<dt>mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False, verbose=True) :</dt><dd><p>Apply Missing Completely at Random (MCAR) contamination to the time series data.</p>
 </dd>
 <dt>aligned(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :</dt><dd><p>Apply missing percentage contamination to the time series data.</p>
 </dd>
-<dt>missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True) :</dt><dd><p>Apply missing percentage contamination at random to the time series data.</p>
+<dt>missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True, verbose=True) :</dt><dd><p>Apply missing percentage contamination at random to the time series data.</p>
 </dd>
 <dt>blackout(ts, missing_rate=0.2, offset=0.1) :</dt><dd><p>Apply blackout contamination to the time series data.</p>
 </dd>
-<dt>gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True):</dt><dd><p>Apply Gaussian contamination to the time series data.</p>
+<dt>gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True, verbose=True):</dt><dd><p>Apply Gaussian contamination to the time series data.</p>
 </dd>
-<dt>distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True):</dt><dd><p>Apply any distribution contamination to the time series data based on their probabilities.</p>
+<dt>distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True, verbose=True):</dt><dd><p>Apply any distribution contamination to the time series data based on their probabilities.</p>
 </dd>
-<dt>disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1):</dt><dd><p>Apply Disjoint contamination to the time series data.</p>
+<dt>disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1, verbose=True):</dt><dd><p>Apply Disjoint contamination to the time series data.</p>
 </dd>
-<dt>overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1,):</dt><dd><p>Apply Overlapping contamination to the time series data.</p>
+<dt>overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1, verbose=True):</dt><dd><p>Apply Overlapping contamination to the time series data.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.aligned">
-<span class="sig-name descname"><span class="pre">aligned</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.aligned"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.aligned" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">aligned</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.aligned"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.aligned" title="Link to this definition">¶</a></dt>
 <dd><p>Apply aligned missing blocks contamination to the time series data.</p>
 <section id="parameters">
 <h5>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h5>
@@ -344,6 +340,8 @@ to contaminate the datasets with missing values and plot results.</p>
 </dd>
 <dt>offset<span class="classifier">float, optional</span></dt><dd><p>Size of the uncontaminated section at the beginning of the series (default is 0.1).</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="returns">
@@ -355,7 +353,7 @@ to contaminate the datasets with missing values and plot results.</p>
 </section>
 <section id="example">
 <h5>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h5>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 </pre></div>
 </div>
 </section>
@@ -369,7 +367,7 @@ to contaminate the datasets with missing values and plot results.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.blackout">
-<span class="sig-name descname"><span class="pre">blackout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.blackout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.blackout" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">blackout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.blackout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.blackout" title="Link to this definition">¶</a></dt>
 <dd><p>Apply blackout contamination to the time series data.</p>
 <section id="id2">
 <h5>Parameters<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h5>
@@ -379,6 +377,8 @@ to contaminate the datasets with missing values and plot results.</p>
 <dt>series_rate<span class="classifier">float, optional</span></dt><dd><p>Percentage of missing values per series (default is 0.2).</p>
 </dd>
 <dt>offset<span class="classifier">float, optional</span></dt><dd><p>Size of the uncontaminated section at the beginning of the series (default is 0.1).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -405,7 +405,7 @@ to contaminate the datasets with missing values and plot results.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.disjoint">
-<span class="sig-name descname"><span class="pre">disjoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.disjoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.disjoint" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">disjoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.disjoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.disjoint" title="Link to this definition">¶</a></dt>
 <dd><p>Apply disjoint contamination to the time series data.</p>
 <section id="id6">
 <h5>Parameters<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h5>
@@ -417,6 +417,8 @@ to contaminate the datasets with missing values and plot results.</p>
 <dt>limit<span class="classifier">float, optional</span></dt><dd><p>Percentage expressing the limit index of the end of the contamination (default is 1: all length).</p>
 </dd>
 <dt>offset<span class="classifier">float, optional</span></dt><dd><p>Size of the uncontaminated section at the beginning of the series (default is 0.1).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -443,7 +445,7 @@ to contaminate the datasets with missing values and plot results.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.distribution">
-<span class="sig-name descname"><span class="pre">distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probabilities</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.distribution" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probabilities</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.distribution" title="Link to this definition">¶</a></dt>
 <dd><p>Apply contamination with a probabilistic distribution to the time series data.</p>
 <section id="id10">
 <h5>Parameters<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h5>
@@ -460,6 +462,8 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 <dt>offset<span class="classifier">float, optional</span></dt><dd><p>Size of the uncontaminated section at the beginning of the series (default is 0.1).</p>
 </dd>
 <dt>seed<span class="classifier">bool, optional</span></dt><dd><p>Whether to use a seed for reproducibility (default is True).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -486,7 +490,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.gaussian">
-<span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_dev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.gaussian" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_dev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.gaussian" title="Link to this definition">¶</a></dt>
 <dd><p>Apply contamination with a Gaussian distribution to the time series data.</p>
 <section id="id14">
 <h5>Parameters<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h5>
@@ -503,6 +507,8 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </dd>
 <dt>seed<span class="classifier">bool, optional</span></dt><dd><p>Whether to use a seed for reproducibility (default is True).</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id15">
@@ -514,7 +520,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </section>
 <section id="id16">
 <h5>Example<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h5>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">std_dev</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">std_dev</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 </pre></div>
 </div>
 </section>
@@ -528,7 +534,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.mcar">
-<span class="sig-name descname"><span class="pre">mcar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explainer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.mcar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.mcar" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mcar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explainer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.mcar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.mcar" title="Link to this definition">¶</a></dt>
 <dd><p>Apply Missing Completely at Random (MCAR) contamination to the time series data.</p>
 <section id="id18">
 <h5>Parameters<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h5>
@@ -547,6 +553,8 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </dd>
 <dt>explainer<span class="classifier">bool, optional</span></dt><dd><p>Whether to apply MCAR to specific series for explanation purposes (default is False).</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id19">
@@ -558,7 +566,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </section>
 <section id="id20">
 <h5>Example<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h5>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 </pre></div>
 </div>
 </section>
@@ -572,7 +580,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.missing_completely_at_random">
-<span class="sig-name descname"><span class="pre">missing_completely_at_random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explainer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.missing_completely_at_random" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">missing_completely_at_random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explainer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.missing_completely_at_random" title="Link to this definition">¶</a></dt>
 <dd><p>Apply Missing Completely at Random (MCAR) contamination to the time series data.</p>
 <section id="id22">
 <h5>Parameters<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h5>
@@ -591,6 +599,8 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </dd>
 <dt>explainer<span class="classifier">bool, optional</span></dt><dd><p>Whether to apply MCAR to specific series for explanation purposes (default is False).</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id23">
@@ -602,7 +612,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </section>
 <section id="id24">
 <h5>Example<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h5>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">mcar</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 </pre></div>
 </div>
 </section>
@@ -616,7 +626,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage">
-<span class="sig-name descname"><span class="pre">missing_percentage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">missing_percentage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.missing_percentage" title="Link to this definition">¶</a></dt>
 <dd><p>Apply aligned missing blocks contamination to the time series data.</p>
 <section id="id26">
 <h5>Parameters<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h5>
@@ -629,6 +639,8 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </dd>
 <dt>offset<span class="classifier">float, optional</span></dt><dd><p>Size of the uncontaminated section at the beginning of the series (default is 0.1).</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id27">
@@ -640,7 +652,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </section>
 <section id="id28">
 <h5>Example<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h5>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 </pre></div>
 </div>
 </section>
@@ -654,7 +666,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.mp">
-<span class="sig-name descname"><span class="pre">mp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.mp" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">mp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.mp" title="Link to this definition">¶</a></dt>
 <dd><p>Apply aligned missing blocks contamination to the time series data.</p>
 <section id="id30">
 <h5>Parameters<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h5>
@@ -667,6 +679,8 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </dd>
 <dt>offset<span class="classifier">float, optional</span></dt><dd><p>Size of the uncontaminated section at the beginning of the series (default is 0.1).</p>
 </dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
+</dd>
 </dl>
 </section>
 <section id="id31">
@@ -678,7 +692,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 </section>
 <section id="id32">
 <h5>Example<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h5>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 </pre></div>
 </div>
 </section>
@@ -692,7 +706,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.overlap">
-<span class="sig-name descname"><span class="pre">overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.overlap" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.overlap" title="Link to this definition">¶</a></dt>
 <dd><p>Apply overlap contamination to the time series data.</p>
 <section id="id34">
 <h5>Parameters<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h5>
@@ -706,6 +720,8 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 <dt>shift<span class="classifier">float, optional</span></dt><dd><p>Percentage of shift inside each the last disjoint contamination.</p>
 </dd>
 <dt>offset<span class="classifier">float, optional</span></dt><dd><p>Size of the uncontaminated section at the beginning of the series (default is 0.1).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -732,7 +748,7 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.Contamination.scattered">
-<span class="sig-name descname"><span class="pre">scattered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.scattered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.scattered" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">scattered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.Contamination.scattered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.Contamination.scattered" title="Link to this definition">¶</a></dt>
 <dd><p>Apply percentage shift contamination with random starting position to the time series data.</p>
 <section id="id38">
 <h5>Parameters<a class="headerlink" href="#id38" title="Link to this heading">¶</a></h5>
@@ -746,6 +762,8 @@ Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0],
 <dt>offset<span class="classifier">float, optional</span></dt><dd><p>Size of the uncontaminated section at the beginning of the series (default is 0.1).</p>
 </dd>
 <dt>seed<span class="classifier">bool, optional</span></dt><dd><p>Whether to use a seed for reproducibility (default is True).</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -833,7 +851,7 @@ or values per series for computational efficiency.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.manager.TimeSeries.normalize">
-<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'z_score'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.normalize" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'z_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/manager.html#TimeSeries.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.manager.TimeSeries.normalize" title="Link to this definition">¶</a></dt>
 <dd><p>Normalize the time series dataset.</p>
 <p>Supported normalization techniques are “z_score” and “min_max”. The method also logs
 the execution time for the normalization process.</p>
@@ -843,6 +861,8 @@ the execution time for the normalization process.</p>
 <dt>normalizer<span class="classifier">str, optional</span></dt><dd><p>The normalization technique to use. Options are “z_score” or “min_max”. Default is “z_score”.</p>
 </dd>
 </dl>
+<p>verbose : bool, optional
+Whether to display the contamination information (default is False).</p>
 </section>
 <section id="id48">
 <h4>Returns<a class="headerlink" href="#id48" title="Link to this heading">¶</a></h4>

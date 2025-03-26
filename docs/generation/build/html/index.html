@@ -208,12 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -276,12 +272,12 @@
 <dl class="simple">
 <dt>In detail, the library provides:</dt><dd><ul class="simple">
 <li><p>Access to commonly used datasets in time series research (<a class="reference external" href="datasets.html">Datasets</a>).</p></li>
-<li><p>Automated preprocessing with built-in methods for normalizing time series (<a class="reference external" href="preprocessing.html">Preprocessing</a>).</p></li>
+<li><p>Automated preprocessing with built-in methods for normalizing time series (<a class="reference external" href="tutorials.html#loading-preprocessing">Preprocessing</a>).</p></li>
 <li><p>Configurable contamination module that simulates real-world missingness patterns (<a class="reference external" href="patterns.html">Patterns</a>).</p></li>
 <li><p>Parameterizable state-of-the-art time series imputation algorithms (<a class="reference external" href="algorithms.html">Algorithms</a>).</p></li>
-<li><p>Benchmarking to foster reproducibility in time series imputation (<a class="reference external" href="benchmark.html">Benchmark</a>).</p></li>
-<li><p>Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (<a class="reference external" href="downstream.html">Downstream Evaluation</a>).</p></li>
-<li><p>Fine-grained analysis of the impact of time series features on imputation results (<a class="reference external" href="explainer.html">Explainer</a>).</p></li>
+<li><p>Benchmarking to foster reproducibility in time series imputation (<a class="reference external" href="tutorials.html#benchmark">Benchmark</a>).</p></li>
+<li><p>Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (<a class="reference external" href="tutorials.html#downstream">Downstream</a>).</p></li>
+<li><p>Fine-grained analysis of the impact of time series features on imputation results (<a class="reference external" href="tutorials.html#explainer">Explainer</a>).</p></li>
 <li><p>Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.</p></li>
 </ul>
 </dd>
@@ -301,29 +297,79 @@
 </div>
 <br><br><section id="get-started">
 <span id="id2"></span><h3>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h3>
+<script>
+   function applyTheme(e)
+   {
+     document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+   }
+
+   const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+   applyTheme(darkQuery); // Apply on load
+   darkQuery.addEventListener('change', applyTheme); // React to changes
+</script>
+
+<style>
+     [data-theme="dark"] .card
+     {
+         padding: 15px;
+         border-radius: 8px;
+         background-color: #181818;
+     }
+
+     [data-theme="dark"] .card p
+     {
+         color: #CCCCCC;
+     }
+
+     [data-theme="dark"] .card h3 a
+     {
+         color: #2e86c1;
+         text-decoration: none;
+     }
+
+     [data-theme="light"] .card
+     {
+         padding: 15px;
+         border-radius: 8px;
+         background-color: #f8f9fa;
+     }
+
+     [data-theme="light"] .card p
+     {
+         color: #333333;
+     }
+
+     [data-theme="light"] .card h3 a
+     {
+         color: #2e86c1;
+         text-decoration: none;
+     }
+</style>
+
+
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
 
-    <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
-    <h3><a href="getting_started.html" style="text-decoration: none; color: #2e86c1;">🚀 Installation</a></h3>
-    <p style="color: #CCCCCC;">Read the guide on how to install <strong>ImputeGAP</strong> on your system.</p>
-    </div>
+   <div class="card">
+     <h3><a href="getting_started.html">🚀 Installation</a></h3>
+     <p>Read the guide on how to install <strong>ImputeGAP</strong> on your system.</p>
+   </div>
 
-    <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
-    <h3><a href="tutorials.html" style="text-decoration: none; color: #2e86c1;">📖 Tutorials</a></h3>
-    <p style="color: #CCCCCC;">Check the tutorials to learn how to use <strong>ImputeGAP</strong> efficiently.</p>
-    </div>
+   <div class="card">
+     <h3><a href="tutorials.html">📖 Tutorials</a></h3>
+     <p>Check the tutorials to learn how to use <strong>ImputeGAP</strong> efficiently.</p>
+   </div>
 
-    <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
-    <h3><a href="imputegap.html" style="text-decoration: none; color: #2e86c1;">📦 API</a></h3>
-    <p style="color: #CCCCCC;">Find the main API for each submodule in the index.</p>
-    </div>
+   <div class="card">
+     <h3><a href="imputegap.html">📦 API</a></h3>
+     <p>Find the main API for each submodule in the index.</p>
+   </div>
 
-    <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
-    <h3><a href="algorithms.html" style="text-decoration: none; color: #2e86c1;">🧠 Algorithms</a></h3>
-    <p style="color: #CCCCCC;">Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
-    </div>
+   <div class="card">
+     <h3><a href="algorithms.html">🧠 Algorithms</a></h3>
+     <p>Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
+   </div>
 
-</div><br><br></section>
+ </div><br><br></section>
 </section>
 <section id="citing">
 <span id="id3"></span><h2>Citing<a class="headerlink" href="#citing" title="Link to this heading">¶</a></h2>
@@ -338,6 +384,10 @@
 <span class="w">  </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>https://arxiv.org/abs/2503.15250<span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
+</div><br>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you like our library, please star our <a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub repository</a>.</p>
 </div>
 <br><br><section id="contributors">
 <span id="id4"></span><h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h3>

@@ -6,12 +6,12 @@ ImputeGAP is a comprehensive Python library for imputation of missing values in 
 
 In detail, the library provides:
     - Access to commonly used datasets in time series research (`Datasets <datasets.html>`_).
-    - Automated preprocessing with built-in methods for normalizing time series (`Preprocessing <preprocessing.html>`_).
+    - Automated preprocessing with built-in methods for normalizing time series (`Preprocessing <tutorials.html#loading-preprocessing>`_).
     - Configurable contamination module that simulates real-world missingness patterns (`Patterns <patterns.html>`_).
     - Parameterizable state-of-the-art time series imputation algorithms (`Algorithms <algorithms.html>`_).
-    - Benchmarking to foster reproducibility in time series imputation (`Benchmark <benchmark.html>`_).
-    - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream Evaluation <downstream.html>`_).
-    - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <explainer.html>`_).
+    - Benchmarking to foster reproducibility in time series imputation (`Benchmark <tutorials.html#benchmark>`_).
+    - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream <tutorials.html#downstream>`_).
+    - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <tutorials.html#explainer>`_).
     - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
 
 
@@ -48,29 +48,81 @@ ___________
 
 .. raw:: html
 
+   <script>
+      function applyTheme(e)
+      {
+        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      }
+
+      const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      applyTheme(darkQuery); // Apply on load
+      darkQuery.addEventListener('change', applyTheme); // React to changes
+   </script>
+
+   <style>
+        [data-theme="dark"] .card
+        {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #181818;
+        }
+
+        [data-theme="dark"] .card p
+        {
+            color: #CCCCCC;
+        }
+
+        [data-theme="dark"] .card h3 a
+        {
+            color: #2e86c1;
+            text-decoration: none;
+        }
+
+        [data-theme="light"] .card
+        {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        [data-theme="light"] .card p
+        {
+            color: #333333;
+        }
+
+        [data-theme="light"] .card h3 a
+        {
+            color: #2e86c1;
+            text-decoration: none;
+        }
+   </style>
+
+
    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
 
-       <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
-       <h3><a href="getting_started.html" style="text-decoration: none; color: #2e86c1;">🚀 Installation</a></h3>
-       <p style="color: #CCCCCC;">Read the guide on how to install <strong>ImputeGAP</strong> on your system.</p>
-       </div>
+      <div class="card">
+        <h3><a href="getting_started.html">🚀 Installation</a></h3>
+        <p>Read the guide on how to install <strong>ImputeGAP</strong> on your system.</p>
+      </div>
 
-       <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
-       <h3><a href="tutorials.html" style="text-decoration: none; color: #2e86c1;">📖 Tutorials</a></h3>
-       <p style="color: #CCCCCC;">Check the tutorials to learn how to use <strong>ImputeGAP</strong> efficiently.</p>
-       </div>
+      <div class="card">
+        <h3><a href="tutorials.html">📖 Tutorials</a></h3>
+        <p>Check the tutorials to learn how to use <strong>ImputeGAP</strong> efficiently.</p>
+      </div>
 
-       <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
-       <h3><a href="imputegap.html" style="text-decoration: none; color: #2e86c1;">📦 API</a></h3>
-       <p style="color: #CCCCCC;">Find the main API for each submodule in the index.</p>
-       </div>
+      <div class="card">
+        <h3><a href="imputegap.html">📦 API</a></h3>
+        <p>Find the main API for each submodule in the index.</p>
+      </div>
 
-       <div style="background-color: #181818; padding: 15px; border-radius: 8px;">
-       <h3><a href="algorithms.html" style="text-decoration: none; color: #2e86c1;">🧠 Algorithms</a></h3>
-       <p style="color: #CCCCCC;">Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
-       </div>
+      <div class="card">
+        <h3><a href="algorithms.html">🧠 Algorithms</a></h3>
+        <p>Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
+      </div>
 
-   </div><br><br>
+    </div><br><br>
+
+
 
 
 .. _citing:
@@ -91,6 +143,16 @@ If you use ImputeGAP in your research, please cite the paper:
       primaryclass = {cs.LG},
       url = {https://arxiv.org/abs/2503.15250}
     }
+
+.. raw:: html
+
+   <br><br>
+
+
+.. note::
+
+    If you like our library, please star our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
+
 
 
 .. raw:: html
@@ -141,12 +203,8 @@ ____________
    getting_started
    tutorials
    datasets
-   preprocessing
    patterns
    algorithms
-   benchmark
-   downstream
-   explainer
    GitHub Repository <https://github.com/eXascaleInfolab/ImputeGAP/>
    PyPI Repository <https://pypi.org/project/imputegap/>
    imputegap

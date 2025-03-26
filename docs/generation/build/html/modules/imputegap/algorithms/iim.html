@@ -207,12 +207,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -270,7 +266,7 @@
 
 <div class="viewcode-block" id="iim">
 <a class="viewcode-back" href="../../../imputegap.iim.html#imputegap.algorithms.iim.iim">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">iim</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">number_neighbor</span><span class="p">,</span> <span class="n">algo_code</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">iim</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">number_neighbor</span><span class="p">,</span> <span class="n">algo_code</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform imputation using the Iterative Imputation Method (IIM) algorithm.</span>
 
@@ -284,6 +280,8 @@
 <span class="sd">        The specific action code for the IIM output. This determines the behavior of the algorithm.</span>
 <span class="sd">    logs : bool, optional</span>
 <span class="sd">        Whether to log the execution time (default is True).</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        Whether to display the contamination information (default is True).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -299,8 +297,8 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; recov_data = iim(incomp_data, number_neighbor=10, algo_code=&quot;iim 2&quot;)</span>
-<span class="sd">    &gt;&gt;&gt; print(recov_data)</span>
+<span class="sd">        &gt;&gt;&gt; recov_data = iim(incomp_data, number_neighbor=10, algo_code=&quot;iim 2&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(recov_data)</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
@@ -312,7 +310,7 @@
     <span class="n">recov_data</span> <span class="o">=</span> <span class="n">impute_with_algorithm</span><span class="p">(</span><span class="n">algo_code</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">number_neighbor</span><span class="p">)</span>
 
     <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">logs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">logs</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&gt; logs, imputation iim - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">recov_data</span></div>

@@ -3,7 +3,7 @@ import ctypes as __native_c_types_import;
 
 from imputegap.tools import utils
 
-def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
+def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha, __verbose=True):
     """
     Perform matrix imputation using the STMVL algorithm with native C++ support.
 
@@ -17,6 +17,8 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
         The smoothing parameter for temporal weight (0 < gamma < 1).
     __py_alpha : float
         The power for the spatial weight.
+    __verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -30,8 +32,8 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
 
     Example
     -------
-    >>> recov_data = stmvl(incomp_data=incomp_data, window_size=2, gamma=0.85, alpha=7)
-    >>> print(recov_data)
+        >>> recov_data = stmvl(incomp_data=incomp_data, window_size=2, gamma=0.85, alpha=7)
+        >>> print(recov_data)
 
     References
     ----------
@@ -39,7 +41,7 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.
     """
 
-    shared_lib = utils.load_share_lib("lib_stmvl")
+    shared_lib = utils.load_share_lib("lib_stmvl", verbose=__verbose)
 
     __py_sizen = len(__py_matrix);
     __py_sizem = len(__py_matrix[0]);
@@ -69,31 +71,57 @@ def native_stmvl(__py_matrix, __py_window, __py_gamma, __py_alpha):
     return __py_recovered;
 
 
-def stmvl(incomp_data, window_size, gamma, alpha, logs=True):
+def stmvl(incomp_data, window_size, gamma, alpha, logs=True, verbose=True):
     """
-    CDREC algorithm for imputation of missing data
-    :author: Quentin Nater
+    ST-MVL algorithm for imputation of missing data
 
-    :param incomp_data: time series with contamination
-    :param window_size: window size for temporal component
-    :param gamma: smoothing parameter for temporal weight
-    :param alpha: power for spatial weight
+    Parameters
+    ----------
+    incomp_data : numpy.ndarray
+        The input matrix with contamination (missing values represented as NaNs).
+    window_size : int
+        window size for temporal component
+    gamma : float
+        smoothing parameter for temporal weight
+    alpha : float
+        power for spatial weight
+    logs : bool, optional
+        Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is False).
+    lib_path : str, optional
+        Custom path to the shared library file (default is None).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
-    :param logs: print logs of time execution
+    Returns
+    -------
+    numpy.ndarray
+        The imputed matrix with missing values recovered.
 
-    :return: recov_data, metrics : all time series with imputation data and their metrics
+    Example
+    -------
+        >>> recov_data = stmvl(incomp_data=incomp_data, window_size=7, gamma=0.85, alpha=7, logs=True)
+        >>> print(recov_data)
+
+    References
+    ----------
+    Yi, X., Zheng, Y., Zhang, J., & Li, T. ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data.
+    School of Information Science and Technology, Southwest Jiaotong University; Microsoft Research; Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences.
 
     """
-    print(f"(PYTHON) ST-MVL: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for window_size {window_size}, "
-          f"gamma {gamma}, and alpha {alpha}...")
+
+    if verbose:
+        print(f"(PYTHON) ST-MVL: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for window_size {window_size}, "
+              f"gamma {gamma}, and alpha {alpha}...")
 
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_stmvl(incomp_data, window_size, gamma, alpha)
+    recov_data = native_stmvl(incomp_data, window_size, gamma, alpha, verbose)
 
     end_time = time.time()
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation stvml - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

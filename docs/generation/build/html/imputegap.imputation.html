@@ -208,12 +208,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -342,7 +338,8 @@ and optimization. Specific algorithms should inherit from this class and impleme
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.BaseImputer.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id2">
 <h4>Parameters<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
 <dl class="simple">
@@ -367,6 +364,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.BaseImputer.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -516,7 +518,8 @@ BRITS :</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id9">
 <h6>Parameters<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -541,6 +544,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -644,7 +652,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id18">
 <h6>Parameters<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -669,6 +678,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -771,7 +785,8 @@ it is inferred from <cite>incomp_data</cite>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id27">
 <h6>Parameters<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -796,6 +811,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -887,7 +907,8 @@ https://github.com/pbansal5/DeepMVI</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id36">
 <h6>Parameters<a class="headerlink" href="#id36" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -912,6 +933,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1003,7 +1029,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id45">
 <h6>Parameters<a class="headerlink" href="#id45" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -1028,6 +1055,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1127,7 +1159,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id54">
 <h6>Parameters<a class="headerlink" href="#id54" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -1152,6 +1185,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1246,7 +1284,8 @@ If convergence is reached earlier, the process stops (default is 10).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id63">
 <h6>Parameters<a class="headerlink" href="#id63" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -1271,6 +1310,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1372,7 +1416,8 @@ Need torch-cluster to work.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id72">
 <h6>Parameters<a class="headerlink" href="#id72" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -1397,6 +1442,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1501,7 +1551,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id81">
 <h6>Parameters<a class="headerlink" href="#id81" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -1526,6 +1577,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1629,7 +1685,8 @@ and time-series. If alpha = 0, network is ignored. (default 0.5)</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id90">
 <h6>Parameters<a class="headerlink" href="#id90" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -1654,6 +1711,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1746,7 +1808,8 @@ If False, conditional imputation models are used, depending on available data pa
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id99">
 <h6>Parameters<a class="headerlink" href="#id99" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -1771,6 +1834,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1881,7 +1949,8 @@ keywords: {Data models;Adaptation models;Computational modeling;Predictive model
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.IIM.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id109">
 <h6>Parameters<a class="headerlink" href="#id109" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -1906,6 +1975,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.IIM.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -1999,7 +2073,8 @@ S. F. Buck, (1960). “A Method of Estimation of Missing Values in Multivariate 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.MICE.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id118">
 <h6>Parameters<a class="headerlink" href="#id118" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -2024,6 +2099,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.MICE.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -2121,7 +2201,8 @@ and time-series. If alpha = 0, network is ignored. (default 0.5)</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id127">
 <h6>Parameters<a class="headerlink" href="#id127" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -2146,6 +2227,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -2188,7 +2274,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
-<dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the STMVL algorithm, if None, default ones are loaded.</p>
+<dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the xgboost algorithm, if None, default ones are loaded.</p>
 <p><strong>Algorithm parameters:</strong></p>
 <dl class="simple">
 <dt>n_estimators<span class="classifier">int, optional</span></dt><dd><p>The number of trees in the Random Forest model used for imputation (default is 10).</p>
@@ -2232,7 +2318,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id136">
 <h6>Parameters<a class="headerlink" href="#id136" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -2257,6 +2344,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -2499,7 +2591,8 @@ Please increase the value if you have more resources</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id146">
 <h6>Parameters<a class="headerlink" href="#id146" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -2524,6 +2617,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -2611,7 +2709,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id155">
 <h6>Parameters<a class="headerlink" href="#id155" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -2636,6 +2735,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -2725,7 +2829,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id164">
 <h6>Parameters<a class="headerlink" href="#id164" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -2750,6 +2855,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -2840,7 +2950,8 @@ Higher values enforce sparsity or robustness against noise in the data.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id173">
 <h6>Parameters<a class="headerlink" href="#id173" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -2865,6 +2976,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -2956,7 +3072,8 @@ Example: 0.8 (fast adaptation), 0.95 (stable systems).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id182">
 <h6>Parameters<a class="headerlink" href="#id182" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -2981,6 +3098,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3066,7 +3188,8 @@ Larger values encourage a sparser, lower-rank solution, while smaller values ret
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id191">
 <h6>Parameters<a class="headerlink" href="#id191" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -3091,6 +3214,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3178,7 +3306,8 @@ Must be greater than 0 and less than or equal to the number of columns in the ma
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id200">
 <h6>Parameters<a class="headerlink" href="#id200" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -3203,6 +3332,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3302,7 +3436,8 @@ That helps to avoid big deviations when forecasting.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id209">
 <h6>Parameters<a class="headerlink" href="#id209" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -3327,6 +3462,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3435,7 +3575,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id219">
 <h6>Parameters<a class="headerlink" href="#id219" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -3460,6 +3601,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3555,7 +3701,8 @@ School of Information Science and Technology, Southwest Jiaotong University; Mic
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id228">
 <h6>Parameters<a class="headerlink" href="#id228" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -3580,6 +3727,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3664,7 +3816,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id237">
 <h6>Parameters<a class="headerlink" href="#id237" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -3689,6 +3842,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3784,7 +3942,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.Interpolation.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id246">
 <h6>Parameters<a class="headerlink" href="#id246" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -3809,6 +3968,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.Interpolation.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3891,7 +4055,8 @@ k : int, optional</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id254">
 <h6>Parameters<a class="headerlink" href="#id254" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -3916,6 +4081,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -3978,7 +4148,8 @@ Template for adding external new algorithm</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id261">
 <h6>Parameters<a class="headerlink" href="#id261" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -4003,6 +4174,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -4057,7 +4233,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id267">
 <h6>Parameters<a class="headerlink" href="#id267" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -4082,6 +4259,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -4144,7 +4326,8 @@ Template for adding external new algorithm</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id274">
 <h6>Parameters<a class="headerlink" href="#id274" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -4169,6 +4352,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MinImpute.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -4231,7 +4419,8 @@ Template for adding external new algorithm</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score">
 <span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score" title="Link to this definition">¶</a></dt>
-<dd><p>Compute evaluation metrics for the imputed time series.</p>
+<dd><p>Compute evaluation metrics for the imputed time series.
+Upstream and downstream metrics can be computed.</p>
 <section id="id281">
 <h6>Parameters<a class="headerlink" href="#id281" title="Link to this heading">¶</a></h6>
 <dl class="simple">
@@ -4256,6 +4445,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 </div>
 </section>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.verbose" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 </dd></dl>
@@ -4359,6 +4553,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer.impute"><code class="docutils literal notranslate"><span class="pre">BaseImputer.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer.logs"><code class="docutils literal notranslate"><span class="pre">BaseImputer.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer.score"><code class="docutils literal notranslate"><span class="pre">BaseImputer.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.BaseImputer.verbose"><code class="docutils literal notranslate"><span class="pre">BaseImputer.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation"><code class="docutils literal notranslate"><span class="pre">Imputation</span></code></a><ul>
@@ -4369,6 +4564,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BRITS.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BRITS.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BRITS.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BRITS.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BayOTIDE</span></code></a><ul>
@@ -4377,6 +4573,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BayOTIDE.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BayOTIDE.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BayOTIDE.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BayOTIDE.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BitGraph</span></code></a><ul>
@@ -4385,6 +4582,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BitGraph.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BitGraph.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BitGraph.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.BitGraph.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.DeepMVI</span></code></a><ul>
@@ -4393,6 +4591,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.DeepMVI.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.DeepMVI.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.DeepMVI.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.DeepMVI.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GAIN</span></code></a><ul>
@@ -4401,6 +4600,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GAIN.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GAIN.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GAIN.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GAIN.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GRIN</span></code></a><ul>
@@ -4409,6 +4609,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GRIN.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GRIN.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GRIN.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.GRIN.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.HKMF_T</span></code></a><ul>
@@ -4417,6 +4618,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.HKMF_T.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.HKMF_T.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.HKMF_T.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.HKMF_T.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MPIN</span></code></a><ul>
@@ -4425,6 +4627,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MPIN.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MPIN.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MPIN.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MPIN.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MRNN</span></code></a><ul>
@@ -4433,6 +4636,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MRNN.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MRNN.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MRNN.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MRNN.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MissNet</span></code></a><ul>
@@ -4441,6 +4645,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MissNet.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MissNet.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MissNet.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.MissNet.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.PRISTI</span></code></a><ul>
@@ -4449,6 +4654,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.PRISTI.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.PRISTI.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.score"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.PRISTI.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.DeepLearning.PRISTI.verbose</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -4460,6 +4666,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.IIM.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.IIM.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.IIM.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.IIM.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MICE</span></code></a><ul>
@@ -4468,6 +4675,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MICE.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MICE.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MICE.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MICE.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MissForest</span></code></a><ul>
@@ -4476,6 +4684,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MissForest.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MissForest.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MissForest.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.MissForest.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.XGBOOST</span></code></a><ul>
@@ -4484,6 +4693,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.XGBOOST.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.XGBOOST.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.XGBOOST.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MachineLearning.XGBOOST.verbose</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -4495,6 +4705,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.CDRec.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.CDRec.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.CDRec.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.CDRec.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.GROUSE</span></code></a><ul>
@@ -4503,6 +4714,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.GROUSE.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.GROUSE.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.GROUSE.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.GROUSE.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.IterativeSVD</span></code></a><ul>
@@ -4511,6 +4723,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.IterativeSVD.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.IterativeSVD.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.IterativeSVD.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.IterativeSVD.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.ROSL</span></code></a><ul>
@@ -4519,6 +4732,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.ROSL.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.ROSL.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.ROSL.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.ROSL.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SPIRIT</span></code></a><ul>
@@ -4527,6 +4741,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SPIRIT.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SPIRIT.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SPIRIT.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SPIRIT.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SVT</span></code></a><ul>
@@ -4535,6 +4750,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SVT.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SVT.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SVT.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SVT.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SoftImpute</span></code></a><ul>
@@ -4543,6 +4759,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SoftImpute.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SoftImpute.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SoftImpute.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.SoftImpute.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.TRMF</span></code></a><ul>
@@ -4551,6 +4768,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.TRMF.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.TRMF.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.score"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.TRMF.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.MatrixCompletion.TRMF.verbose</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -4562,6 +4780,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.DynaMMo.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.DynaMMo.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.score"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.DynaMMo.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.DynaMMo.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.STMVL</span></code></a><ul>
@@ -4570,6 +4789,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.STMVL.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.STMVL.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.STMVL.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.STMVL.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.TKCM</span></code></a><ul>
@@ -4578,6 +4798,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.TKCM.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.TKCM.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.score"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.TKCM.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.PatternSearch.TKCM.verbose</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -4589,6 +4810,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.Interpolation.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.Interpolation.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.score"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.Interpolation.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.Interpolation.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.KNNImpute</span></code></a><ul>
@@ -4597,6 +4819,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.KNNImpute.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.KNNImpute.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.score"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.KNNImpute.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.KNNImpute.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImpute</span></code></a><ul>
@@ -4605,6 +4828,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImpute.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImpute.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImpute.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImpute.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImputeBySeries</span></code></a><ul>
@@ -4613,6 +4837,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImputeBySeries.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImputeBySeries.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.score"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImputeBySeries.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MeanImputeBySeries.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MinImpute</span></code></a><ul>
@@ -4621,6 +4846,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MinImpute.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MinImpute.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MinImpute.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.MinImpute.verbose</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.ZeroImpute</span></code></a><ul>
@@ -4629,6 +4855,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.impute"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.ZeroImpute.impute()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.logs"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.ZeroImpute.logs</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.ZeroImpute.score()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.verbose"><code class="docutils literal notranslate"><span class="pre">Imputation.Statistics.ZeroImpute.verbose</span></code></a></li>
 </ul>
 </li>
 </ul>

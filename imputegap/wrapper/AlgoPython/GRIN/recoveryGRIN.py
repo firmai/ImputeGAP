@@ -36,11 +36,12 @@ def get_model_classes(model_str):
 def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=32, window=1, alpha=10.0, patience=4, epochs=20, workers=2,
                  adj_threshold=0.1, val_len=0.2, test_len=0.2, d_ff=16, ff_dropout=0.1, stride=1, l2_reg=0.0,
                  grad_clip_val=5.0, grad_clip_algorithm="norm", loss_fn="l1_loss", use_lr_schedule=True, hint_rate=0.7,
-                 g_train_freq=1, d_train_freq=5, seed=42):
+                 g_train_freq=1, d_train_freq=5, seed=42, verbose=True):
 
-    print("\n\n\t\t\t(PYTHON) GRIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
-          " batch_size ", batch_size, " lr ", lr, " window ", window, " alpha ", alpha, " patience ", patience,
-          " epochs ", epochs, ", and workers ", workers, "=================================================\n\n ")
+    if verbose:
+        print("\n\n\t\t\t(PYTHON) GRIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
+              " batch_size ", batch_size, " lr ", lr, " window ", window, " alpha ", alpha, " patience ", patience,
+              " epochs ", epochs, ", and workers ", workers, "=================================================\n\n ")
 
     input_data = np.copy(input)
 
@@ -124,9 +125,10 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=32, window=1, alpha=10
 
     # Check if indices are empty
     # Check if indices are empty
-    print(f"🔍 torch size: {len(torch_dataset)}")
-    print(f"🔍 Validation Indices: {len(val_idxs) if val_idxs is not None else 0}")
-    print(f"🔍 Test Indices: {len(test_idxs) if test_idxs is not None else 0}")
+    if verbose:
+        print(f"🔍 torch size: {len(torch_dataset)}")
+        print(f"🔍 Validation Indices: {len(val_idxs) if val_idxs is not None else 0}")
+        print(f"🔍 Test Indices: {len(test_idxs) if test_idxs is not None else 0}")
 
     # Extract only the valid arguments that SpatioTemporalDataModule accepts
     data_module_conf = {
@@ -244,14 +246,16 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=32, window=1, alpha=10
         y_true, y_hat, mask = filler.predict_loader(dm.test_dataloader(), return_mask=True)
 
     # Debugging the shapes before reshaping
-    print("🔍 y_hat shape before reshape:", y_hat.shape)
-    print("🔍 Expected input_data shape:", input_data.shape)
+
 
     y_hat = y_hat.detach().cpu().numpy().reshape(input_data.shape)
 
     imputed_data = np.where(np.isnan(input), y_hat, input_data)  # Replace NaNs with predictions
 
-    print("imputed_data.shape", imputed_data.shape)
+    if verbose:
+        print("🔍 y_hat shape before reshape:", y_hat.shape)
+        print("🔍 Expected input_data shape:", input_data.shape)
+        print("imputed_data.shape", imputed_data.shape)
 
     return imputed_data
 

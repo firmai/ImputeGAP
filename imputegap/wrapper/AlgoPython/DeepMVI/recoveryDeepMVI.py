@@ -10,11 +10,12 @@ def recover_matrix(matrix, max_epoch=1000, patience=2, lr=1e-3):
 # end function
 
 
-def deep_mvi_recovery(input, max_epoch=1000, patience=2, lr=1e-3):
+def deep_mvi_recovery(input, max_epoch=1000, patience=2, lr=1e-3, verbose=True):
 
-    print("\t\t(PYTHON) DEEP MVI: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") "
-            "for max_epoch ", max_epoch, ", patience ", patience,
-            ", lr ", lr, "...")
+    if verbose:
+        print("\t\t(PYTHON) DEEP MVI: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") "
+                "for max_epoch ", max_epoch, ", patience ", patience,
+                ", lr ", lr, "...")
 
     # read input matrix
     matrix = input

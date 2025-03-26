@@ -206,12 +206,8 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -481,11 +477,15 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.disjoint">disjoint() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="imputegap.utils.html#imputegap.tools.utils.display_title">display_title() (in module imputegap.tools.utils)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.distribution">distribution() (imputegap.recovery.manager.TimeSeries.Contamination method)</a>
+</li>
+        <li><a href="imputegap.downstream.html#id0">Downstream (class in imputegap.recovery.downstream)</a>, <a href="imputegap.downstream.html#imputegap.recovery.downstream.Downstream">[1]</a>
+</li>
+        <li><a href="imputegap.downstream.html#id3">downstream_analysis() (imputegap.recovery.downstream.Downstream method)</a>, <a href="imputegap.downstream.html#imputegap.recovery.downstream.Downstream.downstream_analysis">[1]</a>
 </li>
     </ul></td>
   </tr></table>
@@ -525,13 +525,15 @@
 </li>
         <li><a href="imputegap.benchmark.html#id27">generate_heatmap() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_heatmap">[1]</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="imputegap.benchmark.html#id30">generate_plots() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_plots">[1]</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="imputegap.benchmark.html#id34">generate_reports_excel() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_reports_excel">[1]</a>
 </li>
         <li><a href="imputegap.benchmark.html#id37">generate_reports_txt() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_reports_txt">[1]</a>
+</li>
+        <li><a href="imputegap.benchmark.html#id41">generate_reports_txt_tmp() (imputegap.recovery.benchmark.Benchmark method)</a>, <a href="imputegap.benchmark.html#imputegap.recovery.benchmark.Benchmark.generate_reports_txt_tmp">[1]</a>
 </li>
     </ul></td>
   </tr></table>
@@ -762,6 +764,13 @@
 </li>
         </ul></li>
         <li>
+    imputegap.recovery.downstream
+
+        <ul>
+          <li><a href="imputegap.downstream.html#module-0">module</a>, <a href="imputegap.downstream.html#module-imputegap.recovery.downstream">[1]</a>
+</li>
+        </ul></li>
+        <li>
     imputegap.recovery.evaluation
 
         <ul>
@@ -841,6 +850,8 @@
         <li><a href="imputegap.utils.html#imputegap.tools.utils.list_of_downstreams_darts">list_of_downstreams_darts() (in module imputegap.tools.utils)</a>
 </li>
         <li><a href="imputegap.utils.html#imputegap.tools.utils.list_of_downstreams_sktime">list_of_downstreams_sktime() (in module imputegap.tools.utils)</a>
+</li>
+        <li><a href="imputegap.utils.html#imputegap.tools.utils.list_of_extractors">list_of_extractors() (in module imputegap.tools.utils)</a>
 </li>
         <li><a href="imputegap.utils.html#imputegap.tools.utils.list_of_optimizers">list_of_optimizers() (in module imputegap.tools.utils)</a>
 </li>
@@ -963,6 +974,8 @@
           <li><a href="autosummary/imputegap.algorithms.zero_impute.html#module-imputegap.algorithms.zero_impute">imputegap.algorithms.zero_impute</a>, <a href="imputegap.zero_impute.html#module-imputegap.algorithms.zero_impute">[1]</a>
 </li>
           <li><a href="autosummary/imputegap.recovery.benchmark.html#module-imputegap.recovery.benchmark">imputegap.recovery.benchmark</a>, <a href="autosummary/imputegap.recovery.benchmarking.html#module-imputegap.recovery.benchmark">[1]</a>, <a href="imputegap.benchmark.html#module-0">[2]</a>, <a href="imputegap.benchmark.html#module-imputegap.recovery.benchmark">[3]</a>
+</li>
+          <li><a href="imputegap.downstream.html#module-0">imputegap.recovery.downstream</a>, <a href="imputegap.downstream.html#module-imputegap.recovery.downstream">[1]</a>
 </li>
           <li><a href="autosummary/imputegap.recovery.evaluation.html#module-imputegap.recovery.evaluation">imputegap.recovery.evaluation</a>, <a href="imputegap.evaluation.html#module-0">[1]</a>, <a href="imputegap.evaluation.html#module-imputegap.recovery.evaluation">[2]</a>
 </li>
@@ -1174,6 +1187,76 @@
 <section id="V" class="genindex-section">
   <h2>V</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.verbose">verbose (imputegap.recovery.imputation.BaseImputer attribute)</a>
+
+        <ul>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.BRITS attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.GAIN attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.GRIN attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.MissNet attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.MPIN attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.MRNN attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.verbose">(imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.verbose">(imputegap.recovery.imputation.Imputation.MachineLearning.IIM attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.verbose">(imputegap.recovery.imputation.Imputation.MachineLearning.MICE attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.verbose">(imputegap.recovery.imputation.Imputation.MachineLearning.MissForest attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.verbose">(imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.verbose">(imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.verbose">(imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.verbose">(imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.verbose">(imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.verbose">(imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.verbose">(imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.verbose">(imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.verbose">(imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.verbose">(imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.verbose">(imputegap.recovery.imputation.Imputation.PatternSearch.STMVL attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.verbose">(imputegap.recovery.imputation.Imputation.PatternSearch.TKCM attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.verbose">(imputegap.recovery.imputation.Imputation.Statistics.Interpolation attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.verbose">(imputegap.recovery.imputation.Imputation.Statistics.KNNImpute attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.verbose">(imputegap.recovery.imputation.Imputation.Statistics.MeanImpute attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.verbose">(imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.verbose">(imputegap.recovery.imputation.Imputation.Statistics.MinImpute attribute)</a>
+</li>
+          <li><a href="imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.verbose">(imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute attribute)</a>
+</li>
+        </ul></li>
+    </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="imputegap.utils.html#imputegap.tools.utils.verification_limitation">verification_limitation() (in module imputegap.tools.utils)</a>
 </li>

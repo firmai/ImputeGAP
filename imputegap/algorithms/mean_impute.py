@@ -24,11 +24,11 @@ def mean_impute(incomp_data, params=None):
 
     Example
     -------
-    >>> incomp_data = np.array([[5, 2, np.nan], [3, np.nan, 6]])
-    >>> recov_data = mean_impute(incomp_data)
-    >>> print(recov_data)
-    array([[5., 2., 4.],
-           [3., 4., 6.]])
+        >>> incomp_data = np.array([[5, 2, np.nan], [3, np.nan, 6]])
+        >>> recov_data = mean_impute(incomp_data)
+        >>> print(recov_data)
+        array([[5., 2., 4.],
+               [3., 4., 6.]])
 
     """
 

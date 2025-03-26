@@ -409,8 +409,8 @@ class Explainer:
         plots_categories = config[extractor]['categories']
 
         path_file = "./imputegap_assets/shap/"
-        path_file_details = "./imputegap_assets/shap/grouped/"
-        path_file_categories = "./imputegap_assets/shap/per_categories/"
+        path_file_details = "./imputegap_assets/shap/analysis_grouped/"
+        path_file_categories = "./imputegap_assets/shap/analysis_per_categories/"
 
         os.makedirs(path_file, exist_ok=True)
         os.makedirs(path_file_details, exist_ok=True)
@@ -730,7 +730,7 @@ class Explainer:
 
             tmp = TimeSeries()
             tmp.import_matrix(input_data)
-            incomp_data = utils.config_contamination(ts=tmp, pattern=pattern, dataset_rate=current_series, series_rate=missing_rate, block_size=block_size, offset=offset, seed=seed, explainer=True)
+            incomp_data = utils.config_contamination(ts=tmp, pattern=pattern, dataset_rate=current_series, series_rate=missing_rate, block_size=block_size, offset=offset, seed=seed, explainer=True, verbose=False)
 
             input_data_matrices.append(input_data)
             obfuscated_matrices.append(incomp_data)

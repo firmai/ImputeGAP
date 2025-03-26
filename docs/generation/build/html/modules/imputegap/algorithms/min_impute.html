@@ -207,12 +207,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../preprocessing.html">Preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../downstream.html">Downstream Evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../explainer.html">Explainer</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -292,11 +288,11 @@
 
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    &gt;&gt;&gt; incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])</span>
-<span class="sd">    &gt;&gt;&gt; recov_data = min_impute(incomp_data)</span>
-<span class="sd">    &gt;&gt;&gt; print(recov_data)</span>
-<span class="sd">    array([[1., 2., 1.],</span>
-<span class="sd">           [4., 1., 6.]])</span>
+<span class="sd">        &gt;&gt;&gt; incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])</span>
+<span class="sd">        &gt;&gt;&gt; recov_data = min_impute(incomp_data)</span>
+<span class="sd">        &gt;&gt;&gt; print(recov_data)</span>
+<span class="sd">        array([[1., 2., 1.],</span>
+<span class="sd">               [4., 1., 6.]])</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 

@@ -2,7 +2,7 @@
 Patterns
 ========
 
-All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module.
+All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module. To learn how to implement contamination, please refer to the `tutorial <tutorials.html#contamination>`_.
 
 To list all the available patterns, you can use this command:
 

@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.GAIN.gainRecovery import gainRecovery
 
 
-def gain(incomp_data, batch_size=32, hint_rate=0.9, alpha=10, epoch=100, logs=True):
+def gain(incomp_data, batch_size=32, hint_rate=0.9, alpha=10, epoch=100, logs=True, verbose=True):
     """
     Perform imputation using the Multivariate Recurrent Neural Network (MRNN) algorithm.
 
@@ -21,6 +21,8 @@ def gain(incomp_data, batch_size=32, hint_rate=0.9, alpha=10, epoch=100, logs=Tr
         Number of training epochs. Default is 100.
     logs : bool, optional
         Whether to log execution details (e.g., training progress and execution time). Default is True.
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
 
     Returns
@@ -31,8 +33,8 @@ def gain(incomp_data, batch_size=32, hint_rate=0.9, alpha=10, epoch=100, logs=Tr
 
     Example
     -------
-    >>> recov_data = gain(incomp_data, batch_size=32, hint_rate=0.9, alpha=10, epoch=100)
-    >>> print(recov_data)
+        >>> recov_data = gain(incomp_data, batch_size=32, hint_rate=0.9, alpha=10, epoch=100)
+        >>> print(recov_data)
 
     References
     ----------
@@ -40,10 +42,10 @@ def gain(incomp_data, batch_size=32, hint_rate=0.9, alpha=10, epoch=100, logs=Tr
     """
     start_time = time.time()  # Record start time
 
-    recov_data = gainRecovery(incomp_data, batch_size=batch_size, hint_rate=hint_rate, alpha=alpha, epoch=epoch)
+    recov_data = gainRecovery(incomp_data, batch_size=batch_size, hint_rate=hint_rate, alpha=alpha, epoch=epoch, verbose=verbose)
 
     end_time = time.time()
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation gain - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

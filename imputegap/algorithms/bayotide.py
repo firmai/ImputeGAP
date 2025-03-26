@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.BayOTIDE.BayOTIDE import recoveryBayOTIDE
 
 
-def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5, logs=True):
+def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5, logs=True, verbose=False):
     """
     BayOTIDE class to impute missing values using Bayesian Online Multivariate Time series Imputation with functional decomposition
 
@@ -45,6 +45,9 @@ def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_sc
     logs : bool, optional
         Whether to log the execution time (default is True).
 
+    verbose : bool, optional
+                Whether to display the contamination information (default is True).
+
     Returns
     -------
     numpy.ndarray
@@ -52,8 +55,8 @@ def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_sc
 
     Example
     -------
-    >>> recov_data = bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5)
-    >>> print(recov_data)
+        >>> recov_data = bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5)
+        >>> print(recov_data)
 
     References
     ----------
@@ -62,10 +65,11 @@ def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_sc
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoveryBayOTIDE(data=incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v)
+    recov_data = recoveryBayOTIDE(data=incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, verbose=verbose)
 
     end_time = time.time()
-    if logs:
+
+    if logs and verbose:
         print(f"\n\t> logs, imputation bay_otide - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

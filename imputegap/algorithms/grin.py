@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.GRIN.recoveryGRIN import recoveryGRIN
 
 
-def grin(incomp_data, d_hidden=32, lr=0.001, batch_size=32, window=10, alpha=10.0, patience=4, epochs=20, workers=2, logs=True):
+def grin(incomp_data, d_hidden=32, lr=0.001, batch_size=32, window=10, alpha=10.0, patience=4, epochs=20, workers=2, logs=True, verbose=True):
     """
     Perform imputation using the Multivariate Recurrent Neural Network (MRNN) algorithm.
 
@@ -39,6 +39,9 @@ def grin(incomp_data, d_hidden=32, lr=0.001, batch_size=32, window=10, alpha=10.
     logs : bool, optional
         Whether to log the execution time (default is True).
 
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
+
     Returns
     -------
     numpy.ndarray
@@ -46,8 +49,8 @@ def grin(incomp_data, d_hidden=32, lr=0.001, batch_size=32, window=10, alpha=10.
 
     Example
     -------
-    >>> recov_data = grin(incomp_data, d_hidden=32, lr=0.001, batch_size=32, window=10, alpha=10.0, patience=4, epochs=20, workers=2)
-    >>> print(recov_data)
+        >>> recov_data = grin(incomp_data, d_hidden=32, lr=0.001, batch_size=32, window=10, alpha=10.0, patience=4, epochs=20, workers=2)
+        >>> print(recov_data)
 
     References
     ----------
@@ -56,10 +59,10 @@ def grin(incomp_data, d_hidden=32, lr=0.001, batch_size=32, window=10, alpha=10.
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoveryGRIN(input=incomp_data, d_hidden=d_hidden, lr=lr, batch_size=batch_size, window=window, alpha=alpha, patience=patience, epochs=epochs, workers=workers)
+    recov_data = recoveryGRIN(input=incomp_data, d_hidden=d_hidden, lr=lr, batch_size=batch_size, window=window, alpha=alpha, patience=patience, epochs=epochs, workers=workers, verbose=verbose)
 
     end_time = time.time()
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation grin - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

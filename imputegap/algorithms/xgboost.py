@@ -6,7 +6,7 @@ import pandas as pd
 from xgboost import XGBRegressor
 
 
-def xgboost(incomp_data, n_estimators=10, seed=42, logs=True):
+def xgboost(incomp_data, n_estimators=10, seed=42, logs=True, verbose=True):
     """
     Perform imputation using the Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation algorithm.
 
@@ -20,6 +20,9 @@ def xgboost(incomp_data, n_estimators=10, seed=42, logs=True):
         The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
+
     Returns
     -------
     numpy.ndarray
@@ -27,8 +30,8 @@ def xgboost(incomp_data, n_estimators=10, seed=42, logs=True):
 
     Example
     -------
-    >>> recov_data = xgboost(incomp_data, n_estimators=10, seed=42)
-    >>> print(recov_data)
+        >>> recov_data = xgboost(incomp_data, n_estimators=10, seed=42)
+        >>> print(recov_data)
 
     References
     ----------
@@ -37,8 +40,9 @@ def xgboost(incomp_data, n_estimators=10, seed=42, logs=True):
     https://medium.com/@tzhaonj/imputing-missing-data-using-xgboost-802757cace6d
     """
 
-    print("(PYTHON) XGBOOST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ")"
-        " for n_estimators ", n_estimators, ", and seed ", seed, "...")
+    if verbose:
+        print("(PYTHON) XGBOOST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ")"
+            " for n_estimators ", n_estimators, ", and seed ", seed, "...")
 
     if isinstance(incomp_data, np.ndarray):
         incomp_data = pd.DataFrame(incomp_data)
@@ -67,7 +71,7 @@ def xgboost(incomp_data, n_estimators=10, seed=42, logs=True):
         recov_data.loc[recov_data[column].isna(), column] = predictions
 
     end_time = time.time()
-    if logs:
+    if logs and verbose:
         print(f"\n\t> logs, imputation XGBOOST - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return np.array(recov_data)

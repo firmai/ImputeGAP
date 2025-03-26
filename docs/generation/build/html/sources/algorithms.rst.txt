@@ -2,7 +2,7 @@
 Algorithms
 ==========
 
-All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module.
+All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module. To learn how to implement imputation, please refer to the `tutorial <tutorials.html#imputation>`_.
 
 To list all the available algorithms and their optimizers, you can use this command:
 
@@ -180,5 +180,3 @@ References
 .. [31] Liang Wang, Simeng Wu, Tianheng Wu, Xianping Tao, Jian Lu: HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization. IEEE Trans. Knowl. Data Eng. 33(11): 3582-3593 (2021)
 
 .. [32] Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
-
-* need torch-cluster to work
