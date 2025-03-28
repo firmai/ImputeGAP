@@ -7,6 +7,7 @@ from collections import defaultdict
 import numpy as np
 import matplotlib.pyplot as plt
 import xlsxwriter
+from scipy.stats.tests.test_continuous_fit_censored import optimizer
 
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
@@ -35,7 +36,7 @@ class Benchmark:
 
     Example
     -------
-    output : {'drift': {'mcar': {'mean': {'bayesian': {'0.05': {'scores': {'RMSE': 0.9234927128429051, 'MAE': 0.7219362152785619, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.0010309219360351562, 'optimization': 0, 'imputation': 0.0005755424499511719}}, '0.1': {'scores': {'RMSE': 0.9699990038879407, 'MAE': 0.7774057495176013, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.0020699501037597656, 'optimization': 0, 'imputation': 0.00048422813415527344}}, '0.2': {'scores': {'RMSE': 0.9914069853975623, 'MAE': 0.8134840739732964, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.007096290588378906, 'optimization': 0, 'imputation': 0.000461578369140625}}, '0.4': {'scores': {'RMSE': 1.0552448338389784, 'MAE': 0.7426695186604741, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.043192148208618164, 'optimization': 0, 'imputation': 0.0005095005035400391}}, '0.6': {'scores': {'RMSE': 1.0143105930114702, 'MAE': 0.7610548321723654, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.17184901237487793, 'optimization': 0, 'imputation': 0.0005536079406738281}}, '0.8': {'scores': {'RMSE': 1.010712060535523, 'MAE': 0.7641520748788702, 'MI': 0.0, 'CORRELATION': 0}, 'times': {'contamination': 0.6064670085906982, 'optimization': 0, 'imputation': 0.0005743503570556641}}}}, 'cdrec': {'bayesian': {'0.05': {'scores': {'RMSE': 0.23303624184873978, 'MAE': 0.13619797235197734, 'MI': 1.2739817718416822, 'CORRELATION': 0.968435455112644}, 'times': {'contamination': 0.0009615421295166016, 'optimization': 0, 'imputation': 0.09218788146972656}}, '0.1': {'scores': {'RMSE': 0.18152059329152104, 'MAE': 0.09925566629402761, 'MI': 1.1516089897042538, 'CORRELATION': 0.9829398352220718}, 'times': {'contamination': 0.00482487678527832, 'optimization': 0, 'imputation': 0.09549617767333984}}, '0.2': {'scores': {'RMSE': 0.13894771223733138, 'MAE': 0.08459032692102293, 'MI': 1.186191167936035, 'CORRELATION': 0.9901338133811375}, 'times': {'contamination': 0.01713728904724121, 'optimization': 0, 'imputation': 0.1129295825958252}}, '0.4': {'scores': {'RMSE': 0.7544523683503829, 'MAE': 0.11218049973594252, 'MI': 0.021165172206064526, 'CORRELATION': 0.814120507570725}, 'times': {'contamination': 0.10881781578063965, 'optimization': 0, 'imputation': 1.9378046989440918}}, '0.6': {'scores': {'RMSE': 0.4355197572001326, 'MAE': 0.1380846624733049, 'MI': 0.10781252370591506, 'CORRELATION': 0.9166777087122915}, 'times': {'contamination': 0.2380077838897705, 'optimization': 0, 'imputation': 1.8785057067871094}}, '0.8': {'scores': {'RMSE': 0.7672558930795506, 'MAE': 0.32988968428439397, 'MI': 0.013509125598802707, 'CORRELATION': 0.7312998041323675}, 'times': {'contamination': 0.6805167198181152, 'optimization': 0, 'imputation': 1.9562773704528809}}}}, 'stmvl': {'bayesian': {'0.05': {'scores': {'RMSE': 0.5434405584289141, 'MAE': 0.346560495723809, 'MI': 0.7328867182584357, 'CORRELATION': 0.8519431955571422}, 'times': {'contamination': 0.0022056102752685547, 'optimization': 0, 'imputation': 52.07010293006897}}, '0.1': {'scores': {'RMSE': 0.39007056542870916, 'MAE': 0.2753022759369617, 'MI': 0.8280959876205578, 'CORRELATION': 0.9180937736429735}, 'times': {'contamination': 0.002231597900390625, 'optimization': 0, 'imputation': 52.543020248413086}}, '0.2': {'scores': {'RMSE': 0.37254427425455994, 'MAE': 0.2730547993858495, 'MI': 0.7425412593844177, 'CORRELATION': 0.9293322959355041}, 'times': {'contamination': 0.0072672367095947266, 'optimization': 0, 'imputation': 52.88247036933899}}, '0.4': {'scores': {'RMSE': 0.6027573766269363, 'MAE': 0.34494332493982044, 'MI': 0.11876685901414151, 'CORRELATION': 0.8390532279447225}, 'times': {'contamination': 0.04321551322937012, 'optimization': 0, 'imputation': 54.10793352127075}}, '0.6': {'scores': {'RMSE': 0.9004526656857551, 'MAE': 0.4924048353228427, 'MI': 0.011590260996247858, 'CORRELATION': 0.5650541301828254}, 'times': {'contamination': 0.1728806495666504, 'optimization': 0, 'imputation': 40.53373336791992}}, '0.8': {'scores': {'RMSE': 1.0112488396023014, 'MAE': 0.7646823531588104, 'MI': 0.00040669209664367576, 'CORRELATION': 0.0183962968474991}, 'times': {'contamination': 0.6077785491943359, 'optimization': 0, 'imputation': 35.151907444000244}}}}, 'iim': {'bayesian': {'0.05': {'scores': {'RMSE': 0.4445625930776235, 'MAE': 0.2696133927362288, 'MI': 1.1167751522591498, 'CORRELATION': 0.8944975075266335}, 'times': {'contamination': 0.0010058879852294922, 'optimization': 0, 'imputation': 0.7380530834197998}}, '0.1': {'scores': {'RMSE': 0.2939506418814281, 'MAE': 0.16953644212278182, 'MI': 1.0160968166750064, 'CORRELATION': 0.9531900627237018}, 'times': {'contamination': 0.0019745826721191406, 'optimization': 0, 'imputation': 4.7826457023620605}}, '0.2': {'scores': {'RMSE': 0.2366529609250008, 'MAE': 0.14709529129218185, 'MI': 1.064299483512458, 'CORRELATION': 0.9711348247027318}, 'times': {'contamination': 0.00801849365234375, 'optimization': 0, 'imputation': 33.94813060760498}}, '0.4': {'scores': {'RMSE': 0.4155649406397416, 'MAE': 0.22056702659999994, 'MI': 0.06616526470761779, 'CORRELATION': 0.919934494058292}, 'times': {'contamination': 0.04391813278198242, 'optimization': 0, 'imputation': 255.31524085998535}}, '0.6': {'scores': {'RMSE': 0.38695094864012947, 'MAE': 0.24340565131372927, 'MI': 0.06361822797740405, 'CORRELATION': 0.9249744935121553}, 'times': {'contamination': 0.17044353485107422, 'optimization': 0, 'imputation': 840.7470128536224}}, '0.8': {'scores': {'RMSE': 0.5862696375344495, 'MAE': 0.3968159514130716, 'MI': 0.13422239939628303, 'CORRELATION': 0.8178796825899766}, 'times': {'contamination': 0.5999574661254883, 'optimization': 0, 'imputation': 1974.6101157665253}}}}, 'mrnn': {'bayesian': {'0.05': {'scores': {'RMSE': 0.9458508648057621, 'MAE': 0.7019459696903068, 'MI': 0.11924522547609226, 'CORRELATION': 0.02915935932568557}, 'times': {'contamination': 0.001056671142578125, 'optimization': 0, 'imputation': 49.42237901687622}}, '0.1': {'scores': {'RMSE': 1.0125309431502871, 'MAE': 0.761136543268339, 'MI': 0.12567590499764303, 'CORRELATION': -0.037161060882302754}, 'times': {'contamination': 0.003415822982788086, 'optimization': 0, 'imputation': 49.04829454421997}}, '0.2': {'scores': {'RMSE': 1.0317754516097355, 'MAE': 0.7952869439926, 'MI': 0.10908095436833125, 'CORRELATION': -0.04155403791391449}, 'times': {'contamination': 0.007429599761962891, 'optimization': 0, 'imputation': 49.42568325996399}}, '0.4': {'scores': {'RMSE': 1.0807965786089415, 'MAE': 0.7326965517264863, 'MI': 0.006171770470542263, 'CORRELATION': -0.020630168509677818}, 'times': {'contamination': 0.042899370193481445, 'optimization': 0, 'imputation': 49.479795694351196}}, '0.6': {'scores': {'RMSE': 1.0441472017887297, 'MAE': 0.7599852461729673, 'MI': 0.01121013333181846, 'CORRELATION': -0.007513931343350665}, 'times': {'contamination': 0.17329692840576172, 'optimization': 0, 'imputation': 50.439927101135254}}, '0.8': {'scores': {'RMSE': 1.0379347892718205, 'MAE': 0.757440007226372, 'MI': 0.0035880775657246428, 'CORRELATION': -0.0014975078469404196}, 'times': {'contamination': 0.6166613101959229, 'optimization': 0, 'imputation': 50.66455388069153}}}}}}}
+    output : {'eegalcohol': {'mcar': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.4359915238078244, 'MAE': 0.3725965559420608, 'MI': 1.4169232775678364, 'CORRELATION': 0.9530448037164908, 'runtime_linear_scale': 0.14936542510986328, 'runtime_log_scale': -0.8257499207386186}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.3665001858394363, 'MAE': 0.2989983612840734, 'MI': 0.9078918430616858, 'CORRELATION': 0.9049909722894052, 'runtime_linear_scale': 0.14400649070739746, 'runtime_log_scale': -0.8416179328014259}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.39833006221984, 'MAE': 0.30824644022807457, 'MI': 0.8483406827418594, 'CORRELATION': 0.9161465703422209, 'runtime_linear_scale': 0.16263365745544434, 'runtime_log_scale': -0.7887895710757052}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.435591016228979, 'MAE': 0.3335144215651955, 'MI': 0.7286325588353783, 'CORRELATION': 0.9021032587324183, 'runtime_linear_scale': 0.14948725700378418, 'runtime_log_scale': -0.8253958270640592}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.4500113661547204, 'MAE': 0.338085865703361, 'MI': 0.6481512576687939, 'CORRELATION': 0.8893263437029546, 'runtime_linear_scale': 0.11344146728515625, 'runtime_log_scale': -0.9452281648326797}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.46554422402146944, 'MAE': 0.3508926604243284, 'MI': 0.6150677913271478, 'CORRELATION': 0.8791443563129441, 'runtime_linear_scale': 0.14773082733154297, 'runtime_log_scale': -0.8305288700027644}, 'times': {}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.24102595399583507, 'MAE': 0.18984832836399548, 'MI': 1.547782862758484, 'CORRELATION': 0.9810468571465141, 'runtime_linear_scale': 0.056914329528808594, 'runtime_log_scale': -1.2447783759282902}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.28890851809839135, 'MAE': 0.22998623733608023, 'MI': 0.9934511613817691, 'CORRELATION': 0.942944831550703, 'runtime_linear_scale': 0.016567707061767578, 'runtime_log_scale': -1.7807375929281355}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.32523842533021824, 'MAE': 0.2398150375225743, 'MI': 1.0141220941333857, 'CORRELATION': 0.9441733384102147, 'runtime_linear_scale': 0.028653383255004883, 'runtime_log_scale': -1.5428240912452686}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.33824584758611187, 'MAE': 0.2509197576351218, 'MI': 0.9534836631617412, 'CORRELATION': 0.9418540692188737, 'runtime_linear_scale': 0.06619572639465332, 'runtime_log_scale': -1.1791700477677098}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.3656435952078159, 'MAE': 0.26630724595251076, 'MI': 0.7933983583413302, 'CORRELATION': 0.9285706343976159, 'runtime_linear_scale': 0.08452534675598145, 'runtime_log_scale': -1.0730130389129724}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.49851932645867886, 'MAE': 0.3727407177987301, 'MI': 0.5872198065951101, 'CORRELATION': 0.8588039019214768, 'runtime_linear_scale': 0.13430190086364746, 'runtime_log_scale': -0.8719178404306834}, 'times': {}}}}}, 'mp': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.34742151870256754, 'MAE': 0.2948407723046262, 'MI': 1.125964256142418, 'CORRELATION': 0.7892633761655805, 'runtime_linear_scale': 0.15556597709655762, 'runtime_log_scale': -0.8080853789072961}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.3844410885563026, 'MAE': 0.3075576508332523, 'MI': 0.6954312599858194, 'CORRELATION': 0.7735153907243231, 'runtime_linear_scale': 0.1470506191253662, 'runtime_log_scale': -0.8325331426484854}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.35786399802701285, 'MAE': 0.28281102633402344, 'MI': 0.5099951376056691, 'CORRELATION': 0.7954814222537407, 'runtime_linear_scale': 0.2436203956604004, 'runtime_log_scale': -0.6132863558093742}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.43119199789678536, 'MAE': 0.3234427657742828, 'MI': 0.7100745133173589, 'CORRELATION': 0.9024794064542365, 'runtime_linear_scale': 0.18121838569641113, 'runtime_log_scale': -0.7417977426336524}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.4506742156401202, 'MAE': 0.34097493425336545, 'MI': 0.6763547885095422, 'CORRELATION': 0.9019998467331982, 'runtime_linear_scale': 0.25681638717651367, 'runtime_log_scale': -0.590377267856808}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.5381331120567093, 'MAE': 0.40890932295665944, 'MI': 0.5082791604891728, 'CORRELATION': 0.8357667475592477, 'runtime_linear_scale': 0.2639143466949463, 'runtime_log_scale': -0.5785370003783141}, 'times': {}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.3096831481522458, 'MAE': 0.21563592819934016, 'MI': 1.1360273959644958, 'CORRELATION': 0.8560961707189335, 'runtime_linear_scale': 0.04132580757141113, 'runtime_log_scale': -1.3837786508749486}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.29125091771194206, 'MAE': 0.2132355936383109, 'MI': 0.7634945893446304, 'CORRELATION': 0.8372801147837776, 'runtime_linear_scale': 0.04345560073852539, 'runtime_log_scale': -1.3619542419291824}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.2879386824647535, 'MAE': 0.22764645037027648, 'MI': 0.6960203330638733, 'CORRELATION': 0.8714158841311463, 'runtime_linear_scale': 0.04009199142456055, 'runtime_log_scale': -1.3969423712072508}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.3287699640998062, 'MAE': 0.2424201903305073, 'MI': 0.8988758488294901, 'CORRELATION': 0.9446832262622646, 'runtime_linear_scale': 0.040317535400390625, 'runtime_log_scale': -1.3945060240507565}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.38653606830971254, 'MAE': 0.28444195748104634, 'MI': 0.7831614045671689, 'CORRELATION': 0.9261181553419807, 'runtime_linear_scale': 0.08821296691894531, 'runtime_log_scale': -1.054467570793068}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.82152770672647, 'MAE': 0.6070921584056164, 'MI': 0.22840679436695374, 'CORRELATION': 0.579634587815775, 'runtime_linear_scale': 0.11256742477416992, 'runtime_log_scale': -0.9485872692326369}, 'times': {}}}}}}}
     """
 
 
@@ -118,17 +119,13 @@ class Benchmark:
                                     merger = merged_dict.setdefault(outer_key, {}
                                                                     ).setdefault(middle_key, {}).setdefault(mean_key, {}
                                                                                                             ).setdefault(
-                                        method_key, {}).setdefault(level_key, {"scores": {}, "times": {}})
+                                        method_key, {}).setdefault(level_key, {"scores": {}})
 
                                     # Add scores and times
                                     for score_key, v in level_value["scores"].items():
                                         if v is None :
                                             v = 0
                                         merger["scores"][score_key] = (merger["scores"].get(score_key, 0) + v / count)
-                                    for time_key, time_value in level_value["times"].items():
-                                        if time_value is None :
-                                            time_value = 0
-                                        merger["times"][time_key] = (merger["times"].get(time_key, 0) + time_value / count)
 
             results_avg.append(merged_dict)
 
@@ -190,7 +187,7 @@ class Benchmark:
 
         print("\nvisualization of datasets:", *datasets_list)
         print("visualization of algorithms:", *algorithms_list)
-        print(f"visualization of aggregate matrix :\n {comprehensive_matrix}\n\n")
+        #print(f"visualization of aggregate matrix :\n {comprehensive_matrix}\n\n")
 
         return comprehensive_matrix, algorithms_list, datasets_list
 
@@ -269,7 +266,7 @@ class Benchmark:
 
         return True
 
-    def generate_reports_txt(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
+    def generate_reports_txt(self, runs_plots_scores, save_dir="./reports", dataset="", metrics=["RMSE"], run=-1, verbose=True):
         """
         Generate and save a text report of metrics and timing for each dataset, algorithm, and pattern.
 
@@ -281,6 +278,8 @@ class Benchmark:
             Directory to save the reports file (default is "./reports").
         dataset : str, optional
             Name of the data for the report name.
+        metrics : str, optional
+            List of metrics asked for in the report.
         run : int, optional
             Number of the run.
         verbose : bool, optional
@@ -295,144 +294,86 @@ class Benchmark:
         The report is saved in a "report.txt" file in `save_dir`, organized in sections with headers and results.
         """
         os.makedirs(save_dir, exist_ok=True)
-        save_path = os.path.join(save_dir, f"report_{dataset}.txt")
-        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        with open(save_path, "w") as file:
-            # Write an overall header for the report
-            file.write(f"Report for Dataset: {dataset}\n")
-            file.write(f"Generated on: {current_time}\n")
-            if run >= 0:
-                file.write(f"Run number: {run}\n")
-            file.write("=" * 120 + "\n\n")
+        only_one = True
+        opt = None
+        for dataset, patterns_items in runs_plots_scores.items():
+            for pattern, algorithm_items in patterns_items.items():
+                for algorithm, optimizer_items in algorithm_items.items():
+                    for optimizer, x_data_items in optimizer_items.items():
+                        opt = optimizer
+                        break
 
-            metrics = {
-                "RMSE": "Root Mean Square Error - Measures the average magnitude of error.",
-                "MAE": "Mean Absolute Error - Measures the average absolute error.",
-                "MI": "Mutual Information - Indicates dependency between variables.",
-                "CORRELATION": "Correlation Coefficient - Indicates linear relationship between variables."
-            }
-            first_metric = True
+        list_of_patterns = []
+        for dataset, patterns_items in runs_plots_scores.items():
+            for pattern, algorithm_items in patterns_items.items():
+                list_of_patterns.append(pattern)
+                new_dir = save_dir + "/" + pattern.lower() + "/"
+                os.makedirs(new_dir, exist_ok=True)
 
-            for metric, description in metrics.items():
-                # Write the metric description
-                file.write(f"{metric}: {description}\n\n")
+                save_path = os.path.join(new_dir, f"report_{pattern}_{dataset}.txt")
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                column_widths = [15, 15, 15, 18, 12, 25]
+                with open(save_path, "w") as file:
+                    file.write(f"Report for Dataset: {dataset}\n")
+                    file.write(f"Generated on: {current_time}\n")
+                    if run >= 0:
+                        file.write(f"Run number: {run}\n")
+                    file.write("=" * 120 + "\n\n")
 
-                # Create a table header
-                headers = ["Dataset", "Pattern", "Algorithm", "Optimizer", "Rate", metric]
-                header_row = "|".join(f" {header:^{width}} " for header, width in zip(headers, column_widths))
-                separator_row = "+" + "+".join(f"{'-' * (width + 2)}" for width in column_widths) + "+"
-                file.write(f"{separator_row}\n")
-                file.write(f"|{header_row}|\n")
-                file.write(f"{separator_row}\n")
+                    for metric in metrics:
+                        file.write(f"\n{dataset} : {metric} <{pattern}> {opt}\n")
 
-                if first_metric and run ==-1 :
-                    print(f"\n{metric}: {description}\n")
-                    print(separator_row)
-                    print(f"|{header_row}|")
-                    print(separator_row)
+                        # Collect all algorithms and scores by rate
+                        rate_to_scores = defaultdict(dict)
+                        all_algorithms = set()
 
-                # Extract and write results for the current metric
-                for dataset, algo_items in runs_plots_scores.items():
-                    for algorithm, optimizer_items in algo_items.items():
-                        for optimizer, pattern_data in optimizer_items.items():
-                            for pattern, x_data_items in pattern_data.items():
+                        for algorithm, optimizer_items in algorithm_items.items():
+                            for optimizer, x_data_items in optimizer_items.items():
                                 for x, values in x_data_items.items():
-                                    value = values.get("scores", {}).get(metric, None)
-                                    if value is not None:
-                                        value = f"{value:.10f}"  # Limit to 10 decimal places
-                                        row_values = [dataset, algorithm, optimizer, pattern, str(x), value]
-                                        row = "|".join(
-                                            f" {value:^{width}} " for value, width in zip(row_values, column_widths))
-                                        file.write(f"|{row}|\n")
-                                        if first_metric and run ==-1 :
-                                            print(f"|{row}|")
-                file.write(f"{separator_row}\n\n")
-                if first_metric and run ==-1 :
-                    print(separator_row + "\n")
-                    first_metric = False
-
-            file.write("Dictionary of Results:\n")
-            file.write(str(runs_plots_scores) + "\n")
-
-        if verbose:
-            print(f"\nreports recorded in the following directory : {save_path}")
-
-
-    def generate_reports_txt_tmp(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
-        os.makedirs(save_dir, exist_ok=True)
-        save_path = os.path.join(save_dir, f"report_{dataset}.txt")
-        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        with open(save_path, "w") as file:
-            file.write(f"Report for Dataset: {dataset}\n")
-            file.write(f"Generated on: {current_time}\n")
-            if run >= 0:
-                file.write(f"Run number: {run}\n")
-            file.write("=" * 120 + "\n\n")
-
-            metrics = {
-                "RMSE": "Root Mean Square Error - Measures the average magnitude of error.",
-                "MAE": "Mean Absolute Error - Measures the average absolute error.",
-                "MI": "Mutual Information - Indicates dependency between variables.",
-                "CORRELATION": "Correlation Coefficient - Indicates linear relationship between variables."
-            }
-
-            for metric, description in metrics.items():
-                # tables[pattern][rate][algorithm+optimizer] = value
-                tables = defaultdict(lambda: defaultdict(dict))
-
-                for _, algo_items in runs_plots_scores.items():
-                    for algorithm, optimizer_items in algo_items.items():
-                        for optimizer, pattern_data in optimizer_items.items():
-                            for pattern, x_data_items in pattern_data.items():
-                                for rate, values in x_data_items.items():
-                                    score = values.get("scores", {}).get(metric)
+                                    score = values.get("scores", {}).get(metric, None)
                                     if score is not None:
-                                        algo_name = f"{algorithm}_{optimizer}"
-                                        tables[pattern][rate][algo_name] = f"{score:.10f}"
+                                        rate_to_scores[x][algorithm] = f"{score:.10f}"
+                                        all_algorithms.add(algorithm)
 
-                # For each pattern, create one table per metric (all algorithms as columns)
-                for pattern in sorted(tables.keys()):
-                    rate_to_algos = tables[pattern]
-                    all_algos = sorted({algo for rate_data in rate_to_algos.values() for algo in rate_data})
-                    all_rates = sorted(rate_to_algos.keys(), key=float)
+                        all_algorithms = sorted(all_algorithms)
+                        headers = ["Rate"] + list(all_algorithms)
+                        column_widths = [5] + [18] * len(all_algorithms)
 
-                    print(f"\n***{dataset}***\n{metric}: {description}\nAlgorithms run with <{pattern}>")
-                    file.write(f"{dataset} > {metric} <with {pattern}>\n")
+                        # Header and separator rows
+                        header_row = "".join(f" {header:^{width}} " for header, width in zip(headers, column_widths))
+                        separator_row = "" + "".join(f"{'' * (width + 2)}" for width in column_widths) + ""
 
-                    col_widths = [15] + [22] * len(all_algos)
-                    separator = "+" + "+".join("-" * (w + 2) for w in col_widths) + "+"
-                    header = ["Rate"] + all_algos
-                    header_row = "|".join(f" {h:^{w}} " for h, w in zip(header, col_widths))
+                        file.write(f"{separator_row}\n")
+                        file.write(f"{header_row}\n")
+                        file.write(f"{separator_row}\n")
 
-                    file.write(f"{separator}\n")
-                    file.write(f"|{header_row}|\n")
-                    file.write(f"{separator}\n")
+                        if only_one and verbose:
+                            print(f"\n{dataset} : {metric} <{pattern}> {opt}")
+                            print(separator_row)
+                            print(f"{header_row}")
+                            print(separator_row)
 
-                    print(f"{separator}")
-                    print(f"|{header_row}|")
-                    print(f"{separator}")
+                        # Write each row
+                        for rate in sorted(rate_to_scores.keys()):
+                            row_values = [rate] + [rate_to_scores[rate].get(algo, "") for algo in all_algorithms]
+                            row = "".join(f" {val:^{width}} " for val, width in zip(row_values, column_widths))
+                            file.write(f"{row}\n")
+                            if only_one and verbose:
+                                print(f"{row}")
 
-                    for rate in all_rates:
-                        row = [str(rate)]
-                        for algo in all_algos:
-                            val = rate_to_algos[rate].get(algo, "N/A")
-                            row.append(val)
-                        row_line = "|".join(f" {v:^{w}} " for v, w in zip(row, col_widths))
-                        file.write(f"|{row_line}|\n")
-                        print(f"|{row_line}|")
+                        file.write(f"{separator_row}\n\n")
+                        if only_one and verbose:
+                            print(separator_row + "\n")
 
-                    file.write(f"{separator}\n\n\n")
-                    print(f"{separator}\n")
+                        only_one = False
 
-            file.write("Raw Dictionary of Results:\n")
-            file.write(str(runs_plots_scores) + "\n")
+                    file.write("Dictionary of Results:\n")
+                    file.write(str(runs_plots_scores) + "\n")
 
-        if verbose:
-            print(f"\nReports recorded in: {save_path}")
+                if verbose:
+                    print(f"\nreports recorded in the following directory : {save_path}")
+
 
     def generate_reports_excel(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
         """
@@ -535,7 +476,7 @@ class Benchmark:
         workbook.close()
 
 
-    def generate_plots(self, runs_plots_scores, ticks, subplot=False, y_size=4, save_dir="./reports", display=False, verbose=True):
+    def generate_plots(self, runs_plots_scores, ticks,  metrics=None, subplot=False, y_size=4, title=None, save_dir="./reports",display=False, verbose=True):
         """
         Generate and save plots for each metric and pattern based on provided scores.
 
@@ -545,13 +486,19 @@ class Benchmark:
             Dictionary containing scores and timing information for each dataset, pattern, and algorithm.
         ticks : list of float
             List of missing rates for contamination.
+        metrics : list of string
+            List of metrics used
         subplot : bool, optional
             If True, generates a single figure with subplots for all metrics (default is False).
+        y_size : int, optional
+            Default size of the graph (default is 4).
+        title : str, optional
+            Title of the graph (default is "imputegap benchmark").
         save_dir : str, optional
             Directory to save generated plots (default is "./reports").
         display : bool, optional
             Display or not the plots (default is False).
-        __verbose : bool, optional
+        verbose : bool, optional
             Whether to display the contamination information (default is True).
 
         Returns
@@ -563,16 +510,25 @@ class Benchmark:
         Saves generated plots in `save_dir`, categorized by dataset, pattern, and metric.
         """
         os.makedirs(save_dir, exist_ok=True)
-        metrics = ["RMSE", "MAE", "MI", "CORRELATION", "imputation_time", "log_imputation"]
+
+        if metrics is None:
+            metrics = utils.list_of_metrics()
+
         x_size = 16
+
+        title_flag = title
+
 
 
         for dataset, pattern_items in runs_plots_scores.items():
             for pattern, algo_items in pattern_items.items():
-
                 if subplot:
                     fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(x_size*1.90, y_size*2.90))  # Adjusted figsize
-                    fig.canvas.manager.set_window_title("benchmark analysis")
+
+                    if title_flag is None:
+                        title = dataset + " : " + pattern + ", benchmark analysis"
+
+                    fig.canvas.manager.set_window_title(title)
 
                     axes = axes.ravel()  # Flatten the 2D array of axes to a 1D array
 
@@ -596,14 +552,7 @@ class Benchmark:
                         y_vals = []
                         for optimizer, x_data in optimizer_items.items():
                             for x, values in x_data.items():
-                                # Differentiate between score metrics and timing metrics
-                                if metric == "imputation_time" and "imputation" in values["times"]:
-                                    x_vals.append(float(x))
-                                    y_vals.append(values["times"]["imputation"])
-                                elif metric == "log_imputation" and "log_imputation" in values["times"]:
-                                    x_vals.append(float(x))
-                                    y_vals.append(values["times"]["log_imputation"])
-                                elif metric in values["scores"]:
+                                if metric in values["scores"]:
                                     x_vals.append(float(x))
                                     y_vals.append(values["scores"][metric])
 
@@ -621,8 +570,8 @@ class Benchmark:
                     # Save plot only if there is data to display
                     if has_data:
                         ylabel_metric = {
-                            "imputation_time": "Runtime Linear Scale (sec)",
-                            "log_imputation": "Runtime Log Scale",
+                            "runtime_linear_scale": "Runtime Linear Scale (sec)",
+                            "runtime_log_scale": "Runtime Log Scale",
                         }.get(metric, metric)
 
                         ax.set_title(metric)
@@ -631,10 +580,10 @@ class Benchmark:
                         ax.set_xlim(0.0, 0.85)
 
                         # Set y-axis limits with padding below 0 for visibility
-                        if metric == "imputation_time":
+                        if metric == "runtime_linear_scale":
                             ax.set_ylim(-10, 90)
                             ax.set_title("Runtime Linear Scale")
-                        elif metric == "log_imputation":
+                        elif metric == "runtime_log_scale":
                             ax.set_ylim(-4.5, 2.5)
                             ax.set_title("Runtime Log Scale")
                         elif metric == "MAE":
@@ -655,24 +604,31 @@ class Benchmark:
 
                     if not subplot:
                         filename = f"{dataset}_{pattern}_{optimizer}_{metric}.jpg"
-                        filepath = os.path.join(save_dir, filename)
+
+                        new_dir = save_dir + "/" + pattern
+                        os.makedirs(new_dir, exist_ok=True)
+
+                        filepath = os.path.join(new_dir, filename)
                         plt.savefig(filepath)
                         plt.close()
 
                 if subplot:
                     plt.tight_layout()
+                    new_dir = save_dir + "/" + pattern
+                    os.makedirs(new_dir, exist_ok=True)
                     filename = f"{dataset}_{pattern}_metrics_subplot.jpg"
-                    filepath = os.path.join(save_dir, filename)
+                    filepath = os.path.join(new_dir, filename)
                     plt.savefig(filepath)
 
                     if display:
                         plt.show()
+                    else:
+                        plt.close()
 
         if verbose:
             print("\nplots recorded in the following directory : ", save_dir)
 
-    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"],
-             x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], save_dir="./reports", runs=1, verbose=False):
+    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, verbose=False):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.
 
@@ -688,6 +644,8 @@ class Benchmark:
             List of missing rates for contamination.
         optimizers : list of dict
             List of optimizers with their configurations.
+        metrics : list of dict
+            List of metrics for evaluation.
         save_dir : str, optional
             Directory to save reports and plots (default is "./reports").
         runs : int, optional
@@ -713,6 +671,14 @@ class Benchmark:
         if "mpin" in algorithms or "MPIN" in algorithms:
             raise ValueError("The 'mpin' algorithm is not compatible with this setup.")
 
+        if "*" in metrics or "all" in metrics:
+            metrics = utils.list_of_metrics()
+        if "*" in metrics or "all" in algorithms:
+            all_algs = utils.list_of_algorithms()
+            algorithms = [item for item in all_algs if item.upper() != "MPIN"]
+
+
+        benchmark_time = time.time()
         for i_run in range(0, abs(runs)):
             for dataset in datasets:
                 runs_plots_scores = {}
@@ -755,18 +721,16 @@ class Benchmark:
                     for algorithm in algorithms:
                         has_been_optimized = False
                         if verbose:
-                            print("\n3. algorithm evaluated", algorithm, "\n")
+                            print("\n3. algorithm evaluated", algorithm, "with", pattern, "\n")
                         else:
-                            print("algorithm evaluated:", algorithm)
+                            print("algorithm evaluated:", algorithm, "with pattern", pattern, "\n")
 
                         for incx, x in enumerate(x_axis):
                             if verbose:
                                 print("\n4. missing values (series&values) set to", x, "for x_axis\n")
 
-                            start_time_contamination = time.time()  # Record start time
                             incomp_data = utils.config_contamination(ts=ts_test, pattern=pattern, dataset_rate=x,
                                 series_rate=x, block_size=block_size_mcar, verbose=verbose)
-                            end_time_contamination = time.time()
 
                             for optimizer in optimizers:
                                 algo = utils.config_impute_algorithm(incomp_data=incomp_data, algorithm=algorithm, verbose=verbose)
@@ -778,13 +742,11 @@ class Benchmark:
                                     if not has_been_optimized and algorithm not in mean_group and algorithm not in not_optimized:
                                         if verbose:
                                             print("\n5. AutoML to set the parameters", optimizer, "\n")
-                                        start_time_opti = time.time()  # Record start time
                                         i_opti = self._config_optimization(0.25, ts_test, pattern, algorithm, block_size_mcar)
                                         i_opti.impute(user_def=False, params=optimizer_gt)
                                         utils.save_optimization(optimal_params=i_opti.parameters, algorithm=algorithm, dataset=dataset, optimizer="e")
 
                                         has_been_optimized = True
-                                        end_time_opti = time.time()
                                     else:
                                         if verbose:
                                             print("\n5. AutoML already optimized...\n")
@@ -814,35 +776,31 @@ class Benchmark:
 
                                 algo.score(input_data=ts_test.data, recov_data=algo.recov_data)
 
-                                time_contamination = end_time_contamination - start_time_contamination
-                                time_opti = end_time_opti - start_time_opti
+                                if "*" not in metrics and "all" not in metrics:
+                                    algo.metrics = {k: algo.metrics[k] for k in metrics if k in algo.metrics}
+
                                 time_imputation = end_time_imputation - start_time_imputation
                                 log_time_imputation = math.log10(time_imputation) if time_imputation > 0 else None
 
-                                dic_timing = {"contamination": time_contamination, "optimization": time_opti,
-                                              "imputation": time_imputation, "log_imputation": log_time_imputation}
+                                algo.metrics["runtime_linear_scale"] = time_imputation
+                                algo.metrics["runtime_log_scale"] = log_time_imputation
 
                                 dataset_s = dataset
                                 if "-" in dataset:
                                     dataset_s = dataset.replace("-", "")
 
-                                runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(pattern),
-                                                                                            {}).setdefault(
-                                    str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {
-                                    "scores": algo.metrics,
-                                    "times": dic_timing
-                                }
+                                runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(pattern), {}).setdefault(str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {"scores": algo.metrics}
 
                 save_dir_runs = save_dir + "/_details/run_" + str(i_run) + "/" + dataset
                 if verbose:
                     print("\nruns saved in : ", save_dir_runs)
-                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_runs, verbose=verbose)
-                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_runs, verbose=verbose)
-                self.generate_reports_txt(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
-                self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
+                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_runs, display=False, verbose=verbose)
+                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, metrics=metrics, subplot=False, y_size=y_p_size, save_dir=save_dir_runs, display=False, verbose=verbose)
+                self.generate_reports_txt(runs_plots_scores, save_dir_runs, dataset, metrics, i_run, verbose=verbose)
+                #self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
                 run_storage.append(runs_plots_scores)
 
-                print("\n**Results of the analysis**\n")
+        print("\n**Results of the analysis**\n")
 
         scores_list, algos, sets = self.avg_results(*run_storage)
         _ = self.generate_heatmap(scores_list, algos, sets, save_dir=save_dir, display=True)
@@ -851,16 +809,20 @@ class Benchmark:
 
         print("\n\nthe results of the analysis has been saved in : ", save_dir, "\n\n")
 
+        benchmark_end = time.time()
+        print(f"\n> logs: benchmark - Execution Time: {(benchmark_end - benchmark_time):.4f} seconds\n")
+
+        verb = True
         for scores in run_averaged:
             all_keys = list(scores.keys())
             dataset_name = str(all_keys[0])
 
             save_dir_agg_set = save_dir + "/" + dataset_name
 
-            self.generate_reports_txt(scores, save_dir_agg_set, dataset_name, -1)
-            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set)
+            self.generate_reports_txt(scores, save_dir_agg_set, dataset_name, metrics, -1)
+            self.generate_plots(runs_plots_scores=scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set, display=verb)
             # self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_agg_set)
-            self.generate_reports_excel(scores, save_dir_agg_set, dataset_name, -1)
+            #self.generate_reports_excel(scores, save_dir_agg_set, dataset_name, -1)
             print("\n\n")
 
         return run_averaged, scores_list

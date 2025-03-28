@@ -17,7 +17,7 @@ In detail, the library provides:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 .. _data-format:
 
@@ -38,13 +38,13 @@ Please ensure that your data satisfies the following criteria:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 .. _get_started:
 
 Get Started
-___________
+-----------
 
 .. raw:: html
 
@@ -120,7 +120,7 @@ ___________
         <p>Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
       </div>
 
-    </div><br><br>
+    </div><br>
 
 
 
@@ -146,24 +146,24 @@ If you use ImputeGAP in your research, please cite the paper:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 .. note::
 
-    If you like our library, please star our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
+    If you like our library, please add a ⭐ in our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
 
 
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 .. _contributors:
 
 Contributors
-____________
+------------
 
 .. list-table::
    :widths: 100 100
@@ -205,6 +205,7 @@ ____________
    datasets
    patterns
    algorithms
+   integration
    GitHub Repository <https://github.com/eXascaleInfolab/ImputeGAP/>
    PyPI Repository <https://pypi.org/project/imputegap/>
    imputegap

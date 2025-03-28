@@ -92,7 +92,7 @@ class TimeSeries:
         self.patterns = utils.list_of_patterns()
         self.datasets = utils.list_of_datasets()
         self.optimizers = utils.list_of_optimizers()
-        self.downstream_models = utils.list_of_downstreams()
+        self.forecasting_models = utils.list_of_downstreams()
 
     def import_matrix(self, data=None):
         """

@@ -15,7 +15,7 @@ The following prerequisites are required to use ImputeGAP:
 
 Please follow your guide:
 
-[**Windows**](#windows)  | [**Unix**](#unix) | [**MAC**](#mac)
+[**Windows**](#windows)  | [**Linux**](#linux) | [**MAC OS**](#mac-os)
 
 <br>
 
@@ -110,10 +110,10 @@ Now, you are ready to install your project or any dependencies within the Python
 
 <br /><hr /><br />
 
-## UNIX
+## LINUX
 ##### Install Python 3.12
 
-To install Python 3.12 on your wsl system, you can follow these steps before creating a virtual environment:
+To install Python 3.12 on your system, you can follow these steps before creating a virtual environment:
 
 1) Update your package list and install prerequisites:
 
@@ -157,10 +157,10 @@ Now, you are ready to install your project or any dependencies within the Python
 ---
 
 
-## MAC
+## MAC OS
 ##### Install Python 3.12
 
-To install Python 3.12 on your wsl system, you can follow these steps before creating a virtual environment:
+To install Python 3.12 on your system, you can follow these steps before creating a virtual environment:
 
 1) Install Homebrew (if not already installed):
 
@@ -181,17 +181,12 @@ brew install python@3.12
 python3.12 --version
 ```
 
-4) Verify the installation:
-```
-python3.12 --version
-```
-
-5) Create a virtual environment using Python 3.12:
+4) Create a virtual environment using Python 3.12:
 ```
 python3.12 -m venv myenv
 ```
 
-6) Activate the virtual environment:
+5) Activate the virtual environment:
 ```
 source myenv/bin/activate
 ```

@@ -93,7 +93,7 @@ class TimeSeries:
         self.datasets = utils.list_of_datasets()
         self.optimizers = utils.list_of_optimizers()
         self.extractors = utils.list_of_extractors()
-        self.downstream_models = utils.list_of_downstreams()
+        self.forecasting_models = utils.list_of_downstreams()
 
     def import_matrix(self, data=None):
         """
@@ -347,7 +347,7 @@ class TimeSeries:
         self.data = self.data.T
 
         if verbose:
-            print(f"\n\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
+            print(f"\n> logs: normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     def plot(self, input_data, incomp_data=None, recov_data=None, nbr_series=None, nbr_val=None, series_range=None,
              subplot=False, size=(16, 8), algorithm=None, save_path="./imputegap_assets", display=True):
@@ -613,16 +613,14 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if not explainer and verbose:
-                print(f"\n\nMCAR contamination has been called with :"
-                      f"\n\ta number of series impacted {rate_dataset * 100}%"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\ta block size of {block_size}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\twith a seed option set to {seed}"
-                      f"\n\twith a seed value set to {seed_value}"
-                      f"\n\tshape of the set {ts_contaminated.shape}"
-                      f"\n\tthis selection of series {series_selected}\n\n")
+                print(f"\n\nmissigness pattern: (MCAR)"
+                      f"\n\tselected series: {series_selected}"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tblock size: {block_size}"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tseed value: {seed_value}")
+
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -705,13 +703,11 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print("\n\nALIGNED (missing percentage) contamination has been called with :"
-                      "\n\ta number of series impacted ", rate_dataset * 100, "%",
-                      "\n\ta missing rate of ", rate_series * 100, "%",
-                      "\n\ta starting position at ", offset,
-                      "\n\tshape of the set ", ts_contaminated.shape,
-                      "\n\tthis selection of series : ", 1, "->", nbr_series_impacted,
-                      "\n\tvalues : ", offset_nbr, "->", offset_nbr + values_nbr, "\n\n")
+                print(f"\n\nmissigness pattern: (ALIGNED)"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
 
 
             if offset_nbr + values_nbr > NS:
@@ -781,13 +777,11 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print("\n\nSCATTER (missing percentage AT RANDOM) contamination has been called with :"
-                      "\n\ta number of series impacted ", rate_dataset * 100, "%",
-                      "\n\ta missing rate of ", rate_series * 100, "%",
-                      "\n\ta starting position at ", offset,
-                      "\n\tshape of the set ", ts_contaminated.shape,
-                      "\n\tthis selection of series : ", 1, "->", nbr_series_impacted,
-                      "\n\tvalues : ", offset_nbr, "->", offset_nbr + values_nbr, "\n\n")
+                print(f"\n\nmissigness pattern: (SCATTER)"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
 
 
             if offset_nbr + values_nbr > NS:
@@ -895,16 +889,12 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nGAUSSIAN contamination has been called with :"
-                      f"\n\ta number of series impacted {rate_dataset * 100}%"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\twith a seed option set to {seed}"
-                      f"\n\twith a seed value set to {seed_value}"
-                      f"\n\tGaussian std_dev {std_dev}"
-                      f"\n\tshape of the set {ts_contaminated.shape}"
-                      f"\n\tthis selection of series {nbr_series_impacted}\n\n")
+                print(f"\n\nmissigness pattern: (GAUSSIAN)"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tseed value: {seed_value}"
+                      f"\n\tstandard deviation : {std_dev}")
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -989,16 +979,12 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nDISTRIBUTION contamination has been called with :"
-                      f"\n\ta number of series impacted {rate_dataset * 100}%"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\twith a seed option set to {seed}"
-                      f"\n\twith a seed value set to {seed_value}"
-                      f"\n\tshape of the set {ts_contaminated.shape}"
-                      f"\n\tprobabilities list {np.array(probabilities).shape}"
-                      f"\n\tthis selection of series {nbr_series_impacted}\n\n")
+                print(f"\n\nmissigness pattern: (DISTRIBUTION)"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tseed value: {seed_value}"
+                      f"\n\tprobabilities list : {np.array(probabilities).shape}")
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -1064,13 +1050,11 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nDISJOINT contamination has been called with :"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\tlimit to stop {limit}"
-                      f"\n\tshape of the set {ts_contaminated.shape}")
-
+                print(f"\n\nmissigness pattern: (DISJOINT)"
+                      f"\n\trate series impacted: {rate_series * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tlimit: {limit}")
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -1140,15 +1124,13 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nOVERLAP contamination has been called with :"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta offset of {offset*100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\ta shift overlap of {shift * 100} %"
-                      f"\n\ta shift in number {int(shift * NS)}"
-                      f"\n\tlimit to stop {limit}"
-                      f"\n\tshape of the set {ts_contaminated.shape}")
+                print(f"\n\nmissigness pattern: (OVERLAP)"
+                      f"\n\trate series impacted: {rate_series * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tshift: {shift * 100} %"
+                      f"\n\tlimit: {limit}")
+
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(

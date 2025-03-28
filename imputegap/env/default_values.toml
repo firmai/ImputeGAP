@@ -111,7 +111,7 @@ nbr_features = 1
 hidden_layers = 64
 
 [deep_mvi]
-max_epoch = 1000
+max_epoch = 100
 patience = 2
 lr = 0.001
 

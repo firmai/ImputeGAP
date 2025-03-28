@@ -40,7 +40,7 @@ def mean_impute_by_series(incomp_data, logs=True, verbose=True):
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation mean impute (by series) - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation mean impute (by series) - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
 
     return recov_data

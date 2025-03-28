@@ -54,6 +54,6 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation MICE - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation MICE - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

@@ -65,6 +65,6 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
     recov_data[nan_mask] = incomp_data[nan_mask]
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation miss_net - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation miss_net - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

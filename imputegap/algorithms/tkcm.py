@@ -85,6 +85,6 @@ def tkcm(incomp_data, rank, logs=True, verbose=True, lib_path=None):
     end_time = time.time()
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation TKCM - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation TKCM - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

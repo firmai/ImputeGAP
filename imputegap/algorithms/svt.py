@@ -84,6 +84,6 @@ def svt(incomp_data, tau, logs=True, verbose=True, lib_path=None):
     end_time = time.time()
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation SVT - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation SVT - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

@@ -809,12 +809,9 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     None
     """
     if file_name is None:
-        file_name = "../params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+        file_name = "./imputegap_assets/params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
     else:
         file_name += "optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-
-    if not os.path.exists(file_name):
-        file_name = file_name[1:]
 
     dir_name = os.path.dirname(file_name)
     if dir_name and not os.path.exists(dir_name):
@@ -1127,3 +1124,6 @@ def list_of_extractors():
         "tsfel",
         "tsfresh"
     ])
+
+def list_of_metrics():
+    return ["RMSE", "MAE", "MI", "CORRELATION", "runtime_linear_scale", "runtime_log_scale"]

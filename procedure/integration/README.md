@@ -1,11 +1,11 @@
 <img align="right" width="140" height="140" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" >
 <br /> <br />
 
-# ImputeGAP Integration Module
+# Integration
 
-## Getting Started
+<br><br>
 
-### Initializing a Git Repository
+## Initializing a Git Repository
 
 To begin using the ImputeGAP library, initialize a Git repository and clone the project from GitHub:
 
@@ -13,166 +13,201 @@ To begin using the ImputeGAP library, initialize a Git repository and clone the 
 $ git init
 $ git clone https://github.com/eXascaleInfolab/ImputeGAP
 $ cd ./ImputeGAP
-``` 
+```
+
+<br><br>
+
+## Python Integration Steps
+
+1. Navigate to the `./imputegap/algorithms` directory.
+2. Create a new file by copying `mean_inpute.py` and rename it to reflect your algorithm.
+3. Replace the logic section under `# logic` with your algorithm’s implementation.
+4. Adapt the parameters as needed, ensuring to follow the `TimeSeries` object structure for input and return a `numpy.ndarray` matrix. Refer to the docstring of the template for detailed guidance.
+5. Update `./imputegap/recovery/imputation.py`:
+   - Add a function to call your new algorithm by copying the `class MeanImpute(BaseImputer)` and modifying it to suit your requirements.
+   - You can add it into the corresponding family of algorithms.
+6. Perform imputation as needed.
 
 <br>
 
-### Python Integration Steps
+### Default values
 
-1) Navigate to the ```./imputegap/algorithms``` directory. 
+1. To set the default values of your algorithm, please update `./imputegap/env/default_values.toml` and add your configuration:
 
-
-2) Create a new file by copying ```mean_inpute.py``` and rename it to reflect your algorithm.
-
-
-3) Replace the logic section under ```# logic``` with your algorithm’s implementation.
-
-
-4) Adapt the parameters as needed, ensuring to follow the ```TimeSeries``` object structure for input and return a ```numpy.ndarray``` matrix. Refer to the docstring of the template for detailed guidance.
-
-
-5) Update  ```./imputegap/recovery/imputation.py```:
-   1) Add a function to call your new algorithm by copying the ```class MeanImpute(BaseImputer)```and modifying it to suit your requirements.
-   2) You can add it into the corresponding category of algorithms.
-
-
-6) Perform imputation as needed.
-
-<br />
-
-### C++ Integration
-1) Navigate to the ```./imputegap/algorithms``` directory.
-
-
-2) If not already done, convert your CPP/H files into a shared object format  (```.so```) and place them in the  ```imputegap/algorithms/lib``` folder.
-   1) Go to ```./imputegap/wrapper/AlgoCollection```  and update the Makefile. Copy commands from ```libSTMVL.so``` or modify them as needed.
-   2) Optionally, copy your C++ project files into the directory.
-   3) Generate the ```.so``` file using the ```make``` command:
-      ```
-      make your_lib_name
-      ```
-   4) Optional: To include the .so file in the "in-built" directory, open a command line, navigate to the root directory, and execute the library build process:
-      ```
-      rm -rf dist/
-      python setup.py sdist bdist_wheel
-      ```
-
-
-3) Rename ```cpp_integration.py```  to reflect your algorithm’s name.
-
-
-4) Modify the ```native_algo()``` function: 
-   1) Update the shared object parameter to match your shared library.
-   2) Convert input parameters to the appropriate C++ types and pass them to your shared object methods.
-   3) Convert the imputed matrix back to a numpy format.
-
-
-5) Adapt the template method ```your_algo.py``` with the appropriate parameters, ensuring compatibility with the ```TimeSeries``` object and a ```numpy.ndarray``` return type.
-
-
-6) Adapt the  ```./imputegap/recovery/imputation.py```:
-   1) Add a function to call your new algorithm by copying and modifying ```class MeanImpute(BaseImputer)``` as needed. You can copy-paste the class into the corresponding category of algorithms.
-
-
-7) Perform imputation as needed.
- 
-<br /><br />
-
-
-#### Example: CDRec Integration
-
-######  Shared Object Generation
-
-1) Modify the Makefile:
-```
-libCDREC.so: 
-    g++ -O3 -D ARMA_DONT_USE_WRAPPER -fPIC -rdynamic -shared -o lib_cdrec.so -Wall -Werror -Wextra -pedantic \
-	-Wconversion -Wsign-conversion -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -fopenmp -std=gnu++14 \
-	Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp  Algebra/Auxiliary.cpp \
-	Algebra/CentroidDecomposition.cpp  shared/SharedLibCDREC.cpp \
-	-lopenblas -larpack -lmlpack
+```bash
+   [algo]
+   param_1 = value
+   param_2 = value
 ```
 
+2. Update the `./imputegap/tools/utils.py` file, and specify your configuration in the `load_parameters` function.
 
-2) Generate the shared library:
+<br>
 
+### Benchmark
+To access the benchmarking features, please update `./imputegap/tools/utils.py`:
+
+1. Add your algorithm in the `def config_impute_algorithm` function.
+
+<br>
+
+### Optimizer
+To access the optimization tools please update `./imputegap/tools/algorithm_parameters.py`:
+
+1. Add your optimization limits into the `RAYTUNE_PARAMS` dictionary of `./imputegap/tools/algorithm_parameters.py`.
+2. Add your parameters in the `def save_optimization` function of the file `./imputegap/tools/utils.py` to save the optimal parameters.
+
+<br><br>
+
+## C++ Integration
+
+1. Navigate to the `./imputegap/algorithms` directory.
+2. If not already done, convert your CPP/H files into a shared object format (`.so`) and place them in the `imputegap/algorithms/lib` folder.
+   - Go to `./imputegap/wrapper/AlgoCollection` and update the Makefile. Copy commands from `libSTMVL.so` or modify them as needed.
+   - Optionally, copy your C++ project files into the directory.
+   - Generate the `.so` file using the `make` command:
+
+```bash
+make your_lib_name
 ```
-make libCDREC.so
-```
 
+   - Optional: To include the .so file in the "in-built" directory, open a command line, navigate to the root directory, and execute the library build process:
 
-3) Place the generated ```.so``` file in ```imputegap/algorithms/lib```
-
-
-
-4) Optional: To include the .so file in the "in-built" directory, open a command line, navigate to the root directory, and execute the library build process:
-```
+```bash
 rm -rf dist/
 python setup.py sdist bdist_wheel
 ```
-   
-<br> 
 
-######  Wrapper 
+3. Rename `cpp_integration.py` to reflect your algorithm’s name.
+4. Modify the `native_algo()` function:
+   - Update the shared object parameter to match your shared library.
+   - Convert input parameters to the appropriate C++ types and pass them to your shared object methods.
+   - Convert the imputed matrix back to a numpy format.
+5. Adapt the template method `your_algo.py` with the appropriate parameters, ensuring compatibility with the `TimeSeries` object and a `numpy.ndarray` return type.
+6. Adapt the `./imputegap/recovery/imputation.py`:
+   - Add a function to call your new algorithm by copying and modifying `class MeanImpute(BaseImputer)` as needed. You can copy-paste the class into the corresponding category of algorithms.
+7. Perform imputation as needed.
 
-1) In ```imputegap/algorithms/cpp_integration.py```, update the function name and parameter count, and ensure the ```.so``` file matches:
+<br><br>
+
+## Example: CDRec Integration
+
+Once your cpp and h files are ready to be converted (you can look at `./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.cpp` or `./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.h`), create a `.so` file for Linux and Windows, and a `.dylib` file for macOS.
+
+### Shared Object Generation Linux/Windows
+
+1. Modify the Makefile:
+
+```makefile
+libCDREC.so:
+    g++ -O3 -D ARMA_DONT_USE_WRAPPER -fPIC -rdynamic -shared -o lib_cdrec.so -Wall -Werror -Wextra -pedantic \
+    -Wconversion -Wsign-conversion -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -fopenmp -std=gnu++14 \
+    Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp  Algebra/Auxiliary.cpp \
+    Algebra/CentroidDecomposition.cpp  shared/SharedLibCDREC.cpp \
+    -lopenblas -larpack
 ```
-def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
 
-    shared_lib = utils.load_share_lib("lib_cdrec.so") # in-build files
+2. Generate the shared library:
+
+```bash
+make libCDREC.so
+```
+
+3. Place the generated `.so` file in `imputegap/algorithms/lib`
+4. Optional: To include the `.so` file in the "in-built" directory:
+
+```bash
+rm -rf dist/
+python setup.py sdist bdist_wheel
+```
+
+<br><br>
+
+### Shared Object Generation MAC OS
+
+1. Modify the Makefile:
+
+```makefile
+libCDREC.dylib:
+    clang++ -dynamiclib -O3 -fPIC -std=c++17 -o lib_cdrec.dylib \
+    -I/opt/homebrew/include \
+    -L/opt/homebrew/lib \
+    -L/opt/homebrew/opt/openblas/lib \
+    Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp Algebra/Auxiliary.cpp \
+    Algebra/CentroidDecomposition.cpp shared/SharedLibCDREC.cpp \
+    -larmadillo -lopenblas -larpack
+```
+
+2. Generate the shared library:
+
+```bash
+make libCDREC.dylib
+```
+
+3. Place the generated `.dylib` file in `imputegap/algorithms/lib`
+4. Optional: To include the `.dylib` file in the "in-built" directory:
+
+```bash
+rm -rf dist/
+python setup.py sdist bdist_wheel
+```
+
+<br><br>
+
+### Wrapper
+
+1. In `imputegap/algorithms/cpp_integration.py`, update the function name and parameter count, and ensure the `.so` file matches:
+
+```python
+def native_cdrec(__py_matrix, __py_rank, __py_epsilon, __py_iterations):
+    shared_lib = utils.load_share_lib("lib_cdrec") # in-build files
     # shared_lib = utils.load_share_lib("./your_path/lib_cdrec.so") # external files
 ```
-<br> 
 
-2) Convert variables to corresponding C++ types:
+2. Convert variables to corresponding C++ types:
+
+```python
+    __py_n = len(__py_matrix)
+    __py_m = len(__py_matrix[0])
+
+    assert (__py_rank >= 0)
+    assert (__py_rank < __py_m)
+    assert (__py_epsilon > 0)
+    assert (__py_iterations > 0)
+
+    __ctype_size_n = __native_c_types_import.c_ulonglong(__py_n)
+    __ctype_size_m = __native_c_types_import.c_ulonglong(__py_m)
+
+    __ctype_rank = __native_c_types_import.c_ulonglong(__py_rank)
+    __ctype_epsilon = __native_c_types_import.c_double(__py_epsilon)
+    __ctype_iterations = __native_c_types_import.c_ulonglong(__py_iterations)
+
+    __ctype_matrix = __marshal_as_native_column(__py_matrix)
 ```
-    __py_n = len(__py_matrix);
-    __py_m = len(__py_matrix[0]);
 
-    assert (__py_rank >= 0);
-    assert (__py_rank < __py_m);
-    assert (__py_epsilon > 0);
-    assert (__py_iterations > 0);
+3. Call the C++ algorithm with the required parameters:
 
-    __ctype_size_n = __native_c_types_import.c_ulonglong(__py_n);
-    __ctype_size_m = __native_c_types_import.c_ulonglong(__py_m);
-
-    __ctype_rank = __native_c_types_import.c_ulonglong(__py_rank);
-    __ctype_epsilon = __native_c_types_import.c_double(__py_epsilon);
-    __ctype_iterations = __native_c_types_import.c_ulonglong(__py_iterations);
-    
-    # Native code uses linear matrix layout, and also it's easier to pass it in like this
-    __ctype_matrix = __marshal_as_native_column(__py_matrix);
+```python
+    shared_lib.cdrec_imputation_parametrized(__ctype_matrix, __ctype_size_n, __ctype_size_m, __ctype_rank, __ctype_epsilon, __ctype_iterations)
 ```
-<br> 
 
-3) Call the C++ algorithm with the required parameters:
+4. Convert the imputed matrix back to `numpy`:
+
+```python
+    __py_imputed_matrix = __marshal_as_numpy_column(__ctype_matrix, __py_n, __py_m)
+    return __py_imputed_matrix
 ```
-    shared_lib.cdrec_imputation_parametrized(__ctype_matrix, __ctype_size_n, __ctype_size_m, __ctype_rank, __ctype_epsilon, __ctype_iterations);
-```
-<br> 
 
-4) Convert the imputed matrix back to ```numpy```:
-```
-    __py_imputed_matrix = __marshal_as_numpy_column(__ctype_matrix, __py_n, __py_m);
+<br><br>
 
-    return __py_imputed_matrix;
-```
-<br>
+### Method Implementation
 
+1. In `imputegap/algorithms/cpp_integration.py`, create or adapt a generic method for your needs:
 
-######  Method Implementation
-
-1) In ```imputegap/algorithms/cpp_integration.py```, create or adapt a generic method for your needs:
-
-```
+```python
 def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_path=None):
-   
     start_time = time.time()  # Record start time
-
-    # Call the C++ function to perform recovery
     imputed_matrix = native_cdrec(contamination, truncation_rank, epsilon, iterations)
-
     end_time = time.time()
 
     if logs:
@@ -180,25 +215,20 @@ def cdrec(contamination, truncation_rank, iterations, epsilon, logs=True, lib_pa
 
     return imputed_matrix
 ```
-<br> 
 
-######  Imputer Class
+<br><br>
 
-1) Add your algorithm to the catalog in```./imputegap/recovery/imputation.py```
+### Imputer Class
 
+1. Add your algorithm to the catalog in `./imputegap/recovery/imputation.py`
+2. Copy and modify `class MeanImpute(BaseImputer)` to fit your requirements:
 
-2) Copy and modify ```class MeanImpute(BaseImputer)```  to fit your requirements:
-   1) You can copy-paste the class into the corresponding category of algorithm.
-
-```
+```python
 class MatrixCompletion:
     class CDRec(BaseImputer):
         algorithm = "cdrec"
 
         def impute(self, user_defined=True, params=None):
-            
             self.imputed_matrix = cdrec(contamination=self.infected_matrix, truncation_rank=rank, iterations=iterations, epsilon=epsilon, logs=self.logs)
-            
             return self
 ```
-

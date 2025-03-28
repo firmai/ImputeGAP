@@ -8,48 +8,35 @@ ImputeGAP is a comprehensive Python library for imputation of missing values in 
 In detail, the package provides:
 Access to commonly used datasets in time series research (Datasets).
 
-  - Access to commonly used datasets in time series research ([Datasets](https://imputegap.readthedocs.io/en/latest/datasets.html)).
-  - Automated preprocessing with built-in methods for normalizing time series ([PreProcessing](https://imputegap.readthedocs.io/en/latest/tutorials.html#loading-preprocessing)).
-  - Configurable contamination module that simulates real-world missingness patterns ([Patterns](https://imputegap.readthedocs.io/en/latest/patterns.html)).
-  - Parameterizable state-of-the-art time series imputation algorithms ([Algorithms](https://imputegap.readthedocs.io/en/latest/algorithms.html)).
-  - Benchmarking to foster reproducibility in time series imputation ([Benchmark](https://imputegap.readthedocs.io/en/latest/tutorials.html#benchmark)).
-  - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis ([Downstream](https://imputegap.readthedocs.io/en/latest/tutorials.html#downstream)).
-  - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](https://imputegap.readthedocs.io/en/latest/tutorials.html#explainer)).
+  - Access to commonly used datasets in time series research ([Datasets](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)).
+  - Automated preprocessing with built-in methods for normalizing time series ([PreProcessing](#loading-and-preprocessing)).
+  - Configurable contamination module that simulates real-world missingness patterns ([Patterns](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery)).
+  - Parameterizable state-of-the-art time series imputation algorithms ([Algorithms](#Available-Imputation-Algorithms)).
+  - Benchmarking to foster reproducibility in time series imputation ([Benchmark](#benchmark)).
+  - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis ([Downstream](#downstream)).
+  - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](#explainer)).
   - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
 
+<br>
 
-If you like our library, please star our GitHub repository.
+![Python](https://img.shields.io/badge/Python-v3.12-blue) ![Release](https://img.shields.io/badge/Release-v1.0.7-brightgreen)  ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu) ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen) ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue) ![Language](https://img.shields.io/badge/Language-English-blue) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational) [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/en/latest/)
+
+<i>If you like our library, please add a ⭐ in our GitHub repository.</i>
 
 <br>
 
-![Python](https://img.shields.io/badge/Python-v3.12-blue) 
-![Release](https://img.shields.io/badge/Release-v1.0.7-brightgreen) 
-![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
-![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
-![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
-![Language](https://img.shields.io/badge/Language-English-blue)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational)
-[![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/en/latest/)
-
-
-<br>
-
-| Tools                | URL                                                                                        |
-|----------------------|--------------------------------------------------------------------------------------------|
+| Tools                | URL                                                                                       |
+|----------------------|-------------------------------------------------------------------------------------------|
 | 📚 **Documentation** | [https://imputegap.readthedocs.io/en/latest/](https://imputegap.readthedocs.io/en/latest/) |
-| 📦 **PyPI**          | [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)                 |
-| 📁 **Datasets**      | [Repository](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)     |
-
-
-
-
+| 📦 **PyPI**          | [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)                |
+| 📁 **Datasets**      | [Source](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)        |
 
 
 - ---
 
 
 
-# List of available imputation algorithms
+# Available Imputation Algorithms
 | **Family**         | **Algorithm**             | **Venue -- Year**            |
 |--------------------|---------------------------|------------------------------|
 | Deep Learning      | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
@@ -169,13 +156,18 @@ ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_as
 ts.print(nbr_series=9, nbr_val=20)
 ```
 
+The module ``ts.datasets`` contains all the publicly available datasets provided by the library, and can be listed as follows:
+
+```python
+from imputegap.recovery.manager import TimeSeries
+ts = TimeSeries()
+print(f"ImputeGAP datasets : {ts.datasets}")
+```
+
 ---
 
 ## Contamination
-We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns.
-
-
-For more details, please refer to the documentation in this [page](https://imputegap.readthedocs.io/en/latest/patterns.html).
+We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. For more details about the patterns, please refer to the documentation in this [page](https://imputegap.readthedocs.io/en/latest/patterns.html).
 <br></br>
 
 ### Example Contamination
@@ -202,7 +194,7 @@ ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_s
 ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets/contamination")
 ```
 
-All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module. To list all the available patterns, you can use this command:
+All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module, and can be listed as follows:
 ```python
 from imputegap.recovery.manager import TimeSeries
 ts = TimeSeries()
@@ -257,7 +249,7 @@ config = {"rank": 5, "epsilon": 0.01, "iterations": 100}
 imputer.impute(params=config)
 ```
 
-All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module. To list all the available algorithms, you can use this command:
+All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module, and can be listed as follows:
 ```python
 from imputegap.recovery.manager import TimeSeries
 ts = TimeSeries()
@@ -307,14 +299,12 @@ ts.print_results(imputer_def.metrics, text="Default values")
 ts.print_results(imputer.metrics, text="Optimized values")
 
 # plot the recovered time series
-ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets/imputation", display=True)
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets/imputation")
 
 # save hyperparameters
-utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune", file_name="./imputegap_assets/params")
+utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune")
 ```
-All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module.
-
-To list all the available optimizers, you can use this command:
+All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module, and can be listed as follows:
 
 ```python
 from imputegap.recovery.manager import TimeSeries
@@ -326,10 +316,93 @@ print(f"AutoML Optimizers : {ts.optimizers}")
 ---
 
 
+
+## Benchmark
+
+ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms[[33]](#ref33) . Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates.
+
+
+### Example Benchmark
+You can find this example in the file [`runner_benchmark.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_benchmark.py).
+
+The benchmarking module can be utilized as follows:
+
+```python
+from imputegap.recovery.benchmark import Benchmark
+
+# create the ts object and load the time series
+my_datasets = ["eeg-alcohol"]
+
+my_opt = ["default_params"]
+
+my_algorithms = ["SoftImpute", "KNNImpute"]
+
+my_patterns = ["mcar"]
+
+range = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
+
+# launch the evaluation
+list_results, sum_scores = Benchmark().eval(algorithms=my_algorithms, datasets=my_datasets, patterns=my_patterns, x_axis=range, optimizers=my_opt)
+```
+
+You can enable the optimizer using the following command:
+```python
+opt = {"optimizer": "ray_tune", "options": {"n_calls": 1, "max_concurrent_trials": 1}}
+my_opt = [opt]
+```
+
+
+---
+
+
+## Downstream
+ImputeGAP includes a dedicated module for systematically evaluating the impact of data imputation on downstream tasks. Currently, forecasting is the primary supported task, with plans to expand to additional applications in the future. The example below demonstrates how to define the forecasting task and specify Prophet as the predictive model.
+
+### Example Downstream
+You can find this example in the file [`runner_downstream.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_downstream.py).
+
+Below is an example of how to call the downstream process for the model Prophet by defining a dictionary for the evaluator and selecting the model:
+
+```python
+from imputegap.recovery.imputation import Imputation
+from imputegap.recovery.manager import TimeSeries
+from imputegap.tools import utils
+
+# initialize the time series object
+ts = TimeSeries()
+print(f"ImputeGAP downstream models for forcasting : {ts.forecasting_models}")
+
+# load and normalize the dataset
+ts.load_series(utils.search_path("forecast-economy"))
+ts.normalize(normalizer="min_max")
+
+# contaminate the time series
+ts_m = ts.Contamination.aligned(ts.data, rate_series=0.8)
+
+# define and impute the contaminated series
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
+imputer.impute()
+
+# compute and print the downstream results
+downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
+imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
+ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
+```
+All downstream models developed in ImputeGAP are available in the ``ts.forecasting_models`` module, and can be listed as follows:
+
+```python
+from imputegap.recovery.manager import TimeSeries
+ts = TimeSeries()
+print(f"ImputeGAP downstream models for forecasting : {ts.forecasting_models}")
+```
+
+
+---
+
+
 ## Explainer
 
 ImputeGAP provides insights into the algorithm’s behavior by identifying the features that impact the most the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations ([SHAP](https://shap.readthedocs.io/en/latest/)) to reveal how different time series features influence the model’s predictions.
-The documentation for the explainer is described [here](https://imputegap.readthedocs.io/en/latest/tutorials.html#explainer).
 
 
 ### Example Explainer
@@ -351,17 +424,13 @@ ts.load_series(utils.search_path("eeg-alcohol"))
 ts.normalize(normalizer="z_score")
 
 # configure the explanation
-shap_values, shap_details = Explainer.shap_explainer(input_data=ts.data, 
-                                                     extractor="pycatch", 
-                                                     pattern="mcar", 
-                                                     file_name=ts.name,
-                                                     algorithm="CDRec")
+shap_values, shap_details = Explainer.shap_explainer(input_data=ts.data, extractor="pycatch", pattern="mcar", file_name=ts.name, algorithm="CDRec")
 
 # print the impact of each feature
 Explainer.print(shap_values, shap_details)
 ```
 
-To list all the available features extractors, you can use this command:
+All features extractors developed in ImputeGAP are available in the ``ts.extractors`` module, and can be listed as follows:
 
 ```python
 from imputegap.recovery.manager import TimeSeries
@@ -369,97 +438,6 @@ ts = TimeSeries()
 print(f"ImputeGAP features extractors : {ts.extractors}")
 ```
 
-
-
----
-
-
-## Downstream
-ImputeGAP includes a dedicated module for systematically evaluating the impact of data imputation on downstream tasks. Currently, forecasting is the primary supported task, with plans to expand to additional applications in the future. The example below demonstrates how to define the forecasting task and specify Prophet as the predictive model
-The documentation for the downstream evaluation is described [here](https://imputegap.readthedocs.io/en/latest/tutorials.html#downstream).
-
-Below is an example of how to call the downstream process for the model Prophet by defining a dictionary for the evaluator and selecting the model:
-
-
-### Example Downstream
-You can find this example in the file [`runner_downstream.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_downstream.py).
-
-Below is an example of how to call the downstream process for the model Prophet by defining a dictionary for the evaluator and selecting the model:
-
-```python
-from imputegap.recovery.imputation import Imputation
-from imputegap.recovery.manager import TimeSeries
-from imputegap.tools import utils
-
-# initialize the time series object
-ts = TimeSeries()
-print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
-
-# load and normalize the dataset
-ts.load_series(utils.search_path("forecast-economy"))
-ts.normalize(normalizer="min_max")
-
-# contaminate the time series
-ts_m = ts.Contamination.aligned(ts.data, rate_series=0.8)
-
-# define and impute the contaminated series
-imputer = Imputation.MatrixCompletion.CDRec(ts_m)
-imputer.impute()
-
-# compute and print the downstream results
-downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
-imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
-ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
-```
-To list all the available downstream models, you can use this command:
-
-```python
-from imputegap.recovery.manager import TimeSeries
-ts = TimeSeries()
-print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
-```
-
-
-
----
-
-
-## Benchmark
-
-ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms[[33]](#ref33) . Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates. The default metrics evaluated include "RMSE", "MAE", "MI", "Pearson", and the runtime.
-The documentation for the benchmark is described [here](https://imputegap.readthedocs.io/en/latest/tutorials.html#benchmark).
-
-
-### Example Benchmark
-You can find this example in the file [`runner_benchmark.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_benchmark.py).
-
-The benchmarking module can be utilized as follows:
-
-```python
-from imputegap.recovery.benchmark import Benchmark
-
-save_dir = "./imputegap_assets/benchmark"
-nbr_runs = 1
-
-datasets = ["eeg-alcohol"]
-
-optimizers = ["default_params"]
-
-algorithms = ["SoftImpute", "KNNImpute"]
-
-patterns = ["mcar"]
-
-range = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
-
-# launch the evaluation
-list_results, sum_scores = Benchmark().eval(algorithms=algorithms, datasets=datasets, patterns=patterns, x_axis=range, optimizers=optimizers, save_dir=save_dir, runs=nbr_runs)
-```
-
-You can change the optimizer using the following command:
-```python
-optimizer = {"optimizer": "ray_tune", "options": {"n_calls": 1, "max_concurrent_trials": 1}}
-optimizers = [optimizer]
-```
 
 ---
 
@@ -519,82 +497,82 @@ If you use ImputeGAP in your research, please cite the paper:
 ## References
 
 <a name="ref1"></a>
-[1]: Mourad Khayati, Philippe Cudré-Mauroux, Michael H. Böhlen: Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl. Inf. Syst. 62(6): 2257-2280 (2020)
+[1] Mourad Khayati, Philippe Cudré-Mauroux, Michael H. Böhlen: Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl. Inf. Syst. 62(6): 2257-2280 (2020)
 
 <a name="ref2"></a>
-[2]: Olga G. Troyanskaya, Michael N. Cantor, Gavin Sherlock, Patrick O. Brown, Trevor Hastie, Robert Tibshirani, David Botstein, Russ B. Altman: Missing value estimation methods for DNA microarrays. Bioinform. 17(6): 520-525 (2001)
+[2] Olga G. Troyanskaya, Michael N. Cantor, Gavin Sherlock, Patrick O. Brown, Trevor Hastie, Robert Tibshirani, David Botstein, Russ B. Altman: Missing value estimation methods for DNA microarrays. Bioinform. 17(6): 520-525 (2001)
 
 <a name="ref3"></a>
-[3]: Dejiao Zhang, Laura Balzano: Global Convergence of a Grassmannian Gradient Descent Algorithm for Subspace Estimation. AISTATS 2016: 1460-1468
+[3] Dejiao Zhang, Laura Balzano: Global Convergence of a Grassmannian Gradient Descent Algorithm for Subspace Estimation. AISTATS 2016: 1460-1468
 
 <a name="ref4"></a>
-[4]: Xianbiao Shu, Fatih Porikli, Narendra Ahuja: Robust Orthonormal Subspace Learning: Efficient Recovery of Corrupted Low-Rank Matrices. CVPR 2014: 3874-3881
+[4] Xianbiao Shu, Fatih Porikli, Narendra Ahuja: Robust Orthonormal Subspace Learning: Efficient Recovery of Corrupted Low-Rank Matrices. CVPR 2014: 3874-3881
 
 <a name="ref5"></a>
-[5]: Spiros Papadimitriou, Jimeng Sun, Christos Faloutsos: Streaming Pattern Discovery in Multiple Time-Series. VLDB 2005: 697-708
+[5] Spiros Papadimitriou, Jimeng Sun, Christos Faloutsos: Streaming Pattern Discovery in Multiple Time-Series. VLDB 2005: 697-708
 
 <a name="ref6"></a>
-[6]: Rahul Mazumder, Trevor Hastie, Robert Tibshirani: Spectral Regularization Algorithms for Learning Large Incomplete Matrices. J. Mach. Learn. Res. 11: 2287-2322 (2010)
+[6] Rahul Mazumder, Trevor Hastie, Robert Tibshirani: Spectral Regularization Algorithms for Learning Large Incomplete Matrices. J. Mach. Learn. Res. 11: 2287-2322 (2010)
 
 <a name="ref7"></a>
-[7]: Jian-Feng Cai, Emmanuel J. Candès, Zuowei Shen: A Singular Value Thresholding Algorithm for Matrix Completion. SIAM J. Optim. 20(4): 1956-1982 (2010)
+[7] Jian-Feng Cai, Emmanuel J. Candès, Zuowei Shen: A Singular Value Thresholding Algorithm for Matrix Completion. SIAM J. Optim. 20(4): 1956-1982 (2010)
 
 <a name="ref8"></a>
-[8]: Hsiang-Fu Yu, Nikhil Rao, Inderjit S. Dhillon: Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction. NIPS 2016: 847-855
+[8] Hsiang-Fu Yu, Nikhil Rao, Inderjit S. Dhillon: Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction. NIPS 2016: 847-855
 
 <a name="ref9"></a>
-[9]: Xiuwen Yi, Yu Zheng, Junbo Zhang, Tianrui Li: ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data. IJCAI 2016: 2704-2710
+[9] Xiuwen Yi, Yu Zheng, Junbo Zhang, Tianrui Li: ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data. IJCAI 2016: 2704-2710
 
 <a name="ref10"></a>
-[10]: Lei Li, James McCann, Nancy S. Pollard, Christos Faloutsos: DynaMMo: mining and summarization of coevolving sequences with missing values. 507-516
+[10] Lei Li, James McCann, Nancy S. Pollard, Christos Faloutsos: DynaMMo: mining and summarization of coevolving sequences with missing values. 507-516
 
 <a name="ref11"></a>
-[11]: Kevin Wellenzohn, Michael H. Böhlen, Anton Dignös, Johann Gamper, Hannes Mitterer: Continuous Imputation of Missing Values in Streams of Pattern-Determining Time Series. EDBT 2017: 330-341
+[11] Kevin Wellenzohn, Michael H. Böhlen, Anton Dignös, Johann Gamper, Hannes Mitterer: Continuous Imputation of Missing Values in Streams of Pattern-Determining Time Series. EDBT 2017: 330-341
 
 <a name="ref12"></a>
-[12]: Aoqian Zhang, Shaoxu Song, Yu Sun, Jianmin Wang: Learning Individual Models for Imputation (Technical Report). CoRR abs/2004.03436 (2020)
+[12] Aoqian Zhang, Shaoxu Song, Yu Sun, Jianmin Wang: Learning Individual Models for Imputation (Technical Report). CoRR abs/2004.03436 (2020)
 
 <a name="ref13"></a>
-[13]: Tianqi Chen, Carlos Guestrin: XGBoost: A Scalable Tree Boosting System. KDD 2016: 785-794
+[13] Tianqi Chen, Carlos Guestrin: XGBoost: A Scalable Tree Boosting System. KDD 2016: 785-794
 
 <a name="ref14"></a>
-[14]: Royston Patrick , White Ian R.: Multiple Imputation by Chained Equations (MICE): Implementation in Stata. Journal of Statistical Software 2010: 45(4), 1–20.
+[14] Royston Patrick , White Ian R.: Multiple Imputation by Chained Equations (MICE): Implementation in Stata. Journal of Statistical Software 2010: 45(4), 1–20.
 
 <a name="ref15"></a>
-[15]: Daniel J. Stekhoven, Peter Bühlmann: MissForest - non-parametric missing value imputation for mixed-type data. Bioinform. 28(1): 112-118 (2012)
+[15] Daniel J. Stekhoven, Peter Bühlmann: MissForest - non-parametric missing value imputation for mixed-type data. Bioinform. 28(1): 112-118 (2012)
 
 <a name="ref22"></a>
-[22]: Jinsung Yoon, William R. Zame, Mihaela van der Schaar: Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks. IEEE Trans. Biomed. Eng. 66(5): 1477-1490 (2019)
+[22] Jinsung Yoon, William R. Zame, Mihaela van der Schaar: Estimating Missing Data in Temporal Data Streams Using Multi-Directional Recurrent Neural Networks. IEEE Trans. Biomed. Eng. 66(5): 1477-1490 (2019)
 
 <a name="ref23"></a>
-[23]: Wei Cao, Dong Wang, Jian Li, Hao Zhou, Lei Li, Yitan Li: BRITS: Bidirectional Recurrent Imputation for Time Series. NeurIPS 2018: 6776-6786
+[23] Wei Cao, Dong Wang, Jian Li, Hao Zhou, Lei Li, Yitan Li: BRITS: Bidirectional Recurrent Imputation for Time Series. NeurIPS 2018: 6776-6786
 
 <a name="ref24"></a>
-[24]: Parikshit Bansal, Prathamesh Deshpande, Sunita Sarawagi: Missing Value Imputation on Multidimensional Time Series. Proc. VLDB Endow. 14(11): 2533-2545 (2021)
+[24] Parikshit Bansal, Prathamesh Deshpande, Sunita Sarawagi: Missing Value Imputation on Multidimensional Time Series. Proc. VLDB Endow. 14(11): 2533-2545 (2021)
 
 <a name="ref25"></a>
-[25]: Xiao Li, Huan Li, Hua Lu, Christian S. Jensen, Varun Pandey, Volker Markl: Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). CoRR abs/2311.07344 (2023)
+[25] Xiao Li, Huan Li, Hua Lu, Christian S. Jensen, Varun Pandey, Volker Markl: Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation (Extended Version). CoRR abs/2311.07344 (2023)
 
 <a name="ref26"></a>
 [26]: Mingzhe Liu, Han Huang, Hao Feng, Leilei Sun, Bowen Du, Yanjie Fu: PriSTI: A Conditional Diffusion Framework for Spatiotemporal Imputation. ICDE 2023: 1927-1939
 
 <a name="ref27"></a>
-[27]: Kohei Obata, Koki Kawabata, Yasuko Matsubara, Yasushi Sakurai: Mining of Switching Sparse Networks for Missing Value Imputation in Multivariate Time Series. KDD 2024: 2296-2306
+[27] Kohei Obata, Koki Kawabata, Yasuko Matsubara, Yasushi Sakurai: Mining of Switching Sparse Networks for Missing Value Imputation in Multivariate Time Series. KDD 2024: 2296-2306
 
 <a name="ref28"></a>
-[28]: Jinsung Yoon, James Jordon, Mihaela van der Schaar: GAIN: Missing Data Imputation using Generative Adversarial Nets. ICML 2018: 5675-5684
+[28] Jinsung Yoon, James Jordon, Mihaela van der Schaar: GAIN: Missing Data Imputation using Generative Adversarial Nets. ICML 2018: 5675-5684
 
 <a name="ref29"></a>
-[29]: Andrea Cini, Ivan Marisca, Cesare Alippi: Multivariate Time Series Imputation by Graph Neural Networks. CoRR abs/2108.00298 (2021)
+[29] Andrea Cini, Ivan Marisca, Cesare Alippi: Multivariate Time Series Imputation by Graph Neural Networks. CoRR abs/2108.00298 (2021)
 
 <a name="ref30"></a>
-[30]: Shikai Fang, Qingsong Wen, Yingtao Luo, Shandian Zhe, Liang Sun: BayOTIDE: Bayesian Online Multivariate Time Series Imputation with Functional Decomposition. ICML 2024
+[30] Shikai Fang, Qingsong Wen, Yingtao Luo, Shandian Zhe, Liang Sun: BayOTIDE: Bayesian Online Multivariate Time Series Imputation with Functional Decomposition. ICML 2024
 
 <a name="ref31"></a>
-[31]: Liang Wang, Simeng Wu, Tianheng Wu, Xianping Tao, Jian Lu: HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization. IEEE Trans. Knowl. Data Eng. 33(11): 3582-3593 (2021)
+[31] Liang Wang, Simeng Wu, Tianheng Wu, Xianping Tao, Jian Lu: HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization. IEEE Trans. Knowl. Data Eng. 33(11): 3582-3593 (2021)
 
 <a name="ref32"></a>
-[32]: Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
+[32] Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
 
 <a name="ref33"></a>
 [33] Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux:

@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">Integration</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -315,7 +316,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="imputegap.algorithms.cdrec.native_cdrec">
-<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">native_cdrec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_iterations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/cdrec.html#native_cdrec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.cdrec.native_cdrec" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">imputegap.algorithms.cdrec.</span></span><span class="sig-name descname"><span class="pre">native_cdrec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__py_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_epsilon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__py_iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">__verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/algorithms/cdrec.html#native_cdrec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.algorithms.cdrec.native_cdrec" title="Link to this definition">¶</a></dt>
 <dd><p>Perform matrix imputation using the CDRec algorithm with native C++ support.</p>
 <section id="id1">
 <h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
@@ -327,6 +328,8 @@
 <dt>__py_epsilon<span class="classifier">float</span></dt><dd><p>The epsilon value, used as the threshold for stopping iterations based on difference.</p>
 </dd>
 <dt>__py_iterations<span class="classifier">int</span></dt><dd><p>The maximum number of allowed iterations for the algorithm.</p>
+</dd>
+<dt>__verbose<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the contamination information (default is True).</p>
 </dd>
 </dl>
 </section>

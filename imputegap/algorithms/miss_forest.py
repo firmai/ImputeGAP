@@ -68,6 +68,6 @@ def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', s
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation MISS FOREST - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation MISS FOREST - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return np.array(recov_data)

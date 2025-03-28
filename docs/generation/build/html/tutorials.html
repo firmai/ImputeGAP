@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">Integration</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -295,8 +296,7 @@
 <span class="n">ts</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">nbr_series</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The module <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> contains all the publicly available datasets provided by the library.</p>
-<p>To list all the datasets, you can use this command:</p>
+<p>The module <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> contains all the publicly available datasets provided by the library, and can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP datasets : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">datasets</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -324,8 +324,7 @@
 <span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ts_m</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">subplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap_assets/contamination&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>All missingness patterns developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.patterns</span></code> module.</p>
-<p>To list all the available patterns, you can use this command:</p>
+<p>All missingness patterns developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.patterns</span></code> module, and can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missingness patterns : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">patterns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -368,8 +367,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>All algorithms developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.algorithms</span></code> module.</p>
-<p>To list all the available algorithms, you can use this command:</p>
+<p>All algorithms developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.algorithms</span></code> module, and can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Imputation algorithms : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">algorithms</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -409,14 +407,13 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Optimized values&quot;</span><span class="p">)</span>
 
 <span class="c1"># plot the recovered time series</span>
-<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">=</span><span class="n">ts_m</span><span class="p">,</span> <span class="n">recov_data</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">subplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap_assets/imputation&quot;</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">incomp_data</span><span class="o">=</span><span class="n">ts_m</span><span class="p">,</span> <span class="n">recov_data</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">subplot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap_assets/imputation&quot;</span><span class="p">)</span>
 
 <span class="c1"># save hyperparameters</span>
-<span class="n">utils</span><span class="o">.</span><span class="n">save_optimization</span><span class="p">(</span><span class="n">optimal_params</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;ray_tune&quot;</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;./imputegap_assets/params&quot;</span>
+<span class="n">utils</span><span class="o">.</span><span class="n">save_optimization</span><span class="p">(</span><span class="n">optimal_params</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;ray_tune&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>All optimizers developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.optimizers</span></code> module.</p>
-<p>To list all the available optimizers, you can use this command:</p>
+<p>All optimizers developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.optimizers</span></code> module, and can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AutoML Optimizers : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">optimizers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -425,28 +422,26 @@ The list of algorithms is described <a class="reference external" href="algorith
 <br><br></section>
 <section id="benchmark">
 <span id="id5"></span><h2>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms <a class="footnote-reference brackets" href="#id7" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates. The default metrics evaluated include “RMSE”, “MAE”, “MI”, “Pearson”, and the runtime.</p>
+<p>ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms <a class="footnote-reference brackets" href="#id7" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates.</p>
 <p>The benchmarking module can be utilized as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">Benchmark</span>
 
-<span class="n">save_dir</span> <span class="o">=</span> <span class="s2">&quot;./imputegap_assets/benchmark&quot;</span>
-<span class="n">nbr_runs</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># create the ts object and load the time series</span>
+<span class="n">my_datasets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">]</span>
 
-<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">]</span>
+<span class="n">my_opt</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;default_params&quot;</span><span class="p">]</span>
 
-<span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;default_params&quot;</span><span class="p">]</span>
+<span class="n">my_algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SoftImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;KNNImpute&quot;</span><span class="p">]</span>
 
-<span class="n">algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SoftImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;KNNImpute&quot;</span><span class="p">]</span>
-
-<span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mcar&quot;</span><span class="p">]</span>
+<span class="n">my_patterns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mcar&quot;</span><span class="p">]</span>
 
 <span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]</span>
 
 <span class="c1"># launch the evaluation</span>
-<span class="n">list_results</span><span class="p">,</span> <span class="n">sum_scores</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">algorithms</span><span class="o">=</span><span class="n">algorithms</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="nb">range</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">optimizers</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">runs</span><span class="o">=</span><span class="n">nbr_runs</span><span class="p">)</span>
+<span class="n">list_results</span><span class="p">,</span> <span class="n">sum_scores</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">algorithms</span><span class="o">=</span><span class="n">my_algorithms</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">my_datasets</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">my_patterns</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="nb">range</span><span class="p">,</span> <span class="n">optimizers</span><span class="o">=</span><span class="n">my_opt</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You can change the optimizer using the following command:</p>
+<p>You can enable the optimizer using the following command:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;max_concurrent_trials&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
 <span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="n">optimizer</span><span class="p">]</span>
 </pre></div>
@@ -461,7 +456,6 @@ The list of algorithms is described <a class="reference external" href="algorith
 <section id="downstream">
 <span id="id8"></span><h2>Downstream<a class="headerlink" href="#downstream" title="Link to this heading">¶</a></h2>
 <p>ImputeGAP includes a dedicated module for systematically evaluating the impact of data imputation on downstream tasks. Currently, forecasting is the primary supported task, with plans to expand to additional tasks in the future.</p>
-<p>Below is an example of how to call the downstream process for the model by defining a dictionary with the task and the name the model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
@@ -486,10 +480,10 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>To list all the available downstream models, you can use this command:</p>
+<p>All downstream models developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.forecasting_models</span></code> module, and can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP downstream models for forcasting : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">downstream_models</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP downstream models for forecasting : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">forecasting_models</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <br><br></section>
@@ -515,7 +509,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">Explainer</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">shap_values</span><span class="p">,</span> <span class="n">shap_details</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>To list all the available features extractors, you can use this command:</p>
+<p>All features extractors developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.extractors</span></code> module, and can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP features extractors : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">extractors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

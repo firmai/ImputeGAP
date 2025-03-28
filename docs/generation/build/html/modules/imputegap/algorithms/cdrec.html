@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../integration.html">Integration</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -268,7 +269,7 @@
 
 <div class="viewcode-block" id="native_cdrec">
 <a class="viewcode-back" href="../../../imputegap.cdrec.html#imputegap.algorithms.cdrec.native_cdrec">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">native_cdrec</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">,</span> <span class="n">__py_rank</span><span class="p">,</span> <span class="n">__py_epsilon</span><span class="p">,</span> <span class="n">__py_iterations</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">native_cdrec</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">,</span> <span class="n">__py_rank</span><span class="p">,</span> <span class="n">__py_epsilon</span><span class="p">,</span> <span class="n">__py_iterations</span><span class="p">,</span> <span class="n">__verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform matrix imputation using the CDRec algorithm with native C++ support.</span>
 
@@ -282,6 +283,8 @@
 <span class="sd">        The epsilon value, used as the threshold for stopping iterations based on difference.</span>
 <span class="sd">    __py_iterations : int</span>
 <span class="sd">        The maximum number of allowed iterations for the algorithm.</span>
+<span class="sd">    __verbose : bool, optional</span>
+<span class="sd">        Whether to display the contamination information (default is True).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -293,7 +296,7 @@
 <span class="sd">    Khayati, M., Cudré-Mauroux, P. &amp; Böhlen, M.H. Scalable recovery of missing blocks in time series with high and low cross-correlations. Knowl Inf Syst 62, 2257–2280 (2020). https://doi.org/10.1007/s10115-019-01421-7</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">shared_lib</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_share_lib</span><span class="p">(</span><span class="s2">&quot;lib_cdrec&quot;</span><span class="p">)</span>
+    <span class="n">shared_lib</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_share_lib</span><span class="p">(</span><span class="s2">&quot;lib_cdrec&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">__verbose</span><span class="p">)</span>
 
     <span class="n">__py_n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">);</span>
     <span class="n">__py_m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
@@ -368,7 +371,7 @@
     <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">logs</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">&gt; logs, imputation cdrec - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&gt; logs: imputation cdrec - Execution Time: </span><span class="si">{</span><span class="p">(</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">recov_data</span></div>
 

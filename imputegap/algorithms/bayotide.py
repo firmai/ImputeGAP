@@ -70,6 +70,6 @@ def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_sc
     end_time = time.time()
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation bay_otide - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation bay_otide - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

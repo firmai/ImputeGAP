@@ -4,7 +4,7 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
+print(f"ImputeGAP downstream models for forcasting : {ts.forecasting_models}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("forecast-economy"))

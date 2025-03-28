@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.DeepMVI.recoveryDeepMVI import deep_mvi_recovery
 
 
-def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True, verbose=True):
+def deep_mvi(incomp_data, max_epoch=100, patience=2, lr=0.001, logs=True, verbose=True):
     """
     Perform imputation using the DEEP MVI (Deep Multivariate Imputation) algorithm.
 
@@ -43,6 +43,6 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True, verbo
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation deep mvi - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation deep mvi - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

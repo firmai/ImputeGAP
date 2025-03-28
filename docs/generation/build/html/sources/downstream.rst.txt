@@ -44,5 +44,5 @@ To list all the available downstream models, you can use this command:
 
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
-    print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
+    print(f"ImputeGAP downstream models for forcasting : {ts.forecasting_models}")
 

@@ -770,6 +770,6 @@ class Explainer:
         print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
 
         end_time = time.time()
-        print(f"\n\t\t> logs, shap explainer - Execution Time: {(end_time - start_time):.4f} seconds\n\n\n")
+        print(f"\n> logs: shap explainer - Execution Time: {(end_time - start_time):.4f} seconds\n\n\n")
 
         return shap_values, shap_details

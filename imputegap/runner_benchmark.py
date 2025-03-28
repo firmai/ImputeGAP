@@ -1,17 +1,15 @@
 from imputegap.recovery.benchmark import Benchmark
 
-save_dir = "./imputegap_assets/benchmark"
-nbr_runs = 1
+# create the ts object and load the time series
+my_datasets = ["eeg-alcohol"]
 
-datasets = ["eeg-alcohol"]
+my_opt = ["default_params"]
 
-optimizers = ["default_params"]
+my_algorithms = ["SoftImpute", "KNNImpute"]
 
-algorithms = ["SoftImpute", "KNNImpute"]
-
-patterns = ["mcar"]
+my_patterns = ["mcar"]
 
 range = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
 # launch the evaluation
-list_results, sum_scores = Benchmark().eval(algorithms=algorithms, datasets=datasets, patterns=patterns, x_axis=range, optimizers=optimizers, save_dir=save_dir, runs=nbr_runs, verbose=False)
+list_results, sum_scores = Benchmark().eval(algorithms=my_algorithms, datasets=my_datasets, patterns=my_patterns, x_axis=range, optimizers=my_opt)
