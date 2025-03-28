@@ -706,7 +706,6 @@ class Benchmark:
 
                 ts_test.load_series(data=utils.search_path(dataset), nbr_series=limitation_series, nbr_val=limitation_values, header=header)
 
-                start_time_opti, end_time_opti = 0, 0
                 M, N = ts_test.data.shape
 
                 if N < 250:
