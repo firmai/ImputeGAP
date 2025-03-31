@@ -1106,7 +1106,13 @@
     <span class="k">if</span> <span class="n">dir_name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_name</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
+        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="s2">&quot;eps&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;iters&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mrnn&quot;</span><span class="p">:</span>
         <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;hidden_dim&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
             <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
             <span class="s2">&quot;num_iter&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
@@ -1122,12 +1128,7 @@
         <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;learning_neighbors&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="p">}</span>
-    <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;cdrec&quot;</span><span class="p">:</span>
-        <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-            <span class="s2">&quot;eps&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-            <span class="s2">&quot;iters&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-        <span class="p">}</span>
+
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;iterative_svd&quot;</span><span class="p">:</span>
         <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;rank&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -1443,6 +1444,12 @@
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_metrics">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">list_of_metrics</span><span class="p">():</span>
     <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">,</span> <span class="s2">&quot;MI&quot;</span><span class="p">,</span> <span class="s2">&quot;CORRELATION&quot;</span><span class="p">,</span> <span class="s2">&quot;runtime_linear_scale&quot;</span><span class="p">,</span> <span class="s2">&quot;runtime_log_scale&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="list_of_normalizers">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_normalizers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_of_normalizers</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;z_score&quot;</span><span class="p">,</span> <span class="s2">&quot;min_max&quot;</span><span class="p">]</span></div>
 
 </pre></div>
         </article>

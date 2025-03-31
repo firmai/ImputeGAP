@@ -28,7 +28,7 @@ You can access the API documentation at the following `link <imputegap.manager.h
     # initialize the time series object
     ts = TimeSeries()
 
-    # load and normalize the dataset from file or from the code
+    # load and normalize the dataset from the library
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
@@ -45,6 +45,18 @@ The module ``ts.datasets`` contains all the publicly available datasets provided
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
     print(f"ImputeGAP datasets : {ts.datasets}")
+
+
+
+To load your own dataset, add the path to your file in the ``ts.load_series`` function.
+
+.. code-block:: python
+
+    from imputegap.recovery.manager import TimeSeries
+    ts = TimeSeries()
+    ts.load_series("./my_path/my_file.txt")
+
+
 
 
 

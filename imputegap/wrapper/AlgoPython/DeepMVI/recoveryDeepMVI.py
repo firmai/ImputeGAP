@@ -3,8 +3,8 @@ import numpy as np
 
 from imputegap.wrapper.AlgoPython.DeepMVI.transformer import transformer_recovery
 
-def recover_matrix(matrix, max_epoch=1000, patience=2, lr=1e-3):
-    temp = transformer_recovery(matrix, max_epoch, patience, lr)
+def recover_matrix(matrix, max_epoch=1000, patience=2, lr=1e-3, verbose=True):
+    temp = transformer_recovery(matrix, max_epoch, patience, lr, verbose)
     return temp
 
 # end function
@@ -20,7 +20,7 @@ def deep_mvi_recovery(input, max_epoch=1000, patience=2, lr=1e-3, verbose=True):
     # read input matrix
     matrix = input
     
-    matrix_imputed = recover_matrix(matrix, max_epoch, patience, lr)
+    matrix_imputed = recover_matrix(matrix, max_epoch, patience, lr, verbose)
     
     # verification
     nan_mask = np.isnan(matrix_imputed)

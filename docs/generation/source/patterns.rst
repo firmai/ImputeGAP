@@ -2,18 +2,6 @@
 Patterns
 ========
 
-All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module. To learn how to implement contamination, please refer to the `tutorial <tutorials.html#contamination>`_.
-
-To list all the available patterns, you can use this command:
-
-.. code-block:: python
-
-    from imputegap.recovery.manager import TimeSeries
-    ts = TimeSeries()
-    print(f"Missingness patterns : {ts.patterns}")
-
-
-
 .. _setup:
 
 Setup
@@ -28,7 +16,7 @@ Setup
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 .. _scenario_mono_block:
@@ -37,9 +25,6 @@ MONO-BLOCK
 ----------
 One missing block per series
 
-.. raw:: html
-
-   <br><br>
 
 **Aligned**
 
@@ -53,7 +38,7 @@ One missing block per series
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 **Disjoint**
@@ -69,7 +54,7 @@ One missing block per series
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 **Overlap**:
@@ -86,7 +71,7 @@ One missing block per series
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 **Scattered**
@@ -101,7 +86,7 @@ One missing block per series
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 .. _scenario_multi_block:
@@ -110,10 +95,6 @@ MULTI-BLOCK
 -----------
 
 Multiple missing blocks per series
-
-.. raw:: html
-
-   <br><br>
 
 
 **MCAR**
@@ -127,7 +108,7 @@ Multiple missing blocks per series
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 **Block Distribution**

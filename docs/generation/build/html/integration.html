@@ -269,61 +269,121 @@
         <article role="main" id="furo-main-content">
           <section id="integration">
 <h1>Integration<a class="headerlink" href="#integration" title="Link to this heading">¶</a></h1>
-<br><br><section id="initializing-a-git-repository">
-<h2>Initializing a Git Repository<a class="headerlink" href="#initializing-a-git-repository" title="Link to this heading">¶</a></h2>
-<p>To begin using the ImputeGAP library, initialize a Git repository and clone the project from GitHub:</p>
+<p>ImputeGAP allows users to integrate their own algorithms. We provide a wrapper that needs to be adjusted with the core of the imputation algorithm.</p>
+<section id="initialize-a-git-repository">
+<h2>Initialize a Git Repository<a class="headerlink" href="#initialize-a-git-repository" title="Link to this heading">¶</a></h2>
+<p>command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git init
 $ git clone https://github.com/eXascaleInfolab/ImputeGAP
 $ cd ./ImputeGAP
 </pre></div>
 </div>
-<br><br></section>
-<section id="python-integration-steps">
-<h2>Python Integration Steps<a class="headerlink" href="#python-integration-steps" title="Link to this heading">¶</a></h2>
-<ol class="arabic simple">
-<li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">./imputegap/algorithms</span></code> directory.</p></li>
-<li><p>Create a new file by copying <code class="docutils literal notranslate"><span class="pre">mean_inpute.py</span></code> and rename it to reflect your algorithm.</p></li>
-<li><p>Replace the logic section under <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">logic</span></code> with your algorithm’s implementation.</p></li>
-<li><p>Adapt the parameters as needed, ensuring to follow the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> object structure for input and return a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> matrix. Refer to the docstring of the template for detailed guidance.</p></li>
-<li><p>Update <code class="docutils literal notranslate"><span class="pre">./imputegap/recovery/imputation.py</span></code>:</p>
-<ol class="loweralpha simple">
-<li><p>Add a function to call your new algorithm by copying the <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">MeanImpute(BaseImputer)</span></code> and modifying it to suit your requirements.</p></li>
-<li><p>You can add it into the corresponding family of algorithms.</p></li>
-</ol>
-</li>
-<li><p>Perform imputation as needed.</p></li>
-</ol>
-<br><br></section>
-<section id="default-values">
-<h2>Default values<a class="headerlink" href="#default-values" title="Link to this heading">¶</a></h2>
+</section>
+<section id="a-integration-steps-in-python">
+<h2>A. Integration Steps (in Python)<a class="headerlink" href="#a-integration-steps-in-python" title="Link to this heading">¶</a></h2>
+<section id="basic-features">
+<h3>Basic Features<a class="headerlink" href="#basic-features" title="Link to this heading">¶</a></h3>
 <ol class="arabic">
-<li><p>To set the default values of your algorithm, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/env/default_values.toml</span></code> and add your configuration:</p>
+<li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">./imputegap/algorithms</span></code> directory.</p></li>
+<li><p>Create a new file by copying <code class="docutils literal notranslate"><span class="pre">mean_impute.py</span></code> and rename it with the name of your algorithm, e.g., <code class="docutils literal notranslate"><span class="pre">new_alg.py</span></code>.</p></li>
+<li><p>Rename the function <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">mean_impute()</span></code>, e.g., <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">new_alg()</span></code>.</p></li>
+<li><p>Replace the section under <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">core</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">algorithm</span></code> with your algorithm’s implementation. The algorithms should take as input the <code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code> object structure and should return a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> matrix.</p></li>
+<li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">./imputegap/recovery/imputation.py</span></code>:</p>
+<ol class="loweralpha simple">
+<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">MeanImpute(BaseImputer)</span></code> into the corresponding family of algorithms.</p></li>
+<li><p>Rename the class. e.g., <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">NewAlg(BaseImputer)</span></code>.</p></li>
+<li><p>Change the value of the <code class="docutils literal notranslate"><span class="pre">algorithm</span></code> variable from <code class="docutils literal notranslate"><span class="pre">mean_impute</span></code> to <code class="docutils literal notranslate"><span class="pre">new_alg</span></code></p></li>
+<li><p>In the def <code class="docutils literal notranslate"><span class="pre">impute()</span></code> method, replace the call of the function to link into your new algorithm, e.g.,</p></li>
+</ol>
 <blockquote>
-<div><p>[algo]
-param_1 = value
-param_2 = value</p>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.new_alg</span><span class="w"> </span><span class="kn">import</span> <span class="n">new_alg</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">new_alg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
 </div></blockquote>
 </li>
+</ol>
+<br><br></section>
+<section id="advanced-features">
+<h3>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading">¶</a></h3>
+<section id="initialize-default-values">
+<h4>Initialize default values<a class="headerlink" href="#initialize-default-values" title="Link to this heading">¶</a></h4>
+<ol class="arabic simple">
+<li><p>To set the default values of your algorithm, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/env/default_values.toml</span></code> and add your configuration:</p></li>
+</ol>
+<p>command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">new_alg</span><span class="p">]</span>
+<span class="n">param_integer</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">param_float</span> <span class="o">=</span> <span class="mf">0.42</span>
+<span class="n">param_string</span> <span class="o">=</span> <span class="s2">&quot;value_42&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
 <li><p>Update the <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> file, and specify your configuration in the <code class="docutils literal notranslate"><span class="pre">load_parameters</span></code> function.</p></li>
 </ol>
 <br></section>
 <section id="benchmark">
-<h2>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h2>
-<p>To access the benchmarking features, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code>:</p>
-<ol class="arabic simple">
-<li><p>Add your algorithm in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">config_impute_algorithm</span></code> function.</p></li>
-</ol>
+<h4>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h4>
+<p>To access the benchmarking features, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> by adding your algorithm in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">config_impute_algorithm</span></code> function.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;new_alg&quot;</span><span class="p">:</span>
+    <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MyFamily</span><span class="o">.</span><span class="n">NewAlg</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Replace MyFamily with either: Statistics, MatrixCompletion, PatternSearch, MachineLearning, or DeepLearning</p>
 <br></section>
 <section id="optimizer">
-<h2>Optimizer<a class="headerlink" href="#optimizer" title="Link to this heading">¶</a></h2>
-<p>To access the optimization tools please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code>:</p>
-<ol class="arabic simple">
-<li><p>Add your optimization limits into the <code class="docutils literal notranslate"><span class="pre">RAYTUNE_PARAMS</span></code> dictionary of <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code>.</p></li>
-<li><p>Add your parameters in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">save_optimization</span></code> function of the file <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> to save the optimal parameters.</p></li>
+<h4>Optimizer<a class="headerlink" href="#optimizer" title="Link to this heading">¶</a></h4>
+<p>To enable the optimization module, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code>:</p>
+<ol class="arabic">
+<li><dl>
+<dt>Open <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code> copy paste lines 59 to 63 and update the algorithm name and parameters, e.g.,</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;new_alg&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;param_integer&quot;</span><span class="p">:</span> <span class="n">tune</span><span class="o">.</span><span class="n">grid_search</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span> <span class="mi">1</span><span class="p">)]),</span>
+        <span class="s2">&quot;param_float&quot;</span><span class="p">:</span> <span class="n">tune</span><span class="o">.</span><span class="n">loguniform</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s2">&quot;param_string&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;value_1&quot;</span><span class="p">,</span> <span class="s2">&quot;value_n&quot;</span><span class="p">]</span>
+    <span class="p">},</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Add your parameters in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">save_optimization()</span></code> function of the file <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> to save the optimal parameters, line 820 to 825:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;new_alg&quot;</span><span class="p">:</span>
+    <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;param_integer&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="s2">&quot;param_float&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="s2">&quot;param_string&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
 </ol>
+<br></section>
+<section id="update-the-call">
+<h4>Update the call<a class="headerlink" href="#update-the-call" title="Link to this heading">¶</a></h4>
+<p>Navigate to <code class="docutils literal notranslate"><span class="pre">./imputegap/recovery/imputation.py</span></code>:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Improve the imputation call of the <code class="docutils literal notranslate"><span class="pre">NewAlg</span></code> class in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">impute()</span></code> function, and add the call of the optimizer and the default values of the parameters.</p></li>
+</ol>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">param_integer</span><span class="p">,</span> <span class="n">param_float</span><span class="p">,</span> <span class="n">param_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>  <span class="c1"># call the optimizer</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">param_integer</span><span class="p">,</span> <span class="n">param_float</span><span class="p">,</span> <span class="n">param_string</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>  <span class="c1"># load the default values</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">new_alg</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">param_integer</span><span class="o">=</span><span class="n">param_integer</span><span class="p">,</span> <span class="n">param_float</span><span class="o">=</span><span class="n">param_float</span><span class="p">,</span> <span class="n">param_string</span><span class="o">=</span><span class="n">param_string</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+</pre></div>
+</div>
 <br><br></section>
-<section id="c-integration">
-<h2>C++ Integration<a class="headerlink" href="#c-integration" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+<section id="b-integration-steps-other-languages">
+<h2>B. Integration Steps (other languages)<a class="headerlink" href="#b-integration-steps-other-languages" title="Link to this heading">¶</a></h2>
+<p>We will show how to adjust the integration wrapper in C++</p>
 <ol class="arabic">
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">./imputegap/algorithms</span></code> directory.</p></li>
 <li><p>If not already done, convert your CPP/H files into a shared object format (<code class="docutils literal notranslate"><span class="pre">.so</span></code>) and place them in the <code class="docutils literal notranslate"><span class="pre">imputegap/algorithms/lib</span></code> folder.
@@ -356,8 +416,6 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 <section id="example-cdrec-integration">
 <h2>Example: CDRec Integration<a class="headerlink" href="#example-cdrec-integration" title="Link to this heading">¶</a></h2>
 <p>Once your cpp and h files are ready to be converted (you can look at <code class="docutils literal notranslate"><span class="pre">./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.cpp</span></code> or <code class="docutils literal notranslate"><span class="pre">./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.h</span></code>), create a <code class="docutils literal notranslate"><span class="pre">.so</span></code> file for linux and windows, and a <code class="docutils literal notranslate"><span class="pre">.dylib</span></code> file for MAC OS.</p>
-<section id="shared-object-generation-linux-windows">
-<h3>Shared Object Generation Linux/Windows<a class="headerlink" href="#shared-object-generation-linux-windows" title="Link to this heading">¶</a></h3>
 <ol class="arabic">
 <li><p>Modify the Makefile:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">libCDREC</span><span class="o">.</span><span class="n">so</span><span class="p">:</span>
@@ -382,10 +440,7 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-<br><br></section>
-<section id="shared-object-generation-mac-os">
-<h3>Shared Object Generation MAC OS<a class="headerlink" href="#shared-object-generation-mac-os" title="Link to this heading">¶</a></h3>
-<ol class="arabic">
+<br><br><ol class="arabic">
 <li><p>Modify the Makefile:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">libCDREC</span><span class="o">.</span><span class="n">dylib</span><span class="p">:</span>
     <span class="n">clang</span><span class="o">++</span> <span class="o">-</span><span class="n">dynamiclib</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">17</span> <span class="o">-</span><span class="n">o</span> <span class="n">lib_cdrec</span><span class="o">.</span><span class="n">dylib</span> \
@@ -411,10 +466,7 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-<br><br></section>
-<section id="wrapper">
-<h3>Wrapper<a class="headerlink" href="#wrapper" title="Link to this heading">¶</a></h3>
-<ol class="arabic">
+<br><br><ol class="arabic">
 <li><p>In <code class="docutils literal notranslate"><span class="pre">imputegap/algorithms/cpp_integration.py</span></code>, update the function name and parameter count, and ensure the <code class="docutils literal notranslate"><span class="pre">.so</span></code> file matches:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">native_cdrec</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">,</span> <span class="n">__py_rank</span><span class="p">,</span> <span class="n">__py_epsilon</span><span class="p">,</span> <span class="n">__py_iterations</span><span class="p">):</span>
 
@@ -456,10 +508,7 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-<br><br></section>
-<section id="method-implementation">
-<h3>Method Implementation<a class="headerlink" href="#method-implementation" title="Link to this heading">¶</a></h3>
-<ol class="arabic">
+<br><br><ol class="arabic">
 <li><p>In <code class="docutils literal notranslate"><span class="pre">imputegap/algorithms/cpp_integration.py</span></code>, create or adapt a generic method for your needs:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">cdrec</span><span class="p">(</span><span class="n">contamination</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lib_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
@@ -478,10 +527,7 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-<br><br></section>
-<section id="imputer-class">
-<h3>Imputer Class<a class="headerlink" href="#imputer-class" title="Link to this heading">¶</a></h3>
-<ol class="arabic">
+<br><br><ol class="arabic">
 <li><p>Add your algorithm to the catalog in <code class="docutils literal notranslate"><span class="pre">./imputegap/recovery/imputation.py</span></code></p></li>
 <li><p>Copy and modify <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">MeanImpute(BaseImputer)</span></code> to fit your requirements:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MatrixCompletion</span><span class="p">:</span>
@@ -497,7 +543,6 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-</section>
 </section>
 </section>
 
@@ -557,20 +602,20 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Integration</a><ul>
-<li><a class="reference internal" href="#initializing-a-git-repository">Initializing a Git Repository</a></li>
-<li><a class="reference internal" href="#python-integration-steps">Python Integration Steps</a></li>
-<li><a class="reference internal" href="#default-values">Default values</a></li>
+<li><a class="reference internal" href="#initialize-a-git-repository">Initialize a Git Repository</a></li>
+<li><a class="reference internal" href="#a-integration-steps-in-python">A. Integration Steps (in Python)</a><ul>
+<li><a class="reference internal" href="#basic-features">Basic Features</a></li>
+<li><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
+<li><a class="reference internal" href="#initialize-default-values">Initialize default values</a></li>
 <li><a class="reference internal" href="#benchmark">Benchmark</a></li>
 <li><a class="reference internal" href="#optimizer">Optimizer</a></li>
-<li><a class="reference internal" href="#c-integration">C++ Integration</a></li>
-<li><a class="reference internal" href="#example-cdrec-integration">Example: CDRec Integration</a><ul>
-<li><a class="reference internal" href="#shared-object-generation-linux-windows">Shared Object Generation Linux/Windows</a></li>
-<li><a class="reference internal" href="#shared-object-generation-mac-os">Shared Object Generation MAC OS</a></li>
-<li><a class="reference internal" href="#wrapper">Wrapper</a></li>
-<li><a class="reference internal" href="#method-implementation">Method Implementation</a></li>
-<li><a class="reference internal" href="#imputer-class">Imputer Class</a></li>
+<li><a class="reference internal" href="#update-the-call">Update the call</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a class="reference internal" href="#b-integration-steps-other-languages">B. Integration Steps (other languages)</a></li>
+<li><a class="reference internal" href="#example-cdrec-integration">Example: CDRec Integration</a></li>
 </ul>
 </li>
 </ul>

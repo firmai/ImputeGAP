@@ -1,51 +1,64 @@
 Integration
 ===========
 
-.. raw:: html
+ImputeGAP allows users to integrate their own algorithms. We provide a wrapper that needs to be adjusted with the core of the imputation algorithm.
 
-   <br><br>
+Initialize a Git Repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+command::
 
-Initializing a Git Repository
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To begin using the ImputeGAP library, initialize a Git repository and clone the project from GitHub::
-
-    $ git init
-    $ git clone https://github.com/eXascaleInfolab/ImputeGAP
-    $ cd ./ImputeGAP
+        $ git init
+        $ git clone https://github.com/eXascaleInfolab/ImputeGAP
+        $ cd ./ImputeGAP
 
 
-.. raw:: html
+A. Integration Steps (in Python)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   <br><br>
-
-Python Integration Steps
-~~~~~~~~~~~~~~~~~~~~~~~~
+Basic Features
+--------------
 
 1. Navigate to the ``./imputegap/algorithms`` directory.
-2. Create a new file by copying ``mean_inpute.py`` and rename it to reflect your algorithm.
-3. Replace the logic section under ``# logic`` with your algorithm’s implementation.
-4. Adapt the parameters as needed, ensuring to follow the ``TimeSeries`` object structure for input and return a ``numpy.ndarray`` matrix. Refer to the docstring of the template for detailed guidance.
-5. Update ``./imputegap/recovery/imputation.py``:
+2. Create a new file by copying ``mean_impute.py`` and rename it with the name of your algorithm, e.g., ``new_alg.py``.
+3. Rename the function ``def mean_impute()``, e.g., ``def new_alg()``.
+4. Replace the section under ``# core of the algorithm`` with your algorithm’s implementation. The algorithms should take as input the ``TimeSeries`` object structure and should return a ``numpy.ndarray`` matrix.
+5. Navigate to ``./imputegap/recovery/imputation.py``:
 
-   a. Add a function to call your new algorithm by copying the ``class MeanImpute(BaseImputer)`` and modifying it to suit your requirements.
+   a. Copy the ``class MeanImpute(BaseImputer)`` into the corresponding family of algorithms.
 
-   b. You can add it into the corresponding family of algorithms.
+   b. Rename the class. e.g., ``class NewAlg(BaseImputer)``.
 
-6. Perform imputation as needed.
+   c. Change the value of the ``algorithm`` variable from ``mean_impute`` to ``new_alg``
+
+   d. In the def ``impute()`` method, replace the call of the function to link into your new algorithm, e.g.,
+
+    .. code-block:: python
+
+        from imputegap.algorithms.new_alg import new_alg
+        self.recov_data = new_alg(self.incomp_data, params)
+
 
 .. raw:: html
 
    <br><br>
 
-Default values
-~~~~~~~~~~~~~~
+
+Advanced Features
+-----------------
+
+
+Initialize default values
+_________________________
 
 1. To set the default values of your algorithm, please update ``./imputegap/env/default_values.toml`` and add your configuration:
 
-        [algo]
-        param_1 = value
-        param_2 = value
+command::
+
+        [new_alg]
+        param_integer = 42
+        param_float = 0.42
+        param_string = "value_42"
+
 
 2. Update the ``./imputegap/tools/utils.py`` file, and specify your configuration in the ``load_parameters`` function.
 
@@ -56,10 +69,18 @@ Default values
 
 
 Benchmark
-~~~~~~~~~
-To access the benchmarking features, please update ``./imputegap/tools/utils.py``:
+_________
 
-1. Add your algorithm in the ``def config_impute_algorithm`` function.
+To access the benchmarking features, please update ``./imputegap/tools/utils.py`` by adding your algorithm in the ``def config_impute_algorithm`` function.
+
+    .. code-block:: python
+
+
+        elif algorithm == "new_alg":
+            imputer = Imputation.MyFamily.NewAlg(incomp_data)
+
+
+Replace MyFamily with either: Statistics, MatrixCompletion, PatternSearch, MachineLearning, or DeepLearning
 
 
 .. raw:: html
@@ -68,20 +89,61 @@ To access the benchmarking features, please update ``./imputegap/tools/utils.py`
 
 
 Optimizer
-~~~~~~~~~
-To access the optimization tools please update ``./imputegap/tools/algorithm_parameters.py``:
+_________
 
-1. Add your optimization limits into the ``RAYTUNE_PARAMS`` dictionary of ``./imputegap/tools/algorithm_parameters.py``.
-2. Add your parameters in the ``def save_optimization`` function of the file ``./imputegap/tools/utils.py`` to save the optimal parameters.
+To enable the optimization module, please update ``./imputegap/tools/algorithm_parameters.py``:
+
+1. Open ``./imputegap/tools/algorithm_parameters.py`` copy paste lines 59 to 63 and update the algorithm name and parameters, e.g.,
+    .. code-block:: python
+
+        'new_alg': {
+                "param_integer": tune.grid_search([i for i in range(2, 20 1)]),
+                "param_float": tune.loguniform(1e-6, 1),
+                "param_string": ["value_1", "value_n"]
+            },
+
+2. Add your parameters in the ``def save_optimization()`` function of the file ``./imputegap/tools/utils.py`` to save the optimal parameters, line 820 to 825:
+    .. code-block:: python
+
+        if algorithm == "new_alg":
+            params_to_save = {
+                "param_integer": int(optimal_params[0]),
+                "param_float": float(optimal_params[1]),
+                "param_string": str(optimal_params[2])
+        }
+
+
+.. raw:: html
+
+   <br>
+
+
+
+Update the call
+_______________
+
+Navigate to ``./imputegap/recovery/imputation.py``:
+
+   a. Improve the imputation call of the ``NewAlg`` class in the ``def impute()`` function, and add the call of the optimizer and the default values of the parameters.
+
+.. code-block:: python
+
+    if params is not None:
+        param_integer, param_float, param_string = self._check_params(user_def, params)  # call the optimizer
+    else:
+        param_integer, param_float, param_string = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)  # load the default values
+
+    self.recov_data = new_alg(incomp_data=self.incomp_data, param_integer=param_integer, param_float=param_float, param_string=param_string, logs=self.logs, verbose=self.verbose)
+
 
 
 .. raw:: html
 
    <br><br>
 
-
-C++ Integration
-~~~~~~~~~~~~~~~
+B. Integration Steps (other languages)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+We will show how to adjust the integration wrapper in C++
 
 1. Navigate to the ``./imputegap/algorithms`` directory.
 2. If not already done, convert your CPP/H files into a shared object format (``.so``) and place them in the ``imputegap/algorithms/lib`` folder.

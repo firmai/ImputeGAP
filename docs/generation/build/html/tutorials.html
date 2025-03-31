@@ -287,7 +287,7 @@
 <span class="c1"># initialize the time series object</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 
-<span class="c1"># load and normalize the dataset from file or from the code</span>
+<span class="c1"># load and normalize the dataset from the library</span>
 <span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">))</span>
 <span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">)</span>
 
@@ -300,6 +300,12 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP datasets : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">datasets</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To load your own dataset, add the path to your file in the <code class="docutils literal notranslate"><span class="pre">ts.load_series</span></code> function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
+<span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="s2">&quot;./my_path/my_file.txt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <br><br></section>
@@ -442,8 +448,8 @@ The list of algorithms is described <a class="reference external" href="algorith
 </pre></div>
 </div>
 <p>You can enable the optimizer using the following command:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;max_concurrent_trials&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
-<span class="n">optimizers</span> <span class="o">=</span> <span class="p">[</span><span class="n">optimizer</span><span class="p">]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">opt</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;ray_tune&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;n_calls&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;max_concurrent_trials&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+<span class="n">my_opt</span> <span class="o">=</span> <span class="p">[</span><span class="n">opt</span><span class="p">]</span>
 </pre></div>
 </div>
 <aside class="footnote-list brackets">

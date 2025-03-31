@@ -52,7 +52,7 @@ class AttentionModule(nn.Module):
 
     
 class OurModel(nn.Module):
-    def __init__(self,sizes,kernel_size=10,block_size=10,time_len=1000,nhead=2,use_embed=True,use_context=True,use_local=True):
+    def __init__(self,sizes,kernel_size=10,block_size=10,time_len=1000,nhead=2,use_embed=True,use_context=True,use_local=True,verbose=True):
         super(OurModel, self).__init__()
         hidden_dim = 512
         nkernel=32
@@ -88,10 +88,12 @@ class OurModel(nn.Module):
         self.attention = AttentionModule(dquery=self.atten_qdim,dkey=self.atten_qdim,dvalue=self.vdim,nhid=hidden_dim,nhead=nhead,dropout=0.0,mask_len=mask_len)
         # self.mapping_value = nn.Linear(nkernel,self.vdim)
 
-        print("\t\t\t\t kernel size", kernel_size, " vs block_size", block_size)
+        if verbose:
+            print("\t\t\t\t kernel size", kernel_size, " vs block_size", block_size)
         if (use_local):
             if self.kernel_size % self.block_size != 0:
-                print("\t\t\t\t self.kernel_size % self.block_size != 0 > reduced to 1...")
+                if verbose:
+                    print("\t\t\t\t self.kernel_size % self.block_size != 0 > reduced to 1...")
                 self.kernel_size = 1
                 self.block_size = 1
 

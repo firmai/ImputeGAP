@@ -15,7 +15,7 @@ Access to commonly used datasets in time series research (Datasets).
   - Benchmarking to foster reproducibility in time series imputation ([Benchmark](#benchmark)).
   - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis ([Downstream](#downstream)).
   - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](#explainer)).
-  - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
+  - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R ([Integration](https://imputegap.readthedocs.io/en/latest/integration.html)).
 
 <br>
 
@@ -442,7 +442,7 @@ print(f"ImputeGAP features extractors : {ts.extractors}")
 ---
 
 ## Integration
-To add your own imputation algorithm in Python or C++, please refer to the detailed [integration guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/integration).
+To add your own imputation algorithm in Python or C++, please refer to the detailed [integration guide](https://imputegap.readthedocs.io/en/latest/integration.html).
 
 
 ---

@@ -32,7 +32,7 @@ def mean_impute(incomp_data, params=None):
 
     """
 
-    # logic
+    # core of the algorithm
     mean_value = np.nanmean(incomp_data)
 
     # Imputation

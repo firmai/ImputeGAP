@@ -132,7 +132,7 @@ elif(args.dataset=='BeijingAir'):
     args.dec_in = 36
     args.c_out = 36
 
-def train(model, data=None):
+def train(model, data=None, verbose=True):
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     if args.seed > 0:
         args.seed = np.random.randint(args.seed)
@@ -159,16 +159,17 @@ def train(model, data=None):
         # Concatenate all batches
 
         loss, _ =evaluate(model, val_dataloader, scaler)
-        print('\t\t\t\t\t\tepoch, loss:',epoch,loss)
+
+        if verbose:
+            print('\t\t\t\t\t\tepoch, loss:',epoch,loss)
 
         if(loss<best_loss):
             best_loss=loss
             best_model = copy.deepcopy(model.state_dict())
             _, imputed_matrix = evaluate(model, recov_dataloader, scaler)
 
-            print('\t\t\t\t\t\t\t\tbest_loss:', best_loss)
-
-
+            if verbose:
+                print('\t\t\t\t\t\t\t\tbest_loss:', best_loss)
 
     return imputed_matrix, best_model    # Return the imputed matrix
 
@@ -234,7 +235,7 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[1], dropout=0.3, su
 
     model.to(device)
 
-    imputed_matrix, best_model = train(model, data=data)
+    imputed_matrix, best_model = train(model, data=data, verbose=verbose)
 
     if verbose:
         print("\t\t\t\t\t\tImputed Matrix Shape Before Reshaping:", imputed_matrix.shape)

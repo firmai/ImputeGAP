@@ -269,13 +269,6 @@
         <article role="main" id="furo-main-content">
           <section id="patterns">
 <h1>Patterns<a class="headerlink" href="#patterns" title="Link to this heading">¶</a></h1>
-<p>All missingness patterns developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.patterns</span></code> module. To learn how to implement contamination, please refer to the <a class="reference external" href="tutorials.html#contamination">tutorial</a>.</p>
-<p>To list all the available patterns, you can use this command:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
-<span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missingness patterns : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">patterns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
 <section id="setup">
 <span id="id1"></span><h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">¶</a></h2>
 <div class="admonition note">
@@ -287,11 +280,11 @@
 <li><p>W : offset window in the beginning of the series (%); default = 0.1</p></li>
 </ul>
 </div>
-<br><br></section>
+<br></section>
 <section id="mono-block">
 <span id="scenario-mono-block"></span><h2>MONO-BLOCK<a class="headerlink" href="#mono-block" title="Link to this heading">¶</a></h2>
 <p>One missing block per series</p>
-<br><br><p><strong>Aligned</strong></p>
+<p><strong>Aligned</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
@@ -301,7 +294,7 @@
 <li><p>The starting position is the same and begins at <code class="docutils literal notranslate"><span class="pre">W</span></code> and progresses until the size of the missing block is reached, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">S%</span></code> of the dataset.</p></li>
 </ul>
 </div>
-<br><br><p><strong>Disjoint</strong></p>
+<br><p><strong>Disjoint</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
@@ -312,7 +305,7 @@
 <li><p>Each subsequent missing block starts immediately after the previous one ends, continuing this pattern until the limit of the dataset or <code class="docutils literal notranslate"><span class="pre">N</span></code> is reached.</p></li>
 </ul>
 </div>
-<br><br><p><strong>Overlap</strong>:</p>
+<br><p><strong>Overlap</strong>:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
@@ -324,7 +317,7 @@
 <li><p>This pattern continues until the limit or <code class="docutils literal notranslate"><span class="pre">N</span></code> is reached.</p></li>
 </ul>
 </div>
-<br><br><p><strong>Scattered</strong></p>
+<br><p><strong>Scattered</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
@@ -334,11 +327,11 @@
 <li><p>The starting position is randomly shifted by adding a random value to <code class="docutils literal notranslate"><span class="pre">W</span></code>, then progresses until the size of the missing block is reached, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">S%</span></code> of the dataset.</p></li>
 </ul>
 </div>
-<br><br></section>
+<br></section>
 <section id="multi-block">
 <span id="scenario-multi-block"></span><h2>MULTI-BLOCK<a class="headerlink" href="#multi-block" title="Link to this heading">¶</a></h2>
 <p>Multiple missing blocks per series</p>
-<br><br><p><strong>MCAR</strong></p>
+<p><strong>MCAR</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
@@ -347,7 +340,7 @@
 <li><p>Data blocks of the same size are removed from arbitrary series at a random position between <code class="docutils literal notranslate"><span class="pre">W</span></code> and <code class="docutils literal notranslate"><span class="pre">N</span></code>, until the total number of missing values per series is reached.</p></li>
 </ul>
 </div>
-<br><br><p><strong>Block Distribution</strong></p>
+<br><p><strong>Block Distribution</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">

@@ -21,7 +21,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
 
     pip install imputegap
 
-Alternatively, you can install the library from source:
+If you would like to extend the library, you can install from source:
 
 .. code-block:: bash
 

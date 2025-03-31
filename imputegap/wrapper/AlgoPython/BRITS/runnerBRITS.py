@@ -14,7 +14,7 @@ from . import data_loader
 
 from .data_prep_tf import prepare_dat
 
-def train(model, input, epochs, batch_size):
+def train(model, input, epochs, batch_size, verbose=True):
     optimizer = optim.Adam(model.parameters(), lr = 1e-3)
     data_iter = data_loader.get_loader(input, batch_size = batch_size)
 
@@ -29,7 +29,8 @@ def train(model, input, epochs, batch_size):
 
             run_loss += ret['loss'].data
 
-            print ('\t\t\t\r\t\t\t\t\t\tProgress epoch {}, {:.2f}%, average loss {}'.format(epoch, (idx + 1) * 100.0 / len(data_iter), run_loss / (idx + 1.0)))
+            if verbose:
+                print ('\t\t\t\r\t\t\t\t\t\tProgress epoch {}, {:.2f}%, average loss {}'.format(epoch, (idx + 1) * 100.0 / len(data_iter), run_loss / (idx + 1.0)))
     #end for    
     
     return (model, data_iter)
@@ -75,7 +76,7 @@ def brits_recovery(incomp_data, model="brits", epoch=10, batch_size=7, nbr_featu
     if torch.cuda.is_available():
         model = model.cuda()
 
-    (model, data_iter) = train(model, "incomp_data.tmp", epoch, batch_size)
+    (model, data_iter) = train(model, "incomp_data.tmp", epoch, batch_size, verbose)
     res = evaluate(model, data_iter)
 
     recov = np.squeeze(np.array(res))

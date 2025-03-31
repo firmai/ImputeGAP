@@ -95,3 +95,10 @@
 2025-03-27 15:50:36,793 - numba.cuda.cudadrv.driver - INFO - init
 2025-03-27 16:01:28,396 - numba.cuda.cudadrv.driver - INFO - init
 2025-03-27 16:34:58,223 - numba.cuda.cudadrv.driver - INFO - init
+2025-03-31 10:36:58,213 - numba.cuda.cudadrv.driver - INFO - init
+2025-03-31 10:41:59,329 - numba.cuda.cudadrv.driver - INFO - init
+2025-03-31 11:03:26,531 - numba.cuda.cudadrv.driver - INFO - init
+2025-03-31 11:26:30,280 - numba.cuda.cudadrv.driver - INFO - init
+2025-03-31 12:20:43,886 - numba.cuda.cudadrv.driver - INFO - init
+2025-03-31 16:25:31,372 - numba.cuda.cudadrv.driver - INFO - init
+2025-03-31 18:21:45,772 - numba.cuda.cudadrv.driver - INFO - init

@@ -817,7 +817,13 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     if dir_name and not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
-    if algorithm == "mrnn":
+    if algorithm == "cdrec":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "eps": optimal_params[1],
+            "iters": int(optimal_params[2])
+    }
+    elif algorithm == "mrnn":
         params_to_save = { "hidden_dim": int(optimal_params[0]),
             "learning_rate": optimal_params[1],
             "num_iter": int(optimal_params[2]),
@@ -833,12 +839,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         params_to_save = {
             "learning_neighbors": int(optimal_params[0])
         }
-    elif algorithm == "cdrec":
-        params_to_save = {
-            "rank": int(optimal_params[0]),
-            "eps": optimal_params[1],
-            "iters": int(optimal_params[2])
-        }
+
     elif algorithm == "iterative_svd":
         params_to_save = {
             "rank": int(optimal_params[0])
@@ -1127,3 +1128,6 @@ def list_of_extractors():
 
 def list_of_metrics():
     return ["RMSE", "MAE", "MI", "CORRELATION", "runtime_linear_scale", "runtime_log_scale"]
+
+def list_of_normalizers():
+    return ["z_score", "min_max"]

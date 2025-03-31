@@ -131,7 +131,7 @@ class Benchmark:
 
         return results_avg
 
-    def avg_results(self, *datasets):
+    def avg_results(self, *datasets, metric="RMSE"):
         """
         Calculate the average of all metrics and times across multiple datasets.
 
@@ -139,6 +139,8 @@ class Benchmark:
         ----------
         datasets : dict
             Multiple dataset dictionaries to be averaged.
+        metric : str
+            Metric to group.
 
         Returns
         -------
@@ -161,7 +163,7 @@ class Benchmark:
 
                         for missing_values, missing_values_item in algo_data.items():
                             for param, param_data in missing_values_item.items():
-                                rmse = param_data["scores"]["RMSE"]
+                                rmse = param_data["scores"][metric]
                                 aggregated_data[dataset][algo].append(rmse)
 
         # Step 2: Compute averages using NumPy
@@ -185,13 +187,9 @@ class Benchmark:
             for j, algo in enumerate(algorithms_list):
                 comprehensive_matrix[i, j] = average_rmse_matrix[dataset].get(algo, np.nan)
 
-        print("\nvisualization of datasets:", *datasets_list)
-        print("visualization of algorithms:", *algorithms_list)
-        #print(f"visualization of aggregate matrix :\n {comprehensive_matrix}\n\n")
-
         return comprehensive_matrix, algorithms_list, datasets_list
 
-    def generate_heatmap(self, scores_list, algos, sets, save_dir="./reports", display=True):
+    def generate_heatmap(self, scores_list, algos, sets, metric="RMSE", save_dir="./reports", display=True):
         """
         Generate and save RMSE matrix in HD quality.
 
@@ -203,6 +201,8 @@ class Benchmark:
             List of algorithm names (columns of the heatmap).
         sets : list of str
             List of dataset names (rows of the heatmap).
+        metric : str, optional
+            metric to extract
         save_dir : str, optional
             Directory to save the generated plot (default is "./reports").
         display : bool, optional
@@ -234,7 +234,7 @@ class Benchmark:
 
         # Add color bar for reference
         cbar = plt.colorbar(heatmap, ax=ax, orientation='vertical')
-        cbar.set_label('RMSE', rotation=270, labelpad=15)
+        cbar.set_label(metric, rotation=270, labelpad=15)
 
         # Set the tick labels
         ax.set_xticks(np.arange(nbr_algorithms))
@@ -254,7 +254,7 @@ class Benchmark:
                         ha='center', va='center',
                         color="black" if scores_list[i, j] < 1 else "white")  # for visibility
 
-        filename = f"benchmarking_rmse.jpg"
+        filename = "benchmarking_"+ metric.lower()+ ".jpg"
         filepath = os.path.join(save_dir, filename)
         plt.savefig(filepath, dpi=300, bbox_inches='tight')  # Save in HD with tight layout
 
@@ -295,7 +295,22 @@ class Benchmark:
         """
         os.makedirs(save_dir, exist_ok=True)
 
-        only_one = True
+
+        if "RMSE" not in metrics:
+            to_call = [metrics[0], "runtime_linear_scale"]
+        else:
+            to_call = ["RMSE", "runtime_linear_scale"]
+
+        new_metrics = np.copy(metrics)
+
+        if metrics is None:
+            new_metrics = utils.list_of_metrics()
+        else:
+            if "runtime_linear_scale" not in new_metrics:
+                new_metrics = np.append(new_metrics, "runtime_linear_scale")
+            if "runtime_log_scale" not in new_metrics:
+                new_metrics = np.append(new_metrics, "runtime_log_scale")
+
         opt = None
         for dataset, patterns_items in runs_plots_scores.items():
             for pattern, algorithm_items in patterns_items.items():
@@ -321,8 +336,8 @@ class Benchmark:
                         file.write(f"Run number: {run}\n")
                     file.write("=" * 120 + "\n\n")
 
-                    for metric in metrics:
-                        file.write(f"\n{dataset} : {metric} <{pattern}> {opt}\n")
+                    for metric in new_metrics:
+                        file.write(f"\nDataset: {dataset}, pattern: {pattern}, metric: {metric}, parms={opt}")
 
                         # Collect all algorithms and scores by rate
                         rate_to_scores = defaultdict(dict)
@@ -348,8 +363,8 @@ class Benchmark:
                         file.write(f"{header_row}\n")
                         file.write(f"{separator_row}\n")
 
-                        if only_one and verbose:
-                            print(f"\n{dataset} : {metric} <{pattern}> {opt}")
+                        if metric in to_call and verbose:
+                            print(f"\nDataset: {dataset}, pattern: {pattern}, metric: {metric}, parms={opt}")
                             print(separator_row)
                             print(f"{header_row}")
                             print(separator_row)
@@ -359,20 +374,18 @@ class Benchmark:
                             row_values = [rate] + [rate_to_scores[rate].get(algo, "") for algo in all_algorithms]
                             row = "".join(f" {val:^{width}} " for val, width in zip(row_values, column_widths))
                             file.write(f"{row}\n")
-                            if only_one and verbose:
+                            if metric in to_call and verbose:
                                 print(f"{row}")
 
                         file.write(f"{separator_row}\n\n")
-                        if only_one and verbose:
+                        if metric in to_call and verbose:
                             print(separator_row + "\n")
-
-                        only_one = False
 
                     file.write("Dictionary of Results:\n")
                     file.write(str(runs_plots_scores) + "\n")
 
                 if verbose:
-                    print(f"\nreports recorded in the following directory : {save_path}")
+                    print(f"\nresults saved in the following directory : {save_path}")
 
 
     def generate_reports_excel(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
@@ -511,30 +524,34 @@ class Benchmark:
         """
         os.makedirs(save_dir, exist_ok=True)
 
+        new_metrics = np.copy(metrics)
+        new_plots = 0
+
         if metrics is None:
-            metrics = utils.list_of_metrics()
+            new_metrics = utils.list_of_metrics()
+        else:
+            if "runtime_linear_scale" not in new_metrics:
+                new_metrics = np.append(new_metrics, "runtime_linear_scale")
+                new_plots = new_plots + 1
+            if "runtime_log_scale" not in new_metrics:
+                new_plots = new_plots + 1
+                new_metrics = np.append(new_metrics, "runtime_log_scale")
 
-        x_size = 16
+        n_rows = int((len(new_metrics)+new_plots)/2)
 
-        title_flag = title
-
-
+        x_size, title_flag = 16, title
 
         for dataset, pattern_items in runs_plots_scores.items():
             for pattern, algo_items in pattern_items.items():
                 if subplot:
-                    fig, axes = plt.subplots(nrows=3, ncols=2, figsize=(x_size*1.90, y_size*2.90))  # Adjusted figsize
-
+                    fig, axes = plt.subplots(nrows=n_rows, ncols=2, figsize=(x_size*1.90, y_size*2.90))  # Adjusted figsize
                     if title_flag is None:
                         title = dataset + " : " + pattern + ", benchmark analysis"
-
                     fig.canvas.manager.set_window_title(title)
-
                     axes = axes.ravel()  # Flatten the 2D array of axes to a 1D array
 
                 # Iterate over each metric, generating separate plots, including new timing metrics
-                for i, metric in enumerate(metrics):
-
+                for i, metric in enumerate(new_metrics):
                     if subplot:
                         if i < len(axes):
                             ax = axes[i]
@@ -545,8 +562,7 @@ class Benchmark:
                         ax = plt.gca()
 
                     has_data = False  # Flag to check if any data is added to the plot
-
-                    # Iterate over each algorithm and plot them in the same figure
+                    max_y, min_y = -99999, 99999
                     for algorithm, optimizer_items in algo_items.items():
                         x_vals = []
                         y_vals = []
@@ -556,9 +572,7 @@ class Benchmark:
                                     x_vals.append(float(x))
                                     y_vals.append(values["scores"][metric])
 
-                        # Only plot if there are values to plot
                         if x_vals and y_vals:
-                            # Sort x and y values by x for correct spacing
                             sorted_pairs = sorted(zip(x_vals, y_vals))
                             x_vals, y_vals = zip(*sorted_pairs)
 
@@ -567,11 +581,17 @@ class Benchmark:
                             ax.scatter(x_vals, y_vals)
                             has_data = True
 
+
+                            if min_y > min(y_vals):
+                                min_y = min(y_vals)
+                            if max_y < max(y_vals):
+                                max_y = max(y_vals)
+
                     # Save plot only if there is data to display
                     if has_data:
                         ylabel_metric = {
-                            "runtime_linear_scale": "Runtime Linear Scale (sec)",
-                            "runtime_log_scale": "Runtime Log Scale",
+                            "runtime_linear_scale": "Runtime (sec)",
+                            "runtime_log_scale": "Runtime (sec)",
                         }.get(metric, metric)
 
                         ax.set_title(metric)
@@ -579,21 +599,21 @@ class Benchmark:
                         ax.set_ylabel(ylabel_metric)
                         ax.set_xlim(0.0, 0.85)
 
+                        diff = (max_y - min_y)
+
+                        y_padding = (0.2*diff) * diff if max_y != min_y else (0.2*diff)  # Avoid 0 range
+
+                        if y_padding is None or y_padding == 0:
+                            y_padding = 1
+
+                        ax.set_ylim(min_y - y_padding, max_y + y_padding)
+
                         # Set y-axis limits with padding below 0 for visibility
                         if metric == "runtime_linear_scale":
-                            ax.set_ylim(-10, 90)
-                            ax.set_title("Runtime Linear Scale")
+                            ax.set_title("Runtime (linear scale)")
                         elif metric == "runtime_log_scale":
-                            ax.set_ylim(-4.5, 2.5)
-                            ax.set_title("Runtime Log Scale")
-                        elif metric == "MAE":
-                            ax.set_ylim(-0.1, 2.4)
-                        elif metric == "MI":
-                            ax.set_ylim(-0.1, 1.85)
-                        elif metric == "RMSE":
-                            ax.set_ylim(-0.1, 2.6)
+                            ax.set_title("Runtime (log scale)")
                         elif metric == "CORRELATION":
-                            ax.set_ylim(-0.75, 1.1)
                             ax.set_title("Pearson Correlation")
 
                         # Customize x-axis ticks
@@ -626,9 +646,9 @@ class Benchmark:
                         plt.close()
 
         if verbose:
-            print("\nplots recorded in the following directory : ", save_dir)
+            print("\nplots saved in the following directory : ", save_dir)
 
-    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, verbose=False):
+    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, normalizer="z_score", nbr_series=None, nbr_vals=None, verbose=False):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.
 
@@ -650,8 +670,14 @@ class Benchmark:
             Directory to save reports and plots (default is "./reports").
         runs : int, optional
             Number of executions with a view to averaging them
+        normalizer : str, optional
+            Normalizer to pre-process the data (default is "z_score").
+        nbr_series : int, optional
+            Number of series to take inside the dataset (default is None > all series).
+        nbr_vals : int, optional
+            Number of values to take inside the series (default is None > all values).
         verbose : bool, optional
-                Whether to display the contamination information (default is False).
+            Whether to display the contamination information (default is False).
 
         Returns
         -------
@@ -662,8 +688,6 @@ class Benchmark:
         -----
         Runs contamination, imputation, and evaluation, then generates plots and a summary reports.
         """
-
-        print("Initialization of the comprehensive evaluation. It can take time...\n")
         run_storage = []
         not_optimized = ["none"]
         mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]
@@ -682,7 +706,6 @@ class Benchmark:
         for i_run in range(0, abs(runs)):
             for dataset in datasets:
                 runs_plots_scores = {}
-                limitation_series, limitation_values = 100, 1000
                 block_size_mcar = 10
                 y_p_size = max(4, len(algorithms)*0.275)
 
@@ -693,25 +716,16 @@ class Benchmark:
                 header = False
                 if dataset == "eeg-reading":
                     header = True
-                elif dataset == "drift":
-                    limitation_series = 50
-                elif dataset == "fmri-objectviewing":
-                    limitation_series = 360
-                elif dataset == "fmri-stoptask":
-                    limitation_series = 360
 
-                if runs == -1:
-                    limitation_series = 10
-                    limitation_values = 110
-
-                ts_test.load_series(data=utils.search_path(dataset), nbr_series=limitation_series, nbr_val=limitation_values, header=header)
+                ts_test.load_series(data=utils.search_path(dataset), nbr_series=nbr_series, nbr_val=nbr_vals, header=header)
 
                 M, N = ts_test.data.shape
 
                 if N < 250:
                     block_size_mcar = 2
 
-                ts_test.normalize(verbose=verbose)
+                if normalizer in utils.list_of_normalizers():
+                    ts_test.normalize(verbose=verbose)
 
                 for pattern in patterns:
                     if verbose:
@@ -722,14 +736,13 @@ class Benchmark:
                         if verbose:
                             print("\n3. algorithm evaluated", algorithm, "with", pattern, "\n")
                         else:
-                            print("algorithm evaluated:", algorithm, "with pattern", pattern, "\n")
+                            print(f"pattern : {pattern}, algorithm {algorithm}, in progress...")
 
                         for incx, x in enumerate(x_axis):
                             if verbose:
                                 print("\n4. missing values (series&values) set to", x, "for x_axis\n")
 
-                            incomp_data = utils.config_contamination(ts=ts_test, pattern=pattern, dataset_rate=x,
-                                series_rate=x, block_size=block_size_mcar, verbose=verbose)
+                            incomp_data = utils.config_contamination(ts=ts_test, pattern=pattern, dataset_rate=x, series_rate=x, block_size=block_size_mcar, verbose=verbose)
 
                             for optimizer in optimizers:
                                 algo = utils.config_impute_algorithm(incomp_data=incomp_data, algorithm=algorithm, verbose=verbose)
@@ -790,6 +803,7 @@ class Benchmark:
 
                                 runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(pattern), {}).setdefault(str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {"scores": algo.metrics}
 
+                        print(f"done!\n")
                 save_dir_runs = save_dir + "/_details/run_" + str(i_run) + "/" + dataset
                 if verbose:
                     print("\nruns saved in : ", save_dir_runs)
@@ -799,14 +813,12 @@ class Benchmark:
                 #self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
                 run_storage.append(runs_plots_scores)
 
-        print("\n**Results of the analysis**\n")
-
-        scores_list, algos, sets = self.avg_results(*run_storage)
-        _ = self.generate_heatmap(scores_list, algos, sets, save_dir=save_dir, display=True)
+        scores_list, algos, sets = self.avg_results(*run_storage, metric=metrics[0])
+        _ = self.generate_heatmap(scores_list, algos, sets, metric=metrics[0], save_dir=save_dir, display=True)
 
         run_averaged = self.average_runs_by_names(run_storage)
 
-        print("\n\nthe results of the analysis has been saved in : ", save_dir, "\n\n")
+        print("the results of the analysis has been saved in : ", save_dir, "\n")
 
         benchmark_end = time.time()
         print(f"\n> logs: benchmark - Execution Time: {(benchmark_end - benchmark_time):.4f} seconds\n")

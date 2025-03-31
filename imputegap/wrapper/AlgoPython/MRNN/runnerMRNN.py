@@ -19,7 +19,7 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
     _, Recover_testX = M_RNN(trainZ, trainM, trainT, testZ, testM, testT,
                                   hidden_dim=hidden_dim,
                                   learning_rate=learning_rate,
-                                  iterations=iterations)
+                                  iterations=iterations, verbose=verbose)
 
     m = len(x[0])  # columns
 

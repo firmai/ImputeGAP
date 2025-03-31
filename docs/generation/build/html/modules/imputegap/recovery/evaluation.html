@@ -403,11 +403,15 @@
 
         <span class="n">nan_locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">)</span>
 
+        <span class="n">input_vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">]</span>
+        <span class="n">recov_vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">recov_vals</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">input_vals</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
         <span class="c1"># Discretize the continuous data into bins</span>
-        <span class="n">input_data_binned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">],</span>
-                                          <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
-        <span class="n">imputation_binned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">],</span>
-                                        <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">[</span><span class="n">nan_locations</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+        <span class="n">input_data_binned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">input_vals</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="n">input_vals</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+        <span class="n">imputation_binned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">recov_vals</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="n">recov_vals</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
 
         <span class="n">mi_discrete</span> <span class="o">=</span> <span class="n">mutual_info_score</span><span class="p">(</span><span class="n">input_data_binned</span><span class="p">,</span> <span class="n">imputation_binned</span><span class="p">)</span>
         <span class="c1"># mi_continuous = mutual_info_score(self.input_data[nan_locations], self.input_data[nan_locations])</span>
@@ -438,12 +442,12 @@
         <span class="c1"># Check if input data is constant (i.e., no variance)</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">input_data_values</span> <span class="o">==</span> <span class="n">input_data_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">imputed_values</span> <span class="o">==</span> <span class="n">imputed_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t\t\t\n</span><span class="s2">An input array is constant; the correlation coefficient is not defined, set to 0&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># Return 0 when correlation is not defined</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
         <span class="n">correlation</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">input_data_values</span><span class="p">,</span> <span class="n">imputed_values</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">correlation</span><span class="p">):</span>
-            <span class="n">correlation</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">correlation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 
         <span class="k">return</span> <span class="n">correlation</span></div>
 </div>
