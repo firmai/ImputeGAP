@@ -142,7 +142,7 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
         args = get_default_args()
 
     if verbose:
-        print("\n\n\t\t\t(PYTHON) BayOTIDE: Matrix Shape: (", data_matrix.shape[0], ", ", data_matrix.shape[1], ")")
+        print("(IMPUTATION) BayOTIDE: Matrix Shape: (", data_matrix.shape[0], ", ", data_matrix.shape[1], ")")
         print(f"\t\t\tK_trend: {config['K_trend']}, K_season: {config['K_season']}, n_season: {config['n_season']}, "
               f"K_bias: {config['K_bias']}, time_scale: {config['time_scale']}, a0: {config['a0']}, "
               f"b0: {config['b0']}, v: {config['v']}")
@@ -153,7 +153,7 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
 
     torch.random.manual_seed(args.seed)
 
-    hyper_dict = utils_BayOTIDE.make_hyper_dict(config, args)
+    hyper_dict = utils_BayOTIDE.make_hyper_dict(config, args, verbose)
 
     INNER_ITER = hyper_dict["INNER_ITER"]
     EVALU_T = hyper_dict["EVALU_T"]
@@ -184,7 +184,9 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
 
             if T_id % EVALU_T == 0 or T_id == model.T - 1:
                 _, loss_dict = model.model_test(T_id)
-                print(f"\t\t\t\t\t\tT_id = {T_id}, train_rmse = {loss_dict['train_RMSE']:.3f}, test_rmse= {loss_dict['test_RMSE']:.3f}")
+
+                if verbose:
+                    print(f"\t\t\t\t\t\tT_id = {T_id}, train_rmse = {loss_dict['train_RMSE']:.3f}, test_rmse= {loss_dict['test_RMSE']:.3f}")
 
 
         if verbose:
@@ -199,8 +201,6 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
         # **CRITICAL FIX: Ensure each series has unique imputation**
         W_matrix = model.post_W_m.clone().squeeze().cpu().detach().numpy()
         U_matrix = model.post_U_m.clone().squeeze().cpu().detach().numpy()
-
-
 
         # Check for row similarity
         w_unique_rows = np.unique(W_matrix, axis=0)

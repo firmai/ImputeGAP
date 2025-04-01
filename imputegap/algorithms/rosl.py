@@ -21,7 +21,7 @@ def native_rosl(__py_matrix, __py_rank, __py_regularization, __verbose=True):
         The regularization parameter to control the trade-off between reconstruction accuracy and robustness.
         Higher values enforce sparsity or robustness against noise in the data.
     __verbose : bool, optional
-        Whether to display the contamination information (default is False).
+        Whether to display the contamination information (default is True).
 
     Returns
     -------

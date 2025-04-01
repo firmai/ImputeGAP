@@ -471,7 +471,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 
 <span class="c1"># load and normalize the timeseries</span>
 <span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;forecast-economy&quot;</span><span class="p">))</span>
-<span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;min_max&quot;</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
 
 <span class="c1"># contaminate the time series</span>
 <span class="n">ts_m</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Contamination</span><span class="o">.</span><span class="n">aligned</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>

@@ -80,6 +80,9 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3):
     torch.cuda.manual_seed_all(0)
     device = torch.device('cpu')
 
+    num_missing = np.isnan(input_feats).sum()
+    print("num_missing", num_missing)
+
     np.random.seed(0)
     random.seed(0)
 
@@ -90,7 +93,6 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3):
     std = np.nanstd(input_feats,axis=0)
     input_feats = (input_feats-mean)/std
 
-    num_missing = 10*min(max(int(input_feats.shape[0]/100),1),500)
 
     train_feats,val_feats,val_points,test_points,block_size,kernel_size = utils.make_validation(input_feats, num_missing=num_missing)
     

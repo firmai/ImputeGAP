@@ -22,7 +22,7 @@ class Dataset(Enum):
 
 
 class DataLoader(object):
-    def __init__(self, dataset, time_window=None, tags=None, data_names=None):
+    def __init__(self, dataset, time_window=None, tags=None, data_names=None, verbose=True):
         """
         :param dataset: Dataset
         :param time_window:
@@ -49,7 +49,8 @@ class DataLoader(object):
             self._index, self._data, self._tag, self.dim_name, self.tag_name = DataLoader._load_nqu(self._filename,
                                                                                                 self._time_window,
                                                                                                 self._tags,
-                                                                                                self._data_names)
+                                                                                                self._data_names,
+                                                                                                verbose)
 
     def norm(self, min_v: float = 0., max_v: float = 10.):
         """
@@ -156,7 +157,7 @@ class DataLoader(object):
 
 
     @staticmethod
-    def _load_nqu(filename, time_window, tags, data_names):
+    def _load_nqu(filename, time_window, tags, data_names, verbose=True):
         """
         此函数会将输入的 csv 文件转换成便于处理的 numpy 矩阵。
         注意：任何类型的 tag 都会重新 hash 成 0 开始的整数。
@@ -166,9 +167,10 @@ class DataLoader(object):
         """
         df = pd.DataFrame(filename)  # filename is a numpy matrix of (64x256)
 
-        print("\t\t\t\t\t\tBefore conversion, filename shape:", filename.shape)
-        print("\t\t\t\t\t\tAfter conversion, df shape:", df.shape)
-        print("\t\t\t\t\t\tdf.columns:", df.columns)
+        if verbose:
+            print("\t\t\t\t\t\tBefore conversion, filename shape:", filename.shape)
+            print("\t\t\t\t\t\tAfter conversion, df shape:", df.shape)
+            print("\t\t\t\t\t\tdf.columns:", df.columns)
 
 
         if time_window is not None:

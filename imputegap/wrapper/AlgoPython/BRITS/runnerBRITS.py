@@ -60,14 +60,14 @@ def brits_recovery(incomp_data, model="brits", epoch=10, batch_size=7, nbr_featu
 
     if model != "brits_i_univ":
         if verbose:
-            print("\t\t(PYTHON) BRITS: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
+            print("(IMPUTATION) BRITS: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
                   ") for epoch ", epoch, ", batch_size ", batch_size, ", nbr features", nbr_features,
                   ", seq_length ", seq_length, ", and hidden_layers ", hidden_layers, "...")
 
         model = getattr(models, model).Model(batch_size, nbr_features, hidden_layers, seq_length)
     else:
         if verbose:
-            print("\t\t(PYTHON) BRITS-UNIV: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
+            print("(IMPUTATION) BRITS-UNIV: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
                   ") for epoch ", epoch, ", batch_size ", batch_size, ", nbr features", 1,
                   ", seq_length ", n, ", and hidden_layers ", hidden_layers, "...")
 
@@ -80,7 +80,9 @@ def brits_recovery(incomp_data, model="brits", epoch=10, batch_size=7, nbr_featu
     res = evaluate(model, data_iter)
 
     recov = np.squeeze(np.array(res))
-    print("recov", recov.shape)
+
+    if verbose:
+        print("recov", recov.shape)
 
     nan_mask = ~np.isnan(incomp_data)
     recov[nan_mask] = incomp_data[nan_mask]

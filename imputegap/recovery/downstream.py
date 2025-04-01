@@ -93,12 +93,11 @@ class Downstream:
         evaluator = evaluator.lower()
 
         if not params:
-            print("\n\t(DOWNSTREAM) The params for model of downstream analysis are empty or missing. Default ones loaded...")
+            print("\n(DOWNSTREAM) Default parameters of the downstream model loaded.")
             loader = "forecaster-" + str(model)
             params = utils.load_parameters(query="default", algorithm=loader)
 
-        print("\n(DOWNSTREAM) Analysis launched for <", evaluator, "> on the model <", model,
-              "> with parameters :\n\t\t\t\t\t", params, " \n\n")
+        print(f"\n(DOWNSTREAM) Analysis launched !\ntask: {evaluator}\nmodel: {model}\nparams: {params}\nimputation algorithm: {self.algorithm}\ncomparator: {comparator}\n\n")
 
         if evaluator in ["forecast", "forecaster", "forecasting"]:
             y_train_all, y_test_all, y_pred_all = [], [], []
@@ -206,14 +205,16 @@ class Downstream:
                 self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, comparator, model, evaluator)
 
             # Save metrics in a dictionary
-            al_name = "DOWNSTREAM-" + self.algorithm.upper() + "-MSE"
-            al_name_s = "DOWNSTREAM-" + self.algorithm.upper() + "-SMAPE"
-            al_name_c = "DOWNSTREAM-" + comparator.upper() + "-MSE"
-            al_name_cs = "DOWNSTREAM-" + comparator.upper() + "-SMAPE"
-            metrics = {"DOWNSTREAM-ORIGIN-MSE": mse[0], al_name: mse[1], al_name_c: mse[2],
-                       "DOWNSTREAM-ORIGIN-SMAPE": smape[0], al_name_s: smape[1], al_name_cs: smape[2] }
+            al_name = "MSE_" + self.algorithm.upper()
+            al_name_s = "sMAPE_" + self.algorithm.upper()
+            al_name_c = "MSE_" + comparator.upper()
+            al_name_cs = "sMAPE_" + comparator.upper()
+
+            metrics = {"MSE_original": mse[0], al_name: mse[1], al_name_c: mse[2],
+                       "sMAPE_original": smape[0], al_name_s: smape[1], al_name_cs: smape[2] }
 
             return metrics
+
         else:
             print("\tNo evaluator found... list possible : 'forecaster'" + "*" * 30 + "\n")
 

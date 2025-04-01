@@ -32,7 +32,7 @@ def knn(incomp_data, k=5, weights="uniform", logs=True, verbose=True):
     """
 
     if verbose:
-        print(f"(PYTHON) KNNImpute: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for k {k}, "
+        print(f"(IMPUTATION) KNNImpute: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for k {k}, "
               f", and weights {weights}...")
 
     start_time = time.time()  # Record start time

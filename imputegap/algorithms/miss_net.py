@@ -49,7 +49,7 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
     """
 
     if verbose:
-        print("(PYTHON) MISS NET: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") "
+        print("(IMPUTATION) MISS NET: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") "
               "for alpha ", alpha, ", beta ", beta, ", L ", L, ", n_cl ", n_cl, ", max_iteration ", max_iteration,
               "tol ", tol, " random_init ", random_init, "...")
 

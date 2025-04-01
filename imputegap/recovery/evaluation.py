@@ -20,7 +20,7 @@ class Evaluation:
     """
 
 
-    def __init__(self, input_data, recov_data, incomp_data):
+    def __init__(self, input_data, recov_data, incomp_data, algorithm="", verbose=True):
         """
         Initialize the Evaluation class with ground truth, imputation, and incomp_data time series.
 
@@ -32,6 +32,10 @@ class Evaluation:
             The imputed time series.
         incomp_data : numpy.ndarray
             The time series with contamination (NaN values).
+        algorithm : str, optional
+            Name of the algorithm to evaluate.
+        verbose : bool, optional
+            Display of not the anomaly (default: True).
 
         Returns
         -------
@@ -41,6 +45,8 @@ class Evaluation:
         self.recov_data = recov_data
         self.incomp_data = incomp_data
         self.large_error = 100
+        self.algorithm = algorithm
+        self.verbose = verbose
 
     def compute_all_metrics(self):
         """
@@ -57,6 +63,12 @@ class Evaluation:
             - "MI": Mutual Information
             - "CORRELATION": Pearson Correlation Coefficient
         """
+
+        nan_locations = np.isnan(self.incomp_data)
+        recov_vals = self.recov_data[nan_locations]
+        if np.isnan(recov_vals).all():
+            print(f"\n(EVAL) The imputation algorithm {self.algorithm} ended with errors, the imputed time series contains NaN values.\nPlease, check your configuration, the algorithm might not work with the percentage of contamination or the pattern chosen.\n")
+
         rmse = self.compute_rmse()
         mae = self.compute_mae()
         mi_d = self.compute_mi()
@@ -84,7 +96,8 @@ class Evaluation:
         rmse = np.sqrt(mse)
 
         if rmse > self.large_error:
-            print("Extreme error detected, limited to ", self.large_error)
+            if self.verbose:
+                print("Extreme error detected, limited to ", self.large_error)
             rmse = self.large_error
 
         return float(rmse)
@@ -106,7 +119,8 @@ class Evaluation:
         mean_absolute_error = np.mean(absolute_error)
 
         if mean_absolute_error > self.large_error:
-            print("Extreme error detected, limited to ", self.large_error)
+            if self.verbose:
+                print("Extreme error detected, limited to ", self.large_error)
             mean_absolute_error = self.large_error
 
         return mean_absolute_error
@@ -162,7 +176,8 @@ class Evaluation:
 
         # Check if input data is constant (i.e., no variance)
         if np.all(input_data_values == input_data_values[0]) or np.all(imputed_values == imputed_values[0]):
-            print("\t\t\t\nAn input array is constant; the correlation coefficient is not defined, set to 0")
+            if self.verbose:
+                print("\t\t\t\nAn input array is constant; the correlation coefficient is not defined, set to 0")
             return np.nan
 
         correlation, _ = pearsonr(input_data_values, imputed_values)

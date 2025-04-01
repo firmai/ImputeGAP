@@ -138,7 +138,7 @@ def train(model, data=None, verbose=True):
         args.seed = np.random.randint(args.seed)
     torch.set_num_threads(1)
 
-    train_dataloader, val_dataloader, test_dataloader, recov_dataloader, scaler = loaddataset(args.seq_len, args.pred_len, args.mask_ratio, args.dataset, args.batch_size, data)
+    train_dataloader, val_dataloader, test_dataloader, recov_dataloader, scaler = loaddataset(args.seq_len, args.pred_len, args.mask_ratio, args.dataset, args.batch_size, data, verbose)
 
     best_loss=9999999.99
     k=0
@@ -222,7 +222,7 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[1], dropout=0.3, su
         args.pred_len = 1
 
     if verbose:
-        print("\n\n\t\t\t(PYTHON) BitGRAPH: Matrix Shape: (", data.shape[0], ", ", data.shape[1], ")")
+        print("(IMPUTATION) BitGRAPH: Matrix Shape: (", data.shape[0], ", ", data.shape[1], ")")
         print(f"\t\t\tnode_number: {node_number}, kernel_set: {args.kernel_set}, dropout: {args.dropout}, "
               f"subgraph_size: {args.subgraph_size}, node_dim: {args.node_dim}, seq_len: {args.seq_len}, "
               f"lr: {args.lr}, epochs: {args.epochs}, pred_len: {args.pred_len}, and seed {args.seed}")

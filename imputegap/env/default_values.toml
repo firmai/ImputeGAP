@@ -2,7 +2,7 @@
 
 # ALGORITHM DEFAULT VALUES : MATRIX COMPLETION
 [cdrec]
-rank = 2
+rank = 3
 epsilon = 0.000001
 epsilon_str = "E-6"
 iteration = 100

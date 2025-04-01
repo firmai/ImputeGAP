@@ -3,10 +3,9 @@
 
 # Welcome to ImputeGAP
 
-ImputeGAP is a comprehensive Python library for imputation of missing values in time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your own time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.
+ImputeGAP is a comprehensive Python library for imputation of missing values in time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.
 
 In detail, the package provides:
-Access to commonly used datasets in time series research (Datasets).
 
   - Access to commonly used datasets in time series research ([Datasets](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)).
   - Automated preprocessing with built-in methods for normalizing time series ([PreProcessing](#loading-and-preprocessing)).
@@ -19,7 +18,7 @@ Access to commonly used datasets in time series research (Datasets).
 
 <br>
 
-![Python](https://img.shields.io/badge/Python-v3.12-blue) ![Release](https://img.shields.io/badge/Release-v1.0.7-brightgreen)  ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu) ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen) ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue) ![Language](https://img.shields.io/badge/Language-English-blue) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational) [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/en/latest/)
+![Python](https://img.shields.io/badge/Python-v3.12-blue) ![Release](https://img.shields.io/badge/Release-v1.0.7-brightgreen)  ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu) ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen) ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue) ![Language](https://img.shields.io/badge/Language-English-blue) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational) [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/)
 
 <i>If you like our library, please add a ⭐ in our GitHub repository.</i>
 
@@ -27,7 +26,7 @@ Access to commonly used datasets in time series research (Datasets).
 
 | Tools                | URL                                                                                       |
 |----------------------|-------------------------------------------------------------------------------------------|
-| 📚 **Documentation** | [https://imputegap.readthedocs.io/en/latest/](https://imputegap.readthedocs.io/en/latest/) |
+| 📚 **Documentation** | [https://imputegap.readthedocs.io/](https://imputegap.readthedocs.io/) |
 | 📦 **PyPI**          | [https://pypi.org/project/imputegap/](https://pypi.org/project/imputegap/)                |
 | 📁 **Datasets**      | [Source](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset)        |
 
@@ -167,7 +166,7 @@ print(f"ImputeGAP datasets : {ts.datasets}")
 ---
 
 ## Contamination
-We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. For more details about the patterns, please refer to the documentation in this [page](https://imputegap.readthedocs.io/en/latest/patterns.html).
+We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. For more details about the patterns, please refer to the documentation on this [page](https://imputegap.readthedocs.io/en/latest/patterns.html).
 <br></br>
 
 ### Example Contamination
@@ -274,7 +273,6 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"AutoML Optimizers : {ts.optimizers}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -374,7 +372,7 @@ print(f"ImputeGAP downstream models for forcasting : {ts.forecasting_models}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("forecast-economy"))
-ts.normalize(normalizer="min_max")
+ts.normalize()
 
 # contaminate the time series
 ts_m = ts.Contamination.aligned(ts.data, rate_series=0.8)

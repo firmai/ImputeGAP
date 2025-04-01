@@ -312,7 +312,7 @@ def search_path(set_name="test"):
         return filepath
 
 
-def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=True):
+def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=False):
     """
     Load default or optimal parameters for algorithms from a TOML file.
 
@@ -329,7 +329,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     path : str, optional
         Custom file path for the TOML file (default is None).
     verbose : bool, optional
-        Whether to display the contamination information (default is True).
+        Whether to display the contamination information (default is False).
 
     Returns
     -------

@@ -194,6 +194,6 @@ class TestBenchmarking(unittest.TestCase):
                     f"Unexpected RMSE for algorithm '{algo}' at dataset index {i}."
                 )
 
-        validation = Benchmark().generate_heatmap(scores_list, algos, sets, "./reports", False)
+        validation = Benchmark().generate_heatmap(scores_list, algos, sets, metric="RMSE", save_dir="./reports", display=False)
 
         self.assertTrue(validation)

@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.priSTI.runnerPRISTI import recovPRISTI
 
 
-def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, device="cpu", logs=True):
+def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, device="cpu", verbose=True, logs=True):
     """
     Perform imputation using the priSTI (Probabilistic Imputation via Sequential Targeted Imputation) algorithm.
 

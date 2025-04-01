@@ -61,7 +61,7 @@ class BaseImputer:
         """
         raise NotImplementedError("This method should be overridden by subclasses")
 
-    def score(self, input_data, recov_data=None, downstream=None):
+    def score(self, input_data, recov_data=None, downstream=None, verbose=True):
         """
         Compute evaluation metrics for the imputed time series.
         Upstream and downstream metrics can be computed.
@@ -75,6 +75,9 @@ class BaseImputer:
         downstream : dict, optional
             Dictionary that calls, if active, the downstream evaluation. (default is None).
             format : {"model": "forcaster", "params": parameters}
+        verbose : bool, optional
+            Display the message from the evaluator (default is True).
+
         Returns
         -------
         None
@@ -90,7 +93,7 @@ class BaseImputer:
         if isinstance(downstream, dict) and downstream is not None:
             self.downstream_metrics = Downstream(input_data, self.recov_data, self.incomp_data, self.algorithm, downstream).downstream_analysis()
         else:
-            self.metrics = Evaluation(input_data, self.recov_data, self.incomp_data).compute_all_metrics()
+            self.metrics = Evaluation(input_data, self.recov_data, self.incomp_data, self.algorithm, verbose).compute_all_metrics()
 
     def _check_params(self, user_def, params):
         """
@@ -460,7 +463,7 @@ class Imputation:
             """
             algorithm = "mean_impute"
 
-            def impute(self):
+            def impute(self, params=None):
                 """
                 Impute missing values by replacing them with the mean value of the series.
 
@@ -716,7 +719,7 @@ class Imputation:
                 if params is not None:
                     rank, epsilon, iterations = self._check_params(user_def, params)
                 else:
-                    rank, epsilon, iterations = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    rank, epsilon, iterations = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=False)
 
                 self.recov_data = cdrec(incomp_data=self.incomp_data, truncation_rank=rank, iterations=iterations, epsilon=epsilon, logs=self.logs, verbose=self.verbose)
 
@@ -1619,7 +1622,7 @@ class Imputation:
                 else:
                     rank = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = tkcm(incomp_data=self.incomp_data, rank=rank, logs=self.logs)
+                self.recov_data = tkcm(incomp_data=self.incomp_data, rank=rank, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -1630,7 +1633,7 @@ class Imputation:
         Subclasses
         ----------
         MRNN :
-        Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
+            Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
         BRITS :
             Imputation method using Bidirectional Recurrent Imputation for Time Series.
         DeepMVI :

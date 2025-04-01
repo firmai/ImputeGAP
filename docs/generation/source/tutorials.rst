@@ -311,7 +311,7 @@ ImputeGAP includes a dedicated module for systematically evaluating the impact o
 
     # load and normalize the timeseries
     ts.load_series(utils.search_path("forecast-economy"))
-    ts.normalize(normalizer="min_max")
+    ts.normalize()
 
     # contaminate the time series
     ts_m = ts.Contamination.aligned(ts.data, rate_series=0.8)

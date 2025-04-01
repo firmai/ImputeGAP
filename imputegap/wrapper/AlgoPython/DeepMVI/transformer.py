@@ -96,7 +96,7 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3, verbo
     std = np.nanstd(input_feats,axis=0)
     input_feats = (input_feats-mean)/std
 
-    num_missing = 10*min(max(int(input_feats.shape[0]/100),1),500)
+    num_missing = np.isnan(input_feats).sum()
 
     train_feats,val_feats,val_points,test_points,block_size,kernel_size = utils.make_validation(input_feats, num_missing=num_missing)
     

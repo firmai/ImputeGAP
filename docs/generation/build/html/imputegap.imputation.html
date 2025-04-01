@@ -338,7 +338,7 @@ and optimization. Specific algorithms should inherit from this class and impleme
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.BaseImputer.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#BaseImputer.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.BaseImputer.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id2">
@@ -350,6 +350,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -392,13 +394,11 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <p>A class containing imputation algorithms for deep learning-based methods.</p>
 <section id="subclasses">
 <h4>Subclasses<a class="headerlink" href="#subclasses" title="Link to this heading">¶</a></h4>
-<p>MRNN :
-Imputation method using Multi-directional Recurrent Neural Networks (MRNN).
-BRITS :</p>
-<blockquote>
-<div><p>Imputation method using Bidirectional Recurrent Imputation for Time Series.</p>
-</div></blockquote>
 <dl class="simple">
+<dt>MRNN :</dt><dd><p>Imputation method using Multi-directional Recurrent Neural Networks (MRNN).</p>
+</dd>
+<dt>BRITS :</dt><dd><p>Imputation method using Bidirectional Recurrent Imputation for Time Series.</p>
+</dd>
 <dt>DeepMVI :</dt><dd><p>Imputation method using Deep Multivariate Imputation.</p>
 </dd>
 <dt>MPIN :</dt><dd><p>Imputation method using Multi-attribute Sensor Data Streams via Message Propagation.</p>
@@ -518,7 +518,7 @@ BRITS :</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id9">
@@ -530,6 +530,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -652,7 +654,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id18">
@@ -664,6 +666,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -785,7 +789,7 @@ it is inferred from <cite>incomp_data</cite>.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id27">
@@ -797,6 +801,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -907,7 +913,7 @@ https://github.com/pbansal5/DeepMVI</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id36">
@@ -919,6 +925,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -1029,7 +1037,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id45">
@@ -1041,6 +1049,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -1159,7 +1169,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id54">
@@ -1171,6 +1181,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -1284,7 +1296,7 @@ If convergence is reached earlier, the process stops (default is 10).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id63">
@@ -1296,6 +1308,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -1416,7 +1430,7 @@ Need torch-cluster to work.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id72">
@@ -1428,6 +1442,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -1551,7 +1567,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id81">
@@ -1563,6 +1579,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -1685,7 +1703,7 @@ and time-series. If alpha = 0, network is ignored. (default 0.5)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id90">
@@ -1697,6 +1715,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -1808,7 +1828,7 @@ If False, conditional imputation models are used, depending on available data pa
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id99">
@@ -1820,6 +1840,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -1949,7 +1971,7 @@ keywords: {Data models;Adaptation models;Computational modeling;Predictive model
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.IIM.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.IIM.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id109">
@@ -1961,6 +1983,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -2073,7 +2097,7 @@ S. F. Buck, (1960). “A Method of Estimation of Missing Values in Multivariate 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.MICE.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MICE.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id118">
@@ -2085,6 +2109,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -2201,7 +2227,7 @@ and time-series. If alpha = 0, network is ignored. (default 0.5)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.MissForest.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id127">
@@ -2213,6 +2239,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -2318,7 +2346,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MachineLearning.XGBOOST.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id136">
@@ -2330,6 +2358,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -2591,7 +2621,7 @@ Please increase the value if you have more resources</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.CDRec.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id146">
@@ -2603,6 +2633,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -2709,7 +2741,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.GROUSE.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id155">
@@ -2721,6 +2753,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -2829,7 +2863,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.IterativeSVD.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id164">
@@ -2841,6 +2875,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -2950,7 +2986,7 @@ Higher values enforce sparsity or robustness against noise in the data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.ROSL.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id173">
@@ -2962,6 +2998,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -3072,7 +3110,7 @@ Example: 0.8 (fast adaptation), 0.95 (stable systems).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SPIRIT.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id182">
@@ -3084,6 +3122,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -3188,7 +3228,7 @@ Larger values encourage a sparser, lower-rank solution, while smaller values ret
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SVT.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id191">
@@ -3200,6 +3240,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -3306,7 +3348,7 @@ Must be greater than 0 and less than or equal to the number of columns in the ma
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.SoftImpute.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id200">
@@ -3318,6 +3360,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -3436,7 +3480,7 @@ That helps to avoid big deviations when forecasting.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.MatrixCompletion.TRMF.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id209">
@@ -3448,6 +3492,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -3575,7 +3621,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.DynaMMo.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id219">
@@ -3587,6 +3633,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -3701,7 +3749,7 @@ School of Information Science and Technology, Southwest Jiaotong University; Mic
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.STMVL.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id228">
@@ -3713,6 +3761,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -3816,7 +3866,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.PatternSearch.TKCM.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id237">
@@ -3828,6 +3878,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -3942,7 +3994,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.Interpolation.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.Interpolation.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id246">
@@ -3954,6 +4006,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -4055,7 +4109,7 @@ k : int, optional</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.KNNImpute.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id254">
@@ -4067,6 +4121,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -4148,7 +4204,7 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImpute.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id261">
@@ -4160,6 +4216,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -4215,7 +4273,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.MeanImputeBySeries.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/imputation.html#Imputation.Statistics.MeanImputeBySeries.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Impute missing values by replacing them with the mean value of the series.</p>
 <section id="id266">
 <h6>Returns<a class="headerlink" href="#id266" title="Link to this heading">¶</a></h6>
@@ -4233,7 +4291,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id267">
@@ -4245,6 +4303,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -4326,7 +4386,7 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.MinImpute.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id274">
@@ -4338,6 +4398,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>
@@ -4419,7 +4481,7 @@ Template for adding external new algorithm</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score">
-<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downstream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.Statistics.ZeroImpute.score" title="Link to this definition">¶</a></dt>
 <dd><p>Compute evaluation metrics for the imputed time series.
 Upstream and downstream metrics can be computed.</p>
 <section id="id281">
@@ -4431,6 +4493,8 @@ Upstream and downstream metrics can be computed.</p>
 </dd>
 <dt>downstream<span class="classifier">dict, optional</span></dt><dd><p>Dictionary that calls, if active, the downstream evaluation. (default is None).
 format : {“model”: “forcaster”, “params”: parameters}</p>
+</dd>
+<dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>Display the message from the evaluator (default is True).</p>
 </dd>
 </dl>
 </section>

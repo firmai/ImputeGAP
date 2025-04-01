@@ -45,7 +45,7 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
 
     start_time = time.time()  # Record start time
 
-    mice_imputer = IterativeImputer(max_iter=max_iter, tol=tol, initial_strategy=initial_strategy, random_state=seed)
+    mice_imputer = IterativeImputer(max_iter=max_iter, tol=tol, initial_strategy=initial_strategy, random_state=seed, verbose=0)
     recov_data = mice_imputer.fit_transform(incomp_data)
 
     end_time = time.time()

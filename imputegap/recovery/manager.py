@@ -12,24 +12,24 @@ from matplotlib import pyplot as plt  # type: ignore
 
 def select_backend():
     system = platform.system()
-    headless = os.getenv('DISPLAY') is None or os.getenv('CI') is not None
+    headless = os.getenv("DISPLAY") is None or os.getenv("CI") is not None
 
     if headless:
-        matplotlib.use("Agg")
+        matplotlib.use("Agg")  # headless: save-to-file only
         return
 
-    if system == "Darwin":  # macOS
-        try:
-            matplotlib.use("MacOSX")
-        except (ImportError, RuntimeError):
+    # macOS GUI backends (check in priority order)
+    if system == "Darwin":
+        for backend in ["MacOSX", "Qt5Agg", "TkAgg"]:
             try:
-                if importlib.util.find_spec("tkinter") is not None:
-                    matplotlib.use("TkAgg")
-                else:
-                    raise ImportError
+                matplotlib.use(backend)
+                return
             except (ImportError, RuntimeError):
-                matplotlib.use("Agg")
-    else:  # Windows or Linux
+                continue
+        matplotlib.use("Agg")  # fallback
+
+    # Linux or Windows with tkinter
+    else:
         try:
             if importlib.util.find_spec("tkinter") is not None:
                 matplotlib.use("TkAgg")
@@ -173,7 +173,7 @@ class TimeSeries:
 
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=nbr_val, skip_header=int(header))
 
-                print("\nThe time series have been loaded from " + str(data) + "\n")
+                print("\n(SYS) The time series have been loaded from " + str(data) + "\n")
 
                 if nbr_series is not None:
                     self.data = self.data[:, :nbr_series]
@@ -262,13 +262,12 @@ class TimeSeries:
         """
 
         if algorithm != "":
-            print(f"\n\n{text} ({algorithm}) :")
+            print(f"\n{text} ({algorithm}) :")
         else:
-            print(f"\n\n{text} :")
+            print(f"\n{text} :")
 
         for key, value in metrics.items():
             print(f"{key:<20} = {value}")
-        print("\n")
 
     def normalize(self, normalizer="z_score", verbose=True):
         """
@@ -293,8 +292,6 @@ class TimeSeries:
         -------
             >>> ts.normalize(normalizer="z_score")
         """
-        if verbose:
-            print("Normalization of the original time series dataset with ", normalizer)
         self.data = self.data.T
 
         if normalizer == "min_max":
@@ -347,7 +344,7 @@ class TimeSeries:
         self.data = self.data.T
 
         if verbose:
-            print(f"\n> logs: normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
+            print(f"> logs: normalization ({normalizer}) of the data - runtime: {(end_time - start_time):.4f} seconds")
 
     def plot(self, input_data, incomp_data=None, recov_data=None, nbr_series=None, nbr_val=None, series_range=None,
              subplot=False, size=(16, 8), algorithm=None, save_path="./imputegap_assets", display=True):
@@ -435,7 +432,7 @@ class TimeSeries:
             plt.grid(True, linestyle='--', color='#d3d3d3', linewidth=0.6)
 
         if input_data is not None:
-            colors = utils.load_parameters("default", algorithm="colors")
+            colors = utils.load_parameters("default", algorithm="colors", verbose=False)
 
             for idx, i in enumerate(series_indices):
 
@@ -516,7 +513,7 @@ class TimeSeries:
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
             file_path = os.path.join(save_path + "/" + current_time + "_" + algorithm + "_plot.jpg")
             plt.savefig(file_path, bbox_inches='tight')
-            print("plots saved in ", file_path)
+            print("\nplots saved in ", file_path)
 
         if display:
             plt.show()
@@ -613,7 +610,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if not explainer and verbose:
-                print(f"\n\nmissigness pattern: (MCAR)"
+                print(f"\n(CONT) missigness pattern: MCAR"
                       f"\n\tselected series: {series_selected}"
                       f"\n\trate series impacted: {rate_dataset * 100}%"
                       f"\n\tmissing rate per series: {rate_series * 100}%"
@@ -703,7 +700,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nmissigness pattern: (ALIGNED)"
+                print(f"\n(CONT) missigness pattern: ALIGNED"
                       f"\n\trate series impacted: {rate_dataset * 100}%"
                       f"\n\tmissing rate per series: {rate_series * 100}%"
                       f"\n\tstarting position: {offset_nbr}"
@@ -777,7 +774,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nmissigness pattern: (SCATTER)"
+                print(f"\n(CONT) missigness pattern: SCATTER"
                       f"\n\trate series impacted: {rate_dataset * 100}%"
                       f"\n\tmissing rate per series: {rate_series * 100}%"
                       f"\n\tstarting position: {offset_nbr}"
@@ -889,7 +886,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nmissigness pattern: (GAUSSIAN)"
+                print(f"\n(CONT) missigness pattern: GAUSSIAN"
                       f"\n\trate series impacted: {rate_dataset * 100}%"
                       f"\n\tmissing rate per series: {rate_series * 100}%"
                       f"\n\tstarting position: {offset_nbr}"
@@ -979,7 +976,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nmissigness pattern: (DISTRIBUTION)"
+                print(f"\n(CONT) missigness pattern: DISTRIBUTION"
                       f"\n\trate series impacted: {rate_dataset * 100}%"
                       f"\n\tmissing rate per series: {rate_series * 100}%"
                       f"\n\tstarting position: {offset_nbr}"
@@ -1050,7 +1047,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nmissigness pattern: (DISJOINT)"
+                print(f"\n(CONT) missigness pattern: DISJOINT"
                       f"\n\trate series impacted: {rate_series * 100}%"
                       f"\n\tmissing rate per series: {rate_series * 100}%"
                       f"\n\tstarting position: {offset_nbr}"
@@ -1124,7 +1121,7 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nmissigness pattern: (OVERLAP)"
+                print(f"\n(CONT) missigness pattern: OVERLAP"
                       f"\n\trate series impacted: {rate_series * 100}%"
                       f"\n\tmissing rate per series: {rate_series * 100}%"
                       f"\n\tstarting position: {offset_nbr}"

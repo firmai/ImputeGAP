@@ -3,14 +3,15 @@ import os
 import math
 import time
 from collections import defaultdict
-
 import numpy as np
 import matplotlib.pyplot as plt
 import xlsxwriter
-from scipy.stats.tests.test_continuous_fit_censored import optimizer
-
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
+
 
 
 class Benchmark:
@@ -39,6 +40,44 @@ class Benchmark:
     output : {'eegalcohol': {'mcar': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.4359915238078244, 'MAE': 0.3725965559420608, 'MI': 1.4169232775678364, 'CORRELATION': 0.9530448037164908, 'runtime_linear_scale': 0.14936542510986328, 'runtime_log_scale': -0.8257499207386186}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.3665001858394363, 'MAE': 0.2989983612840734, 'MI': 0.9078918430616858, 'CORRELATION': 0.9049909722894052, 'runtime_linear_scale': 0.14400649070739746, 'runtime_log_scale': -0.8416179328014259}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.39833006221984, 'MAE': 0.30824644022807457, 'MI': 0.8483406827418594, 'CORRELATION': 0.9161465703422209, 'runtime_linear_scale': 0.16263365745544434, 'runtime_log_scale': -0.7887895710757052}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.435591016228979, 'MAE': 0.3335144215651955, 'MI': 0.7286325588353783, 'CORRELATION': 0.9021032587324183, 'runtime_linear_scale': 0.14948725700378418, 'runtime_log_scale': -0.8253958270640592}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.4500113661547204, 'MAE': 0.338085865703361, 'MI': 0.6481512576687939, 'CORRELATION': 0.8893263437029546, 'runtime_linear_scale': 0.11344146728515625, 'runtime_log_scale': -0.9452281648326797}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.46554422402146944, 'MAE': 0.3508926604243284, 'MI': 0.6150677913271478, 'CORRELATION': 0.8791443563129441, 'runtime_linear_scale': 0.14773082733154297, 'runtime_log_scale': -0.8305288700027644}, 'times': {}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.24102595399583507, 'MAE': 0.18984832836399548, 'MI': 1.547782862758484, 'CORRELATION': 0.9810468571465141, 'runtime_linear_scale': 0.056914329528808594, 'runtime_log_scale': -1.2447783759282902}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.28890851809839135, 'MAE': 0.22998623733608023, 'MI': 0.9934511613817691, 'CORRELATION': 0.942944831550703, 'runtime_linear_scale': 0.016567707061767578, 'runtime_log_scale': -1.7807375929281355}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.32523842533021824, 'MAE': 0.2398150375225743, 'MI': 1.0141220941333857, 'CORRELATION': 0.9441733384102147, 'runtime_linear_scale': 0.028653383255004883, 'runtime_log_scale': -1.5428240912452686}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.33824584758611187, 'MAE': 0.2509197576351218, 'MI': 0.9534836631617412, 'CORRELATION': 0.9418540692188737, 'runtime_linear_scale': 0.06619572639465332, 'runtime_log_scale': -1.1791700477677098}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.3656435952078159, 'MAE': 0.26630724595251076, 'MI': 0.7933983583413302, 'CORRELATION': 0.9285706343976159, 'runtime_linear_scale': 0.08452534675598145, 'runtime_log_scale': -1.0730130389129724}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.49851932645867886, 'MAE': 0.3727407177987301, 'MI': 0.5872198065951101, 'CORRELATION': 0.8588039019214768, 'runtime_linear_scale': 0.13430190086364746, 'runtime_log_scale': -0.8719178404306834}, 'times': {}}}}}, 'mp': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.34742151870256754, 'MAE': 0.2948407723046262, 'MI': 1.125964256142418, 'CORRELATION': 0.7892633761655805, 'runtime_linear_scale': 0.15556597709655762, 'runtime_log_scale': -0.8080853789072961}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.3844410885563026, 'MAE': 0.3075576508332523, 'MI': 0.6954312599858194, 'CORRELATION': 0.7735153907243231, 'runtime_linear_scale': 0.1470506191253662, 'runtime_log_scale': -0.8325331426484854}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.35786399802701285, 'MAE': 0.28281102633402344, 'MI': 0.5099951376056691, 'CORRELATION': 0.7954814222537407, 'runtime_linear_scale': 0.2436203956604004, 'runtime_log_scale': -0.6132863558093742}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.43119199789678536, 'MAE': 0.3234427657742828, 'MI': 0.7100745133173589, 'CORRELATION': 0.9024794064542365, 'runtime_linear_scale': 0.18121838569641113, 'runtime_log_scale': -0.7417977426336524}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.4506742156401202, 'MAE': 0.34097493425336545, 'MI': 0.6763547885095422, 'CORRELATION': 0.9019998467331982, 'runtime_linear_scale': 0.25681638717651367, 'runtime_log_scale': -0.590377267856808}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.5381331120567093, 'MAE': 0.40890932295665944, 'MI': 0.5082791604891728, 'CORRELATION': 0.8357667475592477, 'runtime_linear_scale': 0.2639143466949463, 'runtime_log_scale': -0.5785370003783141}, 'times': {}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.3096831481522458, 'MAE': 0.21563592819934016, 'MI': 1.1360273959644958, 'CORRELATION': 0.8560961707189335, 'runtime_linear_scale': 0.04132580757141113, 'runtime_log_scale': -1.3837786508749486}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.29125091771194206, 'MAE': 0.2132355936383109, 'MI': 0.7634945893446304, 'CORRELATION': 0.8372801147837776, 'runtime_linear_scale': 0.04345560073852539, 'runtime_log_scale': -1.3619542419291824}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.2879386824647535, 'MAE': 0.22764645037027648, 'MI': 0.6960203330638733, 'CORRELATION': 0.8714158841311463, 'runtime_linear_scale': 0.04009199142456055, 'runtime_log_scale': -1.3969423712072508}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.3287699640998062, 'MAE': 0.2424201903305073, 'MI': 0.8988758488294901, 'CORRELATION': 0.9446832262622646, 'runtime_linear_scale': 0.040317535400390625, 'runtime_log_scale': -1.3945060240507565}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.38653606830971254, 'MAE': 0.28444195748104634, 'MI': 0.7831614045671689, 'CORRELATION': 0.9261181553419807, 'runtime_linear_scale': 0.08821296691894531, 'runtime_log_scale': -1.054467570793068}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.82152770672647, 'MAE': 0.6070921584056164, 'MI': 0.22840679436695374, 'CORRELATION': 0.579634587815775, 'runtime_linear_scale': 0.11256742477416992, 'runtime_log_scale': -0.9485872692326369}, 'times': {}}}}}}}
     """
 
+    def _benchmark_exception(self, algorithm, pattern, x):
+        """
+        Check whether a specific algorithm-pattern combination should be excluded from benchmarking.
+
+        This function flags exceptions where benchmarking is not appropriate or known to fail,
+        based on the algorithm name, the missingness pattern, and the missingness rate `x`.
+
+        Parameters
+        ----------
+        algorithm : str
+            Name of the imputation algorithm (e.g., 'DEEPMVI', 'PRISTI').
+        pattern : str
+            Missing data pattern (e.g., 'MCAR', 'ALIGNED').
+        x : float
+            Proportion of missing values in the data (between 0 and 1).
+
+        Returns
+        -------
+        bool
+            True if the benchmark should be skipped for the given configuration, False otherwise.
+
+        Rules
+        -----
+            - For DeepMVI with MCAR pattern and x > 0.6, skip benchmarking.
+            - For PRISTI, always skip benchmarking.
+        """
+
+        if algorithm.upper() == 'DEEPMVI' or algorithm.upper() == 'DEEP_MVI':
+            if pattern.lower() == "mcar" or pattern.lower() == "missing_completely_at_random":
+                if x > 0.6:
+                    print(f"The imputation algorithm {algorithm} is not compatible with this configuration {pattern} with {x} missingness rate.")
+                    return True
+
+        if algorithm.upper() == 'MPIN':
+            print(f"The imputation algorithm {algorithm} is not compatible with this setup.")
+            return True
+
+        return False
 
     def _config_optimization(self, opti_mean, ts_test, pattern, algorithm, block_size_mcar):
         """
@@ -225,9 +264,19 @@ class Benchmark:
         y_size = cell_size*nbr_datasets
 
         fig, ax = plt.subplots(figsize=(x_size, y_size))
-        fig.canvas.manager.set_window_title("benchmark heatmap")
+        fig.canvas.manager.set_window_title("benchmark heatmap, " + metric)
         cmap = plt.cm.Greys
-        norm = plt.Normalize(vmin=0, vmax=2)  # Normalizing values between 0 and 2 (RMSE)
+
+        if metric == "RMSE":
+            norm = plt.Normalize(vmin=0, vmax=2)
+        elif metric == "CORRELATION":
+            norm = plt.Normalize(vmin=-2, vmax=2)
+        elif metric.lower() == "runtime_linear_scale":
+            norm = plt.Normalize(vmin=0, vmax=1000)
+        elif metric.lower() == "eegalcohol_mcar_default_params_runtime_linear_scale":
+            norm = plt.Normalize(vmin=-2, vmax=10)
+        else:
+            norm = plt.Normalize(vmin=0, vmax=2)
 
         # Create the heatmap
         heatmap = ax.imshow(scores_list, cmap=cmap, norm=norm, aspect='auto')
@@ -262,6 +311,8 @@ class Benchmark:
         if display:
             plt.tight_layout()
             plt.show()
+            plt.close()
+        else:
             plt.close()
 
         return True
@@ -662,9 +713,9 @@ class Benchmark:
             List of contamination patterns to apply.
         x_axis : list of float
             List of missing rates for contamination.
-        optimizers : list of dict
+        optimizers : list
             List of optimizers with their configurations.
-        metrics : list of dict
+        metrics : list of str
             List of metrics for evaluation.
         save_dir : str, optional
             Directory to save reports and plots (default is "./reports").
@@ -692,8 +743,6 @@ class Benchmark:
         not_optimized = ["none"]
         mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]
 
-        if "mpin" in algorithms or "MPIN" in algorithms:
-            raise ValueError("The 'mpin' algorithm is not compatible with this setup.")
 
         if "*" in metrics or "all" in metrics:
             metrics = utils.list_of_metrics()
@@ -736,7 +785,7 @@ class Benchmark:
                         if verbose:
                             print("\n3. algorithm evaluated", algorithm, "with", pattern, "\n")
                         else:
-                            print(f"pattern : {pattern}, algorithm {algorithm}, in progress...")
+                            print(f"pattern : {pattern}, algorithm {algorithm}, started at {time.strftime('%Y-%m-%d %H:%M:%S')}.")
 
                         for incx, x in enumerate(x_axis):
                             if verbose:
@@ -783,10 +832,15 @@ class Benchmark:
                                     opti_params = None
 
                                 start_time_imputation = time.time()
-                                algo.impute(params=opti_params)
+
+                                if not self._benchmark_exception(algorithm, pattern, x):
+                                    algo.impute(params=opti_params)
+                                else:
+                                    algo.recov_data = incomp_data
+
                                 end_time_imputation = time.time()
 
-                                algo.score(input_data=ts_test.data, recov_data=algo.recov_data)
+                                algo.score(input_data=ts_test.data, recov_data=algo.recov_data, verbose=False)
 
                                 if "*" not in metrics and "all" not in metrics:
                                     algo.metrics = {k: algo.metrics[k] for k in metrics if k in algo.metrics}
@@ -803,7 +857,7 @@ class Benchmark:
 
                                 runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(pattern), {}).setdefault(str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {"scores": algo.metrics}
 
-                        print(f"done!\n")
+                        print(f"done!\n\n")
                 save_dir_runs = save_dir + "/_details/run_" + str(i_run) + "/" + dataset
                 if verbose:
                     print("\nruns saved in : ", save_dir_runs)
@@ -813,8 +867,11 @@ class Benchmark:
                 #self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
                 run_storage.append(runs_plots_scores)
 
-        scores_list, algos, sets = self.avg_results(*run_storage, metric=metrics[0])
-        _ = self.generate_heatmap(scores_list, algos, sets, metric=metrics[0], save_dir=save_dir, display=True)
+        for x, m in enumerate(reversed(metrics)):
+            tag = True if x == (len(metrics)-1) else False
+
+            scores_list, algos, sets = self.avg_results(*run_storage, metric=m)
+            _ = self.generate_heatmap(scores_list=scores_list, algos=algos, sets=sets, metric=m, save_dir=save_dir, display=tag)
 
         run_averaged = self.average_runs_by_names(run_storage)
 
@@ -827,13 +884,10 @@ class Benchmark:
         for scores in run_averaged:
             all_keys = list(scores.keys())
             dataset_name = str(all_keys[0])
-
             save_dir_agg_set = save_dir + "/" + dataset_name
 
             self.generate_reports_txt(scores, save_dir_agg_set, dataset_name, metrics, -1)
             self.generate_plots(runs_plots_scores=scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set, display=verb)
-            # self.generate_plots(runs_plots_scores=scores, ticks=x_axis, subplot=False, y_size=y_p_size, save_dir=save_dir_agg_set)
-            #self.generate_reports_excel(scores, save_dir_agg_set, dataset_name, -1)
             print("\n\n")
 
         return run_averaged, scores_list

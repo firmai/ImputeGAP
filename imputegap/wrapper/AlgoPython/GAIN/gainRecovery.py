@@ -50,7 +50,7 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
   input_data = np.copy(miss_data_x)
 
   if verbose:
-      print("\t\t(PYTHON) GAIN: Matrix Shape: (", input_data.shape[0], ", ", input_data.shape[1], ") "
+      print("(IMPUTATION) GAIN: Matrix Shape: (", input_data.shape[0], ", ", input_data.shape[1], ") "
             "for batch_size ", batch_size, ", hint_rate ", hint_rate, ", alpha ", alpha, ", and epoch ", epoch, "...")
   
   gain_parameters = {'batch_size': batch_size,
@@ -73,11 +73,11 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
           return imputed_data_x  # Successfully imputed, return result
 
       if verbose and trial > 0:
-        print(f"\t\t(PYTHON) GAIN: Trial {trial + 1}...")
+        print(f"GAIN: Trial {trial + 1}...")
 
       trial += 1
 
   if verbose:
-      print("\t\t(PYTHON) GAIN: All trials failed, returning last imputed result.")
+      print("All trials failed, returning last imputed result.")
 
   return imputed_data_x  # Return last attempt even if NaN

@@ -10,7 +10,7 @@ from imputegap.wrapper.AlgoPython.priSTI import get_dataloader
 def recovPRISTI(data, target_strategy="hybrid", unconditional=True, seed=42, device="cpu", num_workers=1, verbose=True):
 
     if verbose:
-        print("\t\t(PYTHON) priSTI: Matrix Shape: (", data.shape[0], ", ", data.shape[1], ") for target_strategy ",
+        print("(IMPUTATION) priSTI: Matrix Shape: (", data.shape[0], ", ", data.shape[1], ") for target_strategy ",
               target_strategy, ", unconditional ", unconditional, ", and device ", device, "(num_workers", num_workers,")...")
 
     n, dim = data.shape

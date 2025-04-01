@@ -46,7 +46,7 @@ def mrnn(incomp_data, hidden_dim, learning_rate, iterations, sequence_length, lo
     start_time = time.time()  # Record start time
 
     recov_data = mrnn_recov(matrix_in=incomp_data, hidden_dim=hidden_dim, learning_rate=learning_rate,
-                            iterations=iterations, seq_length=sequence_length, verbose=True)
+                            iterations=iterations, seq_length=sequence_length, verbose=verbose)
 
     end_time = time.time()
     if logs and verbose:

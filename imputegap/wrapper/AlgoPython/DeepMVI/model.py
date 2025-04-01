@@ -92,10 +92,10 @@ class OurModel(nn.Module):
             print("\t\t\t\t kernel size", kernel_size, " vs block_size", block_size)
         if (use_local):
             if self.kernel_size % self.block_size != 0:
-                if verbose:
-                    print("\t\t\t\t self.kernel_size % self.block_size != 0 > reduced to 1...")
                 self.kernel_size = 1
                 self.block_size = 1
+                if verbose:
+                    print("\t\t\t\t self.kernel_size % self.block_size != 0 > reduced to 1...")
 
             assert self.kernel_size % self.block_size == 0
             self.pool2 = nn.AvgPool1d(kernel_size = self.block_size,stride = self.block_size)
@@ -141,7 +141,7 @@ class OurModel(nn.Module):
             den = self.pool(mask.unsqueeze(1))[:,0,:]
             den = (torch.repeat_interleave(den,self.kernel_size,dim=1)*self.kernel_size).clamp(min=1)
             out_feats = feat1/den
-        else : 
+        else :
             feat2 = self.pool2(in_series.unsqueeze(1))[:,0,:]
             feat2 = torch.repeat_interleave(feat2,self.block_size,dim=1)*self.block_size
             out_feats = (feat1 - feat2)/(self.kernel_size-self.block_size)
