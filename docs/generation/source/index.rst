@@ -12,7 +12,7 @@ In detail, the library provides:
     - Benchmarking to foster reproducibility in time series imputation (`Benchmark <tutorials.html#benchmark>`_).
     - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream <tutorials.html#downstream>`_).
     - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <tutorials.html#explainer>`_).
-    - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
+    - Seamless integration of new algorithms in different languages, such as Python, C++, Matlab, Java, and R.
 
 
 .. raw:: html

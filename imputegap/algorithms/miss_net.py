@@ -56,7 +56,7 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
     start_time = time.time()  # Record start time
 
     missnet_model = MissNet(alpha=alpha, beta=beta, L=L, n_cl=n_cl)
-    missnet_model.fit(incomp_data, random_init=random_init, max_iter=max_iteration, tol=tol)  # Train the model
+    missnet_model.fit(incomp_data, random_init=random_init, max_iter=max_iteration, tol=tol, verbose=verbose)  # Train the model
     recov_data = missnet_model.imputation()  # Get the imputed data
 
     end_time = time.time()

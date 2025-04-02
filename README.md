@@ -14,7 +14,7 @@ In detail, the package provides:
   - Benchmarking to foster reproducibility in time series imputation ([Benchmark](#benchmark)).
   - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis ([Downstream](#downstream)).
   - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](#explainer)).
-  - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R ([Integration](https://imputegap.readthedocs.io/en/latest/integration.html)).
+  - Seamless integration of new algorithms in different languages, such as Python, C++, Matlab, Java, and R ([Integration](https://imputegap.readthedocs.io/en/latest/integration.html)).
 
 <br>
 

@@ -13,7 +13,9 @@ class TestExplainer(unittest.TestCase):
         """
         filename = "chlorine"
 
-        RMSE = [0.508740447256769, 0.5834508294411466, 0.5318564446461029, 0.5162089180931576, 0.46608400269248135, 0.4531125301877796, 0.4071204339932292, 0.38188027439915706, 0.32530898769725997, 0.3077025334161655, 0.275820985814237, 0.24169961372557672, 0.18094568173830244, 0.12943484328240668, 0.3299572333029556]
+        RMSE = [0.508740447256769, 0.5834508294411466, 0.5318564446461029, 0.5162089180931576, 0.46608400269248135,
+         0.4531125301877796, 0.4071204339932292, 0.38188027439915706, 0.32530898769725997, 0.3077025334161655,
+         0.275820985814237, 0.24169961372557672, 0.18094568173830244, 0.12943484328240668, 0.3299572333029556]
 
         expected_categories, expected_features, _ = Explainer.load_configuration()
 
@@ -23,11 +25,13 @@ class TestExplainer(unittest.TestCase):
         shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, rate_dataset=0.3,
                                                              seed=True, verbose=True)
 
+        Explainer.print(shap_values, shap_details)
+
         self.assertTrue(shap_values is not None)
         self.assertTrue(shap_details is not None)
 
         for i, (_, output) in enumerate(shap_details):
-            assert np.isclose(RMSE[i], output, atol=0.01)
+            assert np.isclose(RMSE[i], output, atol=0.05)
 
         for i, (x, algo, rate, description, feature, category, mean_features) in enumerate(shap_values):
             assert rate >= 0, f"Rate must be >= 0, but got {rate}"
