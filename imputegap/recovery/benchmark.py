@@ -9,9 +9,6 @@ import xlsxwriter
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-
 
 
 class Benchmark:
@@ -739,6 +736,8 @@ class Benchmark:
         -----
         Runs contamination, imputation, and evaluation, then generates plots and a summary reports.
         """
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
         run_storage = []
         not_optimized = ["none"]
         mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]

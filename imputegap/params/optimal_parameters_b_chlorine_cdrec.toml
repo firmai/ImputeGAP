@@ -1,4 +1,4 @@
 [cdrec]
-rank = "9"
-epsilon = 0.0007825454196799511
-iteration = "615"
+rank = "3"
+epsilon = 0.0004596525401418828
+iteration = "209"
