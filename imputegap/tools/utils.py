@@ -305,7 +305,7 @@ def search_path(set_name="test"):
     if set_name in list_of_datasets():
         return set_name + ".txt"
     else:
-        filepath = "../imputegap/dataset/" + set_name + ".txt"
+        filepath = "../imputegap/dataset/" + set_name
 
         if not os.path.exists(filepath):
             filepath = filepath[1:]

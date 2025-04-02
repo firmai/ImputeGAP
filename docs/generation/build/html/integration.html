@@ -306,8 +306,8 @@ $ cd ./ImputeGAP
 <br><br></section>
 <section id="advanced-features">
 <h3>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading">¶</a></h3>
-<section id="initialize-default-values">
-<h4>Initialize default values<a class="headerlink" href="#initialize-default-values" title="Link to this heading">¶</a></h4>
+<section id="i-initialize-default-values">
+<h4>I. Initialize default values<a class="headerlink" href="#i-initialize-default-values" title="Link to this heading">¶</a></h4>
 <ol class="arabic simple">
 <li><p>To set the default values of your algorithm, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/env/default_values.toml</span></code> and add your configuration:</p></li>
 </ol>
@@ -322,8 +322,8 @@ $ cd ./ImputeGAP
 <li><p>Update the <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> file, and specify your configuration in the <code class="docutils literal notranslate"><span class="pre">load_parameters</span></code> function.</p></li>
 </ol>
 <br></section>
-<section id="benchmark">
-<h4>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h4>
+<section id="ii-benchmark">
+<h4>II. Benchmark<a class="headerlink" href="#ii-benchmark" title="Link to this heading">¶</a></h4>
 <p>To access the benchmarking features, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> by adding your algorithm in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">config_impute_algorithm</span></code> function.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;new_alg&quot;</span><span class="p">:</span>
@@ -333,8 +333,8 @@ $ cd ./ImputeGAP
 </div></blockquote>
 <p>Replace MyFamily with either: Statistics, MatrixCompletion, PatternSearch, MachineLearning, or DeepLearning</p>
 <br></section>
-<section id="optimizer">
-<h4>Optimizer<a class="headerlink" href="#optimizer" title="Link to this heading">¶</a></h4>
+<section id="iii-optimizer">
+<h4>III. Optimizer<a class="headerlink" href="#iii-optimizer" title="Link to this heading">¶</a></h4>
 <p>To enable the optimization module, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code>:</p>
 <ol class="arabic">
 <li><dl>
@@ -362,8 +362,8 @@ $ cd ./ImputeGAP
 </li>
 </ol>
 <br></section>
-<section id="update-the-call">
-<h4>Update the call<a class="headerlink" href="#update-the-call" title="Link to this heading">¶</a></h4>
+<section id="iv-update-the-call">
+<h4>IV. Update the call<a class="headerlink" href="#iv-update-the-call" title="Link to this heading">¶</a></h4>
 <p>Navigate to <code class="docutils literal notranslate"><span class="pre">./imputegap/recovery/imputation.py</span></code>:</p>
 <blockquote>
 <div><ol class="loweralpha simple">
@@ -606,10 +606,10 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 <li><a class="reference internal" href="#a-integration-steps-in-python">A. Integration Steps (in Python)</a><ul>
 <li><a class="reference internal" href="#basic-features">Basic Features</a></li>
 <li><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
-<li><a class="reference internal" href="#initialize-default-values">Initialize default values</a></li>
-<li><a class="reference internal" href="#benchmark">Benchmark</a></li>
-<li><a class="reference internal" href="#optimizer">Optimizer</a></li>
-<li><a class="reference internal" href="#update-the-call">Update the call</a></li>
+<li><a class="reference internal" href="#i-initialize-default-values">I. Initialize default values</a></li>
+<li><a class="reference internal" href="#ii-benchmark">II. Benchmark</a></li>
+<li><a class="reference internal" href="#iii-optimizer">III. Optimizer</a></li>
+<li><a class="reference internal" href="#iv-update-the-call">IV. Update the call</a></li>
 </ul>
 </li>
 </ul>

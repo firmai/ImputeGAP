@@ -47,8 +47,8 @@ Advanced Features
 -----------------
 
 
-Initialize default values
-_________________________
+I. Initialize default values
+____________________________
 
 1. To set the default values of your algorithm, please update ``./imputegap/env/default_values.toml`` and add your configuration:
 
@@ -68,8 +68,8 @@ command::
    <br>
 
 
-Benchmark
-_________
+II. Benchmark
+_____________
 
 To access the benchmarking features, please update ``./imputegap/tools/utils.py`` by adding your algorithm in the ``def config_impute_algorithm`` function.
 
@@ -88,8 +88,8 @@ Replace MyFamily with either: Statistics, MatrixCompletion, PatternSearch, Machi
    <br>
 
 
-Optimizer
-_________
+III. Optimizer
+______________
 
 To enable the optimization module, please update ``./imputegap/tools/algorithm_parameters.py``:
 
@@ -119,8 +119,8 @@ To enable the optimization module, please update ``./imputegap/tools/algorithm_p
 
 
 
-Update the call
-_______________
+IV. Update the call
+___________________
 
 Navigate to ``./imputegap/recovery/imputation.py``:
 

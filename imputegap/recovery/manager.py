@@ -209,7 +209,9 @@ class TimeSeries:
         """
         to_print = self.data
         nbr_tot_series, nbr_tot_values = to_print.shape
-        print_col, print_row = "timestamp", "Series"
+        print_col, print_row = "idx", "TS"
+        print_col_inc, print_row_inc = 0, 1
+
 
         print(f"\nshape of {self.name} : {self.data.shape}\n\tnumber of series = { nbr_tot_series}\n\tnumber of values = {nbr_tot_values}\n")
 
@@ -221,19 +223,20 @@ class TimeSeries:
 
         if not view_by_series:
             to_print = to_print.T
-            print_col, print_row = "Series", "timestamp"
+            print_col, print_row = "TS", "idx"
+            print_col_inc, print_row_inc = 1, 0
 
         header_format = "{:<15}"  # Fixed size for headers
         value_format = "{:>15.10f}"  # Fixed size for values
         # Print the header
         print(f"{'':<18}", end="")  # Empty space for the row labels
         for i in range(to_print.shape[1]):
-            print(header_format.format(f"{print_col}_{i + 1}"), end="")
+            print(header_format.format(f"{print_col}_{i + print_col_inc}"), end="")
         print()
 
         # Print each limited series with fixed size
         for i, series in enumerate(to_print):
-            print(header_format.format(f"{print_row}_{i + 1}"), end="")
+            print(header_format.format(f"{print_row}_{i + print_row_inc}"), end="")
             print("".join([value_format.format(elem) for elem in series]))
 
         if nbr_series < nbr_tot_series:

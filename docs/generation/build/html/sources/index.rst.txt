@@ -1,18 +1,17 @@
 ImputeGAP Documentation
 =======================
 
-ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.
+ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair time series datasets. The library supports a diverse range of imputation algorithms and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, and downstream evaluation.
 
 
 In detail, the library provides:
-    - Access to commonly used datasets in time series research (`Datasets <datasets.html>`_).
-    - Automated preprocessing with built-in methods for normalizing time series (`Preprocessing <tutorials.html#loading-preprocessing>`_).
+    - Access to commonly used datasets in the time series imputation field (`Datasets <datasets.html>`_).
     - Configurable contamination module that simulates real-world missingness patterns (`Patterns <patterns.html>`_).
     - Parameterizable state-of-the-art time series imputation algorithms (`Algorithms <algorithms.html>`_).
-    - Benchmarking to foster reproducibility in time series imputation (`Benchmark <tutorials.html#benchmark>`_).
+    - Benchmarking feature to foster reproducibility in time series imputation (`Benchmark <tutorials.html#benchmark>`_).
     - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream <tutorials.html#downstream>`_).
     - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <tutorials.html#explainer>`_).
-    - Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.
+    - Seamless integration of new algorithms in different languages, such as Python, C++, Matlab, Java, and R (`Integration <integration.html>`_).
 
 
 .. raw:: html
@@ -23,16 +22,14 @@ In detail, the library provides:
 
 Data Format
 -----------
-
-Please ensure that your data satisfies the following criteria:
+Please ensure that your input data satisfies the following format:
 
 .. note::
 
-    - 2D Matrix: columns are the series and rows are the timestamps
+    - Columns are the series' values, and rows are the timestamps
     - Column separator: empty space
     - Row separator: newline
-    - Missing values are NaN
-    - Data output uses ``numpy.ndarray``
+    - Missing values are NaNs
 
 
 
@@ -102,12 +99,12 @@ Get Started
 
       <div class="card">
         <h3><a href="getting_started.html">🚀 Installation</a></h3>
-        <p>Read the guide on how to install <strong>ImputeGAP</strong> on your system.</p>
+        <p>Read the guide on how to install ImputeGAP on your system.</p>
       </div>
 
       <div class="card">
         <h3><a href="tutorials.html">📖 Tutorials</a></h3>
-        <p>Check the tutorials to learn how to use <strong>ImputeGAP</strong> efficiently.</p>
+        <p>Check the tutorials to learn how to use ImputeGAP efficiently.</p>
       </div>
 
       <div class="card">
@@ -117,7 +114,7 @@ Get Started
 
       <div class="card">
         <h3><a href="algorithms.html">🧠 Algorithms</a></h3>
-        <p>Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
+        <p>Explore the core algorithms used in ImputeGAP.</p>
       </div>
 
     </div><br>
@@ -166,7 +163,6 @@ Contributors
 ------------
 
 .. list-table::
-   :widths: 100 100
    :align: center
    :header-rows: 0
 

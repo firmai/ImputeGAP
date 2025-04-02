@@ -276,8 +276,9 @@
 <ul class="simple">
 <li><p>M : number of time series</p></li>
 <li><p>N : length of time series</p></li>
-<li><p>R : rate of missing values chosen by the user (%); default = 0.2</p></li>
-<li><p>W : offset window in the beginning of the series (%); default = 0.1</p></li>
+<li><p>R : user-defined rate of missing values (%); default = 0.2</p></li>
+<li><p>W : user-defined offset window in the beginning of the series (%); default = 0.1</p></li>
+<li><p>S : user-defined rate of contaminated series (%); default = 0.2</p></li>
 </ul>
 </div>
 <br></section>
@@ -285,32 +286,32 @@
 <span id="scenario-mono-block"></span><h2>MONO-BLOCK<a class="headerlink" href="#mono-block" title="Link to this heading">¶</a></h2>
 <p>One missing block per series</p>
 <p><strong>Aligned</strong></p>
+<p>The missing blocks are aligned.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>The missing blocks are aligned.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
 <li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">W</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
 <li><p>The starting position is the same and begins at <code class="docutils literal notranslate"><span class="pre">W</span></code> and progresses until the size of the missing block is reached, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">S%</span></code> of the dataset.</p></li>
 </ul>
 </div>
 <br><p><strong>Disjoint</strong></p>
+<p>The missing blocks are disjoint.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>The missing blocks are disjoint.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
 <li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">W</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
 <li><p>The starting position of the first missing block begins at <code class="docutils literal notranslate"><span class="pre">W</span></code>.</p></li>
 <li><p>Each subsequent missing block starts immediately after the previous one ends, continuing this pattern until the limit of the dataset or <code class="docutils literal notranslate"><span class="pre">N</span></code> is reached.</p></li>
 </ul>
 </div>
 <br><p><strong>Overlap</strong>:</p>
+<p>The missing blocks are overlapping.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>The missing blocks are overlapping.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
 <li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">W</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
 <li><p>The starting position of the first missing block begins at <code class="docutils literal notranslate"><span class="pre">W</span></code>.</p></li>
 <li><p>Each subsequent missing block starts after the previous one ends, but with a shift back of <code class="docutils literal notranslate"><span class="pre">X%</span></code>, creating an overlap.</p></li>
@@ -318,11 +319,11 @@
 </ul>
 </div>
 <br><p><strong>Scattered</strong></p>
+<p>The missing blocks are scattered.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>The missing blocks are scattered.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
 <li><p>The size of a single missing block varies between 1% and (100 - <code class="docutils literal notranslate"><span class="pre">W</span></code>)% of <code class="docutils literal notranslate"><span class="pre">N</span></code>.</p></li>
 <li><p>The starting position is randomly shifted by adding a random value to <code class="docutils literal notranslate"><span class="pre">W</span></code>, then progresses until the size of the missing block is reached, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">S%</span></code> of the dataset.</p></li>
 </ul>
@@ -332,20 +333,20 @@
 <span id="scenario-multi-block"></span><h2>MULTI-BLOCK<a class="headerlink" href="#multi-block" title="Link to this heading">¶</a></h2>
 <p>Multiple missing blocks per series</p>
 <p><strong>MCAR</strong></p>
+<p>The blocks are missing completely at random</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>The blocks are missing completely at random</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
 <li><p>Data blocks of the same size are removed from arbitrary series at a random position between <code class="docutils literal notranslate"><span class="pre">W</span></code> and <code class="docutils literal notranslate"><span class="pre">N</span></code>, until the total number of missing values per series is reached.</p></li>
 </ul>
 </div>
 <br><p><strong>Block Distribution</strong></p>
+<p>The missing blocks follow a distribution.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>The missing blocks follow a distribution.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">M];</span> <span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">∈</span> <span class="pre">[1%,</span> <span class="pre">(100-W)%]</span></code></p></li>
 <li><p>Data is removed following a distribution given by the user for every values of the series, affecting the first series from the top up to <code class="docutils literal notranslate"><span class="pre">S%</span></code> of the dataset.</p></li>
 </ul>
 </div>

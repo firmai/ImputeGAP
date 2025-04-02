@@ -14,7 +14,6 @@ ImputeGAP is compatible with Python>=3.10 (except 3.13) and Unix-compatible envi
 Installation/Update
 -------------------
 
-
 To install the latest version of ImputeGAP from PyPI, run the following command:
 
 .. code-block:: bash

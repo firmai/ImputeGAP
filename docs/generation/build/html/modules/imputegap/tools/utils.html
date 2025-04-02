@@ -582,7 +582,7 @@
     <span class="k">if</span> <span class="n">set_name</span> <span class="ow">in</span> <span class="n">list_of_datasets</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">set_name</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;../imputegap/dataset/&quot;</span> <span class="o">+</span> <span class="n">set_name</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;../imputegap/dataset/&quot;</span> <span class="o">+</span> <span class="n">set_name</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
             <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
