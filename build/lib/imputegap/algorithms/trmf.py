@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.trmf.tmrfRecovery import recoveryTRMF
 
 
-def trmf(incomp_data, lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_iter, logs=True):
+def trmf(incomp_data, lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_iter, logs=True, verbose=True):
     """
     Perform imputation using the Temporal Regularized Matrix Factorization (TRMF) algorithm.
 
@@ -28,6 +28,8 @@ def trmf(incomp_data, lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_ite
         Regularization parameter used for X when undercovering autoregressive dependencies.
     max_iter : int, optional
         Number of iterations of updating matrices F, X and W.
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
     logs : bool, optional
         Whether to log the execution time (default is True).
 
@@ -44,8 +46,8 @@ def trmf(incomp_data, lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_ite
 
     Example
     -------
-    >>> recov_data = trmf(incomp_data, lags=[], K=-1, lambda_f=1.0, lambda_x=1.0, lambda_w=1.0, eta=1.0, alpha=1000.0, max_iter=100)
-    >>> print(recov_data)
+        >>> recov_data = trmf(incomp_data, lags=[], K=-1, lambda_f=1.0, lambda_x=1.0, lambda_w=1.0, eta=1.0, alpha=1000.0, max_iter=100)
+        >>> print(recov_data)
 
     References
     ----------
@@ -56,7 +58,7 @@ def trmf(incomp_data, lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_ite
     recov_data = recoveryTRMF(data=incomp_data, lags=lags, K=K, lambda_f=lambda_f, lambda_x=lambda_x, lambda_w=lambda_w, eta=eta, alpha=alpha, max_iter=max_iter)
 
     end_time = time.time()
-    if logs:
-        print(f"\n\t> logs, imputation trmf - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation trmf - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.DeepMVI.recoveryDeepMVI import deep_mvi_recovery
 
 
-def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True):
+def deep_mvi(incomp_data, max_epoch=100, patience=2, lr=0.001, logs=True, verbose=True):
     """
     Perform imputation using the DEEP MVI (Deep Multivariate Imputation) algorithm.
 
@@ -19,6 +19,8 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True):
         Learning rate of the training (default is 0.001)
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -27,8 +29,8 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True):
 
     Example
     -------
-    >>> recov_data = deep_mvi(incomp_data, 1000, 2, 0.001)
-    >>> print(recov_data)
+        >>> recov_data = deep_mvi(incomp_data, 1000, 2, 0.001)
+        >>> print(recov_data)
 
     References
     ----------
@@ -37,10 +39,10 @@ def deep_mvi(incomp_data, max_epoch=1000, patience=2, lr=0.001, logs=True):
     """
     start_time = time.time()  # Record start time
 
-    recov_data = deep_mvi_recovery(input=incomp_data, max_epoch=max_epoch, patience=patience, lr=lr)
+    recov_data = deep_mvi_recovery(input=incomp_data, max_epoch=max_epoch, patience=patience, lr=lr, verbose=verbose)
 
     end_time = time.time()
-    if logs:
-        print(f"\n\t> logs, imputation deep mvi - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation deep mvi - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

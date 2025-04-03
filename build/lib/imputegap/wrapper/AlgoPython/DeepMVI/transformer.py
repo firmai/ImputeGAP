@@ -9,7 +9,7 @@ from imputegap.wrapper.AlgoPython.DeepMVI.model import *
 
 interval = 0
 
-def train(model,train_loader,val_loader,device, max_epoch=1000, patience=2, lr = 1e-3):
+def train(model,train_loader,val_loader,device, max_epoch=1000, patience=2, lr = 1e-3, verbose=True):
     best_state_dict = model.state_dict()
     best_loss = float('inf')
 
@@ -20,7 +20,9 @@ def train(model,train_loader,val_loader,device, max_epoch=1000, patience=2, lr =
     tolerance_epoch = 0
     train_error = 0
     for epoch in range(start_epoch, max_epoch):
-        print("\n\t\t\t\tStarting Epoch : %d"%epoch, "======/ max", max_epoch,"/==============================")
+
+        if verbose:
+            print("\n\t\t\t\tStarting Epoch : %d"%epoch, "======/ max", max_epoch,"/==============================")
 
         for inp_,mask,residuals,context_info in train_loader :
             inp_ = inp_.to(device).requires_grad_(True)
@@ -47,16 +49,19 @@ def train(model,train_loader,val_loader,device, max_epoch=1000, patience=2, lr =
                 tolerance_epoch += 1
             else :
                 tolerance_epoch += 1
-            print ('\t\t\t\t\t\ttolerance_epoch :\t\t ',tolerance_epoch)
-            print ('\t\t\t\t\t\tpatience :\t\t\t\t ',patience)
-            print ('\t\t\t\t\t\tvalidation loss :\t\t ',float(loss_mre_num/count))
-            print ('\t\t\t\t\t\ttrain loss :\t\t\t ',float(train_error/interval))
+
+            if verbose:
+                print ('\t\t\t\t\t\ttolerance_epoch :\t\t ',tolerance_epoch)
+                print ('\t\t\t\t\t\tpatience :\t\t\t\t ',patience)
+                print ('\t\t\t\t\t\tvalidation loss :\t\t ',float(loss_mre_num/count))
+                print ('\t\t\t\t\t\ttrain loss :\t\t\t ',float(train_error/interval))
             model.train()
             train_error = 0
             if (tolerance_epoch >= patience):
-                print ('\n\t\t\t\t\tEarly Stopping !\n\n ************')
-                print('\t\t\t\t\t\t\ttolerance_epoch :\t\t ', tolerance_epoch)
-                print('\t\t\t\t\t\t\tpatience :\t\t\t\t ', patience)
+                if verbose:
+                    print ('\n\t\t\t\t\tEarly Stopping !\n\n ************')
+                    print('\t\t\t\t\t\t\ttolerance_epoch :\t\t ', tolerance_epoch)
+                    print('\t\t\t\t\t\t\tpatience :\t\t\t\t ', patience)
                 return best_state_dict
     return best_state_dict
 
@@ -72,7 +77,7 @@ def test(model,test_loader,val_feats,device):
     return output_matrix
 
 
-def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3):
+def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3, verbose=True):
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.deterministic = True
     torch.manual_seed(0)
@@ -80,19 +85,18 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3):
     torch.cuda.manual_seed_all(0)
     device = torch.device('cpu')
 
-    num_missing = np.isnan(input_feats).sum()
-    print("num_missing", num_missing)
-
     np.random.seed(0)
     random.seed(0)
 
-    print ('\n\t\t\tTransformer_recovery : start\n')
+    if verbose:
+        print ('\n\t\t\tTransformer_recovery : start\n')
     global interval
 
     mean = np.nanmean(input_feats,axis=0)
     std = np.nanstd(input_feats,axis=0)
     input_feats = (input_feats-mean)/std
 
+    num_missing = np.isnan(input_feats).sum()
 
     train_feats,val_feats,val_points,test_points,block_size,kernel_size = utils.make_validation(input_feats, num_missing=num_missing)
     
@@ -105,10 +109,11 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3):
     use_context=(block_size <= kernel_size)
     use_local = (block_size < kernel_size)
 
-    print ('\t\t\tBlock size is %d, kernel size is %d'%(block_size,kernel_size))
-    print ('\t\t\t\tUse Kernel Regression : ',use_embed)
-    print ('\t\t\t\tUse Context in Keys : ', use_context)
-    print ('\t\t\t\tUse Local Attention : ', use_local)
+    if verbose:
+        print('\t\t\tBlock size is %d, kernel size is %d'%(block_size,kernel_size))
+        print('\t\t\t\tUse Kernel Regression : ',use_embed)
+        print('\t\t\t\tUse Context in Keys : ', use_context)
+        print('\t\t\t\tUse Local Attention : ', use_local)
 
     batch_size = min(input_feats.shape[1]*int(input_feats.shape[0]/time_context),16)
     batch_size = input_feats.shape[1]
@@ -121,10 +126,10 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3):
     val_loader = torch.utils.data.DataLoader(val_set,batch_size = batch_size, drop_last = False, shuffle=True, collate_fn = my_collate)
     test_loader = torch.utils.data.DataLoader(test_set,batch_size = 1,drop_last = False,shuffle=True,collate_fn = my_collate)
 
-    model = OurModel(sizes=[train_feats.shape[1]],kernel_size=kernel_size,block_size = block_size,nhead=2,time_len=train_feats.shape[0],use_embed=use_embed,use_context=use_context,use_local=use_local).to(device)
+    model = OurModel(sizes=[train_feats.shape[1]],kernel_size=kernel_size,block_size = block_size,nhead=2,time_len=train_feats.shape[0],use_embed=use_embed,use_context=use_context,use_local=use_local, verbose=verbose).to(device)
     model.std = torch.from_numpy(std).to(device)
 
-    best_state_dict = train(model,train_loader,val_loader,device,max_epoch,patience, lr)
+    best_state_dict = train(model,train_loader,val_loader,device,max_epoch,patience, lr, verbose)
     model.load_state_dict(best_state_dict)
 
     matrix = test(model,test_loader,val_feats,device)

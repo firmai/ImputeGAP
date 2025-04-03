@@ -2,7 +2,7 @@ import numpy as np
 import time
 
 
-def mean_impute_by_series(incomp_data, logs=True):
+def mean_impute_by_series(incomp_data, logs=True, verbose=True):
     """
     Impute NaN values with the mean value of the time series by series.
 
@@ -12,6 +12,8 @@ def mean_impute_by_series(incomp_data, logs=True):
         The input time series with contamination (missing values represented as NaNs).
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -20,11 +22,11 @@ def mean_impute_by_series(incomp_data, logs=True):
 
     Example
     -------
-    >>> incomp_data = np.array([[5, 2, np.nan], [3, np.nan, 6]])
-    >>> recov_data = mean_impute_by_series(incomp_data)
-    >>> print(recov_data)
-    array([[5., 2., 3.5],
-           [3., 4.5, 6.]])
+        >>> incomp_data = np.array([[5, 2, np.nan], [3, np.nan, 6]])
+        >>> recov_data = mean_impute_by_series(incomp_data)
+        >>> print(recov_data)
+        array([[5., 2., 3.5],
+               [3., 4.5, 6.]])
 
     """
     start_time = time.time()  # Record start time
@@ -37,8 +39,8 @@ def mean_impute_by_series(incomp_data, logs=True):
         recov_data[current_series, np.isnan(incomp_data[current_series])] = mean_value
 
     end_time = time.time()
-    if logs:
-        print(f"\n\t> logs, imputation mean impute (by series) - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation mean impute (by series) - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
 
     return recov_data

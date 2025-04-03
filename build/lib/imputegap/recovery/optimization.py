@@ -205,7 +205,7 @@ class Optimization:
                 run_count += 1
 
             end_time = time.time()
-            print(f"\n\t\t> logs, optimization greedy - Execution Time: {(end_time - start_time):.4f} seconds\n")
+            print(f"\n> logs: optimization greedy - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
             return best_params, best_score
 
@@ -303,7 +303,7 @@ class Optimization:
             optimal_params_dict = {name: value for name, value in zip([dim.name for dim in space], optimal_params)}
 
             end_time = time.time()
-            print(f"\n\t\t> logs, optimization bayesian - Execution Time: {(end_time - start_time):.4f} seconds\n")
+            print(f"\n> logs: optimization bayesian - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
             return optimal_params_dict, np.min(optimizer.yi)
 
@@ -443,7 +443,7 @@ class Optimization:
                                    zip(param_names[algorithm], optimal_params)}
 
             end_time = time.time()
-            print(f"\n\t\t> logs, optimization pso - Execution Time: {(end_time - start_time):.4f} seconds\n")
+            print(f"\n> logs: optimization pso - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
             return optimal_params_dict, cost
 
@@ -569,7 +569,7 @@ class Optimization:
             best_config_dict = {name: value for name, value in zip(param_names[algorithm], best_config)}
 
             end_time = time.time()
-            print(f"\n\t\t> logs, optimization sh - Execution Time: {(end_time - start_time):.4f} seconds\n")
+            print(f"\n> logs: optimization sh - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
             return best_config_dict, best_score
 
@@ -661,7 +661,7 @@ class Optimization:
             print(f"\n\t\t(OPTI) > Ray tune - BEST CONFIG: {analysis.best_config}\n")
 
             end_time = time.time()
-            print(f"\n\t\t> logs, optimization ray tune - Execution Time: {(end_time - start_time):.4f} seconds_____\n")
+            print(f"\n> logs: optimization ray tune - Execution Time: {(end_time - start_time):.4f} seconds_____\n")
 
             ray.shutdown()
 

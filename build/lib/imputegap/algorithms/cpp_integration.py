@@ -7,7 +7,7 @@ from imputegap.tools import utils
 # IN CASE OF NEED, YOU CAN ADAPT AND TAKE CDREC.PY AS A MODEL #
 # =========================================================== #
 
-def native_algo(__py_matrix, __py_param):
+def native_algo(__py_matrix, __py_param, __verbose=True):
     """
     Perform matrix imputation using the CDRec algorithm with native C++ support.
 
@@ -17,6 +17,8 @@ def native_algo(__py_matrix, __py_param):
         The input matrix with missing values (NaNs).
     __py_param : int
         parameters to adapt
+    __verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -25,7 +27,7 @@ def native_algo(__py_matrix, __py_param):
 
     """
 
-    shared_lib = utils.load_share_lib("to_adapt")
+    shared_lib = utils.load_share_lib("to_adapt", verbose=__verbose)
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -51,7 +53,7 @@ def native_algo(__py_matrix, __py_param):
     return __py_imputed_matrix;
 
 
-def your_algo(contamination, param, logs=True):
+def your_algo(contamination, param, logs=True, verbose=True):
     """
     CDRec algorithm for matrix imputation of missing values using Centroid Decomposition.
 
@@ -63,6 +65,8 @@ def your_algo(contamination, param, logs=True):
         to adapt
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
     lib_path : str, optional
         Custom path to the shared library file (default is None).
 
@@ -74,11 +78,11 @@ def your_algo(contamination, param, logs=True):
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_algo(contamination, param)
+    recov_data = native_algo(contamination, param, verbose)
 
     end_time = time.time()
 
-    if logs:
-        print(f"\n\t> logs, imputation algo - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation algo - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

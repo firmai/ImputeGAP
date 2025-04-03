@@ -12,20 +12,16 @@ from imputegap.wrapper.AlgoPython.MissNet.tvgl import TVGL
 # Utils
 def make_dir(input_dir, delete=False):
     if os.path.isdir(input_dir):
-        print(f'\t\t\t\t{input_dir} already exist')
         if delete:
-            print('\t\t\t\tDelete')
             shutil.rmtree(input_dir)
             os.makedirs(input_dir)
-            print(f'\t\t\t\t{input_dir} is ready')
     else:
         os.makedirs(f"{input_dir}")
-        print(f'\t\t\t\t{input_dir} is ready')
 
 def interpolate_matrix(X, how='linear'):
     initial_X = pd.DataFrame(X).interpolate(method=how)
-    initial_X = initial_X.fillna(method='ffill')
-    initial_X = initial_X.fillna(method='bfill')
+    initial_X = initial_X.ffill()
+    initial_X = initial_X.bfill()
     return np.array(initial_X)
 
 

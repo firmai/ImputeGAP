@@ -20,7 +20,7 @@ class Evaluation:
     """
 
 
-    def __init__(self, input_data, recov_data, incomp_data):
+    def __init__(self, input_data, recov_data, incomp_data, algorithm="", verbose=True):
         """
         Initialize the Evaluation class with ground truth, imputation, and incomp_data time series.
 
@@ -32,6 +32,10 @@ class Evaluation:
             The imputed time series.
         incomp_data : numpy.ndarray
             The time series with contamination (NaN values).
+        algorithm : str, optional
+            Name of the algorithm to evaluate.
+        verbose : bool, optional
+            Display of not the anomaly (default: True).
 
         Returns
         -------
@@ -41,6 +45,8 @@ class Evaluation:
         self.recov_data = recov_data
         self.incomp_data = incomp_data
         self.large_error = 100
+        self.algorithm = algorithm
+        self.verbose = verbose
 
     def compute_all_metrics(self):
         """
@@ -57,6 +63,12 @@ class Evaluation:
             - "MI": Mutual Information
             - "CORRELATION": Pearson Correlation Coefficient
         """
+
+        nan_locations = np.isnan(self.incomp_data)
+        recov_vals = self.recov_data[nan_locations]
+        if np.isnan(recov_vals).all():
+            print(f"\n(EVAL) {self.algorithm} ended with errors, the imputed time series contains NaN values.\nPlease, check your configuration, the algorithm might not work with the percentage of contamination or the pattern chosen.")
+
         rmse = self.compute_rmse()
         mae = self.compute_mae()
         mi_d = self.compute_mi()
@@ -84,7 +96,8 @@ class Evaluation:
         rmse = np.sqrt(mse)
 
         if rmse > self.large_error:
-            print("Extreme error detected, limited to ", self.large_error)
+            if self.verbose:
+                print("Extreme error detected, limited to ", self.large_error)
             rmse = self.large_error
 
         return float(rmse)
@@ -106,7 +119,8 @@ class Evaluation:
         mean_absolute_error = np.mean(absolute_error)
 
         if mean_absolute_error > self.large_error:
-            print("Extreme error detected, limited to ", self.large_error)
+            if self.verbose:
+                print("Extreme error detected, limited to ", self.large_error)
             mean_absolute_error = self.large_error
 
         return mean_absolute_error
@@ -127,11 +141,15 @@ class Evaluation:
 
         nan_locations = np.isnan(self.incomp_data)
 
+        input_vals = self.input_data[nan_locations]
+        recov_vals = self.recov_data[nan_locations]
+
+        if np.isnan(recov_vals).all() or np.isnan(input_vals).all():
+            return np.nan
+
         # Discretize the continuous data into bins
-        input_data_binned = np.digitize(self.input_data[nan_locations],
-                                          bins=np.histogram_bin_edges(self.input_data[nan_locations], bins=10))
-        imputation_binned = np.digitize(self.recov_data[nan_locations],
-                                        bins=np.histogram_bin_edges(self.recov_data[nan_locations], bins=10))
+        input_data_binned = np.digitize(input_vals, bins=np.histogram_bin_edges(input_vals, bins=10))
+        imputation_binned = np.digitize(recov_vals, bins=np.histogram_bin_edges(recov_vals, bins=10))
 
         mi_discrete = mutual_info_score(input_data_binned, imputation_binned)
         # mi_continuous = mutual_info_score(self.input_data[nan_locations], self.input_data[nan_locations])
@@ -158,13 +176,14 @@ class Evaluation:
 
         # Check if input data is constant (i.e., no variance)
         if np.all(input_data_values == input_data_values[0]) or np.all(imputed_values == imputed_values[0]):
-            print("\t\t\t\nAn input array is constant; the correlation coefficient is not defined, set to 0")
-            return 0  # Return 0 when correlation is not defined
+            if self.verbose:
+                print("\t\t\t\nAn input array is constant; the correlation coefficient is not defined, set to 0")
+            return np.nan
 
         correlation, _ = pearsonr(input_data_values, imputed_values)
 
         if np.isnan(correlation):
-            correlation = 0
+            correlation = np.nan
 
         return correlation
 

@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.MPIN.runnerMPIN import recoverMPIN
 
 
-def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, num_of_iteration=5, thre=0.25, base="SAGE", logs=True):
+def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, num_of_iteration=5, thre=0.25, base="SAGE", logs=True, verbose=True):
     """
     Perform imputation using the Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation algorithm.
 
@@ -31,6 +31,9 @@ def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_d
         The base model used for graph representation and message propagation. Common options include "SAGE" and "GCN" (default is "SAGE").
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
+
     Returns
     -------
     numpy.ndarray
@@ -38,8 +41,8 @@ def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_d
 
     Example
     -------
-    >>> recov_data = mpin(incomp_data, incre_mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, thre=0.25, base="SAGE")
-    >>> print(recov_data)
+        >>> recov_data = mpin(incomp_data, incre_mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, thre=0.25, base="SAGE")
+        >>> print(recov_data)
 
     References
     ----------
@@ -48,10 +51,10 @@ def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_d
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoverMPIN(input=incomp_data, mode=incre_mode, window=window, k=k, lr=lr, weight_decay=weight_decay, epochs=epochs, num_of_iteration=num_of_iteration, thre=thre, base=base, out_channels=64, eval_ratio=0.05, state=True)
+    recov_data = recoverMPIN(input=incomp_data, mode=incre_mode, window=window, k=k, lr=lr, weight_decay=weight_decay, epochs=epochs, num_of_iteration=num_of_iteration, thre=thre, base=base, out_channels=64, eval_ratio=0.05, state=True, verbose=verbose)
 
     end_time = time.time()
-    if logs:
-        print(f"\n\t> logs, imputation mpin - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation mpin - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

@@ -68,8 +68,8 @@ def dataset_load(dataset: str) -> Union[DataLoader, None]:
         return None
     return DataLoader(ds)
 
-def dataset_load_nqu(dataset, tags, data_names) -> Union[DataLoader, None]:
-    return DataLoader(dataset, tags=tags, data_names=data_names)
+def dataset_load_nqu(dataset, tags, data_names, verbose=True) -> Union[DataLoader, None]:
+    return DataLoader(dataset, tags=tags, data_names=data_names, verbose=verbose)
 
 
 def result_save(filename: str, params: dict, start_idx: list, results: list) -> None:

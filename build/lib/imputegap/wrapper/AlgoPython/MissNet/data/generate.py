@@ -6,10 +6,9 @@ np.random.seed(seed)
 
 def make_dir(input_dir):
 	if os.path.isdir(input_dir):
-		print(f'{input_dir} already exist')
+		print("")
 	else:
 		os.makedirs(f"{input_dir}")
-		print(f'{input_dir} is ready')
 
 def genInvCov(size, low = 0.3 , upper = 0.6, portion = 0.2,symmetric = True):
 	portion = portion/2

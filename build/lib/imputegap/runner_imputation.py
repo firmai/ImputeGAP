@@ -14,7 +14,7 @@ ts.normalize(normalizer="z_score")
 ts_m = ts.Contamination.mcar(ts.data)
 
 # impute the contaminated series
-imputer = Imputation.MatrixCompletion.CDRec(ts_m)
+imputer = Imputation.DeepLearning.MissNet(ts_m)
 imputer.impute()
 
 # compute and print the imputation metrics
@@ -22,4 +22,4 @@ imputer.score(ts.data, imputer.recov_data)
 ts.print_results(imputer.metrics)
 
 # plot the recovered time series
-ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets")
+ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets/imputation")

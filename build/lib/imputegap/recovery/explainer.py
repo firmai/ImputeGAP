@@ -146,7 +146,7 @@ class Explainer:
             feature_name_desc = feature_name.replace("value__", "")
             descriptions.append((feature_name, category, feature_name_desc.replace("_", " ").title()))
 
-        print(f"tsfresh : features extracted successfully___{inc} features_______________________________________\n\n")
+        print(f"\ttsfresh : features extracted successfully___{inc} features")
 
         return results, descriptions
 
@@ -236,7 +236,7 @@ class Explainer:
                 descriptions.append((feature_name, category, feature_name.replace("_", " ").title()))
             total_inc = total_inc + inc
 
-        print(f"tsfel : features extracted successfully___{total_inc} features_______________________________________\n\n")
+        print(f"\ttsfel : features extracted successfully___{total_inc} features")
 
         return results, descriptions
 
@@ -300,7 +300,7 @@ class Explainer:
             descriptions.append((feature_name, category_value, feature_description))
             inc = inc + 1
 
-        print(f"pycatch22 : features extracted successfully___{inc} features_______________________________________\n\n")
+        print(f"\tpycatch22 : features extracted successfully___{inc} features")
 
         return results, descriptions
 
@@ -322,7 +322,7 @@ class Explainer:
         output = ", ".join([f"{output}" for _, output in shap_details])
         print(f"RMSE RESULTS (Y_TRAIN & Y_TEST): [{output}]")
 
-        print("\n\nSHAP Results details : ")
+        print("\n\nFeature Importance:")
         for (x, algo, rate, description, feature, category, mean_features) in shap_values:
             print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
 
@@ -409,8 +409,8 @@ class Explainer:
         plots_categories = config[extractor]['categories']
 
         path_file = "./imputegap_assets/shap/"
-        path_file_details = "./imputegap_assets/shap/grouped/"
-        path_file_categories = "./imputegap_assets/shap/per_categories/"
+        path_file_details = "./imputegap_assets/shap/analysis_grouped/"
+        path_file_categories = "./imputegap_assets/shap/analysis_per_cat/"
 
         os.makedirs(path_file, exist_ok=True)
         os.makedirs(path_file_details, exist_ok=True)
@@ -706,16 +706,17 @@ class Explainer:
         if limit > M:
             limit = M
 
-        print("\nFrom", limit, "/", M, "elements, the training dataset has been set with", training_ratio,"elements and the testing dataset with", (limit-training_ratio), "elements")
-
         if verbose:
-            print("SHAP Explainer has been called\n\t",
-                  "missing_values (", missing_rate * 100, "% )\n\t",
-                  "for a contamination (", pattern, "), \n\t",
-                  "extractor by (", extractor, ") \n\t",
-                  "imputated by (", algorithm, ") with params (", params, ")\n\t",
-                  "with limitation and splitter after verification of (", limit, ") and (", training_ratio, ") for ",
-                  input_data.shape, "...\n\n\tGeneration of the dataset with the time series...")
+            print("\nFrom", limit, "/", M, "elements, the training dataset has been set with", training_ratio,"elements and the testing dataset with", (limit-training_ratio), "elements")
+
+        print(f"\nexplainer launched"
+              f"\n\textractor: {extractor}",
+              f"\n\timputation algorithm: {algorithm}",
+              f"\n\tparams: {params}",
+              f"\n\tmissigness pattern: {pattern}"
+              f"\n\tmissing rate: {missing_rate * 100}%"
+              f"\n\tnbr of series training set: {training_ratio}"
+              f"\n\tnbr of series testing set: {limit-training_ratio}")
 
         input_data_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
@@ -730,7 +731,7 @@ class Explainer:
 
             tmp = TimeSeries()
             tmp.import_matrix(input_data)
-            incomp_data = utils.config_contamination(ts=tmp, pattern=pattern, dataset_rate=current_series, series_rate=missing_rate, block_size=block_size, offset=offset, seed=seed, explainer=True)
+            incomp_data = utils.config_contamination(ts=tmp, pattern=pattern, dataset_rate=current_series, series_rate=missing_rate, block_size=block_size, offset=offset, seed=seed, explainer=True, verbose=False)
 
             input_data_matrices.append(input_data)
             obfuscated_matrices.append(incomp_data)
@@ -751,7 +752,7 @@ class Explainer:
             input_params_full.append(descriptions)
 
             print("\tImputation ", current_series, "...")
-            algo = utils.config_impute_algorithm(incomp_data, algorithm)
+            algo = utils.config_impute_algorithm(incomp_data, algorithm, verbose=verbose)
             algo.logs = False
             algo.impute(user_def=True, params=params)
             algo.score(input_data)
@@ -770,6 +771,6 @@ class Explainer:
         print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
 
         end_time = time.time()
-        print(f"\n\t\t> logs, shap explainer - Execution Time: {(end_time - start_time):.4f} seconds\n\n\n")
+        print(f"\n> logs: shap explainer - Execution Time: {(end_time - start_time):.4f} seconds\n\n\n")
 
         return shap_values, shap_details

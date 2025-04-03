@@ -5,7 +5,7 @@ import importlib.resources
 import numpy as __numpy_import
 import platform
 
-def config_impute_algorithm(incomp_data, algorithm):
+def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     """
     Configure and execute algorithm for selected imputation imputer and pattern.
 
@@ -15,6 +15,8 @@ def config_impute_algorithm(incomp_data, algorithm):
         TimeSeries object containing dataset.
     algorithm : str
         Name of algorithm
+    verbose : bool, optional
+                Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -94,10 +96,12 @@ def config_impute_algorithm(incomp_data, algorithm):
     else:
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
+    imputer.verbose = verbose
+
     return imputer
 
 
-def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0, explainer=False, probabilities=None):
+def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0, explainer=False, probabilities=None, verbose=True):
     """
     Configure and execute contamination for selected imputation algorithm and pattern.
 
@@ -118,21 +122,21 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
         TimeSeries object containing contaminated data.
     """
     if pattern == "mcar" or pattern == "missing_completely_at_random":
-        incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer)
+        incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     elif pattern == "mp" or pattern == "missing_percentage" or pattern == "aligned":
-        incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset)
+        incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, verbose=verbose)
     elif pattern == "ps" or pattern == "percentage_shift" or pattern == "scattered":
-        incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed)
+        incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed, verbose=verbose)
     elif pattern == "disjoint":
-        incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset)
+        incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset, verbose=verbose)
     elif pattern == "overlap":
-        incomp_data = ts.Contamination.overlap(input_data=ts.data, rate_series=dataset_rate, limit=limit, shift=shift, offset=offset)
+        incomp_data = ts.Contamination.overlap(input_data=ts.data, rate_series=dataset_rate, limit=limit, shift=shift, offset=offset, verbose=verbose)
     elif pattern == "gaussian":
-        incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=True)
-    elif pattern == "distribution":
-        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities=probabilities, offset=offset, seed=True)
+        incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=seed, verbose=verbose)
+    elif pattern == "distribution" or pattern == "dist":
+        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities=probabilities, offset=offset, seed=seed, verbose=verbose)
     else:
-        incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset)
+        incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset, verbose=verbose)
 
     return incomp_data
 
@@ -301,14 +305,14 @@ def search_path(set_name="test"):
     if set_name in list_of_datasets():
         return set_name + ".txt"
     else:
-        filepath = "../imputegap/dataset/" + set_name + ".txt"
+        filepath = "../imputegap/dataset/" + set_name
 
         if not os.path.exists(filepath):
             filepath = filepath[1:]
         return filepath
 
 
-def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None):
+def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=False):
     """
     Load default or optimal parameters for algorithms from a TOML file.
 
@@ -324,6 +328,8 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         Optimizer type for optimal parameters (default is "b").
     path : str, optional
         Custom file path for the TOML file (default is None).
+    verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -363,7 +369,8 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     with open(filepath, "r") as _:
         config = toml.load(filepath)
 
-    print("\n(SYS) Inner files loaded : ", filepath, "\n")
+    if verbose:
+        print("\n(SYS) Inner files loaded : ", filepath, "\n")
 
     if algorithm == "cdrec":
         truncation_rank = int(config[algorithm]['rank'])
@@ -695,7 +702,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     elif algorithm == "other":
         return config
     else:
-        print("\t\t(SYS) Default/Optimal config not found for this algorithm")
+        print("(SYS) Default/Optimal config not found for this algorithm")
         return None
 
 
@@ -738,7 +745,7 @@ def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
         raise ValueError("The percentage is out of the acceptable range.")
 
 
-def load_share_lib(name="lib_cdrec", lib=True):
+def load_share_lib(name="lib_cdrec", lib=True, verbose=True):
     """
     Load the shared library based on the operating system.
 
@@ -748,6 +755,8 @@ def load_share_lib(name="lib_cdrec", lib=True):
         The name of the shared library (default is "lib_cdrec").
     lib : bool, optional
         If True, the function loads the library from the default 'imputegap' path; if False, it loads from a local path (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -772,7 +781,8 @@ def load_share_lib(name="lib_cdrec", lib=True):
 
         lib_path = os.path.join(local_path_lin)
 
-    print("\n(SYS) Wrapper files loaded for C++ : ", lib_path, "\n")
+    if verbose:
+        print("\n(SYS) Wrapper files loaded for C++ : ", lib_path, "\n")
 
     return ctypes.CDLL(lib_path)
 
@@ -799,16 +809,21 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     None
     """
     if file_name is None:
-        file_name = "../params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-
-    if not os.path.exists(file_name):
-        file_name = file_name[1:]
+        file_name = "./imputegap_assets/params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+    else:
+        file_name += "optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
 
     dir_name = os.path.dirname(file_name)
     if dir_name and not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
-    if algorithm == "mrnn":
+    if algorithm == "cdrec":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "eps": optimal_params[1],
+            "iters": int(optimal_params[2])
+    }
+    elif algorithm == "mrnn":
         params_to_save = { "hidden_dim": int(optimal_params[0]),
             "learning_rate": optimal_params[1],
             "num_iter": int(optimal_params[2]),
@@ -824,12 +839,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         params_to_save = {
             "learning_neighbors": int(optimal_params[0])
         }
-    elif algorithm == "cdrec":
-        params_to_save = {
-            "rank": int(optimal_params[0]),
-            "eps": optimal_params[1],
-            "iters": int(optimal_params[2])
-        }
+
     elif algorithm == "iterative_svd":
         params_to_save = {
             "rank": int(optimal_params[0])
@@ -1108,3 +1118,16 @@ def list_of_downstreams_darts():
         "deepar",
         "transformer"
     ])
+
+def list_of_extractors():
+    return sorted([
+        "pycatch",
+        "tsfel",
+        "tsfresh"
+    ])
+
+def list_of_metrics():
+    return ["RMSE", "MAE", "MI", "CORRELATION", "runtime_linear_scale", "runtime_log_scale"]
+
+def list_of_normalizers():
+    return ["z_score", "min_max"]

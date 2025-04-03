@@ -2,7 +2,7 @@
 
 # ALGORITHM DEFAULT VALUES : MATRIX COMPLETION
 [cdrec]
-rank = 2
+rank = 3
 epsilon = 0.000001
 epsilon_str = "E-6"
 iteration = 100
@@ -111,7 +111,7 @@ nbr_features = 1
 hidden_layers = 64
 
 [deep_mvi]
-max_epoch = 1000
+max_epoch = 100
 patience = 2
 lr = 0.001
 

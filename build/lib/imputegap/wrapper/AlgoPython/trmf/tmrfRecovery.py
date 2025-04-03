@@ -42,7 +42,7 @@ def recoveryTRMF(data, lags=[], K=-1, lambda_f=1.0, lambda_x=1.0, lambda_w=1.0, 
         n = data.shape[0]
         K = n + 1
 
-    print("\t\t(PYTHON) TRMF: Matrix Shape: (", data.shape[0], ", ", data.shape[1], ") for lags ", lags, ", K ", K,
+    print("(IMPUTATION) TRMF: Matrix Shape: (", data.shape[0], ", ", data.shape[1], ") for lags ", lags, ", K ", K,
           ", lambda_f ", lambda_f, " lambda_x", lambda_x, ", lambda_w ", lambda_w, ", eta ", eta, " alpha", alpha,
           ", and max_iter ", max_iter, ")...")
 

@@ -4,7 +4,7 @@ import ctypes as __native_c_types_import;
 from imputegap.tools import utils
 
 
-def native_iterative_svd(__py_matrix, __py_rank):
+def native_iterative_svd(__py_matrix, __py_rank, __verbose=True):
     """
     Perform matrix imputation using the Iterative SVD algorithm with native C++ support.
 
@@ -14,6 +14,8 @@ def native_iterative_svd(__py_matrix, __py_rank):
         The input matrix with missing values (NaNs).
     __py_rank : int
         The truncation rank for matrix decomposition (must be greater than 0 and less than the number of columns).
+    __verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -25,7 +27,7 @@ def native_iterative_svd(__py_matrix, __py_rank):
     Olga Troyanskaya, Michael Cantor, Gavin Sherlock, Pat Brown, Trevor Hastie, Robert Tibshirani, David Botstein, Russ B. Altman, Missing value estimation methods for DNA microarrays , Bioinformatics, Volume 17, Issue 6, June 2001, Pages 520–525, https://doi.org/10.1093/bioinformatics/17.6.520
     """
 
-    shared_lib = utils.load_share_lib("lib_iterative_svd")
+    shared_lib = utils.load_share_lib("lib_iterative_svd", verbose=__verbose)
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -48,7 +50,7 @@ def native_iterative_svd(__py_matrix, __py_rank):
     return __py_imputed_matrix;
 
 
-def iterative_svd(incomp_data, truncation_rank, logs=True, lib_path=None):
+def iterative_svd(incomp_data, truncation_rank, logs=True, verbose=True, lib_path=None):
     """
     Iterative SVD algorithm for matrix imputation.
 
@@ -62,6 +64,8 @@ def iterative_svd(incomp_data, truncation_rank, logs=True, lib_path=None):
         Whether to log the execution time (default is True).
     lib_path : str, optional
         Custom path to the shared library file (default is None).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -70,18 +74,18 @@ def iterative_svd(incomp_data, truncation_rank, logs=True, lib_path=None):
 
     Example
     -------
-    >>> recov_data = iterative_svd(incomp_data=incomp_data, truncation_rank=1, logs=True)
-    >>> print(recov_data)
+        >>> recov_data = iterative_svd(incomp_data=incomp_data, truncation_rank=1, logs=True)
+        >>> print(recov_data)
 
     """
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_iterative_svd(incomp_data, truncation_rank)
+    recov_data = native_iterative_svd(incomp_data, truncation_rank, verbose)
 
     end_time = time.time()
 
-    if logs:
-        print(f"\n\t> logs, imputation iterative svd - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation iterative svd - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

@@ -6,7 +6,7 @@ from missforest import MissForest
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
 
-def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', seed=42, logs=True):
+def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', seed=42, logs=True, verbose=True):
     """
     Perform imputation using the Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation algorithm.
 
@@ -28,6 +28,9 @@ def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', s
         The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
+
     Returns
     -------
     numpy.ndarray
@@ -35,8 +38,8 @@ def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', s
 
     Example
     -------
-    >>> recov_data = mice(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', seed=42)
-    >>> print(recov_data)
+        >>> recov_data = mice(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', seed=42)
+        >>> print(recov_data)
 
     References
     ----------
@@ -45,8 +48,9 @@ def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', s
     https://pypi.org/project/MissForest/
     """
 
-    print("(PYTHON) MISS FOREST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") for n_estimators ",
-          n_estimators, ", max_iter ", max_iter, " max_features ", max_features, ", and seed ", seed, "...")
+    if verbose:
+        print("(IMPUTATION) MISS FOREST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") for n_estimators ",
+              n_estimators, ", max_iter ", max_iter, " max_features ", max_features, ", and seed ", seed, "...")
 
     # Convert numpy array to pandas DataFrame if needed
     if isinstance(incomp_data, np.ndarray):
@@ -63,7 +67,7 @@ def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', s
     recov_data = mf_imputer.fit_transform(incomp_data)
 
     end_time = time.time()
-    if logs:
-        print(f"\n\t> logs, imputation MISS FOREST - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation MISS FOREST - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return np.array(recov_data)

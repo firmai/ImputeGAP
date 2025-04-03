@@ -2,7 +2,7 @@ import time
 from imputegap.wrapper.AlgoPython.BRITS.runnerBRITS import brits_recovery
 
 
-def brits(incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=32, logs=True):
+def brits(incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=32, logs=True, verbose=True):
     """
     Perform imputation using the BRITS algorithm.
 
@@ -22,6 +22,8 @@ def brits(incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hi
         Number of units in the hidden layer of the model. Controls the capacity of the neural network to learn complex patterns.
     seq_length : int
         Length of the input sequence used by the model. Defines the number of time steps processed at once.
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -36,8 +38,8 @@ def brits(incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hi
 
     Example
     -------
-    >>> recov_data = brits(incomp_data=incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=32, logs=True)
-    >>> print(recov_data)
+        >>> recov_data = brits(incomp_data=incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=32, logs=True)
+        >>> print(recov_data)
 
     References
     ----------
@@ -45,10 +47,10 @@ def brits(incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hi
     """
     start_time = time.time()  # Record start time
 
-    recov_data = brits_recovery(incomp_data=incomp_data, model=model, epoch=epoch, batch_size=batch_size, nbr_features=nbr_features, hidden_layers=hidden_layers, seq_length=seq_length)
+    recov_data = brits_recovery(incomp_data=incomp_data, model=model, epoch=epoch, batch_size=batch_size, nbr_features=nbr_features, hidden_layers=hidden_layers, seq_length=seq_length, verbose=verbose)
 
     end_time = time.time()
-    if logs:
-        print(f"\n\t> logs, imputation brits - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation brits - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

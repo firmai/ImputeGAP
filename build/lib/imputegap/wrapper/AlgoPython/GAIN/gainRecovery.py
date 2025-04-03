@@ -31,7 +31,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
 
-def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100):
+def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100, verbose=True):
   '''Main function for UCI letter and spam datasets.
   
   Args:
@@ -49,8 +49,9 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
 
   input_data = np.copy(miss_data_x)
 
-  print("\t\t(PYTHON) GAIN: Matrix Shape: (", input_data.shape[0], ", ", input_data.shape[1], ") "
-        "for batch_size ", batch_size, ", hint_rate ", hint_rate, ", alpha ", alpha, ", and epoch ", epoch, "...")
+  if verbose:
+      print("(IMPUTATION) GAIN: Matrix Shape: (", input_data.shape[0], ", ", input_data.shape[1], ") "
+            "for batch_size ", batch_size, ", hint_rate ", hint_rate, ", alpha ", alpha, ", and epoch ", epoch, "...")
   
   gain_parameters = {'batch_size': batch_size,
                      'hint_rate': hint_rate,
@@ -62,7 +63,7 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
   gain_parameters['batch_size'] = batch_size
   # print('Batch size: ', gain_parameters["batch_size"])
 
-  max_trials = 3  # Maximum number of retries
+  max_trials = 10  # Maximum number of retries
   trial = 0
 
   while trial < max_trials:
@@ -71,8 +72,12 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
       if not np.all(np.isnan(imputed_data_x)):
           return imputed_data_x  # Successfully imputed, return result
 
-      print(f"\t\t(PYTHON) GAIN: Trial {trial + 1} failed, reattempting...")
+      if verbose and trial > 0:
+        print(f"GAIN: Trial {trial + 1}...")
+
       trial += 1
 
-  print("\t\t(PYTHON) GAIN: All trials failed, returning last imputed result.")
+  if verbose:
+      print("All trials failed, returning last imputed result.")
+
   return imputed_data_x  # Return last attempt even if NaN
