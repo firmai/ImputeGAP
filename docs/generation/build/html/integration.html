@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ImputeGAP Package" href="imputegap.html" /><link rel="prev" title="Algorithms" href="algorithms.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>Integration - imputegap 1.0.7 documentation</title>
+        <title>Integration - imputegap 1.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">imputegap 1.0.7 documentation</div></a>
+      <a href="index.html"><div class="brand">imputegap 1.0.8 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">imputegap 1.0.7 documentation</span>
+  <span class="sidebar-brand-text">imputegap 1.0.8 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -365,11 +365,7 @@ $ cd ./ImputeGAP
 <section id="iv-update-the-call">
 <h4>IV. Update the call<a class="headerlink" href="#iv-update-the-call" title="Link to this heading">¶</a></h4>
 <p>Navigate to <code class="docutils literal notranslate"><span class="pre">./imputegap/recovery/imputation.py</span></code>:</p>
-<blockquote>
-<div><ol class="loweralpha simple">
-<li><p>Improve the imputation call of the <code class="docutils literal notranslate"><span class="pre">NewAlg</span></code> class in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">impute()</span></code> function, and add the call of the optimizer and the default values of the parameters.</p></li>
-</ol>
-</div></blockquote>
+<p>Improve the imputation call of the <code class="docutils literal notranslate"><span class="pre">NewAlg</span></code> class in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">impute()</span></code> function, and add the call of the optimizer and the default values of the parameters.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">param_integer</span><span class="p">,</span> <span class="n">param_float</span><span class="p">,</span> <span class="n">param_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>  <span class="c1"># call the optimizer</span>
 <span class="k">else</span><span class="p">:</span>
@@ -413,8 +409,8 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 <li><p>Perform imputation as needed.</p></li>
 </ol>
 <br><br></section>
-<section id="example-cdrec-integration">
-<h2>Example: CDRec Integration<a class="headerlink" href="#example-cdrec-integration" title="Link to this heading">¶</a></h2>
+<section id="c-example-cdrec-integration">
+<h2>C. Example: CDRec Integration<a class="headerlink" href="#c-example-cdrec-integration" title="Link to this heading">¶</a></h2>
 <p>Once your cpp and h files are ready to be converted (you can look at <code class="docutils literal notranslate"><span class="pre">./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.cpp</span></code> or <code class="docutils literal notranslate"><span class="pre">./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.h</span></code>), create a <code class="docutils literal notranslate"><span class="pre">.so</span></code> file for linux and windows, and a <code class="docutils literal notranslate"><span class="pre">.dylib</span></code> file for MAC OS.</p>
 <ol class="arabic">
 <li><p>Modify the Makefile:</p>
@@ -615,7 +611,7 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </ul>
 </li>
 <li><a class="reference internal" href="#b-integration-steps-other-languages">B. Integration Steps (other languages)</a></li>
-<li><a class="reference internal" href="#example-cdrec-integration">Example: CDRec Integration</a></li>
+<li><a class="reference internal" href="#c-example-cdrec-integration">C. Example: CDRec Integration</a></li>
 </ul>
 </li>
 </ul>
@@ -627,7 +623,7 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=46dfa7f5"></script>
+</div><script src="static/documentation_options.js?v=aec50437"></script>
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>

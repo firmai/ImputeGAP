@@ -548,10 +548,11 @@ class Imputation:
                     Parameters of the KNNImpute algorithm, if None, default ones are loaded.
 
                     **Algorithm parameters:**
-                    k : int, optional
-                        Number of nearest neighbor (default is 5).
-                    weights : str, optional
-                        "uniform" for mean, "distance" for inverse-distance weighting.
+
+                        k : int, optional
+                            Number of nearest neighbor (default is 5).
+                        weights : str, optional
+                            "uniform" for mean, "distance" for inverse-distance weighting.
 
                 Returns
                 -------
@@ -630,72 +631,72 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    - rank : int
-                        Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
-                    - epsilon : float
-                        The learning rate used for the algorithm.
-                    - iterations : int
-                        The number of iterations to perform.
+                        rank : int
+                            Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
+                        epsilon : float
+                            The learning rate used for the algorithm.
+                        iterations : int
+                            The number of iterations to perform.
 
                     **Auto-ML parameters:**
 
-                    - input_data : numpy.ndarray
-                        The original time series dataset without contamination.
-                    - optimizer : str
-                        The optimizer to use for parameter optimization. Valid values are "bayesian", "greedy", "pso", or "sh".
-                    - options : dict, optional
-                        Optional parameters specific to the optimizer.
+                        input_data : numpy.ndarray
+                            The original time series dataset without contamination.
+                        optimizer : str
+                            The optimizer to use for parameter optimization. Valid values are "bayesian", "greedy", "pso", or "sh".
+                        options : dict, optional
+                            Optional parameters specific to the optimizer.
 
                         **Bayesian:**
 
-                        - n_calls : int, optional
-                            Number of calls to the objective function. Default is 3.
-                        - metrics : list, optional
-                            List of selected metrics to consider for optimization. Default is ["RMSE"].
-                        - n_random_starts : int, optional
-                            Number of initial calls to the objective function, from random points. Default is 50.
-                        - acq_func : str, optional
-                            Acquisition function to minimize over the Gaussian prior. Valid values: 'LCB', 'EI', 'PI', 'gp_hedge' (default is 'gp_hedge').
+                            n_calls : int, optional
+                                Number of calls to the objective function. Default is 3.
+                            metrics : list, optional
+                                List of selected metrics to consider for optimization. Default is ["RMSE"].
+                            n_random_starts : int, optional
+                                Number of initial calls to the objective function, from random points. Default is 50.
+                            acq_func : str, optional
+                                Acquisition function to minimize over the Gaussian prior. Valid values: 'LCB', 'EI', 'PI', 'gp_hedge' (default is 'gp_hedge').
 
                         **Greedy:**
 
-                        - n_calls : int, optional
-                            Number of calls to the objective function. Default is 3.
-                        - metrics : list, optional
-                            List of selected metrics to consider for optimization. Default is ["RMSE"].
+                            n_calls : int, optional
+                                Number of calls to the objective function. Default is 3.
+                            metrics : list, optional
+                                List of selected metrics to consider for optimization. Default is ["RMSE"].
 
                         **PSO:**
 
-                        - n_particles : int, optional
-                            Number of particles used.
-                        - c1 : float, optional
-                            PSO learning coefficient c1 (personal learning).
-                        - c2 : float, optional
-                            PSO learning coefficient c2 (global learning).
-                        - w : float, optional
-                            PSO inertia weight.
-                        - iterations : int, optional
-                            Number of iterations for the optimization.
-                        - n_processes : int, optional
-                            Number of processes during optimization.
+                            n_particles : int, optional
+                                Number of particles used.
+                            c1 : float, optional
+                                PSO learning coefficient c1 (personal learning).
+                            c2 : float, optional
+                                PSO learning coefficient c2 (global learning).
+                            w : float, optional
+                                PSO inertia weight.
+                            iterations : int, optional
+                                Number of iterations for the optimization.
+                            n_processes : int, optional
+                                Number of processes during optimization.
 
                         **Successive Halving (SH):**
 
-                        - num_configs : int, optional
-                            Number of configurations to try.
-                        - num_iterations : int, optional
-                            Number of iterations to run the optimization.
-                        - reduction_factor : int, optional
-                            Reduction factor for the number of configurations kept after each iteration.
+                            num_configs : int, optional
+                                Number of configurations to try.
+                            num_iterations : int, optional
+                                Number of iterations to run the optimization.
+                            reduction_factor : int, optional
+                                Reduction factor for the number of configurations kept after each iteration.
 
 
                         **RAY TUNE (ray_tune):**
 
-                        - n_calls : int, optional
-                            Number of calls to the objective function (default is 10).
-                        - max_concurrent_trials : int, optional
-                            Number of trials run in parallel, related to your total memory / cpu / gpu (default is 2).
-                            Please increase the value if you have more resources
+                            n_calls : int, optional
+                                Number of calls to the objective function (default is 10).
+                            max_concurrent_trials : int, optional
+                                Number of trials run in parallel, related to your total memory / cpu / gpu (default is 2).
+                                Please increase the value if you have more resources
 
                 Returns
                 -------
@@ -751,8 +752,8 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    - rank : int
-                        Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
+                        rank : int
+                            Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
 
 
                 Returns
@@ -809,8 +810,8 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    - max_rank : int
-                        Max rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
+                        max_rank : int
+                            Max rank of matrix reduction, which should be higher than 1 and smaller than the number of series.
 
 
                 Returns
@@ -867,12 +868,12 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                     rank : int
-                        The rank of the low-dimensional subspace for matrix decomposition.
-                        Must be greater than 0 and less than or equal to the number of columns in the matrix.
-                     regularization : float
-                        The regularization parameter to control the trade-off between reconstruction accuracy and robustness.
-                        Higher values enforce sparsity or robustness against noise in the data.
+                         rank : int
+                            The rank of the low-dimensional subspace for matrix decomposition.
+                            Must be greater than 0 and less than or equal to the number of columns in the matrix.
+                         regularization : float
+                            The regularization parameter to control the trade-off between reconstruction accuracy and robustness.
+                            Higher values enforce sparsity or robustness against noise in the data.
 
                 Returns
                 -------
@@ -928,9 +929,9 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                     max_rank : int
-                        The max rank of the low-dimensional subspace for matrix decomposition.
-                        Must be greater than 0 and less than or equal to the number of columns in the matrix.
+                         max_rank : int
+                            The max rank of the low-dimensional subspace for matrix decomposition.
+                            Must be greater than 0 and less than or equal to the number of columns in the matrix.
 
                 Returns
                 -------
@@ -987,15 +988,15 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    k : int
-                        The number of eigencomponents (principal components) to retain for dimensionality reduction.
-                        Example: 2, 5, 10.
-                    w : int
-                        The window size for capturing temporal dependencies.
-                        Example: 5 (short-term), 20 (long-term).
-                    lambda_value : float
-                        The forgetting factor controlling how quickly past data is "forgotten".
-                        Example: 0.8 (fast adaptation), 0.95 (stable systems).
+                        k : int
+                            The number of eigencomponents (principal components) to retain for dimensionality reduction.
+                            Example: 2, 5, 10.
+                        w : int
+                            The window size for capturing temporal dependencies.
+                            Example: 5 (short-term), 20 (long-term).
+                        lambda_value : float
+                            The forgetting factor controlling how quickly past data is "forgotten".
+                            Example: 0.8 (fast adaptation), 0.95 (stable systems).
 
                 Returns
                 -------
@@ -1051,9 +1052,9 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    tau : float
-                        The thresholding parameter for singular values. Controls how singular values are shrunk during the decomposition process.
-                        Larger values encourage a sparser, lower-rank solution, while smaller values retain more detail.
+                        tau : float
+                            The thresholding parameter for singular values. Controls how singular values are shrunk during the decomposition process.
+                            Larger values encourage a sparser, lower-rank solution, while smaller values retain more detail.
 
 
                 Returns
@@ -1110,25 +1111,25 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    lags : array-like, optional
-                        Set of lag indices to use in model.
-                    K : int, optional
-                        Length of latent embedding dimension
-                    lambda_f : float, optional
-                        Regularization parameter used for matrix F.
-                    lambda_x : float, optional
-                        Regularization parameter used for matrix X.
-                    lambda_w : float, optional
-                        Regularization parameter used for matrix W.
-                    alpha : float, optional
-                        Regularization parameter used for make the sum of lag coefficient close to 1.
-                        That helps to avoid big deviations when forecasting.
-                    eta : float, optional
-                        Regularization parameter used for X when undercovering autoregressive dependencies.
-                    max_iter : int, optional
-                        Number of iterations of updating matrices F, X and W.
-                    logs : bool, optional
-                        Whether to log the execution time (default is True).
+                        lags : array-like, optional
+                            Set of lag indices to use in model.
+                        K : int, optional
+                            Length of latent embedding dimension
+                        lambda_f : float, optional
+                            Regularization parameter used for matrix F.
+                        lambda_x : float, optional
+                            Regularization parameter used for matrix X.
+                        lambda_w : float, optional
+                            Regularization parameter used for matrix W.
+                        alpha : float, optional
+                            Regularization parameter used for make the sum of lag coefficient close to 1.
+                            That helps to avoid big deviations when forecasting.
+                        eta : float, optional
+                            Regularization parameter used for X when undercovering autoregressive dependencies.
+                        max_iter : int, optional
+                            Number of iterations of updating matrices F, X and W.
+                        logs : bool, optional
+                            Whether to log the execution time (default is True).
 
 
                 Returns
@@ -1203,21 +1204,21 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    alpha : float, optional
-                        Trade-off parameter controlling the contribution of contextual matrix
-                        and time-series. If alpha = 0, network is ignored. (default 0.5)
-                    beta : float, optional
-                        Regularization parameter for sparsity. (default 0.1)
-                    L : int, optional
-                        Hidden dimension size. (default 10)
-                    n_cl : int, optional
-                        Number of clusters. (default 1)
-                    max_iteration : int, optional
-                        Maximum number of iterations for convergence. (default 20)
-                    tol : float, optional
-                        Tolerance for early stopping criteria.  (default 5)
-                    random_init : bool, optional
-                        Whether to use random initialization for latent variables. (default False)
+                        alpha : float, optional
+                            Trade-off parameter controlling the contribution of contextual matrix
+                            and time-series. If alpha = 0, network is ignored. (default 0.5)
+                        beta : float, optional
+                            Regularization parameter for sparsity. (default 0.1)
+                        L : int, optional
+                            Hidden dimension size. (default 10)
+                        n_cl : int, optional
+                            Number of clusters. (default 1)
+                        max_iteration : int, optional
+                            Maximum number of iterations for convergence. (default 20)
+                        tol : float, optional
+                            Tolerance for early stopping criteria.  (default 5)
+                        random_init : bool, optional
+                            Whether to use random initialization for latent variables. (default False)
 
                 Returns
                 -------
@@ -1274,14 +1275,14 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    max_iter : int, optional
-                        Maximum number of imputation rounds to perform before returning the imputations computed during the final round. (default is 3). \n
-                    tol : float, optional
-                        Tolerance of the stopping condition. (default is 0.001). \n
-                    initial_strategy : str, optional
-                        Which strategy to use to initialize the missing values. {‘mean’, ‘median’, ‘most_frequent’, ‘constant’} (default is "means"). \n
-                    seed : int, optional
-                        The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42). \n
+                        max_iter : int, optional
+                            Maximum number of imputation rounds to perform before returning the imputations computed during the final round. (default is 3). \n
+                        tol : float, optional
+                            Tolerance of the stopping condition. (default is 0.001). \n
+                        initial_strategy : str, optional
+                            Which strategy to use to initialize the missing values. {‘mean’, ‘median’, ‘most_frequent’, ‘constant’} (default is "means"). \n
+                        seed : int, optional
+                            The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42). \n
 
                 Returns
                 -------
@@ -1338,10 +1339,10 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    n_estimators : int, optional
-                        The number of trees in the Random Forest model used for imputation (default is 10).
-                    seed : int, optional
-                        The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).
+                        n_estimators : int, optional
+                            The number of trees in the Random Forest model used for imputation (default is 10).
+                        seed : int, optional
+                            The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).
 
                 Returns
                 -------
@@ -1395,10 +1396,12 @@ class Imputation:
                 params : dict, optional
                     Parameters of the IIM algorithm, if None, default ones are loaded.
 
-                    - learning_neighbours : int
-                        Number of nearest neighbors for learning.
-                    - algo_code : str
-                        Unique code for the algorithm configuration.
+                    **Algorithm parameters:**
+
+                        learning_neighbours : int
+                            Number of nearest neighbors for learning.
+                        algo_code : str
+                            Unique code for the algorithm configuration.
 
                 Returns
                 -------
@@ -1595,8 +1598,8 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    rank : int
-                        The rank for matrix decomposition (must be greater than 1 and smaller than the number of series).
+                        rank : int
+                            The rank for matrix decomposition (must be greater than 1 and smaller than the number of series).
 
                 Returns
                 -------
@@ -1676,16 +1679,16 @@ class Imputation:
                 params : dict, optional
                     Parameters of the MRNN algorithm, if None, default ones are loaded.
 
-                     **Algorithm parameters:**
+                    **Algorithm parameters:**
 
-                    - hidden_dim : int
-                        The number of hidden units in the neural network.
-                    - learning_rate : float
-                        Learning rate for training the neural network.
-                    - iterations : int
-                        Number of iterations for training.
-                    - sequence_length : int
-                        The length of the sequences used in the recurrent neural network.
+                        hidden_dim : int
+                            The number of hidden units in the neural network.
+                        learning_rate : float
+                            Learning rate for training the neural network.
+                        iterations : int
+                            Number of iterations for training.
+                        sequence_length : int
+                            The length of the sequences used in the recurrent neural network.
 
                 Returns
                 -------
@@ -1739,18 +1742,18 @@ class Imputation:
                 params : dict, optional
                     Parameters of the BRITS algorithm, if None, default ones are loaded.
 
-                     **Algorithm parameters:**
+                    **Algorithm parameters:**
 
-                    - model : str
-                        Specifies the type of model to use for the imputation. Options may include predefined models like 'brits', 'brits-i' or 'brits_i_univ'.
-                    - epoch : int
-                        Number of epochs for training the model. Determines how many times the algorithm processes the entire dataset during training.
-                    - batch_size : int
-                        Size of the batches used during training. Larger batch sizes can speed up training but may require more memory.
-                    - nbr_features : int
-                        Number of features, dimension in the time series.
-                    - hidden_layer : int
-                        Number of units in the hidden layer of the model. Controls the capacity of the neural network to learn complex patterns.
+                        model : str
+                            Specifies the type of model to use for the imputation. Options may include predefined models like 'brits', 'brits-i' or 'brits_i_univ'.
+                        epoch : int
+                            Number of epochs for training the model. Determines how many times the algorithm processes the entire dataset during training.
+                        batch_size : int
+                            Size of the batches used during training. Larger batch sizes can speed up training but may require more memory.
+                        nbr_features : int
+                            Number of features, dimension in the time series.
+                        hidden_layer : int
+                            Number of units in the hidden layer of the model. Controls the capacity of the neural network to learn complex patterns.
 
                 Returns
                 -------
@@ -1801,16 +1804,18 @@ class Imputation:
                 user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
-                    Parameters of the BRITS algorithm, if None, default ones are loaded.
+                    Parameters of the DeepMVI algorithm, if None, default ones are loaded.
 
-                     **Algorithm parameters:**
+                    **Algorithm parameters:**
 
-                     max_epoch : int, optional
-                        Limit of training epoch (default is 1000)
-                    patience : int, optional
-                        Number of threshold error that can be crossed during the training (default is 2)
-                    lr : float, optional
-                        Learning rate of the training (default is 0.001)
+                        max_epoch : int, optional
+                            Limit of training epoch (default is 1000)
+
+                        patience : int, optional
+                            Number of threshold error that can be crossed during the training (default is 2)
+
+                        lr : float, optional
+                            Learning rate of the training (default is 0.001)
 
                 Returns
                 -------
@@ -1821,7 +1826,7 @@ class Imputation:
                 -------
                     >>> deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
                     >>> deep_mvi_imputer.impute()  # default parameters for imputation > or
-                    >>> deep_mvi_imputer.impute(params={"max_epoch": 10, "patience": 2})  # user-defined > or
+                    >>> deep_mvi_imputer.impute(params={"max_epoch": 10, "patience": 2, "lr":0.001})  # user-defined > or
                     >>> deep_mvi_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # automl with ray_tune
                     >>> recov_data = deep_mvi_imputer.recov_data
 
@@ -1862,28 +1867,28 @@ class Imputation:
                 user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
-                    Parameters of the BRITS algorithm, if None, default ones are loaded.
+                    Parameters of the MPIN algorithm, if None, default ones are loaded.
 
                     **Algorithm parameters:**
 
-                    incre_mode : str, optional
-                        The mode of incremental learning. Options are: 'alone',  'data', 'state', 'state+transfer', 'data+state', 'data+state+transfer' (default is "alone").
-                    window : int, optional
-                        The size of the sliding window for processing data streams (default is 2).
-                    k : int, optional
-                        The number of neighbors to consider during message propagation (default is 10).
-                    lr : float, optional
-                        The learning rate for optimizing the message propagation algorithm (default is 0.01).
-                    weight_decay : float, optional
-                        The weight decay (regularization) term to prevent overfitting during training (default is 0.1).
-                    epochs : int, optional
-                        The number of epochs to run the training process (default is 200).
-                    num_of_iteration : int, optional
-                        The number of iteration of the whole training (default is 5).
-                    thre : float, optional
-                        The threshold for considering a missing value as imputed (default is 0.25).
-                    base : str, optional
-                        The base model used for graph representation and message propagation. Common options include "SAGE" and "GCN" (default is "SAGE").
+                        incre_mode : str, optional
+                            The mode of incremental learning. Options are: 'alone',  'data', 'state', 'state+transfer', 'data+state', 'data+state+transfer' (default is "alone").
+                        window : int, optional
+                            The size of the sliding window for processing data streams (default is 2).
+                        k : int, optional
+                            The number of neighbors to consider during message propagation (default is 10).
+                        lr : float, optional
+                            The learning rate for optimizing the message propagation algorithm (default is 0.01).
+                        weight_decay : float, optional
+                            The weight decay (regularization) term to prevent overfitting during training (default is 0.1).
+                        epochs : int, optional
+                            The number of epochs to run the training process (default is 200).
+                        num_of_iteration : int, optional
+                            The number of iteration of the whole training (default is 5).
+                        thre : float, optional
+                            The threshold for considering a missing value as imputed (default is 0.25).
+                        base : str, optional
+                            The base model used for graph representation and message propagation. Common options include "SAGE" and "GCN" (default is "SAGE").
 
 
                 Returns
@@ -1934,19 +1939,19 @@ class Imputation:
                 user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
-                    Parameters of the BRITS algorithm, if None, default ones are loaded.
+                    Parameters of the PRISTI algorithm, if None, default ones are loaded.
 
-                     **Algorithm parameters:**
+                    **Algorithm parameters:**
 
-                    target_strategy : str, optional
-                        The strategy to use for targeting missing values. Options include: "hybrid", "random", "historical" (default is "hybrid").
-                    unconditional : bool, optional
-                        Whether to use an unconditional imputation model (default is True).
-                        If False, conditional imputation models are used, depending on available data patterns.
-                    seed : int, optional
-                        Random seed for reproducibility (default is 42).
-                    device : str, optional
-                        The device to perform computation on, e.g., "cpu" or "cuda" (default is "cpu").
+                        target_strategy : str, optional
+                            The strategy to use for targeting missing values. Options include: "hybrid", "random", "historical" (default is "hybrid").
+                        unconditional : bool, optional
+                            Whether to use an unconditional imputation model (default is True).
+                            If False, conditional imputation models are used, depending on available data patterns.
+                        seed : int, optional
+                            Random seed for reproducibility (default is 42).
+                        device : str, optional
+                            The device to perform computation on, e.g., "cpu" or "cuda" (default is "cpu").
 
 
                 Returns
@@ -2000,7 +2005,7 @@ class Imputation:
                 params : dict, optional
                     Parameters of the MissNet algorithm, if None, default ones are loaded.
 
-                         **Algorithm parameters:**
+                    **Algorithm parameters:**
 
                         alpha : float, optional
                             Trade-off parameter controlling the contribution of contextual matrix
@@ -2076,15 +2081,15 @@ class Imputation:
 
                     **Algorithm parameters:**
 
-                    batch_size : int, optional
-                        Number of samples in each mini-batch during training. Default is 32.
-                    hint_rate : float, optional
-                        Probability of providing hints for the missing data during training. Default is 0.9.
-                    alpha : float, optional
-                        Hyperparameter that controls the balance between the adversarial loss and the reconstruction loss. Default is 10.
-                    epoch : int, optional
-                        Number of training epochs. Default is 100.
-                    logs : bool, optional
+                        batch_size : int, optional
+                            Number of samples in each mini-batch during training. Default is 32.
+                        hint_rate : float, optional
+                            Probability of providing hints for the missing data during training. Default is 0.9.
+                        alpha : float, optional
+                            Hyperparameter that controls the balance between the adversarial loss and the reconstruction loss. Default is 10.
+                        epoch : int, optional
+                            Number of training epochs. Default is 100.
+                        logs : bool, optional
 
 
                 Returns
@@ -2141,31 +2146,31 @@ class Imputation:
                 params : dict, optional
                     Parameters of the GRIN algorithm or Auto-ML configuration, if None, default ones are loaded.
 
-                     **Algorithm parameters:**
+                    **Algorithm parameters:**
 
-                    d_hidden : int, optional, default=32
-                        The number of hidden units in the model's recurrent and graph layers.
+                        d_hidden : int, optional, default=32
+                            The number of hidden units in the model's recurrent and graph layers.
 
-                    lr : float, optional, default=0.001
-                        Learning rate for the optimizer.
+                        lr : float, optional, default=0.001
+                            Learning rate for the optimizer.
 
-                    batch_size : int, optional, default=32
-                        The number of samples per training batch.
+                        batch_size : int, optional, default=32
+                            The number of samples per training batch.
 
-                    window : int, optional, default=10
-                        The size of the time window used for modeling temporal dependencies.
+                        window : int, optional, default=10
+                            The size of the time window used for modeling temporal dependencies.
 
-                    alpha : float, optional, default=10.0
-                        The weight assigned to the adversarial loss term during training.
+                        alpha : float, optional, default=10.0
+                            The weight assigned to the adversarial loss term during training.
 
-                    patience : int, optional, default=4
-                        Number of epochs without improvement before early stopping is triggered.
+                        patience : int, optional, default=4
+                            Number of epochs without improvement before early stopping is triggered.
 
-                    epochs : int, optional, default=20
-                        The maximum number of training epochs.
+                        epochs : int, optional, default=20
+                            The maximum number of training epochs.
 
-                    workers : int, optional, default=2
-                        The number of worker processes for data loading.
+                        workers : int, optional, default=2
+                            The number of worker processes for data loading.
 
 
                 Returns
@@ -2221,37 +2226,37 @@ class Imputation:
                 params : dict, optional
                     Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.
 
-                     **Algorithm parameters:**
+                    **Algorithm parameters:**
 
-                    K_trend : int, (optional) (default: 20)
-                        Number of trend factors.
+                        K_trend : int, (optional) (default: 20)
+                            Number of trend factors.
 
-                    K_season : int, (optional) (default: 2)
-                        Number of seasonal factors.
+                        K_season : int, (optional) (default: 2)
+                            Number of seasonal factors.
 
-                    n_season : int, (optional) (default: 5)
-                        Number of seasonal components per factor.
+                        n_season : int, (optional) (default: 5)
+                            Number of seasonal components per factor.
 
-                    K_bias : int, (optional) (default: 1)
-                        Number of bias factors.
+                        K_bias : int, (optional) (default: 1)
+                            Number of bias factors.
 
-                    time_scale : float, (optional) (default: 1)
-                        Time scaling factor.
+                        time_scale : float, (optional) (default: 1)
+                            Time scaling factor.
 
-                    a0 : float, (optional) (default: 0.6)
-                        Hyperparameter for prior distribution.
+                        a0 : float, (optional) (default: 0.6)
+                            Hyperparameter for prior distribution.
 
-                    b0 : float, (optional) (default: 2.5)
-                        Hyperparameter for prior distribution.
+                        b0 : float, (optional) (default: 2.5)
+                            Hyperparameter for prior distribution.
 
-                    v : float, (optional) (default: 0.5)
-                        Variance parameter.
+                        v : float, (optional) (default: 0.5)
+                            Variance parameter.
 
-                    config : dict, (optional) (default: None)
-                        Dictionary containing all configuration parameters, that will replace all other parameters (see documentation).
+                        config : dict, (optional) (default: None)
+                            Dictionary containing all configuration parameters, that will replace all other parameters (see documentation).
 
-                    args : object, (optional) (default: None)
-                        Arguments containing all configuration parameters, that will replace all other parameters (see documentation).
+                        args : object, (optional) (default: None)
+                            Arguments containing all configuration parameters, that will replace all other parameters (see documentation).
 
 
                 Returns
@@ -2307,19 +2312,19 @@ class Imputation:
                 params : dict, optional
                     Parameters of the HKMF-T algorithm or Auto-ML configuration, if None, default ones are loaded.
 
-                     **Algorithm parameters:**
+                    **Algorithm parameters:**
 
-                     tags : numpy.ndarray, optional
-                        An array containing tags that provide additional structure or metadata about
-                        the input data. If None, no tags are used (default is None).
+                        tags : numpy.ndarray, optional
+                            An array containing tags that provide additional structure or metadata about
+                            the input data. If None, no tags are used (default is None).
 
-                    data_names : list of str, optional
-                        List of names corresponding to each row or column of the dataset for interpretability.
-                        If None, names are not used (default is None).
+                        data_names : list of str, optional
+                            List of names corresponding to each row or column of the dataset for interpretability.
+                            If None, names are not used (default is None).
 
-                    epoch : int, optional
-                        The maximum number of training epochs for the Hankel Matrix Factorization algorithm.
-                        If convergence is reached earlier, the process stops (default is 10).
+                        epoch : int, optional
+                            The maximum number of training epochs for the Hankel Matrix Factorization algorithm.
+                            If convergence is reached earlier, the process stops (default is 10).
 
                 Returns
                 -------
@@ -2379,35 +2384,35 @@ class Imputation:
                 params : dict, optional
                     Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.
 
-                     **Algorithm parameters:**
+                    **Algorithm parameters:**
 
-                    node_number : int, optional
-                        The number of nodes (time series variables) in the dataset. If not provided,
-                        it is inferred from `incomp_data`.
+                        node_number : int, optional
+                            The number of nodes (time series variables) in the dataset. If not provided,
+                            it is inferred from `incomp_data`.
 
-                    kernel_set : list, optional
-                        Set of kernel sizes used in the model for graph convolution operations (default: [1]).
+                        kernel_set : list, optional
+                            Set of kernel sizes used in the model for graph convolution operations (default: [1]).
 
-                    dropout : float, optional
-                        Dropout rate applied during training to prevent overfitting (default: 0.1).
+                        dropout : float, optional
+                            Dropout rate applied during training to prevent overfitting (default: 0.1).
 
-                    subgraph_size : int, optional
-                        The size of each subgraph used in message passing within the graph network (default: 5).
+                        subgraph_size : int, optional
+                            The size of each subgraph used in message passing within the graph network (default: 5).
 
-                    node_dim : int, optional
-                        Dimensionality of the node embeddings in the graph convolution layers (default: 3).
+                        node_dim : int, optional
+                            Dimensionality of the node embeddings in the graph convolution layers (default: 3).
 
-                    seq_len : int, optional
-                        Length of the input sequence for temporal modeling (default: 1).
+                        seq_len : int, optional
+                            Length of the input sequence for temporal modeling (default: 1).
 
-                    lr : float, optional
-                        Learning rate for model optimization (default: 0.001).
+                        lr : float, optional
+                            Learning rate for model optimization (default: 0.001).
 
-                    epoch : int, optional
-                        Number of training epochs (default: 10).
+                        epoch : int, optional
+                            Number of training epochs (default: 10).
 
-                    seed : int, optional
-                        Random seed for reproducibility (default: 42).
+                        seed : int, optional
+                            Random seed for reproducibility (default: 42).
 
                 Returns
                 -------

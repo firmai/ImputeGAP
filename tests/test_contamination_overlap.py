@@ -48,7 +48,7 @@ class TestContaminationOverlap(unittest.TestCase):
         of the previous series and continuing with overlap.
         """
 
-        datasets = ["test", "chlorine", "eeg-alcohol", "fmri-stoptask"]
+        datasets = ["test.txt", "chlorine", "eeg-alcohol", "fmri-stoptask"]
         series_rate = [0.2, 0.5, 0.8]  # Percentage of series impacted
         P = 0.1  # Offset zone
         shift = [0.05, 0.1]

@@ -124,7 +124,7 @@ ___________________
 
 Navigate to ``./imputegap/recovery/imputation.py``:
 
-   a. Improve the imputation call of the ``NewAlg`` class in the ``def impute()`` function, and add the call of the optimizer and the default values of the parameters.
+Improve the imputation call of the ``NewAlg`` class in the ``def impute()`` function, and add the call of the optimizer and the default values of the parameters.
 
 .. code-block:: python
 
@@ -172,8 +172,8 @@ We will show how to adjust the integration wrapper in C++
 
    <br><br>
 
-Example: CDRec Integration
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+C. Example: CDRec Integration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Once your cpp and h files are ready to be converted (you can look at ``./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.cpp`` or ``./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.h``), create a ``.so`` file for linux and windows, and a ``.dylib`` file for MAC OS.
 
 Shared Object Generation Linux/Windows

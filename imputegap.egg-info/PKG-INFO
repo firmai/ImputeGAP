@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: imputegap
-Version: 1.0.7
+Version: 1.0.8
 Summary: A Library of Imputation Techniques for Time Series Data
 Home-page: https://github.com/eXascaleInfolab/ImputeGAP
 Author: Quentin Nater
@@ -93,7 +93,7 @@ Access to commonly used datasets in time series research (Datasets).
 <br>
 
 ![Python](https://img.shields.io/badge/Python-v3.12-blue) 
-![Release](https://img.shields.io/badge/Release-v1.0.7-brightgreen) 
+![Release](https://img.shields.io/badge/Release-v1.0.8-brightgreen)
 ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu)
 ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen)
 ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue)
