@@ -314,7 +314,7 @@ class Benchmark:
 
         return True
 
-    def generate_reports_txt(self, runs_plots_scores, save_dir="./reports", dataset="", metrics=["RMSE"], run=-1, verbose=True):
+    def generate_reports_txt(self, runs_plots_scores, save_dir="./reports", dataset="", metrics=["RMSE"], run=-1, rt=0, verbose=True):
         """
         Generate and save a text report of metrics and timing for each dataset, algorithm, and pattern.
 
@@ -330,6 +330,8 @@ class Benchmark:
             List of metrics asked for in the report.
         run : int, optional
             Number of the run.
+        rt : float, optional
+            Total time of the run.
         verbose : bool, optional
             Whether to display the contamination information (default is True).
 
@@ -380,6 +382,7 @@ class Benchmark:
                 with open(save_path, "w") as file:
                     file.write(f"Report for Dataset: {dataset}\n")
                     file.write(f"Generated on: {current_time}\n")
+                    file.write(f"Total runtime: {rt} (sec)\n")
                     if run >= 0:
                         file.write(f"Run number: {run}\n")
                     file.write("=" * 120 + "\n\n")
@@ -647,9 +650,34 @@ class Benchmark:
                         ax.set_ylabel(ylabel_metric)
                         ax.set_xlim(0.0, 0.85)
 
-                        diff = (max_y - min_y)
+                        if metric == "RMSE" or metric == "MAE":
+                            if min_y < 0:
+                                min_y = 0
+                            if max_y > 3:
+                                max_y = 3
+                        elif metric == "CORRELATION":
+                            if min_y < -1:
+                                min_y = -1
+                            if max_y > 1:
+                                max_y = 1
+                        elif metric == "MI":
+                            if min_y < 0:
+                                min_y = 0
+                            if max_y > 2:
+                                max_y = 2
+                        elif metric == "runtime_linear_scale":
+                            if min_y < 0:
+                                min_y = 0
+                            if max_y > 10:
+                                max_y = 10
+                        elif metric == "runtime_log_scale":
+                            if min_y < -5:
+                                min_y = -5
+                            if max_y > 5:
+                                max_y = 5
 
-                        y_padding = (0.2*diff) * diff if max_y != min_y else (0.2*diff)  # Avoid 0 range
+                        diff = (max_y - min_y)
+                        y_padding = 0.15*diff
 
                         if y_padding is None or y_padding == 0:
                             y_padding = 1
@@ -862,7 +890,7 @@ class Benchmark:
                     print("\nruns saved in : ", save_dir_runs)
                 self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_runs, display=False, verbose=verbose)
                 self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, metrics=metrics, subplot=False, y_size=y_p_size, save_dir=save_dir_runs, display=False, verbose=verbose)
-                self.generate_reports_txt(runs_plots_scores, save_dir_runs, dataset, metrics, i_run, verbose=verbose)
+                self.generate_reports_txt(runs_plots_scores=runs_plots_scores, save_dir=save_dir_runs, dataset=dataset, metrics=metrics, run=i_run, verbose=verbose)
                 #self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
                 run_storage.append(runs_plots_scores)
 
@@ -877,7 +905,8 @@ class Benchmark:
         print("the results of the analysis has been saved in : ", save_dir, "\n")
 
         benchmark_end = time.time()
-        print(f"\n> logs: benchmark - Execution Time: {(benchmark_end - benchmark_time):.4f} seconds\n")
+        total_time_benchmark = round(benchmark_end - benchmark_time, 4)
+        print(f"\n> logs: benchmark - Execution Time: {total_time_benchmark} seconds\n")
 
         verb = True
         for scores in run_averaged:
@@ -885,7 +914,7 @@ class Benchmark:
             dataset_name = str(all_keys[0])
             save_dir_agg_set = save_dir + "/" + dataset_name
 
-            self.generate_reports_txt(scores, save_dir_agg_set, dataset_name, metrics, -1)
+            self.generate_reports_txt(runs_plots_scores=scores, save_dir=save_dir_agg_set, dataset=dataset_name, metrics=metrics, rt=total_time_benchmark, run=-1)
             self.generate_plots(runs_plots_scores=scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set, display=verb)
             print("\n\n")
 

@@ -33,7 +33,7 @@ class TestOptiMRNN(unittest.TestCase):
         algo_default.score(input_data=ts_1.data)
         metrics_default = algo_default.metrics
 
-        algo_load = Imputation.PatternSearch.STMVL(incomp_data)
+        algo_load = Imputation.DeepLearning.MRNN(incomp_data)
         algo_load.impute(params=params_optimal_load)
         algo_load.score(input_data=ts_1.data)
 
