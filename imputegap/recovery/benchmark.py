@@ -67,11 +67,15 @@ class Benchmark:
         if algorithm.upper() == 'DEEPMVI' or algorithm.upper() == 'DEEP_MVI':
             if pattern.lower() == "mcar" or pattern.lower() == "missing_completely_at_random":
                 if x > 0.6:
-                    print(f"The imputation algorithm {algorithm} is not compatible with this configuration {pattern} with {x} missingness rate.")
+                    print(f"\n(BENCH) The imputation algorithm {algorithm} is not compatible with this configuration {pattern} with missingness rate more than 0.6.")
+                    return True
+            if pattern.lower() == "mp" or pattern.lower() == "aligned":
+                if x < 0.15:
+                    print(f"\n(BENCH) The imputation algorithm {algorithm} is not compatible with this configuration {pattern} with missingness rate less then 0.15.")
                     return True
 
         if algorithm.upper() == 'MPIN':
-            print(f"The imputation algorithm {algorithm} is not compatible with this setup.")
+            print(f"\n(BENCH) The imputation algorithm {algorithm} is not compatible with this setup.")
             return True
 
         return False
