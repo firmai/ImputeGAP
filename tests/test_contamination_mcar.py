@@ -12,7 +12,7 @@ class TestContaminationMCAR(unittest.TestCase):
         the goal is to test if only the selected values are contaminated
         """
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test.txt"))
 
         series_impacted = [0.4]
         missing_rates = [40]
@@ -49,7 +49,7 @@ class TestContaminationMCAR(unittest.TestCase):
         the goal is to test if the starting position is always guaranteed
         """
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test.txt"))
 
         series_impacted = [0.4, 1]
         missing_rates = [0.1, 0.4, 0.6]

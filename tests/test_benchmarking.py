@@ -7,6 +7,7 @@ class TestBenchmarking(unittest.TestCase):
         """
         the goal is to test if only the simple imputation with ST-MVL has the expected outcome
         """
+        bench = Benchmark()
         expected_datasets = ["eeg-alcohol"]
 
         opti_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 2, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
@@ -17,7 +18,8 @@ class TestBenchmarking(unittest.TestCase):
 
         x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
-        results_benchmarking, _ = Benchmark().eval(datasets=expected_datasets, optimizers=optimizers, algorithms=algorithms_full, patterns=patterns_small, x_axis=x_axis, runs=-1)
+        bench.eval(datasets=expected_datasets, optimizers=optimizers, algorithms=algorithms_full, patterns=patterns_small, x_axis=x_axis, runs=-1)
+        results_benchmarking = bench.list_results
         results_benchmarking = results_benchmarking[0]
         expected_datasets = ["eegalcohol"]
 
@@ -155,7 +157,8 @@ class TestBenchmarking(unittest.TestCase):
                     "iim": {"bayesian": { "0.05": {"scores": {"RMSE": -100, "MAE": 1, "MI": 2, "CORRELATION": 3}, "times": {"contamination": 4, "optimization": 5, "imputation": 6}}, "0.2": {"scores": {"RMSE": 1, "MAE": 2, "MI": 3, "CORRELATION": 4}, "times": {"contamination": 5, "optimization": 6, "imputation": 7}}, "0.4": {"scores": {"RMSE": 0.5, "MAE": 1.5, "MI": 2.5, "CORRELATION": 3.5}, "times": {"contamination": 4.5, "optimization": 5.5, "imputation": 6.5}}, "0.6": {"scores": {"RMSE": 0.5, "MAE": 1.5, "MI": 2.5, "CORRELATION": 3.5}, "times": {"contamination": 4.5, "optimization": 5.5, "imputation": 6.5}}, "0.8": {"scores": {"RMSE": 0.5, "MAE": 1.5, "MI": 2.5, "CORRELATION": 3.5}, "times": {"contamination": 4.5, "optimization": 5.5, "imputation": 6.5}}}},
         }}}
 
-        scores_list, algos, sets = Benchmark().avg_results(alpha_1, alpha_2, beta_1, beta_2, delta_1, delta_2, epsilon_1, epsilon_2, gamma_1, gamma_2)
+        bench = Benchmark()
+        scores_list, algos, sets = bench.avg_results(alpha_1, alpha_2, beta_1, beta_2, delta_1, delta_2, epsilon_1, epsilon_2, gamma_1, gamma_2)
 
         print(scores_list)
 
@@ -194,6 +197,7 @@ class TestBenchmarking(unittest.TestCase):
                     f"Unexpected RMSE for algorithm '{algo}' at dataset index {i}."
                 )
 
-        validation = Benchmark().generate_heatmap(scores_list, algos, sets, "./reports", False)
+
+        validation = bench.generate_heatmap(scores_list, algos, sets, metric="RMSE", save_dir="./reports", display=False)
 
         self.assertTrue(validation)

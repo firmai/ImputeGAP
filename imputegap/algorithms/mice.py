@@ -43,7 +43,7 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
     """
 
     if verbose:
-        print("(PYTHON) MICE : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") for max_iter ",
+        print("(IMPUTATION) MICE : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") for max_iter ",
               max_iter, ", tol ", tol, " initial_strategy ", initial_strategy, ", and seed ", seed, "...\n\n\t\t\t"
               "Careful, this imputation algorithm might take a while to compute.")
 
@@ -54,6 +54,6 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation MICE - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation MICE - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

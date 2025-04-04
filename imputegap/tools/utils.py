@@ -305,14 +305,14 @@ def search_path(set_name="test"):
     if set_name in list_of_datasets():
         return set_name + ".txt"
     else:
-        filepath = "../imputegap/dataset/" + set_name + ".txt"
+        filepath = "../imputegap/dataset/" + set_name
 
         if not os.path.exists(filepath):
             filepath = filepath[1:]
         return filepath
 
 
-def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=True):
+def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=False):
     """
     Load default or optimal parameters for algorithms from a TOML file.
 
@@ -329,7 +329,7 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     path : str, optional
         Custom file path for the TOML file (default is None).
     verbose : bool, optional
-        Whether to display the contamination information (default is True).
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -809,18 +809,21 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     None
     """
     if file_name is None:
-        file_name = "../params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+        file_name = "./imputegap_assets/params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
     else:
         file_name += "optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-
-    if not os.path.exists(file_name):
-        file_name = file_name[1:]
 
     dir_name = os.path.dirname(file_name)
     if dir_name and not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
-    if algorithm == "mrnn":
+    if algorithm == "cdrec":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "eps": optimal_params[1],
+            "iters": int(optimal_params[2])
+    }
+    elif algorithm == "mrnn":
         params_to_save = { "hidden_dim": int(optimal_params[0]),
             "learning_rate": optimal_params[1],
             "num_iter": int(optimal_params[2]),
@@ -836,12 +839,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         params_to_save = {
             "learning_neighbors": int(optimal_params[0])
         }
-    elif algorithm == "cdrec":
-        params_to_save = {
-            "rank": int(optimal_params[0]),
-            "eps": optimal_params[1],
-            "iters": int(optimal_params[2])
-        }
+
     elif algorithm == "iterative_svd":
         params_to_save = {
             "rank": int(optimal_params[0])
@@ -1127,3 +1125,9 @@ def list_of_extractors():
         "tsfel",
         "tsfresh"
     ])
+
+def list_of_metrics():
+    return ["RMSE", "MAE", "MI", "CORRELATION", "runtime_linear_scale", "runtime_log_scale"]
+
+def list_of_normalizers():
+    return ["z_score", "min_max"]

@@ -91,7 +91,7 @@ def get_default_args():
     return Args()
 
 
-def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, config=None, args=None):
+def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, config=None, args=None, verbose=True):
     """
     Run BayOTIDE model using a provided NumPy data matrix instead of loading from a file.
 
@@ -141,11 +141,11 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
     if args is None:
         args = get_default_args()
 
-
-    print("\n\n\t\t\t(PYTHON) BayOTIDE: Matrix Shape: (", data_matrix.shape[0], ", ", data_matrix.shape[1], ")")
-    print(f"\t\t\tK_trend: {config['K_trend']}, K_season: {config['K_season']}, n_season: {config['n_season']}, "
-          f"K_bias: {config['K_bias']}, time_scale: {config['time_scale']}, a0: {config['a0']}, "
-          f"b0: {config['b0']}, v: {config['v']}")
+    if verbose:
+        print("(IMPUTATION) BayOTIDE: Matrix Shape: (", data_matrix.shape[0], ", ", data_matrix.shape[1], ")")
+        print(f"\t\t\tK_trend: {config['K_trend']}, K_season: {config['K_season']}, n_season: {config['n_season']}, "
+              f"K_bias: {config['K_bias']}, time_scale: {config['time_scale']}, a0: {config['a0']}, "
+              f"b0: {config['b0']}, v: {config['v']}")
 
     torch.random.manual_seed(args.seed)
 
@@ -153,7 +153,7 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
 
     torch.random.manual_seed(args.seed)
 
-    hyper_dict = utils_BayOTIDE.make_hyper_dict(config, args)
+    hyper_dict = utils_BayOTIDE.make_hyper_dict(config, args, verbose)
 
     INNER_ITER = hyper_dict["INNER_ITER"]
     EVALU_T = hyper_dict["EVALU_T"]
@@ -184,13 +184,17 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
 
             if T_id % EVALU_T == 0 or T_id == model.T - 1:
                 _, loss_dict = model.model_test(T_id)
-                print(
-                    f"\t\t\t\t\t\tT_id = {T_id}, train_rmse = {loss_dict['train_RMSE']:.3f}, test_rmse= {loss_dict['test_RMSE']:.3f}")
+
+                if verbose:
+                    print(f"\t\t\t\t\t\tT_id = {T_id}, train_rmse = {loss_dict['train_RMSE']:.3f}, test_rmse= {loss_dict['test_RMSE']:.3f}")
 
 
-        print('\t\t\t\tSmoothing back...')
+        if verbose:
+            print('\t\t\t\tSmoothing back...')
         model.smooth()
-        print('\t\t\t\tFinished training!')
+
+        if verbose:
+            print('\t\t\t\tFinished training!')
 
         model.post_update_U_after_smooth(0)
 
@@ -198,15 +202,16 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
         W_matrix = model.post_W_m.clone().squeeze().cpu().detach().numpy()
         U_matrix = model.post_U_m.clone().squeeze().cpu().detach().numpy()
 
-        print("\n\t\t\t\tW_matrix shape:", W_matrix.shape)  # Should be (N, K)
-        print("\t\t\t\tU_matrix shape:", U_matrix.shape)  # Should be (K, T)
-
         # Check for row similarity
         w_unique_rows = np.unique(W_matrix, axis=0)
-        print(f"\t\t\t\t\t\tUnique W_matrix rows: {w_unique_rows.shape[0]} / {W_matrix.shape[0]}")
 
         u_unique_rows = np.unique(U_matrix, axis=0)
-        print(f"\t\t\t\t\t\tUnique W_matrix rows: {u_unique_rows.shape[0]} / {U_matrix.shape[0]}")
+
+        if verbose:
+            print("\n\t\t\t\tW_matrix shape:", W_matrix.shape)  # Should be (N, K)
+            print("\t\t\t\tU_matrix shape:", U_matrix.shape)  # Should be (K, T)
+            print(f"\t\t\t\t\t\tUnique W_matrix rows: {w_unique_rows.shape[0]} / {W_matrix.shape[0]}")
+            print(f"\t\t\t\t\t\tUnique W_matrix rows: {u_unique_rows.shape[0]} / {U_matrix.shape[0]}")
 
         # Ensure the multiplication preserves individual series variations
         imputed_matrix = np.matmul(W_matrix, U_matrix)  # (N, T)

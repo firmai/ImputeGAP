@@ -2,7 +2,6 @@ import numpy as np
 from skopt.space import Integer, Real
 from ray import train, tune
 
-
 # CDRec parameters
 CDREC_RANK_RANGE = [i for i in range(1, 11)]  # This will generate a range from 1 to 10
 CDREC_EPS_RANGE = np.logspace(-6, 0, num=10)  # log scale for eps
@@ -38,7 +37,6 @@ SEARCH_SPACES_PSO = {
     'stmvl': [(2, 99), (1e-6, 0.999999), (1, 9)]
 }
 
-
 # Define the parameter names for each algorithm
 PARAM_NAMES = {
     'cdrec': ['rank', 'epsilon', 'iteration'],
@@ -63,9 +61,11 @@ RAYTUNE_PARAMS = {
         "eps": tune.loguniform(1e-6, 1),
         "iters": tune.grid_search([i * 50 for i in range(1, 4)])
     },
+
     "iim": {
         "learning_neighbors": tune.grid_search([i for i in range(1, 20)])  # Up to 100 learning neighbors
     },
+
     "mrnn": {
         "hidden_dim":  tune.grid_search([i for i in range(10, 100, 20)]),  # Hidden dimension
         "learning_rate": tune.loguniform(1e-6, 1),  # Log scale for learning rate
@@ -73,13 +73,12 @@ RAYTUNE_PARAMS = {
         "seq_len": 7  # tune.grid_search([i for i in range(5, 7, 2)]),  # Sequence length
         #"keep_prob": tune.loguniform(1e-6, 1)  # Dropout keep probability
     },
+
     "stmvl": {
         "window_size": tune.grid_search([i for i in range(10, 100)]),  # Window size
         "gamma": tune.loguniform(1e-6, 1),  # Smoothing parameter gamma
         "alpha": tune.grid_search([i for i in range(2, 10)]),  # Window size
     },
-
-    # --- New Algorithms ---
 
     "iterative_svd": {
         "rank": tune.grid_search([i for i in range(2, 16, 1)])  # Testing rank from 2 to 18

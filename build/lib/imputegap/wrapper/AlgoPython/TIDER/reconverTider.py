@@ -534,7 +534,7 @@ def recoveryTIDER(miss_data, eta=0.01, batch_size=32, epochs=5, device="cuda", l
     args.dim_size = miss_data.shape[0]
     args.bias_dimension = miss_data.shape[1]
 
-    print("\n\n\t\t\t(PYTHON) TIDER: Matrix Shape: (", x.shape[0], ", ", x.shape[1], ") for",
+    print("(IMPUTATION) TIDER: Matrix Shape: (", x.shape[0], ", ", x.shape[1], ") for",
           " batch_size ", args.batch_size, " eta ", args.eta, " lr ", lr, " epochs ", args.num_epochs ,
           ", device ", args.device,  " bias_dimension ", args.bias_dimension, ", and ", args.dim_size,
           "=================================================\n\n ")

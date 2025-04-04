@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>imputegap.recovery.imputation - imputegap 1.0.7 documentation</title>
+        <title>imputegap.recovery.imputation - imputegap 1.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">imputegap 1.0.7 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">imputegap 1.0.8 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">imputegap 1.0.7 documentation</span>
+  <span class="sidebar-brand-text">imputegap 1.0.8 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../integration.html">Integration</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -309,6 +310,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">downstream_metrics</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downstream_plot</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
@@ -333,7 +335,7 @@
 
 <div class="viewcode-block" id="BaseImputer.score">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.BaseImputer.score">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">recov_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">downstream</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">recov_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">downstream</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute evaluation metrics for the imputed time series.</span>
 <span class="sd">        Upstream and downstream metrics can be computed.</span>
@@ -347,6 +349,9 @@
 <span class="sd">        downstream : dict, optional</span>
 <span class="sd">            Dictionary that calls, if active, the downstream evaluation. (default is None).</span>
 <span class="sd">            format : {&quot;model&quot;: &quot;forcaster&quot;, &quot;params&quot;: parameters}</span>
+<span class="sd">        verbose : bool, optional</span>
+<span class="sd">            Display the message from the evaluator (default is True).</span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        None</span>
@@ -360,9 +365,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">recov_data</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">downstream</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">downstream</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">downstream_metrics</span> <span class="o">=</span> <span class="n">Downstream</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">downstream</span><span class="p">)</span><span class="o">.</span><span class="n">downstream_analysis</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">downstream_plot</span> <span class="o">=</span> <span class="n">Downstream</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">downstream</span><span class="p">)</span><span class="o">.</span><span class="n">downstream_analysis</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">Evaluation</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">)</span><span class="o">.</span><span class="n">compute_all_metrics</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">Evaluation</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span><span class="o">.</span><span class="n">compute_all_metrics</span><span class="p">()</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
@@ -763,7 +768,7 @@
 
 <div class="viewcode-block" id="Imputation.Statistics.MeanImputeBySeries.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.Statistics.MeanImputeBySeries.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Impute missing values by replacing them with the mean value of the series.</span>
 
@@ -860,10 +865,11 @@
 <span class="sd">                    Parameters of the KNNImpute algorithm, if None, default ones are loaded.</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
-<span class="sd">                    k : int, optional</span>
-<span class="sd">                        Number of nearest neighbor (default is 5).</span>
-<span class="sd">                    weights : str, optional</span>
-<span class="sd">                        &quot;uniform&quot; for mean, &quot;distance&quot; for inverse-distance weighting.</span>
+
+<span class="sd">                        k : int, optional</span>
+<span class="sd">                            Number of nearest neighbor (default is 5).</span>
+<span class="sd">                        weights : str, optional</span>
+<span class="sd">                            &quot;uniform&quot; for mean, &quot;distance&quot; for inverse-distance weighting.</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -951,72 +957,72 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    - rank : int</span>
-<span class="sd">                        Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.</span>
-<span class="sd">                    - epsilon : float</span>
-<span class="sd">                        The learning rate used for the algorithm.</span>
-<span class="sd">                    - iterations : int</span>
-<span class="sd">                        The number of iterations to perform.</span>
+<span class="sd">                        rank : int</span>
+<span class="sd">                            Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.</span>
+<span class="sd">                        epsilon : float</span>
+<span class="sd">                            The learning rate used for the algorithm.</span>
+<span class="sd">                        iterations : int</span>
+<span class="sd">                            The number of iterations to perform.</span>
 
 <span class="sd">                    **Auto-ML parameters:**</span>
 
-<span class="sd">                    - input_data : numpy.ndarray</span>
-<span class="sd">                        The original time series dataset without contamination.</span>
-<span class="sd">                    - optimizer : str</span>
-<span class="sd">                        The optimizer to use for parameter optimization. Valid values are &quot;bayesian&quot;, &quot;greedy&quot;, &quot;pso&quot;, or &quot;sh&quot;.</span>
-<span class="sd">                    - options : dict, optional</span>
-<span class="sd">                        Optional parameters specific to the optimizer.</span>
+<span class="sd">                        input_data : numpy.ndarray</span>
+<span class="sd">                            The original time series dataset without contamination.</span>
+<span class="sd">                        optimizer : str</span>
+<span class="sd">                            The optimizer to use for parameter optimization. Valid values are &quot;bayesian&quot;, &quot;greedy&quot;, &quot;pso&quot;, or &quot;sh&quot;.</span>
+<span class="sd">                        options : dict, optional</span>
+<span class="sd">                            Optional parameters specific to the optimizer.</span>
 
 <span class="sd">                        **Bayesian:**</span>
 
-<span class="sd">                        - n_calls : int, optional</span>
-<span class="sd">                            Number of calls to the objective function. Default is 3.</span>
-<span class="sd">                        - metrics : list, optional</span>
-<span class="sd">                            List of selected metrics to consider for optimization. Default is [&quot;RMSE&quot;].</span>
-<span class="sd">                        - n_random_starts : int, optional</span>
-<span class="sd">                            Number of initial calls to the objective function, from random points. Default is 50.</span>
-<span class="sd">                        - acq_func : str, optional</span>
-<span class="sd">                            Acquisition function to minimize over the Gaussian prior. Valid values: &#39;LCB&#39;, &#39;EI&#39;, &#39;PI&#39;, &#39;gp_hedge&#39; (default is &#39;gp_hedge&#39;).</span>
+<span class="sd">                            n_calls : int, optional</span>
+<span class="sd">                                Number of calls to the objective function. Default is 3.</span>
+<span class="sd">                            metrics : list, optional</span>
+<span class="sd">                                List of selected metrics to consider for optimization. Default is [&quot;RMSE&quot;].</span>
+<span class="sd">                            n_random_starts : int, optional</span>
+<span class="sd">                                Number of initial calls to the objective function, from random points. Default is 50.</span>
+<span class="sd">                            acq_func : str, optional</span>
+<span class="sd">                                Acquisition function to minimize over the Gaussian prior. Valid values: &#39;LCB&#39;, &#39;EI&#39;, &#39;PI&#39;, &#39;gp_hedge&#39; (default is &#39;gp_hedge&#39;).</span>
 
 <span class="sd">                        **Greedy:**</span>
 
-<span class="sd">                        - n_calls : int, optional</span>
-<span class="sd">                            Number of calls to the objective function. Default is 3.</span>
-<span class="sd">                        - metrics : list, optional</span>
-<span class="sd">                            List of selected metrics to consider for optimization. Default is [&quot;RMSE&quot;].</span>
+<span class="sd">                            n_calls : int, optional</span>
+<span class="sd">                                Number of calls to the objective function. Default is 3.</span>
+<span class="sd">                            metrics : list, optional</span>
+<span class="sd">                                List of selected metrics to consider for optimization. Default is [&quot;RMSE&quot;].</span>
 
 <span class="sd">                        **PSO:**</span>
 
-<span class="sd">                        - n_particles : int, optional</span>
-<span class="sd">                            Number of particles used.</span>
-<span class="sd">                        - c1 : float, optional</span>
-<span class="sd">                            PSO learning coefficient c1 (personal learning).</span>
-<span class="sd">                        - c2 : float, optional</span>
-<span class="sd">                            PSO learning coefficient c2 (global learning).</span>
-<span class="sd">                        - w : float, optional</span>
-<span class="sd">                            PSO inertia weight.</span>
-<span class="sd">                        - iterations : int, optional</span>
-<span class="sd">                            Number of iterations for the optimization.</span>
-<span class="sd">                        - n_processes : int, optional</span>
-<span class="sd">                            Number of processes during optimization.</span>
+<span class="sd">                            n_particles : int, optional</span>
+<span class="sd">                                Number of particles used.</span>
+<span class="sd">                            c1 : float, optional</span>
+<span class="sd">                                PSO learning coefficient c1 (personal learning).</span>
+<span class="sd">                            c2 : float, optional</span>
+<span class="sd">                                PSO learning coefficient c2 (global learning).</span>
+<span class="sd">                            w : float, optional</span>
+<span class="sd">                                PSO inertia weight.</span>
+<span class="sd">                            iterations : int, optional</span>
+<span class="sd">                                Number of iterations for the optimization.</span>
+<span class="sd">                            n_processes : int, optional</span>
+<span class="sd">                                Number of processes during optimization.</span>
 
 <span class="sd">                        **Successive Halving (SH):**</span>
 
-<span class="sd">                        - num_configs : int, optional</span>
-<span class="sd">                            Number of configurations to try.</span>
-<span class="sd">                        - num_iterations : int, optional</span>
-<span class="sd">                            Number of iterations to run the optimization.</span>
-<span class="sd">                        - reduction_factor : int, optional</span>
-<span class="sd">                            Reduction factor for the number of configurations kept after each iteration.</span>
+<span class="sd">                            num_configs : int, optional</span>
+<span class="sd">                                Number of configurations to try.</span>
+<span class="sd">                            num_iterations : int, optional</span>
+<span class="sd">                                Number of iterations to run the optimization.</span>
+<span class="sd">                            reduction_factor : int, optional</span>
+<span class="sd">                                Reduction factor for the number of configurations kept after each iteration.</span>
 
 
 <span class="sd">                        **RAY TUNE (ray_tune):**</span>
 
-<span class="sd">                        - n_calls : int, optional</span>
-<span class="sd">                            Number of calls to the objective function (default is 10).</span>
-<span class="sd">                        - max_concurrent_trials : int, optional</span>
-<span class="sd">                            Number of trials run in parallel, related to your total memory / cpu / gpu (default is 2).</span>
-<span class="sd">                            Please increase the value if you have more resources</span>
+<span class="sd">                            n_calls : int, optional</span>
+<span class="sd">                                Number of calls to the objective function (default is 10).</span>
+<span class="sd">                            max_concurrent_trials : int, optional</span>
+<span class="sd">                                Number of trials run in parallel, related to your total memory / cpu / gpu (default is 2).</span>
+<span class="sd">                                Please increase the value if you have more resources</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -1040,7 +1046,7 @@
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">rank</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">iterations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">rank</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">iterations</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                    <span class="n">rank</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">iterations</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">cdrec</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="o">=</span><span class="n">rank</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
@@ -1078,8 +1084,8 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    - rank : int</span>
-<span class="sd">                        Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.</span>
+<span class="sd">                        rank : int</span>
+<span class="sd">                            Rank of matrix reduction, which should be higher than 1 and smaller than the number of series.</span>
 
 
 <span class="sd">                Returns</span>
@@ -1142,8 +1148,8 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    - max_rank : int</span>
-<span class="sd">                        Max rank of matrix reduction, which should be higher than 1 and smaller than the number of series.</span>
+<span class="sd">                        max_rank : int</span>
+<span class="sd">                            Max rank of matrix reduction, which should be higher than 1 and smaller than the number of series.</span>
 
 
 <span class="sd">                Returns</span>
@@ -1206,12 +1212,12 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                     rank : int</span>
-<span class="sd">                        The rank of the low-dimensional subspace for matrix decomposition.</span>
-<span class="sd">                        Must be greater than 0 and less than or equal to the number of columns in the matrix.</span>
-<span class="sd">                     regularization : float</span>
-<span class="sd">                        The regularization parameter to control the trade-off between reconstruction accuracy and robustness.</span>
-<span class="sd">                        Higher values enforce sparsity or robustness against noise in the data.</span>
+<span class="sd">                         rank : int</span>
+<span class="sd">                            The rank of the low-dimensional subspace for matrix decomposition.</span>
+<span class="sd">                            Must be greater than 0 and less than or equal to the number of columns in the matrix.</span>
+<span class="sd">                         regularization : float</span>
+<span class="sd">                            The regularization parameter to control the trade-off between reconstruction accuracy and robustness.</span>
+<span class="sd">                            Higher values enforce sparsity or robustness against noise in the data.</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -1273,9 +1279,9 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                     max_rank : int</span>
-<span class="sd">                        The max rank of the low-dimensional subspace for matrix decomposition.</span>
-<span class="sd">                        Must be greater than 0 and less than or equal to the number of columns in the matrix.</span>
+<span class="sd">                         max_rank : int</span>
+<span class="sd">                            The max rank of the low-dimensional subspace for matrix decomposition.</span>
+<span class="sd">                            Must be greater than 0 and less than or equal to the number of columns in the matrix.</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -1338,15 +1344,15 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    k : int</span>
-<span class="sd">                        The number of eigencomponents (principal components) to retain for dimensionality reduction.</span>
-<span class="sd">                        Example: 2, 5, 10.</span>
-<span class="sd">                    w : int</span>
-<span class="sd">                        The window size for capturing temporal dependencies.</span>
-<span class="sd">                        Example: 5 (short-term), 20 (long-term).</span>
-<span class="sd">                    lambda_value : float</span>
-<span class="sd">                        The forgetting factor controlling how quickly past data is &quot;forgotten&quot;.</span>
-<span class="sd">                        Example: 0.8 (fast adaptation), 0.95 (stable systems).</span>
+<span class="sd">                        k : int</span>
+<span class="sd">                            The number of eigencomponents (principal components) to retain for dimensionality reduction.</span>
+<span class="sd">                            Example: 2, 5, 10.</span>
+<span class="sd">                        w : int</span>
+<span class="sd">                            The window size for capturing temporal dependencies.</span>
+<span class="sd">                            Example: 5 (short-term), 20 (long-term).</span>
+<span class="sd">                        lambda_value : float</span>
+<span class="sd">                            The forgetting factor controlling how quickly past data is &quot;forgotten&quot;.</span>
+<span class="sd">                            Example: 0.8 (fast adaptation), 0.95 (stable systems).</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -1408,9 +1414,9 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    tau : float</span>
-<span class="sd">                        The thresholding parameter for singular values. Controls how singular values are shrunk during the decomposition process.</span>
-<span class="sd">                        Larger values encourage a sparser, lower-rank solution, while smaller values retain more detail.</span>
+<span class="sd">                        tau : float</span>
+<span class="sd">                            The thresholding parameter for singular values. Controls how singular values are shrunk during the decomposition process.</span>
+<span class="sd">                            Larger values encourage a sparser, lower-rank solution, while smaller values retain more detail.</span>
 
 
 <span class="sd">                Returns</span>
@@ -1473,25 +1479,25 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    lags : array-like, optional</span>
-<span class="sd">                        Set of lag indices to use in model.</span>
-<span class="sd">                    K : int, optional</span>
-<span class="sd">                        Length of latent embedding dimension</span>
-<span class="sd">                    lambda_f : float, optional</span>
-<span class="sd">                        Regularization parameter used for matrix F.</span>
-<span class="sd">                    lambda_x : float, optional</span>
-<span class="sd">                        Regularization parameter used for matrix X.</span>
-<span class="sd">                    lambda_w : float, optional</span>
-<span class="sd">                        Regularization parameter used for matrix W.</span>
-<span class="sd">                    alpha : float, optional</span>
-<span class="sd">                        Regularization parameter used for make the sum of lag coefficient close to 1.</span>
-<span class="sd">                        That helps to avoid big deviations when forecasting.</span>
-<span class="sd">                    eta : float, optional</span>
-<span class="sd">                        Regularization parameter used for X when undercovering autoregressive dependencies.</span>
-<span class="sd">                    max_iter : int, optional</span>
-<span class="sd">                        Number of iterations of updating matrices F, X and W.</span>
-<span class="sd">                    logs : bool, optional</span>
-<span class="sd">                        Whether to log the execution time (default is True).</span>
+<span class="sd">                        lags : array-like, optional</span>
+<span class="sd">                            Set of lag indices to use in model.</span>
+<span class="sd">                        K : int, optional</span>
+<span class="sd">                            Length of latent embedding dimension</span>
+<span class="sd">                        lambda_f : float, optional</span>
+<span class="sd">                            Regularization parameter used for matrix F.</span>
+<span class="sd">                        lambda_x : float, optional</span>
+<span class="sd">                            Regularization parameter used for matrix X.</span>
+<span class="sd">                        lambda_w : float, optional</span>
+<span class="sd">                            Regularization parameter used for matrix W.</span>
+<span class="sd">                        alpha : float, optional</span>
+<span class="sd">                            Regularization parameter used for make the sum of lag coefficient close to 1.</span>
+<span class="sd">                            That helps to avoid big deviations when forecasting.</span>
+<span class="sd">                        eta : float, optional</span>
+<span class="sd">                            Regularization parameter used for X when undercovering autoregressive dependencies.</span>
+<span class="sd">                        max_iter : int, optional</span>
+<span class="sd">                            Number of iterations of updating matrices F, X and W.</span>
+<span class="sd">                        logs : bool, optional</span>
+<span class="sd">                            Whether to log the execution time (default is True).</span>
 
 
 <span class="sd">                Returns</span>
@@ -1575,21 +1581,21 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    alpha : float, optional</span>
-<span class="sd">                        Trade-off parameter controlling the contribution of contextual matrix</span>
-<span class="sd">                        and time-series. If alpha = 0, network is ignored. (default 0.5)</span>
-<span class="sd">                    beta : float, optional</span>
-<span class="sd">                        Regularization parameter for sparsity. (default 0.1)</span>
-<span class="sd">                    L : int, optional</span>
-<span class="sd">                        Hidden dimension size. (default 10)</span>
-<span class="sd">                    n_cl : int, optional</span>
-<span class="sd">                        Number of clusters. (default 1)</span>
-<span class="sd">                    max_iteration : int, optional</span>
-<span class="sd">                        Maximum number of iterations for convergence. (default 20)</span>
-<span class="sd">                    tol : float, optional</span>
-<span class="sd">                        Tolerance for early stopping criteria.  (default 5)</span>
-<span class="sd">                    random_init : bool, optional</span>
-<span class="sd">                        Whether to use random initialization for latent variables. (default False)</span>
+<span class="sd">                        alpha : float, optional</span>
+<span class="sd">                            Trade-off parameter controlling the contribution of contextual matrix</span>
+<span class="sd">                            and time-series. If alpha = 0, network is ignored. (default 0.5)</span>
+<span class="sd">                        beta : float, optional</span>
+<span class="sd">                            Regularization parameter for sparsity. (default 0.1)</span>
+<span class="sd">                        L : int, optional</span>
+<span class="sd">                            Hidden dimension size. (default 10)</span>
+<span class="sd">                        n_cl : int, optional</span>
+<span class="sd">                            Number of clusters. (default 1)</span>
+<span class="sd">                        max_iteration : int, optional</span>
+<span class="sd">                            Maximum number of iterations for convergence. (default 20)</span>
+<span class="sd">                        tol : float, optional</span>
+<span class="sd">                            Tolerance for early stopping criteria.  (default 5)</span>
+<span class="sd">                        random_init : bool, optional</span>
+<span class="sd">                            Whether to use random initialization for latent variables. (default False)</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -1652,14 +1658,14 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    max_iter : int, optional</span>
-<span class="sd">                        Maximum number of imputation rounds to perform before returning the imputations computed during the final round. (default is 3). \n</span>
-<span class="sd">                    tol : float, optional</span>
-<span class="sd">                        Tolerance of the stopping condition. (default is 0.001). \n</span>
-<span class="sd">                    initial_strategy : str, optional</span>
-<span class="sd">                        Which strategy to use to initialize the missing values. {‘mean’, ‘median’, ‘most_frequent’, ‘constant’} (default is &quot;means&quot;). \n</span>
-<span class="sd">                    seed : int, optional</span>
-<span class="sd">                        The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42). \n</span>
+<span class="sd">                        max_iter : int, optional</span>
+<span class="sd">                            Maximum number of imputation rounds to perform before returning the imputations computed during the final round. (default is 3). \n</span>
+<span class="sd">                        tol : float, optional</span>
+<span class="sd">                            Tolerance of the stopping condition. (default is 0.001). \n</span>
+<span class="sd">                        initial_strategy : str, optional</span>
+<span class="sd">                            Which strategy to use to initialize the missing values. {‘mean’, ‘median’, ‘most_frequent’, ‘constant’} (default is &quot;means&quot;). \n</span>
+<span class="sd">                        seed : int, optional</span>
+<span class="sd">                            The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42). \n</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -1722,10 +1728,10 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    n_estimators : int, optional</span>
-<span class="sd">                        The number of trees in the Random Forest model used for imputation (default is 10).</span>
-<span class="sd">                    seed : int, optional</span>
-<span class="sd">                        The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).</span>
+<span class="sd">                        n_estimators : int, optional</span>
+<span class="sd">                            The number of trees in the Random Forest model used for imputation (default is 10).</span>
+<span class="sd">                        seed : int, optional</span>
+<span class="sd">                            The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -1785,10 +1791,12 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the IIM algorithm, if None, default ones are loaded.</span>
 
-<span class="sd">                    - learning_neighbours : int</span>
-<span class="sd">                        Number of nearest neighbors for learning.</span>
-<span class="sd">                    - algo_code : str</span>
-<span class="sd">                        Unique code for the algorithm configuration.</span>
+<span class="sd">                    **Algorithm parameters:**</span>
+
+<span class="sd">                        learning_neighbours : int</span>
+<span class="sd">                            Number of nearest neighbors for learning.</span>
+<span class="sd">                        algo_code : str</span>
+<span class="sd">                            Unique code for the algorithm configuration.</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -2006,8 +2014,8 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    rank : int</span>
-<span class="sd">                        The rank for matrix decomposition (must be greater than 1 and smaller than the number of series).</span>
+<span class="sd">                        rank : int</span>
+<span class="sd">                            The rank for matrix decomposition (must be greater than 1 and smaller than the number of series).</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -2033,7 +2041,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">rank</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">tkcm</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">rank</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">tkcm</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">rank</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
@@ -2049,7 +2057,7 @@
 <span class="sd">        Subclasses</span>
 <span class="sd">        ----------</span>
 <span class="sd">        MRNN :</span>
-<span class="sd">        Imputation method using Multi-directional Recurrent Neural Networks (MRNN).</span>
+<span class="sd">            Imputation method using Multi-directional Recurrent Neural Networks (MRNN).</span>
 <span class="sd">        BRITS :</span>
 <span class="sd">            Imputation method using Bidirectional Recurrent Imputation for Time Series.</span>
 <span class="sd">        DeepMVI :</span>
@@ -2096,16 +2104,16 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the MRNN algorithm, if None, default ones are loaded.</span>
 
-<span class="sd">                     **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    - hidden_dim : int</span>
-<span class="sd">                        The number of hidden units in the neural network.</span>
-<span class="sd">                    - learning_rate : float</span>
-<span class="sd">                        Learning rate for training the neural network.</span>
-<span class="sd">                    - iterations : int</span>
-<span class="sd">                        Number of iterations for training.</span>
-<span class="sd">                    - sequence_length : int</span>
-<span class="sd">                        The length of the sequences used in the recurrent neural network.</span>
+<span class="sd">                        hidden_dim : int</span>
+<span class="sd">                            The number of hidden units in the neural network.</span>
+<span class="sd">                        learning_rate : float</span>
+<span class="sd">                            Learning rate for training the neural network.</span>
+<span class="sd">                        iterations : int</span>
+<span class="sd">                            Number of iterations for training.</span>
+<span class="sd">                        sequence_length : int</span>
+<span class="sd">                            The length of the sequences used in the recurrent neural network.</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -2165,18 +2173,18 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the BRITS algorithm, if None, default ones are loaded.</span>
 
-<span class="sd">                     **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    - model : str</span>
-<span class="sd">                        Specifies the type of model to use for the imputation. Options may include predefined models like &#39;brits&#39;, &#39;brits-i&#39; or &#39;brits_i_univ&#39;.</span>
-<span class="sd">                    - epoch : int</span>
-<span class="sd">                        Number of epochs for training the model. Determines how many times the algorithm processes the entire dataset during training.</span>
-<span class="sd">                    - batch_size : int</span>
-<span class="sd">                        Size of the batches used during training. Larger batch sizes can speed up training but may require more memory.</span>
-<span class="sd">                    - nbr_features : int</span>
-<span class="sd">                        Number of features, dimension in the time series.</span>
-<span class="sd">                    - hidden_layer : int</span>
-<span class="sd">                        Number of units in the hidden layer of the model. Controls the capacity of the neural network to learn complex patterns.</span>
+<span class="sd">                        model : str</span>
+<span class="sd">                            Specifies the type of model to use for the imputation. Options may include predefined models like &#39;brits&#39;, &#39;brits-i&#39; or &#39;brits_i_univ&#39;.</span>
+<span class="sd">                        epoch : int</span>
+<span class="sd">                            Number of epochs for training the model. Determines how many times the algorithm processes the entire dataset during training.</span>
+<span class="sd">                        batch_size : int</span>
+<span class="sd">                            Size of the batches used during training. Larger batch sizes can speed up training but may require more memory.</span>
+<span class="sd">                        nbr_features : int</span>
+<span class="sd">                            Number of features, dimension in the time series.</span>
+<span class="sd">                        hidden_layer : int</span>
+<span class="sd">                            Number of units in the hidden layer of the model. Controls the capacity of the neural network to learn complex patterns.</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -2233,16 +2241,18 @@
 <span class="sd">                user_def : bool, optional</span>
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
-<span class="sd">                    Parameters of the BRITS algorithm, if None, default ones are loaded.</span>
+<span class="sd">                    Parameters of the DeepMVI algorithm, if None, default ones are loaded.</span>
 
-<span class="sd">                     **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                     max_epoch : int, optional</span>
-<span class="sd">                        Limit of training epoch (default is 1000)</span>
-<span class="sd">                    patience : int, optional</span>
-<span class="sd">                        Number of threshold error that can be crossed during the training (default is 2)</span>
-<span class="sd">                    lr : float, optional</span>
-<span class="sd">                        Learning rate of the training (default is 0.001)</span>
+<span class="sd">                        max_epoch : int, optional</span>
+<span class="sd">                            Limit of training epoch (default is 1000)</span>
+
+<span class="sd">                        patience : int, optional</span>
+<span class="sd">                            Number of threshold error that can be crossed during the training (default is 2)</span>
+
+<span class="sd">                        lr : float, optional</span>
+<span class="sd">                            Learning rate of the training (default is 0.001)</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -2253,7 +2263,7 @@
 <span class="sd">                -------</span>
 <span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer = Imputation.DeepLearning.DeepMVI(incomp_data)</span>
 <span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute()  # default parameters for imputation &gt; or</span>
-<span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute(params={&quot;max_epoch&quot;: 10, &quot;patience&quot;: 2})  # user-defined &gt; or</span>
+<span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute(params={&quot;max_epoch&quot;: 10, &quot;patience&quot;: 2, &quot;lr&quot;:0.001})  # user-defined &gt; or</span>
 <span class="sd">                    &gt;&gt;&gt; deep_mvi_imputer.impute(user_def=False, params={&quot;input_data&quot;: ts.data, &quot;optimizer&quot;: &quot;ray_tune&quot;})  # automl with ray_tune</span>
 <span class="sd">                    &gt;&gt;&gt; recov_data = deep_mvi_imputer.recov_data</span>
 
@@ -2300,28 +2310,28 @@
 <span class="sd">                user_def : bool, optional</span>
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
-<span class="sd">                    Parameters of the BRITS algorithm, if None, default ones are loaded.</span>
+<span class="sd">                    Parameters of the MPIN algorithm, if None, default ones are loaded.</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    incre_mode : str, optional</span>
-<span class="sd">                        The mode of incremental learning. Options are: &#39;alone&#39;,  &#39;data&#39;, &#39;state&#39;, &#39;state+transfer&#39;, &#39;data+state&#39;, &#39;data+state+transfer&#39; (default is &quot;alone&quot;).</span>
-<span class="sd">                    window : int, optional</span>
-<span class="sd">                        The size of the sliding window for processing data streams (default is 2).</span>
-<span class="sd">                    k : int, optional</span>
-<span class="sd">                        The number of neighbors to consider during message propagation (default is 10).</span>
-<span class="sd">                    lr : float, optional</span>
-<span class="sd">                        The learning rate for optimizing the message propagation algorithm (default is 0.01).</span>
-<span class="sd">                    weight_decay : float, optional</span>
-<span class="sd">                        The weight decay (regularization) term to prevent overfitting during training (default is 0.1).</span>
-<span class="sd">                    epochs : int, optional</span>
-<span class="sd">                        The number of epochs to run the training process (default is 200).</span>
-<span class="sd">                    num_of_iteration : int, optional</span>
-<span class="sd">                        The number of iteration of the whole training (default is 5).</span>
-<span class="sd">                    thre : float, optional</span>
-<span class="sd">                        The threshold for considering a missing value as imputed (default is 0.25).</span>
-<span class="sd">                    base : str, optional</span>
-<span class="sd">                        The base model used for graph representation and message propagation. Common options include &quot;SAGE&quot; and &quot;GCN&quot; (default is &quot;SAGE&quot;).</span>
+<span class="sd">                        incre_mode : str, optional</span>
+<span class="sd">                            The mode of incremental learning. Options are: &#39;alone&#39;,  &#39;data&#39;, &#39;state&#39;, &#39;state+transfer&#39;, &#39;data+state&#39;, &#39;data+state+transfer&#39; (default is &quot;alone&quot;).</span>
+<span class="sd">                        window : int, optional</span>
+<span class="sd">                            The size of the sliding window for processing data streams (default is 2).</span>
+<span class="sd">                        k : int, optional</span>
+<span class="sd">                            The number of neighbors to consider during message propagation (default is 10).</span>
+<span class="sd">                        lr : float, optional</span>
+<span class="sd">                            The learning rate for optimizing the message propagation algorithm (default is 0.01).</span>
+<span class="sd">                        weight_decay : float, optional</span>
+<span class="sd">                            The weight decay (regularization) term to prevent overfitting during training (default is 0.1).</span>
+<span class="sd">                        epochs : int, optional</span>
+<span class="sd">                            The number of epochs to run the training process (default is 200).</span>
+<span class="sd">                        num_of_iteration : int, optional</span>
+<span class="sd">                            The number of iteration of the whole training (default is 5).</span>
+<span class="sd">                        thre : float, optional</span>
+<span class="sd">                            The threshold for considering a missing value as imputed (default is 0.25).</span>
+<span class="sd">                        base : str, optional</span>
+<span class="sd">                            The base model used for graph representation and message propagation. Common options include &quot;SAGE&quot; and &quot;GCN&quot; (default is &quot;SAGE&quot;).</span>
 
 
 <span class="sd">                Returns</span>
@@ -2378,19 +2388,19 @@
 <span class="sd">                user_def : bool, optional</span>
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
-<span class="sd">                    Parameters of the BRITS algorithm, if None, default ones are loaded.</span>
+<span class="sd">                    Parameters of the PRISTI algorithm, if None, default ones are loaded.</span>
 
-<span class="sd">                     **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    target_strategy : str, optional</span>
-<span class="sd">                        The strategy to use for targeting missing values. Options include: &quot;hybrid&quot;, &quot;random&quot;, &quot;historical&quot; (default is &quot;hybrid&quot;).</span>
-<span class="sd">                    unconditional : bool, optional</span>
-<span class="sd">                        Whether to use an unconditional imputation model (default is True).</span>
-<span class="sd">                        If False, conditional imputation models are used, depending on available data patterns.</span>
-<span class="sd">                    seed : int, optional</span>
-<span class="sd">                        Random seed for reproducibility (default is 42).</span>
-<span class="sd">                    device : str, optional</span>
-<span class="sd">                        The device to perform computation on, e.g., &quot;cpu&quot; or &quot;cuda&quot; (default is &quot;cpu&quot;).</span>
+<span class="sd">                        target_strategy : str, optional</span>
+<span class="sd">                            The strategy to use for targeting missing values. Options include: &quot;hybrid&quot;, &quot;random&quot;, &quot;historical&quot; (default is &quot;hybrid&quot;).</span>
+<span class="sd">                        unconditional : bool, optional</span>
+<span class="sd">                            Whether to use an unconditional imputation model (default is True).</span>
+<span class="sd">                            If False, conditional imputation models are used, depending on available data patterns.</span>
+<span class="sd">                        seed : int, optional</span>
+<span class="sd">                            Random seed for reproducibility (default is 42).</span>
+<span class="sd">                        device : str, optional</span>
+<span class="sd">                            The device to perform computation on, e.g., &quot;cpu&quot; or &quot;cuda&quot; (default is &quot;cpu&quot;).</span>
 
 
 <span class="sd">                Returns</span>
@@ -2450,7 +2460,7 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the MissNet algorithm, if None, default ones are loaded.</span>
 
-<span class="sd">                         **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
 <span class="sd">                        alpha : float, optional</span>
 <span class="sd">                            Trade-off parameter controlling the contribution of contextual matrix</span>
@@ -2532,15 +2542,15 @@
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    batch_size : int, optional</span>
-<span class="sd">                        Number of samples in each mini-batch during training. Default is 32.</span>
-<span class="sd">                    hint_rate : float, optional</span>
-<span class="sd">                        Probability of providing hints for the missing data during training. Default is 0.9.</span>
-<span class="sd">                    alpha : float, optional</span>
-<span class="sd">                        Hyperparameter that controls the balance between the adversarial loss and the reconstruction loss. Default is 10.</span>
-<span class="sd">                    epoch : int, optional</span>
-<span class="sd">                        Number of training epochs. Default is 100.</span>
-<span class="sd">                    logs : bool, optional</span>
+<span class="sd">                        batch_size : int, optional</span>
+<span class="sd">                            Number of samples in each mini-batch during training. Default is 32.</span>
+<span class="sd">                        hint_rate : float, optional</span>
+<span class="sd">                            Probability of providing hints for the missing data during training. Default is 0.9.</span>
+<span class="sd">                        alpha : float, optional</span>
+<span class="sd">                            Hyperparameter that controls the balance between the adversarial loss and the reconstruction loss. Default is 10.</span>
+<span class="sd">                        epoch : int, optional</span>
+<span class="sd">                            Number of training epochs. Default is 100.</span>
+<span class="sd">                        logs : bool, optional</span>
 
 
 <span class="sd">                Returns</span>
@@ -2603,31 +2613,31 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the GRIN algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
 
-<span class="sd">                     **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    d_hidden : int, optional, default=32</span>
-<span class="sd">                        The number of hidden units in the model&#39;s recurrent and graph layers.</span>
+<span class="sd">                        d_hidden : int, optional, default=32</span>
+<span class="sd">                            The number of hidden units in the model&#39;s recurrent and graph layers.</span>
 
-<span class="sd">                    lr : float, optional, default=0.001</span>
-<span class="sd">                        Learning rate for the optimizer.</span>
+<span class="sd">                        lr : float, optional, default=0.001</span>
+<span class="sd">                            Learning rate for the optimizer.</span>
 
-<span class="sd">                    batch_size : int, optional, default=32</span>
-<span class="sd">                        The number of samples per training batch.</span>
+<span class="sd">                        batch_size : int, optional, default=32</span>
+<span class="sd">                            The number of samples per training batch.</span>
 
-<span class="sd">                    window : int, optional, default=10</span>
-<span class="sd">                        The size of the time window used for modeling temporal dependencies.</span>
+<span class="sd">                        window : int, optional, default=10</span>
+<span class="sd">                            The size of the time window used for modeling temporal dependencies.</span>
 
-<span class="sd">                    alpha : float, optional, default=10.0</span>
-<span class="sd">                        The weight assigned to the adversarial loss term during training.</span>
+<span class="sd">                        alpha : float, optional, default=10.0</span>
+<span class="sd">                            The weight assigned to the adversarial loss term during training.</span>
 
-<span class="sd">                    patience : int, optional, default=4</span>
-<span class="sd">                        Number of epochs without improvement before early stopping is triggered.</span>
+<span class="sd">                        patience : int, optional, default=4</span>
+<span class="sd">                            Number of epochs without improvement before early stopping is triggered.</span>
 
-<span class="sd">                    epochs : int, optional, default=20</span>
-<span class="sd">                        The maximum number of training epochs.</span>
+<span class="sd">                        epochs : int, optional, default=20</span>
+<span class="sd">                            The maximum number of training epochs.</span>
 
-<span class="sd">                    workers : int, optional, default=2</span>
-<span class="sd">                        The number of worker processes for data loading.</span>
+<span class="sd">                        workers : int, optional, default=2</span>
+<span class="sd">                            The number of worker processes for data loading.</span>
 
 
 <span class="sd">                Returns</span>
@@ -2689,37 +2699,37 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
 
-<span class="sd">                     **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    K_trend : int, (optional) (default: 20)</span>
-<span class="sd">                        Number of trend factors.</span>
+<span class="sd">                        K_trend : int, (optional) (default: 20)</span>
+<span class="sd">                            Number of trend factors.</span>
 
-<span class="sd">                    K_season : int, (optional) (default: 2)</span>
-<span class="sd">                        Number of seasonal factors.</span>
+<span class="sd">                        K_season : int, (optional) (default: 2)</span>
+<span class="sd">                            Number of seasonal factors.</span>
 
-<span class="sd">                    n_season : int, (optional) (default: 5)</span>
-<span class="sd">                        Number of seasonal components per factor.</span>
+<span class="sd">                        n_season : int, (optional) (default: 5)</span>
+<span class="sd">                            Number of seasonal components per factor.</span>
 
-<span class="sd">                    K_bias : int, (optional) (default: 1)</span>
-<span class="sd">                        Number of bias factors.</span>
+<span class="sd">                        K_bias : int, (optional) (default: 1)</span>
+<span class="sd">                            Number of bias factors.</span>
 
-<span class="sd">                    time_scale : float, (optional) (default: 1)</span>
-<span class="sd">                        Time scaling factor.</span>
+<span class="sd">                        time_scale : float, (optional) (default: 1)</span>
+<span class="sd">                            Time scaling factor.</span>
 
-<span class="sd">                    a0 : float, (optional) (default: 0.6)</span>
-<span class="sd">                        Hyperparameter for prior distribution.</span>
+<span class="sd">                        a0 : float, (optional) (default: 0.6)</span>
+<span class="sd">                            Hyperparameter for prior distribution.</span>
 
-<span class="sd">                    b0 : float, (optional) (default: 2.5)</span>
-<span class="sd">                        Hyperparameter for prior distribution.</span>
+<span class="sd">                        b0 : float, (optional) (default: 2.5)</span>
+<span class="sd">                            Hyperparameter for prior distribution.</span>
 
-<span class="sd">                    v : float, (optional) (default: 0.5)</span>
-<span class="sd">                        Variance parameter.</span>
+<span class="sd">                        v : float, (optional) (default: 0.5)</span>
+<span class="sd">                            Variance parameter.</span>
 
-<span class="sd">                    config : dict, (optional) (default: None)</span>
-<span class="sd">                        Dictionary containing all configuration parameters, that will replace all other parameters (see documentation).</span>
+<span class="sd">                        config : dict, (optional) (default: None)</span>
+<span class="sd">                            Dictionary containing all configuration parameters, that will replace all other parameters (see documentation).</span>
 
-<span class="sd">                    args : object, (optional) (default: None)</span>
-<span class="sd">                        Arguments containing all configuration parameters, that will replace all other parameters (see documentation).</span>
+<span class="sd">                        args : object, (optional) (default: None)</span>
+<span class="sd">                            Arguments containing all configuration parameters, that will replace all other parameters (see documentation).</span>
 
 
 <span class="sd">                Returns</span>
@@ -2781,19 +2791,19 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the HKMF-T algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
 
-<span class="sd">                     **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                     tags : numpy.ndarray, optional</span>
-<span class="sd">                        An array containing tags that provide additional structure or metadata about</span>
-<span class="sd">                        the input data. If None, no tags are used (default is None).</span>
+<span class="sd">                        tags : numpy.ndarray, optional</span>
+<span class="sd">                            An array containing tags that provide additional structure or metadata about</span>
+<span class="sd">                            the input data. If None, no tags are used (default is None).</span>
 
-<span class="sd">                    data_names : list of str, optional</span>
-<span class="sd">                        List of names corresponding to each row or column of the dataset for interpretability.</span>
-<span class="sd">                        If None, names are not used (default is None).</span>
+<span class="sd">                        data_names : list of str, optional</span>
+<span class="sd">                            List of names corresponding to each row or column of the dataset for interpretability.</span>
+<span class="sd">                            If None, names are not used (default is None).</span>
 
-<span class="sd">                    epoch : int, optional</span>
-<span class="sd">                        The maximum number of training epochs for the Hankel Matrix Factorization algorithm.</span>
-<span class="sd">                        If convergence is reached earlier, the process stops (default is 10).</span>
+<span class="sd">                        epoch : int, optional</span>
+<span class="sd">                            The maximum number of training epochs for the Hankel Matrix Factorization algorithm.</span>
+<span class="sd">                            If convergence is reached earlier, the process stops (default is 10).</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -2859,35 +2869,35 @@
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
 
-<span class="sd">                     **Algorithm parameters:**</span>
+<span class="sd">                    **Algorithm parameters:**</span>
 
-<span class="sd">                    node_number : int, optional</span>
-<span class="sd">                        The number of nodes (time series variables) in the dataset. If not provided,</span>
-<span class="sd">                        it is inferred from `incomp_data`.</span>
+<span class="sd">                        node_number : int, optional</span>
+<span class="sd">                            The number of nodes (time series variables) in the dataset. If not provided,</span>
+<span class="sd">                            it is inferred from `incomp_data`.</span>
 
-<span class="sd">                    kernel_set : list, optional</span>
-<span class="sd">                        Set of kernel sizes used in the model for graph convolution operations (default: [1]).</span>
+<span class="sd">                        kernel_set : list, optional</span>
+<span class="sd">                            Set of kernel sizes used in the model for graph convolution operations (default: [1]).</span>
 
-<span class="sd">                    dropout : float, optional</span>
-<span class="sd">                        Dropout rate applied during training to prevent overfitting (default: 0.1).</span>
+<span class="sd">                        dropout : float, optional</span>
+<span class="sd">                            Dropout rate applied during training to prevent overfitting (default: 0.1).</span>
 
-<span class="sd">                    subgraph_size : int, optional</span>
-<span class="sd">                        The size of each subgraph used in message passing within the graph network (default: 5).</span>
+<span class="sd">                        subgraph_size : int, optional</span>
+<span class="sd">                            The size of each subgraph used in message passing within the graph network (default: 5).</span>
 
-<span class="sd">                    node_dim : int, optional</span>
-<span class="sd">                        Dimensionality of the node embeddings in the graph convolution layers (default: 3).</span>
+<span class="sd">                        node_dim : int, optional</span>
+<span class="sd">                            Dimensionality of the node embeddings in the graph convolution layers (default: 3).</span>
 
-<span class="sd">                    seq_len : int, optional</span>
-<span class="sd">                        Length of the input sequence for temporal modeling (default: 1).</span>
+<span class="sd">                        seq_len : int, optional</span>
+<span class="sd">                            Length of the input sequence for temporal modeling (default: 1).</span>
 
-<span class="sd">                    lr : float, optional</span>
-<span class="sd">                        Learning rate for model optimization (default: 0.001).</span>
+<span class="sd">                        lr : float, optional</span>
+<span class="sd">                            Learning rate for model optimization (default: 0.001).</span>
 
-<span class="sd">                    epoch : int, optional</span>
-<span class="sd">                        Number of training epochs (default: 10).</span>
+<span class="sd">                        epoch : int, optional</span>
+<span class="sd">                            Number of training epochs (default: 10).</span>
 
-<span class="sd">                    seed : int, optional</span>
-<span class="sd">                        Random seed for reproducibility (default: 42).</span>
+<span class="sd">                        seed : int, optional</span>
+<span class="sd">                            Random seed for reproducibility (default: 42).</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -2962,7 +2972,7 @@
       
     </aside>
   </div>
-</div><script src="../../../static/documentation_options.js?v=46dfa7f5"></script>
+</div><script src="../../../static/documentation_options.js?v=aec50437"></script>
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>

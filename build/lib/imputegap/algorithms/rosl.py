@@ -6,7 +6,7 @@ import numpy as __numpy_import;
 from imputegap.tools import utils
 
 
-def native_rosl(__py_matrix, __py_rank, __py_regularization):
+def native_rosl(__py_matrix, __py_rank, __py_regularization, __verbose=True):
     """
     Perform matrix imputation using the ROSL algorithm with native C++ support.
 
@@ -20,6 +20,8 @@ def native_rosl(__py_matrix, __py_rank, __py_regularization):
     __py_regularization : float
         The regularization parameter to control the trade-off between reconstruction accuracy and robustness.
         Higher values enforce sparsity or robustness against noise in the data.
+    __verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -31,7 +33,7 @@ def native_rosl(__py_matrix, __py_rank, __py_regularization):
     ----------
     X. Shu, F. Porikli, and N. Ahuja. Robust orthonormal subspace learning: Efficient recovery of corrupted low-rank matrices. In 2014 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2014, Columbus, OH, USA, June 23-28, 2014, pages 3874–3881, 2014.
     """
-    shared_lib = utils.load_share_lib("lib_rosl")
+    shared_lib = utils.load_share_lib("lib_rosl", verbose=__verbose)
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -58,7 +60,7 @@ def native_rosl(__py_matrix, __py_rank, __py_regularization):
     return __py_imputed_matrix;
 
 
-def rosl(incomp_data, rank, regularization, logs=True, lib_path=None):
+def rosl(incomp_data, rank, regularization, logs=True, verbose=True, lib_path=None):
     """
     ROSL algorithm for matrix imputation.
 
@@ -74,6 +76,8 @@ def rosl(incomp_data, rank, regularization, logs=True, lib_path=None):
         Higher values enforce sparsity or robustness against noise in the data.
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
     lib_path : str, optional
         Custom path to the shared library file (default is None).
 
@@ -84,18 +88,18 @@ def rosl(incomp_data, rank, regularization, logs=True, lib_path=None):
 
     Example
     -------
-    >>> recov_data = rosl(incomp_data=incomp_data, rank=5, regularization=10 logs=True)
-    >>> print(recov_data)
+        >>> recov_data = rosl(incomp_data=incomp_data, rank=5, regularization=10 logs=True)
+        >>> print(recov_data)
 
     """
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_rosl(incomp_data, rank, regularization)
+    recov_data = native_rosl(incomp_data, rank, regularization, verbose)
 
     end_time = time.time()
 
-    if logs:
-        print(f"\n\t> logs, imputation ROSL - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation ROSL - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

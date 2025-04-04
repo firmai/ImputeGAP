@@ -2,18 +2,6 @@
 Datasets
 ========
 
-The module ``ts.datasets`` contains all the publicly available datasets provided by the library.
-
-To list all the datasets, you can use this command:
-
-.. code-block:: python
-
-    from imputegap.recovery.manager import TimeSeries
-    ts = TimeSeries()
-    print(f"ImputeGAP datasets : {ts.datasets}")
-
-
-
 DATASETS in ImputeGAP
 
     -   `airq <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#AIR-QUALITY>`_

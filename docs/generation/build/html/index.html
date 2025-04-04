@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Getting Started" href="getting_started.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>imputegap 1.0.7 documentation</title>
+        <title>imputegap 1.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">imputegap 1.0.7 documentation</div></a>
+      <a href="#"><div class="brand">imputegap 1.0.8 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">imputegap 1.0.7 documentation</span>
+  <span class="sidebar-brand-text">imputegap 1.0.8 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -210,6 +210,7 @@
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integration.html">Integration</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -268,35 +269,34 @@
         <article role="main" id="furo-main-content">
           <section id="imputegap-documentation">
 <h1>ImputeGAP Documentation<a class="headerlink" href="#imputegap-documentation" title="Link to this heading">¶</a></h1>
-<p>ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair your own time series datasets. The library supports a diverse range of imputation methods and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, downstream evaluation, and compatibility with popular time series frameworks.</p>
+<p>ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair time series datasets. The library supports a diverse range of imputation algorithms and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, and downstream evaluation.</p>
 <dl class="simple">
 <dt>In detail, the library provides:</dt><dd><ul class="simple">
-<li><p>Access to commonly used datasets in time series research (<a class="reference external" href="datasets.html">Datasets</a>).</p></li>
-<li><p>Automated preprocessing with built-in methods for normalizing time series (<a class="reference external" href="tutorials.html#loading-preprocessing">Preprocessing</a>).</p></li>
+<li><p>Access to commonly used datasets in the time series imputation field (<a class="reference external" href="datasets.html">Datasets</a>).</p></li>
 <li><p>Configurable contamination module that simulates real-world missingness patterns (<a class="reference external" href="patterns.html">Patterns</a>).</p></li>
 <li><p>Parameterizable state-of-the-art time series imputation algorithms (<a class="reference external" href="algorithms.html">Algorithms</a>).</p></li>
-<li><p>Benchmarking to foster reproducibility in time series imputation (<a class="reference external" href="tutorials.html#benchmark">Benchmark</a>).</p></li>
-<li><p>Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (<a class="reference external" href="tutorials.html#downstream">Downstream</a>).</p></li>
+<li><p>Extensive benchmarking to compare the performance of imputation algorithms (<a class="reference external" href="tutorials.html#benchmark">Benchmark</a>).</p></li>
+<li><p>Modular tools to assess the impact of imputation on key downstream tasks (<a class="reference external" href="tutorials.html#downstream">Downstream</a>).</p></li>
 <li><p>Fine-grained analysis of the impact of time series features on imputation results (<a class="reference external" href="tutorials.html#explainer">Explainer</a>).</p></li>
-<li><p>Plug-and-play integration of new datasets and algorithms in various languages such as Python, C++, Matlab, Java, and R.</p></li>
+<li><p>Seamless integration of new algorithms in Python, C++, Matlab, Java, and R (<a class="reference external" href="integration.html">Integration</a>).</p></li>
 </ul>
 </dd>
 </dl>
-<br><br><section id="data-format">
+<br><section id="data-format">
 <span id="id1"></span><h2>Data Format<a class="headerlink" href="#data-format" title="Link to this heading">¶</a></h2>
-<p>Please ensure that your data satisfies the following criteria:</p>
+<p>Please ensure that your input data satisfies the following format:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>2D Matrix: columns are the series and rows are the timestamps</p></li>
+<li><p>Columns are the series’ values, and rows are the timestamps</p></li>
 <li><p>Column separator: empty space</p></li>
 <li><p>Row separator: newline</p></li>
-<li><p>Missing values are NaN</p></li>
-<li><p>Data output uses <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></p></li>
+<li><p>Missing values are NaNs</p></li>
 </ul>
 </div>
-<br><br><section id="get-started">
-<span id="id2"></span><h3>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h3>
+<br></section>
+<section id="get-started">
+<span id="id2"></span><h2>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h2>
 <script>
    function applyTheme(e)
    {
@@ -351,12 +351,12 @@
 
    <div class="card">
      <h3><a href="getting_started.html">🚀 Installation</a></h3>
-     <p>Read the guide on how to install <strong>ImputeGAP</strong> on your system.</p>
+     <p>Read the guide on how to install ImputeGAP on your system.</p>
    </div>
 
    <div class="card">
      <h3><a href="tutorials.html">📖 Tutorials</a></h3>
-     <p>Check the tutorials to learn how to use <strong>ImputeGAP</strong> efficiently.</p>
+     <p>Check the tutorials to learn how to use ImputeGAP efficiently.</p>
    </div>
 
    <div class="card">
@@ -366,11 +366,10 @@
 
    <div class="card">
      <h3><a href="algorithms.html">🧠 Algorithms</a></h3>
-     <p>Explore the core algorithms used in <strong>ImputeGAP</strong>.</p>
+     <p>Explore the core algorithms used in ImputeGAP.</p>
    </div>
 
- </div><br><br></section>
-</section>
+ </div><br></section>
 <section id="citing">
 <span id="id3"></span><h2>Citing<a class="headerlink" href="#citing" title="Link to this heading">¶</a></h2>
 <p>If you use ImputeGAP in your research, please cite the paper:</p>
@@ -384,19 +383,16 @@
 <span class="w">  </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>https://arxiv.org/abs/2503.15250<span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
-</div><br>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you like our library, please star our <a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub repository</a>.</p>
 </div>
-<br><br><section id="contributors">
-<span id="id4"></span><h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h3>
-<div class="table-wrapper colwidths-given docutils container">
+<br><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you like our library, please add a ⭐ in our <a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub repository</a>.</p>
+</div>
+<br></section>
+<section id="contributors">
+<span id="id4"></span><h2>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper docutils container">
 <table class="docutils align-center">
-<colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><a class="reference external image-reference" href="https://exascale.info/members/quentin-nater/"><img alt="Quentin Nater - ImputeGAP" class="align-center" src="images/quentin_nater.png" style="width: 100px; height: 100px;" />
 </a>
@@ -413,7 +409,6 @@
 </div>
 <div class="toctree-wrapper compound">
 </div>
-</section>
 </section>
 </section>
 
@@ -463,14 +458,10 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">ImputeGAP Documentation</a><ul>
-<li><a class="reference internal" href="#data-format">Data Format</a><ul>
+<li><a class="reference internal" href="#data-format">Data Format</a></li>
 <li><a class="reference internal" href="#get-started">Get Started</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#citing">Citing</a><ul>
+<li><a class="reference internal" href="#citing">Citing</a></li>
 <li><a class="reference internal" href="#contributors">Contributors</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -482,7 +473,7 @@
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=46dfa7f5"></script>
+</div><script src="static/documentation_options.js?v=aec50437"></script>
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>

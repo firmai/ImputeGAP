@@ -22,6 +22,7 @@ def Data_Loader_With_Dataset(seq_length, data):
     # xy = np.loadtxt(filename, delimiter=" ", skiprows=0)
     # xy = xy[::-1]
 
+
     xy, dmin, dmax = MinMaxScaler(data)
     x = xy
 

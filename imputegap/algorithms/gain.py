@@ -46,6 +46,6 @@ def gain(incomp_data, batch_size=32, hint_rate=0.9, alpha=10, epoch=100, logs=Tr
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation gain - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation gain - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

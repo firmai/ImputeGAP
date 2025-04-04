@@ -3,7 +3,7 @@ from sklearn.experimental import enable_iterative_imputer  # Enable experimental
 from sklearn.impute import IterativeImputer  # Now import IterativeImputer
 
 
-def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, logs=True):
+def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, logs=True, verbose=True):
     """
     Perform imputation using the Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation algorithm.
 
@@ -21,6 +21,9 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
         The seed of the pseudo random number generator to use. Randomizes selection of estimator features (default is 42).
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
+
     Returns
     -------
     numpy.ndarray
@@ -28,8 +31,8 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
 
     Example
     -------
-    >>> recov_data = mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42)
-    >>> print(recov_data)
+        >>> recov_data = mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42)
+        >>> print(recov_data)
 
     References
     ----------
@@ -39,9 +42,10 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
     https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html#sklearn.impute.IterativeImputer
     """
 
-    print("(PYTHON) MICE : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") for max_iter ",
-          max_iter, ", tol ", tol, " initial_strategy ", initial_strategy, ", and seed ", seed, "...\n\n\t\t\t"
-          "Careful, this imputation algorithm might take a while to compute.")
+    if verbose:
+        print("(IMPUTATION) MICE : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") for max_iter ",
+              max_iter, ", tol ", tol, " initial_strategy ", initial_strategy, ", and seed ", seed, "...\n\n\t\t\t"
+              "Careful, this imputation algorithm might take a while to compute.")
 
     start_time = time.time()  # Record start time
 
@@ -49,7 +53,7 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
     recov_data = mice_imputer.fit_transform(incomp_data)
 
     end_time = time.time()
-    if logs:
-        print(f"\n\t> logs, imputation MICE - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation MICE - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

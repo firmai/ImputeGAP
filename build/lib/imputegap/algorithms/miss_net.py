@@ -4,7 +4,7 @@ import numpy as np
 
 from imputegap.wrapper.AlgoPython.MissNet.recoveryMissNet import MissNet
 
-def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init, logs=True):
+def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init, logs=True, verbose=True):
     """
     Perform imputation using the Multivariate Recurrent Neural Network (MRNN) algorithm.
 
@@ -29,6 +29,8 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
         Whether to use random initialization for latent variables. (default False)
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -37,8 +39,8 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
 
     Example
     -------
-    >>> recov_data = miss_net(incomp_data, alpha=0.5, beta=0.1, L=10, n_cl=1, max_iteration=20, tol=5, random_init=False)
-    >>> print(recov_data)
+        >>> recov_data = miss_net(incomp_data, alpha=0.5, beta=0.1, L=10, n_cl=1, max_iteration=20, tol=5, random_init=False)
+        >>> print(recov_data)
 
     References
     ----------
@@ -46,14 +48,15 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
     https://github.com/KoheiObata/MissNet/tree/main
     """
 
-    print("(PYTHON) MISS NET: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") "
-          "for alpha ", alpha, ", beta ", beta, ", L ", L, ", n_cl ", n_cl, ", max_iteration ", max_iteration,
-          "tol ", tol, " random_init ", random_init, "...")
+    if verbose:
+        print("(IMPUTATION) MISS NET: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") "
+              "for alpha ", alpha, ", beta ", beta, ", L ", L, ", n_cl ", n_cl, ", max_iteration ", max_iteration,
+              "tol ", tol, " random_init ", random_init, "...")
 
     start_time = time.time()  # Record start time
 
     missnet_model = MissNet(alpha=alpha, beta=beta, L=L, n_cl=n_cl)
-    missnet_model.fit(incomp_data, random_init=random_init, max_iter=max_iteration, tol=tol)  # Train the model
+    missnet_model.fit(incomp_data, random_init=random_init, max_iter=max_iteration, tol=tol, verbose=verbose)  # Train the model
     recov_data = missnet_model.imputation()  # Get the imputed data
 
     end_time = time.time()
@@ -61,7 +64,7 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
     nan_mask = ~np.isnan(incomp_data)
     recov_data[nan_mask] = incomp_data[nan_mask]
 
-    if logs:
-        print(f"\n\t> logs, imputation miss_net - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation miss_net - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

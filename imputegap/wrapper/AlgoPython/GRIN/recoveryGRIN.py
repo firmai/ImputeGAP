@@ -39,7 +39,7 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=32, window=1, alpha=10
                  g_train_freq=1, d_train_freq=5, seed=42, verbose=True):
 
     if verbose:
-        print("\n\n\t\t\t(PYTHON) GRIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
+        print("\n(IMPUTATION) GRIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
               " batch_size ", batch_size, " lr ", lr, " window ", window, " alpha ", alpha, " patience ", patience,
               " epochs ", epochs, ", and workers ", workers, "=================================================\n\n ")
 
@@ -141,7 +141,8 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=32, window=1, alpha=10
         "test_idxs": test_idxs,
         "batch_size": batch_size,
         "workers": workers,
-        "samples_per_epoch": None
+        "samples_per_epoch": None,
+        "verbose": verbose
     }
 
     # Now, pass only the relevant parameters

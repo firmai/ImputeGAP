@@ -7,7 +7,7 @@ from imputegap.wrapper.AlgoPython.MRNN.M_RNN import M_RNN
 def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, seq_length=7, verbose=True):
 
     if verbose:
-        print("\t\t(PYTHON) MRNN: Matrix Shape: (", matrix_in.shape[0], ", ", matrix_in.shape[1], ") "
+        print("(IMPUTATION) MRNN: Matrix Shape: (", matrix_in.shape[0], ", ", matrix_in.shape[1], ") "
             "for hidden_dim ", hidden_dim, ", learning_rate ", learning_rate, " iterations ", iterations,
               " seq_length ", seq_length, "...")
 
@@ -19,7 +19,7 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
     _, Recover_testX = M_RNN(trainZ, trainM, trainT, testZ, testM, testT,
                                   hidden_dim=hidden_dim,
                                   learning_rate=learning_rate,
-                                  iterations=iterations)
+                                  iterations=iterations, verbose=verbose)
 
     m = len(x[0])  # columns
 

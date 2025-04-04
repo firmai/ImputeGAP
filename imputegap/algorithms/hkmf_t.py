@@ -47,10 +47,10 @@ def hkmf_t(incomp_data, tags=None, data_names=None, epoch=10, logs=True, verbose
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoveryHKMFT(miss_data=incomp_data,tags=tags, data_names=data_names, epoch=epoch)
+    recov_data = recoveryHKMFT(miss_data=incomp_data,tags=tags, data_names=data_names, epoch=epoch, verbose=verbose)
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation hkmf_t - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation hkmf_t - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

@@ -42,8 +42,9 @@ class TestPipeline(unittest.TestCase):
         # explainer
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("chlorine"))
-        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, algorithm="cdrec", missing_rate=0.25, rate_dataset=0.4, training_ratio=0.6, file_name="eeg-alcohol")
-        Explainer.print(shap_values, shap_details)
+        exp = Explainer()
+        exp.shap_explainer(input_data=ts_1.data, algorithm="cdrec", missing_rate=0.25, rate_dataset=0.4, training_ratio=0.6, file_name="eeg-alcohol")
+        exp.print(exp.shap_values, exp.shap_details)
 
         # benchmark
         dataset_test = ["eeg-alcohol"]
@@ -52,7 +53,9 @@ class TestPipeline(unittest.TestCase):
         algorithms_test = ["mean", "cdrec"]
         patterns_small = ["mcar"]
         x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
-        Benchmark().eval(algorithms=algorithms_test, datasets=dataset_test, patterns=patterns_small, x_axis=x_axis, optimizers=optimizers, save_dir="test_naterq", runs=2)
+
+        bench = Benchmark()
+        bench.eval(algorithms=algorithms_test, datasets=dataset_test, patterns=patterns_small, x_axis=x_axis, optimizers=optimizers, save_dir="test_naterq", runs=2)
 
         x = not x
         self.assertTrue(x)

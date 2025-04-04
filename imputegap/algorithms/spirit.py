@@ -102,6 +102,6 @@ def spirit(incomp_data, k, w, lambda_value, logs=True, verbose=True, lib_path=No
     end_time = time.time()
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation SPIRIT - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation SPIRIT - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

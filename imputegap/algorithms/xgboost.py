@@ -41,7 +41,7 @@ def xgboost(incomp_data, n_estimators=10, seed=42, logs=True, verbose=True):
     """
 
     if verbose:
-        print("(PYTHON) XGBOOST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ")"
+        print("(IMPUTATION) XGBOOST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ")"
             " for n_estimators ", n_estimators, ", and seed ", seed, "...")
 
     if isinstance(incomp_data, np.ndarray):
@@ -72,6 +72,6 @@ def xgboost(incomp_data, n_estimators=10, seed=42, logs=True, verbose=True):
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation XGBOOST - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation XGBOOST - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return np.array(recov_data)

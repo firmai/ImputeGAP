@@ -3,7 +3,7 @@ import ctypes as __native_c_types_import;
 
 from imputegap.tools import utils
 
-def native_grouse(__py_matrix, __py_rank):
+def native_grouse(__py_matrix, __py_rank, __verbose=True):
     """
     Perform matrix imputation using the GROUSE algorithm with native C++ support.
 
@@ -13,6 +13,8 @@ def native_grouse(__py_matrix, __py_rank):
         The input matrix with missing values (NaNs).
     __py_rank : int
         The truncation rank for matrix decomposition (must be greater than 0 and less than the number of columns).
+    __verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -24,7 +26,7 @@ def native_grouse(__py_matrix, __py_rank):
     D. Zhang and L. Balzano. Global convergence of a grassmannian gradient descent algorithm for subspace estimation. In Proceedings of the 19th International Conference on Artificial Intelligence and Statistics, AISTATS 2016, Cadiz, Spain, May 9-11, 2016, pages 1460–1468, 2016.
     """
 
-    shared_lib = utils.load_share_lib("lib_grouse")
+    shared_lib = utils.load_share_lib("lib_grouse", verbose=__verbose)
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -47,7 +49,7 @@ def native_grouse(__py_matrix, __py_rank):
     return __py_imputed_matrix;
 
 
-def grouse(incomp_data, max_rank, logs=True, lib_path=None):
+def grouse(incomp_data, max_rank, logs=True, verbose=True, lib_path=None):
     """
     GROUSE algorithm for matrix imputation.
 
@@ -59,6 +61,8 @@ def grouse(incomp_data, max_rank, logs=True, lib_path=None):
         The max rank for matrix decomposition (must be greater than 1 and smaller than the number of series).
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
     lib_path : str, optional
         Custom path to the shared library file (default is None).
 
@@ -69,17 +73,17 @@ def grouse(incomp_data, max_rank, logs=True, lib_path=None):
 
     Example
     -------
-    >>> recov_data = grouse(incomp_data=incomp_data, max_rank=5, logs=True)
-    >>> print(recov_data)
+        >>> recov_data = grouse(incomp_data=incomp_data, max_rank=5, logs=True)
+        >>> print(recov_data)
     """
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_grouse(incomp_data, max_rank)
+    recov_data = native_grouse(incomp_data, max_rank, verbose)
 
     end_time = time.time()
 
-    if logs:
-        print(f"\n\t> logs, imputation GROUSE - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation GROUSE - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

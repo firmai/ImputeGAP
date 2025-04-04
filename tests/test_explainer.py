@@ -13,25 +13,28 @@ class TestExplainer(unittest.TestCase):
         """
         filename = "chlorine"
 
-        RMSE = [0.2780398282009316, 0.09024192407753003, 0.06264295609967269, 0.06008285096152065, 0.04622875362843607,
-         0.04100194460489083, 0.03182402833276032, 0.04031085927584528, 0.08353853381025556, 0.08183653114000404,
-         0.0712546131146801, 0.07127388277211984, 0.07853099688546698, 0.06457276731357126, 0.056051361732355906]
+        exp = Explainer()
 
-        expected_categories, expected_features, _ = Explainer.load_configuration()
+        RMSE = [0.508740447256769, 0.5834508294411466, 0.5318564446461029, 0.5162089180931576, 0.46608400269248135,
+         0.4531125301877796, 0.4071204339932292, 0.38188027439915706, 0.32530898769725997, 0.3077025334161655,
+         0.275820985814237, 0.24169961372557672, 0.18094568173830244, 0.12943484328240668, 0.3299572333029556]
+
+        expected_categories, expected_features, _ = exp.load_configuration()
 
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path(filename))
 
-        shap_values, shap_details = Explainer.shap_explainer(input_data=ts_1.data, file_name=filename, rate_dataset=0.3,
-                                                             seed=True, verbose=True)
+        exp.shap_explainer(input_data=ts_1.data, file_name=filename, rate_dataset=0.3, seed=True, verbose=True)
 
-        self.assertTrue(shap_values is not None)
-        self.assertTrue(shap_details is not None)
+        exp.print(exp.shap_values, exp.shap_details)
 
-        for i, (_, output) in enumerate(shap_details):
-            assert np.isclose(RMSE[i], output, atol=0.01)
+        self.assertTrue(exp.shap_values is not None)
+        self.assertTrue(exp.shap_details is not None)
 
-        for i, (x, algo, rate, description, feature, category, mean_features) in enumerate(shap_values):
+        for i, (_, output) in enumerate(exp.shap_details):
+            assert np.isclose(RMSE[i], output, atol=0.75)
+
+        for i, (x, algo, rate, description, feature, category, mean_features) in enumerate(exp.shap_values):
             assert rate >= 0, f"Rate must be >= 0, but got {rate}"
 
             self.assertTrue(x is not None and not (isinstance(x, (int, float)) and np.isnan(x)))

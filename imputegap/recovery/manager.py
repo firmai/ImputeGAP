@@ -12,24 +12,24 @@ from matplotlib import pyplot as plt  # type: ignore
 
 def select_backend():
     system = platform.system()
-    headless = os.getenv('DISPLAY') is None or os.getenv('CI') is not None
+    headless = os.getenv("DISPLAY") is None or os.getenv("CI") is not None
 
     if headless:
-        matplotlib.use("Agg")
+        matplotlib.use("Agg")  # headless: save-to-file only
         return
 
-    if system == "Darwin":  # macOS
-        try:
-            matplotlib.use("MacOSX")
-        except (ImportError, RuntimeError):
+    # macOS GUI backends (check in priority order)
+    if system == "Darwin":
+        for backend in ["MacOSX", "Qt5Agg", "TkAgg"]:
             try:
-                if importlib.util.find_spec("tkinter") is not None:
-                    matplotlib.use("TkAgg")
-                else:
-                    raise ImportError
+                matplotlib.use(backend)
+                return
             except (ImportError, RuntimeError):
-                matplotlib.use("Agg")
-    else:  # Windows or Linux
+                continue
+        matplotlib.use("Agg")  # fallback
+
+    # Linux or Windows with tkinter
+    else:
         try:
             if importlib.util.find_spec("tkinter") is not None:
                 matplotlib.use("TkAgg")
@@ -88,12 +88,13 @@ class TimeSeries:
         """
         self.data = None
         self.name = "default"
+        self.plots = None
         self.algorithms = utils.list_of_algorithms()
         self.patterns = utils.list_of_patterns()
         self.datasets = utils.list_of_datasets()
         self.optimizers = utils.list_of_optimizers()
         self.extractors = utils.list_of_extractors()
-        self.downstream_models = utils.list_of_downstreams()
+        self.forecasting_models = utils.list_of_downstreams()
 
     def import_matrix(self, data=None):
         """
@@ -173,7 +174,7 @@ class TimeSeries:
 
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=nbr_val, skip_header=int(header))
 
-                print("\nThe time series have been loaded from " + str(data) + "\n")
+                print("\n(SYS) The time series have been loaded from " + str(data) + "\n")
 
                 if nbr_series is not None:
                     self.data = self.data[:, :nbr_series]
@@ -209,7 +210,9 @@ class TimeSeries:
         """
         to_print = self.data
         nbr_tot_series, nbr_tot_values = to_print.shape
-        print_col, print_row = "timestamp", "Series"
+        print_col, print_row = "idx", "TS"
+        print_col_inc, print_row_inc = 0, 1
+
 
         print(f"\nshape of {self.name} : {self.data.shape}\n\tnumber of series = { nbr_tot_series}\n\tnumber of values = {nbr_tot_values}\n")
 
@@ -221,19 +224,20 @@ class TimeSeries:
 
         if not view_by_series:
             to_print = to_print.T
-            print_col, print_row = "Series", "timestamp"
+            print_col, print_row = "TS", "idx"
+            print_col_inc, print_row_inc = 1, 0
 
         header_format = "{:<15}"  # Fixed size for headers
         value_format = "{:>15.10f}"  # Fixed size for values
         # Print the header
         print(f"{'':<18}", end="")  # Empty space for the row labels
         for i in range(to_print.shape[1]):
-            print(header_format.format(f"{print_col}_{i + 1}"), end="")
+            print(header_format.format(f"{print_col}_{i + print_col_inc}"), end="")
         print()
 
         # Print each limited series with fixed size
         for i, series in enumerate(to_print):
-            print(header_format.format(f"{print_row}_{i + 1}"), end="")
+            print(header_format.format(f"{print_row}_{i + print_row_inc}"), end="")
             print("".join([value_format.format(elem) for elem in series]))
 
         if nbr_series < nbr_tot_series:
@@ -262,13 +266,12 @@ class TimeSeries:
         """
 
         if algorithm != "":
-            print(f"\n\n{text} ({algorithm}) :")
+            print(f"\n{text} ({algorithm}) :")
         else:
-            print(f"\n\n{text} :")
+            print(f"\n{text} :")
 
         for key, value in metrics.items():
             print(f"{key:<20} = {value}")
-        print("\n")
 
     def normalize(self, normalizer="z_score", verbose=True):
         """
@@ -293,8 +296,6 @@ class TimeSeries:
         -------
             >>> ts.normalize(normalizer="z_score")
         """
-        if verbose:
-            print("Normalization of the original time series dataset with ", normalizer)
         self.data = self.data.T
 
         if normalizer == "min_max":
@@ -347,7 +348,7 @@ class TimeSeries:
         self.data = self.data.T
 
         if verbose:
-            print(f"\n\t> logs, normalization {normalizer} - Execution Time: {(end_time - start_time):.4f} seconds\n")
+            print(f"> logs: normalization ({normalizer}) of the data - runtime: {(end_time - start_time):.4f} seconds")
 
     def plot(self, input_data, incomp_data=None, recov_data=None, nbr_series=None, nbr_val=None, series_range=None,
              subplot=False, size=(16, 8), algorithm=None, save_path="./imputegap_assets", display=True):
@@ -435,7 +436,7 @@ class TimeSeries:
             plt.grid(True, linestyle='--', color='#d3d3d3', linewidth=0.6)
 
         if input_data is not None:
-            colors = utils.load_parameters("default", algorithm="colors")
+            colors = utils.load_parameters("default", algorithm="colors", verbose=False)
 
             for idx, i in enumerate(series_indices):
 
@@ -516,10 +517,12 @@ class TimeSeries:
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
             file_path = os.path.join(save_path + "/" + current_time + "_" + algorithm + "_plot.jpg")
             plt.savefig(file_path, bbox_inches='tight')
-            print("plots saved in ", file_path)
+            print("\nplots saved in ", file_path)
 
         if display:
             plt.show()
+
+        self.plots = plt
 
         return file_path
 
@@ -613,16 +616,14 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if not explainer and verbose:
-                print(f"\n\nMCAR contamination has been called with :"
-                      f"\n\ta number of series impacted {rate_dataset * 100}%"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\ta block size of {block_size}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\twith a seed option set to {seed}"
-                      f"\n\twith a seed value set to {seed_value}"
-                      f"\n\tshape of the set {ts_contaminated.shape}"
-                      f"\n\tthis selection of series {series_selected}\n\n")
+                print(f"\n(CONT) missigness pattern: MCAR"
+                      f"\n\tselected series: {series_selected}"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tblock size: {block_size}"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tseed value: {seed_value}")
+
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -705,13 +706,11 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print("\n\nALIGNED (missing percentage) contamination has been called with :"
-                      "\n\ta number of series impacted ", rate_dataset * 100, "%",
-                      "\n\ta missing rate of ", rate_series * 100, "%",
-                      "\n\ta starting position at ", offset,
-                      "\n\tshape of the set ", ts_contaminated.shape,
-                      "\n\tthis selection of series : ", 1, "->", nbr_series_impacted,
-                      "\n\tvalues : ", offset_nbr, "->", offset_nbr + values_nbr, "\n\n")
+                print(f"\n(CONT) missigness pattern: ALIGNED"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
 
 
             if offset_nbr + values_nbr > NS:
@@ -781,13 +780,11 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print("\n\nSCATTER (missing percentage AT RANDOM) contamination has been called with :"
-                      "\n\ta number of series impacted ", rate_dataset * 100, "%",
-                      "\n\ta missing rate of ", rate_series * 100, "%",
-                      "\n\ta starting position at ", offset,
-                      "\n\tshape of the set ", ts_contaminated.shape,
-                      "\n\tthis selection of series : ", 1, "->", nbr_series_impacted,
-                      "\n\tvalues : ", offset_nbr, "->", offset_nbr + values_nbr, "\n\n")
+                print(f"\n(CONT) missigness pattern: SCATTER"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
 
 
             if offset_nbr + values_nbr > NS:
@@ -895,16 +892,12 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nGAUSSIAN contamination has been called with :"
-                      f"\n\ta number of series impacted {rate_dataset * 100}%"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\twith a seed option set to {seed}"
-                      f"\n\twith a seed value set to {seed_value}"
-                      f"\n\tGaussian std_dev {std_dev}"
-                      f"\n\tshape of the set {ts_contaminated.shape}"
-                      f"\n\tthis selection of series {nbr_series_impacted}\n\n")
+                print(f"\n(CONT) missigness pattern: GAUSSIAN"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tseed value: {seed_value}"
+                      f"\n\tstandard deviation : {std_dev}")
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -989,16 +982,12 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nDISTRIBUTION contamination has been called with :"
-                      f"\n\ta number of series impacted {rate_dataset * 100}%"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\twith a seed option set to {seed}"
-                      f"\n\twith a seed value set to {seed_value}"
-                      f"\n\tshape of the set {ts_contaminated.shape}"
-                      f"\n\tprobabilities list {np.array(probabilities).shape}"
-                      f"\n\tthis selection of series {nbr_series_impacted}\n\n")
+                print(f"\n(CONT) missigness pattern: DISTRIBUTION"
+                      f"\n\trate series impacted: {rate_dataset * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tseed value: {seed_value}"
+                      f"\n\tprobabilities list : {np.array(probabilities).shape}")
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -1064,13 +1053,11 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nDISJOINT contamination has been called with :"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\tlimit to stop {limit}"
-                      f"\n\tshape of the set {ts_contaminated.shape}")
-
+                print(f"\n(CONT) missigness pattern: DISJOINT"
+                      f"\n\trate series impacted: {rate_series * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tlimit: {limit}")
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -1140,15 +1127,13 @@ class TimeSeries:
             values_nbr = int(NS * rate_series)
 
             if verbose:
-                print(f"\n\nOVERLAP contamination has been called with :"
-                      f"\n\ta missing rate of {rate_series * 100}%"
-                      f"\n\ta offset of {offset*100}%"
-                      f"\n\ta starting position at {offset_nbr}"
-                      f"\n\tvalues to remove by series {values_nbr}"
-                      f"\n\ta shift overlap of {shift * 100} %"
-                      f"\n\ta shift in number {int(shift * NS)}"
-                      f"\n\tlimit to stop {limit}"
-                      f"\n\tshape of the set {ts_contaminated.shape}")
+                print(f"\n(CONT) missigness pattern: OVERLAP"
+                      f"\n\trate series impacted: {rate_series * 100}%"
+                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tshift: {shift * 100} %"
+                      f"\n\tlimit: {limit}")
+
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(

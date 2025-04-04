@@ -22,7 +22,7 @@ class Dataset(Enum):
 
 
 class DataLoader(object):
-    def __init__(self, dataset, time_window=None, tags=None, data_names=None):
+    def __init__(self, dataset, time_window=None, tags=None, data_names=None, verbose=True):
         """
         :param dataset: Dataset
         :param time_window:
@@ -49,7 +49,8 @@ class DataLoader(object):
             self._index, self._data, self._tag, self.dim_name, self.tag_name = DataLoader._load_nqu(self._filename,
                                                                                                 self._time_window,
                                                                                                 self._tags,
-                                                                                                self._data_names)
+                                                                                                self._data_names,
+                                                                                                verbose)
 
     def norm(self, min_v: float = 0., max_v: float = 10.):
         """
@@ -79,7 +80,6 @@ class DataLoader(object):
         [1, 1, 1,  0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1]
         [start_idx ↑,  end_idx ↑)
         """
-        print(np.array(self._data).shape)
         if len(self) > begin_idx >= 0 and len(self) > end_idx > 0 and begin_idx < end_idx:
             self._mask = np.ones((self._data.shape[1],), dtype=np.int8)
             self._mask[begin_idx: end_idx] = 0
@@ -156,7 +156,7 @@ class DataLoader(object):
 
 
     @staticmethod
-    def _load_nqu(filename, time_window, tags, data_names):
+    def _load_nqu(filename, time_window, tags, data_names, verbose=True):
         """
         此函数会将输入的 csv 文件转换成便于处理的 numpy 矩阵。
         注意：任何类型的 tag 都会重新 hash 成 0 开始的整数。
@@ -166,9 +166,10 @@ class DataLoader(object):
         """
         df = pd.DataFrame(filename)  # filename is a numpy matrix of (64x256)
 
-        print("\t\t\t\t\t\tBefore conversion, filename shape:", filename.shape)
-        print("\t\t\t\t\t\tAfter conversion, df shape:", df.shape)
-        print("\t\t\t\t\t\tdf.columns:", df.columns)
+        if verbose:
+            print("\t\t\t\t\t\tBefore conversion, filename shape:", filename.shape)
+            print("\t\t\t\t\t\tAfter conversion, df shape:", df.shape)
+            print("\t\t\t\t\t\tdf.columns:", df.columns)
 
 
         if time_window is not None:
@@ -187,8 +188,9 @@ class DataLoader(object):
         if len(dim_name) <= 0:
             logging.error(f'Empty data columns in file, pls check csv head.')
 
-        print("\t\t\t\t\t\tdim_name:", dim_name)
-        # Ensure all necessary tag columns exist
+        if verbose:
+            print("\t\t\t\t\t\tdim_name:", dim_name)
+            # Ensure all necessary tag columns exist
 
         df_renamed = df.rename(columns={int(idx): f'data_{n}' for idx, n in enumerate(dim_name)})
 
@@ -216,8 +218,9 @@ class DataLoader(object):
                         tag_name2id[t] = len(tag_name2id)
                         tag_name_list.append(t)
 
-        print("\t\t\t\t\t\ttag_name2id:", tag_name2id)
-        print("\t\t\t\t\t\ttag_name_list:", tag_name_list)
+        if verbose:
+            print("\t\t\t\t\t\ttag_name2id:", tag_name2id)
+            print("\t\t\t\t\t\ttag_name_list:", tag_name_list)
 
         data = np.zeros((len(dim_name), df_renamed.index.size))
         tag = np.zeros((len(dim_name), df_renamed.index.size), dtype=int)

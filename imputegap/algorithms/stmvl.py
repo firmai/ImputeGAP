@@ -112,7 +112,7 @@ def stmvl(incomp_data, window_size, gamma, alpha, logs=True, verbose=True):
     """
 
     if verbose:
-        print(f"(PYTHON) ST-MVL: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for window_size {window_size}, "
+        print(f"(IMPUTATION) ST-MVL: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for window_size {window_size}, "
               f"gamma {gamma}, and alpha {alpha}...")
 
     start_time = time.time()  # Record start time
@@ -122,6 +122,6 @@ def stmvl(incomp_data, window_size, gamma, alpha, logs=True, verbose=True):
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation stvml - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation stvml - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

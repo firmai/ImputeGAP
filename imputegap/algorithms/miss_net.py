@@ -49,14 +49,14 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
     """
 
     if verbose:
-        print("(PYTHON) MISS NET: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") "
+        print("(IMPUTATION) MISS NET: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") "
               "for alpha ", alpha, ", beta ", beta, ", L ", L, ", n_cl ", n_cl, ", max_iteration ", max_iteration,
               "tol ", tol, " random_init ", random_init, "...")
 
     start_time = time.time()  # Record start time
 
     missnet_model = MissNet(alpha=alpha, beta=beta, L=L, n_cl=n_cl)
-    missnet_model.fit(incomp_data, random_init=random_init, max_iter=max_iteration, tol=tol)  # Train the model
+    missnet_model.fit(incomp_data, random_init=random_init, max_iter=max_iteration, tol=tol, verbose=verbose)  # Train the model
     recov_data = missnet_model.imputation()  # Get the imputed data
 
     end_time = time.time()
@@ -65,6 +65,6 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
     recov_data[nan_mask] = incomp_data[nan_mask]
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation miss_net - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation miss_net - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

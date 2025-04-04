@@ -23,13 +23,12 @@ def zero_impute(incomp_data, params=None):
 
     Example
     -------
-    >>> incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])
-    >>> recov_data = zero_impute(incomp_data)
-    >>> print(recov_data)
-    array([[1., 2., 0.],
-           [4., 0., 6.]])
+        >>> incomp_data = np.array([[1, 2, np.nan], [4, np.nan, 6]])
+        >>> recov_data = zero_impute(incomp_data)
+        >>> print(recov_data)
+        array([[1., 2., 0.],
+               [4., 0., 6.]])
 
-    :author: Quentin Nater
     """
     recov_data = np.nan_to_num(incomp_data, nan=0)
 

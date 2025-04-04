@@ -205,8 +205,7 @@ def show_main(*result_files,
     :param recalculate: recalculate metrics then show it.
     :return:
     """
-    logging.basicConfig(format='%(asctime)-15s %(message)s',
-                        level=logging.INFO)
+    logging.basicConfig(format='%(asctime)-15s %(message)s', level=logging.INFO)
     # return dict like {'dataset_name': {blackout_lens: (start_idx, results, params)}}
     results = utils.results_load(result_files)
     # single plot
@@ -383,7 +382,8 @@ def single_main(input,
                 train_lambda_e: float = 0.1,
                 train_stop_rate: float = 1.0,
                 train_converge_threshold: float = 0.001,
-                is_show: bool = False
+                is_show: bool = False,
+                verbose = True
                 ):
     """
     HKMF-T single mode.
@@ -409,7 +409,7 @@ def single_main(input,
     dataset = np.nan_to_num(dataset, nan=0.0)
 
     # param valid
-    dl = utils.dataset_load_nqu(dataset, tags, data_names)
+    dl = utils.dataset_load_nqu(dataset, tags, data_names, verbose)
     if dl is None:
         return -1
     method_core = get_method_handle(method)
@@ -430,16 +430,22 @@ def single_main(input,
 
     if np.isnan(input).any():
         dl.generate_mask_nqu(input)
-        print("\n\n\t\t\t\t\t\tdl._mask", dl._mask.shape)
-        print("\t\t\t\t\t\tdl._mask", *dl._mask, "\n\n")
+
+        if verbose:
+            print("\n\n\t\t\t\t\t\tdl._mask", dl._mask.shape)
+            print("\t\t\t\t\t\tdl._mask", *dl._mask, "\n\n")
     else:
         dl.generate_mask(blackouts_begin, blackouts_end)
-        print("\t\t\t\t\t\tdl._mask", dl._mask.shape)
+
+        if verbose:
+            print("\t\t\t\t\t\tdl._mask", dl._mask.shape)
 
 
     data, mask, tag, gt = dl.get_data()
 
-    print("\t\t\t\t\t\tTRAINING >>>>>>>>>>>>>>>>>>")
+    if verbose:
+        print("\t\t\t\t\t\tTRAINING >>>>>>>>>>>>>>>>>>")
+
     rs, rmse_score, dtw_score = method_core(data, mask, tag, gt,
                                             max_epoch,
                                             train_eta,
@@ -448,11 +454,12 @@ def single_main(input,
                                             train_lambda_e,
                                             train_stop_rate,
                                             train_converge_threshold, )
-    print('\t\t\t\tgt:', np.array(gt).shape)
-    print('\t\t\t\trs:', np.array(rs).shape, "\n")
-    print('\t\t\t\trmse_score:', rmse_score)
-    print('\t\t\t\tdtw_score:', dtw_score)
-    print('\t\t\t\tdtw_score:', dtw_metric(gt, rs))
+    if verbose:
+        print('\t\t\t\tgt:', np.array(gt).shape)
+        print('\t\t\t\trs:', np.array(rs).shape, "\n")
+        print('\t\t\t\trmse_score:', rmse_score)
+        print('\t\t\t\tdtw_score:', dtw_score)
+        print('\t\t\t\tdtw_score:', dtw_metric(gt, rs))
 
     if is_show:
         utils.show_gt_rs(gt, rs, blackouts_begin, blackouts_end, method)
@@ -464,17 +471,19 @@ def single_main(input,
         nan_mask = np.isnan(updated_matrix[row])  # Identify NaN positions
         updated_matrix[row, nan_mask] = rs[ind, nan_mask]  # Replace only NaNs
 
-    print('\t\t\t\tupdated_matrix:', np.array(updated_matrix).shape)
+    if verbose:
+        print('\t\t\t\tupdated_matrix:', np.array(updated_matrix).shape)
 
     return updated_matrix
 
 
-def recoveryHKMFT(miss_data, tags=None, data_names=None, epoch=10):
+def recoveryHKMFT(miss_data, tags=None, data_names=None, epoch=10, verbose=True):
 
-    print("\n\n\t\t\t(PYTHON) HKMF-T: Matrix Shape: (", miss_data.shape[0], ", ", miss_data.shape[1], ")")
-    print(f"\t\t\ttags: {tags}, data_names: {data_names}, epoch: {epoch}")
+    if verbose:
+        print("(IMPUTATION) HKMF-T: Matrix Shape: (", miss_data.shape[0], ", ", miss_data.shape[1], ")")
+        print(f"\t\t\ttags: {tags}, data_names: {data_names}, epoch: {epoch}")
 
-    imputation = single_main(miss_data, tags=tags, data_names=data_names, max_epoch=epoch)
+    imputation = single_main(miss_data, tags=tags, data_names=data_names, max_epoch=epoch, verbose=verbose)
     return imputation
 
 

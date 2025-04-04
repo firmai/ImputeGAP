@@ -21,7 +21,7 @@ def native_rosl(__py_matrix, __py_rank, __py_regularization, __verbose=True):
         The regularization parameter to control the trade-off between reconstruction accuracy and robustness.
         Higher values enforce sparsity or robustness against noise in the data.
     __verbose : bool, optional
-        Whether to display the contamination information (default is False).
+        Whether to display the contamination information (default is True).
 
     Returns
     -------
@@ -100,6 +100,6 @@ def rosl(incomp_data, rank, regularization, logs=True, verbose=True, lib_path=No
     end_time = time.time()
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation ROSL - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation ROSL - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

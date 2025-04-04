@@ -25,6 +25,7 @@ class SpatioTemporalDataModule(pl.LightningDataModule):
         batch_size=1000,
         workers=8,
         samples_per_epoch=None,
+        verbose=True
     ):
         super(SpatioTemporalDataModule, self).__init__()
         self.torch_dataset = dataset
@@ -40,6 +41,7 @@ class SpatioTemporalDataModule(pl.LightningDataModule):
         )
         # preprocessing
         self.scale = scale
+        self.verbose = verbose
         self.scaling_type = scaling_type
         self.scaling_axis = scaling_axis
         self.scale_exogenous = (
@@ -159,7 +161,8 @@ class SpatioTemporalDataModule(pl.LightningDataModule):
         return self._data_loader(self.valset, shuffle, batch_size)
 
     def test_dataloader(self, shuffle=False, batch_size=None):
-        print(f"🔍 Test Dataloader: {len(self.testset)} samples")  # Debugging
+        if self.verbose:
+            print(f"🔍 Test Dataloader: {len(self.testset)} samples")  # Debugging
         return self._data_loader(self.testset, shuffle, batch_size)
 
     @staticmethod

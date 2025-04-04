@@ -13,7 +13,7 @@ class TestLoading(unittest.TestCase):
         utils.display_title()
 
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test.txt"))
 
         self.assertEqual(ts_1.data.shape, (10, 25))
         self.assertEqual(ts_1.data[0, 1], 2.5)
@@ -35,7 +35,7 @@ class TestLoading(unittest.TestCase):
         Verify if the manager of a dataset is working
         """
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test.txt"))
 
         to_save = "./assets"
         file_path = ts_1.plot(input_data=ts_1.data, nbr_series=5, nbr_val=100, size=(16, 8), save_path=to_save, display=False)
@@ -44,7 +44,7 @@ class TestLoading(unittest.TestCase):
 
     def test_loading_normalization_min_max(self):
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test.txt"))
         ts_1.normalize(normalizer="min_max")
 
         assert np.isclose(np.min(ts_1.data), 0), f"Min value after Min-Max normalization is not 0: {np.min(ts_1.normalized_ts)}"
@@ -52,7 +52,7 @@ class TestLoading(unittest.TestCase):
 
     def test_loading_normalization_z_score(self):
         normalized = TimeSeries()
-        normalized.load_series(utils.search_path("test"))
+        normalized.load_series(utils.search_path("test.txt"))
         normalized.normalize()
 
         mean = np.mean(normalized.data)

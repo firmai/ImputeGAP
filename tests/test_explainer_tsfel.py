@@ -14,7 +14,9 @@ class TestExplainerTSFEL(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("chlorine"))
 
-        shap_values, shap_details = Explainer.extractor_tsfel(data=ts_1.data)
+        exp = Explainer()
+
+        shap_values, shap_details = exp.extractor_tsfel(data=ts_1.data)
 
         self.assertTrue(shap_values is not None)
         self.assertTrue(shap_details is not None)

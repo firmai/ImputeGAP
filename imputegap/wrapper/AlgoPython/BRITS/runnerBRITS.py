@@ -14,7 +14,7 @@ from . import data_loader
 
 from .data_prep_tf import prepare_dat
 
-def train(model, input, epochs, batch_size):
+def train(model, input, epochs, batch_size, verbose=True):
     optimizer = optim.Adam(model.parameters(), lr = 1e-3)
     data_iter = data_loader.get_loader(input, batch_size = batch_size)
 
@@ -29,7 +29,8 @@ def train(model, input, epochs, batch_size):
 
             run_loss += ret['loss'].data
 
-            print ('\t\t\t\r\t\t\t\t\t\tProgress epoch {}, {:.2f}%, average loss {}'.format(epoch, (idx + 1) * 100.0 / len(data_iter), run_loss / (idx + 1.0)))
+            if verbose:
+                print ('\t\t\t\r\t\t\t\t\t\tProgress epoch {}, {:.2f}%, average loss {}'.format(epoch, (idx + 1) * 100.0 / len(data_iter), run_loss / (idx + 1.0)))
     #end for    
     
     return (model, data_iter)
@@ -59,14 +60,14 @@ def brits_recovery(incomp_data, model="brits", epoch=10, batch_size=7, nbr_featu
 
     if model != "brits_i_univ":
         if verbose:
-            print("\t\t(PYTHON) BRITS: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
+            print("(IMPUTATION) BRITS: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
                   ") for epoch ", epoch, ", batch_size ", batch_size, ", nbr features", nbr_features,
                   ", seq_length ", seq_length, ", and hidden_layers ", hidden_layers, "...")
 
         model = getattr(models, model).Model(batch_size, nbr_features, hidden_layers, seq_length)
     else:
         if verbose:
-            print("\t\t(PYTHON) BRITS-UNIV: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
+            print("(IMPUTATION) BRITS-UNIV: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
                   ") for epoch ", epoch, ", batch_size ", batch_size, ", nbr features", 1,
                   ", seq_length ", n, ", and hidden_layers ", hidden_layers, "...")
 
@@ -75,11 +76,13 @@ def brits_recovery(incomp_data, model="brits", epoch=10, batch_size=7, nbr_featu
     if torch.cuda.is_available():
         model = model.cuda()
 
-    (model, data_iter) = train(model, "incomp_data.tmp", epoch, batch_size)
+    (model, data_iter) = train(model, "incomp_data.tmp", epoch, batch_size, verbose)
     res = evaluate(model, data_iter)
 
     recov = np.squeeze(np.array(res))
-    print("recov", recov.shape)
+
+    if verbose:
+        print("recov", recov.shape)
 
     nan_mask = ~np.isnan(incomp_data)
     recov[nan_mask] = incomp_data[nan_mask]

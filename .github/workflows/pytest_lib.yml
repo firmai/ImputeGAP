@@ -21,9 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install libmlpack-dev
-        sudo apt-get install libopenblas-dev
-        sudo apt-get install python3-dev build-essential
+        sudo apt-get install -y libmlpack-dev libopenblas-dev python3-dev build-essential
         pip install --upgrade google protobuf
         pip install imputegap==1.0.7
 

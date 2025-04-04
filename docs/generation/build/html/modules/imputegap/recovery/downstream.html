@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>imputegap.recovery.downstream - imputegap 1.0.7 documentation</title>
+        <title>imputegap.recovery.downstream - imputegap 1.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">imputegap 1.0.7 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">imputegap 1.0.8 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">imputegap 1.0.7 documentation</span>
+  <span class="sidebar-brand-text">imputegap 1.0.8 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -209,6 +209,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../integration.html">Integration</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../imputegap.html">ImputeGAP Package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -354,17 +355,17 @@
         <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">downstream</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;params&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">plots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">downstream</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;plots&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">comparator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">downstream</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;comparator&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">plt</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="n">evaluator</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">(DOWNSTREAM) The params for model of downstream analysis are empty or missing. Default ones loaded...&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(DOWNSTREAM) Default parameters of the downstream model loaded.&quot;</span><span class="p">)</span>
             <span class="n">loader</span> <span class="o">=</span> <span class="s2">&quot;forecaster-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
             <span class="n">params</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">loader</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(DOWNSTREAM) Analysis launched for &lt;&quot;</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">,</span> <span class="s2">&quot;&gt; on the model &lt;&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span>
-              <span class="s2">&quot;&gt; with parameters :</span><span class="se">\n\t\t\t\t\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="s2">&quot; </span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(DOWNSTREAM) Analysis launched !</span><span class="se">\n</span><span class="s2">task: </span><span class="si">{</span><span class="n">evaluator</span><span class="si">}</span><span class="se">\n</span><span class="s2">model: </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="se">\n</span><span class="s2">params: </span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="se">\n</span><span class="s2">imputation algorithm: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="si">}</span><span class="se">\n</span><span class="s2">comparator: </span><span class="si">{</span><span class="n">comparator</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">evaluator</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;forecast&quot;</span><span class="p">,</span> <span class="s2">&quot;forecaster&quot;</span><span class="p">,</span> <span class="s2">&quot;forecasting&quot;</span><span class="p">]:</span>
             <span class="n">y_train_all</span><span class="p">,</span> <span class="n">y_test_all</span><span class="p">,</span> <span class="n">y_pred_all</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -469,17 +470,19 @@
 
             <span class="k">if</span> <span class="n">plots</span><span class="p">:</span>
                 <span class="c1"># Global plot with all rows and columns</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_plot_downstream</span><span class="p">(</span><span class="n">y_train_all</span><span class="p">,</span> <span class="n">y_test_all</span><span class="p">,</span> <span class="n">y_pred_all</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">comparator</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">)</span>
+                <span class="n">plt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plot_downstream</span><span class="p">(</span><span class="n">y_train_all</span><span class="p">,</span> <span class="n">y_test_all</span><span class="p">,</span> <span class="n">y_pred_all</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">comparator</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">)</span>
 
             <span class="c1"># Save metrics in a dictionary</span>
-            <span class="n">al_name</span> <span class="o">=</span> <span class="s2">&quot;DOWNSTREAM-&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;-MSE&quot;</span>
-            <span class="n">al_name_s</span> <span class="o">=</span> <span class="s2">&quot;DOWNSTREAM-&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;-SMAPE&quot;</span>
-            <span class="n">al_name_c</span> <span class="o">=</span> <span class="s2">&quot;DOWNSTREAM-&quot;</span> <span class="o">+</span> <span class="n">comparator</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;-MSE&quot;</span>
-            <span class="n">al_name_cs</span> <span class="o">=</span> <span class="s2">&quot;DOWNSTREAM-&quot;</span> <span class="o">+</span> <span class="n">comparator</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;-SMAPE&quot;</span>
-            <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;DOWNSTREAM-ORIGIN-MSE&quot;</span><span class="p">:</span> <span class="n">mse</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">al_name</span><span class="p">:</span> <span class="n">mse</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">al_name_c</span><span class="p">:</span> <span class="n">mse</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                       <span class="s2">&quot;DOWNSTREAM-ORIGIN-SMAPE&quot;</span><span class="p">:</span> <span class="n">smape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">al_name_s</span><span class="p">:</span> <span class="n">smape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">al_name_cs</span><span class="p">:</span> <span class="n">smape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">}</span>
+            <span class="n">al_name</span> <span class="o">=</span> <span class="s2">&quot;MSE_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="n">al_name_s</span> <span class="o">=</span> <span class="s2">&quot;sMAPE_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="n">al_name_c</span> <span class="o">=</span> <span class="s2">&quot;MSE_&quot;</span> <span class="o">+</span> <span class="n">comparator</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="n">al_name_cs</span> <span class="o">=</span> <span class="s2">&quot;sMAPE_&quot;</span> <span class="o">+</span> <span class="n">comparator</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
-            <span class="k">return</span> <span class="n">metrics</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;MSE_original&quot;</span><span class="p">:</span> <span class="n">mse</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">al_name</span><span class="p">:</span> <span class="n">mse</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">al_name_c</span><span class="p">:</span> <span class="n">mse</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                       <span class="s2">&quot;sMAPE_original&quot;</span><span class="p">:</span> <span class="n">smape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">al_name_s</span><span class="p">:</span> <span class="n">smape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">al_name_cs</span><span class="p">:</span> <span class="n">smape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">plt</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">No evaluator found... list possible : &#39;forecaster&#39;&quot;</span> <span class="o">+</span> <span class="s2">&quot;*&quot;</span> <span class="o">*</span> <span class="mi">30</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -513,6 +516,11 @@
 <span class="sd">            Title of the plot.</span>
 <span class="sd">        max_series : int</span>
 <span class="sd">            Maximum number of series to plot (default is 9).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        plt</span>
+<span class="sd">            Return the plots object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Create a 3x3 subplot grid (3 rows for data types, 3 columns for valid series)</span>
 
@@ -595,7 +603,9 @@
             <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;plots saved in &quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">plt</span></div>
 
 </pre></div>
         </article>
@@ -629,7 +639,7 @@
       
     </aside>
   </div>
-</div><script src="../../../static/documentation_options.js?v=46dfa7f5"></script>
+</div><script src="../../../static/documentation_options.js?v=aec50437"></script>
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>

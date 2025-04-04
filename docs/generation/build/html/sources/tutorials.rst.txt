@@ -3,22 +3,16 @@ Tutorials
 =========
 
 
-.. _loading-preprocessing:
+.. _loading:
 
-Loading and Preprocessing
--------------------------
+Loading
+-------
 
 ImputeGAP comes with several time series datasets. The list of datasets is described `here <datasets.html>`_.
 
-As an example, we start by using eeg-alcohol, a standard dataset composed of individuals with a genetic predisposition to alcoholism. The dataset contains measurements from 64 electrodes placed on subject’s scalps, sampled at 256 Hz (3.9-ms epoch) for 1 second. The dimensions of the dataset are 64 series, each containing 256 values.
+As an example, we use the eeg-alcohol dataset, composed of individuals with a genetic predisposition to alcoholism. The dataset contains measurements from 64 electrodes placed on subject’s scalps, sampled at 256 Hz. The dimensions of the dataset are 64 series, each containing 256 values.
 
-The library enables time series normalization as a preprocessing step prior to imputation. Users can select from two normalization techniques to standardize their data distribution.
-
-    - Z-score normalization: Standardizes data by subtracting the mean and dividing by the standard deviation, ensuring a mean of 0 and a standard deviation of 1.
-    - Min-max normalization: Scales data to a fixed range, typically [0,1], by adjusting values based on the minimum and maximum in the dataset.
-
-You can access the API documentation at the following `link <imputegap.manager.html#imputegap.recovery.manager.TimeSeries.normalize>`_.
-
+To load and plot the eeg-alcohol dataset from the library:
 
 .. code-block:: python
 
@@ -28,7 +22,7 @@ You can access the API documentation at the following `link <imputegap.manager.h
     # initialize the time series object
     ts = TimeSeries()
 
-    # load and normalize the dataset from file or from the code
+    # load and normalize the dataset from the library
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
@@ -38,9 +32,7 @@ You can access the API documentation at the following `link <imputegap.manager.h
 
 
 
-The module ``ts.datasets`` contains all the publicly available datasets provided by the library.
-
-To list all the datasets, you can use this command:
+The module ``ts.datasets`` contains all the publicly available datasets provided by the library, which can be listed as follows:
 
 .. code-block:: python
 
@@ -53,9 +45,31 @@ To list all the datasets, you can use this command:
 
 
 
+To load your own dataset, add the path to your file in the ``ts.load_series`` function:
+
+.. code-block:: python
+
+    from imputegap.recovery.manager import TimeSeries
+    ts = TimeSeries()
+    ts.load_series("./my_path/my_file.txt")
+
+
+
+To import the time series as a matrix, add it to the  ``ts.import_matrix`` function:
+
+.. code-block:: python
+
+    from imputegap.recovery.manager import TimeSeries
+    ts = TimeSeries()
+    mat = [[2,3,9], [3,10,5], [-1,4,5], [0,0,0]]
+    ts.import_matrix(mat)
+
+
+
+
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 
@@ -88,9 +102,7 @@ As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pat
 
 
 
-All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module.
-
-To list all the available patterns, you can use this command:
+All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module. They can be listed as follows:
 
 .. code-block:: python
 
@@ -104,7 +116,7 @@ To list all the available patterns, you can use this command:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 
@@ -114,11 +126,11 @@ To list all the available patterns, you can use this command:
 Imputation
 ----------
 
-In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms. Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search Methods.
+In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms: Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search.
 The list of algorithms is described `here <algorithms.html>`_.
 
 
-Let's illustrate the imputation using the CDRec Algorithm from the Matrix Completion family.
+Let's illustrate the imputation using the CDRec algorithm from the Matrix Completion family.
 
 .. code-block:: python
 
@@ -156,9 +168,7 @@ Imputation can be performed using either default values or user-defined values. 
     imputer.impute(params=config)
 
 
-All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module.
-
-To list all the available algorithms, you can use this command:
+All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module, which can be listed as follows:
 
 .. code-block:: python
 
@@ -170,7 +180,7 @@ To list all the available algorithms, you can use this command:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 
@@ -179,7 +189,7 @@ To list all the available algorithms, you can use this command:
 Parameter Tuning
 ----------------
 
-The Optimizer component manages algorithm configuration and hyperparameter tuning. To invoke the tuning process, users need to specify the optimization option during the Impute call by selecting the appropriate input for the algorithm. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by `Ray Tune <https://docs.ray.io/en/latest/tune/index.html>`_.
+The Optimizer component manages algorithm configuration and hyperparameter tuning. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by `Ray Tune <https://docs.ray.io/en/latest/tune/index.html>`_.
 
 .. code-block:: python
 
@@ -213,17 +223,15 @@ The Optimizer component manages algorithm configuration and hyperparameter tunin
     ts.print_results(imputer.metrics, text="Optimized values")
 
     # plot the recovered time series
-    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets/imputation", display=True)
+    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets/imputation")
 
     # save hyperparameters
-    utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune", file_name="./imputegap_assets/params"
+    utils.save_optimization(optimal_params=imputer.parameters, algorithm=imputer.algorithm, dataset="eeg-alcohol", optimizer="ray_tune")
 
 
 
 
-All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module.
-
-To list all the available optimizers, you can use this command:
+All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module, which can be listed as follows:
 
 .. code-block:: python
 
@@ -235,7 +243,7 @@ To list all the available optimizers, you can use this command:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 
@@ -245,7 +253,7 @@ To list all the available optimizers, you can use this command:
 Benchmark
 ---------
 
-ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms [33]_.  Users have full control over the benchmark by customizing various parameters, including the list of datasets to evaluate, the algorithms to compare, the choice of optimizer to fine-tune the algorithms on the chosen datasets, the missingness patterns, and the range of missing rates. The default metrics evaluated include "RMSE", "MAE", "MI", "Pearson", and the runtime.
+ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms [33]_.  Users have full control over the benchmark by customizing various parameters, including the list of the algorithms to compare, the optimizer, the datasets to evaluate, the missingness patterns, the range of missing values, and the performance metrics.
 
 
 The benchmarking module can be utilized as follows:
@@ -254,32 +262,32 @@ The benchmarking module can be utilized as follows:
 
     from imputegap.recovery.benchmark import Benchmark
 
-    save_dir = "./imputegap_assets/benchmark"
-    nbr_runs = 1
+    my_algorithms = ["SoftImpute", "KNNImpute"]
 
-    datasets = ["eeg-alcohol"]
+    my_opt = ["default_params"]
 
-    optimizers = ["default_params"]
+    my_datasets = ["eeg-alcohol"]
 
-    algorithms = ["SoftImpute", "KNNImpute"]
-
-    patterns = ["mcar"]
+    my_patterns = ["mcar"]
 
     range = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 
+    my_metrics = ["*"]
+
     # launch the evaluation
-    list_results, sum_scores = Benchmark().eval(algorithms=algorithms, datasets=datasets, patterns=patterns, x_axis=range, optimizers=optimizers, save_dir=save_dir, runs=nbr_runs)
+    bench = Benchmark()
+    bench.eval(algorithms=my_algorithms, datasets=my_datasets, patterns=my_patterns, x_axis=range, metrics=my_metrics, optimizers=my_opt)
 
 
 
 
 
-You can change the optimizer using the following command:
+You can enable the optimizer using the following command:
 
 .. code-block:: python
 
-    optimizer = {"optimizer": "ray_tune", "options": {"n_calls": 1, "max_concurrent_trials": 1}}
-    optimizers = [optimizer]
+    opt = {"optimizer": "ray_tune", "options": {"n_calls": 1, "max_concurrent_trials": 1}}
+    my_opt = [opt]
 
 
 .. [33] Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux: Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)
@@ -287,7 +295,7 @@ You can change the optimizer using the following command:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 
@@ -296,10 +304,7 @@ You can change the optimizer using the following command:
 Downstream
 ----------
 
-
 ImputeGAP includes a dedicated module for systematically evaluating the impact of data imputation on downstream tasks. Currently, forecasting is the primary supported task, with plans to expand to additional tasks in the future.
-
-Below is an example of how to call the downstream process for the model by defining a dictionary with the task and the name the model:
 
 .. code-block:: python
 
@@ -312,7 +317,7 @@ Below is an example of how to call the downstream process for the model by defin
 
     # load and normalize the timeseries
     ts.load_series(utils.search_path("forecast-economy"))
-    ts.normalize(normalizer="min_max")
+    ts.normalize()
 
     # contaminate the time series
     ts_m = ts.Contamination.aligned(ts.data, rate_series=0.8)
@@ -329,13 +334,13 @@ Below is an example of how to call the downstream process for the model by defin
 
 
 
-To list all the available downstream models, you can use this command:
+All downstream models developed in ImputeGAP are available in the ``ts.forecasting_models`` module, which can be listed as follows:
 
 .. code-block:: python
 
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
-    print(f"ImputeGAP downstream models for forcasting : {ts.downstream_models}")
+    print(f"ImputeGAP downstream models for forecasting : {ts.forecasting_models}")
 
 
 
@@ -344,7 +349,7 @@ To list all the available downstream models, you can use this command:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 .. _explainer:
@@ -353,9 +358,9 @@ Explainer
 ---------
 
 
-ImputeGAP provides insights into the algorithm's behavior by identifying the features that impact the most the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (`SHAP <https://shap.readthedocs.io/en/latest/>`_) to reveal how different time series features influence the model’s predictions.
+The library provides insights into the algorithm's behavior by identifying the features that impact the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (`SHAP <https://shap.readthedocs.io/en/latest/>`_) to reveal how different time series features influence the model’s predictions.
 
-Let's illustrate the explainer using the cdrec Algorithm and MCAR missingness pattern:
+Let's illustrate the explainer using the CDRec algorithm and MCAR missingness pattern:
 
 .. code-block:: python
 
@@ -363,21 +368,22 @@ Let's illustrate the explainer using the cdrec Algorithm and MCAR missingness pa
     from imputegap.recovery.explainer import Explainer
     from imputegap.tools import utils
 
-    # initialize the time series object
+    # initialize the time series and explainer object
     ts = TimeSeries()
+    exp = Explainer()
 
-    # load and normalize the timeseries
+    # load and normalize the dataset
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
     # configure the explanation
-    shap_values, shap_details = Explainer.shap_explainer(input_data=ts.data, extractor="pycatch", pattern="mcar", file_name=ts.name, algorithm="CDRec")
+    exp.shap_explainer(input_data=ts.data, extractor="pycatch", pattern="mcar", file_name=ts.name, algorithm="CDRec")
 
     # print the impact of each feature
-    Explainer.print(shap_values, shap_details)
+    exp.print(exp.shap_values, exp.shap_details)
 
 
-To list all the available features extractors, you can use this command:
+All feature extractors developed in ImputeGAP are available in the ``ts.extractors`` module, which can be listed as follows:
 
 .. code-block:: python
 
@@ -388,7 +394,7 @@ To list all the available features extractors, you can use this command:
 
 .. raw:: html
 
-   <br><br>
+   <br>
 
 
 

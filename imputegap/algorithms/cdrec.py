@@ -92,17 +92,17 @@ def cdrec(incomp_data, truncation_rank, iterations, epsilon, logs=True, verbose=
     """
 
     if verbose:
-        print(f"(PYTHON) CDRec: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for rank {truncation_rank}, "
-              f"epsilon {epsilon}, and iterations {iterations}...")
+        print(f"\n(IMPUTATION) CDRec: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for rank {truncation_rank}, "
+              f"epsilon {epsilon}, and iterations {iterations}.")
 
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_cdrec(incomp_data, truncation_rank, epsilon, iterations, verbose)
+    recov_data = native_cdrec(incomp_data, truncation_rank, epsilon, iterations, False)
 
     end_time = time.time()
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation cdrec - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"> logs: imputation cdrec - Execution Time: {(end_time - start_time):.4f} seconds.")
 
     return recov_data

@@ -9,10 +9,9 @@ from main import MissNet
 
 def make_dir(input_dir):
     if os.path.isdir(input_dir):
-        print(f'{input_dir} already exist')
+        print("")
     else:
         os.makedirs(f"{input_dir}")
-        print(f'{input_dir} is ready')
 
 class Config:
     def __init__(self, n_components=15, alpha=0.5, beta=1, n_cl=1, max_iter=100, tol=5, random_init=False):
@@ -35,7 +34,6 @@ class Data:
 
 def execute(X, SAVEPATH, config):
     if os.path.isfile(f'{SAVEPATH}/X_impute.txt'):
-        print(SAVEPATH, 'exists')
         return
 
     #method

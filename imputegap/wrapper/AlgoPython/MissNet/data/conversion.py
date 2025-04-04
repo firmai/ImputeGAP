@@ -12,10 +12,9 @@ np.random.seed(seed)
 
 def make_dir(input_dir):
     if os.path.isdir(input_dir):
-        print(f'{input_dir} already exist')
+        print("")
     else:
         os.makedirs(f"{input_dir}")
-        print(f'{input_dir} is ready')
 
 def plot_indicator(W, savepath=False):
     #missing values are black

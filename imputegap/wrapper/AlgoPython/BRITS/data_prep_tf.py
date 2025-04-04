@@ -22,7 +22,7 @@ def parse_delta(masks, dir_):
 def parse_rec(values, masks, evals, eval_masks, dir_):
     deltas = parse_delta(masks, dir_)
 
-    forwards = pd.DataFrame(values).fillna(method="ffill").fillna(0.0).to_numpy()
+    forwards = pd.DataFrame(values).ffill().fillna(0.0).to_numpy()
 
     rec = {}
 

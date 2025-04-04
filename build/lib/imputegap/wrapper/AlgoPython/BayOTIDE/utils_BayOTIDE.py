@@ -148,7 +148,7 @@ def make_log(args, hyper_dict, result_dict,other_para = ''):
     print('log written!')
 
 
-def make_hyper_dict(config, args=None):
+def make_hyper_dict(config, args=None, verbose=True):
     hyper_dict = config
 
     if config["device"] == "cpu":
@@ -156,7 +156,9 @@ def make_hyper_dict(config, args=None):
     else:
         hyper_dict["device"] = torch.device(
             "cuda" if torch.cuda.is_available() else "cpu")
-    print("\t\t\t\tuse device:", hyper_dict["device"])
+
+    if verbose:
+        print("\t\t\t\tuse device:", hyper_dict["device"])
 
     # Ensure K_trend and K_season exist in hyper_dict
     if "K_trend" not in hyper_dict:

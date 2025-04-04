@@ -61,11 +61,7 @@ def train(
                     logging.info("valid_avg_epoch_loss"+str(avg_loss_valid / batch_no)+", epoch:"+str(epoch_no))
             if best_valid_loss > avg_loss_valid:
                 best_valid_loss = avg_loss_valid
-                print(
-                    "\n best loss is updated to ",
-                    avg_loss_valid / batch_no,
-                    "at",
-                    epoch_no,
+                print("\n best loss is updated to ", avg_loss_valid / batch_no, "at", epoch_no,
                 )
                 logging.info("best loss is updated to "+str(avg_loss_valid / batch_no)+" at "+str(epoch_no))
                 

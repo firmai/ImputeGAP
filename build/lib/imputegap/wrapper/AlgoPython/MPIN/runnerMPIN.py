@@ -58,7 +58,7 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
 
     X, X_mask = get_window_data(base_X=input, base_X_mask=mask, start=start, end=end, ratio=sample_ratio)
 
-    print("\n\n\t\t\t(PYTHON) window_imputation: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
+    print("\t(IMPUTATION) window_imputation: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
           " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " threshold ", thre,
           ", and base ", base, "=================================================\n\n ")
 
@@ -224,11 +224,12 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
 
 
 def recoverMPIN(input, mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, num_of_iteration=5, thre=0.25,
-                base="SAGE", out_channels=64, eval_ratio=0.05, state=True, dynamic=True, seed=0):
+                base="SAGE", out_channels=64, eval_ratio=0.05, state=True, dynamic=True, seed=0, verbose=True):
 
-    print("\t\t(PYTHON) MPIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for mode ", mode,
-          ", window ", window, " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " num_of_iteration ",
-          num_of_iteration, " threshold ", thre, ", and base ", base, "...")
+    if verbose:
+        print("(IMPUTATION) MPIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for mode ", mode,
+              ", window ", window, " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " num_of_iteration ",
+              num_of_iteration, " threshold ", thre, ", and base ", base, "...")
 
     torch.random.manual_seed(seed)
     device = torch.device('cpu')

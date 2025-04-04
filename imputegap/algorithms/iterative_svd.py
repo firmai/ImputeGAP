@@ -86,6 +86,6 @@ def iterative_svd(incomp_data, truncation_rank, logs=True, verbose=True, lib_pat
     end_time = time.time()
 
     if logs and verbose:
-        print(f"\n\t> logs, imputation iterative svd - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation iterative svd - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

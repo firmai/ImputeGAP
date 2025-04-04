@@ -51,6 +51,6 @@ def brits(incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hi
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation brits - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation brits - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

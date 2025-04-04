@@ -88,17 +88,17 @@ class Downstream:
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
         comparator = self.downstream.get("comparator", None)
+        plt = None
 
         model = model.lower()
         evaluator = evaluator.lower()
 
         if not params:
-            print("\n\t(DOWNSTREAM) The params for model of downstream analysis are empty or missing. Default ones loaded...")
+            print("\n(DOWNSTREAM) Default parameters of the downstream model loaded.")
             loader = "forecaster-" + str(model)
             params = utils.load_parameters(query="default", algorithm=loader)
 
-        print("\n(DOWNSTREAM) Analysis launched for <", evaluator, "> on the model <", model,
-              "> with parameters :\n\t\t\t\t\t", params, " \n\n")
+        print(f"\n(DOWNSTREAM) Analysis launched !\ntask: {evaluator}\nmodel: {model}\nparams: {params}\nimputation algorithm: {self.algorithm}\ncomparator: {comparator}\n\n")
 
         if evaluator in ["forecast", "forecaster", "forecasting"]:
             y_train_all, y_test_all, y_pred_all = [], [], []
@@ -203,17 +203,19 @@ class Downstream:
 
             if plots:
                 # Global plot with all rows and columns
-                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, comparator, model, evaluator)
+                plt = self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, comparator, model, evaluator)
 
             # Save metrics in a dictionary
-            al_name = "DOWNSTREAM-" + self.algorithm.upper() + "-MSE"
-            al_name_s = "DOWNSTREAM-" + self.algorithm.upper() + "-SMAPE"
-            al_name_c = "DOWNSTREAM-" + comparator.upper() + "-MSE"
-            al_name_cs = "DOWNSTREAM-" + comparator.upper() + "-SMAPE"
-            metrics = {"DOWNSTREAM-ORIGIN-MSE": mse[0], al_name: mse[1], al_name_c: mse[2],
-                       "DOWNSTREAM-ORIGIN-SMAPE": smape[0], al_name_s: smape[1], al_name_cs: smape[2] }
+            al_name = "MSE_" + self.algorithm.upper()
+            al_name_s = "sMAPE_" + self.algorithm.upper()
+            al_name_c = "MSE_" + comparator.upper()
+            al_name_cs = "sMAPE_" + comparator.upper()
 
-            return metrics
+            metrics = {"MSE_original": mse[0], al_name: mse[1], al_name_c: mse[2],
+                       "sMAPE_original": smape[0], al_name_s: smape[1], al_name_cs: smape[2] }
+
+            return metrics, plt
+
         else:
             print("\tNo evaluator found... list possible : 'forecaster'" + "*" * 30 + "\n")
 
@@ -246,6 +248,11 @@ class Downstream:
             Title of the plot.
         max_series : int
             Maximum number of series to plot (default is 9).
+
+        Returns
+        -------
+        plt
+            Return the plots object.
         """
         # Create a 3x3 subplot grid (3 rows for data types, 3 columns for valid series)
 
@@ -329,3 +336,5 @@ class Downstream:
             print("plots saved in ", file_path)
 
         plt.show()
+
+        return plt

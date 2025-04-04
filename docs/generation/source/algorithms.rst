@@ -2,21 +2,7 @@
 Algorithms
 ==========
 
-All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module. To learn how to implement imputation, please refer to the `tutorial <tutorials.html#imputation>`_.
-
-To list all the available algorithms and their optimizers, you can use this command:
-
-.. code-block:: python
-
-    from imputegap.recovery.manager import TimeSeries
-    ts = TimeSeries()
-    print(f"Imputation algorithms : {ts.algorithms}")
-    print(f"AutoML Optimizers : {ts.optimizers}")
-
-
-.. raw:: html
-
-   <br><br>
+To learn how to add a new imputation algorithm, please refer to the `tutorial <tutorials.html#imputation>`_.
 
 
 .. list-table::

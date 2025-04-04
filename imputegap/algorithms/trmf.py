@@ -59,6 +59,6 @@ def trmf(incomp_data, lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_ite
 
     end_time = time.time()
     if logs and verbose:
-        print(f"\n\t> logs, imputation trmf - Execution Time: {(end_time - start_time):.4f} seconds\n")
+        print(f"\n> logs: imputation trmf - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

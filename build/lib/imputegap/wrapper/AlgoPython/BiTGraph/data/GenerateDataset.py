@@ -52,19 +52,21 @@ def get_0_1_array(array,rate=0.2):
     re_array = new_array.reshape(array.shape)
     return re_array
 
-def synthetic_data(mask_ratio, dataset):
+def synthetic_data(mask_ratio, dataset, verbose=True):
 
     if isinstance(dataset, np.ndarray):
 
-        print("\n\t\t\t\timputegap dataset loaded")
+        if verbose:
+            print("\n\t\t\t\timputegap dataset loaded")
         data = np.array(dataset).astype('float')
         mask = np.where(np.isnan(data), 0, 1)
         data[np.isnan(data)] = 0.0
         data = data[:, :, None].astype('float32')
         mask = mask[:, :, None].astype('int32')
 
-        print("\t\t\t\tdata shape", data.shape)
-        print("\t\t\t\tmask shape", mask.shape, " \n")
+        if verbose:
+            print("\t\t\t\tdata shape", data.shape)
+            print("\t\t\t\tmask shape", mask.shape, " \n")
     else:
         if(dataset=='Metr'):
             path = os.path.join('./data/metr_la/', 'metr_la.h5')
@@ -163,12 +165,12 @@ def Add_Window_Horizon(data,mask, window=3, horizon=1):
 
     return X, Y, masks, masks_target
 
-def loaddataset(history_len, pred_len, mask_ratio, dataset, batch_size=1, data=None):
+def loaddataset(history_len, pred_len, mask_ratio, dataset, batch_size=1, data=None, verbose=True):
 
     if data is not None:
-        data_numpy, mask = synthetic_data(mask_ratio, data)
+        data_numpy, mask = synthetic_data(mask_ratio, data, verbose)
     else:
-        data_numpy,mask = synthetic_data(mask_ratio, dataset)
+        data_numpy,mask = synthetic_data(mask_ratio, dataset, verbose)
 
     x, y, mask_s, mask_target = Add_Window_Horizon(data_numpy, mask, history_len, pred_len)
 

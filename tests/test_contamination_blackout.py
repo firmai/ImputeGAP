@@ -11,7 +11,7 @@ class TestContaminationBlackout(unittest.TestCase):
         the goal is to test if only the selected values are contaminated
         """
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test.txt"))
 
         missing_rates = [0.4, 0.9]
         offset = 0.1
@@ -32,7 +32,7 @@ class TestContaminationBlackout(unittest.TestCase):
         the goal is to test if the starting position is always guaranteed
         """
         ts_1 = TimeSeries()
-        ts_1.load_series(utils.search_path("test"))
+        ts_1.load_series(utils.search_path("test.txt"))
 
         missing_rates = [0.1, 0.4, 0.6]
         ten_percent_index = int(ts_1.data.shape[1] * 0.1)

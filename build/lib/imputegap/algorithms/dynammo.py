@@ -3,7 +3,7 @@ import ctypes as __native_c_types_import;
 
 from imputegap.tools import utils
 
-def native_dynammo(__py_matrix, __py_h, __py_maxIter, __py_fast):
+def native_dynammo(__py_matrix, __py_h, __py_maxIter, __py_fast, __verbose=True):
     """
     Perform matrix imputation using the DynaMMo algorithm with native C++ support.
 
@@ -17,6 +17,8 @@ def native_dynammo(__py_matrix, __py_h, __py_maxIter, __py_fast):
         The maximum number of iterations for the imputation process.
     __py_fast : bool
         If True, enables faster approximate processing.
+    __verbose : bool, optional
+        Whether to display the contamination information (default is False).
 
      Returns
     -------
@@ -29,7 +31,7 @@ def native_dynammo(__py_matrix, __py_h, __py_maxIter, __py_fast):
     L. Li, J. McCann, N. S. Pollard, and C. Faloutsos. Dynammo: mining and summarization of coevolving sequences with missing values. In Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, Paris, France, June 28 - July 1, 2009, pages 507–516, 2009.
     """
 
-    shared_lib = utils.load_share_lib("lib_dynammo")
+    shared_lib = utils.load_share_lib("lib_dynammo", verbose=__verbose)
 
     __py_n = len(__py_matrix);
     __py_m = len(__py_matrix[0]);
@@ -54,7 +56,7 @@ def native_dynammo(__py_matrix, __py_h, __py_maxIter, __py_fast):
     return __py_imputed_matrix;
 
 
-def dynammo(incomp_data, h, max_iteration, approximation, logs=True, lib_path=None):
+def dynammo(incomp_data, h, max_iteration, approximation, logs=True, verbose=True, lib_path=None):
     """
     DynaMMo algorithm for matrix imputation.
 
@@ -70,6 +72,8 @@ def dynammo(incomp_data, h, max_iteration, approximation, logs=True, lib_path=No
         If True, enables faster approximate processing.
     logs : bool, optional
         Whether to log the execution time (default is True).
+    verbose : bool, optional
+        Whether to display the contamination information (default is True).
     lib_path : str, optional
         Custom path to the shared library file (default is None).
 
@@ -80,18 +84,18 @@ def dynammo(incomp_data, h, max_iteration, approximation, logs=True, lib_path=No
 
     Example
     -------
-    >>> recov_data = dynammo(incomp_data=incomp_data, h=5, max_iteration=100, approximation=True, logs=True)
-    >>> print(recov_data)
+        >>> recov_data = dynammo(incomp_data=incomp_data, h=5, max_iteration=100, approximation=True, logs=True)
+        >>> print(recov_data)
 
     """
     start_time = time.time()  # Record start time
 
     # Call the C++ function to perform recovery
-    recov_data = native_dynammo(incomp_data, h, max_iteration, approximation)
+    recov_data = native_dynammo(incomp_data, h, max_iteration, approximation, verbose)
 
     end_time = time.time()
 
-    if logs:
-        print(f"\n\t> logs, imputation DynaMMo - Execution Time: {(end_time - start_time):.4f} seconds\n")
+    if logs and verbose:
+        print(f"\n> logs: imputation DynaMMo - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
     return recov_data

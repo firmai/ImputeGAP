@@ -7,10 +7,11 @@ from imputegap.wrapper.AlgoPython.priSTI.utils import train, evaluate
 from imputegap.wrapper.AlgoPython.priSTI import get_dataloader
 
 
-def recovPRISTI(data, target_strategy="hybrid", unconditional=True, seed=42, device="cpu", num_workers=1):
+def recovPRISTI(data, target_strategy="hybrid", unconditional=True, seed=42, device="cpu", num_workers=1, verbose=True):
 
-    print("\t\t(PYTHON) priSTI: Matrix Shape: (", data.shape[0], ", ", data.shape[1], ") for target_strategy ",
-          target_strategy, ", unconditional ", unconditional, ", and device ", device, "(num_workers", num_workers,")...")
+    if verbose:
+        print("(IMPUTATION) priSTI: Matrix Shape: (", data.shape[0], ", ", data.shape[1], ") for target_strategy ",
+              target_strategy, ", unconditional ", unconditional, ", and device ", device, "(num_workers", num_workers,")...")
 
     n, dim = data.shape
     SEED = seed
@@ -35,7 +36,8 @@ def recovPRISTI(data, target_strategy="hybrid", unconditional=True, seed=42, dev
     config["train"]["batch_size"] = data.shape[1]
 
     model = PriSTI_(config, device, target_dim=dim, seq_len=n).to(device)
-    print("\t\t\tStarting training\n")
+    if verbose:
+        print("\t\t\tStarting training\n")
     train(
         model,
         config["train"],
@@ -43,7 +45,8 @@ def recovPRISTI(data, target_strategy="hybrid", unconditional=True, seed=42, dev
         valid_loader=data_loader
     )
     
-    print("\t\t\tStarting evaluation\n")
+    if verbose:
+        print("\t\t\tStarting evaluation\n")
     matrix = evaluate(model, data_loader, nsample=1)
 
     return np.array(matrix)
