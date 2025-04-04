@@ -88,6 +88,7 @@ class TimeSeries:
         """
         self.data = None
         self.name = "default"
+        self.plots = None
         self.algorithms = utils.list_of_algorithms()
         self.patterns = utils.list_of_patterns()
         self.datasets = utils.list_of_datasets()
@@ -520,6 +521,8 @@ class TimeSeries:
 
         if display:
             plt.show()
+
+        self.plots = plt
 
         return file_path
 

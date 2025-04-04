@@ -43,6 +43,7 @@ class BaseImputer:
         self.recov_data = None
         self.metrics = None
         self.downstream_metrics = None
+        self.downstream_plot = None
         self.parameters = None
 
     def impute(self, params=None):
@@ -91,7 +92,7 @@ class BaseImputer:
             self.recov_data = recov_data
 
         if isinstance(downstream, dict) and downstream is not None:
-            self.downstream_metrics = Downstream(input_data, self.recov_data, self.incomp_data, self.algorithm, downstream).downstream_analysis()
+            self.downstream_metrics, self.downstream_plot = Downstream(input_data, self.recov_data, self.incomp_data, self.algorithm, downstream).downstream_analysis()
         else:
             self.metrics = Evaluation(input_data, self.recov_data, self.incomp_data, self.algorithm, verbose).compute_all_metrics()
 

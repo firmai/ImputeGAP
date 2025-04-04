@@ -1,0 +1,4 @@
+hidden_dim = 15
+learning_rate = 2.795423569785294e-6
+num_iter = 68
+seq_len = 7

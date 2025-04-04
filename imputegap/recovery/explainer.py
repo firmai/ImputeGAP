@@ -55,7 +55,15 @@ class Explainer:
 
     """
 
-    def load_configuration(file_path=None):
+    def __init__(self):
+        """
+        Initialize the Explainer object.
+        """
+        self.shap_values = None
+        self.shap_details = None
+        self.plots = None
+
+    def load_configuration(self, file_path=None):
         """
         Load categories and features from a TOML file.
 
@@ -85,7 +93,7 @@ class Explainer:
         return categories, features, config_data
 
 
-    def extractor_tsfresh(data, categories=["statistical", "temporal", "shape", "frequency"]):
+    def extractor_tsfresh(self, data, categories=["statistical", "temporal", "shape", "frequency"]):
         """
         Extract features using tsfresh and group them into 4 categories:
         statistical, temporal, frequency, and shape-based.
@@ -153,7 +161,7 @@ class Explainer:
 
 
 
-    def extractor_tsfel(data, frequency=None, categories=["spectral", "statistical", "temporal", "fractal"]):
+    def extractor_tsfel(self, data, frequency=None, categories=["spectral", "statistical", "temporal", "fractal"]):
         """
         Extract features using TSFEL (Time Series Feature Extraction Library).
 
@@ -241,7 +249,7 @@ class Explainer:
         return results, descriptions
 
 
-    def extractor_pycatch(data, features_categories, features_list, do_catch24=True):
+    def extractor_pycatch(self, data, features_categories, features_list, do_catch24=True):
         """
         Extract features from time series data using pycatch22.
 
@@ -304,7 +312,7 @@ class Explainer:
 
         return results, descriptions
 
-    def print(shap_values, shap_details=None):
+    def print(self, shap_values, shap_details=None):
         """
         Convert SHAP raw results to a refined format for display.
 
@@ -326,7 +334,7 @@ class Explainer:
         for (x, algo, rate, description, feature, category, mean_features) in shap_values:
             print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
 
-    def convert_results(tmp, file, algo, descriptions, features, categories, mean_features, to_save):
+    def convert_results(self, tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
         Convert SHAP raw results to a refined format for display.
 
@@ -373,7 +381,7 @@ class Explainer:
 
         return result_shap
 
-    def execute_shap_model(x_dataset, x_information, y_dataset, file, algorithm, splitter=10, extractor="pycatch", display=False, verbose=False):
+    def execute_shap_model(self, x_dataset, x_information, y_dataset, file, algorithm, splitter=10, extractor="pycatch", display=False, verbose=False):
         """
         Launch the SHAP model for explaining the features of the dataset.
 
@@ -405,7 +413,7 @@ class Explainer:
         """
 
         print("\n\nInitialization of the SHAP model with dimension", np.array(x_information).shape)
-        _, _, config = Explainer.load_configuration()
+        _, _, config = self.load_configuration()
         plots_categories = config[extractor]['categories']
 
         path_file = "./imputegap_assets/shap/"
@@ -479,28 +487,31 @@ class Explainer:
         plt.close()
         alphas.append(alpha)
 
-        shap.summary_plot(np.array(shval).T, np.array(x_test).T, feature_names=series_names, show=display)
-        alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_shap_reverse.png")
-        plt.title("SHAP Features by Series")
-        plt.savefig(alpha)
-        plt.close()
-        alphas.append(alpha)
 
-        shap.plots.waterfall(shval_x[0], show=display)
-        alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_DTL_Waterfall.png")
-        plt.title("SHAP Waterfall Results")
-        fig = plt.gcf()  # Get the current figure created by SHAP
-        fig.set_size_inches(20, 10)  # Ensure the size is correct
-        plt.savefig(alpha)
-        plt.close()
-        alphas.append(alpha)
+        if not display:
 
-        shap.plots.beeswarm(shval_x, show=display, plot_size=(22, 10))
-        alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_DTL_Beeswarm.png")
-        plt.title("SHAP Beeswarm Results")
-        plt.savefig(alpha)
-        plt.close()
-        alphas.append(alpha)
+            shap.plots.waterfall(shval_x[0], show=display)
+            alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_DTL_Waterfall.png")
+            plt.title("SHAP Waterfall Results")
+            fig = plt.gcf()  # Get the current figure created by SHAP
+            fig.set_size_inches(20, 10)  # Ensure the size is correct
+            plt.savefig(alpha)
+            plt.close()
+            alphas.append(alpha)
+
+            shap.summary_plot(np.array(shval).T, np.array(x_test).T, feature_names=series_names, show=display)
+            alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_shap_reverse.png")
+            plt.title("SHAP Features by Series")
+            plt.savefig(alpha)
+            plt.close()
+            alphas.append(alpha)
+
+            shap.plots.beeswarm(shval_x, show=display, plot_size=(22, 10))
+            alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_DTL_Beeswarm.png")
+            plt.title("SHAP Beeswarm Results")
+            plt.savefig(alpha)
+            plt.close()
+            alphas.append(alpha)
 
         total_weights_for_all_algorithms = []
 
@@ -551,36 +562,34 @@ class Explainer:
         trendT = np.array(trendT)
         mean_features = np.array(mean_features)
 
-        shap.summary_plot(np.array(geometry).T, np.array(geometryT).T, plot_size=(20, 10), feature_names=geometryDesc, show=display)
-        alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[0].lower() + ".png")
-        plt.title("SHAP details of " + plots_categories[0].lower())
-        plt.savefig(alpha)
-        plt.close()
-        alphas.append(alpha)
+        if not display:
+            shap.summary_plot(np.array(geometry).T, np.array(geometryT).T, plot_size=(20, 10), feature_names=geometryDesc, show=display)
+            alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[0].lower() + ".png")
+            plt.title("SHAP details of " + plots_categories[0].lower())
+            plt.savefig(alpha)
+            plt.close()
+            alphas.append(alpha)
 
-        shap.summary_plot(np.array(transformation).T, np.array(transformationT).T, plot_size=(20, 10),
-                          feature_names=transformationDesc, show=display)
-        alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[2].lower() + ".png")
-        plt.title("SHAP details of " + plots_categories[1].lower())
-        plt.savefig(alpha)
-        plt.close()
-        alphas.append(alpha)
+            shap.summary_plot(np.array(transformation).T, np.array(transformationT).T, plot_size=(20, 10), feature_names=transformationDesc, show=display)
+            alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[2].lower() + ".png")
+            plt.title("SHAP details of " + plots_categories[1].lower())
+            plt.savefig(alpha)
+            plt.close()
+            alphas.append(alpha)
 
-        shap.summary_plot(np.array(correlation).T, np.array(correlationT).T, plot_size=(20, 10),
-                          feature_names=correlationDesc, show=display)
-        alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[1].lower() + ".png")
-        plt.title("SHAP details of " + plots_categories[1].lower())
-        plt.savefig(alpha)
-        plt.close()
-        alphas.append(alpha)
+            shap.summary_plot(np.array(correlation).T, np.array(correlationT).T, plot_size=(20, 10), feature_names=correlationDesc, show=display)
+            alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[1].lower() + ".png")
+            plt.title("SHAP details of " + plots_categories[1].lower())
+            plt.savefig(alpha)
+            plt.close()
+            alphas.append(alpha)
 
-        shap.summary_plot(np.array(trend).T, np.array(trendT).T, plot_size=(20, 8), feature_names=trendDesc,
-                          show=display)
-        alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[3].lower() + ".png")
-        plt.title("SHAP details of " + plots_categories[3].lower())
-        plt.savefig(alpha)
-        plt.close()
-        alphas.append(alpha)
+            shap.summary_plot(np.array(trend).T, np.array(trendT).T, plot_size=(20, 8), feature_names=trendDesc, show=display)
+            alpha = os.path.join(path_file_categories + file + "_" + algorithm + "_" + extractor + "_shap_" + plots_categories[3].lower() + ".png")
+            plt.title("SHAP details of " + plots_categories[3].lower())
+            plt.savefig(alpha)
+            plt.close()
+            alphas.append(alpha)
 
         aggregation_features.append(np.mean(geometry, axis=0))
         aggregation_features.append(np.mean(correlation, axis=0))
@@ -603,12 +612,13 @@ class Explainer:
         plt.close()
         alphas.append(alpha)
 
-        shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names, show=display)
-        alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_shap_agg_reverse.png")
-        plt.title("SHAP Aggregation Features by Series")
-        plt.savefig(alpha)
-        plt.close()
-        alphas.append(alpha)
+        if not display:
+            shap.summary_plot(np.array(aggregation_features).T, np.array(aggregation_test).T, feature_names=series_names, show=display)
+            alpha = os.path.join(path_file_details + file + "_" + algorithm + "_" + extractor + "_shap_agg_reverse.png")
+            plt.title("SHAP Aggregation Features by Series")
+            plt.savefig(alpha)
+            plt.close()
+            alphas.append(alpha)
 
         if verbose:
             print("\t\tSHAP Families details :")
@@ -630,13 +640,13 @@ class Explainer:
         for alpha in alphas:
             print("\n\n\tplot has been saved : ", alpha)
 
-        results_shap = Explainer.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions,
+        results_shap = self.convert_results(total_weights_for_all_algorithms, file, algorithm, x_descriptions,
                                                  x_features, x_categories, mean_features,
                                                  to_save=path_file + file + "_" + algorithm + "_" + extractor)
 
         return results_shap
 
-    def shap_explainer(input_data, algorithm="cdrec", params=None, extractor="pycatch", pattern="mcar", missing_rate=0.4,
+    def shap_explainer(self, input_data, algorithm="cdrec", params=None, extractor="pycatch", pattern="mcar", missing_rate=0.4,
                        block_size=10, offset=0.1, seed=True, rate_dataset=1, training_ratio=0.6,
                        file_name="ts", display=False, verbose=False):
         """
@@ -722,7 +732,7 @@ class Explainer:
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
 
         if extractor == "pycatch" or extractor == "pycatch22":
-            categories, features, _ = Explainer.load_configuration()
+            categories, features, _ = self.load_configuration()
 
         for current_series in range(0, limit):
 
@@ -737,13 +747,13 @@ class Explainer:
             obfuscated_matrices.append(incomp_data)
 
             if extractor == "pycatch" or extractor == "pycatch22":
-                catch_fct, descriptions = Explainer.extractor_pycatch(incomp_data, categories, features, False)
+                catch_fct, descriptions = self.extractor_pycatch(incomp_data, categories, features, False)
                 extracted_features = np.array(list(catch_fct.values()))
             elif extractor == "tsfel":
-                catch_fct, descriptions = Explainer.extractor_tsfel(incomp_data)
+                catch_fct, descriptions = self.extractor_tsfel(incomp_data)
                 extracted_features = np.array(list(catch_fct.values()))
             elif extractor == "tsfresh":
-                catch_fct, descriptions = Explainer.extractor_tsfresh(incomp_data)
+                catch_fct, descriptions = self.extractor_tsfresh(incomp_data)
                 extracted_features = np.array(list(catch_fct.values()))
             else:
                 catch_fct, descriptions, extracted_features = None, None, None
@@ -765,7 +775,7 @@ class Explainer:
         for input, output in zip(input_params, output_metrics):
             shap_details.append((input, output["RMSE"]))
 
-        shap_values = Explainer.execute_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
+        shap_values = self.execute_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
                                                    training_ratio, extractor, display, verbose)
 
         print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
@@ -773,4 +783,5 @@ class Explainer:
         end_time = time.time()
         print(f"\n> logs: shap explainer - Execution Time: {(end_time - start_time):.4f} seconds\n\n\n")
 
-        return shap_values, shap_details
+        self.shap_values = shap_values
+        self.shap_details = shap_details

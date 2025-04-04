@@ -4,6 +4,8 @@ README.md
 pyproject.toml
 requirements.txt
 setup.py
+imputegap/01_imputegap_repair.ipynb
+imputegap/02_imputegap_explore.ipynb
 imputegap/__init__.py
 imputegap/report.log
 imputegap/runner_benchmark.py

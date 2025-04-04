@@ -102,7 +102,7 @@ As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pat
 
 
 
-All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module, which can be listed as follows:
+All missingness patterns developed in ImputeGAP are available in the ``ts.patterns`` module. They can be listed as follows:
 
 .. code-block:: python
 
@@ -126,7 +126,7 @@ All missingness patterns developed in ImputeGAP are available in the ``ts.patter
 Imputation
 ----------
 
-In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms. Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search.
+In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms: Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search.
 The list of algorithms is described `here <algorithms.html>`_.
 
 
@@ -189,7 +189,7 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
 Parameter Tuning
 ----------------
 
-The Optimizer component manages algorithm configuration and hyperparameter tuning. To invoke the tuning process, users need to specify the optimization option during the Impute call by selecting the appropriate input for the algorithm. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by `Ray Tune <https://docs.ray.io/en/latest/tune/index.html>`_.
+The Optimizer component manages algorithm configuration and hyperparameter tuning. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by `Ray Tune <https://docs.ray.io/en/latest/tune/index.html>`_.
 
 .. code-block:: python
 
@@ -253,7 +253,7 @@ All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` mod
 Benchmark
 ---------
 
-ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms [33]_.  Users have full control over the benchmark by customizing various parameters, including the list of the algorithms to compare, the choice of optimizer to fine-tune the algorithms, the datasets to evaluate, the missingness patterns, the range of missing values, and the performance metrics.
+ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms [33]_.  Users have full control over the benchmark by customizing various parameters, including the list of the algorithms to compare, the optimizer, the datasets to evaluate, the missingness patterns, the range of missing values, and the performance metrics.
 
 
 The benchmarking module can be utilized as follows:
@@ -275,7 +275,8 @@ The benchmarking module can be utilized as follows:
     my_metrics = ["*"]
 
     # launch the evaluation
-    list_results, sum_scores = Benchmark().eval(algorithms=my_algorithms, datasets=my_datasets, patterns=my_patterns, x_axis=range, metrics=my_metrics, optimizers=my_opt)
+    bench = Benchmark()
+    bench.eval(algorithms=my_algorithms, datasets=my_datasets, patterns=my_patterns, x_axis=range, metrics=my_metrics, optimizers=my_opt)
 
 
 
@@ -357,7 +358,7 @@ Explainer
 ---------
 
 
-The library provides insights into the algorithm's behavior by identifying the features that impact the most the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (`SHAP <https://shap.readthedocs.io/en/latest/>`_) to reveal how different time series features influence the model’s predictions.
+The library provides insights into the algorithm's behavior by identifying the features that impact the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (`SHAP <https://shap.readthedocs.io/en/latest/>`_) to reveal how different time series features influence the model’s predictions.
 
 Let's illustrate the explainer using the CDRec algorithm and MCAR missingness pattern:
 
@@ -367,21 +368,22 @@ Let's illustrate the explainer using the CDRec algorithm and MCAR missingness pa
     from imputegap.recovery.explainer import Explainer
     from imputegap.tools import utils
 
-    # initialize the time series object
+    # initialize the time series and explainer object
     ts = TimeSeries()
+    exp = Explainer()
 
-    # load and normalize the timeseries
+    # load and normalize the dataset
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
     # configure the explanation
-    shap_values, shap_details = Explainer.shap_explainer(input_data=ts.data, extractor="pycatch", pattern="mcar", file_name=ts.name, algorithm="CDRec")
+    exp.shap_explainer(input_data=ts.data, extractor="pycatch", pattern="mcar", file_name=ts.name, algorithm="CDRec")
 
     # print the impact of each feature
-    Explainer.print(shap_values, shap_details)
+    exp.print(exp.shap_values, exp.shap_details)
 
 
-All features extractors developed in ImputeGAP are available in the ``ts.extractors`` module, which can be listed as follows:
+All feature extractors developed in ImputeGAP are available in the ``ts.extractors`` module, which can be listed as follows:
 
 .. code-block:: python
 

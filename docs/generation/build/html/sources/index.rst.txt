@@ -8,10 +8,10 @@ In detail, the library provides:
     - Access to commonly used datasets in the time series imputation field (`Datasets <datasets.html>`_).
     - Configurable contamination module that simulates real-world missingness patterns (`Patterns <patterns.html>`_).
     - Parameterizable state-of-the-art time series imputation algorithms (`Algorithms <algorithms.html>`_).
-    - Benchmarking feature to foster reproducibility in time series imputation (`Benchmark <tutorials.html#benchmark>`_).
-    - Modular tools to analyze the behavior of imputation algorithms and assess their impact on key downstream tasks in time series analysis (`Downstream <tutorials.html#downstream>`_).
+    - Extensive benchmarking to compare the performance of imputation algorithms (`Benchmark <tutorials.html#benchmark>`_).
+    - Modular tools to assess the impact of imputation on key downstream tasks (`Downstream <tutorials.html#downstream>`_).
     - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <tutorials.html#explainer>`_).
-    - Seamless integration of new algorithms in different languages, such as Python, C++, Matlab, Java, and R (`Integration <integration.html>`_).
+    - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R (`Integration <integration.html>`_).
 
 
 .. raw:: html

@@ -52,7 +52,9 @@ class TestPipeline(unittest.TestCase):
         algorithms_test = ["mean", "cdrec"]
         patterns_small = ["mcar"]
         x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
-        Benchmark().eval(algorithms=algorithms_test, datasets=dataset_test, patterns=patterns_small, x_axis=x_axis, optimizers=optimizers, save_dir="test_naterq", runs=2)
+
+        bench = Benchmark()
+        bench.eval(algorithms=algorithms_test, datasets=dataset_test, patterns=patterns_small, x_axis=x_axis, optimizers=optimizers, save_dir="test_naterq", runs=2)
 
         x = not x
         self.assertTrue(x)

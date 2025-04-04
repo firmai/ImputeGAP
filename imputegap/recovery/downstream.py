@@ -88,6 +88,7 @@ class Downstream:
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
         comparator = self.downstream.get("comparator", None)
+        plt = None
 
         model = model.lower()
         evaluator = evaluator.lower()
@@ -202,7 +203,7 @@ class Downstream:
 
             if plots:
                 # Global plot with all rows and columns
-                self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, comparator, model, evaluator)
+                plt = self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, comparator, model, evaluator)
 
             # Save metrics in a dictionary
             al_name = "MSE_" + self.algorithm.upper()
@@ -213,7 +214,7 @@ class Downstream:
             metrics = {"MSE_original": mse[0], al_name: mse[1], al_name_c: mse[2],
                        "sMAPE_original": smape[0], al_name_s: smape[1], al_name_cs: smape[2] }
 
-            return metrics
+            return metrics, plt
 
         else:
             print("\tNo evaluator found... list possible : 'forecaster'" + "*" * 30 + "\n")
@@ -247,6 +248,11 @@ class Downstream:
             Title of the plot.
         max_series : int
             Maximum number of series to plot (default is 9).
+
+        Returns
+        -------
+        plt
+            Return the plots object.
         """
         # Create a 3x3 subplot grid (3 rows for data types, 3 columns for valid series)
 
@@ -330,3 +336,5 @@ class Downstream:
             print("plots saved in ", file_path)
 
         plt.show()
+
+        return plt

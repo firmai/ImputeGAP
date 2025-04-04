@@ -14,8 +14,10 @@ class TestExplainerTSFEL(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("chlorine"))
 
-        categories, features, _ = Explainer.load_configuration()
-        shap_values, shap_details = Explainer.extractor_pycatch(data=ts_1.data, features_categories=categories, features_list=features, do_catch24=False)
+        exp = Explainer()
+
+        categories, features, _ = exp.load_configuration()
+        shap_values, shap_details = exp.extractor_pycatch(data=ts_1.data, features_categories=categories, features_list=features, do_catch24=False)
 
         self.assertTrue(shap_values is not None)
         self.assertTrue(shap_details is not None)
