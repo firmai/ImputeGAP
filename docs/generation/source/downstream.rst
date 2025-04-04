@@ -1,14 +1,8 @@
-=====================
-Downstream Evaluation
-=====================
+==========
+Downstream
+==========
 
 ImputeGAP includes a dedicated module for systematically evaluating the impact of data imputation on downstream tasks. Currently, forecasting is the primary supported task, with plans to expand to additional tasks in the future.
-
-
-
-
-
-Below is an example of how to call the downstream process for the model by defining a dictionary with the task and the name the model:
 
 .. code-block:: python
 
@@ -21,7 +15,7 @@ Below is an example of how to call the downstream process for the model by defin
 
     # load and normalize the timeseries
     ts.load_series(utils.search_path("forecast-economy"))
-    ts.normalize(normalizer="min_max")
+    ts.normalize()
 
     # contaminate the time series
     ts_m = ts.Contamination.aligned(ts.data, rate_series=0.8)
@@ -38,11 +32,19 @@ Below is an example of how to call the downstream process for the model by defin
 
 
 
-To list all the available downstream models, you can use this command:
+All downstream models developed in ImputeGAP are available in the ``ts.forecasting_models`` module, which can be listed as follows:
 
 .. code-block:: python
 
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
-    print(f"ImputeGAP downstream models for forcasting : {ts.forecasting_models}")
+    print(f"ImputeGAP downstream models for forecasting : {ts.forecasting_models}")
 
+
+
+
+
+
+.. raw:: html
+
+   <br>
