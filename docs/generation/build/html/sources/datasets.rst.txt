@@ -2,7 +2,7 @@
 Datasets
 ========
 
-DATASETS in ImputeGAP
+DATASETS in ImputeGAP:
 
     -   `airq <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#AIR-QUALITY>`_
     -   `bafu <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#bafu>`_
@@ -19,3 +19,5 @@ DATASETS in ImputeGAP
     -   `motion <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#motion>`_
     -   `soccer <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#soccer>`_
     -   `temperature <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#temperature>`_
+
+The datasets are stored in ``./imputegap/dataset``.

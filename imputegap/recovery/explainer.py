@@ -327,12 +327,17 @@ class Explainer:
         -------
         None
         """
-        output = ", ".join([f"{output}" for _, output in shap_details])
-        print(f"RMSE RESULTS (Y_TRAIN & Y_TEST): [{output}]")
+        #output = ", ".join([f"{output}" for _, output in shap_details])
+        #print(f"RMSE RESULTS (Y_TRAIN & Y_TEST): [{output}]")
 
-        print("\n\nFeature Importance:")
+        print("\nTop-5 features:")
+        inc = 0
         for (x, algo, rate, description, feature, category, mean_features) in shap_values:
+            inc = inc + 1
             print(f"\tFeature : {x:<5} {algo:<10} with a score of {rate:<10} {category:<18} {description:<75} {feature}\n")
+
+            if inc > 5:
+                break
 
     def convert_results(self, tmp, file, algo, descriptions, features, categories, mean_features, to_save):
         """
@@ -778,10 +783,10 @@ class Explainer:
         shap_values = self.execute_shap_model(input_params, input_params_full, output_rmse, file_name, algorithm,
                                                    training_ratio, extractor, display, verbose)
 
-        print("\n\nSHAP Explainer succeeded without fail, please find the results in : ./assets/shap/*\n")
-
         end_time = time.time()
-        print(f"\n> logs: shap explainer - Execution Time: {(end_time - start_time):.4f} seconds\n\n\n")
+        print(f"\n> logs: shap explainer - Execution Time: {(end_time - start_time):.4f} seconds\n")
+
+        print("\nSHAP results saved in: ./imputegap_assets/shap/*\n")
 
         self.shap_values = shap_values
         self.shap_details = shap_details

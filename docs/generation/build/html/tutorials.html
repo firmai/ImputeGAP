@@ -284,9 +284,9 @@
 <span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">search_path</span><span class="p">(</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">))</span>
 <span class="n">ts</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">normalizer</span><span class="o">=</span><span class="s2">&quot;z_score&quot;</span><span class="p">)</span>
 
-<span class="c1"># plot and print a subset of time series</span>
-<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap_assets&quot;</span><span class="p">)</span>
-<span class="n">ts</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">nbr_series</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># print and plot a subset of time series</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">nbr_series</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap_assets&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The module <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> contains all the publicly available datasets provided by the library, which can be listed as follows:</p>
@@ -299,6 +299,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="n">ts</span><span class="o">.</span><span class="n">load_series</span><span class="p">(</span><span class="s2">&quot;./my_path/my_file.txt&quot;</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>To import the time series as a matrix, add it to the  <code class="docutils literal notranslate"><span class="pre">ts.import_matrix</span></code> function:</p>
@@ -306,6 +307,7 @@
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="n">mat</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
 <span class="n">ts</span><span class="o">.</span><span class="n">import_matrix</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
 </pre></div>
 </div>
 <br></section>
@@ -525,6 +527,16 @@ The list of algorithms is described <a class="reference external" href="algorith
 </pre></div>
 </div>
 <br></section>
+<section id="notebook">
+<span id="id11"></span><h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
+<p>ImputeGAP provides Jupyter notebooks available through the following links:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/01_imputegap_repair.ipynb">01_imputegap_repair</a></p></li>
+<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/02_imputegap_explore.ipynb">02_imputegap_explore</a></p></li>
+</ul>
+</div></blockquote>
+<br></section>
 </section>
 
         </article>
@@ -590,6 +602,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <li><a class="reference internal" href="#benchmark">Benchmark</a></li>
 <li><a class="reference internal" href="#downstream">Downstream</a></li>
 <li><a class="reference internal" href="#explainer">Explainer</a></li>
+<li><a class="reference internal" href="#notebook">Notebook</a></li>
 </ul>
 </li>
 </ul>

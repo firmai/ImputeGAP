@@ -7,26 +7,26 @@ import matplotlib
 import importlib.resources
 from imputegap.tools import utils
 
-from matplotlib import pyplot as plt  # type: ignore
+import matplotlib.pyplot as plt
 
 
 def select_backend():
     system = platform.system()
-    headless = os.getenv("DISPLAY") is None or os.getenv("CI") is not None
+    #headless = os.getenv("DISPLAY") is None or os.getenv("CI") is not None
 
-    if headless:
-        matplotlib.use("Agg")  # headless: save-to-file only
-        return
-
-    # macOS GUI backends (check in priority order)
     if system == "Darwin":
         for backend in ["MacOSX", "Qt5Agg", "TkAgg"]:
             try:
+                print("mac backend", backend)
+
                 matplotlib.use(backend)
                 return
             except (ImportError, RuntimeError):
                 continue
-        matplotlib.use("Agg")  # fallback
+        try:
+            matplotlib.use("TkAgg")  # fallback
+        except (ImportError, RuntimeError):
+            matplotlib.use("Agg")
 
     # Linux or Windows with tkinter
     else:
@@ -38,8 +38,6 @@ def select_backend():
         except (ImportError, RuntimeError):
             matplotlib.use("Agg")
 
-# Call the backend selector
-select_backend()
 
 
 class TimeSeries:
@@ -95,6 +93,7 @@ class TimeSeries:
         self.optimizers = utils.list_of_optimizers()
         self.extractors = utils.list_of_extractors()
         self.forecasting_models = utils.list_of_downstreams()
+        select_backend()
 
     def import_matrix(self, data=None):
         """
@@ -243,7 +242,7 @@ class TimeSeries:
         if nbr_series < nbr_tot_series:
             print("...")
 
-    def print_results(self, metrics, algorithm="", text="Results of the analysis"):
+    def print_results(self, metrics, algorithm="", text="Results"):
         """
         Prints the results of the imputation process.
 
@@ -391,10 +390,14 @@ class TimeSeries:
             >>> ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets") # contamination
             >>> ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets") # imputation
         """
+        select_backend()
+
         number_of_series = 0
         if algorithm is None:
             algorithm = "imputegap"
-        algorithm.lower()
+            title_imputation = "Imputed Data"
+        else:
+            title_imputation = algorithm.lower()
 
         if nbr_series is None or nbr_series == -1:
             nbr_series = input_data.shape[0]
@@ -456,28 +459,28 @@ class TimeSeries:
 
                 if incomp_data is None and recov_data is None:  # plot only raw matrix
                     ax.plot(timestamps, input_data[i, :nbr_val], linewidth=2.5,
-                            color=color, linestyle='-', label=f'Series {i + 1}')
+                            color=color, linestyle='-', label=f'Series')
 
                 if incomp_data is not None and recov_data is None:  # plot infected matrix
                     if np.isnan(incomp_data[i, :]).any():
                         ax.plot(timestamps, input_data[i, :nbr_val], linewidth=1.5,
-                                color=color, linestyle='--', label=f'Missing Data {i + 1}')
+                                color=color, linestyle='--', label=f'Missing Data')
 
                     if np.isnan(incomp_data[i, :]).any() or not subplot:
                         ax.plot(np.arange(min(incomp_data.shape[1], nbr_val)), incomp_data[i, :nbr_val],
-                                color=color, linewidth=2.5, linestyle='-', label=f'Series {i + 1}')
+                                color=color, linewidth=2.5, linestyle='-', label=f'Series')
 
                 if recov_data is not None:  # plot imputed matrix
                     if np.isnan(incomp_data[i, :]).any():
                         ax.plot(np.arange(min(recov_data.shape[1], nbr_val)), recov_data[i, :nbr_val],
-                                linestyle='-', color="r", label=f'Imputed Data {i + 1}')
+                                linestyle='-', color="r", label=title_imputation)
 
                         ax.plot(timestamps, input_data[i, :nbr_val], linewidth=1.5,
-                                linestyle='--', color=color, label=f'Missing Data {i + 1}')
+                                linestyle='--', color=color, label=f'Missing Data')
 
                     if np.isnan(incomp_data[i, :]).any() or not subplot:
                         ax.plot(np.arange(min(incomp_data.shape[1], nbr_val)), incomp_data[i, :nbr_val],
-                                color=color, linewidth=2.5, linestyle='-', label=f'Series {i + 1}')
+                                color=color, linewidth=2.5, linestyle='-', label=f'Series')
 
                 # Label and legend for subplot
                 if subplot:
@@ -517,7 +520,7 @@ class TimeSeries:
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
             file_path = os.path.join(save_path + "/" + current_time + "_" + algorithm + "_plot.jpg")
             plt.savefig(file_path, bbox_inches='tight')
-            print("\nplots saved in ", file_path)
+            print("\nplots saved in:", file_path)
 
         if display:
             plt.show()
@@ -617,11 +620,11 @@ class TimeSeries:
 
             if not explainer and verbose:
                 print(f"\n(CONT) missigness pattern: MCAR"
-                      f"\n\tselected series: {series_selected}"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tselected series: {', '.join(str(int(n)+1) for n in sorted(series_selected, key=int))}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
                       f"\n\tblock size: {block_size}"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tseed value: {seed_value}")
 
 
@@ -707,9 +710,9 @@ class TimeSeries:
 
             if verbose:
                 print(f"\n(CONT) missigness pattern: ALIGNED"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
 
 
@@ -781,9 +784,9 @@ class TimeSeries:
 
             if verbose:
                 print(f"\n(CONT) missigness pattern: SCATTER"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
 
 
@@ -893,9 +896,9 @@ class TimeSeries:
 
             if verbose:
                 print(f"\n(CONT) missigness pattern: GAUSSIAN"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tseed value: {seed_value}"
                       f"\n\tstandard deviation : {std_dev}")
 
@@ -983,9 +986,9 @@ class TimeSeries:
 
             if verbose:
                 print(f"\n(CONT) missigness pattern: DISTRIBUTION"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tseed value: {seed_value}"
                       f"\n\tprobabilities list : {np.array(probabilities).shape}")
 
@@ -1054,9 +1057,9 @@ class TimeSeries:
 
             if verbose:
                 print(f"\n(CONT) missigness pattern: DISJOINT"
-                      f"\n\trate series impacted: {rate_series * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_series * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tlimit: {limit}")
 
             if offset_nbr + values_nbr > NS:
@@ -1128,9 +1131,9 @@ class TimeSeries:
 
             if verbose:
                 print(f"\n(CONT) missigness pattern: OVERLAP"
-                      f"\n\trate series impacted: {rate_series * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_series * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tshift: {shift * 100} %"
                       f"\n\tlimit: {limit}")
 

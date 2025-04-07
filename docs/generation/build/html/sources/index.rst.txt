@@ -13,6 +13,15 @@ In detail, the library provides:
     - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <tutorials.html#explainer>`_).
     - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R (`Integration <integration.html>`_).
 
+.. raw:: html
+
+   <br>
+
+.. note::
+
+    If you like our library, please add a ⭐ in our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
+
+
 
 .. raw:: html
 
@@ -145,16 +154,6 @@ If you use ImputeGAP in your research, please cite the paper:
 
    <br>
 
-
-.. note::
-
-    If you like our library, please add a ⭐ in our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
-
-
-
-.. raw:: html
-
-   <br>
 
 
 .. _contributors:

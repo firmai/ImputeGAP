@@ -5,6 +5,7 @@ import importlib.resources
 import numpy as __numpy_import
 import platform
 
+
 def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     """
     Configure and execute algorithm for selected imputation imputer and pattern.
@@ -1047,11 +1048,11 @@ def list_of_algorithms():
 
 def list_of_patterns():
     return sorted([
-        "mcar",
         "aligned",
-        "scattered",
         "disjoint",
         "overlap",
+        "scattered",
+        "mcar",
         "gaussian",
         "distribution"
     ])
@@ -1127,7 +1128,7 @@ def list_of_extractors():
     ])
 
 def list_of_metrics():
-    return ["RMSE", "MAE", "MI", "CORRELATION", "runtime_linear_scale", "runtime_log_scale"]
+    return ["RMSE", "MAE", "MI", "CORRELATION", "runtime", "runtime_log_scale"]
 
 def list_of_normalizers():
     return ["z_score", "min_max"]

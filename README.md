@@ -151,9 +151,9 @@ print(f"ImputeGAP datasets : {ts.datasets}")
 ts.load_series(utils.search_path("eeg-alcohol"))
 ts.normalize(normalizer="z_score")
 
-# plot and print a subset of time series
-ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
-ts.print(nbr_series=9, nbr_val=20)
+# print and plot a subset of time series
+ts.print(nbr_series=6, nbr_val=20)
+ts.plot(input_data=ts.data, nbr_series=6, nbr_val=100, save_path="./imputegap_assets")
 ```
 
 The module ``ts.datasets`` contains all the publicly available datasets provided by the library, which can be listed as follows:
@@ -441,6 +441,17 @@ from imputegap.recovery.manager import TimeSeries
 ts = TimeSeries()
 print(f"ImputeGAP features extractors : {ts.extractors}")
 ```
+
+
+---
+
+## Notebook
+
+ImputeGAP provides Jupyter notebooks available through the following links:
+
+- [01_imputegap_repair](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/01_imputegap_repair.ipynb)
+- [02_imputegap_explore](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/02_imputegap_explore.ipynb)
+
 
 
 ---

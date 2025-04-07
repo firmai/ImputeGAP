@@ -98,7 +98,7 @@ class Downstream:
             loader = "forecaster-" + str(model)
             params = utils.load_parameters(query="default", algorithm=loader)
 
-        print(f"\n(DOWNSTREAM) Analysis launched !\ntask: {evaluator}\nmodel: {model}\nparams: {params}\nimputation algorithm: {self.algorithm}\ncomparator: {comparator}\n\n")
+        print(f"\n(DOWNSTREAM) Analysis launched !\ntask: {evaluator}\nmodel: {model}\nparams: {params}\nbase algorithm: {self.algorithm}\nreference algorithm: {comparator}\n")
 
         if evaluator in ["forecast", "forecaster", "forecasting"]:
             y_train_all, y_test_all, y_pred_all = [], [], []
@@ -333,7 +333,7 @@ class Downstream:
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
             file_path = os.path.join(save_path + "/" + current_time + "_" + type + "_" + model + "_downstream.jpg")
             plt.savefig(file_path, bbox_inches='tight')
-            print("plots saved in ", file_path)
+            print("plots saved in: ", save_path)
 
         plt.show()
 

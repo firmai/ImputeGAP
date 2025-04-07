@@ -26,9 +26,9 @@ To load and plot the eeg-alcohol dataset from the library:
     ts.load_series(utils.search_path("eeg-alcohol"))
     ts.normalize(normalizer="z_score")
 
-    # plot and print a subset of time series
-    ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
-    ts.print(nbr_series=9, nbr_val=20)
+    # print and plot a subset of time series
+    ts.print(nbr_series=6, nbr_val=20)
+    ts.plot(input_data=ts.data, nbr_series=6, nbr_val=100, save_path="./imputegap_assets")
 
 
 
@@ -52,6 +52,7 @@ To load your own dataset, add the path to your file in the ``ts.load_series`` fu
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
     ts.load_series("./my_path/my_file.txt")
+    ts.print()
 
 
 
@@ -63,6 +64,7 @@ To import the time series as a matrix, add it to the  ``ts.import_matrix`` funct
     ts = TimeSeries()
     mat = [[2,3,9], [3,10,5], [-1,4,5], [0,0,0]]
     ts.import_matrix(mat)
+    ts.print()
 
 
 
@@ -395,6 +397,21 @@ All feature extractors developed in ImputeGAP are available in the ``ts.extracto
 .. raw:: html
 
    <br>
+
+.. _notebook:
+
+Notebook
+--------
+
+ImputeGAP provides Jupyter notebooks available through the following links:
+
+    - `01_imputegap_repair <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/01_imputegap_repair.ipynb>`_
+    - `02_imputegap_explore <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/02_imputegap_explore.ipynb>`_
+
+.. raw:: html
+
+   <br>
+
 
 
 

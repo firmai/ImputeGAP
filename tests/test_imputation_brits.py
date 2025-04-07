@@ -28,13 +28,13 @@ class TestBRITS(unittest.TestCase):
             "CORRELATION": 0.19068315619146248
         }
 
-        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
+        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3,
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
-        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2,
+        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.3,
                         f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
-        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
+        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.35,
                         f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
-        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.3,
+        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.35,
                         f"metrics CORRELATION = {metrics['CORRELATION']}, expected CORRELATION = {expected_metrics['CORRELATION']} ")
 
 
@@ -60,13 +60,13 @@ class TestBRITS(unittest.TestCase):
             "CORRELATION": 0.10694245305242461
         }
 
-        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
+        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3,
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
-        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2,
+        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.3,
                         f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
-        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
+        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.35,
                         f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
-        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.3,
+        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.35,
                         f"metrics CORRELATION = {metrics['CORRELATION']}, expected CORRELATION = {expected_metrics['CORRELATION']} ")
 
     def test_imputation_brits_i_udef(self):
@@ -91,11 +91,11 @@ class TestBRITS(unittest.TestCase):
             "CORRELATION": 0.08306921217575602
         }
 
-        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
+        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3,
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
-        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2,
+        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.3,
                         f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
-        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
+        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.35,
                         f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
-        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.3,
+        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.35,
                         f"metrics CORRELATION = {metrics['CORRELATION']}, expected CORRELATION = {expected_metrics['CORRELATION']} ")

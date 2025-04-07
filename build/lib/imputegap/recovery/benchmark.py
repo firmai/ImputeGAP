@@ -404,7 +404,7 @@ class Benchmark:
                     file.write("=" * 120 + "\n\n")
 
                     for metric in new_metrics:
-                        file.write(f"\nDataset: {dataset}, pattern: {pattern}, metric: {metric}, parms={opt}")
+                        file.write(f"\nDataset: {{{dataset}, {pattern}, {metric}, {opt}}}")
 
                         # Collect all algorithms and scores by rate
                         rate_to_scores = defaultdict(dict)
@@ -431,7 +431,7 @@ class Benchmark:
                         file.write(f"{separator_row}\n")
 
                         if metric in to_call and verbose:
-                            print(f"\nDataset: {dataset}, pattern: {pattern}, metric: {metric}, parms={opt}")
+                            print(f"\nDataset: {{{dataset}, {pattern}, {metric}, {opt}}}")
                             print(separator_row)
                             print(f"{header_row}")
                             print(separator_row)
@@ -450,9 +450,6 @@ class Benchmark:
 
                     file.write("Dictionary of Results:\n")
                     file.write(str(runs_plots_scores) + "\n")
-
-                if verbose:
-                    print(f"\nresults saved in the following directory : {save_path}")
 
 
     def generate_reports_excel(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
@@ -738,9 +735,6 @@ class Benchmark:
                     else:
                         plt.close()
 
-        if verbose:
-            print("\nplots saved in the following directory : ", save_dir)
-
         self.plots = plt
 
     def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, normalizer="z_score", nbr_series=None, nbr_vals=None, verbose=False):
@@ -921,8 +915,6 @@ class Benchmark:
 
         run_averaged = self.average_runs_by_names(run_storage)
 
-        print("the results of the analysis has been saved in : ", save_dir, "\n")
-
         benchmark_end = time.time()
         total_time_benchmark = round(benchmark_end - benchmark_time, 4)
         print(f"\n> logs: benchmark - Execution Time: {total_time_benchmark} seconds\n")
@@ -935,7 +927,7 @@ class Benchmark:
 
             self.generate_reports_txt(runs_plots_scores=scores, save_dir=save_dir_agg_set, dataset=dataset_name, metrics=metrics, rt=total_time_benchmark, run=-1)
             self.generate_plots(runs_plots_scores=scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set, display=verb)
-            print("\n\n")
 
+        print("\nthe results of the analysis has been saved in : ", save_dir, "\n")
         self.list_results = run_averaged
         self.aggregate_results = scores_list
