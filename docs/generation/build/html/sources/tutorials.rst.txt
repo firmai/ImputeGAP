@@ -405,8 +405,8 @@ Notebook
 
 ImputeGAP provides Jupyter notebooks available through the following links:
 
-    - `01_imputegap_repair <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/01_imputegap_repair.ipynb>`_
-    - `02_imputegap_explore <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/02_imputegap_explore.ipynb>`_
+    - `01_imputegap_repair <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_repair.ipynb>`_
+    - `02_imputegap_explore <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_explore.ipynb>`_
 
 .. raw:: html
 

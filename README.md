@@ -449,8 +449,8 @@ print(f"ImputeGAP features extractors : {ts.extractors}")
 
 ImputeGAP provides Jupyter notebooks available through the following links:
 
-- [01_imputegap_repair](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/01_imputegap_repair.ipynb)
-- [02_imputegap_explore](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/02_imputegap_explore.ipynb)
+- [01_imputegap_repair](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_repair.ipynb)
+- [02_imputegap_explore](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_explore.ipynb)
 
 
 

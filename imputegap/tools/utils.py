@@ -102,7 +102,7 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     return imputer
 
 
-def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0, explainer=False, probabilities=None, verbose=True):
+def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0.5, explainer=False, probabilities=None, verbose=True):
     """
     Configure and execute contamination for selected imputation algorithm and pattern.
 
@@ -125,17 +125,17 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
     if pattern == "mcar" or pattern == "missing_completely_at_random":
         incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     elif pattern == "mp" or pattern == "missing_percentage" or pattern == "aligned":
-        incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, verbose=verbose)
+        incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, explainer=explainer, verbose=verbose)
     elif pattern == "ps" or pattern == "percentage_shift" or pattern == "scattered":
-        incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed, verbose=verbose)
+        incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     elif pattern == "disjoint":
         incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset, verbose=verbose)
     elif pattern == "overlap":
         incomp_data = ts.Contamination.overlap(input_data=ts.data, rate_series=dataset_rate, limit=limit, shift=shift, offset=offset, verbose=verbose)
     elif pattern == "gaussian":
-        incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=seed, verbose=verbose)
+        incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     elif pattern == "distribution" or pattern == "dist":
-        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities=probabilities, offset=offset, seed=seed, verbose=verbose)
+        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities=probabilities, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     else:
         incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset, verbose=verbose)
 
@@ -743,7 +743,7 @@ def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
         return percentage / 100
 
     else:
-        raise ValueError("The percentage is out of the acceptable range.")
+        raise ValueError(f"The percentage {percentage} is out of the acceptable range.")
 
 
 def load_share_lib(name="lib_cdrec", lib=True, verbose=True):

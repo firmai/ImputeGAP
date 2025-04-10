@@ -47,7 +47,7 @@ class Benchmark:
         self.plots = None
 
 
-    def _benchmark_exception(self, algorithm, pattern, x):
+    def _benchmark_exception(self, data, algorithm, pattern, x):
         """
         Check whether a specific algorithm-pattern combination should be excluded from benchmarking.
 
@@ -56,6 +56,8 @@ class Benchmark:
 
         Parameters
         ----------
+        data : numpy matrix
+            Matrix of data with nan values
         algorithm : str
             Name of the imputation algorithm (e.g., 'DEEPMVI', 'PRISTI').
         pattern : str
@@ -322,8 +324,6 @@ class Benchmark:
         if display:
             plt.tight_layout()
             plt.show()
-            plt.close()
-        else:
             plt.close()
 
         self.heatmap = plt
@@ -786,13 +786,11 @@ class Benchmark:
         not_optimized = ["none"]
         mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]
 
-
         if "*" in metrics or "all" in metrics:
             metrics = utils.list_of_metrics()
         if "*" in metrics or "all" in algorithms:
             all_algs = utils.list_of_algorithms()
             algorithms = [item for item in all_algs if item.upper() != "MPIN"]
-
 
         benchmark_time = time.time()
         for i_run in range(0, abs(runs)):
@@ -876,7 +874,7 @@ class Benchmark:
 
                                 start_time_imputation = time.time()
 
-                                if not self._benchmark_exception(algorithm, pattern, x):
+                                if not self._benchmark_exception(incomp_data, algorithm, pattern, x):
                                     algo.impute(params=opti_params)
                                 else:
                                     algo.recov_data = incomp_data

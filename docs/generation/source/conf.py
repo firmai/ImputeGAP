@@ -11,6 +11,8 @@ import sys
 project = 'imputegap'
 copyright = '2025, Quentin Nater'
 author = 'Quentin Nater'
+html_title = 'ImputeGAP 1.0.9 Documentation'
+html_short_title = 'ImputeGAP 1.0.9 Documentation'
 
 
 # -- General configuration ---------------------------------------------------
@@ -46,8 +48,10 @@ html_static_path = ['static']
 html_css_files = ['custom.css']
 
 # Set the version and release info
-version = '1.0.8'
-release = '1.0.8'
+version = '1.0.9'
+release = '1.0.9'
+
+html_title = "ImputeGAP 1.0.9 Documentation"
 
 
 html_theme_options = {

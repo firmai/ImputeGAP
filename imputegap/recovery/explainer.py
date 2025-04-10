@@ -614,6 +614,7 @@ class Explainer:
         plt.title("SHAP Aggregation Results")
         plt.gca().axes.get_xaxis().set_visible(False)
         plt.savefig(alpha)
+        self.plots = plt
         plt.close()
         alphas.append(alpha)
 
@@ -704,6 +705,10 @@ class Explainer:
         to generate explanations for the imputation results, which are logged in a local directory.
         """
         start_time = time.time()  # Record start time
+
+        if pattern in ["disjoint", "overlap", "blackout"]:
+            raise ValueError("Invalid pattern detected: disjoint, overlap, or blackout are not allowed for SHAP.\nPlease, you MCAR, Aligned, Scattered, Gaussian, or Distribution.")
+
 
         if rate_dataset < 0.05 or rate_dataset > 1:
             print("\nlimit percentage higher than 100%, reduce to 100% of the dataset")
