@@ -320,13 +320,16 @@ class Benchmark:
         filepath = os.path.join(save_dir, filename)
         plt.savefig(filepath, dpi=300, bbox_inches='tight')  # Save in HD with tight layout
 
+
+
+
         # Show the plot
         if display:
             plt.tight_layout()
             plt.show()
+            self.heatmap = plt
+        else:
             plt.close()
-
-        self.heatmap = plt
 
         return True
 

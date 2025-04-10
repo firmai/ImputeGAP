@@ -58,7 +58,7 @@ class TestException(unittest.TestCase):
         ts_01 = TimeSeries()
         percentage = 120
 
-        with pytest.raises(ValueError, match=f"The percentage is out of the acceptable range."):
+        with pytest.raises(ValueError, match=f"The percentage 120 is out of the acceptable range."):
             ts_01.Contamination.mcar(input_data=np.array([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]), rate_series=percentage)
 
 
