@@ -593,13 +593,16 @@
         <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>  <span class="c1"># Save in HD with tight layout</span>
 
+
+
+
         <span class="c1"># Show the plot</span>
         <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">heatmap</span> <span class="o">=</span> <span class="n">plt</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">heatmap</span> <span class="o">=</span> <span class="n">plt</span>
 
         <span class="k">return</span> <span class="kc">True</span></div>
 
