@@ -681,7 +681,7 @@ Finally, fMRI-STOPTASK - normalized 20x182 demonstrates the impact of "MIN-MAX" 
 
 ## FORECAST-ECONOMY
 
-This economic dataset is used for testing downstream forecasting. It exhibits a seasonality of 7 and consists of 16 time series, each containing 931 values.
+This economic dataset is used for evaluating downstream forecasting models. It exhibits a seasonality of 7 and consists of 16 time series, each containing 931 values.
 
 
 ![FORECAST-ECONOMY dataset - raw data M](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/forecast-economy/forecast-economy_M.jpg)
