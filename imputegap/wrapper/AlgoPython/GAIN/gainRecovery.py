@@ -49,6 +49,11 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
 
   input_data = np.copy(miss_data_x)
 
+  if batch_size > input_data.shape[0]:
+      batch_size = int(input_data.shape[0] / 2)
+      if verbose:
+          print("Batch size higher than input data size, reducing batch size to", batch_size)
+
   if verbose:
       print("(IMPUTATION) GAIN: Matrix Shape: (", input_data.shape[0], ", ", input_data.shape[1], ") "
             "for batch_size ", batch_size, ", hint_rate ", hint_rate, ", alpha ", alpha, ", and epoch ", epoch, "...")

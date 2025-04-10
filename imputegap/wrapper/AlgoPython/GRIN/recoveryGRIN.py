@@ -38,6 +38,11 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=32, window=1, alpha=10
                  grad_clip_val=5.0, grad_clip_algorithm="norm", loss_fn="l1_loss", use_lr_schedule=True, hint_rate=0.7,
                  g_train_freq=1, d_train_freq=5, seed=42, verbose=True):
 
+    if batch_size > input.shape[0]:
+        batch_size = int(input.shape[0] / 2)
+        if verbose:
+            print("Batch size higher than input data size, reducing batch size to", batch_size)
+
     if verbose:
         print("\n(IMPUTATION) GRIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
               " batch_size ", batch_size, " lr ", lr, " window ", window, " alpha ", alpha, " patience ", patience,

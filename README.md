@@ -17,7 +17,7 @@ In detail, the package provides:
 
 <br>
 
-![Python](https://img.shields.io/badge/Python-v3.12-blue) ![Release](https://img.shields.io/badge/Release-v1.0.8-brightgreen)  ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu) ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen) ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue) ![Language](https://img.shields.io/badge/Language-English-blue) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational) [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/)
+![Python](https://img.shields.io/badge/Python-v3.12-blue) ![Release](https://img.shields.io/badge/Release-v1.0.9-brightgreen)  ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu) ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen) ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue) ![Language](https://img.shields.io/badge/Language-English-blue) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational) [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/)
 
 <i>If you like our library, please add a ⭐ in our GitHub repository.</i>
 
@@ -151,9 +151,9 @@ print(f"ImputeGAP datasets : {ts.datasets}")
 ts.load_series(utils.search_path("eeg-alcohol"))
 ts.normalize(normalizer="z_score")
 
-# plot and print a subset of time series
-ts.plot(input_data=ts.data, nbr_series=9, nbr_val=100, save_path="./imputegap_assets")
-ts.print(nbr_series=9, nbr_val=20)
+# print and plot a subset of time series
+ts.print(nbr_series=6, nbr_val=20)
+ts.plot(input_data=ts.data, nbr_series=6, nbr_val=100, save_path="./imputegap_assets")
 ```
 
 The module ``ts.datasets`` contains all the publicly available datasets provided by the library, which can be listed as follows:
@@ -441,6 +441,17 @@ from imputegap.recovery.manager import TimeSeries
 ts = TimeSeries()
 print(f"ImputeGAP features extractors : {ts.extractors}")
 ```
+
+
+---
+
+## Notebook
+
+ImputeGAP provides Jupyter notebooks available through the following links:
+
+- [01_imputegap_repair](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_repair.ipynb)
+- [02_imputegap_explore](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_explore.ipynb)
+
 
 
 ---

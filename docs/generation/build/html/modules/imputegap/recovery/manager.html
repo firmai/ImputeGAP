@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
-        <title>imputegap.recovery.manager - imputegap 1.0.8 documentation</title>
+        <title>imputegap.recovery.manager - ImputeGAP 1.0.9 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">imputegap 1.0.8 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">ImputeGAP 1.0.9 Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">imputegap 1.0.8 documentation</span>
+  <span class="sidebar-brand-text">ImputeGAP 1.0.9 Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -270,28 +270,28 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">importlib.resources</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>  <span class="c1"># type: ignore</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 
 <div class="viewcode-block" id="select_backend">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.select_backend">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">select_backend</span><span class="p">():</span>
     <span class="n">system</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span>
-    <span class="n">headless</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DISPLAY&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;CI&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="c1">#headless = os.getenv(&quot;DISPLAY&quot;) is None or os.getenv(&quot;CI&quot;) is not None</span>
 
-    <span class="k">if</span> <span class="n">headless</span><span class="p">:</span>
-        <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>  <span class="c1"># headless: save-to-file only</span>
-        <span class="k">return</span>
-
-    <span class="c1"># macOS GUI backends (check in priority order)</span>
     <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;Darwin&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">backend</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;MacOSX&quot;</span><span class="p">,</span> <span class="s2">&quot;Qt5Agg&quot;</span><span class="p">,</span> <span class="s2">&quot;TkAgg&quot;</span><span class="p">]:</span>
             <span class="k">try</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mac backend&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+
                 <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
                 <span class="k">return</span>
             <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
                 <span class="k">continue</span>
-        <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>  <span class="c1"># fallback</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;TkAgg&quot;</span><span class="p">)</span>  <span class="c1"># fallback</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
+            <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span>
 
     <span class="c1"># Linux or Windows with tkinter</span>
     <span class="k">else</span><span class="p">:</span>
@@ -304,8 +304,6 @@
             <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">)</span></div>
 
 
-<span class="c1"># Call the backend selector</span>
-<span class="n">select_backend</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="TimeSeries">
@@ -363,6 +361,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizers</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_optimizers</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extractors</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_extractors</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">forecasting_models</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">list_of_downstreams</span><span class="p">()</span>
+        <span class="n">select_backend</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TimeSeries.import_matrix">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.import_matrix">[docs]</a>
@@ -522,7 +521,7 @@
 
 <div class="viewcode-block" id="TimeSeries.print_results">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.print_results">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">print_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Results of the analysis&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Results&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Prints the results of the imputation process.</span>
 
@@ -676,10 +675,16 @@
 <span class="sd">            &gt;&gt;&gt; ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path=&quot;./imputegap_assets&quot;) # contamination</span>
 <span class="sd">            &gt;&gt;&gt; ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path=&quot;./imputegap_assets&quot;) # imputation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">select_backend</span><span class="p">()</span>
+
         <span class="n">number_of_series</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">algorithm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">algorithm</span> <span class="o">=</span> <span class="s2">&quot;imputegap&quot;</span>
-        <span class="n">algorithm</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">title_imputation</span> <span class="o">=</span> <span class="s2">&quot;Imputed Data&quot;</span>
+            <span class="n">title_contamination</span> <span class="o">=</span> <span class="s2">&quot;Missing Data&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">title_imputation</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">title_contamination</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">nbr_series</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">nbr_series</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">nbr_series</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -741,28 +746,28 @@
 
                 <span class="k">if</span> <span class="n">incomp_data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">recov_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># plot only raw matrix</span>
                     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span>
-                            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Series </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Series_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 
                 <span class="k">if</span> <span class="n">incomp_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">recov_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># plot infected matrix</span>
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
                         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
-                                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Missing Data </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">title_contamination</span><span class="p">)</span>
 
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">subplot</span><span class="p">:</span>
                         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nbr_val</span><span class="p">)),</span> <span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span>
-                                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Series </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Series&#39;</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">recov_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># plot imputed matrix</span>
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
                         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">recov_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nbr_val</span><span class="p">)),</span> <span class="n">recov_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span>
-                                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Imputed Data </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">title_imputation</span><span class="p">)</span>
 
                         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
-                                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Missing Data </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Missing Data&#39;</span><span class="p">)</span>
 
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">subplot</span><span class="p">:</span>
                         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nbr_val</span><span class="p">)),</span> <span class="n">incomp_data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">nbr_val</span><span class="p">],</span>
-                                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Series </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                                <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Series&#39;</span><span class="p">)</span>
 
                 <span class="c1"># Label and legend for subplot</span>
                 <span class="k">if</span> <span class="n">subplot</span><span class="p">:</span>
@@ -802,7 +807,7 @@
             <span class="n">current_time</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y_%m_</span><span class="si">%d</span><span class="s2">_%H_%M_%S&quot;</span><span class="p">)</span>
             <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">current_time</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">algorithm</span> <span class="o">+</span> <span class="s2">&quot;_plot.jpg&quot;</span><span class="p">)</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">plots saved in &quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">plots saved in:&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">display</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -866,7 +871,7 @@
 <span class="sd">            seed : bool, optional</span>
 <span class="sd">                Whether to use a seed for reproducibility (default is True).</span>
 <span class="sd">            explainer : bool, optional</span>
-<span class="sd">                Whether to apply MCAR to specific series for explanation purposes (default is False).</span>
+<span class="sd">                Whether to apply MCAR to specific series for explanation purposes, set rate_series 1# (default is False).</span>
 <span class="sd">            verbose : bool, optional</span>
 <span class="sd">                Whether to display the contamination information (default is True).</span>
 
@@ -907,11 +912,11 @@
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(CONT) missigness pattern: MCAR&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">selected series: </span><span class="si">{</span><span class="n">series_selected</span><span class="si">}</span><span class="s2">&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate series impacted: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">missing rate per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">selected series: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">sorted</span><span class="p">(</span><span class="n">series_selected</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">percentage of contaminated series: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate of missing data per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">block size: </span><span class="si">{</span><span class="n">block_size</span><span class="si">}</span><span class="s2">&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">starting position: </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">security offset: [0-</span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">]&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">seed value: </span><span class="si">{</span><span class="n">seed_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
@@ -956,7 +961,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.aligned">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.aligned">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">aligned</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply aligned missing blocks contamination to the time series data.</span>
 
@@ -970,6 +975,8 @@
 <span class="sd">                Percentage of missing values per series (default is 0.2).</span>
 <span class="sd">            offset : float, optional</span>
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
+<span class="sd">            explainer : bool, optional</span>
+<span class="sd">                Whether to apply MCAR to specific series for explanation purposes (default is False).</span>
 <span class="sd">            verbose : bool, optional</span>
 <span class="sd">                Whether to display the contamination information (default is True).</span>
 
@@ -989,22 +996,27 @@
 
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">M</span><span class="p">,</span> <span class="n">NS</span> <span class="o">=</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">default_init</span> <span class="o">=</span> <span class="mi">0</span>
 
-            <span class="n">rate_series</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_series</span><span class="p">)</span>
-            <span class="n">rate_dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
-            <span class="n">offset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-
-            <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">))</span>
-            <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="o">*</span><span class="n">NS</span><span class="p">)</span>
+            <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(CONT) missigness pattern: ALIGNED&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate series impacted: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">missing rate per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">starting position: </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">index impacted : </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">offset_nbr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span><span class="p">:</span>  <span class="c1"># use random series</span>
+                <span class="n">rate_series</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_series</span><span class="p">)</span>
+                <span class="n">rate_dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># use fix series</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
+                <span class="n">default_init</span> <span class="o">=</span> <span class="n">nbr_series_impacted</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="n">nbr_series_impacted</span> <span class="o">+</span> <span class="mi">1</span>
 
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(CONT) missigness pattern: ALIGNED&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">percentage of contaminated series: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate of missing data per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">security offset: [0-</span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">]&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">index impacted : </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">offset_nbr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span> <span class="o">&gt;</span> <span class="n">NS</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1012,7 +1024,7 @@
                     <span class="sa">f</span><span class="s2">&quot; (</span><span class="si">{</span><span class="n">offset_nbr</span><span class="o">+</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2"> must be smaller than </span><span class="si">{</span><span class="n">NS</span><span class="si">}</span><span class="s2">).&quot;</span><span class="p">)</span>
 
 
-            <span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">default_init</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">):</span>
                 <span class="n">S</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
                 <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts_contaminated</span><span class="p">[</span><span class="n">S</span><span class="p">])</span>  <span class="c1"># number of values in the series</span>
                 <span class="n">P</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">offset</span><span class="p">)</span>  <span class="c1"># values to protect in the beginning of the series</span>
@@ -1027,7 +1039,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.scattered">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.scattered">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">scattered</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">scattered</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply percentage shift contamination with random starting position to the time series data.</span>
 
@@ -1043,6 +1055,8 @@
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
 <span class="sd">            seed : bool, optional</span>
 <span class="sd">                Whether to use a seed for reproducibility (default is True).</span>
+<span class="sd">            explainer : bool, optional</span>
+<span class="sd">                Whether to apply MCAR to specific series for explanation purposes (default is False).</span>
 <span class="sd">            verbose : bool, optional</span>
 <span class="sd">                Whether to display the contamination information (default is True).</span>
 
@@ -1066,20 +1080,26 @@
 
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">M</span><span class="p">,</span> <span class="n">NS</span> <span class="o">=</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">default_init</span> <span class="o">=</span> <span class="mi">0</span>
 
-            <span class="n">rate_series</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_series</span><span class="p">)</span>
-            <span class="n">rate_dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
-            <span class="n">offset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-
-            <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">))</span>
-            <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span><span class="o">*</span><span class="n">NS</span><span class="p">)</span>
+            <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span><span class="p">:</span>  <span class="c1"># use random series</span>
+                <span class="n">rate_series</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_series</span><span class="p">)</span>
+                <span class="n">rate_dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># use fix series</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
+                <span class="n">default_init</span> <span class="o">=</span> <span class="n">nbr_series_impacted</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="n">nbr_series_impacted</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(CONT) missigness pattern: SCATTER&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate series impacted: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">missing rate per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">starting position: </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">percentage of contaminated series: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate of missing data per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">security offset: [0-</span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">]&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">index impacted : </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">offset_nbr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
@@ -1089,7 +1109,7 @@
                     <span class="sa">f</span><span class="s2">&quot; (</span><span class="si">{</span><span class="n">offset_nbr</span><span class="o">+</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2"> must be smaller than </span><span class="si">{</span><span class="n">NS</span><span class="si">}</span><span class="s2">).&quot;</span><span class="p">)</span>
 
 
-            <span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">default_init</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">):</span>
                 <span class="n">S</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
                 <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts_contaminated</span><span class="p">[</span><span class="n">S</span><span class="p">])</span>  <span class="c1"># number of values in the series</span>
                 <span class="n">P</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">offset</span><span class="p">)</span>  <span class="c1"># values to protect in the beginning of the series</span>
@@ -1140,7 +1160,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.gaussian">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.gaussian">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">gaussian</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">std_dev</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">gaussian</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">std_dev</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply contamination with a Gaussian distribution to the time series data.</span>
 
@@ -1153,11 +1173,13 @@
 <span class="sd">            rate_series : float, optional</span>
 <span class="sd">                Percentage of missing values per series (default is 0.2).</span>
 <span class="sd">            std_dev : float, optional</span>
-<span class="sd">                Standard deviation of the Gaussian distribution for missing values (default is 0.2).</span>
+<span class="sd">                Standard deviation of the Gaussian distribution for missing values (default is 0.4).</span>
 <span class="sd">            offset : float, optional</span>
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
 <span class="sd">            seed : bool, optional</span>
 <span class="sd">                Whether to use a seed for reproducibility (default is True).</span>
+<span class="sd">            explainer : bool, optional</span>
+<span class="sd">                Whether to apply MCAR to specific series for explanation purposes (default is False).</span>
 <span class="sd">            verbose : bool, optional</span>
 <span class="sd">                Whether to display the contamination information (default is True).</span>
 
@@ -1168,7 +1190,7 @@
 
 <span class="sd">            Example</span>
 <span class="sd">            -------</span>
-<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True, verbose=True):</span>
+<span class="sd">                &gt;&gt;&gt; ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.4, offset=0.1, seed=True, verbose=True):</span>
 
 <span class="sd">            References</span>
 <span class="sd">            ----------</span>
@@ -1178,26 +1200,31 @@
 
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">M</span><span class="p">,</span> <span class="n">NS</span> <span class="o">=</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">default_init</span> <span class="o">=</span> <span class="mi">0</span>
 
             <span class="k">if</span> <span class="n">seed</span><span class="p">:</span>
                 <span class="n">seed_value</span> <span class="o">=</span> <span class="mi">42</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed_value</span><span class="p">)</span>
 
-            <span class="c1"># Validation and limitation of input parameters</span>
-            <span class="n">rate_series</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_series</span><span class="p">)</span>
-            <span class="n">rate_dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
-            <span class="n">offset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-
-            <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">))</span>
-
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span><span class="p">:</span>  <span class="c1"># use random series</span>
+                <span class="c1"># Validation and limitation of input parameters</span>
+                <span class="n">rate_series</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_series</span><span class="p">)</span>
+                <span class="n">rate_dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># use fix series</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
+                <span class="n">default_init</span> <span class="o">=</span> <span class="n">nbr_series_impacted</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="n">nbr_series_impacted</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(CONT) missigness pattern: GAUSSIAN&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate series impacted: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">missing rate per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">starting position: </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">percentage of contaminated series: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate of missing data per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">security offset: [0-</span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">]&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">seed value: </span><span class="si">{</span><span class="n">seed_value</span><span class="si">}</span><span class="s2">&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">standard deviation : </span><span class="si">{</span><span class="n">std_dev</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -1206,7 +1233,7 @@
                     <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Error: The sum of offset (</span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">) and missing values (</span><span class="si">{</span><span class="n">values_nbr</span><span class="si">}</span><span class="s2">) exceeds the limit of of the series.&quot;</span><span class="p">)</span>
 
 
-            <span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">default_init</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">):</span>
                 <span class="n">S</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
                 <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts_contaminated</span><span class="p">[</span><span class="n">S</span><span class="p">])</span>  <span class="c1"># number of values in the series</span>
                 <span class="n">P</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">offset</span><span class="p">)</span>  <span class="c1"># values to protect in the beginning of the series</span>
@@ -1233,7 +1260,7 @@
 
 <div class="viewcode-block" id="TimeSeries.Contamination.distribution">
 <a class="viewcode-back" href="../../../imputegap.manager.html#imputegap.recovery.manager.TimeSeries.Contamination.distribution">[docs]</a>
-        <span class="k">def</span><span class="w"> </span><span class="nf">distribution</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">probabilities</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">distribution</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">rate_dataset</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">rate_series</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">probabilities</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">explainer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Apply contamination with a probabilistic distribution to the time series data.</span>
 
@@ -1252,6 +1279,8 @@
 <span class="sd">                Size of the uncontaminated section at the beginning of the series (default is 0.1).</span>
 <span class="sd">            seed : bool, optional</span>
 <span class="sd">                Whether to use a seed for reproducibility (default is True).</span>
+<span class="sd">            explainer : bool, optional</span>
+<span class="sd">                Whether to apply MCAR to specific series for explanation purposes (default is False).</span>
 <span class="sd">            verbose : bool, optional</span>
 <span class="sd">                Whether to display the contamination information (default is True).</span>
 
@@ -1271,26 +1300,31 @@
 
             <span class="n">ts_contaminated</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">M</span><span class="p">,</span> <span class="n">NS</span> <span class="o">=</span> <span class="n">ts_contaminated</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">default_init</span> <span class="o">=</span> <span class="mi">0</span>
 
             <span class="k">if</span> <span class="n">seed</span><span class="p">:</span>
                 <span class="n">seed_value</span> <span class="o">=</span> <span class="mi">42</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed_value</span><span class="p">)</span>
 
-            <span class="c1"># Validation and limitation of input parameters</span>
-            <span class="n">rate_series</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_series</span><span class="p">)</span>
-            <span class="n">rate_dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
-            <span class="n">offset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-
-            <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">))</span>
-
             <span class="n">offset_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">NS</span><span class="p">)</span>
             <span class="n">values_nbr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NS</span> <span class="o">*</span> <span class="n">rate_series</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span><span class="p">:</span>  <span class="c1"># use random series</span>
+                <span class="c1"># Validation and limitation of input parameters</span>
+                <span class="n">rate_series</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_series</span><span class="p">)</span>
+                <span class="n">rate_dataset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">verification_limitation</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">rate_dataset</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># use fix series</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rate_dataset</span><span class="p">)</span>
+                <span class="n">default_init</span> <span class="o">=</span> <span class="n">nbr_series_impacted</span>
+                <span class="n">nbr_series_impacted</span> <span class="o">=</span> <span class="n">nbr_series_impacted</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">explainer</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(CONT) missigness pattern: DISTRIBUTION&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate series impacted: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">missing rate per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">starting position: </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">percentage of contaminated series: </span><span class="si">{</span><span class="n">rate_dataset</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate of missing data per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">security offset: [0-</span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">]&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">seed value: </span><span class="si">{</span><span class="n">seed_value</span><span class="si">}</span><span class="s2">&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">probabilities list : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -1302,7 +1336,7 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Error: The probability list does not match the matrix in input </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> != (</span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">NS</span><span class="o">-</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">).&quot;</span><span class="p">)</span>
 
-            <span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">default_init</span><span class="p">,</span> <span class="n">nbr_series_impacted</span><span class="p">):</span>
                 <span class="n">S</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
                 <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ts_contaminated</span><span class="p">[</span><span class="n">S</span><span class="p">])</span>  <span class="c1"># number of values in the series</span>
                 <span class="n">P</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">offset</span><span class="p">)</span>  <span class="c1"># values to protect in the beginning of the series</span>
@@ -1362,9 +1396,9 @@
 
             <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(CONT) missigness pattern: DISJOINT&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate series impacted: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">missing rate per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">starting position: </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">percentage of contaminated series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate of missing data per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">security offset: [0-</span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">]&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">limit: </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">offset_nbr</span> <span class="o">+</span> <span class="n">values_nbr</span> <span class="o">&gt;</span> <span class="n">NS</span><span class="p">:</span>
@@ -1439,9 +1473,9 @@
 
             <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(CONT) missigness pattern: OVERLAP&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate series impacted: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">missing rate per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
-                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">starting position: </span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">percentage of contaminated series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">rate of missing data per series: </span><span class="si">{</span><span class="n">rate_series</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%&quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">security offset: [0-</span><span class="si">{</span><span class="n">offset_nbr</span><span class="si">}</span><span class="s2">]&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">shift: </span><span class="si">{</span><span class="n">shift</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2"> %&quot;</span>
                       <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">limit: </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -1518,7 +1552,7 @@
       
     </aside>
   </div>
-</div><script src="../../../static/documentation_options.js?v=aec50437"></script>
+</div><script src="../../../static/documentation_options.js?v=0abd802e"></script>
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>

@@ -1,4 +1,6 @@
 import math
+
+import numpy as np
 import torch
 import torch.nn as nn
 from typing import List
@@ -176,7 +178,14 @@ class OurModel(nn.Module):
         
         if (in_series.shape[1]%self.kernel_size != 0):
             hidden_state = torch.cat([hidden_state,torch.zeros([hidden_state.shape[0],in_series.shape[1]-hidden_state.shape[1],hidden_state.shape[2]]).to(hidden_state.device)],dim=1)
-                
+
+        # Check and align sequence lengths before concatenation
+        seq_len_hidden = hidden_state.shape[1]
+        seq_len_siblings = siblings.shape[1]
+
+        if seq_len_hidden != seq_len_siblings:
+            return None
+
         if (self.use_embed):
             feats = torch.cat([hidden_state,siblings],dim=2)
         else:
@@ -191,7 +200,11 @@ class OurModel(nn.Module):
 
     def forward (self,in_series,mask,residuals,context_info : List[torch.Tensor]):
         mean = self.core(in_series,residuals,context_info)
-        return {'mae':self.mae_loss(mean,in_series,mask,context_info).mean()}
+
+        if mean is None:
+            return {'error'}
+        else:
+            return {'mae':self.mae_loss(mean,in_series,mask,context_info).mean()}
     
     @torch.jit.export
     def validate(self,in_series,mask,residuals, context_info  : List[torch.Tensor],test=False):

@@ -2,7 +2,7 @@
 Algorithms
 ==========
 
-To learn how to add a new imputation algorithm, please refer to the `tutorial <tutorials.html#imputation>`_.
+To learn how to use an imputation algorithm, please refer to the `tutorial <tutorials.html#imputation>`_.
 
 
 .. list-table::

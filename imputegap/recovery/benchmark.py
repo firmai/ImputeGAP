@@ -34,7 +34,7 @@ class Benchmark:
 
     Example
     -------
-    output : {'eegalcohol': {'mcar': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.4359915238078244, 'MAE': 0.3725965559420608, 'MI': 1.4169232775678364, 'CORRELATION': 0.9530448037164908, 'runtime_linear_scale': 0.14936542510986328, 'runtime_log_scale': -0.8257499207386186}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.3665001858394363, 'MAE': 0.2989983612840734, 'MI': 0.9078918430616858, 'CORRELATION': 0.9049909722894052, 'runtime_linear_scale': 0.14400649070739746, 'runtime_log_scale': -0.8416179328014259}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.39833006221984, 'MAE': 0.30824644022807457, 'MI': 0.8483406827418594, 'CORRELATION': 0.9161465703422209, 'runtime_linear_scale': 0.16263365745544434, 'runtime_log_scale': -0.7887895710757052}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.435591016228979, 'MAE': 0.3335144215651955, 'MI': 0.7286325588353783, 'CORRELATION': 0.9021032587324183, 'runtime_linear_scale': 0.14948725700378418, 'runtime_log_scale': -0.8253958270640592}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.4500113661547204, 'MAE': 0.338085865703361, 'MI': 0.6481512576687939, 'CORRELATION': 0.8893263437029546, 'runtime_linear_scale': 0.11344146728515625, 'runtime_log_scale': -0.9452281648326797}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.46554422402146944, 'MAE': 0.3508926604243284, 'MI': 0.6150677913271478, 'CORRELATION': 0.8791443563129441, 'runtime_linear_scale': 0.14773082733154297, 'runtime_log_scale': -0.8305288700027644}, 'times': {}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.24102595399583507, 'MAE': 0.18984832836399548, 'MI': 1.547782862758484, 'CORRELATION': 0.9810468571465141, 'runtime_linear_scale': 0.056914329528808594, 'runtime_log_scale': -1.2447783759282902}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.28890851809839135, 'MAE': 0.22998623733608023, 'MI': 0.9934511613817691, 'CORRELATION': 0.942944831550703, 'runtime_linear_scale': 0.016567707061767578, 'runtime_log_scale': -1.7807375929281355}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.32523842533021824, 'MAE': 0.2398150375225743, 'MI': 1.0141220941333857, 'CORRELATION': 0.9441733384102147, 'runtime_linear_scale': 0.028653383255004883, 'runtime_log_scale': -1.5428240912452686}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.33824584758611187, 'MAE': 0.2509197576351218, 'MI': 0.9534836631617412, 'CORRELATION': 0.9418540692188737, 'runtime_linear_scale': 0.06619572639465332, 'runtime_log_scale': -1.1791700477677098}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.3656435952078159, 'MAE': 0.26630724595251076, 'MI': 0.7933983583413302, 'CORRELATION': 0.9285706343976159, 'runtime_linear_scale': 0.08452534675598145, 'runtime_log_scale': -1.0730130389129724}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.49851932645867886, 'MAE': 0.3727407177987301, 'MI': 0.5872198065951101, 'CORRELATION': 0.8588039019214768, 'runtime_linear_scale': 0.13430190086364746, 'runtime_log_scale': -0.8719178404306834}, 'times': {}}}}}, 'mp': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.34742151870256754, 'MAE': 0.2948407723046262, 'MI': 1.125964256142418, 'CORRELATION': 0.7892633761655805, 'runtime_linear_scale': 0.15556597709655762, 'runtime_log_scale': -0.8080853789072961}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.3844410885563026, 'MAE': 0.3075576508332523, 'MI': 0.6954312599858194, 'CORRELATION': 0.7735153907243231, 'runtime_linear_scale': 0.1470506191253662, 'runtime_log_scale': -0.8325331426484854}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.35786399802701285, 'MAE': 0.28281102633402344, 'MI': 0.5099951376056691, 'CORRELATION': 0.7954814222537407, 'runtime_linear_scale': 0.2436203956604004, 'runtime_log_scale': -0.6132863558093742}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.43119199789678536, 'MAE': 0.3234427657742828, 'MI': 0.7100745133173589, 'CORRELATION': 0.9024794064542365, 'runtime_linear_scale': 0.18121838569641113, 'runtime_log_scale': -0.7417977426336524}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.4506742156401202, 'MAE': 0.34097493425336545, 'MI': 0.6763547885095422, 'CORRELATION': 0.9019998467331982, 'runtime_linear_scale': 0.25681638717651367, 'runtime_log_scale': -0.590377267856808}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.5381331120567093, 'MAE': 0.40890932295665944, 'MI': 0.5082791604891728, 'CORRELATION': 0.8357667475592477, 'runtime_linear_scale': 0.2639143466949463, 'runtime_log_scale': -0.5785370003783141}, 'times': {}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.3096831481522458, 'MAE': 0.21563592819934016, 'MI': 1.1360273959644958, 'CORRELATION': 0.8560961707189335, 'runtime_linear_scale': 0.04132580757141113, 'runtime_log_scale': -1.3837786508749486}, 'times': {}}, '0.1': {'scores': {'RMSE': 0.29125091771194206, 'MAE': 0.2132355936383109, 'MI': 0.7634945893446304, 'CORRELATION': 0.8372801147837776, 'runtime_linear_scale': 0.04345560073852539, 'runtime_log_scale': -1.3619542419291824}, 'times': {}}, '0.2': {'scores': {'RMSE': 0.2879386824647535, 'MAE': 0.22764645037027648, 'MI': 0.6960203330638733, 'CORRELATION': 0.8714158841311463, 'runtime_linear_scale': 0.04009199142456055, 'runtime_log_scale': -1.3969423712072508}, 'times': {}}, '0.4': {'scores': {'RMSE': 0.3287699640998062, 'MAE': 0.2424201903305073, 'MI': 0.8988758488294901, 'CORRELATION': 0.9446832262622646, 'runtime_linear_scale': 0.040317535400390625, 'runtime_log_scale': -1.3945060240507565}, 'times': {}}, '0.6': {'scores': {'RMSE': 0.38653606830971254, 'MAE': 0.28444195748104634, 'MI': 0.7831614045671689, 'CORRELATION': 0.9261181553419807, 'runtime_linear_scale': 0.08821296691894531, 'runtime_log_scale': -1.054467570793068}, 'times': {}}, '0.8': {'scores': {'RMSE': 0.82152770672647, 'MAE': 0.6070921584056164, 'MI': 0.22840679436695374, 'CORRELATION': 0.579634587815775, 'runtime_linear_scale': 0.11256742477416992, 'runtime_log_scale': -0.9485872692326369}, 'times': {}}}}}}}
+    output : {'eegalcohol': {'mcar': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.4359915238078244, 'MAE': 0.3725965559420608, 'MI': 1.4169232775678364, 'CORRELATION': 0.9530448037164908, 'runtime': 0.2811245918273926, 'runtime_log_scale': -0.5511011621200811}}, '0.1': {'scores': {'RMSE': 0.3665001858394363, 'MAE': 0.2989983612840734, 'MI': 0.9078918430616858, 'CORRELATION': 0.9049909722894052, 'runtime': 0.1305081844329834, 'runtime_log_scale': -0.8843622519837359}}, '0.2': {'scores': {'RMSE': 0.39833006221984, 'MAE': 0.30824644022807457, 'MI': 0.8483406827418594, 'CORRELATION': 0.9161465703422209, 'runtime': 0.1445169448852539, 'runtime_log_scale': -0.8400812280720497}}, '0.4': {'scores': {'RMSE': 0.435591016228979, 'MAE': 0.3335144215651955, 'MI': 0.7286325588353783, 'CORRELATION': 0.9021032587324183, 'runtime': 0.306765079498291, 'runtime_log_scale': -0.5131940796785996}}, '0.6': {'scores': {'RMSE': 0.4500113661547204, 'MAE': 0.338085865703361, 'MI': 0.6481512576687939, 'CORRELATION': 0.8893263437029546, 'runtime': 0.10979938507080078, 'runtime_log_scale': -0.9594000921364352}}, '0.8': {'scores': {'RMSE': 0.46554422402146944, 'MAE': 0.3508926604243284, 'MI': 0.6150677913271478, 'CORRELATION': 0.8791443563129441, 'runtime': 0.12360215187072754, 'runtime_log_scale': -0.907973968264617}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.24102595399583507, 'MAE': 0.18984832836399548, 'MI': 1.547782862758484, 'CORRELATION': 0.9810468571465141, 'runtime': 0.04365086555480957, 'runtime_log_scale': -1.3600071402298746}}, '0.1': {'scores': {'RMSE': 0.28890851809839135, 'MAE': 0.22998623733608023, 'MI': 0.9934511613817691, 'CORRELATION': 0.942944831550703, 'runtime': 0.02493762969970703, 'runtime_log_scale': -1.6031448282134637}}, '0.2': {'scores': {'RMSE': 0.32523842533021824, 'MAE': 0.2398150375225743, 'MI': 1.0141220941333857, 'CORRELATION': 0.9441733384102147, 'runtime': 0.01948857307434082, 'runtime_log_scale': -1.7102199581438617}}, '0.4': {'scores': {'RMSE': 0.33824584758611187, 'MAE': 0.2509197576351218, 'MI': 0.9534836631617412, 'CORRELATION': 0.9418540692188737, 'runtime': 0.04377126693725586, 'runtime_log_scale': -1.3588108827701144}}, '0.6': {'scores': {'RMSE': 0.3656435952078159, 'MAE': 0.26630724595251076, 'MI': 0.7933983583413302, 'CORRELATION': 0.9285706343976159, 'runtime': 0.10764479637145996, 'runtime_log_scale': -0.9680069594473933}}, '0.8': {'scores': {'RMSE': 0.49851932645867886, 'MAE': 0.3727407177987301, 'MI': 0.5872198065951101, 'CORRELATION': 0.8588039019214768, 'runtime': 0.1279888153076172, 'runtime_log_scale': -0.8928279808397801}}}}}}}
     """
 
     def __init__(self):
@@ -47,7 +47,7 @@ class Benchmark:
         self.plots = None
 
 
-    def _benchmark_exception(self, algorithm, pattern, x):
+    def _benchmark_exception(self, data, algorithm, pattern, x):
         """
         Check whether a specific algorithm-pattern combination should be excluded from benchmarking.
 
@@ -56,6 +56,8 @@ class Benchmark:
 
         Parameters
         ----------
+        data : numpy matrix
+            Matrix of data with nan values
         algorithm : str
             Name of the imputation algorithm (e.g., 'DEEPMVI', 'PRISTI').
         pattern : str
@@ -263,7 +265,7 @@ class Benchmark:
         Bool
             True if the matrix has been generated
         """
-        save_dir = save_dir + "/_heatmap/"
+        save_dir = save_dir + "/_heatmaps/"
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
@@ -284,7 +286,7 @@ class Benchmark:
             norm = plt.Normalize(vmin=-2, vmax=2)
         elif metric.lower() == "runtime_linear_scale":
             norm = plt.Normalize(vmin=0, vmax=1000)
-        elif metric.lower() == "eegalcohol_mcar_default_params_runtime_linear_scale":
+        elif metric.lower() == "runtime_log_scale":
             norm = plt.Normalize(vmin=-2, vmax=10)
         else:
             norm = plt.Normalize(vmin=0, vmax=2)
@@ -318,15 +320,16 @@ class Benchmark:
         filepath = os.path.join(save_dir, filename)
         plt.savefig(filepath, dpi=300, bbox_inches='tight')  # Save in HD with tight layout
 
+
+
+
         # Show the plot
         if display:
             plt.tight_layout()
             plt.show()
-            plt.close()
+            self.heatmap = plt
         else:
             plt.close()
-
-        self.heatmap = plt
 
         return True
 
@@ -363,17 +366,17 @@ class Benchmark:
 
 
         if "RMSE" not in metrics:
-            to_call = [metrics[0], "runtime_linear_scale"]
+            to_call = [metrics[0], "runtime"]
         else:
-            to_call = ["RMSE", "runtime_linear_scale"]
+            to_call = ["RMSE", "runtime"]
 
         new_metrics = np.copy(metrics)
 
         if metrics is None:
             new_metrics = utils.list_of_metrics()
         else:
-            if "runtime_linear_scale" not in new_metrics:
-                new_metrics = np.append(new_metrics, "runtime_linear_scale")
+            if "runtime" not in new_metrics:
+                new_metrics = np.append(new_metrics, "runtime")
             if "runtime_log_scale" not in new_metrics:
                 new_metrics = np.append(new_metrics, "runtime_log_scale")
 
@@ -404,7 +407,10 @@ class Benchmark:
                     file.write("=" * 120 + "\n\n")
 
                     for metric in new_metrics:
-                        file.write(f"\nDataset: {dataset}, pattern: {pattern}, metric: {metric}, parms={opt}")
+                        if metric == "runtime_log_scale":
+                            break
+
+                        file.write(f"\n{dataset}: {{{pattern}, {metric}, {opt}}}")
 
                         # Collect all algorithms and scores by rate
                         rate_to_scores = defaultdict(dict)
@@ -431,7 +437,7 @@ class Benchmark:
                         file.write(f"{separator_row}\n")
 
                         if metric in to_call and verbose:
-                            print(f"\nDataset: {dataset}, pattern: {pattern}, metric: {metric}, parms={opt}")
+                            print(f"\n{dataset}: {{{pattern}, {metric}, {opt}}}")
                             print(separator_row)
                             print(f"{header_row}")
                             print(separator_row)
@@ -450,9 +456,6 @@ class Benchmark:
 
                     file.write("Dictionary of Results:\n")
                     file.write(str(runs_plots_scores) + "\n")
-
-                if verbose:
-                    print(f"\nresults saved in the following directory : {save_path}")
 
 
     def generate_reports_excel(self, runs_plots_scores, save_dir="./reports", dataset="", run=-1, verbose=True):
@@ -597,8 +600,8 @@ class Benchmark:
         if metrics is None:
             new_metrics = utils.list_of_metrics()
         else:
-            if "runtime_linear_scale" not in new_metrics:
-                new_metrics = np.append(new_metrics, "runtime_linear_scale")
+            if "runtime" not in new_metrics:
+                new_metrics = np.append(new_metrics, "runtime")
                 new_plots = new_plots + 1
             if "runtime_log_scale" not in new_metrics:
                 new_plots = new_plots + 1
@@ -657,7 +660,7 @@ class Benchmark:
                     # Save plot only if there is data to display
                     if has_data:
                         ylabel_metric = {
-                            "runtime_linear_scale": "Runtime (sec)",
+                            "runtime": "Runtime (sec)",
                             "runtime_log_scale": "Runtime (sec)",
                         }.get(metric, metric)
 
@@ -681,7 +684,7 @@ class Benchmark:
                                 min_y = 0
                             if max_y > 2:
                                 max_y = 2
-                        elif metric == "runtime_linear_scale":
+                        elif metric == "runtime":
                             if min_y < 0:
                                 min_y = 0
                             if max_y > 10:
@@ -701,7 +704,7 @@ class Benchmark:
                         ax.set_ylim(min_y - y_padding, max_y + y_padding)
 
                         # Set y-axis limits with padding below 0 for visibility
-                        if metric == "runtime_linear_scale":
+                        if metric == "runtime":
                             ax.set_title("Runtime (linear scale)")
                         elif metric == "runtime_log_scale":
                             ax.set_title("Runtime (log scale)")
@@ -737,9 +740,6 @@ class Benchmark:
                         plt.show()
                     else:
                         plt.close()
-
-        if verbose:
-            print("\nplots saved in the following directory : ", save_dir)
 
         self.plots = plt
 
@@ -789,13 +789,11 @@ class Benchmark:
         not_optimized = ["none"]
         mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]
 
-
         if "*" in metrics or "all" in metrics:
             metrics = utils.list_of_metrics()
         if "*" in metrics or "all" in algorithms:
             all_algs = utils.list_of_algorithms()
             algorithms = [item for item in all_algs if item.upper() != "MPIN"]
-
 
         benchmark_time = time.time()
         for i_run in range(0, abs(runs)):
@@ -831,7 +829,7 @@ class Benchmark:
                         if verbose:
                             print("\n3. algorithm evaluated", algorithm, "with", pattern, "\n")
                         else:
-                            print(f"pattern : {pattern}, algorithm {algorithm}, started at {time.strftime('%Y-%m-%d %H:%M:%S')}.")
+                            print(f"{algorithm} using {pattern}, started at {time.strftime('%Y-%m-%d %H:%M:%S')}.")
 
                         for incx, x in enumerate(x_axis):
                             if verbose:
@@ -879,7 +877,7 @@ class Benchmark:
 
                                 start_time_imputation = time.time()
 
-                                if not self._benchmark_exception(algorithm, pattern, x):
+                                if not self._benchmark_exception(incomp_data, algorithm, pattern, x):
                                     algo.impute(params=opti_params)
                                 else:
                                     algo.recov_data = incomp_data
@@ -894,7 +892,7 @@ class Benchmark:
                                 time_imputation = end_time_imputation - start_time_imputation
                                 log_time_imputation = math.log10(time_imputation) if time_imputation > 0 else None
 
-                                algo.metrics["runtime_linear_scale"] = time_imputation
+                                algo.metrics["runtime"] = time_imputation
                                 algo.metrics["runtime_log_scale"] = log_time_imputation
 
                                 dataset_s = dataset
@@ -904,12 +902,12 @@ class Benchmark:
                                 runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(pattern), {}).setdefault(str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {"scores": algo.metrics}
 
                         print(f"done!\n\n")
-                save_dir_runs = save_dir + "/_details/run_" + str(i_run) + "/" + dataset
-                if verbose:
-                    print("\nruns saved in : ", save_dir_runs)
-                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_runs, display=False, verbose=verbose)
-                self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, metrics=metrics, subplot=False, y_size=y_p_size, save_dir=save_dir_runs, display=False, verbose=verbose)
-                self.generate_reports_txt(runs_plots_scores=runs_plots_scores, save_dir=save_dir_runs, dataset=dataset, metrics=metrics, run=i_run, verbose=verbose)
+                #save_dir_runs = save_dir + "/_details/run_" + str(i_run) + "/" + dataset
+                #if verbose:
+                #    print("\nruns saved in : ", save_dir_runs)
+                #self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_runs, display=False, verbose=verbose)
+                #self.generate_plots(runs_plots_scores=runs_plots_scores, ticks=x_axis, metrics=metrics, subplot=False, y_size=y_p_size, save_dir=save_dir_runs, display=False, verbose=verbose)
+                #self.generate_reports_txt(runs_plots_scores=runs_plots_scores, save_dir=save_dir_runs, dataset=dataset, metrics=metrics, run=i_run, verbose=verbose)
                 #self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
                 run_storage.append(runs_plots_scores)
 
@@ -920,8 +918,6 @@ class Benchmark:
             _ = self.generate_heatmap(scores_list=scores_list, algos=algos, sets=sets, metric=m, save_dir=save_dir, display=tag)
 
         run_averaged = self.average_runs_by_names(run_storage)
-
-        print("the results of the analysis has been saved in : ", save_dir, "\n")
 
         benchmark_end = time.time()
         total_time_benchmark = round(benchmark_end - benchmark_time, 4)
@@ -935,7 +931,7 @@ class Benchmark:
 
             self.generate_reports_txt(runs_plots_scores=scores, save_dir=save_dir_agg_set, dataset=dataset_name, metrics=metrics, rt=total_time_benchmark, run=-1)
             self.generate_plots(runs_plots_scores=scores, ticks=x_axis, metrics=metrics, subplot=True, y_size=y_p_size, save_dir=save_dir_agg_set, display=verb)
-            print("\n\n")
 
+        print("\nThe results are saved in : ", save_dir, "\n")
         self.list_results = run_averaged
         self.aggregate_results = scores_list

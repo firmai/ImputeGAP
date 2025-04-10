@@ -7,26 +7,26 @@ import matplotlib
 import importlib.resources
 from imputegap.tools import utils
 
-from matplotlib import pyplot as plt  # type: ignore
+import matplotlib.pyplot as plt
 
 
 def select_backend():
     system = platform.system()
-    headless = os.getenv("DISPLAY") is None or os.getenv("CI") is not None
+    #headless = os.getenv("DISPLAY") is None or os.getenv("CI") is not None
 
-    if headless:
-        matplotlib.use("Agg")  # headless: save-to-file only
-        return
-
-    # macOS GUI backends (check in priority order)
     if system == "Darwin":
         for backend in ["MacOSX", "Qt5Agg", "TkAgg"]:
             try:
+                print("mac backend", backend)
+
                 matplotlib.use(backend)
                 return
             except (ImportError, RuntimeError):
                 continue
-        matplotlib.use("Agg")  # fallback
+        try:
+            matplotlib.use("TkAgg")  # fallback
+        except (ImportError, RuntimeError):
+            matplotlib.use("Agg")
 
     # Linux or Windows with tkinter
     else:
@@ -38,8 +38,6 @@ def select_backend():
         except (ImportError, RuntimeError):
             matplotlib.use("Agg")
 
-# Call the backend selector
-select_backend()
 
 
 class TimeSeries:
@@ -95,6 +93,7 @@ class TimeSeries:
         self.optimizers = utils.list_of_optimizers()
         self.extractors = utils.list_of_extractors()
         self.forecasting_models = utils.list_of_downstreams()
+        select_backend()
 
     def import_matrix(self, data=None):
         """
@@ -243,7 +242,7 @@ class TimeSeries:
         if nbr_series < nbr_tot_series:
             print("...")
 
-    def print_results(self, metrics, algorithm="", text="Results of the analysis"):
+    def print_results(self, metrics, algorithm="", text="Results"):
         """
         Prints the results of the imputation process.
 
@@ -391,10 +390,16 @@ class TimeSeries:
             >>> ts.plot(ts.data, ts_m, nbr_series=9, subplot=True, save_path="./imputegap_assets") # contamination
             >>> ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputer.recov_data, nbr_series=9, subplot=True, save_path="./imputegap_assets") # imputation
         """
+        select_backend()
+
         number_of_series = 0
         if algorithm is None:
             algorithm = "imputegap"
-        algorithm.lower()
+            title_imputation = "Imputed Data"
+            title_contamination = "Missing Data"
+        else:
+            title_imputation = algorithm.lower()
+            title_contamination = algorithm.lower()
 
         if nbr_series is None or nbr_series == -1:
             nbr_series = input_data.shape[0]
@@ -456,28 +461,28 @@ class TimeSeries:
 
                 if incomp_data is None and recov_data is None:  # plot only raw matrix
                     ax.plot(timestamps, input_data[i, :nbr_val], linewidth=2.5,
-                            color=color, linestyle='-', label=f'Series {i + 1}')
+                            color=color, linestyle='-', label=f'Series_' + str(i+1))
 
                 if incomp_data is not None and recov_data is None:  # plot infected matrix
                     if np.isnan(incomp_data[i, :]).any():
                         ax.plot(timestamps, input_data[i, :nbr_val], linewidth=1.5,
-                                color=color, linestyle='--', label=f'Missing Data {i + 1}')
+                                color=color, linestyle='--', label=title_contamination)
 
                     if np.isnan(incomp_data[i, :]).any() or not subplot:
                         ax.plot(np.arange(min(incomp_data.shape[1], nbr_val)), incomp_data[i, :nbr_val],
-                                color=color, linewidth=2.5, linestyle='-', label=f'Series {i + 1}')
+                                color=color, linewidth=2.5, linestyle='-', label=f'Series')
 
                 if recov_data is not None:  # plot imputed matrix
                     if np.isnan(incomp_data[i, :]).any():
                         ax.plot(np.arange(min(recov_data.shape[1], nbr_val)), recov_data[i, :nbr_val],
-                                linestyle='-', color="r", label=f'Imputed Data {i + 1}')
+                                linestyle='-', color="r", label=title_imputation)
 
                         ax.plot(timestamps, input_data[i, :nbr_val], linewidth=1.5,
-                                linestyle='--', color=color, label=f'Missing Data {i + 1}')
+                                linestyle='--', color=color, label=f'Missing Data')
 
                     if np.isnan(incomp_data[i, :]).any() or not subplot:
                         ax.plot(np.arange(min(incomp_data.shape[1], nbr_val)), incomp_data[i, :nbr_val],
-                                color=color, linewidth=2.5, linestyle='-', label=f'Series {i + 1}')
+                                color=color, linewidth=2.5, linestyle='-', label=f'Series')
 
                 # Label and legend for subplot
                 if subplot:
@@ -517,7 +522,7 @@ class TimeSeries:
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
             file_path = os.path.join(save_path + "/" + current_time + "_" + algorithm + "_plot.jpg")
             plt.savefig(file_path, bbox_inches='tight')
-            print("\nplots saved in ", file_path)
+            print("\nplots saved in:", file_path)
 
         if display:
             plt.show()
@@ -576,7 +581,7 @@ class TimeSeries:
             seed : bool, optional
                 Whether to use a seed for reproducibility (default is True).
             explainer : bool, optional
-                Whether to apply MCAR to specific series for explanation purposes (default is False).
+                Whether to apply MCAR to specific series for explanation purposes, set rate_series 1# (default is False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -617,11 +622,11 @@ class TimeSeries:
 
             if not explainer and verbose:
                 print(f"\n(CONT) missigness pattern: MCAR"
-                      f"\n\tselected series: {series_selected}"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
+                      f"\n\tselected series: {', '.join(str(int(n)+1) for n in sorted(series_selected, key=int))}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
                       f"\n\tblock size: {block_size}"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tseed value: {seed_value}")
 
 
@@ -663,7 +668,7 @@ class TimeSeries:
 
             return ts_contaminated
 
-        def aligned(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, verbose=True):
+        def aligned(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, explainer=False, verbose=True):
             """
             Apply aligned missing blocks contamination to the time series data.
 
@@ -677,6 +682,8 @@ class TimeSeries:
                 Percentage of missing values per series (default is 0.2).
             offset : float, optional
                 Size of the uncontaminated section at the beginning of the series (default is 0.1).
+            explainer : bool, optional
+                Whether to apply MCAR to specific series for explanation purposes (default is False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -696,22 +703,27 @@ class TimeSeries:
 
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape
+            default_init = 0
 
-            rate_series = utils.verification_limitation(rate_series)
-            rate_dataset = utils.verification_limitation(rate_dataset)
-            offset = utils.verification_limitation(offset)
-
-            nbr_series_impacted = int(np.ceil(M * rate_dataset))
-            offset_nbr = int(offset*NS)
+            offset_nbr = int(offset * NS)
             values_nbr = int(NS * rate_series)
 
-            if verbose:
-                print(f"\n(CONT) missigness pattern: ALIGNED"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
-                      f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
+            if not explainer:  # use random series
+                rate_series = utils.verification_limitation(rate_series)
+                rate_dataset = utils.verification_limitation(rate_dataset)
+                offset = utils.verification_limitation(offset)
+                nbr_series_impacted = int(np.ceil(M * rate_dataset))
+            else:  # use fix series
+                nbr_series_impacted = int(rate_dataset)
+                default_init = nbr_series_impacted
+                nbr_series_impacted = nbr_series_impacted + 1
 
+            if not explainer and verbose:
+                print(f"\n(CONT) missigness pattern: ALIGNED"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
+                      f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
@@ -719,7 +731,7 @@ class TimeSeries:
                     f" ({offset_nbr+values_nbr} must be smaller than {NS}).")
 
 
-            for series in range(0, nbr_series_impacted):
+            for series in range(default_init, nbr_series_impacted):
                 S = int(series)
                 N = len(ts_contaminated[S])  # number of values in the series
                 P = int(N * offset)  # values to protect in the beginning of the series
@@ -731,7 +743,7 @@ class TimeSeries:
 
             return ts_contaminated
 
-        def scattered(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True, verbose=True):
+        def scattered(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True, explainer=False, verbose=True):
             """
             Apply percentage shift contamination with random starting position to the time series data.
 
@@ -747,6 +759,8 @@ class TimeSeries:
                 Size of the uncontaminated section at the beginning of the series (default is 0.1).
             seed : bool, optional
                 Whether to use a seed for reproducibility (default is True).
+            explainer : bool, optional
+                Whether to apply MCAR to specific series for explanation purposes (default is False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -770,20 +784,26 @@ class TimeSeries:
 
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape
+            default_init = 0
 
-            rate_series = utils.verification_limitation(rate_series)
-            rate_dataset = utils.verification_limitation(rate_dataset)
-            offset = utils.verification_limitation(offset)
-
-            nbr_series_impacted = int(np.ceil(M * rate_dataset))
-            offset_nbr = int(offset*NS)
+            offset_nbr = int(offset * NS)
             values_nbr = int(NS * rate_series)
 
-            if verbose:
+            if not explainer:  # use random series
+                rate_series = utils.verification_limitation(rate_series)
+                rate_dataset = utils.verification_limitation(rate_dataset)
+                offset = utils.verification_limitation(offset)
+                nbr_series_impacted = int(np.ceil(M * rate_dataset))
+            else:  # use fix series
+                nbr_series_impacted = int(rate_dataset)
+                default_init = nbr_series_impacted
+                nbr_series_impacted = nbr_series_impacted + 1
+
+            if not explainer and verbose:
                 print(f"\n(CONT) missigness pattern: SCATTER"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tindex impacted : {offset_nbr} -> {offset_nbr + values_nbr}")
 
 
@@ -793,7 +813,7 @@ class TimeSeries:
                     f" ({offset_nbr+values_nbr} must be smaller than {NS}).")
 
 
-            for series in range(0, nbr_series_impacted):
+            for series in range(default_init, nbr_series_impacted):
                 S = int(series)
                 N = len(ts_contaminated[S])  # number of values in the series
                 P = int(N * offset)  # values to protect in the beginning of the series
@@ -838,7 +858,7 @@ class TimeSeries:
             """
             return TimeSeries.Contamination.aligned(input_data, rate_dataset=1, rate_series=series_rate, offset=offset, verbose=verbose)
 
-        def gaussian(input_data, rate_dataset=0.2, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True, verbose=True):
+        def gaussian(input_data, rate_dataset=0.2, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True, explainer=False, verbose=True):
             """
             Apply contamination with a Gaussian distribution to the time series data.
 
@@ -851,11 +871,13 @@ class TimeSeries:
             rate_series : float, optional
                 Percentage of missing values per series (default is 0.2).
             std_dev : float, optional
-                Standard deviation of the Gaussian distribution for missing values (default is 0.2).
+                Standard deviation of the Gaussian distribution for missing values (default is 0.4).
             offset : float, optional
                 Size of the uncontaminated section at the beginning of the series (default is 0.1).
             seed : bool, optional
                 Whether to use a seed for reproducibility (default is True).
+            explainer : bool, optional
+                Whether to apply MCAR to specific series for explanation purposes (default is False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -866,7 +888,7 @@ class TimeSeries:
 
             Example
             -------
-                >>> ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True, verbose=True):
+                >>> ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.4, offset=0.1, seed=True, verbose=True):
 
             References
             ----------
@@ -876,26 +898,31 @@ class TimeSeries:
 
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape
+            default_init = 0
 
             if seed:
                 seed_value = 42
                 np.random.seed(seed_value)
 
-            # Validation and limitation of input parameters
-            rate_series = utils.verification_limitation(rate_series)
-            rate_dataset = utils.verification_limitation(rate_dataset)
-            offset = utils.verification_limitation(offset)
-
-            nbr_series_impacted = int(np.ceil(M * rate_dataset))
-
             offset_nbr = int(offset * NS)
             values_nbr = int(NS * rate_series)
 
-            if verbose:
+            if not explainer:  # use random series
+                # Validation and limitation of input parameters
+                rate_series = utils.verification_limitation(rate_series)
+                rate_dataset = utils.verification_limitation(rate_dataset)
+                offset = utils.verification_limitation(offset)
+                nbr_series_impacted = int(np.ceil(M * rate_dataset))
+            else:  # use fix series
+                nbr_series_impacted = int(rate_dataset)
+                default_init = nbr_series_impacted
+                nbr_series_impacted = nbr_series_impacted + 1
+
+            if not explainer and verbose:
                 print(f"\n(CONT) missigness pattern: GAUSSIAN"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tseed value: {seed_value}"
                       f"\n\tstandard deviation : {std_dev}")
 
@@ -904,7 +931,7 @@ class TimeSeries:
                     f"\n\tError: The sum of offset ({offset_nbr}) and missing values ({values_nbr}) exceeds the limit of of the series.")
 
 
-            for series in range(0, nbr_series_impacted):
+            for series in range(default_init, nbr_series_impacted):
                 S = int(series)
                 N = len(ts_contaminated[S])  # number of values in the series
                 P = int(N * offset)  # values to protect in the beginning of the series
@@ -928,7 +955,7 @@ class TimeSeries:
 
             return ts_contaminated
 
-        def distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True, verbose=True):
+        def distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True, explainer=False, verbose=True):
             """
             Apply contamination with a probabilistic distribution to the time series data.
 
@@ -947,6 +974,8 @@ class TimeSeries:
                 Size of the uncontaminated section at the beginning of the series (default is 0.1).
             seed : bool, optional
                 Whether to use a seed for reproducibility (default is True).
+            explainer : bool, optional
+                Whether to apply MCAR to specific series for explanation purposes (default is False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -966,26 +995,31 @@ class TimeSeries:
 
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape
+            default_init = 0
 
             if seed:
                 seed_value = 42
                 np.random.seed(seed_value)
 
-            # Validation and limitation of input parameters
-            rate_series = utils.verification_limitation(rate_series)
-            rate_dataset = utils.verification_limitation(rate_dataset)
-            offset = utils.verification_limitation(offset)
-
-            nbr_series_impacted = int(np.ceil(M * rate_dataset))
-
             offset_nbr = int(offset * NS)
             values_nbr = int(NS * rate_series)
 
-            if verbose:
+            if not explainer:  # use random series
+                # Validation and limitation of input parameters
+                rate_series = utils.verification_limitation(rate_series)
+                rate_dataset = utils.verification_limitation(rate_dataset)
+                offset = utils.verification_limitation(offset)
+                nbr_series_impacted = int(np.ceil(M * rate_dataset))
+            else:  # use fix series
+                nbr_series_impacted = int(rate_dataset)
+                default_init = nbr_series_impacted
+                nbr_series_impacted = nbr_series_impacted + 1
+
+            if not explainer and verbose:
                 print(f"\n(CONT) missigness pattern: DISTRIBUTION"
-                      f"\n\trate series impacted: {rate_dataset * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_dataset * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tseed value: {seed_value}"
                       f"\n\tprobabilities list : {np.array(probabilities).shape}")
 
@@ -997,7 +1031,7 @@ class TimeSeries:
                 raise ValueError(
                     f"\n\tError: The probability list does not match the matrix in input {np.array(probabilities).shape} != ({M},{NS-offset_nbr}).")
 
-            for series in range(0, nbr_series_impacted):
+            for series in range(default_init, nbr_series_impacted):
                 S = int(series)
                 N = len(ts_contaminated[S])  # number of values in the series
                 P = int(N * offset)  # values to protect in the beginning of the series
@@ -1054,9 +1088,9 @@ class TimeSeries:
 
             if verbose:
                 print(f"\n(CONT) missigness pattern: DISJOINT"
-                      f"\n\trate series impacted: {rate_series * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_series * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tlimit: {limit}")
 
             if offset_nbr + values_nbr > NS:
@@ -1128,9 +1162,9 @@ class TimeSeries:
 
             if verbose:
                 print(f"\n(CONT) missigness pattern: OVERLAP"
-                      f"\n\trate series impacted: {rate_series * 100}%"
-                      f"\n\tmissing rate per series: {rate_series * 100}%"
-                      f"\n\tstarting position: {offset_nbr}"
+                      f"\n\tpercentage of contaminated series: {rate_series * 100}%"
+                      f"\n\trate of missing data per series: {rate_series * 100}%"
+                      f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tshift: {shift * 100} %"
                       f"\n\tlimit: {limit}")
 

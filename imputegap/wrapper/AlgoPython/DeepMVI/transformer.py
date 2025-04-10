@@ -50,6 +50,10 @@ def train(model,train_loader,val_loader,device, max_epoch=1000, patience=2, lr =
             else :
                 tolerance_epoch += 1
 
+            if np.isnan(loss_mre_num):
+                return None
+
+
             if verbose:
                 print ('\t\t\t\t\t\ttolerance_epoch :\t\t ',tolerance_epoch)
                 print ('\t\t\t\t\t\tpatience :\t\t\t\t ',patience)
@@ -130,6 +134,10 @@ def transformer_recovery(input_feats, max_epoch=1000, patience=2, lr=1e-3, verbo
     model.std = torch.from_numpy(std).to(device)
 
     best_state_dict = train(model,train_loader,val_loader,device,max_epoch,patience, lr, verbose)
+
+    if best_state_dict is None :
+        return None
+
     model.load_state_dict(best_state_dict)
 
     matrix = test(model,test_loader,val_feats,device)
