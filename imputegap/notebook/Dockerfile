@@ -22,6 +22,8 @@ RUN pip install --no-cache-dir imputegap==1.0.9 jupyter ipywidgets
 # Copy current project files into container
 COPY ./ /root/
 
+RUN mkdir /root/imputegap_assets
+
 EXPOSE 8888
 
 # Print version and launch Jupyter

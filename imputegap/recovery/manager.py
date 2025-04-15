@@ -543,9 +543,6 @@ class TimeSeries:
         aligned(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :
             Apply missing percentage contamination to the time series data.
 
-        missing_percentage_at_random(ts, series_rate=0.2, missing_rate=0.2, offset=0.1, seed=True, verbose=True) :
-            Apply missing percentage contamination at random to the time series data.
-
         blackout(ts, missing_rate=0.2, offset=0.1) :
             Apply blackout contamination to the time series data.
 
@@ -1200,9 +1197,5 @@ class TimeSeries:
                 S = S + 1
 
             return ts_contaminated
-
-        missing_completely_at_random = mcar
-        mp = aligned
-        missing_percentage = aligned
 
 

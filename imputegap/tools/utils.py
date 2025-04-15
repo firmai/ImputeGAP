@@ -72,7 +72,7 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
     elif algorithm == "min_impute" or algorithm == "MinImpute":
         imputer = Imputation.Statistics.MinImpute(incomp_data)
-    elif algorithm == "zero_impute" or algorithm == "ZeroImpute":
+    elif algorithm == "zero_impute" or algorithm == "ZeroImpute" or algorithm == "zeroimpute":
         imputer = Imputation.Statistics.ZeroImpute(incomp_data)
     elif algorithm == "trmf" or algorithm == "TRMF":
         imputer = Imputation.MatrixCompletion.TRMF(incomp_data)

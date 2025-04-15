@@ -18,6 +18,6 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute and print the downstream results
-downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
+downstream_config = {"task": "forecast", "model": "hw-add", "baseline": "ZeroImpute"}
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
-ts.print_results(imputer.downstream_metrics, algorithm="hw-add")
+ts.print_results(imputer.downstream_metrics, text="Downstream results")
