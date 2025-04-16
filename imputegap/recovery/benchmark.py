@@ -665,7 +665,7 @@ class Benchmark:
                         }.get(metric, metric)
 
                         ax.set_title(metric)
-                        ax.set_xlabel("Rates")
+                        ax.set_xlabel("Rate")
                         ax.set_ylabel(ylabel_metric)
                         ax.set_xlim(0.0, 0.85)
 

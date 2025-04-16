@@ -1,3 +1,7 @@
+<img align="right" width="140" height="140" src="https://www.naterscreations.com/imputegap/logo_imputegap_patterns_b.png" >
+
+<br />
+
 # Patterns
 
 All missingness patterns developed in ImputeGAP are available in the `ts.patterns` module.
@@ -70,4 +74,4 @@ The missing blocks follow a distribution.
 > - `R ∈ [1%, (100-W)%]`  
 > - Data is removed following a distribution given by the user for every value of the series, affecting the first series from the top up to `S%` of the dataset.  
 
-If you need to remove data following a specific distribution, please refer to this [tutorial](https://imputegap.readthedocs.io/en/latest/tutorials_distribution.html).
+To configure the distribution pattern, please refer to this [tutorial](https://imputegap.readthedocs.io/en/latest/tutorials_distribution.html).

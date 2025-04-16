@@ -87,7 +87,11 @@ class Downstream:
         model = self.downstream.get("model", "naive")
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
-        comparator = self.downstream.get("comparator", None)
+        baseline = self.downstream.get("baseline", None)
+
+        if baseline is None:
+            baseline = self.downstream.get("comparator", None)
+
         plt = None
 
         model = model.lower()
@@ -98,7 +102,7 @@ class Downstream:
             loader = "forecaster-" + str(model)
             params = utils.load_parameters(query="default", algorithm=loader)
 
-        print(f"\n(DOWNSTREAM) Analysis launched !\ntask: {evaluator}\nmodel: {model}\nparams: {params}\nbase algorithm: {self.algorithm}\nreference algorithm: {comparator}\n")
+        print(f"\n(DOWNSTREAM) Analysis launched !\ntask: {evaluator}\nmodel: {model}\nparams: {params}\nbase algorithm: {str(self.algorithm).lower()}\nreference algorithm: {str(baseline).lower()}\n")
 
         if evaluator in ["forecast", "forecaster", "forecasting"]:
             y_train_all, y_test_all, y_pred_all = [], [], []
@@ -112,12 +116,12 @@ class Downstream:
                 elif x == 2:
                     from imputegap.recovery.imputation import Imputation
 
-                    if comparator is not None:
-                        impt = utils.config_impute_algorithm(self.incomp_data, algorithm=comparator)
+                    if baseline is not None:
+                        impt = utils.config_impute_algorithm(self.incomp_data, algorithm=baseline)
                         impt.impute()
                         data = impt.recov_data
                     else:
-                        comparator = "zero-impute"
+                        baseline = "zero-impute"
                         zero_impute = Imputation.Statistics.ZeroImpute(self.incomp_data).impute()
                         data = zero_impute.recov_data
 
@@ -177,8 +181,6 @@ class Downstream:
                     # Convert predictions back to NumPy
                     y_pred = y_pred_ts.values().T  # Shape: (n_series, time_steps)
 
-
-
                     # Ensure y_pred_ts has the same components as y_test_ts
                     y_pred_ts = y_pred_ts.with_columns_renamed(y_pred_ts.components, y_test_ts.components)
 
@@ -203,13 +205,13 @@ class Downstream:
 
             if plots:
                 # Global plot with all rows and columns
-                plt = self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, comparator, model, evaluator)
+                plt = self._plot_downstream(y_train_all, y_test_all, y_pred_all, self.incomp_data, self.algorithm, baseline, model, evaluator)
 
             # Save metrics in a dictionary
-            al_name = "MSE_" + self.algorithm.upper()
-            al_name_s = "sMAPE_" + self.algorithm.upper()
-            al_name_c = "MSE_" + comparator.upper()
-            al_name_cs = "sMAPE_" + comparator.upper()
+            al_name = "MSE_" + self.algorithm.lower()
+            al_name_s = "sMAPE_" + self.algorithm.lower()
+            al_name_c = "MSE_" + baseline.lower()
+            al_name_cs = "sMAPE_" + baseline.lower()
 
             metrics = {"MSE_original": mse[0], al_name: mse[1], al_name_c: mse[2],
                        "sMAPE_original": smape[0], al_name_s: smape[1], al_name_cs: smape[2] }
@@ -312,11 +314,11 @@ class Downstream:
 
                 # Add labels, title, and grid
                 if row_idx == 0:
-                    ax.set_title(f"original data, series_{series_idx}")
+                    ax.set_title(f"original data, series_{series_idx+1}")
                 elif row_idx == 1:
-                    ax.set_title(f"{algorithm.lower()} imputation, series_{series_idx}")
+                    ax.set_title(f"{algorithm.lower()} imputation, series_{series_idx+1}")
                 else:
-                    ax.set_title(f"{comparison.lower()} imputation, series_{series_idx}")
+                    ax.set_title(f"{comparison.lower()} imputation, series_{series_idx+1}")
 
                 ax.set_xlabel("Timestamp")
                 ax.set_ylabel("Value")
@@ -325,6 +327,7 @@ class Downstream:
 
         # Adjust layout
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+        fig.subplots_adjust(top=0.92, hspace=0.4)
 
         if save_path:
             os.makedirs(save_path, exist_ok=True)

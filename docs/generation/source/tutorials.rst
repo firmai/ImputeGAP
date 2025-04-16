@@ -177,6 +177,7 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
     print(f"Imputation algorithms : {ts.algorithms}")
+    print(f"Imputation families : {ts.families}")
 
 
 
@@ -264,7 +265,7 @@ The benchmarking module can be utilized as follows:
 
     from imputegap.recovery.benchmark import Benchmark
 
-    my_algorithms = ["SoftImpute", "KNNImpute"]
+    my_algorithms = ["SoftImpute", "MeanImpute", "CDRec"]
 
     my_opt = ["default_params"]
 
@@ -329,9 +330,9 @@ ImputeGAP includes a dedicated module for systematically evaluating the impact o
     imputer.impute()
 
     # compute and print the downstream results
-    downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
+    downstream_config = {"task": "forecast", "model": "hw-add", "baseline": "ZeroImpute"}
     imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
-    ts.print_results(imputer.downstream_metrics, algorithm=imputer.algorithm)
+    ts.print_results(imputer.downstream_metrics, text="Downstream results")
 
 
 

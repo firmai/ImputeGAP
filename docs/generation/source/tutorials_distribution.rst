@@ -18,7 +18,7 @@ To use any distribution, provide a probability matrix as a parameter, covering a
         D = norm.pdf(R, loc=P + mean * (N - P), scale=0.2 * (N - P))
         D /= D.sum()
         probabilities.append(D)
-    ts_m2 = ts.Contamination.distribution(ts.data, rate_dataset=0.2, rate_series=0.4, probabilities=probabilities, seed=True)
+    ts_m2 = ts.Contamination.distribution(ts.data, rate_dataset=0.2, rate_series=0.4, probabilities_list=probabilities, seed=True)
 
 
 
