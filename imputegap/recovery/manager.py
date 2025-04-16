@@ -17,8 +17,6 @@ def select_backend():
     if system == "Darwin":
         for backend in ["MacOSX", "Qt5Agg", "TkAgg"]:
             try:
-                print("mac backend", backend)
-
                 matplotlib.use(backend)
                 return
             except (ImportError, RuntimeError):
@@ -30,13 +28,12 @@ def select_backend():
 
     # Linux or Windows with tkinter
     else:
-        try:
-            if importlib.util.find_spec("tkinter") is not None:
-                matplotlib.use("TkAgg")
-            else:
-                raise ImportError
-        except (ImportError, RuntimeError):
-            matplotlib.use("Agg")
+        for backend in ["QtAgg", "Qt5Agg", "TkAgg", "Agg"]:
+            try:
+                matplotlib.use(backend)
+                return
+            except (ImportError, RuntimeError):
+                continue
 
 
 
@@ -93,6 +90,7 @@ class TimeSeries:
         self.optimizers = utils.list_of_optimizers()
         self.extractors = utils.list_of_extractors()
         self.forecasting_models = utils.list_of_downstreams()
+        self.families = utils.list_of_families()
         select_backend()
 
     def import_matrix(self, data=None):
@@ -487,10 +485,12 @@ class TimeSeries:
                 # Label and legend for subplot
                 if subplot:
                     ax.set_title('Series ' + str(i+1), fontsize=9)
+                    #ax.plot([], [], ' ', label='Series ' + str(i + 1))  # invisible line with label
                     ax.set_xlabel('Timestamp', fontsize=7)
                     ax.set_ylabel('Values', fontsize=7)
                     ax.legend(loc='upper left', fontsize=6, frameon=True, fancybox=True, framealpha=0.8)
-                    plt.tight_layout()
+                    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+                    fig.subplots_adjust(top=0.96, hspace=0.4)
 
                 number_of_series += 1
                 if number_of_series == nbr_series:
@@ -589,7 +589,7 @@ class TimeSeries:
 
             Example
             -------
-                >>> ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True, verbose=True):
+                >>> ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True):
 
             References
             ----------
@@ -667,7 +667,7 @@ class TimeSeries:
 
         def aligned(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, explainer=False, verbose=True):
             """
-            Apply aligned missing blocks contamination to the time series data.
+            Apply missing percentage contamination to the time series data.
 
             Parameters
             ----------
@@ -691,7 +691,7 @@ class TimeSeries:
 
             Example
             -------
-                >>> ts_m = ts.Contamination.aligned(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1, verbose=True):
+                >>> ts_m = ts.Contamination.aligned(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1):
 
             References
             ----------
@@ -742,7 +742,7 @@ class TimeSeries:
 
         def scattered(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, seed=True, explainer=False, verbose=True):
             """
-            Apply percentage shift contamination with random starting position to the time series data.
+            Apply percentage shift contamination with random starting position to selected series.
 
             Parameters
             ----------
@@ -827,7 +827,7 @@ class TimeSeries:
 
         def blackout(input_data, series_rate=0.2, offset=0.1, verbose=True):
             """
-            Apply blackout contamination to the time series data.
+            Apply blackout contamination to selected series
 
             Parameters
             ----------
@@ -857,7 +857,7 @@ class TimeSeries:
 
         def gaussian(input_data, rate_dataset=0.2, rate_series=0.2, std_dev=0.2, offset=0.1, seed=True, explainer=False, verbose=True):
             """
-            Apply contamination with a Gaussian distribution to the time series data.
+            Apply contamination with a Gaussian distribution to selected series
 
             Parameters
             ----------
@@ -885,7 +885,7 @@ class TimeSeries:
 
             Example
             -------
-                >>> ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.4, offset=0.1, seed=True, verbose=True):
+                >>> ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.4, offset=0.1, seed=True):
 
             References
             ----------
@@ -952,9 +952,9 @@ class TimeSeries:
 
             return ts_contaminated
 
-        def distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True, explainer=False, verbose=True):
+        def distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities_list=None, offset=0.1, seed=True, explainer=False, verbose=True):
             """
-            Apply contamination with a probabilistic distribution to the time series data.
+            Apply contamination with a probabilistic distribution to selected series
 
             Parameters
             ----------
@@ -964,7 +964,7 @@ class TimeSeries:
                 Percentage of series to contaminate (default is 0.2).
             rate_series : float, optional
                 Percentage of missing values per series (default is 0.2).
-            probabilities : 2-D array-like, optional
+            probabilities_list : 2-D array-like, optional
                 The probabilities of being contaminated associated with each values of a series.
                 Most match the shape of input data without the offset : (e.g. [[0.1, 0, 0.3, 0], [0.2, 0.1, 0.2, 0.9]])
             offset : float, optional
@@ -983,7 +983,7 @@ class TimeSeries:
 
             Example
             -------
-                >>> ts_m = ts.Contamination.distribution(ts.data, rate_dataset=0.2, rate_series=0.2, probabilities=probabilities, offset=0.1, seed=True)
+                >>> ts_m = ts.Contamination.distribution(ts.data, rate_dataset=0.2, rate_series=0.2, probabilities_list=probabilities_list, offset=0.1, seed=True)
 
             References
             ----------
@@ -1018,15 +1018,15 @@ class TimeSeries:
                       f"\n\trate of missing data per series: {rate_series * 100}%"
                       f"\n\tsecurity offset: [0-{offset_nbr}]"
                       f"\n\tseed value: {seed_value}"
-                      f"\n\tprobabilities list : {np.array(probabilities).shape}")
+                      f"\n\tprobabilities list : {np.array(probabilities_list).shape}")
 
             if offset_nbr + values_nbr > NS:
                 raise ValueError(
                     f"\n\tError: The sum of offset ({offset_nbr}) and missing values ({values_nbr}) exceeds the limit of of the series.")
 
-            if np.array(probabilities).shape != (M,NS-offset_nbr):
+            if np.array(probabilities_list).shape != (M, NS - offset_nbr):
                 raise ValueError(
-                    f"\n\tError: The probability list does not match the matrix in input {np.array(probabilities).shape} != ({M},{NS-offset_nbr}).")
+                    f"\n\tError: The probability list does not match the matrix in input {np.array(probabilities_list).shape} != ({M},{NS - offset_nbr}).")
 
             for series in range(default_init, nbr_series_impacted):
                 S = int(series)
@@ -1034,7 +1034,7 @@ class TimeSeries:
                 P = int(N * offset)  # values to protect in the beginning of the series
                 W = int(N * rate_series)  # number of data points to remove
                 R = np.arange(P, N)
-                D = probabilities[S]
+                D = probabilities_list[S]
 
                 missing_indices = np.random.choice(R, size=W, replace=False, p=D)
 
@@ -1046,7 +1046,7 @@ class TimeSeries:
 
         def disjoint(input_data, rate_series=0.1, limit=1, offset=0.1, verbose=True):
             """
-            Apply disjoint contamination to the time series data.
+            Apply disjoint contamination to selected series
 
             Parameters
             ----------
@@ -1118,7 +1118,7 @@ class TimeSeries:
 
         def overlap(input_data, rate_series=0.2, limit=1, shift=0.05, offset=0.1, verbose=True):
             """
-            Apply overlap contamination to the time series data.
+            Apply overlap contamination to selected series
 
             Parameters
             ----------

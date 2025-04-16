@@ -330,7 +330,7 @@ The benchmarking module can be utilized as follows:
 ```python
 from imputegap.recovery.benchmark import Benchmark
 
-my_algorithms = ["SoftImpute", "KNNImpute"]
+my_algorithms = ["SoftImpute", "MeanImpute", "CDRec"]
 
 my_opt = ["default_params"]
 
@@ -386,7 +386,7 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute and print the downstream results
-downstream_config = {"task": "forecast", "model": "hw-add", "baseline": "ZeroImpute"}
+downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
 ts.print_results(imputer.downstream_metrics, text="Downstream results")
 ```

@@ -135,7 +135,7 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
     elif pattern == "gaussian":
         incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     elif pattern == "distribution" or pattern == "dist":
-        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities=probabilities, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
+        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities_list=probabilities, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     else:
         incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset, verbose=verbose)
 
@@ -1126,6 +1126,9 @@ def list_of_extractors():
         "tsfel",
         "tsfresh"
     ])
+
+def list_of_families():
+    return sorted(["DeepLearning", "MatrixCompletion", "PatternSearch", "MachineLearning", "Statistics"])
 
 def list_of_metrics():
     return ["RMSE", "MAE", "MI", "CORRELATION", "runtime", "runtime_log_scale"]

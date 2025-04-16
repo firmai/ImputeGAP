@@ -53,7 +53,7 @@ class TestContaminationDistribution(unittest.TestCase):
             for S in series_impacted:
                 for R in missing_rates:
                     D = self.load_probabilities(ts.data)
-                    incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=S, rate_series=R, probabilities=D, offset=P)
+                    incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=S, rate_series=R, probabilities_list=D, offset=P)
 
                     n_nan = np.isnan(incomp_data).sum()
                     expected_nan_series = math.ceil(S * M)
@@ -85,7 +85,7 @@ class TestContaminationDistribution(unittest.TestCase):
                 D = self.load_probabilities(ts_1.data)
                 ts_contaminate = ts_1.Contamination.distribution(input_data=ts_1.data,
                                                                  rate_dataset=series_sel,
-                                                                 rate_series=missing_rate, probabilities=D, offset=0.1)
+                                                                 rate_series=missing_rate, probabilities_list=D, offset=0.1)
 
                 if np.isnan(ts_contaminate[:, :ten_percent_index]).any():
                     check_position = False
@@ -120,7 +120,7 @@ class TestContaminationDistribution(unittest.TestCase):
                         # Generate contamination with the current standard deviation
                         D = self.load_probabilities(ts.data, std_dev=std_dev)
                         contaminated_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=S, rate_series=R,
-                                                                          probabilities=D, offset=P)
+                                                                          probabilities_list=D, offset=P)
 
                         # Calculate positions of NaN values
                         nan_positions = np.where(np.isnan(contaminated_data))
@@ -155,7 +155,7 @@ class TestContaminationDistribution(unittest.TestCase):
                 for missing_rate in missing_rates:
                     D = self.load_probabilities(ts_1.data, std_dev=std_dev)
                     ts_contaminate = ts_1.Contamination.distribution(input_data=ts_1.data, rate_series=missing_rate,
-                                                                     rate_dataset=series_sel, probabilities=D,
+                                                                     rate_dataset=series_sel, probabilities_list=D,
                                                                      offset=offset, seed=True)
 
                     nbr_series_contaminated = 0

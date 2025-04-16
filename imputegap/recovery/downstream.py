@@ -88,6 +88,10 @@ class Downstream:
         params = self.downstream.get("params", None)
         plots = self.downstream.get("plots", True)
         baseline = self.downstream.get("baseline", None)
+
+        if baseline is None:
+            baseline = self.downstream.get("comparator", None)
+
         plt = None
 
         model = model.lower()
@@ -176,8 +180,6 @@ class Downstream:
 
                     # Convert predictions back to NumPy
                     y_pred = y_pred_ts.values().T  # Shape: (n_series, time_steps)
-
-
 
                     # Ensure y_pred_ts has the same components as y_test_ts
                     y_pred_ts = y_pred_ts.with_columns_renamed(y_pred_ts.components, y_test_ts.components)
@@ -325,7 +327,6 @@ class Downstream:
 
         # Adjust layout
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-
         fig.subplots_adjust(top=0.92, hspace=0.4)
 
         if save_path:
