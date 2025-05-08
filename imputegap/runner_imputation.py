@@ -8,14 +8,14 @@ print(f"Imputation algorithms : {ts.algorithms}")
 print(f"Imputation families : {ts.families}")
 
 # load and normalize the dataset
-ts.load_series(utils.search_path("eeg-alcohol"))
-ts.normalize(normalizer="z_score")
+ts.load_series(utils.search_path("chlorine"))
+ts.normalize()
 
 # contaminate the time series
-ts_m = ts.Contamination.mcar(ts.data)
+ts_m = ts.Contamination.mcar(ts.data, rate_series=0.4, rate_dataset=0.4)
 
 # impute the contaminated series
-imputer = Imputation.MatrixCompletion.CDRec(ts_m)
+imputer = Imputation.DeepLearning.BayOTIDE(incomp_data=ts_m)
 imputer.impute()
 
 # compute and print the imputation metrics

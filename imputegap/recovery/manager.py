@@ -26,10 +26,12 @@ def select_backend():
         except (ImportError, RuntimeError):
             matplotlib.use("Agg")
 
-    # Linux or Windows with tkinter
+    # Linux or Windows
     else:
-        for backend in ["QtAgg", "Qt5Agg", "TkAgg", "Agg"]:
+        for backend in ["TkAgg", "QtAgg", "Qt5Agg", "Agg"]:
             try:
+                if backend == "TkAgg":
+                    import tkinter
                 matplotlib.use(backend)
                 return
             except (ImportError, RuntimeError):
@@ -123,7 +125,7 @@ class TimeSeries:
 
             return self
 
-    def load_series(self, data, nbr_series=None, nbr_val=None, header=False, replace_nan=False):
+    def load_series(self, data, nbr_series=None, nbr_val=None, header=False, replace_nan=False, verbose=True):
         """
         Loads time series data from a file or predefined dataset.
 
@@ -142,6 +144,8 @@ class TimeSeries:
             Whether the dataset has a header. Default is False.
         replace_nan : bool, optional
             The Dataset has already NaN values that needs to be replaced by 0 values.
+        verbose : bool, optional
+            Display information print (default: True).
 
 
         Returns
@@ -171,7 +175,8 @@ class TimeSeries:
 
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=nbr_val, skip_header=int(header))
 
-                print("\n(SYS) The time series have been loaded from " + str(data) + "\n")
+                if verbose:
+                    print("\n(SYS) The time series have been loaded from " + str(data) + "\n")
 
                 if nbr_series is not None:
                     self.data = self.data[:, :nbr_series]
@@ -491,6 +496,8 @@ class TimeSeries:
                     ax.legend(loc='upper left', fontsize=6, frameon=True, fancybox=True, framealpha=0.8)
                     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
                     fig.subplots_adjust(top=0.96, hspace=0.4)
+                else:
+                    plt.tight_layout(rect=[0.01, 0.03, 0.88, 0.95])
 
                 number_of_series += 1
                 if number_of_series == nbr_series:
@@ -533,35 +540,40 @@ class TimeSeries:
 
     class Contamination:
         """
-        Inner class to apply contamination patterns to the time series data.
+        Inner class to apply contamination patterns to selected series.
 
         Methods
         -------
         mcar(ts, series_rate=0.2, missing_rate=0.2, block_size=10, offset=0.1, seed=True, explainer=False, verbose=True) :
-            Apply Missing Completely at Random (MCAR) contamination to the time series data.
+            Apply Missing Completely at Random (MCAR) contamination to selected series.
 
         aligned(ts, series_rate=0.2, missing_rate=0.2, offset=0.1) :
-            Apply missing percentage contamination to the time series data.
+            Apply missing percentage contamination to selected series.
 
         blackout(ts, missing_rate=0.2, offset=0.1) :
-            Apply blackout contamination to the time series data.
+            Apply blackout contamination to selected series.
 
         gaussian(input_data, series_rate=0.2, missing_rate=0.2, std_dev=0.2, offset=0.1, seed=True, verbose=True):
-            Apply Gaussian contamination to the time series data.
+            Apply Gaussian contamination to selected series.
 
         distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities=None, offset=0.1, seed=True, verbose=True):
             Apply any distribution contamination to the time series data based on their probabilities.
 
         disjoint(input_data, missing_rate=0.1, limit=1, offset=0.1, verbose=True):
-            Apply Disjoint contamination to the time series data.
+            Apply Disjoint contamination to selected series.
 
         overlap(input_data, missing_rate=0.2, limit=1, shift=0.05, offset=0.1, verbose=True):
-            Apply Overlapping contamination to the time series data.
+            Apply Overlapping contamination to selected series.
+
+        References
+        ----------
+            https://imputegap.readthedocs.io/en/latest/patterns.html
+
         """
 
         def mcar(input_data, rate_dataset=0.2, rate_series=0.2, block_size=10, offset=0.1, seed=True, explainer=False, verbose=True):
             """
-            Apply Missing Completely at Random (MCAR) contamination to the time series data.
+            Apply Missing Completely at Random (MCAR) contamination to selected series.
 
             Parameters
             ----------
@@ -578,7 +590,7 @@ class TimeSeries:
             seed : bool, optional
                 Whether to use a seed for reproducibility (default is True).
             explainer : bool, optional
-                Whether to apply MCAR to specific series for explanation purposes, set rate_series 1# (default is False).
+                Only used within the Explainer Module to contaminate one series at a time (default: False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -589,11 +601,8 @@ class TimeSeries:
 
             Example
             -------
-                >>> ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True):
+                >>> ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10):
 
-            References
-            ----------
-                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             if seed:
@@ -667,7 +676,7 @@ class TimeSeries:
 
         def aligned(input_data, rate_dataset=0.2, rate_series=0.2, offset=0.1, explainer=False, verbose=True):
             """
-            Apply missing percentage contamination to the time series data.
+            Create aligned missing blocks across the selected series.
 
             Parameters
             ----------
@@ -680,7 +689,7 @@ class TimeSeries:
             offset : float, optional
                 Size of the uncontaminated section at the beginning of the series (default is 0.1).
             explainer : bool, optional
-                Whether to apply MCAR to specific series for explanation purposes (default is False).
+                Only used within the Explainer Module to contaminate one series at a time (default: False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -693,9 +702,6 @@ class TimeSeries:
             -------
                 >>> ts_m = ts.Contamination.aligned(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1):
 
-            References
-            ----------
-                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             ts_contaminated = input_data.copy()
@@ -757,7 +763,7 @@ class TimeSeries:
             seed : bool, optional
                 Whether to use a seed for reproducibility (default is True).
             explainer : bool, optional
-                Whether to apply MCAR to specific series for explanation purposes (default is False).
+                Only used within the Explainer Module to contaminate one series at a time (default: False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -770,9 +776,6 @@ class TimeSeries:
             -------
                 >>> ts_m = ts.Contamination.scattered(ts.data, rate_dataset=0.2, rate_series=0.4, offset=0.1)
 
-            References
-            ----------
-                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             if seed:
@@ -849,9 +852,6 @@ class TimeSeries:
             -------
                 >>> ts_m = ts.Contamination.blackout(ts.data, series_rate=0.2)
 
-            References
-            ----------
-                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
             return TimeSeries.Contamination.aligned(input_data, rate_dataset=1, rate_series=series_rate, offset=offset, verbose=verbose)
 
@@ -874,7 +874,7 @@ class TimeSeries:
             seed : bool, optional
                 Whether to use a seed for reproducibility (default is True).
             explainer : bool, optional
-                Whether to apply MCAR to specific series for explanation purposes (default is False).
+                Only used within the Explainer Module to contaminate one series at a time (default: False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -885,11 +885,8 @@ class TimeSeries:
 
             Example
             -------
-                >>> ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.4, offset=0.1, seed=True):
+                >>> ts_m = ts.Contamination.gaussian(ts.data, rate_series=0.2, std_dev=0.4, offset=0.1):
 
-            References
-            ----------
-                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
             from scipy.stats import norm
 
@@ -954,7 +951,7 @@ class TimeSeries:
 
         def distribution(input_data, rate_dataset=0.2, rate_series=0.2, probabilities_list=None, offset=0.1, seed=True, explainer=False, verbose=True):
             """
-            Apply contamination with a probabilistic distribution to selected series
+            Apply any distribution contamination to the time series data based on their probabilities.
 
             Parameters
             ----------
@@ -972,7 +969,7 @@ class TimeSeries:
             seed : bool, optional
                 Whether to use a seed for reproducibility (default is True).
             explainer : bool, optional
-                Whether to apply MCAR to specific series for explanation purposes (default is False).
+                Only used within the Explainer Module to contaminate one series at a time (default: False).
             verbose : bool, optional
                 Whether to display the contamination information (default is True).
 
@@ -983,11 +980,8 @@ class TimeSeries:
 
             Example
             -------
-                >>> ts_m = ts.Contamination.distribution(ts.data, rate_dataset=0.2, rate_series=0.2, probabilities_list=probabilities_list, offset=0.1, seed=True)
+                >>> ts_m = ts.Contamination.distribution(ts.data, rate_dataset=0.2, rate_series=0.2, probabilities_list=probabilities_list, offset=0.1)
 
-            References
-            ----------
-                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
 
             ts_contaminated = input_data.copy()
@@ -1070,9 +1064,6 @@ class TimeSeries:
             -------
                 >>> ts_m = ts.Contamination.disjoint(ts.data, rate_series=0.1, limit=1, offset=0.1)
 
-            References
-            ----------
-                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape
@@ -1144,9 +1135,6 @@ class TimeSeries:
             -------
                 >>> ts_m = ts.Contamination.overlap(ts.data, rate_series=0.1, limit=1, shift=0.05, offset=0.1)
 
-            References
-            ----------
-                https://imputegap.readthedocs.io/en/latest/patterns.html
             """
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape

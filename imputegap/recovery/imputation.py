@@ -264,6 +264,29 @@ class BaseImputer:
 
         self.parameters = optimal_params
 
+    def _check_dl_split(self):
+        """
+        Check whether the proportion of missing values in the contaminated data is acceptable
+        for training a deep learning model. If more than 40% of the values are missing,
+        the function returns False.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        bool
+            True if the missing data ratio is less than or equal to 40%, False otherwise.
+        """
+        missing_ratio = utils.get_missing_ratio(self.incomp_data)
+
+        if missing_ratio <= 0.4:
+            return True
+        else:
+            print(f"(IMP) The proportion of missing values {missing_ratio} is too high to train an effective deep learning model.\n"
+                  "Please consider reducing the contamination rate or selecting a different family of imputation methods")
+            return False
+
 
 class Imputation:
     """
@@ -2269,7 +2292,7 @@ class Imputation:
                 -------
                     >>> bay_otide_imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
                     >>> bay_otide_imputer.impute()  # default parameters for imputation > or
-                    >>> bay_otide_imputer.impute(user_def=True, params={"K_trend":20, "K_season":2, "n_season":5, "K_bias":1, "time_scale":1, "a0":0.6, "b0":2.5, "v":0.5})  # user defined> or
+                    >>> bay_otide_imputer.impute(user_def=True, params={"K_trend":20, "K_season":2, "n_season":5, "K_bias":1, "time_scale":1, "a0":0.6, "b0":2.5, "v":0.5, "tr_ratio":0.6})  # user defined> or
                     >>> bay_otide_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
                     >>> recov_data = bay_otide_imputer.recov_data
 
@@ -2280,14 +2303,20 @@ class Imputation:
                 """
                 from imputegap.algorithms.bayotide import bay_otide
 
-                if params is not None:
-                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v = self._check_params(user_def, params)
-                else:
-                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                if not (self._check_dl_split()):
+                    self.recov_data = self.incomp_data
+                    return
 
-                self.recov_data = bay_otide(incomp_data=self.incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, logs=self.logs, verbose=self.verbose)
+                if params is not None:
+                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, tr_ratio = self._check_params(user_def, params)
+                else:
+                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, tr_ratio = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+
+                self.recov_data = bay_otide(incomp_data=self.incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
 
                 return self
+
+
 
         class HKMF_T(BaseImputer):
             """

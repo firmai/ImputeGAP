@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import xlsxwriter
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
+import psutil
 
 
 
@@ -743,7 +744,7 @@ class Benchmark:
 
         self.plots = plt
 
-    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, normalizer="z_score", nbr_series=None, nbr_vals=None, verbose=False):
+    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, normalizer="z_score", nbr_series=2500, nbr_vals=2500, verbose=False):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.
 
@@ -768,9 +769,9 @@ class Benchmark:
         normalizer : str, optional
             Normalizer to pre-process the data (default is "z_score").
         nbr_series : int, optional
-            Number of series to take inside the dataset (default is None > all series).
+            Number of series to take inside the dataset (default is 2500 (as the max values)).
         nbr_vals : int, optional
-            Number of values to take inside the series (default is None > all values).
+            Number of values to take inside the series (default is 2500 (as the max values)).
         verbose : bool, optional
             Whether to display the contamination information (default is False).
 
@@ -805,16 +806,29 @@ class Benchmark:
                 if verbose:
                     print("\n1. evaluation launch for", dataset, "\n")
                 ts_test = TimeSeries()
+                default_data = TimeSeries()
 
                 header = False
                 if dataset == "eeg-reading":
                     header = True
 
-                ts_test.load_series(data=utils.search_path(dataset), nbr_series=nbr_series, nbr_val=nbr_vals, header=header)
+                reshp = False
+                default_data.load_series(data=utils.search_path(dataset), header=header, verbose=False)
+                Mdef, Ndef = default_data.data.shape
 
+                if Ndef > nbr_vals or Mdef > nbr_series:
+                    reshp = True
+                    print(f"\nThe dataset contains a large number of values {default_data.data.shape}, which may be too much for some algorithms to handle efficiently. Consider reducing the number of series or the volume of data.")
+                default_data = None
+
+                ts_test.load_series(data=utils.search_path(dataset), nbr_series=nbr_series, nbr_val=nbr_vals, header=header)
                 M, N = ts_test.data.shape
 
+                if reshp:
+                    print(f"Benchmarking module has reduced the shape to {ts_test.data.shape}.\n")
+
                 if N < 250:
+                    print(f"The block size is too high for the number of values per series, reduce to 2\n")
                     block_size_mcar = 2
 
                 if normalizer in utils.list_of_normalizers():

@@ -26,6 +26,7 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     """
 
     from imputegap.recovery.imputation import Imputation
+    from imputegap.recovery.manager import TimeSeries
 
     # 1st generation
     if algorithm == "cdrec" or algorithm == "CDRec":
@@ -64,7 +65,7 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer = Imputation.DeepLearning.PRISTI(incomp_data)
 
     # 3rd generation
-    elif algorithm == "knn" or algorithm == "KNN" or algorithm == "knn_impute" or algorithm == "KNNImpute":
+    elif algorithm == "knn" or algorithm == "KNN" or algorithm == "knn_impute" or algorithm == "KNNImpute" or algorithm == "KNNImputer":
         imputer = Imputation.Statistics.KNNImpute(incomp_data)
     elif algorithm == "interpolation" or algorithm == "Interpolation":
         imputer = Imputation.Statistics.Interpolation(incomp_data)
@@ -94,7 +95,10 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
     elif algorithm == "bit_graph" or algorithm == "BitGraph":
         imputer = Imputation.DeepLearning.BitGraph(incomp_data)
+    elif algorithm == "mean_impute" or algorithm == "MeanImpute":
+        imputer = Imputation.Statistics.MeanImpute(incomp_data)
     else:
+        print(f"(IMP) Algorithm not recognized, please choose your algorithm on this list :\n\t{TimeSeries().algorithms}")
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
 
     imputer.verbose = verbose
@@ -313,6 +317,32 @@ def search_path(set_name="test"):
         return filepath
 
 
+def get_missing_ratio(incomp_data):
+    """
+    Check whether the proportion of missing values in the contaminated data is acceptable
+    for training a deep learning model.
+
+    Parameters
+    ----------
+    incomp_data : TimeSeries (numpy array)
+            TimeSeries object containing dataset.
+
+    Returns
+    -------
+    bool
+        True if the missing data ratio is less than or equal to 40%, False otherwise.
+    """
+    import numpy as np
+
+    miss_m = incomp_data
+    total_values = miss_m.size
+    missing_values = np.isnan(miss_m).sum()
+    missing_ratio = missing_values / total_values
+
+    return missing_ratio
+
+
+
 def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=False):
     """
     Load default or optimal parameters for algorithms from a TOML file.
@@ -525,7 +555,8 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         a0 = float(config[algorithm]['a0'])
         b0 = float(config[algorithm]['b0'])
         v = float(config[algorithm]['v'])
-        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v)
+        tr_ratio = float(config[algorithm]['tr_ratio'])
+        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, tr_ratio)
     elif algorithm == "hkmf_t":
         tags = config[algorithm]['tags']
         data_names = config[algorithm]['data_names']
@@ -978,7 +1009,8 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "time_scale": int(optimal_params[4]),
             "a0": float(optimal_params[5]),
             "b0": float(optimal_params[6]),
-            "v": float(optimal_params[7])
+            "v": float(optimal_params[7]),
+            "tr_ratio": float(optimal_params[8])
         }
     elif algorithm == "hkmf_t":
         params_to_save = {

@@ -30,8 +30,7 @@ If you would like to extend the library, you can install from source:
     pip install -e .
 
 
-To create and set up an environment with Python 3.12, please refer to the `installation guide <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation>`_.
-
+To create and set up an environment with Python 3.12 for installing ImputeGAP, refer to this `guide <getting_started_environment.html>`_.
 
 
 

@@ -158,14 +158,15 @@ epochs = 20
 workers = 2
 
 [bay_otide]
-K_trend = 20
-K_season = 2
-n_season = 5
-K_bias = 1
+K_trend = 30
+K_season = 1
+n_season = 7
+K_bias = 0
 time_scale = 1
-a0 = 0.6
-b0 = 2.5
-v = 0.5
+a0 = 1
+b0 = 1
+v = 1
+tr_ratio = 0.6
 
 
 [hkmf_t]

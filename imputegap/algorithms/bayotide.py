@@ -1,9 +1,9 @@
 import time
 
-from imputegap.wrapper.AlgoPython.BayOTIDE.BayOTIDE import recoveryBayOTIDE
+from imputegap.wrapper.AlgoPython.BayOTIDE.BayOTIDE import recovBayOTIDE
 
 
-def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5, logs=True, verbose=False):
+def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5, tr_ratio=0.6, logs=True, verbose=False):
     """
     BayOTIDE class to impute missing values using Bayesian Online Multivariate Time series Imputation with functional decomposition
 
@@ -36,6 +36,9 @@ def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_sc
     v : float, (optional) (default: 0.5)
         Variance parameter.
 
+    tr_ratio : float, (optional) (default: 0.6)
+        Ratio of the training set for the model.
+
     config : dict, (optional) (default: None)
         Dictionary containing all configuration parameters, that will replace all other parameters (see documentation).
 
@@ -55,7 +58,7 @@ def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_sc
 
     Example
     -------
-        >>> recov_data = bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5)
+        >>> recov_data = bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5, tr_ratio=0.6)
         >>> print(recov_data)
 
     References
@@ -65,7 +68,7 @@ def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_sc
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoveryBayOTIDE(data=incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, verbose=verbose)
+    recov_data = recovBayOTIDE(incomp_m=incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, tr_ratio=tr_ratio, verbose=verbose)
 
     end_time = time.time()
 

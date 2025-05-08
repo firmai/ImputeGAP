@@ -1,0 +1,57 @@
+Report for Dataset: drift
+Generated on: 2025-05-08 16:54:47
+Total runtime: 319.4592 (sec)
+========================================================================================================================
+
+
+drift: {mcar, RMSE, default_params}
+ Rate        BayOTIDE      
+
+ 0.05      0.7999498768    
+  0.2      0.8167024167    
+  0.4      0.8239820397    
+  0.8          nan         
+
+
+
+drift: {mcar, MAE, default_params}
+ Rate        BayOTIDE      
+
+ 0.05      0.6370091626    
+  0.2      0.6137303576    
+  0.4      0.6288886664    
+  0.8          nan         
+
+
+
+drift: {mcar, MI, default_params}
+ Rate        BayOTIDE      
+
+ 0.05      0.4217175933    
+  0.2      0.1265249386    
+  0.4      0.1255663970    
+  0.8          nan         
+
+
+
+drift: {mcar, CORRELATION, default_params}
+ Rate        BayOTIDE      
+
+ 0.05      0.6847769200    
+  0.2      0.6580098220    
+  0.4      0.6436380172    
+  0.8          nan         
+
+
+
+drift: {mcar, runtime, default_params}
+ Rate        BayOTIDE      
+
+ 0.05     106.7603168488   
+  0.2     103.5220704079   
+  0.4     99.8248269558    
+  0.8      0.0003716946    
+
+
+Dictionary of Results:
+{'drift': {'mcar': {'BayOTIDE': {'default_params': {'0.05': {'scores': {'RMSE': 0.7999498767563581, 'MAE': 0.6370091625528973, 'MI': 0.4217175933141517, 'CORRELATION': 0.6847769199667262, 'runtime': 106.76031684875488, 'runtime_log_scale': 2.028409854038865}}, '0.2': {'scores': {'RMSE': 0.816702416724087, 'MAE': 0.6137303575794133, 'MI': 0.12652493857082778, 'CORRELATION': 0.6580098219727197, 'runtime': 103.52207040786743, 'runtime_log_scale': 2.015032949160411}}, '0.4': {'scores': {'RMSE': 0.8239820396934417, 'MAE': 0.6288886663592839, 'MI': 0.12556639696204508, 'CORRELATION': 0.6436380172008269, 'runtime': 99.82482695579529, 'runtime_log_scale': 1.9992385660268222}}, '0.8': {'scores': {'RMSE': nan, 'MAE': nan, 'MI': nan, 'CORRELATION': nan, 'runtime': 0.00037169456481933594, 'runtime_log_scale': -3.429813789418745}}}}}}}

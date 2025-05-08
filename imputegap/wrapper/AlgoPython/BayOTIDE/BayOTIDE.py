@@ -1,97 +1,242 @@
-import numpy as np
-import torch
-import tqdm
+import os
 
+import numpy as np
+import torch 
+import sys
 import imputegap
 from imputegap.recovery.manager import TimeSeries
+from imputegap.tools import utils
+
+sys.path.append("../")
+
+import tqdm
+import yaml
+torch.random.manual_seed(300)
+
+
 from imputegap.wrapper.AlgoPython.BayOTIDE import utils_BayOTIDE, model_BayOTIDE
+
 import time
 import warnings
-
 warnings.filterwarnings("ignore")
+args = utils_BayOTIDE.parse_args_dynamic_streaming()
 
+torch.random.manual_seed(args.seed)
 
-def get_default_config(data_matrix=None):
+def generate_mask(data_matrix, drop_rate=0.8, valid_rate=0.2, verbose=False):
     """
-    Generate a default configuration for BayOTIDE with adaptive values
-    based on input data.
-
-    :param data_matrix: NumPy array (N x T) representing the dataset.
-    :return: Dictionary containing hyperparameters.
+    Generate train/test/valid masks based only on existing NaN positions in data_matrix.
     """
-    # Use defaults if no data is provided
-    N, T = (data_matrix.shape if data_matrix is not None else (64, 256))  # Default 64x256
+    nan_mask = np.isnan(data_matrix)
+    nan_indices = np.argwhere(nan_mask)
+    np.random.shuffle(nan_indices)
 
-    # Dynamically determine ranks based on data size
-    K_trend = min(30, max(5, N // 3))  # Set trend rank (limit between 5 and N/3)
-    K_season = min(3, max(1, T // 100))  # Adaptive seasonal rank (based on time steps)
-    n_season = min(10, max(3, T // 50))  # Number of seasonal components
-    K_bias = 1 if T > 100 else 0  # Include bias term if time series is long
+    n = len(nan_indices)
+    n_test = int(n * drop_rate)
+    n_valid = int(n * valid_rate)
+    n_train = n - n_test - n_valid
 
-    # Adaptive damping factors to avoid instability
-    DAMPING_U = max(0.5, min(0.9, 1 - (N / (N + T))))  # Keep damping within (0.5, 0.9)
-    DAMPING_tau = max(0.3, min(0.7, 1 - (T / (N + T))))  # Ensure reasonable updates
-    DAMPING_W = (DAMPING_U + DAMPING_tau) / 2  # Keep W damping balanced
+    if verbose:
+        print(f"\n{n =}")
 
-    # Avoid very small variance values that cause numerical issues
-    a0 = max(1e-2, N / 100)  # Prior variance scaling
-    b0 = max(1e-2, T / 100)  # Prior variance scaling
-    v = max(0.5, min(5, N / T))  # Adaptive variance parameter
+    # Sanity check
+    if verbose:
+        print(f"\n{n_test =}")
+        print(f"{n_valid =}")
+        print(f"{n_train =}\n")
 
-    # Auto-generate frequency list for K_season
-    freq_list = [max(5, min(30, T // (10 + i * 5))) for i in range(K_season)]
-    lengthscale_list = [max(0.01, min(0.1, T / (1000 + i * 100))) for i in range(K_season)]
+    train_idx = nan_indices[:n_train]
+    test_idx = nan_indices[n_train:n_train + n_test]
+    valid_idx = nan_indices[n_train + n_test:]
 
+    if verbose:
+        print(f"\n{train_idx.shape =}")
+        print(f"{test_idx.shape =}")
+        print(f"{valid_idx.shape =}\n")
 
-    return {
-        "INNER_ITER": 5,
-        "EVALU_T": max(50, min(200, T // 10)),  # Adaptive evaluation interval
-        "device": "cuda" if torch.cuda.is_available() else "cpu",
-        "num_fold": 1,
-        "time_scale": 1,
-        "fix_int": True,
-        "K_trend": K_trend,
-        "K_season": K_season,
-        "n_season": n_season,
-        "K_bias": K_bias,
-        "a0": a0,
-        "b0": b0,
-        "v": v,
-        "THRE": 1.0e-4,
-        "DAMPING_U": DAMPING_U,
-        "DAMPING_tau": DAMPING_tau,
-        "DAMPING_W": DAMPING_W,
-        "kernel": {
-            "kernel_trend": {
-                "type": "Matern_21",
-                "lengthscale": max(0.05, min(0.2, T / 500)),  # Adaptive lengthscale
-                "variance": max(0.1, min(2.0, N / T)),  # Ensure variance is stable
-                "noise": 1.0,
-            },
-            "kernel_season": {
-                "type": "exp-periodic",
-                "freq_list": freq_list,  # Now matches K_season
-                "lengthscale_list": lengthscale_list,
-                "noise": 1.0,
-            }
-        }
-    }
+    mask_train = np.zeros_like(data_matrix, dtype=np.uint8)
+    mask_test = np.zeros_like(data_matrix, dtype=np.uint8)
+    mask_valid = np.zeros_like(data_matrix, dtype=np.uint8)
+
+    mask_train[tuple(train_idx.T)] = 1
+    mask_test[tuple(test_idx.T)] = 1
+    mask_valid[tuple(valid_idx.T)] = 1
+
+    # Sanity check
+    if verbose:
+        print(f"\nTrain mask NaNs: {mask_train.sum()}")
+        print(f"Test mask NaNs: {mask_test.sum()}")
+        print(f"Valid mask NaNs: {mask_valid.sum()}")
+
+        print(f"{mask_train.shape =}")
+        print(f"{mask_test.shape =}")
+        print(f"{mask_valid.shape =}\n")
+
+    return mask_train, mask_test, mask_valid
 
 
+def generate_random_mask(gt, mask_test, mask_valid, droprate=0.2, verbose=False, seed=300):
+    """
+    Generate a random training mask over the non-NaN entries of gt, excluding positions
+    already present in the test and validation masks.
 
-def get_default_args():
-    class Args:
-        seed = 42
-        num_fold = 1
-        dataset = "default"
-        task = "impute"
-        r = 0.01
-        other_para = ""
+    Parameters
+    ----------
+    gt : numpy.ndarray
+        Ground truth data (no NaNs).
+    mask_test : numpy.ndarray
+        Binary mask indicating test positions.
+    mask_valid : numpy.ndarray
+        Binary mask indicating validation positions.
+    droprate : float
+        Proportion of eligible entries to include in the training mask.
+    verbose : bool
+        Whether to print debug info.
+    seed : int, optional
+        Random seed for reproducibility.
 
-    return Args()
+    Returns
+    -------
+    numpy.ndarray
+        Binary mask indicating training positions.
+    """
+    assert gt.shape == mask_test.shape == mask_valid.shape, "All input matrices must have the same shape"
+
+    if seed is not None:
+        np.random.seed(seed)
+
+    # Valid positions: non-NaN and not in test/valid masks
+    occupied_mask = (mask_test + mask_valid).astype(bool)
+    eligible_mask = (~np.isnan(gt)) & (~occupied_mask)
+    eligible_indices = np.argwhere(eligible_mask)
+
+    n_train = int(len(eligible_indices) * droprate)
+
+    np.random.shuffle(eligible_indices)
+    selected_indices = eligible_indices[:n_train]
+
+    mask_train = np.zeros_like(gt, dtype=np.uint8)
+    mask_train[tuple(selected_indices.T)] = 1
+
+    if verbose:
+        print(f"\nTest mask: {mask_test.sum()} values")
+        print(f"Valid mask: {mask_valid.sum()} values")
+        print(f"Eligible entries: {len(eligible_indices)}")
+        print(f"Selected training entries: {n_train}\n")
+
+    # Sanity check: no overlap between training and test masks
+    overlap = np.logical_and(mask_train, mask_test).sum()
+    assert overlap == 0, f"Overlap detected between training and test masks: {overlap} entries."
+
+    # Sanity check: no overlap between training and test masks
+    overlap = np.logical_and(mask_train, mask_valid).sum()
+    assert overlap == 0, f"Overlap detected between training and test masks: {overlap} entries."
+
+    return mask_train
 
 
-def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, config=None, args=None, verbose=True):
+
+
+def generate_mask_imputegap(data_matrix, test_rate=0.8, valid_rate=0.2, verbose=False, seed=300):
+    """
+    Dispatch NaN positions in data_matrix to test and validation masks only.
+
+    Parameters
+    ----------
+    data_matrix : numpy.ndarray
+        Input matrix containing NaNs to be split.
+    test_rate : float
+        Proportion of NaNs to assign to the test set (default is 0.8).
+    valid_rate : float
+        Proportion of NaNs to assign to the validation set (default is 0.2).
+        test_rate + valid_rate must equal 1.0.
+    verbose : bool
+        Whether to print debug info.
+    seed : int, optional
+        Random seed for reproducibility.
+
+    Returns
+    -------
+    tuple
+        test_mask : numpy.ndarray
+            Binary mask indicating positions of NaNs in the test set.
+        valid_mask : numpy.ndarray
+            Binary mask indicating positions of NaNs in the validation set.
+        n_nan : int
+            Total number of NaN values found in the input matrix.
+    """
+    assert np.isclose(test_rate + valid_rate, 1.0), "test_rate and valid_rate must sum to 1.0"
+
+    if seed is not None:
+        np.random.seed(seed)
+
+    nan_mask = np.isnan(data_matrix)
+    nan_indices = np.argwhere(nan_mask)
+    np.random.shuffle(nan_indices)
+
+    n_nan = len(nan_indices)
+    n_test = int(n_nan * test_rate)
+    n_valid = n_nan - n_test
+
+    if verbose:
+        print(f"\n4.a) creating mask (testing, validation): Total NaNs = {n_nan}")
+        print(f"4.b) creating mask: Assigned to test = {n_test}")
+        print(f"4.c) creating mask: Assigned to valid = {n_valid}\n")
+
+    test_idx = nan_indices[:n_test]
+    valid_idx = nan_indices[n_test:]
+
+    mask_test = np.zeros_like(data_matrix, dtype=np.uint8)
+    mask_valid = np.zeros_like(data_matrix, dtype=np.uint8)
+
+    mask_test[tuple(test_idx.T)] = 1
+    mask_valid[tuple(valid_idx.T)] = 1
+
+    return mask_test, mask_valid, n_nan
+
+
+
+def prepare_testing_set(incomp_m, tr_ratio):
+
+    data_matrix_cont = incomp_m.copy()
+
+    target_ratio = 1 - tr_ratio
+    total_values = data_matrix_cont.size
+    target_n_nan = int(target_ratio * total_values)
+
+    # 2) Current number of NaNs
+    current_n_nan = np.isnan(data_matrix_cont).sum()
+    n_new_nans = target_n_nan - current_n_nan
+
+    # 2) Get available (non-NaN) indices as 2D coordinates
+    available_indices = np.argwhere(~np.isnan(data_matrix_cont))
+
+    # 3) Randomly pick indices to contaminate
+    if n_new_nans > 0:
+        chosen_indices = available_indices[np.random.choice(len(available_indices), size=n_new_nans, replace=False)]
+        for i, j in chosen_indices:
+            data_matrix_cont[i, j] = np.nan
+
+    # 4) check ratio
+    n_total = data_matrix_cont.size
+    n_nan = np.isnan(data_matrix_cont).sum()
+    n_not_nan = n_total - n_nan
+
+    # Compute actual ratios
+    missing_ratio = n_nan / n_total
+    observed_ratio = n_not_nan / n_total
+
+    # Check if they match expectations (within a small tolerance)
+    assert abs(missing_ratio - target_ratio) < 0.01, f"Missing ratio {missing_ratio} is not {target_ratio}"
+    assert abs(observed_ratio - tr_ratio) < 0.01, f"Missing ratio {observed_ratio} is not {tr_ratio}"
+
+    # Create the new mask
+    new_mask = np.isnan(data_matrix_cont)
+
+    return data_matrix_cont, new_mask
+
+
+def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, tr_ratio=0.6, config=None, args=None, verbose=True):
     """
     Run BayOTIDE model using a provided NumPy data matrix instead of loading from a file.
 
@@ -104,23 +249,58 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
     :param a0: Prior hyperparameter for variance scaling (optional, overrides config if provided).
     :param b0: Prior hyperparameter for variance scaling (optional, overrides config if provided).
     :param v: Variance hyperparameter for noise modeling (optional, overrides config if provided).
+    :param tr_ratio: ratio of the training set.
     :param config: Dictionary containing hyperparameters (optional).
     :param args: Parsed arguments for the model (optional).
     :return: Imputed time series matrix (N x T).
     """
-    data_matrix = data.copy()
-    final_matrix = data.copy()
-    missing_mask = np.isnan(data)
 
+    gt_data_matrix = incomp_m.copy()
+    cont_data_matrix = incomp_m.copy()
+    mask_original_nan = np.isnan(incomp_m)
+    original_missing_ratio = utils.get_missing_ratio(cont_data_matrix)
 
-    # Replace NaN values in the dataset with 0
-    data_matrix = np.nan_to_num(data_matrix, nan=0.0)
+    if verbose:
+        print(f"\n1.a) original missing ratio = {original_missing_ratio:.2%}")
+        print(f"1.b) original missing numbers = {np.sum(mask_original_nan)}")
 
-    # Load default configuration if not provided
+    if abs((1-tr_ratio) - original_missing_ratio) > 0.01:
+        cont_data_matrix, new_mask = prepare_testing_set(cont_data_matrix, tr_ratio)
+
+        if verbose:
+            print(f"1.c) building of the test set to reach a fix ratio of {1 - tr_ratio:.2%}...")
+            final_ratio = utils.get_missing_ratio(cont_data_matrix)
+            print(f"1.d) final artificially missing ratio for test set = {final_ratio:.2%}")
+            print(f"1.e) final artificially missing numbers = {np.sum(new_mask)}\n")
+
+    else:
+        new_mask = mask_original_nan.copy()
+
+    if verbose:
+        print("\n2.a) reset all testing matrix values to 0 to prevent data leakage.")
+    gt_data_matrix[new_mask] = 0
+    assert not np.isnan(gt_data_matrix).any(), "gt_data_matrix still contains NaNs"
+    assert (gt_data_matrix == 0).any(), "gt_data_matrix does not contain any zeros"
+
+    sub_tensor = torch.from_numpy(gt_data_matrix).float()
+    zero_ratio = (sub_tensor == 0).sum().item() / sub_tensor.numel()
+
+    if verbose:
+        print(f"2.b) check ratios : {zero_ratio = }")
+        print(f"2.c) convert matrix to tensor (torch) : {sub_tensor.shape = }\n")
+
     if config is None:
-        config = get_default_config(data_matrix)
+        # Get directory of current file
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        config_path = os.path.join(base_dir, "config_bayotide.yaml")
 
-    # Override default configuration with user-provided values if not None
+        with open(config_path, "r") as f:
+            config = yaml.safe_load(f)
+
+        if verbose:
+            print(f"\n3.a) loading of the configuration file : {config_path = }")
+
+    # Conditional updates
     if K_trend is not None:
         config["K_trend"] = K_trend
     if K_season is not None:
@@ -138,47 +318,84 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
     if v is not None:
         config["v"] = v
 
-    if args is None:
-        args = get_default_args()
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if verbose:
+        print(f"3.b) Using device: {device}\n")
+
+    # Set device in config
+    config["device"] = device
+    seed = config["seed"]
+
+    data_save = {}
+    data_save['ndims'] = sub_tensor.shape
+    data_save['raw_data'] = sub_tensor
+    data_save['data'] = []
+    data_save['time_uni'] = np.linspace(0, 1, sub_tensor.shape[1])
+
+    for i in range(config["num_fold"]):
+        mask_test, mask_valid, nbr_nans = generate_mask_imputegap(cont_data_matrix, test_rate=0.8, valid_rate=0.2, verbose=verbose, seed=seed)
+        mask_train = generate_random_mask(gt=gt_data_matrix, mask_test=mask_test, mask_valid=mask_valid, droprate=0.4, verbose=verbose, seed=seed)
+        data_save['data'].append({'mask_train': mask_train, 'mask_test': mask_test, 'mask_valid': mask_valid})
 
     if verbose:
-        print("(IMPUTATION) BayOTIDE: Matrix Shape: (", data_matrix.shape[0], ", ", data_matrix.shape[1], ")")
-        print(f"\t\t\tK_trend: {config['K_trend']}, K_season: {config['K_season']}, n_season: {config['n_season']}, "
-              f"K_bias: {config['K_bias']}, time_scale: {config['time_scale']}, a0: {config['a0']}, "
-              f"b0: {config['b0']}, v: {config['v']}")
+        print(f"4.e) check : mask_test.sum() / mask_train.size = {mask_test.sum() / mask_train.size}")
 
-    torch.random.manual_seed(args.seed)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, config["data_path"])
+    np.save(file_path, data_save)
+    config["data_path"] = file_path
 
-    data_matrix = np.nan_to_num(data_matrix, nan=0.0)
+    if verbose:
+        print(f"Data saved to {file_path}")
 
-    torch.random.manual_seed(args.seed)
-
-    hyper_dict = utils_BayOTIDE.make_hyper_dict(config, args, verbose)
+    data_file = file_path
+    hyper_dict = config
 
     INNER_ITER = hyper_dict["INNER_ITER"]
     EVALU_T = hyper_dict["EVALU_T"]
 
+    test_rmse = []
+    test_MAE = []
+    test_CRPS = []
+    test_NLLK = []
+    train_time = []
 
-    for fold_id in range(args.num_fold):
-        data_dict = utils_BayOTIDE.make_data_dict(hyper_dict, data_matrix, fold=fold_id)
+    before_smooth_MAE_list = []
+    before_smooth_RMSE_list = []
+
+    result_dict = {}
+
+    if verbose:
+        print("\n\ntraining...")
+
+    for fold_id in range(config["num_fold"]):
+
+        data_dict = utils_BayOTIDE.make_data_dict(hyper_dict, data_file, fold=fold_id)
+
+        train_time_start = time.time()
+
         model = model_BayOTIDE.BayTIDE(hyper_dict, data_dict)
+
         model.reset()
 
-        # One-pass along the time axis
+        # one-pass along the time axis
         for T_id in tqdm.tqdm(range(model.T)):
             model.filter_predict(T_id)
             model.msg_llk_init()
 
-            if model.mask_train[:, T_id].sum() > 0:
+            if model.mask_train[:, T_id].sum() > 0:  # at least one obseved data at current step
                 for inner_it in range(INNER_ITER):
                     flag = (inner_it == (INNER_ITER - 1))
+
                     model.msg_approx_U(T_id)
                     model.filter_update(T_id, flag)
+
                     model.msg_approx_W(T_id)
                     model.post_update_W(T_id)
 
                 model.msg_approx_tau(T_id)
                 model.post_update_tau(T_id)
+
             else:
                 model.filter_update_fake(T_id)
 
@@ -186,49 +403,96 @@ def recoveryBayOTIDE(data, K_trend=None, K_season=None, n_season=None, K_bias=No
                 _, loss_dict = model.model_test(T_id)
 
                 if verbose:
-                    print(f"\t\t\t\t\t\tT_id = {T_id}, train_rmse = {loss_dict['train_RMSE']:.3f}, test_rmse= {loss_dict['test_RMSE']:.3f}")
+                    print("T_id = {}, train_rmse = {:.3f}, test_rmse= {:.3f}".format(T_id, loss_dict["train_RMSE"], loss_dict["test_RMSE"]))
 
+                # to add: store running loss?
+
+        before_smooth_MAE = loss_dict["test_MAE"]
+        before_smooth_RMSE = loss_dict["test_RMSE"]
 
         if verbose:
-            print('\t\t\t\tSmoothing back...')
+            print('\n\n5.a) smoothing back...')
+
         model.smooth()
-
-        if verbose:
-            print('\t\t\t\tFinished training!')
-
         model.post_update_U_after_smooth(0)
 
-        # **CRITICAL FIX: Ensure each series has unique imputation**
-        W_matrix = model.post_W_m.clone().squeeze().cpu().detach().numpy()
-        U_matrix = model.post_U_m.clone().squeeze().cpu().detach().numpy()
+        train_time_end = time.time()
+        if verbose:
+            print('\n\n6.a) evaluation...')
 
-        # Check for row similarity
-        w_unique_rows = np.unique(W_matrix, axis=0)
-
-        u_unique_rows = np.unique(U_matrix, axis=0)
+        _, loss_dict = model.model_test(T=T_id, prob=True)
 
         if verbose:
-            print("\n\t\t\t\tW_matrix shape:", W_matrix.shape)  # Should be (N, K)
-            print("\t\t\t\tU_matrix shape:", U_matrix.shape)  # Should be (K, T)
-            print(f"\t\t\t\t\t\tUnique W_matrix rows: {w_unique_rows.shape[0]} / {W_matrix.shape[0]}")
-            print(f"\t\t\t\t\t\tUnique W_matrix rows: {u_unique_rows.shape[0]} / {U_matrix.shape[0]}")
+            print("\nfold = {}, after smooth: \n test_rmse= {:.3f}, \n test_MAE= {:.3f}, \n CRPS= {:.3f},\n neg-llk= {:.3f}".format(fold_id, loss_dict["test_RMSE"], loss_dict["test_MAE"], loss_dict["CRPS"], loss_dict["neg-llk"]))
 
-        # Ensure the multiplication preserves individual series variations
-        imputed_matrix = np.matmul(W_matrix, U_matrix)  # (N, T)
+        test_rmse.append(loss_dict["test_RMSE"])
+        test_MAE.append(loss_dict["test_MAE"])
+        test_CRPS.append(loss_dict["CRPS"])
+        test_NLLK.append(loss_dict["neg-llk"])
+        train_time.append(train_time_end - train_time_start)
 
-        final_matrix[missing_mask] = imputed_matrix[missing_mask]
+        before_smooth_MAE_list.append(before_smooth_MAE)
+        before_smooth_RMSE_list.append(before_smooth_RMSE)
 
-    return final_matrix
+        if verbose:
+            print("\nfold = {}, train-time = {:.3f} sec \n\n".format(fold_id, train_time_end - train_time_start))
+
+    test_rmse = np.array(test_rmse)
+    test_MAE = np.array(test_MAE)
+    test_CRPS = np.array(test_CRPS)
+    test_NLLK = np.array(test_NLLK)
+    train_time = np.array(train_time)
+
+    before_smooth_MAE = np.array(before_smooth_MAE_list)
+    before_smooth_RMSE = np.array(before_smooth_RMSE_list)
+
+    result_dict["RMSE"] = test_rmse
+    result_dict["MAE"] = test_MAE
+    result_dict["CRPS"] = test_CRPS
+    result_dict["NLLK"] = test_NLLK
+
+    result_dict["before_smooth_MAE"] = before_smooth_MAE
+    result_dict["before_smooth_RMSE"] = before_smooth_RMSE
+
+    result_dict["time"] = np.sum(train_time)
+
+    pred = torch.mm(model.post_W_m.squeeze(), model.post_U_m.squeeze()).cpu().numpy()
+
+    if verbose:
+        print(f"\n\n7.a) imputation : prediction shape > {pred.shape =}\n")
+
+    # Fill NaNs in original data
+    final_result = incomp_m.copy()
+    final_result[mask_original_nan] = pred[mask_original_nan]
+
+    if verbose:
+        print(f"{final_result.shape =}")
+
+    return final_result
 
 
 if __name__ == "__main__":
-    ts_1 = TimeSeries()
 
-    # 2. load the timeseries from file or from the code
-    ts_1.load_series(imputegap.tools.utils.search_path("eeg-alcohol"))  # shape 64x256
-    ts_1.normalize(normalizer="min_max")
+    ts = TimeSeries()
+    ts.load_series(imputegap.tools.utils.search_path("chlorine"))
+    print(f"{ts.data.shape = }")
 
-    # 3. contamination of the data
-    x = ts_1.Contamination.aligned(ts_1.data, rate_series=0.4)
+    # contaminate the time series with MCAR pattern
+    ts_m = ts.Contamination.mcar(ts.data)
 
-    imputation = recoveryBayOTIDE(x)
+    imputed_data = recovBayOTIDE(ts.data, ts_m)
+
+    from imputegap.recovery.imputation import Imputation
+
+    imputer = Imputation.DeepLearning.BayOTIDE(ts_m)
+    imputer.recov_data = imputed_data
+    imputer.incomp_data = ts_m
+
+    # compute and print the imputation metrics
+    imputer.score(ts.data, imputed_data)
+    ts.print_results(imputer.metrics)
+
+    # plot the recovered time series
+    ts.plot(input_data=ts.data, incomp_data=ts_m, recov_data=imputed_data, nbr_series=9, subplot=True, algorithm=imputer.algorithm, save_path="./imputegap_assets/imputation")
+    ts.plot(input_data=ts.data, nbr_series=9,  save_path="./imputegap_assets/imputation")
+    ts.plot(input_data=imputed_data, nbr_series=9,  save_path="./imputegap_assets/imputation")

@@ -7,11 +7,11 @@
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
         <title>Tutorials - ImputeGAP 1.0.9 Documentation</title>
-      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
-    <link rel="stylesheet" type="text/css" href="static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     
     
 
@@ -247,7 +247,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="sources/tutorials.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/tutorials.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -379,6 +379,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Imputation algorithms : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">algorithms</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Imputation families : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">families</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <br></section>
@@ -434,7 +435,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <p>The benchmarking module can be utilized as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">Benchmark</span>
 
-<span class="n">my_algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SoftImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;KNNImpute&quot;</span><span class="p">]</span>
+<span class="n">my_algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SoftImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;MeanImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;CDRec&quot;</span><span class="p">]</span>
 
 <span class="n">my_opt</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;default_params&quot;</span><span class="p">]</span>
 
@@ -485,9 +486,9 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>
 
 <span class="c1"># compute and print the downstream results</span>
-<span class="n">downstream_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;forecast&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;hw-add&quot;</span><span class="p">,</span> <span class="s2">&quot;comparator&quot;</span><span class="p">:</span> <span class="s2">&quot;ZeroImpute&quot;</span><span class="p">}</span>
+<span class="n">downstream_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;forecast&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;hw-add&quot;</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">:</span> <span class="s2">&quot;ZeroImpute&quot;</span><span class="p">}</span>
 <span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="n">downstream</span><span class="o">=</span><span class="n">downstream_config</span><span class="p">)</span>
-<span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">)</span>
+<span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Downstream results&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>All downstream models developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.forecasting_models</span></code> module, which can be listed as follows:</p>
@@ -614,11 +615,11 @@ The list of algorithms is described <a class="reference external" href="algorith
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=0abd802e"></script>
-    <script src="static/doctools.js?v=9bcbadda"></script>
-    <script src="static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="static/scripts/furo.js?v=5fa4622c"></script>
-    <script src="static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="static/copybutton.js?v=f281be69"></script>
+</div><script src="_static/documentation_options.js?v=0abd802e"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
     </body>
 </html>
