@@ -14,17 +14,11 @@ ts_m = ts.Contamination.mcar(ts.data)
 imputer = Imputation.DeepLearning.BayOTIDE(ts_m)
 
 # use Ray Tune to fine tune the imputation algorithm
-imputer.impute(ts.data, user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
+imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
 
 # compute the imputation metrics with optimized parameter values
 imputer.score(ts.data, imputer.recov_data)
 
-# compute the imputation metrics with default parameter values
-imputer_def = Imputation.DeepLearning.BayOTIDE(ts_m).impute(ts.data)
-imputer_def.score(ts.data, imputer_def.recov_data)
-
-# print the imputation metrics with default and optimized parameter values
-ts.print_results(imputer_def.metrics, text="Default values")
 ts.print_results(imputer.metrics, text="Optimized values")
 
 # plot the recovered time series

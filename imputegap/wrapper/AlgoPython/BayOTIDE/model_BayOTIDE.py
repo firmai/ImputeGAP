@@ -1,3 +1,14 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/xuangu-fang/BayOTIDE
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2308.14906
+# ===============================================================================================================
+
+
 """
 Implementation of BayTIDE model, try offline / online version
 
@@ -9,22 +20,14 @@ Bellevue,WA, USA, 05/2023
 """
 
 import numpy as np
-from numpy.lib import utils
 import torch
-import matplotlib.pyplot as plt
 from imputegap.wrapper.AlgoPython.BayOTIDE.model_LDS import LDS_GP_streaming
 import os
-import tqdm
 from imputegap.wrapper.AlgoPython.BayOTIDE import utils_BayOTIDE
 
 from torch.distributions.multivariate_normal import MultivariateNormal
-# import tensorly as tl
-
-# tl.set_backend("pytorch")
-
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 JITTER = 1e-4
-
 torch.manual_seed(300)
 
 

@@ -12,7 +12,7 @@ ts.load_series(utils.search_path("chlorine"))
 ts.normalize()
 
 # contaminate the time series
-ts_m = ts.Contamination.mcar(ts.data, rate_series=0.4, rate_dataset=0.4)
+ts_m = ts.Contamination.mcar(ts.data)
 
 # impute the contaminated series
 imputer = Imputation.DeepLearning.BayOTIDE(incomp_data=ts_m)

@@ -166,7 +166,7 @@ time_scale = 1
 a0 = 1
 b0 = 1
 v = 1
-tr_ratio = 0.6
+tr_ratio = 0.8
 
 
 [hkmf_t]

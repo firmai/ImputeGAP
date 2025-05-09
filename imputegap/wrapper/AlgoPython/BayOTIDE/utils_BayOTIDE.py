@@ -1,16 +1,19 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/xuangu-fang/BayOTIDE
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2308.14906
+# ===============================================================================================================
+
 import numpy as np
 import torch
-
-# import utils
-import scipy
 from scipy import linalg
 import argparse
-
-from tensorflow.python.autograph.operators.py_builtins import print_registry
-from torch.utils.data import Dataset
 from pathlib import Path
 from scipy.special import kn
-
 torch.random.manual_seed(300)
 
 
@@ -153,13 +156,8 @@ def make_log(args, hyper_dict, result_dict,other_para = ''):
 def make_hyper_dict(config, args=None):
     hyper_dict = config
 
-    if config["device"] == "cpu":
-        hyper_dict["device"] = torch.device("cpu")
-    else:
-        hyper_dict["device"] = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")
-    print("use device:", hyper_dict["device"])
-
+    hyper_dict["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #print("use device:", hyper_dict["device"])
 
     if args is not None:
         # overwrite config with args if needed
@@ -171,11 +169,11 @@ def make_hyper_dict(config, args=None):
 
 def make_data_dict(hyper_dict, data_path, fold=0, args=None):
     """to be polish"""
-    print(f"Data loaded from {data_path}")
+    #print(f"Data loaded from {data_path}")
     full_data = np.load(data_path, allow_pickle=True).item()
 
     #print(f"{full_data =}")
-    print(f"{type(full_data)}")
+    #print(f"{type(full_data)}")
 
 
     # already split into train, test and valid mask

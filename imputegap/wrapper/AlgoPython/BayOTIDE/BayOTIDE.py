@@ -1,27 +1,32 @@
-import os
+# ===============================================================================================================
+# SOURCE: https://github.com/xuangu-fang/BayOTIDE
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2308.14906
+# ===============================================================================================================
 
+
+import os
 import numpy as np
 import torch 
 import sys
 import imputegap
 from imputegap.recovery.manager import TimeSeries
 from imputegap.tools import utils
-
 sys.path.append("../")
-
 import tqdm
 import yaml
 torch.random.manual_seed(300)
-
-
 from imputegap.wrapper.AlgoPython.BayOTIDE import utils_BayOTIDE, model_BayOTIDE
-
 import time
 import warnings
 warnings.filterwarnings("ignore")
 args = utils_BayOTIDE.parse_args_dynamic_streaming()
-
 torch.random.manual_seed(args.seed)
+
 
 def generate_mask(data_matrix, drop_rate=0.8, valid_rate=0.2, verbose=False):
     """
@@ -119,10 +124,10 @@ def generate_random_mask(gt, mask_test, mask_valid, droprate=0.2, verbose=False,
     mask_train[tuple(selected_indices.T)] = 1
 
     if verbose:
-        print(f"\nTest mask: {mask_test.sum()} values")
-        print(f"Valid mask: {mask_valid.sum()} values")
-        print(f"Eligible entries: {len(eligible_indices)}")
-        print(f"Selected training entries: {n_train}\n")
+        print(f"\n4.d) test mask: {mask_test.sum()} values")
+        print(f"4.d) valid mask: {mask_valid.sum()} values")
+        print(f"4.d) eligible entries: {len(eligible_indices)}")
+        print(f"4.d) selected training entries: {n_train}\n")
 
     # Sanity check: no overlap between training and test masks
     overlap = np.logical_and(mask_train, mask_test).sum()
@@ -196,7 +201,10 @@ def generate_mask_imputegap(data_matrix, test_rate=0.8, valid_rate=0.2, verbose=
 
 
 
-def prepare_testing_set(incomp_m, tr_ratio):
+def prepare_testing_set(incomp_m, tr_ratio, seed=None):
+
+    if seed is not None:
+        np.random.seed(seed)
 
     data_matrix_cont = incomp_m.copy()
 
@@ -213,7 +221,7 @@ def prepare_testing_set(incomp_m, tr_ratio):
 
     # 3) Randomly pick indices to contaminate
     if n_new_nans > 0:
-        chosen_indices = available_indices[np.random.choice(len(available_indices), size=n_new_nans, replace=False)]
+        chosen_indices = available_indices[:n_new_nans]
         for i, j in chosen_indices:
             data_matrix_cont[i, j] = np.nan
 
@@ -257,8 +265,14 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
 
     gt_data_matrix = incomp_m.copy()
     cont_data_matrix = incomp_m.copy()
+    final_result = incomp_m.copy()
     mask_original_nan = np.isnan(incomp_m)
     original_missing_ratio = utils.get_missing_ratio(cont_data_matrix)
+
+    nan_replacement             = 0
+    artificial_training_drop    = 0.4
+    ts_ratio                    = 0.9
+    val_ratio                   = 1-ts_ratio
 
     if verbose:
         print(f"\n1.a) original missing ratio = {original_missing_ratio:.2%}")
@@ -278,12 +292,12 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
 
     if verbose:
         print("\n2.a) reset all testing matrix values to 0 to prevent data leakage.")
-    gt_data_matrix[new_mask] = 0
+    gt_data_matrix[new_mask] = nan_replacement
     assert not np.isnan(gt_data_matrix).any(), "gt_data_matrix still contains NaNs"
-    assert (gt_data_matrix == 0).any(), "gt_data_matrix does not contain any zeros"
+    assert (gt_data_matrix == nan_replacement).any(), "gt_data_matrix does not contain any zeros"
 
     sub_tensor = torch.from_numpy(gt_data_matrix).float()
-    zero_ratio = (sub_tensor == 0).sum().item() / sub_tensor.numel()
+    zero_ratio = (sub_tensor == nan_replacement).sum().item() / sub_tensor.numel()
 
     if verbose:
         print(f"2.b) check ratios : {zero_ratio = }")
@@ -333,8 +347,8 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     data_save['time_uni'] = np.linspace(0, 1, sub_tensor.shape[1])
 
     for i in range(config["num_fold"]):
-        mask_test, mask_valid, nbr_nans = generate_mask_imputegap(cont_data_matrix, test_rate=0.8, valid_rate=0.2, verbose=verbose, seed=seed)
-        mask_train = generate_random_mask(gt=gt_data_matrix, mask_test=mask_test, mask_valid=mask_valid, droprate=0.4, verbose=verbose, seed=seed)
+        mask_test, mask_valid, nbr_nans = generate_mask_imputegap(cont_data_matrix, test_rate=ts_ratio, valid_rate=val_ratio, verbose=verbose, seed=seed)
+        mask_train = generate_random_mask(gt=gt_data_matrix, mask_test=mask_test, mask_valid=mask_valid, droprate=artificial_training_drop, verbose=verbose, seed=seed)
         data_save['data'].append({'mask_train': mask_train, 'mask_test': mask_test, 'mask_valid': mask_valid})
 
     if verbose:
@@ -354,25 +368,12 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     INNER_ITER = hyper_dict["INNER_ITER"]
     EVALU_T = hyper_dict["EVALU_T"]
 
-    test_rmse = []
-    test_MAE = []
-    test_CRPS = []
-    test_NLLK = []
-    train_time = []
-
-    before_smooth_MAE_list = []
-    before_smooth_RMSE_list = []
-
-    result_dict = {}
-
     if verbose:
         print("\n\ntraining...")
 
     for fold_id in range(config["num_fold"]):
 
         data_dict = utils_BayOTIDE.make_data_dict(hyper_dict, data_file, fold=fold_id)
-
-        train_time_start = time.time()
 
         model = model_BayOTIDE.BayTIDE(hyper_dict, data_dict)
 
@@ -405,64 +406,22 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
                 if verbose:
                     print("T_id = {}, train_rmse = {:.3f}, test_rmse= {:.3f}".format(T_id, loss_dict["train_RMSE"], loss_dict["test_RMSE"]))
 
-                # to add: store running loss?
+    if verbose:
+        print('\n\n5.a) smoothing back...')
 
-        before_smooth_MAE = loss_dict["test_MAE"]
-        before_smooth_RMSE = loss_dict["test_RMSE"]
+    model.smooth()
+    model.post_update_U_after_smooth(0)
 
-        if verbose:
-            print('\n\n5.a) smoothing back...')
-
-        model.smooth()
-        model.post_update_U_after_smooth(0)
-
-        train_time_end = time.time()
-        if verbose:
-            print('\n\n6.a) evaluation...')
-
-        _, loss_dict = model.model_test(T=T_id, prob=True)
-
-        if verbose:
-            print("\nfold = {}, after smooth: \n test_rmse= {:.3f}, \n test_MAE= {:.3f}, \n CRPS= {:.3f},\n neg-llk= {:.3f}".format(fold_id, loss_dict["test_RMSE"], loss_dict["test_MAE"], loss_dict["CRPS"], loss_dict["neg-llk"]))
-
-        test_rmse.append(loss_dict["test_RMSE"])
-        test_MAE.append(loss_dict["test_MAE"])
-        test_CRPS.append(loss_dict["CRPS"])
-        test_NLLK.append(loss_dict["neg-llk"])
-        train_time.append(train_time_end - train_time_start)
-
-        before_smooth_MAE_list.append(before_smooth_MAE)
-        before_smooth_RMSE_list.append(before_smooth_RMSE)
-
-        if verbose:
-            print("\nfold = {}, train-time = {:.3f} sec \n\n".format(fold_id, train_time_end - train_time_start))
-
-    test_rmse = np.array(test_rmse)
-    test_MAE = np.array(test_MAE)
-    test_CRPS = np.array(test_CRPS)
-    test_NLLK = np.array(test_NLLK)
-    train_time = np.array(train_time)
-
-    before_smooth_MAE = np.array(before_smooth_MAE_list)
-    before_smooth_RMSE = np.array(before_smooth_RMSE_list)
-
-    result_dict["RMSE"] = test_rmse
-    result_dict["MAE"] = test_MAE
-    result_dict["CRPS"] = test_CRPS
-    result_dict["NLLK"] = test_NLLK
-
-    result_dict["before_smooth_MAE"] = before_smooth_MAE
-    result_dict["before_smooth_RMSE"] = before_smooth_RMSE
-
-    result_dict["time"] = np.sum(train_time)
-
-    pred = torch.mm(model.post_W_m.squeeze(), model.post_U_m.squeeze()).cpu().numpy()
+    # Run model test and get predictions
+    pred, loss_dict = model.model_test(T_id)
 
     if verbose:
-        print(f"\n\n7.a) imputation : prediction shape > {pred.shape =}\n")
+        print(f"{pred.shape =}")
 
     # Fill NaNs in original data
-    final_result = incomp_m.copy()
+    if isinstance(pred, torch.Tensor):
+        pred = pred.detach().cpu().numpy()
+
     final_result[mask_original_nan] = pred[mask_original_nan]
 
     if verbose:

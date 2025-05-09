@@ -1,6 +1,5 @@
 # config: hyper paras
 
-device: "cpu" #cuda'
 data_path: "imputegap_dataset.npy"
 R: 0.2 # ratio of test
 num_fold: 1
@@ -19,7 +18,7 @@ v: 1
 fold: 1 # number of folds(random split) and take average,min:1,max:5'
 fix_int: True
 
-time_scale: 1 # time scale of the time-step, 
+time_scale: 1 # time scale of the time-step,
 kernel:
   kernel_trend:
     type: "Matern_21" # GP kernel type, Matern_21 or Matern_23"
@@ -42,6 +41,6 @@ DAMPING_W: 0.8
 
 EVALU_T: 100
 
-INNER_ITER: 5
+INNER_ITER: 10
 THRE: 1.0e-4 # therethold of CEP innner iteration
 

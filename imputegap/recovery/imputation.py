@@ -264,7 +264,7 @@ class BaseImputer:
 
         self.parameters = optimal_params
 
-    def _check_dl_split(self):
+    def _check_dl_split(self, split_ratio):
         """
         Check whether the proportion of missing values in the contaminated data is acceptable
         for training a deep learning model. If more than 40% of the values are missing,
@@ -280,10 +280,12 @@ class BaseImputer:
         """
         missing_ratio = utils.get_missing_ratio(self.incomp_data)
 
-        if missing_ratio <= 0.4:
+        ratio = 1 - split_ratio
+
+        if missing_ratio <= ratio:
             return True
         else:
-            print(f"(IMP) The proportion of missing values {missing_ratio} is too high to train an effective deep learning model.\n"
+            print(f"\n(IMP) The proportion of missing values {missing_ratio*100}% is too high to train an effective deep learning model, limited to {int(round(ratio*100))}%.\n"
                   "Please consider reducing the contamination rate or selecting a different family of imputation methods")
             return False
 
@@ -2303,7 +2305,7 @@ class Imputation:
                 """
                 from imputegap.algorithms.bayotide import bay_otide
 
-                if not (self._check_dl_split()):
+                if not (self._check_dl_split(split_ratio=0.8)):
                     self.recov_data = self.incomp_data
                     return
 
