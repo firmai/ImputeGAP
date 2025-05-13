@@ -26,7 +26,7 @@ class TestOptiRAY(unittest.TestCase):
         # 4. imputation of the contaminated data
         # imputation with AutoML which will discover the optimal hyperparameters for your dataset and your algorithm
 
-        algorithms_all = ["SoftImpute", "stmvl", "knnimpute"]
+        algorithms_all = ["SoftImpute", "stmvl", "KNNImpute"]
 
         for alg in algorithms_all:
             imputer = utils.config_impute_algorithm(incomp_data=ts_mask, algorithm=alg)

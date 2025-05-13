@@ -350,7 +350,7 @@ class TimeSeries:
             print(f"> logs: normalization ({normalizer}) of the data - runtime: {(end_time - start_time):.4f} seconds")
 
     def plot(self, input_data, incomp_data=None, recov_data=None, nbr_series=None, nbr_val=None, series_range=None,
-             subplot=False, size=(16, 8), algorithm=None, save_path="./imputegap_assets", display=True):
+             subplot=False, size=(16, 8), algorithm=None, save_path="./imputegap_assets", display=True, verbose=True):
         """
         Plot the time series data, including raw, contaminated, or imputed data.
 
@@ -378,6 +378,8 @@ class TimeSeries:
             Path to save the plot locally.
         display : bool, optional
             Whether to display the plot. Default is True.
+        verbose : bool, optional
+            Whether to display the plot information. Default is True.
 
         Returns
         -------
@@ -526,7 +528,9 @@ class TimeSeries:
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
             file_path = os.path.join(save_path + "/" + current_time + "_" + algorithm + "_plot.jpg")
             plt.savefig(file_path, bbox_inches='tight')
-            print("\nplots saved in:", file_path)
+
+            if verbose:
+                print("\nplots saved in:", file_path)
 
         if display:
             plt.show()

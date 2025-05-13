@@ -797,6 +797,10 @@ class Benchmark:
             all_algs = utils.list_of_algorithms()
             algorithms = [item for item in all_algs if item.upper() != "MPIN"]
 
+        directory_now = datetime.datetime.now()
+        directory_time = directory_now.strftime("%y_%m_%d_%H_%M_%S")
+        save_dir = save_dir + "/" + "bench_" + directory_time
+
         benchmark_time = time.time()
         for i_run in range(0, abs(runs)):
             for dataset in datasets:
@@ -914,6 +918,9 @@ class Benchmark:
                                 if "-" in dataset:
                                     dataset_s = dataset.replace("-", "")
 
+                                save_dir_plot = save_dir + "/" + dataset_s + "/" + pattern + "/recovery"
+                                ts_test.plot(input_data=ts_test.data, incomp_data=incomp_data, recov_data=algo.recov_data, nbr_series=9, subplot=True, algorithm=algo.algorithm, display=False, save_path=save_dir_plot, verbose=False)
+
                                 runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(pattern), {}).setdefault(str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {"scores": algo.metrics}
 
                         print(f"done!\n\n")
@@ -925,6 +932,8 @@ class Benchmark:
                 #self.generate_reports_txt(runs_plots_scores=runs_plots_scores, save_dir=save_dir_runs, dataset=dataset, metrics=metrics, run=i_run, verbose=verbose)
                 #self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
                 run_storage.append(runs_plots_scores)
+
+        plt.close('all')  # Close all open figures
 
         for x, m in enumerate(reversed(metrics)):
             tag = True if x == (len(metrics)-1) else False

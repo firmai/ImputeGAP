@@ -13,7 +13,7 @@ class TestBenchmarking(unittest.TestCase):
         opti_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 2, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
         optimizers = [opti_bayesian]
 
-        algorithms_full = ["mean", "cdrec", "stmvl", "iim", "mrnn"]
+        algorithms_full = ["meanimpute", "cdrec", "stmvl", "iim", "mrnn"]
         patterns_small = ["mcar"]
 
         x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
@@ -43,7 +43,7 @@ class TestBenchmarking(unittest.TestCase):
             scenario_data = dataset_data["mcar"]
 
             # Check that all algorithms exist
-            expected_algorithms = {"stmvl", "cdrec", "iim", "mean", "mrnn"}
+            expected_algorithms = {"stmvl", "cdrec", "iim", "meanimpute", "mrnn"}
             actual_algorithms = set(scenario_data.keys())
             self.assertTrue(
                 expected_algorithms.issubset(actual_algorithms),
