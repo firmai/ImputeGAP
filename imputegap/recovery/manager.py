@@ -173,12 +173,12 @@ class TimeSeries:
                 self.data = np.genfromtxt(data, delimiter=' ', max_rows=nbr_val, skip_header=int(header))
 
                 if verbose:
-                    print("\n(SYS) The time series have been loaded from " + str(data) + "\n")
+                    print("\n(SYS) The dataset is loaded from " + str(data) + "\n")
 
                 if nbr_series is not None:
                     self.data = self.data[:, :nbr_series]
             else:
-                print("\nThe time series have not been loaded, format unknown\n")
+                print("\nThe dataset has not been loaded, format unknown\n")
                 self.data = None
                 raise ValueError("Invalid input for load_series")
 
@@ -350,7 +350,7 @@ class TimeSeries:
             print(f"> logs: normalization ({normalizer}) of the data - runtime: {(end_time - start_time):.4f} seconds")
 
     def plot(self, input_data, incomp_data=None, recov_data=None, nbr_series=None, nbr_val=None, series_range=None,
-             subplot=False, size=(16, 8), algorithm=None, save_path="./imputegap_assets", display=True, verbose=True):
+             subplot=False, size=(16, 8), algorithm=None, save_path="./imputegap_assets", cont_rate=None, display=True, verbose=True):
         """
         Plot the time series data, including raw, contaminated, or imputed data.
 
@@ -376,6 +376,8 @@ class TimeSeries:
             Name of the algorithm used for imputation.
         save_path : str, optional
             Path to save the plot locally.
+        cont_rate : str, optional
+            Percentage of contamination in each series to plot.
         display : bool, optional
             Whether to display the plot. Default is True.
         verbose : bool, optional
@@ -526,7 +528,12 @@ class TimeSeries:
 
             now = datetime.datetime.now()
             current_time = now.strftime("%y_%m_%d_%H_%M_%S")
-            file_path = os.path.join(save_path + "/" + current_time + "_" + algorithm + "_plot.jpg")
+
+            if cont_rate is None:
+                file_path = os.path.join(save_path + "/" + current_time + "_" + algorithm + "_plot.jpg")
+            else:
+                file_path = os.path.join(save_path + "/" + cont_rate + "_" + algorithm + "_plot.jpg")
+
             plt.savefig(file_path, bbox_inches='tight')
 
             if verbose:

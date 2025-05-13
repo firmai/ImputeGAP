@@ -50,7 +50,7 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
     elif alg == "rosl":
         imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
-    elif alg == "softimpute" or algorithm == "softimp":
+    elif alg == "softimpute" or alg == "softimp":
         imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
     elif alg == "spirit":
         imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
@@ -68,11 +68,11 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer = Imputation.DeepLearning.PRISTI(incomp_data)
 
     # 3rd generation
-    elif alg == "knn" or algorithm == "knnimpute":
+    elif alg == "knn" or alg == "knnimpute":
         imputer = Imputation.Statistics.KNNImpute(incomp_data)
     elif alg == "interpolation":
         imputer = Imputation.Statistics.Interpolation(incomp_data)
-    elif alg == "meanseries" or algorithm == "meanimputebyseries":
+    elif alg == "meanseries" or alg == "meanimputebyseries":
         imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
     elif alg == "minimpute":
         imputer = Imputation.Statistics.MinImpute(incomp_data)

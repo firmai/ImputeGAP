@@ -595,6 +595,8 @@ class Benchmark:
         """
         os.makedirs(save_dir, exist_ok=True)
 
+        print("\nThe plots have been generated...\n")
+
         new_metrics = np.copy(metrics)
         new_plots = 0
 
@@ -848,7 +850,7 @@ class Benchmark:
                         if verbose:
                             print("\n3. algorithm evaluated", algorithm, "with", pattern, "\n")
                         else:
-                            print(f"{algorithm} using {pattern}, started at {time.strftime('%Y-%m-%d %H:%M:%S')}.")
+                            print(f"{algorithm} is tested with {pattern}, started at {time.strftime('%Y-%m-%d %H:%M:%S')}.")
 
                         for incx, x in enumerate(x_axis):
                             if verbose:
@@ -918,8 +920,9 @@ class Benchmark:
                                 if "-" in dataset:
                                     dataset_s = dataset.replace("-", "")
 
-                                save_dir_plot = save_dir + "/" + dataset_s + "/" + pattern + "/recovery"
-                                ts_test.plot(input_data=ts_test.data, incomp_data=incomp_data, recov_data=algo.recov_data, nbr_series=9, subplot=True, algorithm=algo.algorithm, display=False, save_path=save_dir_plot, verbose=False)
+                                save_dir_plot = save_dir + "/" + dataset_s + "/" + pattern + "/recovery/"
+                                cont_rate = int(x*100)
+                                ts_test.plot(input_data=ts_test.data, incomp_data=incomp_data, recov_data=algo.recov_data, nbr_series=3, subplot=True, algorithm=algo.algorithm, cont_rate=str(cont_rate), display=False, save_path=save_dir_plot, verbose=False)
 
                                 runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(pattern), {}).setdefault(str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {"scores": algo.metrics}
 
@@ -936,10 +939,9 @@ class Benchmark:
         plt.close('all')  # Close all open figures
 
         for x, m in enumerate(reversed(metrics)):
-            tag = True if x == (len(metrics)-1) else False
-
+            #tag = True if x == (len(metrics)-1) else False
             scores_list, algos, sets = self.avg_results(*run_storage, metric=m)
-            _ = self.generate_heatmap(scores_list=scores_list, algos=algos, sets=sets, metric=m, save_dir=save_dir, display=tag)
+            _ = self.generate_heatmap(scores_list=scores_list, algos=algos, sets=sets, metric=m, save_dir=save_dir, display=False)
 
         run_averaged = self.average_runs_by_names(run_storage)
 
@@ -948,6 +950,7 @@ class Benchmark:
         print(f"\n> logs: benchmark - Execution Time: {total_time_benchmark} seconds\n")
 
         verb = True
+
         for scores in run_averaged:
             all_keys = list(scores.keys())
             dataset_name = str(all_keys[0])
