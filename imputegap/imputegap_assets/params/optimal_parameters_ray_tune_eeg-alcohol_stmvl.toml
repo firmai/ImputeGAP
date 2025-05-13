@@ -1,0 +1,3 @@
+window_size = 80
+gamma = 1e-6
+alpha = 1
