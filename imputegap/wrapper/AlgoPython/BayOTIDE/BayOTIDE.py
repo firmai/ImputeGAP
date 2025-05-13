@@ -24,8 +24,7 @@ from imputegap.wrapper.AlgoPython.BayOTIDE import utils_BayOTIDE, model_BayOTIDE
 import time
 import warnings
 warnings.filterwarnings("ignore")
-args = utils_BayOTIDE.parse_args_dynamic_streaming()
-torch.random.manual_seed(args.seed)
+torch.random.manual_seed(300)
 
 
 def generate_mask(data_matrix, drop_rate=0.8, valid_rate=0.2, verbose=False):

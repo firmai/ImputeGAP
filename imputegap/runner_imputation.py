@@ -5,17 +5,16 @@ from imputegap.tools import utils
 # initialize the time series object
 ts = TimeSeries()
 print(f"Imputation algorithms : {ts.algorithms}")
-print(f"Imputation families : {ts.families}")
 
 # load and normalize the dataset
-ts.load_series(utils.search_path("chlorine"))
-ts.normalize()
+ts.load_series(utils.search_path("eeg-alcohol"))
+ts.normalize(normalizer="z_score")
 
 # contaminate the time series
 ts_m = ts.Contamination.mcar(ts.data)
 
 # impute the contaminated series
-imputer = Imputation.DeepLearning.BayOTIDE(incomp_data=ts_m)
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute and print the imputation metrics

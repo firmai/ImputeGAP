@@ -5,13 +5,13 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="imputegap.tools.utils package" href="imputegap.utils.html" />
 
-    <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.0 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
         <title>imputegap.recovery.evaluation package - ImputeGAP 1.0.9 Documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
     
 
@@ -202,7 +202,17 @@
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
-<div id="searchbox"></div><div class="sidebar-tree">
+<div id="searchbox"></div><div style="margin-top:10px; display: flex; gap: 10px; align-items: center; padding: 5px; margin-left:15px;">
+    <a href="https://github.com/eXascaleInfolab/ImputeGAP" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="GitHub">
+        <svg class="svg-inline--fa fa-github fa-lg" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg="" width="25px">
+            <path fill="#63AEFF" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fa-brands fa-github fa-lg" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+    </a>
+
+    <a href="https://pypi.org/project/imputegap/" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PyPI">
+    <svg class="svg-inline--fa fa-box fa-lg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="box" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" width="22px" >
+        <path fill="#63AEFF" d="M50.7 58.5L0 160H208V32H93.7C75.5 32 58.9 42.3 50.7 58.5zM240 160H448L397.3 58.5C389.1 42.3 372.5 32 354.3 32H240V160zm208 32H0V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192z"></path></svg><!-- <i class="fa-solid fa-box fa-lg" aria-hidden="true"></i> Font Awesome fontawesome.com -->
+    </a>
+</div><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
@@ -211,20 +221,11 @@
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="integration.html">Integration</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub Repository</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/imputegap/">PyPI Repository</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="imputegap.html">ImputeGAP Package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of ImputeGAP Package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="imputegap.html">API</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.cdrec.html">imputegap.algorithms.cdrec package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.stmvl.html">imputegap.algorithms.stmvl package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.iim.html">imputegap.algorithms.iim package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.mrnn.html">imputegap.algorithms.mrnn package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.mean_impute.html">imputegap.algorithms.mean_impute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.min_impute.html">imputegap.algorithms.min_impute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.zero_impute.html">imputegap.algorithms.zero_impute package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">imputegap.recovery.evaluation package</a></li>
 </ul>
@@ -247,7 +248,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/imputegap.evaluation.rst.txt" title="View this page">
+  <a class="muted-link" href="sources/imputegap.evaluation.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -283,7 +284,7 @@
 <span id="modules"></span><h2>Modules<a class="headerlink" href="#module-imputegap.recovery.evaluation" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.</p>
 <section id="methods">
@@ -302,7 +303,7 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation.compute_all_metrics">
-<span class="sig-name descname"><span class="pre">compute_all_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_all_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_all_metrics" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_all_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_all_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_all_metrics" title="Link to this definition">¶</a></dt>
 <dd><p>Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.</p>
 <p>The metrics include RMSE, MAE, Mutual Information (MI), and Pearson Correlation.</p>
 <section id="returns">
@@ -320,7 +321,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation.compute_correlation">
-<span class="sig-name descname"><span class="pre">compute_correlation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_correlation" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_correlation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_correlation" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the Pearson Correlation Coefficient between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>Pearson Correlation measures the linear relationship between the ground truth and imputed values,
 with 1 being a perfect positive correlation and -1 a perfect negative correlation.</p>
@@ -335,7 +336,7 @@ with 1 being a perfect positive correlation and -1 a perfect negative correlatio
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation.compute_mae">
-<span class="sig-name descname"><span class="pre">compute_mae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_mae" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_mae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_mae" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the Mean Absolute Error (MAE) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>The MAE measures the average magnitude of the error in absolute terms, making it more robust to outliers than RMSE.</p>
 <section id="id2">
@@ -349,7 +350,7 @@ with 1 being a perfect positive correlation and -1 a perfect negative correlatio
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation.compute_mi">
-<span class="sig-name descname"><span class="pre">compute_mi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_mi" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_mi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_mi" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the Mutual Information (MI) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>MI measures the amount of shared information between the ground truth and the imputed values,
 indicating how well the imputation preserves the underlying patterns of the data.</p>
@@ -364,7 +365,7 @@ indicating how well the imputation preserves the underlying patterns of the data
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.evaluation.Evaluation.compute_rmse">
-<span class="sig-name descname"><span class="pre">compute_rmse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_rmse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_rmse" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_rmse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_rmse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.evaluation.Evaluation.compute_rmse" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the Root Mean Squared Error (RMSE) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>The RMSE measures the average magnitude of the error between the imputed values and the ground truth,
 giving higher weight to large errors.</p>
@@ -388,7 +389,7 @@ giving higher weight to large errors.</p>
 <span id="imputegap-recovery-evaluation-module"></span><h2>imputegap.recovery.evaluation module<a class="headerlink" href="#module-0" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="id0">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imputegap.recovery.evaluation.</span></span><span class="sig-name descname"><span class="pre">Evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recov_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class to evaluate the performance of imputation algorithms by comparing imputed time series with the ground truth.</p>
 <section id="id5">
@@ -407,7 +408,7 @@ giving higher weight to large errors.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="id6">
-<span class="sig-name descname"><span class="pre">compute_all_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_all_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_all_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_all_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
 <dd><p>Compute a set of evaluation metrics for the imputation based on the ground truth and contamination data.</p>
 <p>The metrics include RMSE, MAE, Mutual Information (MI), and Pearson Correlation.</p>
 <section id="id7">
@@ -425,7 +426,7 @@ giving higher weight to large errors.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id8">
-<span class="sig-name descname"><span class="pre">compute_correlation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_correlation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the Pearson Correlation Coefficient between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>Pearson Correlation measures the linear relationship between the ground truth and imputed values,
 with 1 being a perfect positive correlation and -1 a perfect negative correlation.</p>
@@ -440,7 +441,7 @@ with 1 being a perfect positive correlation and -1 a perfect negative correlatio
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id10">
-<span class="sig-name descname"><span class="pre">compute_mae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_mae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the Mean Absolute Error (MAE) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>The MAE measures the average magnitude of the error in absolute terms, making it more robust to outliers than RMSE.</p>
 <section id="id11">
@@ -454,7 +455,7 @@ with 1 being a perfect positive correlation and -1 a perfect negative correlatio
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id12">
-<span class="sig-name descname"><span class="pre">compute_mi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id12" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_mi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id12" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the Mutual Information (MI) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>MI measures the amount of shared information between the ground truth and the imputed values,
 indicating how well the imputation preserves the underlying patterns of the data.</p>
@@ -469,7 +470,7 @@ indicating how well the imputation preserves the underlying patterns of the data
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id14">
-<span class="sig-name descname"><span class="pre">compute_rmse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/evaluation.html#Evaluation.compute_rmse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id14" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">compute_rmse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/evaluation.html#Evaluation.compute_rmse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id14" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the Root Mean Squared Error (RMSE) between the ground truth and imputed values for NaN positions in contamination.</p>
 <p>The RMSE measures the average magnitude of the error between the imputed values and the ground truth,
 giving higher weight to large errors.</p>
@@ -571,11 +572,11 @@ giving higher weight to large errors.</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=0abd802e"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
-    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="_static/copybutton.js?v=f281be69"></script>
+</div><script src="static/documentation_options.js?v=0abd802e"></script>
+    <script src="static/doctools.js?v=9bcbadda"></script>
+    <script src="static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="static/copybutton.js?v=f281be69"></script>
     </body>
 </html>

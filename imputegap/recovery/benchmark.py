@@ -788,7 +788,8 @@ class Benchmark:
 
         run_storage = []
         not_optimized = ["none"]
-        mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]
+        mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries",
+                      "meanimpute", "minimpute", "zeroimpute", "meanimputebyseries"]
 
         if "*" in metrics or "all" in metrics:
             metrics = utils.list_of_metrics()

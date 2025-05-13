@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 def select_backend():
     system = platform.system()
     #headless = os.getenv("DISPLAY") is None or os.getenv("CI") is not None
-
     if system == "Darwin":
         for backend in ["MacOSX", "Qt5Agg", "TkAgg"]:
             try:
@@ -30,8 +29,6 @@ def select_backend():
     else:
         for backend in ["TkAgg", "QtAgg", "Qt5Agg", "Agg"]:
             try:
-                if backend == "TkAgg":
-                    import tkinter
                 matplotlib.use(backend)
                 return
             except (ImportError, RuntimeError):

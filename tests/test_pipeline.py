@@ -50,7 +50,7 @@ class TestPipeline(unittest.TestCase):
         dataset_test = ["eeg-alcohol"]
         opti_bayesian = {"optimizer": "bayesian", "options": {"n_calls": 3, "n_random_starts": 50, "acq_func": "gp_hedge", "metrics": "RMSE"}}
         optimizers = [opti_bayesian]
-        algorithms_test = ["mean", "cdrec"]
+        algorithms_test = ["meanimpute", "cdrec"]
         patterns_small = ["mcar"]
         x_axis = [0.05, 0.1, 0.2, 0.4, 0.6, 0.8]
 

@@ -2236,6 +2236,11 @@ class Imputation:
             -------
             impute(self, user_def=True, params=None):
                 Perform imputation using the BayOTIDE
+
+            References
+            ----------
+            https://arxiv.org/abs/2308.14906
+            https://github.com/xuangu-fang/BayOTIDE
             """
 
             algorithm = "bay_otide"
