@@ -177,7 +177,6 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
     print(f"Imputation algorithms : {ts.algorithms}")
-    print(f"Imputation families : {ts.families}")
 
 
 
@@ -406,8 +405,8 @@ Notebook
 
 ImputeGAP provides Jupyter notebooks available through the following links:
 
-    - `01_imputegap_repair <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_repair.ipynb>`_
-    - `02_imputegap_explore <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_explore.ipynb>`_
+    - `01_imputegap_imputation_pipeline <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_imputation_pipeline.ipynb>`_
+    - `02_imputegap_advanced_analysis <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/002_imputegap_advanced_analysis.ipynb>`_
 
 .. raw:: html
 

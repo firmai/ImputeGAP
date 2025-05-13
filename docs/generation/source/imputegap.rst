@@ -1,5 +1,5 @@
-ImputeGAP Package
-=================
+API
+===
 
 Subpackages
 -----------
@@ -12,13 +12,6 @@ Subpackages
    imputegap.optimization
    imputegap.explainer
    imputegap.benchmarking
-   imputegap.cdrec
-   imputegap.stmvl
-   imputegap.iim
-   imputegap.mrnn
-   imputegap.mean_impute
-   imputegap.min_impute
-   imputegap.zero_impute
    imputegap.utils
    imputegap.evaluation
 

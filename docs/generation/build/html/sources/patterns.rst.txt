@@ -126,5 +126,5 @@ The missing blocks follow a distribution.
     -   ``R ∈ [1%, (100-W)%]``
     -   Data is removed following a distribution given by the user for every values of the series, affecting the first series from the top up to ``S%`` of the dataset.
 
-If you need to remove data following a specific distribution, please refer to this `tutorial <tutorials_distribution.html>`_.
+To configure the distribution pattern, please refer to this `tutorial <tutorials_distribution.html>`_.
 

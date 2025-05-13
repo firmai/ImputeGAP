@@ -201,10 +201,6 @@ Contributors
    patterns
    algorithms
    integration
-   GitHub Repository <https://github.com/eXascaleInfolab/ImputeGAP/>
-   PyPI Repository <https://pypi.org/project/imputegap/>
    imputegap
-
-
 
 

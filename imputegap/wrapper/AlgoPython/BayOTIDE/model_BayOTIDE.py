@@ -1,3 +1,14 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/xuangu-fang/BayOTIDE
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2308.14906
+# ===============================================================================================================
+
+
 """
 Implementation of BayTIDE model, try offline / online version
 
@@ -10,21 +21,13 @@ Bellevue,WA, USA, 05/2023
 
 import numpy as np
 import torch
-import matplotlib.pyplot as plt
-import os
-import tqdm
-from torch.distributions.multivariate_normal import MultivariateNormal
-
-import imputegap
 from imputegap.wrapper.AlgoPython.BayOTIDE.model_LDS import LDS_GP_streaming
+import os
+from imputegap.wrapper.AlgoPython.BayOTIDE import utils_BayOTIDE
 
-# import tensorly as tl
-
-# tl.set_backend("pytorch")
-
+from torch.distributions.multivariate_normal import MultivariateNormal
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 JITTER = 1e-4
-
 torch.manual_seed(300)
 
 
@@ -66,8 +69,8 @@ class BayTIDE:
 
         # self.unique_train_time = list(np.unique(self.train_time_ind))
 
-        self.time_uni = data_dict['time_uni']  # T * 1, unique time-stamps
-
+        self.time_uni = data_dict['time_uni']  # T * 1, unique time-stamps 
+        
         LDS_paras_trend = data_dict["LDS_paras_trend"]  # LDS parameters for trend
         LDS_paras_season_list = data_dict[ 'LDS_paras_season'] # LDS parameters for seasonal (multi-season, save as list)
 
@@ -80,7 +83,7 @@ class BayTIDE:
             self.traj_class.append(LDS_GP_streaming(LDS_paras_season))
 
         # posterior: store the most recently posterior of the traj (temporal factors) from LDS ( column-wise)
-        self.post_U_m =   torch.rand( self.K, 1, self.T).double().to(self.device)#  (K, 1, T)
+        self.post_U_m =   torch.rand( self.K, 1, self.T).double().to(self.device)#  (K, 1, T) 
         self.post_U_v = torch.eye(self.K).reshape( (self.K, self.K, 1)).repeat( 1, 1, self.T).double().to(self.device)  # ( K, K, T) --- recall,  it's a diag matrix
 
         # self.post_U_v = torch.ones(self.K).reshape( (self.K,1,1)).repeat( 1, 1, self.T).double().to(self.device)  # ( K, 1, T) --diag covariance matrix at each T
@@ -89,8 +92,8 @@ class BayTIDE:
         self.post_b = self.b0
 
         # posterior: store the most recently posterior of the weights (row-wise)
-        self.post_W_m =   torch.rand(  self.N, self.K, 1,).double().to(self.device)#  (N,K,1)
-        # self.post_W_m =   torch.ones(  self.N, self.K, 1,).double().to(self.device)#  (N,K,1)
+        self.post_W_m =   torch.rand(  self.N, self.K, 1,).double().to(self.device)#  (N,K,1) 
+        # self.post_W_m =   torch.ones(  self.N, self.K, 1,).double().to(self.device)#  (N,K,1) 
 
         self.post_W_v = torch.eye(self.K).reshape( (1, self.K, self.K)).repeat(self.N, 1, 1).double().to(self.device)  # ( N, K, K)
 
@@ -125,12 +128,12 @@ class BayTIDE:
         self.msg_gamma_eta = None
 
         # gamma in CP, we just set it as a all-one constant v
-
+        
         self.all_one_vector = torch.ones(self.K,
                                        1).double().to(self.device)  # (R^K)*1
 
         self.all_one_vector_K =torch.ones(self.K).double().to(self.device)  # (R^K)*1
-
+        
         self.all_one_vector_N = torch.ones(self.N, 1).to(self.device)  # N*1
 
         self.msg_llk_init_raw()
@@ -177,7 +180,7 @@ class BayTIDE:
         trend_factor.filter_update(y=y[:self.K_trend],
                                                      R=R[:self.K_trend,:self.K_trend],
                                                      add_to_list=add_to_list)
-
+        
         # update the posterior
         H = trend_factor.H
         m = trend_factor.m
@@ -200,7 +203,7 @@ class BayTIDE:
             current_index += self.n_season
 
     def msg_llk_init_raw(self):
-        """init the llk-msg used for DAMPING in inner loop of CEP, msg for U and tau and W"""
+        """init the llk-msg used for DAMPING in inner loop of CEP, msg for U and tau and W"""            
 
         "''init msg for U''"
         self.msg_U_lam_llk_raw =  1e-4 * torch.eye(self.K).reshape((1, self.K, self.K)).repeat(
@@ -220,7 +223,7 @@ class BayTIDE:
         self.msg_b_raw = torch.ones(self.N, 1).double().to(self.device)  # N*1
 
     def msg_llk_init(self):
-        """init the llk-msg used for DAMPING in inner loop of CEP, msg for U and tau and W"""
+        """init the llk-msg used for DAMPING in inner loop of CEP, msg for U and tau and W"""            
 
         "''init msg for U''"
         self.msg_U_lam_llk =  self.msg_U_lam_llk_raw # (N,K,K)
@@ -240,7 +243,7 @@ class BayTIDE:
 
     def msg_approx_U(self,T):
         """approximate the msg for U(t), as X^{n}(t) = W^{n} x U(t) + noise, we just have:
-        msg_U_lam = self.E_tau * E_z_2
+        msg_U_lam = self.E_tau * E_z_2 
         msg_U_eta = self.y_n * E_z * self.E_tau
         where E_z = mean of W^{n}, E_z_2 = cov of W^{n}+(E_z)^2, n = 1,2,...,N
         """
@@ -257,7 +260,7 @@ class BayTIDE:
 
         self.msg_U_eta_llk = (self.DAMPING_U * self.msg_U_eta_llk +
                                     (1 - self.DAMPING_U) * msg_U_eta_new) # (N,K,1)
-
+    
 
         #  apply train-mask! only use the msg from training entries
         mask_train_T = self.mask_train[:,T].reshape(-1,1,1)
@@ -269,13 +272,13 @@ class BayTIDE:
         msg_V_inv_m = self.msg_U_eta_llk.sum(dim=0)# (K,1)
 
         # trans the natural parameters to the mean and cov,
-        # these msg will be used for filter update
+        # these msg will be used for filter update  
         self.msg_U_V =  torch.linalg.inv(msg_V_inv)  # (K,K)
         self.msg_U_m = torch.mm(self.msg_U_V, msg_V_inv_m)  # (K,1)
 
     def msg_approx_W(self,T):
         """approximate the msg for W, as X^{n}(t) = W^{n} x U(t) + noise, we just have:
-        msg_U_lam = self.E_tau * E_z_2
+        msg_U_lam = self.E_tau * E_z_2 
         msg_U_eta = self.y_n * E_z * self.E_tau
         where E_z = mean of U(t), E_z_2 = cov of U(t)+(E_z)^2, n = 1,2,...,N
         """
@@ -283,21 +286,21 @@ class BayTIDE:
         E_z = self.post_U_m[:,:,T].reshape(-1,1)  # (K,1)
         E_z_2 = self.post_U_v[:,:,T] + torch.mm(
                 E_z, E_z.T)  # (K,K)
-
+        
         # augument to n-times
         E_z = E_z.reshape(1,self.K,1).repeat(self.N,1,1) # (N,K,1)
         E_z_2 = E_z_2.reshape(1,self.K,self.K).repeat(self.N,1,1) # (N,K,K)
-
+        
         msg_W_lam_new = self.E_tau * E_z_2  # (N,K,K)
         msg_W_eta_new = self.data[:,T].reshape(-1,1,1) * E_z * self.E_tau   # (N,K,1)
 
         # DAMPING step:
         self.msg_W_lam_llk = (self.DAMPING_W * self.msg_W_lam_llk +
                                     (1 - self.DAMPING_W) * msg_W_lam_new) # (N,K,K)
-
+        
         self.msg_W_eta_llk = (self.DAMPING_W * self.msg_W_eta_llk +
                                     (1 - self.DAMPING_W) * msg_W_eta_new) # (N,K,1)
-
+        
         #  apply train-mask! only use the msg from training entries
         mask_train_T = self.mask_train[:,T].reshape(-1,1,1)
         self.msg_W_lam_llk = self.msg_W_lam_llk * mask_train_T # (N,K,K)
@@ -320,12 +323,12 @@ class BayTIDE:
         E_z_U = self.post_U_m[:,:,T].reshape(-1,1)  # (K,1)
         E_z_2_U = self.post_U_v[:,:,T] + torch.mm(
                 E_z_U, E_z_U.T)  # (K,K)
-
+        
         # augument to n-times
         E_z_U = E_z_U.reshape(1,self.K,1).repeat(self.N,1,1) # (N,K,1)
-        E_z_2_U = E_z_2_U.reshape(1,self.K,self.K).repeat(self.N,1,1) # (N,K,K)
+        E_z_2_U = E_z_2_U.reshape(1,self.K,self.K).repeat(self.N,1,1) # (N,K,K)   
 
-        E_z = E_z_W* E_z_U  # (N,K,1)
+        E_z = E_z_W* E_z_U  # (N,K,1)             
         E_z_2 = E_z_2_W * E_z_2_U  # (N,K,K)
 
 
@@ -336,7 +339,7 @@ class BayTIDE:
 
         term2 = self.data[:,T].reshape(-1,1) * E_z.sum(dim=1) # N*1
 
-
+       
 
         temp = torch.matmul(E_z_2, self.all_one_vector)  # N*K*1
         term3 = 0.5 * torch.matmul(temp.transpose(dim0=1, dim1=2),  self.all_one_vector).reshape(-1, 1)  # N*1
@@ -397,13 +400,13 @@ class BayTIDE:
         H = trend_factor.H
         U_m_smooth = torch.stack(
             [torch.mm(H, m) for m in trend_factor.m_smooth_list], dim=-1)  # (K_trend,1,T)
-
+        
         U_v_smooth = torch.stack(
                     [torch.mm(torch.mm(H, P), H.T) for P in trend_factor.P_smooth_list],
                     dim=-1)  # (K_trend,K_trend,T)
-
+        
         currnt_T = U_m_smooth.shape[-1]
-
+        
         self.post_U_m[:self.K_trend,:,:currnt_T ] = U_m_smooth
         self.post_U_v[:self.K_trend,:self.K_trend,:currnt_T] = U_v_smooth
 
@@ -437,7 +440,7 @@ class BayTIDE:
             # mask = mask[:,:T]
             # error = (pred[:,:T] - self.data[:,:T]) * mask
 
-
+            
             error = (pred - self.data) * mask
 
 
@@ -449,7 +452,7 @@ class BayTIDE:
 
         loss_dict['train_RMSE'] = loss_list[0][0]
         loss_dict['train_MAE'] = loss_list[0][1]
-        loss_dict['valid_RMSE'] = loss_list[1][0]
+        loss_dict['valid_RMSE'] = loss_list[1][0]   
         loss_dict['valid_MAE'] = loss_list[1][1]
         loss_dict['test_RMSE'] = loss_list[2][0]
         loss_dict['test_MAE'] = loss_list[2][1]
@@ -458,10 +461,10 @@ class BayTIDE:
             """compute the prob. metric: CRPS and neg-llk"""
             # get the sample of prediction
             sample_X = self.pred_sample(nsample_=100).cpu() # (N,T,nsample)
-            neg_llk = imputegap.wrapper.AlgoPython.BayOTIDE.utils_BayOTIDE.neg_llk(self.data.cpu(),sample_X,  self.mask_test.cpu()).cpu().detach().numpy()
-            CRPS = imputegap.wrapper.AlgoPython.BayOTIDE.utils_BayOTIDE.CRPS_score(self.data.cpu(),sample_X,  self.mask_test.cpu()).cpu().detach().numpy()
+            neg_llk = utils_BayOTIDE.neg_llk(self.data.cpu(),sample_X,  self.mask_test.cpu()).cpu().detach().numpy()
+            CRPS = utils_BayOTIDE.CRPS_score(self.data.cpu(),sample_X,  self.mask_test.cpu()).cpu().detach().numpy()
 
-            loss_dict['neg-llk'] = neg_llk
+            loss_dict['neg-llk'] = neg_llk  
             loss_dict['CRPS'] = CRPS
 
         return pred, loss_dict
@@ -482,7 +485,7 @@ class BayTIDE:
 
                 # remove the invalid negative entries in cov-matrix, set as 1e-5
                 cov_matrix = torch.where(cov_matrix< 1e-5, self.all_one_vector_K * 1e-5, cov_matrix)
-                # cov_matrix = torch.ones(model.K)
+                # cov_matrix = torch.ones(model.K) 
 
                 sample = MultivariateNormal(mean,  torch.diag(cov_matrix.double())).sample(torch.Size([nsample_]))
 
@@ -517,7 +520,7 @@ class BayTIDE:
         # trend_factor.filter_update(y=y[:self.K_trend],
         #                                              R=R[:self.K_trend,:self.K_trend],
         #                                              add_to_list=add_to_list)
-
+        
         # # update the posterior
         # H = trend_factor.H
         # m = trend_factor.m

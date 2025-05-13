@@ -1,9 +1,15 @@
-import numpy as np
+# ===============================================================================================================
+# SOURCE: https://github.com/xuangu-fang/BayOTIDE
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2308.14906
+# ===============================================================================================================
 
-# import scipy
 import torch
 
-# import utils
 """
 base model of LDS system
 

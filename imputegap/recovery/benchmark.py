@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import xlsxwriter
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries
+import psutil
 
 
 
@@ -594,6 +595,8 @@ class Benchmark:
         """
         os.makedirs(save_dir, exist_ok=True)
 
+        print("\nThe plots have been generated...\n")
+
         new_metrics = np.copy(metrics)
         new_plots = 0
 
@@ -743,7 +746,7 @@ class Benchmark:
 
         self.plots = plt
 
-    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, normalizer="z_score", nbr_series=None, nbr_vals=None, verbose=False):
+    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, normalizer="z_score", nbr_series=2500, nbr_vals=2500, verbose=False):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.
 
@@ -768,9 +771,9 @@ class Benchmark:
         normalizer : str, optional
             Normalizer to pre-process the data (default is "z_score").
         nbr_series : int, optional
-            Number of series to take inside the dataset (default is None > all series).
+            Number of series to take inside the dataset (default is 2500 (as the max values)).
         nbr_vals : int, optional
-            Number of values to take inside the series (default is None > all values).
+            Number of values to take inside the series (default is 2500 (as the max values)).
         verbose : bool, optional
             Whether to display the contamination information (default is False).
 
@@ -787,13 +790,18 @@ class Benchmark:
 
         run_storage = []
         not_optimized = ["none"]
-        mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries"]
+        mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries",
+                      "meanimpute", "minimpute", "zeroimpute", "meanimputebyseries"]
 
         if "*" in metrics or "all" in metrics:
             metrics = utils.list_of_metrics()
         if "*" in metrics or "all" in algorithms:
             all_algs = utils.list_of_algorithms()
             algorithms = [item for item in all_algs if item.upper() != "MPIN"]
+
+        directory_now = datetime.datetime.now()
+        directory_time = directory_now.strftime("%y_%m_%d_%H_%M_%S")
+        save_dir = save_dir + "/" + "bench_" + directory_time
 
         benchmark_time = time.time()
         for i_run in range(0, abs(runs)):
@@ -805,16 +813,29 @@ class Benchmark:
                 if verbose:
                     print("\n1. evaluation launch for", dataset, "\n")
                 ts_test = TimeSeries()
+                default_data = TimeSeries()
 
                 header = False
                 if dataset == "eeg-reading":
                     header = True
 
-                ts_test.load_series(data=utils.search_path(dataset), nbr_series=nbr_series, nbr_val=nbr_vals, header=header)
+                reshp = False
+                default_data.load_series(data=utils.search_path(dataset), header=header, verbose=False)
+                Mdef, Ndef = default_data.data.shape
 
+                if Ndef > nbr_vals or Mdef > nbr_series:
+                    reshp = True
+                    print(f"\nThe dataset contains a large number of values {default_data.data.shape}, which may be too much for some algorithms to handle efficiently. Consider reducing the number of series or the volume of data.")
+                default_data = None
+
+                ts_test.load_series(data=utils.search_path(dataset), nbr_series=nbr_series, nbr_val=nbr_vals, header=header)
                 M, N = ts_test.data.shape
 
+                if reshp:
+                    print(f"Benchmarking module has reduced the shape to {ts_test.data.shape}.\n")
+
                 if N < 250:
+                    print(f"The block size is too high for the number of values per series, reduce to 2\n")
                     block_size_mcar = 2
 
                 if normalizer in utils.list_of_normalizers():
@@ -829,7 +850,7 @@ class Benchmark:
                         if verbose:
                             print("\n3. algorithm evaluated", algorithm, "with", pattern, "\n")
                         else:
-                            print(f"{algorithm} using {pattern}, started at {time.strftime('%Y-%m-%d %H:%M:%S')}.")
+                            print(f"{algorithm} is tested with {pattern}, started at {time.strftime('%Y-%m-%d %H:%M:%S')}.")
 
                         for incx, x in enumerate(x_axis):
                             if verbose:
@@ -899,6 +920,10 @@ class Benchmark:
                                 if "-" in dataset:
                                     dataset_s = dataset.replace("-", "")
 
+                                save_dir_plot = save_dir + "/" + dataset_s + "/" + pattern + "/recovery/"
+                                cont_rate = int(x*100)
+                                ts_test.plot(input_data=ts_test.data, incomp_data=incomp_data, recov_data=algo.recov_data, nbr_series=3, subplot=True, algorithm=algo.algorithm, cont_rate=str(cont_rate), display=False, save_path=save_dir_plot, verbose=False)
+
                                 runs_plots_scores.setdefault(str(dataset_s), {}).setdefault(str(pattern), {}).setdefault(str(algorithm), {}).setdefault(str(optimizer_value), {})[str(x)] = {"scores": algo.metrics}
 
                         print(f"done!\n\n")
@@ -911,11 +936,12 @@ class Benchmark:
                 #self.generate_reports_excel(runs_plots_scores, save_dir_runs, dataset, i_run, verbose=verbose)
                 run_storage.append(runs_plots_scores)
 
-        for x, m in enumerate(reversed(metrics)):
-            tag = True if x == (len(metrics)-1) else False
+        plt.close('all')  # Close all open figures
 
+        for x, m in enumerate(reversed(metrics)):
+            #tag = True if x == (len(metrics)-1) else False
             scores_list, algos, sets = self.avg_results(*run_storage, metric=m)
-            _ = self.generate_heatmap(scores_list=scores_list, algos=algos, sets=sets, metric=m, save_dir=save_dir, display=tag)
+            _ = self.generate_heatmap(scores_list=scores_list, algos=algos, sets=sets, metric=m, save_dir=save_dir, display=False)
 
         run_averaged = self.average_runs_by_names(run_storage)
 
@@ -924,6 +950,7 @@ class Benchmark:
         print(f"\n> logs: benchmark - Execution Time: {total_time_benchmark} seconds\n")
 
         verb = True
+
         for scores in run_averaged:
             all_keys = list(scores.keys())
             dataset_name = str(all_keys[0])

@@ -25,6 +25,7 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.githubpages",
     "sphinx_copybutton",
+    'sphinx_tabs.tabs'
 ]
 
 autosummary_generate = True  # Automatically generate method summaries
@@ -32,6 +33,7 @@ html_sidebars = {
     "**": [
         "sidebar/brand.html",  # Logo and project name
         "sidebar/search.html",  # Search bar
+        "sidebar/github.html",
         "sidebar/navigation.html",  # Collapsible navigation
         "sidebar/scroll-start.html",
         "sidebar/scroll-end.html",

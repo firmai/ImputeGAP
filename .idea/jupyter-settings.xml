@@ -7,7 +7,7 @@
           <value>
             <JupyterConnectionParameters>
               <option name="managed" value="true" />
-              <option name="sdkName" value="Remote Python 3.10.12 (sftp://ubuntu@134.21.219.180:22/home/ubuntu/.virtualenvs/imputegap/bin/python)" />
+              <option name="sdkName" value="" />
             </JupyterConnectionParameters>
           </value>
         </entry>

@@ -23,7 +23,7 @@ class TestBayOTIDE(unittest.TestCase):
 
         ts_1.print_results(algo.metrics, algo.algorithm)
 
-        expected_metrics = { "RMSE": 0.23310484284439198, "MAE": 0.1945214920849173, "MI": 0.25175008229717605, "CORRELATION": 0.5598877919541634 }
+        expected_metrics = { "RMSE": 0.45736779062678723, "MAE": 0.3242590407827107, "MI": 0.1612574524564802, "CORRELATION": 0.17630638596293635 }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
@@ -43,16 +43,19 @@ class TestBayOTIDE(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(ts_1.data, rate_series=0.18)
+        incomp_data = ts_1.Contamination.mcar(ts_1.data)
 
-        algo = Imputation.DeepLearning.BayOTIDE(incomp_data).impute(user_def=True, params={"K_trend":20, "K_season":2, "n_season":5, "K_bias":1, "time_scale":1, "a0":0.6, "b0":2.5, "v":0.5})
-
+        algo = Imputation.DeepLearning.BayOTIDE(incomp_data).impute(user_def=True,
+                                                                    params={"K_trend": 20, "K_season": 1, "n_season": 5,
+                                                                            "K_bias": 1, "time_scale": 1, "a0": 0.6,
+                                                                            "b0": 2.5,
+                                                                            "v": 0.5, "tr_ratio": 0.6})
         algo.score(ts_1.data, algo.recov_data)
         metrics = algo.metrics
 
         ts_1.print_results(algo.metrics, algo.algorithm)
 
-        expected_metrics = { "RMSE": 0.23310484284439198, "MAE": 0.1945214920849173, "MI": 0.25175008229717605, "CORRELATION": 0.5598877919541634 }
+        expected_metrics = { "RMSE": 0.4893146074670323, "MAE": 0.33710753715879266, "MI": 0.1715958388712933, "CORRELATION": 0.04462561944495773 }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
                        f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")

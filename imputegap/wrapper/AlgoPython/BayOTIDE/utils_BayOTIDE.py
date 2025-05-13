@@ -1,14 +1,19 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/xuangu-fang/BayOTIDE
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2308.14906
+# ===============================================================================================================
+
 import numpy as np
 import torch
-
-# import utils
-import scipy
 from scipy import linalg
 import argparse
-from torch.utils.data import Dataset
 from pathlib import Path
 from scipy.special import kn
-
 torch.random.manual_seed(300)
 
 
@@ -79,12 +84,12 @@ def parse_args_dynamic_streaming():
         '--r',
           type=float,
           default=0.2,
-          help='train/test ratio, support 0.2 or 0.4 now')
+          help='train/test ratio, support 0.2 or 0.4 now')    
     parser.add_argument(
         '--other_para',
           type=str,
           default='',
-          help='')
+          help='')    
 
 
     return parser.parse_args()
@@ -134,13 +139,13 @@ def make_log(args, hyper_dict, result_dict,other_para = ''):
 
     f.write('\n final test MAE is, avg is %.4f, std is %.4f \n' %
             (result_dict['MAE'].mean(), result_dict['MAE'].std()))
-
+    
     f.write('\n final test CRPS is, avg is %.4f, std is %.4f \n' %
             (result_dict['CRPS'].mean(), result_dict['CRPS'].std()))
-
+    
     f.write('\n final test NLLK is, avg is %.4f, std is %.4f \n' %
             (result_dict['NLLK'].mean(), result_dict['NLLK'].std()))
-
+    
     f.write('---------------------------------------------\n')
     f.write('\n\n\n')
     f.close()
@@ -148,27 +153,11 @@ def make_log(args, hyper_dict, result_dict,other_para = ''):
     print('log written!')
 
 
-def make_hyper_dict(config, args=None, verbose=True):
+def make_hyper_dict(config, args=None):
     hyper_dict = config
 
-    if config["device"] == "cpu":
-        hyper_dict["device"] = torch.device("cpu")
-    else:
-        hyper_dict["device"] = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")
-
-    if verbose:
-        print("\t\t\t\tuse device:", hyper_dict["device"])
-
-    # Ensure K_trend and K_season exist in hyper_dict
-    if "K_trend" not in hyper_dict:
-        hyper_dict["K_trend"] = 5  # Default value
-
-    if "K_season" not in hyper_dict:
-        hyper_dict["K_season"] = 3  # Default value
-
-    if "n_season" not in hyper_dict:
-        hyper_dict["n_season"] = 2  # Default value
+    hyper_dict["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #print("use device:", hyper_dict["device"])
 
     if args is not None:
         # overwrite config with args if needed
@@ -178,75 +167,42 @@ def make_hyper_dict(config, args=None, verbose=True):
     return hyper_dict
 
 
-def make_data_dict(hyper_dict, full_data, fold=0, args=None):
-    """
-    Process a preloaded NumPy matrix and return a data dictionary
-    containing all necessary components for BayOTIDE.
+def make_data_dict(hyper_dict, data_path, fold=0, args=None):
+    """to be polish"""
+    #print(f"Data loaded from {data_path}")
+    full_data = np.load(data_path, allow_pickle=True).item()
 
-    :param hyper_dict: Dictionary containing hyperparameters.
-    :param full_data: NumPy matrix containing the dataset.
-    :param fold: Fold index for cross-validation (default: 0).
-    :param args: Additional arguments (optional).
-    :return: Dictionary with processed data.
-    """
-    import numpy as np
-
-    # Ensure full_data is a NumPy array
-    if not isinstance(full_data, np.ndarray):
-        raise ValueError("full_data must be a NumPy array containing the dataset.")
-
-    data_dict = {"data": full_data}  # Store the raw data
-
-    # Define time indices (assuming uniform time intervals)
-    time_scale = hyper_dict.get("time_scale", 1)
-    data_dict["time_uni"] = np.arange(full_data.shape[1]) * time_scale  # Assuming time along axis=1
-
-    # Set fixed interval parameter
-    data_dict["fix_int"] = hyper_dict.get("fix_int", True)
+    #print(f"{full_data =}")
+    #print(f"{type(full_data)}")
 
 
-    # Assuming full_data is a NumPy array with missing values (NaNs)
-    num_samples = full_data.shape[0]
+    # already split into train, test and valid mask
+    data_dict = full_data["data"][fold]
+    data_dict["data"] = full_data["raw_data"]
 
-    # Generate missing value masks
-    mask_train = np.zeros_like(full_data, dtype=bool)
-    mask_test = np.zeros_like(full_data, dtype=bool)
-    mask_valid = np.zeros_like(full_data, dtype=bool)
+    time_scale = hyper_dict["time_scale"]
 
-    # Get indices of non-NaN values
-    non_nan_indices = np.where(~np.isnan(full_data))
+    data_dict["time_uni"] = full_data["time_uni"] * time_scale
 
-    # Shuffle indices to ensure randomness
-    np.random.seed(42)  # For reproducibility
-    shuffled_indices = np.random.permutation(len(non_nan_indices[0]))
+    data_dict["fix_int"] = hyper_dict["fix_int"]
 
-    # Compute split sizes
-    train_size = int(0.6 * len(shuffled_indices))
-    test_size = int(0.2 * len(shuffled_indices))
-    valid_size = len(shuffled_indices) - train_size - test_size  # Remaining for validation
+    data_dict["LDS_paras_trend"] = make_LDS_paras_trend(
+        hyper_dict, data_dict)
+    
+    data_dict["LDS_paras_season"] = make_LDS_paras_season(
+        hyper_dict, data_dict)
+    
+    if 'clean_data' in full_data.keys():
+        data_dict['clean_data'] = full_data['clean_data']
+    
+    if 'weight' in full_data.keys():
+        data_dict['weight'] = full_data['weight']
 
-    # Split indices
-    train_indices = shuffled_indices[:train_size]
-    test_indices = shuffled_indices[train_size:train_size + test_size]
-    valid_indices = shuffled_indices[train_size + test_size:]
-
-    # Apply masks based on the split
-    mask_train[non_nan_indices[0][train_indices], non_nan_indices[1][train_indices]] = True
-    mask_test[non_nan_indices[0][test_indices], non_nan_indices[1][test_indices]] = True
-    mask_valid[non_nan_indices[0][valid_indices], non_nan_indices[1][valid_indices]] = True
-
-    # Store masks in data_dict
-    data_dict["mask_train"] = mask_train
-    data_dict["mask_test"] = mask_test
-    data_dict["mask_valid"] = mask_valid
-
-    # Generate LDS parameters for trend and seasonality
-    data_dict["LDS_paras_trend"] = make_LDS_paras_trend(hyper_dict, data_dict)
-    data_dict["LDS_paras_season"] = make_LDS_paras_season(hyper_dict, data_dict)
+    # data_dict["LDS_init_list"] = [
+    #     make_LDS_paras(dim, hyper_dict, data_dict) for dim in data_dict["ndims"]
+    # ]
 
     return data_dict
-
-
 
 
 def make_LDS_paras_trend(hyper_dict, data_dict):
@@ -300,13 +256,6 @@ def make_LDS_paras_season(hyper_dict, data_dict):
 
     LDS_season_list = []
     kernel_paras = hyper_dict["kernel"]['kernel_season']
-    # Ensure freq_list matches K_season
-    if len(kernel_paras["freq_list"]) < hyper_dict["K_season"]:
-        print(f"⚠️ Warning: freq_list has only {len(kernel_paras['freq_list'])} elements, but K_season={hyper_dict['K_season']}. Extending list.")
-        kernel_paras["freq_list"] = (kernel_paras["freq_list"] * hyper_dict["K_season"])[:hyper_dict["K_season"]]
-        kernel_paras["lengthscale_list"] = (kernel_paras["lengthscale_list"] * hyper_dict["K_season"])[
-                                           :hyper_dict["K_season"]]
-
     for K in range(hyper_dict["K_season"]):
 
         LDS_init = {}
@@ -331,7 +280,7 @@ def make_LDS_paras_season(hyper_dict, data_dict):
             F[D:, D:] = 0
 
             density_freq = density_periodic(D,kernel_paras["lengthscale_list"][K])
-
+                                                
             P_inf = torch.diag(
                 torch.cat((
                     density_freq,
@@ -347,7 +296,7 @@ def make_LDS_paras_season(hyper_dict, data_dict):
 
             # rasie not implemented error
             raise NotImplementedError
-
+        
         LDS_season_list.append(LDS_init)
 
     return LDS_season_list
@@ -494,9 +443,6 @@ def generate_state_space_Matern_23(data_dict, hyper_dict):
 
 
 def Lyapunov_slover(F, Q):
-    """
-    For the given mix-process SDE, solve correspoding Lyapunov to get P_{\\inf}
-    """
 
     return linalg.solve_continuous_lyapunov(F, Q)
 
@@ -619,29 +565,6 @@ def moment_Hadmard(modes,
                    order="first",
                    sum_2_scaler=True,
                    device=torch.device("cpu")):
-    """
-    -compute first and second moments of \\Hadmard_prod_{k \\in given modes} u_k -CP style
-    -can be used to compute full-mode / calibrating-mode of U/gamma ?
-
-    :param modes: list of target mode
-    :param ind: index of tensor entries     : shape (N, nmod)
-    :param U_m: mean of U-list              : shape [(ndim,R_U,1)..]
-    :param U_v: var of U (diag)-list        : shape [(ndim,R_U,1).. or (ndim,R_U,R_U)]
-    :param order: oder of expectated order  : "first" or "second"
-    :param sum_2_scaler: flag on whether sum the moment 2 scaler  : Bool
-
-    retrun:
-    --if sum_2_scaler is True
-    : E_z: first moment of 1^T (\\Hadmard_prod)  : shape (N, 1)
-    : E_z_2: second moment 1^T (\\Hadmard_prod)  : shape (N, 1)
-
-    --if sum_2_scaler is False
-    : E_z: first moment of \\Hadmard_prod   : shape (N, R_U, 1)
-    : E_z_2: second moment of \\Hadmard_prod: shape (N, R_U, R_U)
-
-    it's easy to transfer this function to kronecker_product(Tucker form) by changing Hadmard_product_batch to kronecker_product_einsum_batched
-
-    """
     assert order in {"first", "second"}
     assert sum_2_scaler in {True, False}
 
@@ -720,30 +643,7 @@ def moment_Hadmard_T(
         sum_2_scaler=True,
         device=torch.device("cpu"),
 ):
-    """
-    -compute first and second moments of \\Hadmard_prod_{k \\in given modes} Gamma_k(t) -CP style
-    -can be used to compute full-mode / calibrating-mode of gamma ?
 
-    :param modes: list of target mode
-    :param ind: index of tensor entries              : shape (N, nmod)
-    :param tid: list of time-stamp index of entries      : shape (N, 1)
-    :param U_m: mode-wise U-mean-list                : shape [(ndim,R_U,1,T)..]
-    :param U_v: mode-wise U-var-list (full or diag)  : shape [(ndim,R_U,1,T).. or (ndim,R_U,R_U,T)]
-    :param order: oder of expectated order  : "first" or "second"
-    :param sum_2_scaler: flag on whether sum the moment 2 scaler  : Bool
-
-    retrun:
-    --if sum_2_scaler is True
-    : E_z: first moment of 1^T (\\Hadmard_prod)  : shape (N, 1)
-    : E_z_2: second moment 1^T (\\Hadmard_prod)  : shape (N, 1)
-
-    --if sum_2_scaler is False
-    : E_z: first moment of \\Hadmard_prod   : shape (N, R_U, 1)
-    : E_z_2: second moment of \\Hadmard_prod: shape (N, R_U, R_U)
-
-    it's easy to transfer this function to kronecker_product(Tucker form) by changing Hadmard_product_batch to kronecker_product_einsum_batched
-
-    """
     assert order in {"first", "second"}
     assert sum_2_scaler in {True, False}
 
@@ -848,34 +748,7 @@ def moment_product(
         device=torch.device("cpu"),
         product_method="hadamard",
 ):
-    """
-    -compute first and second moments of \\Hadmard_prod_{k \\in given modes} u_k -CP style
-    -can be used to compute full-mode / calibrating-mode of U/gamma ?
 
-    :param modes: list of target mode
-    :param ind: index of tensor entries     : shape (N, nmod)
-    :param U_m: mean of U-list              : shape [(ndim,R_U,1)..]
-    :param U_v: var of U (diag)-list        : shape [(ndim,R_U,1).. or (ndim,R_U,R_U)]
-    :param order: oder of expectated order  : "first" or "second"
-    :param sum_2_scaler: flag on whether sum the moment 2 scaler  : Bool
-    :product_method: method pf product              : "hadamard" or "kronecker"
-
-    retrun:
-    --if sum_2_scaler is True
-    : E_z: first moment of 1^T (\\Hadmard_prod)  : shape (N, 1)
-    : E_z_2: second moment 1^T (\\Hadmard_prod)  : shape (N, 1)
-
-    --if sum_2_scaler is False
-        - method is hadamard
-        : E_z: first moment of \\Hadmard_prod   : shape (N, R_U, 1)
-        : E_z_2: second moment of \\Hadmard_prod: shape (N, R_U, R_U)
-        - method is hadamard
-        : E_z: first moment of \\kronecker_prod   : shape (N, R_U^{K}, 1)
-        : E_z_2: second moment of \\kronecker_prod: shape (N, R_U^{K}, R_U^{K})
-
-    it's easy to transfer this function to kronecker_product(Tucker form) by changing Hadmard_product_batch to kronecker_product_einsum_batched
-
-    """
     assert order in {"first", "second"}
     assert sum_2_scaler in {True, False}
     assert product_method in {"hadamard", "kronecker"}
@@ -961,33 +834,6 @@ def moment_product_T(
         device=torch.device("cpu"),
         product_method="hadamard",
 ):
-    """
-    -compute first and second moments of \\_prod_{k \\in given modes} u_k(t) -CP / with style
-
-
-    :param modes: list of target mode
-    :param ind: index of tensor entries              : shape (N, nmod)
-    :param ind_T: list of time-stamp index of entries      : shape (N, 1)
-    :param U_m_T: mode-wise U-mean-list                : shape [(ndim,R_U,1,T)..]
-    :param U_v_T: mode-wise U-var-list (full or diag)  : shape [(ndim,R_U,1,T).. or (ndim,R_U,R_U,T)]
-    :param order: oder of expectated order  : "first" or "second"
-    :param sum_2_scaler: flag on whether sum the moment 2 scaler  : Bool
-    :product_method: method pf product              : "hadamard" or "kronecker"
-
-    retrun:
-    --if sum_2_scaler is True
-    : E_z: first moment of 1^T (\\prod)  : shape (N, 1)
-    : E_z_2: second moment 1^T (\\prod)  : shape (N, 1)
-
-    --if sum_2_scaler is False
-        - method is hadamard
-        : E_z: first moment of \\Hadmard_prod   : shape (N, R_U, 1)
-        : E_z_2: second moment of \\Hadmard_prod: shape (N, R_U, R_U)
-        - method is hadamard
-        : E_z: first moment of \\kronecker_prod   : shape (N, R_U^{K}, 1)
-        : E_z_2: second moment of \\kronecker_prod: shape (N, R_U^{K}, R_U^{K})
-
-    """
     assert order in {"first", "second"}
     assert sum_2_scaler in {True, False}
     assert product_method in {"hadamard", "kronecker"}

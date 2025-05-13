@@ -419,6 +419,7 @@ class Explainer:
 
         print("\n\nInitialization of the SHAP model with dimension", np.array(x_information).shape)
         _, _, config = self.load_configuration()
+
         plots_categories = config[extractor]['categories']
 
         path_file = "./imputegap_assets/shap/"
@@ -738,10 +739,13 @@ class Explainer:
               f"\n\tnbr of series training set: {training_ratio}"
               f"\n\tnbr of series testing set: {limit-training_ratio}")
 
+        if extractor in ["pycatch22", "pycatch-22"]:
+            extractor = "pycatch"
+
         input_data_matrices, obfuscated_matrices = [], []
         output_metrics, output_rmse, input_params, input_params_full = [], [], [], []
 
-        if extractor == "pycatch" or extractor == "pycatch22":
+        if extractor == "pycatch" or extractor == "pycatch22" or extractor == "pycatch-22":
             categories, features, _ = self.load_configuration()
 
         for current_series in range(0, limit):
@@ -756,7 +760,7 @@ class Explainer:
             input_data_matrices.append(input_data)
             obfuscated_matrices.append(incomp_data)
 
-            if extractor == "pycatch" or extractor == "pycatch22":
+            if extractor == "pycatch":
                 catch_fct, descriptions = self.extractor_pycatch(incomp_data, categories, features, False)
                 extracted_features = np.array(list(catch_fct.values()))
             elif extractor == "tsfel":

@@ -26,78 +26,86 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     """
 
     from imputegap.recovery.imputation import Imputation
+    from imputegap.recovery.manager import TimeSeries
+
+    alg_low = algorithm.lower()
+    alg = alg_low.replace('_', '').replace('-', '')
 
     # 1st generation
-    if algorithm == "cdrec" or algorithm == "CDRec":
+    if alg == "cdrec":
         imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
-    elif algorithm == "stmvl" or algorithm == "STMVL":
+    elif alg == "stmvl":
         imputer = Imputation.PatternSearch.STMVL(incomp_data)
-    elif algorithm == "iim" or algorithm == "IIM":
+    elif alg == "iim":
         imputer = Imputation.MachineLearning.IIM(incomp_data)
-    elif algorithm == "mrnn" or algorithm == "MRNN":
+    elif alg == "mrnn":
         imputer = Imputation.DeepLearning.MRNN(incomp_data)
 
     # 2nd generation
-    elif algorithm == "iterative_svd" or algorithm == "iter_svd" or algorithm == "IterativeSVD":
+    elif alg == "iterativesvd" or alg == "itersvd":
         imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
-    elif algorithm == "grouse" or algorithm == "GROUSE":
+    elif alg == "grouse":
         imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
-    elif algorithm == "dynammo" or algorithm == "DynaMMo":
+    elif alg == "dynammo":
         imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
-    elif algorithm == "rosl" or algorithm == "ROSL":
+    elif alg == "rosl":
         imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
-    elif algorithm == "soft_impute" or algorithm == "soft_imp" or algorithm == "SoftImpute":
+    elif alg == "softimpute" or alg == "softimp":
         imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
-    elif algorithm == "spirit" or algorithm == "SPIRIT":
+    elif alg == "spirit":
         imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
-    elif algorithm == "svt" or algorithm == "SVT":
+    elif alg == "svt":
         imputer = Imputation.MatrixCompletion.SVT(incomp_data)
-    elif algorithm == "tkcm" or algorithm == "TKCM":
+    elif alg == "tkcm":
         imputer = Imputation.PatternSearch.TKCM(incomp_data)
-    elif algorithm == "deep_mvi" or algorithm == "DeepMVI":
+    elif alg == "deepmvi":
         imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
-    elif algorithm == "brits" or algorithm == "BRITS":
+    elif alg == "brits":
         imputer = Imputation.DeepLearning.BRITS(incomp_data)
-    elif algorithm == "mpin" or algorithm == "MPIN":
+    elif alg == "mpin":
         imputer = Imputation.DeepLearning.MPIN(incomp_data)
-    elif algorithm == "pristi" or algorithm == "PRISTI":
+    elif alg == "pristi":
         imputer = Imputation.DeepLearning.PRISTI(incomp_data)
 
     # 3rd generation
-    elif algorithm == "knn" or algorithm == "KNN" or algorithm == "knn_impute" or algorithm == "KNNImpute":
+    elif alg == "knn" or alg == "knnimpute":
         imputer = Imputation.Statistics.KNNImpute(incomp_data)
-    elif algorithm == "interpolation" or algorithm == "Interpolation":
+    elif alg == "interpolation":
         imputer = Imputation.Statistics.Interpolation(incomp_data)
-    elif algorithm == "mean_series" or algorithm == "MeanImputeBySeries":
+    elif alg == "meanseries" or alg == "meanimputebyseries":
         imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
-    elif algorithm == "min_impute" or algorithm == "MinImpute":
+    elif alg == "minimpute":
         imputer = Imputation.Statistics.MinImpute(incomp_data)
-    elif algorithm == "zero_impute" or algorithm == "ZeroImpute" or algorithm == "zeroimpute":
+    elif alg == "zeroimpute":
         imputer = Imputation.Statistics.ZeroImpute(incomp_data)
-    elif algorithm == "trmf" or algorithm == "TRMF":
+    elif alg == "trmf":
         imputer = Imputation.MatrixCompletion.TRMF(incomp_data)
-    elif algorithm == "mice" or algorithm == "MICE":
+    elif alg == "mice":
         imputer = Imputation.MachineLearning.MICE(incomp_data)
-    elif algorithm == "miss_forest" or algorithm == "MissForest":
+    elif alg == "missforest":
         imputer = Imputation.MachineLearning.MissForest(incomp_data)
-    elif algorithm == "xgboost" or algorithm == "XGBOOST":
+    elif alg == "xgboost":
         imputer = Imputation.MachineLearning.XGBOOST(incomp_data)
-    elif algorithm == "miss_net" or algorithm == "MissNet":
+    elif alg == "missnet":
         imputer = Imputation.DeepLearning.MissNet(incomp_data)
-    elif algorithm == "gain" or algorithm == "GAIN":
+    elif alg == "gain":
         imputer = Imputation.DeepLearning.GAIN(incomp_data)
-    elif algorithm == "grin" or algorithm == "GRIN":
+    elif alg == "grin":
         imputer = Imputation.DeepLearning.GRIN(incomp_data)
-    elif algorithm == "bay_otide" or algorithm == "BayOTIDE":
+    elif alg == "bayotide":
         imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
-    elif algorithm == "hkmf_t" or algorithm == "HKMF_T":
+    elif alg == "hkmft":
         imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
-    elif algorithm == "bit_graph" or algorithm == "BitGraph":
+    elif alg == "bitgraph":
         imputer = Imputation.DeepLearning.BitGraph(incomp_data)
-    else:
+    elif alg == "meanimpute":
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
+    else:
+        raise ValueError(f"(IMP) Algorithm '{algorithm}' not recognized, please choose your algorithm from this list:\n\t{TimeSeries().algorithms}")
+        imputer = None
 
-    imputer.verbose = verbose
+    if imputer is not None:
+        imputer.verbose = verbose
 
     return imputer
 
@@ -122,22 +130,31 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
     TimeSeries
         TimeSeries object containing contaminated data.
     """
-    if pattern == "mcar" or pattern == "missing_completely_at_random":
+
+    from imputegap.recovery.manager import TimeSeries
+
+    pattern_low = pattern.lower()
+    ptn = pattern_low.replace('_', '').replace('-', '')
+
+    if ptn == "mcar" or ptn == "missing_completely_at_random":
         incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
-    elif pattern == "mp" or pattern == "missing_percentage" or pattern == "aligned":
+    elif ptn == "mp" or ptn == "missingpercentage" or ptn == "aligned":
         incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, explainer=explainer, verbose=verbose)
-    elif pattern == "ps" or pattern == "percentage_shift" or pattern == "scattered":
+    elif ptn == "ps" or ptn == "percentageshift" or ptn == "scattered":
         incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
-    elif pattern == "disjoint":
+    elif ptn == "disjoint":
         incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset, verbose=verbose)
-    elif pattern == "overlap":
+    elif ptn == "overlap":
         incomp_data = ts.Contamination.overlap(input_data=ts.data, rate_series=dataset_rate, limit=limit, shift=shift, offset=offset, verbose=verbose)
-    elif pattern == "gaussian":
+    elif ptn == "gaussian":
         incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
-    elif pattern == "distribution" or pattern == "dist":
+    elif ptn == "distribution" or pattern == "dist":
         incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities_list=probabilities, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
-    else:
+    elif ptn == "blackout":
         incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset, verbose=verbose)
+    else:
+        raise ValueError(f"\n(CONT) Pattern '{pattern}' not recognized, please choose your algorithm on this list :\n\t{TimeSeries().patterns}\n")
+        incomp_data = None
 
     return incomp_data
 
@@ -159,60 +176,66 @@ def config_forecaster(model, params):
             Forecaster object for downstream analytics
         """
 
-        if model == "prophet":
+        from imputegap.recovery.manager import TimeSeries
+
+        model_low = model.lower()
+        mdl = model_low.replace('_', '').replace('-', '')
+
+        if mdl == "prophet":
             from sktime.forecasting.fbprophet import Prophet
             forecaster = Prophet(**params)
-        elif model == "exp-smoothing":
+        elif mdl == "expsmoothing":
             from sktime.forecasting.exp_smoothing import ExponentialSmoothing
             forecaster = ExponentialSmoothing(**params)
-        elif model == "nbeats":
+        elif mdl == "nbeats":
             from darts.models import NBEATSModel
             forecaster = NBEATSModel(**params)
-        elif model == "xgboost":
+        elif mdl == "xgboost":
             from darts.models.forecasting.xgboost import XGBModel
             forecaster = XGBModel(**params)
-        elif model == "lightgbm":
+        elif mdl == "lightgbm":
             from darts.models.forecasting.lgbm import LightGBMModel
             forecaster = LightGBMModel(**params)
-        elif model == "lstm":
+        elif mdl == "lstm":
             from darts.models.forecasting.rnn_model import RNNModel
             forecaster = RNNModel(**params)
-        elif model == "deepar":
+        elif mdl == "deepar":
             from darts.models.forecasting.rnn_model import RNNModel
             forecaster = RNNModel(**params)
-        elif model == "transformer":
+        elif mdl == "transformer":
             from darts.models.forecasting.transformer_model import TransformerModel
             forecaster = TransformerModel(**params)
-        elif model == "hw-add":
+        elif mdl == "hwadd":
             from sktime.forecasting.exp_smoothing import ExponentialSmoothing
             forecaster = ExponentialSmoothing(**params)
-        elif model == "arima":
+        elif mdl == "arima":
             from sktime.forecasting.arima import AutoARIMA
             forecaster = AutoARIMA(**params)
-        elif model == "sf-arima":
+        elif mdl == "sf-arima":
             from sktime.forecasting.statsforecast import StatsForecastAutoARIMA
             forecaster = StatsForecastAutoARIMA(**params)
             forecaster.set_config(warnings='off')
-        elif model == "bats":
+        elif mdl == "bats":
             from sktime.forecasting.bats import BATS
             forecaster = BATS(**params)
-        elif model == "ets":
+        elif mdl == "ets":
             from sktime.forecasting.ets import AutoETS
             forecaster = AutoETS(**params)
-        elif model == "croston":
+        elif mdl == "croston":
             from sktime.forecasting.croston import Croston
             forecaster = Croston(**params)
-        elif model == "theta":
+        elif mdl == "theta":
             from sktime.forecasting.theta import ThetaForecaster
             forecaster = ThetaForecaster(**params)
-        elif model == "unobs":
+        elif mdl == "unobs":
             from sktime.forecasting.structural import UnobservedComponents
             forecaster = UnobservedComponents(**params)
-
-
-        else:
+        elif mdl == "naive":
             from sktime.forecasting.naive import NaiveForecaster
             forecaster = NaiveForecaster(**params)
+        else:
+            raise ValueError(f"\n(DOWN) Forecasting model '{model}' not recognized, please choose your algorithm on this list :\n\t{TimeSeries().forecasting_models}\n")
+            forecaster = None
 
         return forecaster
 
@@ -311,6 +334,32 @@ def search_path(set_name="test"):
         if not os.path.exists(filepath):
             filepath = filepath[1:]
         return filepath
+
+
+def get_missing_ratio(incomp_data):
+    """
+    Check whether the proportion of missing values in the contaminated data is acceptable
+    for training a deep learning model.
+
+    Parameters
+    ----------
+    incomp_data : TimeSeries (numpy array)
+            TimeSeries object containing dataset.
+
+    Returns
+    -------
+    bool
+        True if the missing data ratio is less than or equal to 40%, False otherwise.
+    """
+    import numpy as np
+
+    miss_m = incomp_data
+    total_values = miss_m.size
+    missing_values = np.isnan(miss_m).sum()
+    missing_ratio = missing_values / total_values
+
+    return missing_ratio
+
 
 
 def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=False):
@@ -525,7 +574,8 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         a0 = float(config[algorithm]['a0'])
         b0 = float(config[algorithm]['b0'])
         v = float(config[algorithm]['v'])
-        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v)
+        tr_ratio = float(config[algorithm]['tr_ratio'])
+        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, tr_ratio)
     elif algorithm == "hkmf_t":
         tags = config[algorithm]['tags']
         data_names = config[algorithm]['data_names']
@@ -978,7 +1028,8 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "time_scale": int(optimal_params[4]),
             "a0": float(optimal_params[5]),
             "b0": float(optimal_params[6]),
-            "v": float(optimal_params[7])
+            "v": float(optimal_params[7]),
+            "tr_ratio": float(optimal_params[8])
         }
     elif algorithm == "hkmf_t":
         params_to_save = {

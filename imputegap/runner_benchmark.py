@@ -1,7 +1,7 @@
 from imputegap.recovery.benchmark import Benchmark
 from imputegap.tools import utils
 
-my_algorithms = ["SoftImpute", "MeanImpute", "CDRec"]
+my_algorithms = ["MeanImpute", "SoftImpute"]
 
 my_opt = ["default_params"]
 
