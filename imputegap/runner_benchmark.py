@@ -1,5 +1,4 @@
 from imputegap.recovery.benchmark import Benchmark
-from imputegap.tools import utils
 
 my_algorithms = ["MeanImpute", "SoftImpute"]
 

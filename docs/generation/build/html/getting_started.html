@@ -221,7 +221,8 @@
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="integration.html">Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about_us.html">About Us</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
@@ -291,7 +292,8 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </div>
 </div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><p>ImputeGAP is compatible with Python&gt;=3.10 (except 3.13) and Unix-compatible environment.</p>
 <br><div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Windows:</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Linux:</button><button aria-controls="panel-1-1-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-2" name="1-2" role="tab" tabindex="-1">MacOS:</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><p>To run ImputeGAP in a Unix-compatible environment on Windows, install the <code class="docutils literal notranslate"><span class="pre">Windows</span> <span class="pre">Subsystem</span> <span class="pre">for</span> <span class="pre">Linux</span> <span class="pre">(WSL)</span></code>.</p>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Windows:</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Linux:</button><button aria-controls="panel-1-1-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-2" name="1-2" role="tab" tabindex="-1">MacOS:</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><p><strong>Install WSL</strong></p>
+<p>To run ImputeGAP in a Unix-compatible environment on Windows, install the <code class="docutils literal notranslate"><span class="pre">Windows</span> <span class="pre">Subsystem</span> <span class="pre">for</span> <span class="pre">Linux</span> <span class="pre">(WSL)</span></code>.</p>
 <ol class="arabic simple">
 <li><p>Search for <code class="docutils literal notranslate"><span class="pre">WSL</span></code> in the Start menu to check if it’s already installed.</p></li>
 <li><p>If not, open <code class="docutils literal notranslate"><span class="pre">PowerShell</span></code> as <code class="docutils literal notranslate"><span class="pre">Administrator</span></code>.</p></li>
@@ -303,13 +305,14 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <ol class="arabic simple" start="4">
 <li><p>Restart your computer once the installation completes.</p></li>
 </ol>
-<br><p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
-<br><p><strong>Step 1: Check Existing Python Version</strong></p>
+<br><p><strong>Prepare Python 3.12 Environment</strong></p>
+<p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
+<br><p><em>Step 1: Check Existing Python Version</em></p>
 <p>Open your terminal and check the currently installed version of Python:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>--version
 </pre></div>
 </div>
-<br><p><strong>Step 2: Install Python 3.12</strong></p>
+<br><p><em>Step 2: Install Python 3.12</em></p>
 <p>If needed, install Python 3.12 on your WSL system, follow these steps:</p>
 <ol class="arabic simple">
 <li><p>Update your package list and install prerequisites:</p></li>
@@ -339,7 +342,8 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>--version
 </pre></div>
 </div>
-<br><ol class="arabic simple">
+<br><p><strong>Install Python 3.12 Environment</strong></p>
+<ol class="arabic simple">
 <li><p>Create a virtual environment:</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>imputegap_env
@@ -357,13 +361,14 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>imputegap
 </pre></div>
 </div>
-<br><br></div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
-<br><p><strong>Step 1: Check Existing Python Version</strong></p>
+<br><br></div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><p><strong>Prepare Python 3.12 Environment</strong></p>
+<p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
+<br><p><em>Step 1: Check Existing Python Version*</em></p>
 <p>Open your terminal and check the currently installed version of Python:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>--version
 </pre></div>
 </div>
-<br><p><strong>Step 2: Install Python 3.12</strong></p>
+<br><p><a href="#id2"><span class="problematic" id="id3">*</span></a>Step 2: Install Python 3.12</p>
 <p>If needed, install Python 3.12 on your system, follow these steps:</p>
 <ol class="arabic simple">
 <li><p>Update your package list and install prerequisites:</p></li>
@@ -393,7 +398,8 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>--version
 </pre></div>
 </div>
-<br><ol class="arabic simple">
+<br><p><strong>Install Python 3.12 Environment</strong></p>
+<ol class="arabic simple">
 <li><p>Create a virtual environment:</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>imputegap_env
@@ -411,7 +417,8 @@ sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>imputegap
 </pre></div>
 </div>
-<br><br></div><div aria-labelledby="tab-1-1-2" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-2" name="1-2" role="tabpanel" tabindex="0"><p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
+<br><br></div><div aria-labelledby="tab-1-1-2" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-2" name="1-2" role="tabpanel" tabindex="0"><p><strong>Prepare Python 3.12 Environment</strong></p>
+<p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
 <ol class="arabic simple">
 <li><p>Install Homebrew (if not already installed):</p></li>
 </ol>
@@ -431,7 +438,8 @@ brew<span class="w"> </span>install<span class="w"> </span>python@3.12
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>--version
 </pre></div>
 </div>
-<br><ol class="arabic simple">
+<br><p><strong>Install Python 3.12 Environment</strong></p>
+<ol class="arabic simple">
 <li><p>Create a virtual environment:</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>imputegap_env
@@ -453,31 +461,42 @@ brew<span class="w"> </span>install<span class="w"> </span>python@3.12
 </div></div>
 </section>
 <section id="docker">
-<span id="id2"></span><h2>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h2>
+<span id="id4"></span><h2>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h2>
 <p>You can download the latest version of ImputeGAP with all dependencies pre-installed using Docker.</p>
-<p>Make sure Docker is installed and the engine is running, then proceed with the following command appropriate to your operating system:</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">Windows</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">Ubuntu</button><button aria-controls="panel-2-2-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-2" name="2-2" role="tab" tabindex="-1">MacOS</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><p>To pull the ImputeGAP Docker image:</p>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">Windows</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">Ubuntu</button><button aria-controls="panel-2-2-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-2" name="2-2" role="tab" tabindex="-1">MacOS</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><p>Launch Docker and make sure it is running:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">version</span>
+</pre></div>
+</div>
+<p>Pull the ImputeGAP Docker image:</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">pull</span> <span class="n">qnater</span><span class="p">/</span><span class="n">imputegap</span><span class="p">:</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">8</span>
 </pre></div>
 </div>
-<p>To run the Docker container:</p>
+<p>Run the Docker container:</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="n">-p</span> <span class="n">8888</span><span class="p">:</span><span class="n">8888</span> <span class="n">qnater</span><span class="p">/</span><span class="n">imputegap</span><span class="p">:</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">8</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><p>To pull the ImputeGAP Docker image:</p>
+</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><p>Launch Docker and make sure it is running:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">version</span>
+</pre></div>
+</div>
+<p>Pull the ImputeGAP Docker image:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>qnater/imputegap:0.0.8
 </pre></div>
 </div>
-<p>To run the Docker container:</p>
+<p>Run the Docker container:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8888</span>:8888<span class="w"> </span>qnater/imputegap:0.0.8
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-2-2-2" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-2" name="2-2" role="tabpanel" tabindex="0"><p>To pull the ImputeGAP Docker image:</p>
+</div><div aria-labelledby="tab-2-2-2" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-2" name="2-2" role="tabpanel" tabindex="0"><p>Launch Docker and make sure it is running:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">version</span>
+</pre></div>
+</div>
+<p>Pull the ImputeGAP Docker image:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/x86_64<span class="w"> </span>qnater/imputegap:0.0.8
 </pre></div>
 </div>
-<p>To run the Docker container:</p>
+<p>Run the Docker container:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8888</span>:8888<span class="w"> </span>qnater/imputegap:0.0.8
 </pre></div>
 </div>

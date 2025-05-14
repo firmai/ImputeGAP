@@ -220,7 +220,8 @@
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="integration.html">Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about_us.html">About Us</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
@@ -270,8 +271,8 @@
         <article role="main" id="furo-main-content">
           <section id="tutorials">
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">¶</a></h1>
-<section id="loading">
-<span id="id1"></span><h2>Loading<a class="headerlink" href="#loading" title="Link to this heading">¶</a></h2>
+<section id="dataset-loading">
+<span id="loading"></span><h2>Dataset Loading<a class="headerlink" href="#dataset-loading" title="Link to this heading">¶</a></h2>
 <p>ImputeGAP comes with several time series datasets. The list of datasets is described <a class="reference external" href="datasets.html">here</a>.</p>
 <p>As an example, we use the eeg-alcohol dataset, composed of individuals with a genetic predisposition to alcoholism. The dataset contains measurements from 64 electrodes placed on subject’s scalps, sampled at 256 Hz. The dimensions of the dataset are 64 series, each containing 256 values.</p>
 <p>To load and plot the eeg-alcohol dataset from the library:</p>
@@ -312,8 +313,8 @@
 </pre></div>
 </div>
 <br></section>
-<section id="contamination">
-<span id="id2"></span><h2>Contamination<a class="headerlink" href="#contamination" title="Link to this heading">¶</a></h2>
+<section id="data-contamination">
+<span id="contamination"></span><h2>Data Contamination<a class="headerlink" href="#data-contamination" title="Link to this heading">¶</a></h2>
 <p>We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. The list of patterns is described <a class="reference external" href="patterns.html">here</a>.</p>
 <p>As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pattern:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
@@ -341,7 +342,7 @@
 </div>
 <br></section>
 <section id="imputation">
-<span id="id4"></span><h2>Imputation<a class="headerlink" href="#imputation" title="Link to this heading">¶</a></h2>
+<span id="id2"></span><h2>Imputation<a class="headerlink" href="#imputation" title="Link to this heading">¶</a></h2>
 <p>In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms: Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search.
 The list of algorithms is described <a class="reference external" href="algorithms.html">here</a>.</p>
 <p>Let’s illustrate the imputation using the CDRec algorithm from the Matrix Completion family.</p>
@@ -430,8 +431,8 @@ The list of algorithms is described <a class="reference external" href="algorith
 </div>
 <br></section>
 <section id="benchmark">
-<span id="id6"></span><h2>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms <a class="footnote-reference brackets" href="#id8" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>.  Users have full control over the benchmark by customizing various parameters, including the list of the algorithms to compare, the optimizer, the datasets to evaluate, the missingness patterns, the range of missing values, and the performance metrics.</p>
+<span id="id4"></span><h2>Benchmark<a class="headerlink" href="#benchmark" title="Link to this heading">¶</a></h2>
+<p>ImputeGAP can serve as a common test-bed for comparing the effectiveness and efficiency of time series imputation algorithms <a class="footnote-reference brackets" href="#id6" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></a>.  Users have full control over the benchmark by customizing various parameters, including the list of the algorithms to compare, the optimizer, the datasets to evaluate, the missingness patterns, the range of missing values, and the performance metrics.</p>
 <p>The benchmarking module can be utilized as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">Benchmark</span>
 
@@ -458,14 +459,14 @@ The list of algorithms is described <a class="reference external" href="algorith
 </pre></div>
 </div>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id8" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">33</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">33</a><span class="fn-bracket">]</span></span>
 <p>Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux: Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)</p>
 </aside>
 </aside>
 <br></section>
 <section id="downstream">
-<span id="id9"></span><h2>Downstream<a class="headerlink" href="#downstream" title="Link to this heading">¶</a></h2>
+<span id="id7"></span><h2>Downstream<a class="headerlink" href="#downstream" title="Link to this heading">¶</a></h2>
 <p>ImputeGAP includes a dedicated module for systematically evaluating the impact of data imputation on downstream tasks. Currently, forecasting is the primary supported task, with plans to expand to additional tasks in the future.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
@@ -499,7 +500,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 </div>
 <br></section>
 <section id="explainer">
-<span id="id10"></span><h2>Explainer<a class="headerlink" href="#explainer" title="Link to this heading">¶</a></h2>
+<span id="id8"></span><h2>Explainer<a class="headerlink" href="#explainer" title="Link to this heading">¶</a></h2>
 <p>The library provides insights into the algorithm’s behavior by identifying the features that impact the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (<a class="reference external" href="https://shap.readthedocs.io/en/latest/">SHAP</a>) to reveal how different time series features influence the model’s predictions.</p>
 <p>Let’s illustrate the explainer using the CDRec algorithm and MCAR missingness pattern:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
@@ -529,7 +530,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 </div>
 <br></section>
 <section id="notebook">
-<span id="id11"></span><h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
+<span id="id9"></span><h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
 <p>ImputeGAP provides Jupyter notebooks available through the following links:</p>
 <blockquote>
 <div><ul class="simple">
@@ -596,8 +597,8 @@ The list of algorithms is described <a class="reference external" href="algorith
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Tutorials</a><ul>
-<li><a class="reference internal" href="#loading">Loading</a></li>
-<li><a class="reference internal" href="#contamination">Contamination</a></li>
+<li><a class="reference internal" href="#dataset-loading">Dataset Loading</a></li>
+<li><a class="reference internal" href="#data-contamination">Data Contamination</a></li>
 <li><a class="reference internal" href="#imputation">Imputation</a></li>
 <li><a class="reference internal" href="#parameter-tuning">Parameter Tuning</a></li>
 <li><a class="reference internal" href="#benchmark">Benchmark</a></li>

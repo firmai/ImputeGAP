@@ -1,5 +1,5 @@
-Integration
-===========
+Contributing
+============
 
 ImputeGAP allows users to integrate their own algorithms. We provide a wrapper that needs to be adjusted with the core of the imputation algorithm.
 

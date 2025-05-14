@@ -90,6 +90,7 @@ class TimeSeries:
         self.extractors = utils.list_of_extractors()
         self.forecasting_models = utils.list_of_downstreams()
         self.families = utils.list_of_families()
+        self.algorithms_with_families = utils.list_of_algorithms_with_families()
         select_backend()
 
     def import_matrix(self, data=None):

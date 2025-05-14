@@ -3,14 +3,13 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API" href="imputegap.html" /><link rel="prev" title="Contributing" href="contributing.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Getting Started with Environment - ImputeGAP 1.0.9 Documentation</title>
+        <title>About Us - ImputeGAP 1.0.9 Documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="static/tabs.css?v=a5c4661c" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="static/custom.css" />
     
@@ -215,14 +214,14 @@
     </a>
 </div><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="about_us.html">About Us</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">About Us</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="imputegap.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
@@ -250,7 +249,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="sources/getting_started_environment.rst.txt" title="View this page">
+  <a class="muted-link" href="sources/about_us.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -270,171 +269,38 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="getting-started-with-environment">
-<h1>Getting Started with Environment<a class="headerlink" href="#getting-started-with-environment" title="Link to this heading">¶</a></h1>
-<section id="system-requirements">
-<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP is compatible with Python&gt;=3.10 (except 3.13) and Unix-compatible environment.</p>
-<br><div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Windows:</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Linux:</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">MacOS:</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><p>To run ImputeGAP in a Unix-compatible environment on Windows, install the <code class="docutils literal notranslate"><span class="pre">Windows</span> <span class="pre">Subsystem</span> <span class="pre">for</span> <span class="pre">Linux</span> <span class="pre">(WSL)</span></code>.</p>
-<ol class="arabic simple">
-<li><p>Search for <code class="docutils literal notranslate"><span class="pre">WSL</span></code> in the Start menu to check if it’s already installed.</p></li>
-<li><p>If not, open <code class="docutils literal notranslate"><span class="pre">PowerShell</span></code> as <code class="docutils literal notranslate"><span class="pre">Administrator</span></code>.</p></li>
-<li><p>Run the following command:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wsl<span class="w"> </span>--install
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
-<li><p>Restart your computer once the installation completes.</p></li>
-</ol>
-<br><p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
-<br><p><strong>Step 1: Check Existing Python Version</strong></p>
-<p>Open your terminal and check the currently installed version of Python:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>--version
-</pre></div>
-</div>
-<br><p><strong>Step 2: Install Python 3.12</strong></p>
-<p>If needed, install Python 3.12 on your WSL system, follow these steps:</p>
-<ol class="arabic simple">
-<li><p>Update your package list and install prerequisites:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>libssl-dev<span class="w"> </span>zlib1g-dev<span class="w"> </span>libncurses5-dev<span class="w"> </span>libncursesw5-dev<span class="w"> </span><span class="se">\</span>
-libreadline-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>libgdbm-dev<span class="w"> </span>libdb5.3-dev<span class="w"> </span>libbz2-dev<span class="w"> </span>libexpat1-dev<span class="w"> </span>liblzma-dev<span class="w"> </span><span class="se">\</span>
-tk-dev<span class="w"> </span>python3-tk<span class="w"> </span>libopenblas0<span class="w"> </span>software-properties-common<span class="w"> </span>python3-pip
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Add the deadsnakes PPA and update:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:deadsnakes/ppa
-sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
-<li><p>Install Python 3.12:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>python3.12<span class="w"> </span>python3.12-venv<span class="w"> </span>python3.12-dev
-</pre></div>
-</div>
-<ol class="arabic simple" start="5">
-<li><p>Verify the installation:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>--version
-</pre></div>
-</div>
-<br><ol class="arabic simple">
-<li><p>Create a virtual environment:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>imputegap_env
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Activate the virtual environment:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>imputegap_env/bin/activate
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Install ImputeGAP</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>imputegap
-</pre></div>
-</div>
-<br><br></div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
-<br><p><strong>Step 1: Check Existing Python Version</strong></p>
-<p>Open your terminal and check the currently installed version of Python:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>--version
-</pre></div>
-</div>
-<br><p><strong>Step 2: Install Python 3.12</strong></p>
-<p>If needed, install Python 3.12 on your system, follow these steps:</p>
-<ol class="arabic simple">
-<li><p>Update your package list and install prerequisites:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>libssl-dev<span class="w"> </span>zlib1g-dev<span class="w"> </span>libncurses5-dev<span class="w"> </span>libncursesw5-dev<span class="w"> </span><span class="se">\</span>
-libreadline-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>libgdbm-dev<span class="w"> </span>libdb5.3-dev<span class="w"> </span>libbz2-dev<span class="w"> </span>libexpat1-dev<span class="w"> </span>liblzma-dev<span class="w"> </span><span class="se">\</span>
-tk-dev<span class="w"> </span>python3-tk<span class="w"> </span>libopenblas0<span class="w"> </span>software-properties-common<span class="w"> </span>python3-pip
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Add the deadsnakes PPA and update:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:deadsnakes/ppa
-sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
-<li><p>Install Python 3.12:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>python3.12<span class="w"> </span>python3.12-venv<span class="w"> </span>python3.12-dev
-</pre></div>
-</div>
-<ol class="arabic simple" start="5">
-<li><p>Verify the installation:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>--version
-</pre></div>
-</div>
-<br><ol class="arabic simple">
-<li><p>Create a virtual environment:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>imputegap_env
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Activate the virtual environment:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>imputegap_env/bin/activate
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Install ImputeGAP</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>imputegap
-</pre></div>
-</div>
-<br><br></div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><p>To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.</p>
-<ol class="arabic simple">
-<li><p>Install Homebrew (if not already installed):</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&quot;</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Update Homebrew and install Python 3.12:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>update
-brew<span class="w"> </span>install<span class="w"> </span>python@3.12
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Verify the installation:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>--version
-</pre></div>
-</div>
-<br><ol class="arabic simple">
-<li><p>Create a virtual environment:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.12<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>imputegap_env
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Activate the virtual environment:</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>imputegap_env/bin/activate
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>Install ImputeGAP</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>imputegap
-</pre></div>
-</div>
-</div></div>
+          <section id="about-us">
+<h1>About Us<a class="headerlink" href="#about-us" title="Link to this heading">¶</a></h1>
+<p>Driven by our passion for time series, machine learning, technology, and programming, we aim to build innovative tools that bridge cutting-edge research and practical applications.</p>
+<p>For project-related inquiries, you are welcome to contact our team.</p>
+<section id="core-maintainers">
+<h2>Core Maintainers<a class="headerlink" href="#core-maintainers" title="Link to this heading">¶</a></h2>
+<p>Active developers and researchers who contribute to the design, implementation, and maintenance of our core libraries and tools. They oversee discussions, supervise technical decisions, and ensure consistent quality across the project.</p>
+<section id="quentin-nater">
+<h3>Quentin Nater<a class="headerlink" href="#quentin-nater" title="Link to this heading">¶</a></h3>
+<a class="reference external image-reference" href="https://exascale.info/members/quentin-nater/"><img alt="Quentin Nater" class="portrait align-left" src="images/quentin_nater.png" style="width: 150px;" />
+</a>
+<p>Quentin Nater is a PhD student jointly supervised by <a class="reference external" href="https://exascale.info/members/mourad-khayati/">Mourad Khayati</a> and <a class="reference external" href="https://exascale.info/phil/">Philippe Cudré-Mauroux</a> at the Department of Computer Science of the <a class="reference external" href="https://www.unifr.ch/home/en/">University of Fribourg</a> in Switzerland. His main research interests revolve around time series analytics, with a focus on data imputation, machine learning and multimodal learning.</p>
+ <a href="https://exascale.info/members/quentin-nater/" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5H2v7a.5.5 0 0 0 .5.5H6a.5.5 0 0 0 .5-.5V10h3v4.5a.5.5 0 0 0 .5.5h3.5a.5.5 0 0 0 .5-.5v-7h.5a.5.5 0 0 0 .354-.854l-6-6z"/>
+      </svg>
+      Home Page
+ </a>
+
+<br><br></section>
+<section id="id1">
+<h3>Mourad Khayati<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<a class="reference external image-reference" href="https://exascale.info/members/mourad-khayati/"><img alt="Mourad Khayati" class="portrait align-left" src="images/mourad_khayati.png" style="width: 150px;" />
+</a>
+<p>Mourad Khayati is a Senior Researcher and a Lecturer with the eXascale Infolab and the Advanced Software Engineering group, respectively, at the Department of Computer Science of the <a class="reference external" href="https://www.unifr.ch/home/en/">University of Fribourg</a>, Switzerland. He obtained his PhD from the University of Zurich, Switzerland, under the supervision of Prof. Michael Böhlen. His research interests include Time Series analytics and data quality with a special focus on temporal data repair/cleaning. He is the recipient of the VLDB 2020 Best Experiments and Analysis Paper Award.</p>
+<a href="https://exascale.info/members/mourad-khayati/" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; text-decoration: none; margin-left:185px; ">
+     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+       <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5H2v7a.5.5 0 0 0 .5.5H6a.5.5 0 0 0 .5-.5V10h3v4.5a.5.5 0 0 0 .5.5h3.5a.5.5 0 0 0 .5-.5v-7h.5a.5.5 0 0 0 .354-.854l-6-6z"/>
+     </svg>
+     Home Page
+</a>
+<br><br></section>
 </section>
 </section>
 
@@ -443,8 +309,26 @@ brew<span class="w"> </span>install<span class="w"> </span>python@3.12
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="imputegap.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">API</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="contributing.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Contributing</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -475,8 +359,12 @@ brew<span class="w"> </span>install<span class="w"> </span>python@3.12
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Getting Started with Environment</a><ul>
-<li><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li><a class="reference internal" href="#">About Us</a><ul>
+<li><a class="reference internal" href="#core-maintainers">Core Maintainers</a><ul>
+<li><a class="reference internal" href="#quentin-nater">Quentin Nater</a></li>
+<li><a class="reference internal" href="#id1">Mourad Khayati</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -494,6 +382,5 @@ brew<span class="w"> </span>install<span class="w"> </span>python@3.12
     <script src="static/scripts/furo.js?v=5fa4622c"></script>
     <script src="static/clipboard.min.js?v=a7894cd8"></script>
     <script src="static/copybutton.js?v=f281be69"></script>
-    <script src="static/tabs.js?v=3030b3cb"></script>
     </body>
 </html>

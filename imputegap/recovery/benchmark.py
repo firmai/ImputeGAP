@@ -35,7 +35,7 @@ class Benchmark:
 
     Example
     -------
-    output : {'eegalcohol': {'mcar': {'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.4359915238078244, 'MAE': 0.3725965559420608, 'MI': 1.4169232775678364, 'CORRELATION': 0.9530448037164908, 'runtime': 0.2811245918273926, 'runtime_log_scale': -0.5511011621200811}}, '0.1': {'scores': {'RMSE': 0.3665001858394363, 'MAE': 0.2989983612840734, 'MI': 0.9078918430616858, 'CORRELATION': 0.9049909722894052, 'runtime': 0.1305081844329834, 'runtime_log_scale': -0.8843622519837359}}, '0.2': {'scores': {'RMSE': 0.39833006221984, 'MAE': 0.30824644022807457, 'MI': 0.8483406827418594, 'CORRELATION': 0.9161465703422209, 'runtime': 0.1445169448852539, 'runtime_log_scale': -0.8400812280720497}}, '0.4': {'scores': {'RMSE': 0.435591016228979, 'MAE': 0.3335144215651955, 'MI': 0.7286325588353783, 'CORRELATION': 0.9021032587324183, 'runtime': 0.306765079498291, 'runtime_log_scale': -0.5131940796785996}}, '0.6': {'scores': {'RMSE': 0.4500113661547204, 'MAE': 0.338085865703361, 'MI': 0.6481512576687939, 'CORRELATION': 0.8893263437029546, 'runtime': 0.10979938507080078, 'runtime_log_scale': -0.9594000921364352}}, '0.8': {'scores': {'RMSE': 0.46554422402146944, 'MAE': 0.3508926604243284, 'MI': 0.6150677913271478, 'CORRELATION': 0.8791443563129441, 'runtime': 0.12360215187072754, 'runtime_log_scale': -0.907973968264617}}}}, 'KNNImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.24102595399583507, 'MAE': 0.18984832836399548, 'MI': 1.547782862758484, 'CORRELATION': 0.9810468571465141, 'runtime': 0.04365086555480957, 'runtime_log_scale': -1.3600071402298746}}, '0.1': {'scores': {'RMSE': 0.28890851809839135, 'MAE': 0.22998623733608023, 'MI': 0.9934511613817691, 'CORRELATION': 0.942944831550703, 'runtime': 0.02493762969970703, 'runtime_log_scale': -1.6031448282134637}}, '0.2': {'scores': {'RMSE': 0.32523842533021824, 'MAE': 0.2398150375225743, 'MI': 1.0141220941333857, 'CORRELATION': 0.9441733384102147, 'runtime': 0.01948857307434082, 'runtime_log_scale': -1.7102199581438617}}, '0.4': {'scores': {'RMSE': 0.33824584758611187, 'MAE': 0.2509197576351218, 'MI': 0.9534836631617412, 'CORRELATION': 0.9418540692188737, 'runtime': 0.04377126693725586, 'runtime_log_scale': -1.3588108827701144}}, '0.6': {'scores': {'RMSE': 0.3656435952078159, 'MAE': 0.26630724595251076, 'MI': 0.7933983583413302, 'CORRELATION': 0.9285706343976159, 'runtime': 0.10764479637145996, 'runtime_log_scale': -0.9680069594473933}}, '0.8': {'scores': {'RMSE': 0.49851932645867886, 'MAE': 0.3727407177987301, 'MI': 0.5872198065951101, 'CORRELATION': 0.8588039019214768, 'runtime': 0.1279888153076172, 'runtime_log_scale': -0.8928279808397801}}}}}}}
+    output : {'eegalcohol': {'mcar': {'MeanImpute': {'default_params': {'0.05': {'scores': {'RMSE': 1.107394798606378, 'MAE': 0.9036474830477748, 'CORRELATION': nan, 'RUNTIME': 10.07390022277832, 'RUNTIME_LOG': 1.00319764506136}}, '0.1': {'scores': {'RMSE': 0.8569349076796438, 'MAE': 0.6416542359734557, 'CORRELATION': nan, 'RUNTIME': 1.0, 'RUNTIME_LOG': 0.0}}, '0.2': {'scores': {'RMSE': 0.9924113085421721, 'MAE': 0.7939689811173046, 'CORRELATION': nan, 'RUNTIME': 1.0, 'RUNTIME_LOG': 0.0}}, '0.4': {'scores': {'RMSE': 1.0058063455061463, 'MAE': 0.8076546785476064, 'CORRELATION': nan, 'RUNTIME': 1.0, 'RUNTIME_LOG': 0.0}}, '0.6': {'scores': {'RMSE': 0.9891809506243663, 'MAE': 0.7914550709031675, 'CORRELATION': nan, 'RUNTIME': 1.0, 'RUNTIME_LOG': 0.0}}, '0.8': {'scores': {'RMSE': 0.9927953862507292, 'MAE': 0.7925635744718286, 'CORRELATION': nan, 'RUNTIME': 1.0, 'RUNTIME_LOG': 0.0}}}}, 'SoftImpute': {'default_params': {'0.05': {'scores': {'RMSE': 0.4359915238078244, 'MAE': 0.3725965559420608, 'CORRELATION': 0.9530448037164908, 'RUNTIME': 199.30577278137207, 'RUNTIME_LOG': 2.2995198779819055}}, '0.1': {'scores': {'RMSE': 0.3665001858394363, 'MAE': 0.2989983612840734, 'CORRELATION': 0.9049909722894052, 'RUNTIME': 117.54822731018066, 'RUNTIME_LOG': 2.0702160841184516}}, '0.2': {'scores': {'RMSE': 0.39833006221984, 'MAE': 0.30824644022807457, 'CORRELATION': 0.9161465703422209, 'RUNTIME': 317.5652027130127, 'RUNTIME_LOG': 2.5018329084349737}}, '0.4': {'scores': {'RMSE': 0.435591016228979, 'MAE': 0.3335144215651955, 'CORRELATION': 0.9021032587324183, 'RUNTIME': 302.2916316986084, 'RUNTIME_LOG': 2.4804261248244566}}, '0.6': {'scores': {'RMSE': 0.4500113661547204, 'MAE': 0.338085865703361, 'CORRELATION': 0.8893263437029546, 'RUNTIME': 314.93282318115234, 'RUNTIME_LOG': 2.498217926383076}}, '0.8': {'scores': {'RMSE': 0.46554422402146944, 'MAE': 0.3508926604243284, 'CORRELATION': 0.8791443563129441, 'RUNTIME': 311.9697570800781, 'RUNTIME_LOG': 2.4941124947560986}}}}}}}
     """
 
     def __init__(self):
@@ -285,9 +285,9 @@ class Benchmark:
             norm = plt.Normalize(vmin=0, vmax=2)
         elif metric == "CORRELATION":
             norm = plt.Normalize(vmin=-2, vmax=2)
-        elif metric.lower() == "runtime_linear_scale":
-            norm = plt.Normalize(vmin=0, vmax=1000)
-        elif metric.lower() == "runtime_log_scale":
+        elif metric.lower() == "RUNTIME":
+            norm = plt.Normalize(vmin=0, vmax=100000)
+        elif metric.lower() == "RUNTIME_LOG":
             norm = plt.Normalize(vmin=-2, vmax=10)
         else:
             norm = plt.Normalize(vmin=0, vmax=2)
@@ -364,22 +364,22 @@ class Benchmark:
         The report is saved in a "report.txt" file in `save_dir`, organized in sections with headers and results.
         """
         os.makedirs(save_dir, exist_ok=True)
-
+        metric_unit = "ms"
 
         if "RMSE" not in metrics:
-            to_call = [metrics[0], "runtime"]
+            to_call = [metrics[0], "RUNTIME"]
         else:
-            to_call = ["RMSE", "runtime"]
+            to_call = ["RMSE", "RUNTIME"]
 
         new_metrics = np.copy(metrics)
 
         if metrics is None:
             new_metrics = utils.list_of_metrics()
         else:
-            if "runtime" not in new_metrics:
-                new_metrics = np.append(new_metrics, "runtime")
-            if "runtime_log_scale" not in new_metrics:
-                new_metrics = np.append(new_metrics, "runtime_log_scale")
+            if "RUNTIME" not in new_metrics:
+                new_metrics = np.append(new_metrics, "RUNTIME")
+            if "RUNTIME_LOG" not in new_metrics:
+                new_metrics = np.append(new_metrics, "RUNTIME_LOG")
 
         opt = None
         for dataset, patterns_items in runs_plots_scores.items():
@@ -393,7 +393,7 @@ class Benchmark:
         for dataset, patterns_items in runs_plots_scores.items():
             for pattern, algorithm_items in patterns_items.items():
                 list_of_patterns.append(pattern)
-                new_dir = save_dir + "/" + pattern.lower() + "/"
+                new_dir = save_dir + "/" + pattern.lower() + "/error"
                 os.makedirs(new_dir, exist_ok=True)
 
                 save_path = os.path.join(new_dir, f"report_{pattern}_{dataset}.txt")
@@ -402,16 +402,17 @@ class Benchmark:
                 with open(save_path, "w") as file:
                     file.write(f"Report for Dataset: {dataset}\n")
                     file.write(f"Generated on: {current_time}\n")
-                    file.write(f"Total runtime: {rt} (sec)\n")
+                    file.write(f"Total runtime: {rt} (ms)\n")
                     if run >= 0:
                         file.write(f"Run number: {run}\n")
                     file.write("=" * 120 + "\n\n")
 
                     for metric in new_metrics:
-                        if metric == "runtime_log_scale":
-                            break
 
-                        file.write(f"\n{dataset}: {{{pattern}, {metric}, {opt}}}")
+                        if metric == "RUNTIME":
+                            file.write(f"\n{dataset}: {{{pattern}, {metric}[{metric_unit}], {opt}}}")
+                        else:
+                            file.write(f"\n{dataset}: {{{pattern}, {metric}, {opt}}}")
 
                         # Collect all algorithms and scores by rate
                         rate_to_scores = defaultdict(dict)
@@ -438,7 +439,10 @@ class Benchmark:
                         file.write(f"{separator_row}\n")
 
                         if metric in to_call and verbose:
-                            print(f"\n{dataset}: {{{pattern}, {metric}, {opt}}}")
+                            if metric == "RUNTIME":
+                                print(f"\n{dataset}: {{{pattern}, {metric}[{metric_unit}], {opt}}}")
+                            else:
+                                print(f"\n{dataset}: {{{pattern}, {metric}, {opt}}}")
                             print(separator_row)
                             print(f"{header_row}")
                             print(separator_row)
@@ -603,12 +607,9 @@ class Benchmark:
         if metrics is None:
             new_metrics = utils.list_of_metrics()
         else:
-            if "runtime" not in new_metrics:
-                new_metrics = np.append(new_metrics, "runtime")
+            if "RUNTIME_LOG" not in new_metrics:
                 new_plots = new_plots + 1
-            if "runtime_log_scale" not in new_metrics:
-                new_plots = new_plots + 1
-                new_metrics = np.append(new_metrics, "runtime_log_scale")
+                new_metrics = np.append(new_metrics, "RUNTIME_LOG")
 
         n_rows = int((len(new_metrics)+new_plots)/2)
 
@@ -618,6 +619,15 @@ class Benchmark:
             for pattern, algo_items in pattern_items.items():
                 if subplot:
                     fig, axes = plt.subplots(nrows=n_rows, ncols=2, figsize=(x_size*1.90, y_size*2.90))  # Adjusted figsize
+                    fig.subplots_adjust(
+                        left=0.04,
+                        right=0.99,
+                        top=0.97,
+                        bottom=0.05,
+                        wspace=0.095,
+                        hspace=0.2
+                    )
+
                     if title_flag is None:
                         title = dataset + " : " + pattern + ", benchmark analysis"
                     fig.canvas.manager.set_window_title(title)
@@ -650,7 +660,7 @@ class Benchmark:
                             x_vals, y_vals = zip(*sorted_pairs)
 
                             # Plot each algorithm as a line with scattered points
-                            ax.plot(x_vals, y_vals, label=f"{algorithm}")
+                            ax.plot(x_vals, y_vals, label=f"{algorithm}", linewidth=2)
                             ax.scatter(x_vals, y_vals)
                             has_data = True
 
@@ -663,8 +673,8 @@ class Benchmark:
                     # Save plot only if there is data to display
                     if has_data:
                         ylabel_metric = {
-                            "runtime": "Runtime (sec)",
-                            "runtime_log_scale": "Runtime (sec)",
+                            "RUNTIME": "Runtime [ms]",
+                            "RUNTIME_LOG": "log₁₀(Runtime [ms])",
                         }.get(metric, metric)
 
                         ax.set_title(metric)
@@ -687,12 +697,12 @@ class Benchmark:
                                 min_y = 0
                             if max_y > 2:
                                 max_y = 2
-                        elif metric == "runtime":
+                        elif metric == "RUNTIME":
                             if min_y < 0:
                                 min_y = 0
-                            if max_y > 10:
-                                max_y = 10
-                        elif metric == "runtime_log_scale":
+                            if max_y > 10000:
+                                max_y = 10000
+                        elif metric == "RUNTIME_LOG":
                             if min_y < -5:
                                 min_y = -5
                             if max_y > 5:
@@ -707,9 +717,9 @@ class Benchmark:
                         ax.set_ylim(min_y - y_padding, max_y + y_padding)
 
                         # Set y-axis limits with padding below 0 for visibility
-                        if metric == "runtime":
+                        if metric == "RUNTIME":
                             ax.set_title("Runtime (linear scale)")
-                        elif metric == "runtime_log_scale":
+                        elif metric == "RUNTIME_LOG":
                             ax.set_title("Runtime (log scale)")
                         elif metric == "CORRELATION":
                             ax.set_title("Pearson Correlation")
@@ -732,8 +742,8 @@ class Benchmark:
                             plt.close()
 
                 if subplot:
-                    plt.tight_layout()
-                    new_dir = save_dir + "/" + pattern
+                    #plt.tight_layout()
+                    new_dir = save_dir + "/" + pattern + "/error"
                     os.makedirs(new_dir, exist_ok=True)
                     filename = f"{dataset}_{pattern}_metrics_subplot.jpg"
                     filepath = os.path.join(new_dir, filename)
@@ -910,11 +920,13 @@ class Benchmark:
                                 if "*" not in metrics and "all" not in metrics:
                                     algo.metrics = {k: algo.metrics[k] for k in metrics if k in algo.metrics}
 
-                                time_imputation = end_time_imputation - start_time_imputation
+                                time_imputation = (end_time_imputation - start_time_imputation) * 1000
+                                if time_imputation < 1:
+                                    time_imputation = 1
                                 log_time_imputation = math.log10(time_imputation) if time_imputation > 0 else None
 
-                                algo.metrics["runtime"] = time_imputation
-                                algo.metrics["runtime_log_scale"] = log_time_imputation
+                                algo.metrics["RUNTIME"] = time_imputation
+                                algo.metrics["RUNTIME_LOG"] = log_time_imputation
 
                                 dataset_s = dataset
                                 if "-" in dataset:
