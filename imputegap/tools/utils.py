@@ -1182,7 +1182,43 @@ def list_of_families():
     return sorted(["DeepLearning", "MatrixCompletion", "PatternSearch", "MachineLearning", "Statistics"])
 
 def list_of_metrics():
-    return ["RMSE", "MAE", "MI", "CORRELATION", "runtime", "runtime_log_scale"]
+    return ["RMSE", "MAE", "MI", "CORRELATION", "RUNTIME", "RUNTIME_LOG"]
+
+def list_of_algorithms_with_families():
+    return sorted([
+        "MatrixCompletion.CDRec",
+        "MatrixCompletion.IterativeSVD",
+        "MatrixCompletion.GROUSE",
+        "MatrixCompletion.ROSL",
+        "MatrixCompletion.SPIRIT",
+        "MatrixCompletion.SoftImpute",
+        "MatrixCompletion.SVT",
+        "MatrixCompletion.TRMF",
+        "PatternSearch.STMVL",
+        "PatternSearch.DynaMMo",
+        "PatternSearch.TKCM",
+        "MachineLearning.IIM",
+        "MachineLearning.XGBOOST",
+        "MachineLearning.MICE",
+        "MachineLearning.MissForest",
+        "Statistics.KNNImpute",
+        "Statistics.Interpolation",
+        "Statistics.MinImpute",
+        "Statistics.MeanImpute",
+        "Statistics.ZeroImpute",
+        "Statistics.MeanImputeBySeries",
+        "DeepLearning.MRNN",
+        "DeepLearning.BRITS",
+        "DeepLearning.DeepMVI",
+        "DeepLearning.MPIN",
+        "DeepLearning.PRISTI",
+        "DeepLearning.MissNet",
+        "DeepLearning.GAIN",
+        "DeepLearning.GRIN",
+        "DeepLearning.BayOTIDE",
+        "DeepLearning.HKMF_T",
+        "DeepLearning.BitGraph"
+    ])
 
 def list_of_normalizers():
     return ["z_score", "min_max"]

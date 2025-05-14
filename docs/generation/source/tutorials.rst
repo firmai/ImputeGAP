@@ -5,8 +5,8 @@ Tutorials
 
 .. _loading:
 
-Loading
--------
+Dataset Loading
+---------------
 
 ImputeGAP comes with several time series datasets. The list of datasets is described `here <datasets.html>`_.
 
@@ -77,8 +77,8 @@ To import the time series as a matrix, add it to the  ``ts.import_matrix`` funct
 
 .. _contamination:
 
-Contamination
--------------
+Data Contamination
+------------------
 We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. The list of patterns is described `here <patterns.html>`_.
 
 As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pattern:

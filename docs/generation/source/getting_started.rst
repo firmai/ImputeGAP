@@ -50,8 +50,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
             .. tab:: Windows:
 
 
-                Install WSL
-                ~~~~~~~~~~~
+                **Install WSL**
 
                 To run ImputeGAP in a Unix-compatible environment on Windows, install the ``Windows Subsystem for Linux (WSL)``.
 
@@ -73,8 +72,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
                    <br>
 
 
-                Prepare Python 3.12 Environment
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                **Prepare Python 3.12 Environment**
 
                 To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.
 
@@ -82,7 +80,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
 
                    <br>
 
-                **Step 1: Check Existing Python Version**
+                *Step 1: Check Existing Python Version*
 
                 Open your terminal and check the currently installed version of Python:
 
@@ -95,7 +93,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
 
                    <br>
 
-                **Step 2: Install Python 3.12**
+                *Step 2: Install Python 3.12*
 
                 If needed, install Python 3.12 on your WSL system, follow these steps:
 
@@ -136,8 +134,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
                    <br>
 
 
-                Install Python 3.12 Environment
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                **Install Python 3.12 Environment**
 
                 1. Create a virtual environment:
 
@@ -168,8 +165,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
 
 
 
-                Prepare Python 3.12 Environment
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                **Prepare Python 3.12 Environment**
 
                 To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.
 
@@ -177,7 +173,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
 
                    <br>
 
-                **Step 1: Check Existing Python Version**
+                *Step 1: Check Existing Python Version**
 
                 Open your terminal and check the currently installed version of Python:
 
@@ -191,7 +187,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
                    <br>
 
 
-                **Step 2: Install Python 3.12**
+                *Step 2: Install Python 3.12
 
                 If needed, install Python 3.12 on your system, follow these steps:
 
@@ -232,8 +228,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
                    <br>
 
 
-                Install Python 3.12 Environment
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                **Install Python 3.12 Environment**
 
                 1. Create a virtual environment:
 
@@ -267,8 +262,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
             .. tab:: MacOS:
 
 
-                Prepare Python 3.12 Environment
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                **Prepare Python 3.12 Environment**
 
                 To ensure a proper Python setup, we recommend creating a dedicated Python environment for the project. Python 3.12 is a suitable and supported choice.
 
@@ -299,8 +293,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
                    <br>
 
 
-                Install Python 3.12 Environment
-                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                **Install Python 3.12 Environment**
 
                 1. Create a virtual environment:
 
@@ -332,19 +325,24 @@ Docker
 
 You can download the latest version of ImputeGAP with all dependencies pre-installed using Docker.
 
-Make sure Docker is installed and the engine is running, then proceed with the following command appropriate to your operating system:
 
 .. tabs::
 
     .. tab:: Windows
 
-        To pull the ImputeGAP Docker image:
+        Launch Docker and make sure it is running:
+
+        .. code-block:: powershell
+
+             docker version
+
+        Pull the ImputeGAP Docker image:
 
         .. code-block:: powershell
 
              docker pull qnater/imputegap:0.0.8
 
-        To run the Docker container:
+        Run the Docker container:
 
         .. code-block:: powershell
 
@@ -353,13 +351,19 @@ Make sure Docker is installed and the engine is running, then proceed with the f
 
     .. tab:: Ubuntu
 
-        To pull the ImputeGAP Docker image:
+        Launch Docker and make sure it is running:
+
+        .. code-block:: powershell
+
+             docker version
+
+        Pull the ImputeGAP Docker image:
 
         .. code-block:: bash
 
             docker pull qnater/imputegap:0.0.8
 
-        To run the Docker container:
+        Run the Docker container:
 
         .. code-block:: bash
 
@@ -367,13 +371,19 @@ Make sure Docker is installed and the engine is running, then proceed with the f
 
     .. tab:: MacOS
 
-        To pull the ImputeGAP Docker image:
+        Launch Docker and make sure it is running:
+
+        .. code-block:: powershell
+
+             docker version
+
+        Pull the ImputeGAP Docker image:
 
         .. code-block:: bash
 
             docker pull --platform linux/x86_64 qnater/imputegap:0.0.8
 
-        To run the Docker container:
+        Run the Docker container:
 
         .. code-block:: bash
 

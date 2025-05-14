@@ -11,7 +11,7 @@ In detail, the library provides:
     - Extensive benchmarking to compare the performance of imputation algorithms (`Benchmark <tutorials.html#benchmark>`_).
     - Modular tools to assess the impact of imputation on key downstream tasks (`Downstream <tutorials.html#downstream>`_).
     - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <tutorials.html#explainer>`_).
-    - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R (`Integration <integration.html>`_).
+    - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R (`Contributing <contributing.html>`_).
 
 .. raw:: html
 
@@ -154,38 +154,21 @@ If you use ImputeGAP in your research, please cite the paper:
 
    <br>
 
+We also invite you to cite our tutorial paper, which will be presented at the 2025 `KDD Conference <https://kdd2025.kdd.org/>`_.
 
+.. code-block:: bash
 
-.. _contributors:
+    @article{nater2025kdd,
+      title = {A Hands-on Tutorial on Time Series Imputation with ImputeGAP},
+      author = {Nater, Quentin and Khayati, Mourad and Cudré-Mauroux, Philippe},
+      year = {2025},
+      booktitle = {SIGKDD Conference on Knowledge Discovery and Data Mining (To Appear)},
+      series = {KDD2025}
+    }
 
-Contributors
-------------
+.. raw:: html
 
-.. list-table::
-   :align: center
-   :header-rows: 0
-
-   * - .. image:: _img/quentin_nater.png
-          :alt: Quentin Nater - ImputeGAP
-          :width: 100px
-          :height: 100px
-          :align: center
-          :target: https://exascale.info/members/quentin-nater/
-     - .. image:: _img/mourad_khayati.png
-          :alt: Mourad Khayati - ImputeGAP
-          :width: 100px
-          :height: 100px
-          :align: center
-          :target: https://exascale.info/members/mourad-khayati/
-
-   * - Quentin Nater
-     - Mourad Khayati
-
-
-
-
-
-
+   <br>
 
 
 .. toctree::
@@ -200,7 +183,8 @@ Contributors
    datasets
    patterns
    algorithms
-   integration
+   contributing
+   about_us
    imputegap
 
 

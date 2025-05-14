@@ -27,4 +27,4 @@ RUN mkdir /root/imputegap_assets
 EXPOSE 8888
 
 # Print version and launch Jupyter
-CMD ["sh", "-c", "imputegap; jupyter notebook --notebook-dir=/root --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"]
+CMD ["sh", "-c", "imputegap; jupyter trust /root/*.ipynb; jupyter notebook --notebook-dir=/root --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"]
