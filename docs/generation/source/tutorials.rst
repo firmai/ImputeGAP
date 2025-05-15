@@ -264,7 +264,7 @@ The benchmarking module can be utilized as follows:
 
     from imputegap.recovery.benchmark import Benchmark
 
-    my_algorithms = ["SoftImpute", "MeanImpute", "CDRec"]
+    my_algorithms = ["SoftImpute", "MeanImpute"]
 
     my_opt = ["default_params"]
 
@@ -329,7 +329,7 @@ ImputeGAP includes a dedicated module for systematically evaluating the impact o
     imputer.impute()
 
     # compute and print the downstream results
-    downstream_config = {"task": "forecast", "model": "hw-add", "baseline": "ZeroImpute"}
+    downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
     imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
     ts.print_results(imputer.downstream_metrics, text="Downstream results")
 
@@ -397,21 +397,6 @@ All feature extractors developed in ImputeGAP are available in the ``ts.extracto
 .. raw:: html
 
    <br>
-
-.. _notebook:
-
-Notebook
---------
-
-ImputeGAP provides Jupyter notebooks available through the following links:
-
-    - `01_imputegap_imputation_pipeline <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_imputation_pipeline.ipynb>`_
-    - `02_imputegap_advanced_analysis <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/002_imputegap_advanced_analysis.ipynb>`_
-
-.. raw:: html
-
-   <br>
-
 
 
 

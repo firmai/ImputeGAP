@@ -13,7 +13,7 @@ In detail, the package provides:
   - Extensive benchmarking to compare the performance of imputation algorithms ([Benchmark](#benchmark)).
   - Modular tools to assess the impact of imputation on key downstream tasks ([Downstream](#downstream)).
   - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](#explainer)).
-  - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R ([Integration](https://imputegap.readthedocs.io/en/latest/integration.html)).
+  - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R ([Contributing](https://imputegap.readthedocs.io/en/latest/contributing.html)).
 
 <br>
 
@@ -74,47 +74,57 @@ In detail, the package provides:
 
 ### **Quick Navigation**
 
-- **Deployment**  
+- **Getting Started**  
   - [System Requirements](#system-requirements)  
   - [Installation](#installation)  
 
 - **Code Snippets**  
-  - [Data Loading](#loading)  
+  - [Dataset Loading](#dataset-loading)  
   - [Contamination](#contamination)  
   - [Imputation](#imputation)  
   - [Auto-ML](#Parameter-Tuning)  
   - [Explainer](#explainer)  
   - [Downstream Evaluation](#downstream)
   - [Benchmark](#benchmark)  
+  - [Notebook](#Jupyter-Notebook)  
 
 - **Contribute**  
-  - [Integration Guide](#integration)  
+  - [Integration Guide](#contribution)  
 
 - **Additional Information**  
-  - [References](#references)  
-  - [Core Contributors](#core-contributors)  
-
+   - [Maintainers](#maintainers)  
+   - [References](#references)  
+ 
 
 ---
+
+<br> <br>
+
+# Getting Started
 
 ## System Requirements
 
 ImputeGAP is compatible with Python>=3.10 (except 3.13) and Unix-compatible environment.
 
-<i>To create and set up an environment with Python 3.12, please refer to the [installation guide](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/procedure/installation).</i>
+<i>To create and set up an environment with Python 3.12, please refer to the [installation guide](https://imputegap.readthedocs.io/en/latest/getting_started.html).</i>
 
----
 
+<br>
 
 ## Installation
 
 
+### pip
 
 To install the latest version of ImputeGAP from PyPI, run the following command:
 
 ```bash
 pip install imputegap
 ``` 
+
+<br>
+
+### Source
 
 Alternatively, you can install the library from source:
 
@@ -125,9 +135,39 @@ cd ./ImputeGAP
 pip install -e .
 ```
 
+<br>
+
+### Docker
+
+Alternatively, you can download the latest version of ImputeGAP with all dependencies pre-installed using Docker.
+
+Launch Docker and make sure it is running:
+
+```bash
+docker version
+``` 
+
+Pull the ImputeGAP Docker image (add `--platform linux/x86_64` in the command for MacOS) :
+
+```bash
+docker pull qnater/imputegap:0.0.8
+```
+
+Run the Docker container:
+
+```bash
+docker run -p 8888:8888 qnater/imputegap:0.0.8
+``` 
+
 
 ---
-## Loading
+
+
+<br> <br>
+
+# Tutorials
+
+## Dataset Loading
 
 ImputeGAP comes with several time series datasets. The list of datasets is described [here](https://imputegap.readthedocs.io/en/latest/datasets.html).
 
@@ -330,7 +370,7 @@ The benchmarking module can be utilized as follows:
 ```python
 from imputegap.recovery.benchmark import Benchmark
 
-my_algorithms = ["SoftImpute", "MeanImpute", "CDRec"]
+my_algorithms = ["SoftImpute", "MeanImpute"]
 
 my_opt = ["default_params"]
 
@@ -445,26 +485,38 @@ print(f"ImputeGAP features extractors : {ts.extractors}")
 
 ---
 
-## Notebook
+## Jupyter Notebook
 
 ImputeGAP provides Jupyter notebooks available through the following links:
 
-- [01_imputegap_repair](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_repair.ipynb)
-- [02_imputegap_explore](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_explore.ipynb)
+- [Jupyter: Imputegap Imputation Pipeline Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_imputation_pipeline.ipynb)
+- [Jupyter: Imputegap Advanced Analysis Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_advanced_analysis.ipynb)
+
+
+
+## Google Colab Notebook
+
+ImputeGAP provides Google Colab notebooks available through the following links:
+
+- [Google Colab: Imputegap Imputation Pipeline Notebook](https://colab.research.google.com/drive/1Kq1_HVoCTWLtB1zyryR35opxXmaprztV?usp=sharing)
+- [Google Colab: Imputegap Advanced Analysis Notebook](https://colab.research.google.com/drive/1iOzLtpZTA3KDoyIc-srw2eoX5soEmP8x?usp=sharing)
 
 
 
 ---
 
-## Integration
-To add your own imputation algorithm, please refer to the detailed [integration guide](https://imputegap.readthedocs.io/en/latest/integration.html).
+## Contribution
+To add your own imputation algorithm, please refer to the detailed [integration guide](https://imputegap.readthedocs.io/en/latest/contributing.html).
 
 
 ---
 
-## Citing
 
-If you use ImputeGAP in your research, please cite the paper:
+<br> <br>
+
+# Citing
+
+If you use ImputeGAP in your research, please cite these papers:
 
 ```
 @article{nater2025imputegap,
@@ -477,34 +529,59 @@ If you use ImputeGAP in your research, please cite the paper:
   url = {https://arxiv.org/abs/2503.15250}
 }
 ```
+
+<br>
+
+```
+@article{nater2025kdd,
+  title = {A Hands-on Tutorial on Time Series Imputation with ImputeGAP},
+  author = {Nater, Quentin and Khayati, Mourad and Cudré-Mauroux, Philippe},
+  year = {2025},
+  booktitle = {SIGKDD Conference on Knowledge Discovery and Data Mining (To Appear)},
+  series = {KDD2025}
+}
+```
+
+<br> <br>
+
 ---
 
-## Core Contributors
+## Maintainers
 
-<table align="center">
+<table>
   <tr>
-    <td align="center">
-      <a href="https://exascale.info/members/quentin-nater/">
-        <img src="https://www.naterscreations.com/d/quentin_nater.png" alt="Quentin Nater - ImputeGAP" width="100" height="100" />
-      </a>
+    <td width="50%" align="center">
+      <img src="https://imputegap.readthedocs.io/en/latest/_images/quentin_nater.png" alt="Quentin Nater" width="150"/><br>
+      <strong>Quentin Nater</strong><br><br>
+      <div style="text-align: justify;"> 
+        Quentin is a PhD student jointly supervised by
+        <a href="https://exascale.info/members/mourad-khayati/">Mourad Khayati</a> and
+        <a href="https://exascale.info/phil/">Philippe Cudré-Mauroux</a> at the Department of Computer Science of the
+        <a href="https://www.unifr.ch/home/en/">University of Fribourg</a>, Switzerland.<br> He completed his Master’s degree in Digital Neuroscience at the University of Fribourg.
+        His research focuses on <strong>time series analytics</strong>,
+        including <strong>data imputation</strong>, <strong>machine learning</strong>, and
+        <strong>multimodal learning</strong>.
+      </div><br>
+      👉 <a href="https://exascale.info/members/quentin-nater/">Home Page</a>
     </td>
-    <td align="center">
-      <a href="https://exascale.info/members/mourad-khayati/">
-        <img src="https://www.naterscreations.com/d/mourad_khayati.png" alt="Mourad Khayati - ImputeGAP" width="100" height="100"  />
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      Quentin Nater  
-    </td>
-    <td align="center">
-      Mourad Khayati
+    <td width="50%" align="center">
+      <img src="https://imputegap.readthedocs.io/en/latest/_images/mourad_khayati.png" alt="Mourad Khayati" width="150"/><br>
+      <strong>Mourad Khayati</strong><br><br>
+      <div style="text-align: justify;"> 
+        Mourad is a Senior Researcher and Lecturer with the
+        <a href="https://exascale.info/">eXascale Infolab</a> and the Advanced Software Engineering group at the Department of Computer Science of the
+        <a href="https://www.unifr.ch/home/en/">University of Fribourg</a>, Switzerland. 
+        His research interests include <strong>time series analytics</strong> and
+        <strong>data quality</strong>, with a focus on <strong>temporal data repair/cleaning</strong>.
+        He received the <strong>VLDB 2020 Best Experiments and Analysis Paper Award</strong>.
+      </div><br>
+      👉 <a href="https://exascale.info/members/mourad-khayati/">Home Page</a>
     </td>
   </tr>
 </table>
 
 
+<br> <br>
 
 ---
 
