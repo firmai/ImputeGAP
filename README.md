@@ -550,9 +550,14 @@ If you use ImputeGAP in your research, please cite these papers:
 
 <table>
   <tr>
-    <td width="50%" align="center">
-      <img src="https://imputegap.readthedocs.io/en/latest/_images/quentin_nater.png" alt="Quentin Nater" width="150"/><br>
-      <strong>Quentin Nater</strong><br><br>
+    <td width="50%">
+      <div  style="text-align: center;" >
+        <a href="https://exascale.info/members/quentin-nater/">
+            <img src="https://imputegap.readthedocs.io/en/latest/_images/quentin_nater.png" alt="Quentin Nater" width="150"/>
+        </a><br>
+        <strong>Quentin Nater</strong>
+      </div>
+      <br><br>
       <div style="text-align: justify;"> 
         Quentin is a PhD student jointly supervised by
         <a href="https://exascale.info/members/mourad-khayati/">Mourad Khayati</a> and
@@ -564,9 +569,14 @@ If you use ImputeGAP in your research, please cite these papers:
       </div><br>
       👉 <a href="https://exascale.info/members/quentin-nater/">Home Page</a>
     </td>
-    <td width="50%" align="center">
-      <img src="https://imputegap.readthedocs.io/en/latest/_images/mourad_khayati.png" alt="Mourad Khayati" width="150"/><br>
-      <strong>Mourad Khayati</strong><br><br>
+    <td width="50%" >
+      <div  style="text-align: center;" >
+        <a href="https://exascale.info/members/mourad-khayati/">
+          <img src="https://imputegap.readthedocs.io/en/latest/_images/mourad_khayati.png" alt="Mourad Khayati" width="150" />
+        </a><br>
+        <strong>Mourad Khayati</strong>
+      </div>
+      <br><br>
       <div style="text-align: justify;"> 
         Mourad is a Senior Researcher and Lecturer with the
         <a href="https://exascale.info/">eXascale Infolab</a> and the Advanced Software Engineering group at the Department of Computer Science of the
