@@ -37,7 +37,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
             pip install -e .
 
 
-    .. tab:: env
+    .. tab:: venv
 
         ImputeGAP is compatible with Python>=3.10 (except 3.13) and Unix-compatible environment.
 
@@ -323,7 +323,7 @@ To install the latest version of ImputeGAP from PyPI, run the following command:
 Docker
 ~~~~~~
 
-You can download the latest version of ImputeGAP with all dependencies pre-installed using Docker.
+You can download the latest version of ImputeGAP as a Docker container, pre-configured with Jupyter Notebook and all required dependencies.
 
 
 .. tabs::

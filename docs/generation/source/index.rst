@@ -136,7 +136,7 @@ Get Started
 Citing
 ------
 
-If you use ImputeGAP in your research, please cite the paper:
+If you use ImputeGAP in your research, please cite these papers:
 
 .. code-block:: bash
 
@@ -153,8 +153,6 @@ If you use ImputeGAP in your research, please cite the paper:
 .. raw:: html
 
    <br>
-
-We also invite you to cite our tutorial paper, which will be presented at the 2025 `KDD Conference <https://kdd2025.kdd.org/>`_.
 
 .. code-block:: bash
 
@@ -180,6 +178,7 @@ We also invite you to cite our tutorial paper, which will be presented at the 20
    index
    getting_started
    tutorials
+   notebook
    datasets
    patterns
    algorithms

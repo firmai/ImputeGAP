@@ -217,6 +217,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebook.html">Notebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
@@ -284,6 +285,8 @@
 <section id="methods">
 <h3>Methods<a class="headerlink" href="#methods" title="Link to this heading">¶</a></h3>
 <dl>
+<dt>show()</dt><dd><p>Show the shap result plot</p>
+</dd>
 <dt>load_configuration(file_path=None)</dt><dd><p>Load categories and features from a TOML file.</p>
 </dd>
 <dt>extractor_pycatch(data, features_categories, features_list, do_catch24=True)</dt><dd><p>Extract features from time series data using pycatch22.</p>
@@ -601,6 +604,12 @@ to generate explanations for the imputation results, which are logged in a local
 </section>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="imputegap.recovery.explainer.Explainer.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/recovery/explainer.html#Explainer.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.explainer.Explainer.show" title="Link to this definition">¶</a></dt>
+<dd><p>Display the explainer plot for shap</p>
+</dd></dl>
+
 </section>
 </dd></dl>
 
@@ -674,6 +683,7 @@ to generate explanations for the imputation results, which are logged in a local
 <li><a class="reference internal" href="#imputegap.recovery.explainer.Explainer.load_configuration"><code class="docutils literal notranslate"><span class="pre">Explainer.load_configuration()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.explainer.Explainer.print"><code class="docutils literal notranslate"><span class="pre">Explainer.print()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.recovery.explainer.Explainer.shap_explainer"><code class="docutils literal notranslate"><span class="pre">Explainer.shap_explainer()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.recovery.explainer.Explainer.show"><code class="docutils literal notranslate"><span class="pre">Explainer.show()</span></code></a></li>
 </ul>
 </li>
 </ul>

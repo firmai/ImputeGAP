@@ -23,6 +23,9 @@ class Explainer:
 
     Methods
     -------
+    show()
+        Show the shap result plot
+
     load_configuration(file_path=None)
         Load categories and features from a TOML file.
 
@@ -62,6 +65,20 @@ class Explainer:
         self.shap_values = None
         self.shap_details = None
         self.plots = None
+
+    def show(self):
+        """
+        Display the explainer plot for shap
+        """
+
+        if self.plots is not None:
+            plt.close("all")
+            shval, x_test, optimal_display = self.plots
+            shap.summary_plot(shval, x_test, plot_size=(25, 10), feature_names=optimal_display)
+        else:
+            print("(EXP) No plots saved in the object.")
+
+
 
     def load_configuration(self, file_path=None):
         """
@@ -485,6 +502,8 @@ class Explainer:
         for names in range(0, np.array(x_test).shape[0]):
             series_names.append("Series " + str(names + np.array(x_train).shape[0]))
 
+        self.plots = (shval, x_test, optimal_display)
+
         shap.summary_plot(shval, x_test, plot_size=(25, 10), feature_names=optimal_display, show=display)
         alpha = os.path.join(path_file + file + "_" + algorithm + "_" + extractor + "_shap_all.png")
         plt.title("SHAP Details Results")
@@ -615,7 +634,6 @@ class Explainer:
         plt.title("SHAP Aggregation Results")
         plt.gca().axes.get_xaxis().set_visible(False)
         plt.savefig(alpha)
-        self.plots = plt
         plt.close()
         alphas.append(alpha)
 

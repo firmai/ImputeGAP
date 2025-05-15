@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Datasets" href="datasets.html" /><link rel="prev" title="Getting Started" href="getting_started.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Notebook" href="notebook.html" /><link rel="prev" title="Getting Started" href="getting_started.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
         <title>Tutorials - ImputeGAP 1.0.9 Documentation</title>
@@ -217,6 +217,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebook.html">Notebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
@@ -436,7 +437,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <p>The benchmarking module can be utilized as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.benchmark</span><span class="w"> </span><span class="kn">import</span> <span class="n">Benchmark</span>
 
-<span class="n">my_algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SoftImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;MeanImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;CDRec&quot;</span><span class="p">]</span>
+<span class="n">my_algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SoftImpute&quot;</span><span class="p">,</span> <span class="s2">&quot;MeanImpute&quot;</span><span class="p">]</span>
 
 <span class="n">my_opt</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;default_params&quot;</span><span class="p">]</span>
 
@@ -487,7 +488,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">()</span>
 
 <span class="c1"># compute and print the downstream results</span>
-<span class="n">downstream_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;forecast&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;hw-add&quot;</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">:</span> <span class="s2">&quot;ZeroImpute&quot;</span><span class="p">}</span>
+<span class="n">downstream_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;forecast&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;hw-add&quot;</span><span class="p">,</span> <span class="s2">&quot;comparator&quot;</span><span class="p">:</span> <span class="s2">&quot;ZeroImpute&quot;</span><span class="p">}</span>
 <span class="n">imputer</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">imputer</span><span class="o">.</span><span class="n">recov_data</span><span class="p">,</span> <span class="n">downstream</span><span class="o">=</span><span class="n">downstream_config</span><span class="p">)</span>
 <span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Downstream results&quot;</span><span class="p">)</span>
 </pre></div>
@@ -529,16 +530,6 @@ The list of algorithms is described <a class="reference external" href="algorith
 </pre></div>
 </div>
 <br></section>
-<section id="notebook">
-<span id="id9"></span><h2>Notebook<a class="headerlink" href="#notebook" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP provides Jupyter notebooks available through the following links:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_imputation_pipeline.ipynb">01_imputegap_imputation_pipeline</a></p></li>
-<li><p><a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/002_imputegap_advanced_analysis.ipynb">02_imputegap_advanced_analysis</a></p></li>
-</ul>
-</div></blockquote>
-<br></section>
 </section>
 
         </article>
@@ -546,12 +537,12 @@ The list of algorithms is described <a class="reference external" href="algorith
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="datasets.html">
+          <a class="next-page" href="notebook.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Datasets</div>
+                <div class="title">Notebook</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -604,7 +595,6 @@ The list of algorithms is described <a class="reference external" href="algorith
 <li><a class="reference internal" href="#benchmark">Benchmark</a></li>
 <li><a class="reference internal" href="#downstream">Downstream</a></li>
 <li><a class="reference internal" href="#explainer">Explainer</a></li>
-<li><a class="reference internal" href="#notebook">Notebook</a></li>
 </ul>
 </li>
 </ul>
