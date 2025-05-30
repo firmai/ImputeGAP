@@ -1,97 +1,94 @@
-########################################
-## code copied and adapted from:      ##
-## https://github.com/lmluzern/BRITS/ ##
-########################################
+# ===============================================================================================================
+# SOURCE: https://github.com/caow13/BRITS
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://papers.nips.cc/paper_files/paper/2018/hash/734e6bfcd358e25ac1db0a4241b95651-Abstract.html
+# ===============================================================================================================
+
 
 import torch
 import torch.optim as optim
 
 import numpy as np
+import imputegap.wrapper.AlgoPython.BRITS.utils as utilsX
+import imputegap.wrapper.AlgoPython.BRITS.models as models
+import imputegap.wrapper.AlgoPython.BRITS.data_loader as data_loader
+from imputegap.tools import utils
 
-from . import utils
-from . import models
-from . import data_loader
+from imputegap.wrapper.AlgoPython.BRITS.data_prep_tf import prepare_dat
 
-from .data_prep_tf import prepare_dat
 
-def train(model, input, epochs, batch_size, verbose=True):
-    optimizer = optim.Adam(model.parameters(), lr = 1e-3)
-    data_iter = data_loader.get_loader(input, batch_size = batch_size)
-
+def train(model, input, batch_size, epochs, verbose=True):
+    optimizer = optim.Adam(model.parameters(), lr=1e-3)
+    data_iter = data_loader.get_loader(input, batch_size=batch_size)
     for epoch in range(0, epochs):
         model.train()
-
         run_loss = 0.0
 
-        for idx, data in enumerate(data_iter):
-            data = utils.to_var(data)
+        for idx, data in enumerate(data_iter):  # 4
+            data = utilsX.to_var(data)
             ret = model.run_on_batch(data, optimizer)
-
             run_loss += ret['loss'].data
 
+            forward = data["forward"]
+            values = forward['values']
+
             if verbose:
-                print ('\t\t\t\r\t\t\t\t\t\tProgress epoch {}, {:.2f}%, average loss {}'.format(epoch, (idx + 1) * 100.0 / len(data_iter), run_loss / (idx + 1.0)))
-    #end for    
-    
+                print('\r Progress epoch {}, {:.2f}%, batch {} [{}], average loss {}'.format(epoch, (idx + 1) * 100.0 / len(data_iter), idx, values.shape, run_loss / (idx + 1.0)))
+
     return (model, data_iter)
-#end function
+
 
 def evaluate(model, val_iter):
     model.eval()
-
     imputations = []
 
     for idx, data in enumerate(val_iter):
-        data = utils.to_var(data)
+        data = utilsX.to_var(data)
         ret = model.run_on_batch(data, None)
-        
         imputation = ret['imputations'].data.cpu().numpy()
         imputations += imputation.tolist()
-    #end for
 
     imputations = np.asarray(imputations)
     return imputations
-#end function
 
-def brits_recovery(incomp_data, model="brits", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=36, verbose=True):
-    matrix = incomp_data
-    n = matrix.shape[1]
-    prepare_dat(incomp_data, "incomp_data.tmp")
 
-    if model != "brits_i_univ":
-        if verbose:
-            print("(IMPUTATION) BRITS: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
-                  ") for epoch ", epoch, ", batch_size ", batch_size, ", nbr features", nbr_features,
-                  ", seq_length ", seq_length, ", and hidden_layers ", hidden_layers, "...")
+def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=36, seed=42, verbose=True):
+    recov = np.copy(incomp_data)
+    m_mask = np.isnan(incomp_data)
 
-        model = getattr(models, model).Model(batch_size, nbr_features, hidden_layers, seq_length)
-    else:
-        if verbose:
-            print("(IMPUTATION) BRITS-UNIV: Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1],
-                  ") for epoch ", epoch, ", batch_size ", batch_size, ", nbr features", 1,
-                  ", seq_length ", n, ", and hidden_layers ", hidden_layers, "...")
+    batch_size = utils.validate_batch_size(batch_size=batch_size, m=incomp_data.shape[0], divisor=2, min_val=4, verbose=verbose)
 
-        model = getattr(models, model).Model(batch_size, 1, hidden_layers, n)
+    # ==================================================================================================================
+    cont_data_matrix, mask_train, mask_test, mask_valid = utils.dl_integration_transformation(incomp_data, tr_ratio=0.8, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=-99999, offset=0.05, seed=seed, verbose=False)
+    # ==================================================================================================================
+
+    prepare_dat(cont_data_matrix, "brits.tmp", mask_train, mask_test, mask_valid)
+
+    if incomp_data.ndim == 2 and nbr_features != 1:
+        nbr_features = 1
+
+    print(f"(IMPUTATION) {model.upper()}\n\tMatrix Shape: {incomp_data.shape[0]}, {incomp_data.shape[1]}"
+          f"\n\tepoch: {epoch}\n\tbatch_size: {batch_size}\n\tnbr_features: {nbr_features}\n\tseq_length: {seq_length}"
+          f"\n\thidden_layers: {hidden_layers}\n")
+
+    model = getattr(models, model).Model(batch_size, nbr_features, hidden_layers, seq_length)
 
     if torch.cuda.is_available():
         model = model.cuda()
 
-    (model, data_iter) = train(model, "incomp_data.tmp", epoch, batch_size, verbose)
+    (model, data_iter) = train(model, "brits.tmp", batch_size, epoch, verbose)
+
     res = evaluate(model, data_iter)
 
-    recov = np.squeeze(np.array(res))
+    recovery = np.squeeze(np.array(res))
 
     if verbose:
-        print("recov", recov.shape)
+        print("recovery", recovery.shape)
 
-    nan_mask = ~np.isnan(incomp_data)
-    recov[nan_mask] = incomp_data[nan_mask]
+    recov[m_mask] = recovery[m_mask]
 
     return recov
-
-
-    #for i in range(0, len(res)):
-    #    res_l = res[i, :n];
-    #    matrix[:, i] = res_l.reshape(n);
-    #end for
-#end function

@@ -1,22 +1,26 @@
 import torch
 import torch.nn as nn
 
+
 from torch.autograd import Variable
-from . import rits
+
+
+
+import imputegap.wrapper.AlgoPython.BRITS.models.rits as rits
 
 
 class Model(nn.Module):
-    def __init__(self, batch_size, nbr_features, hidden_layers, seq_length):
+    def __init__(self, batch_size, nbr_features, hidden_layers, seq_len):
         super(Model, self).__init__()
         self.batch_size = batch_size
         self.nbr_features = nbr_features
         self.hidden_layers = hidden_layers
-        self.seq_length = seq_length
+        self.seq_len = seq_len
         self.build()
 
     def build(self):
-        self.rits_f = rits.Model(self.batch_size, self.nbr_features, self.hidden_layers, self.seq_length)
-        self.rits_b = rits.Model(self.batch_size, self.nbr_features, self.hidden_layers, self.seq_length)
+        self.rits_f = rits.Model(self.batch_size, self.nbr_features, self.hidden_layers, self.seq_len)
+        self.rits_b = rits.Model(self.batch_size, self.nbr_features, self.hidden_layers, self.seq_len)
 
     def forward(self, data):
         ret_f = self.rits_f(data, 'forward')

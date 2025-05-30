@@ -1,12 +1,23 @@
-#!/usr/bin/python
+# ===============================================================================================================
+# SOURCE: https://github.com/pbansal5/DeepMVI
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2103.01600
+# ===============================================================================================================
+
 import numpy as np
 import time
 
-from transformer import transformer_recovery
+from imputegap.wrapper.AlgoPython.DeepMVI.transformer import transformer_recovery
 
 def recover_matrix(matrix):
     np.save('org_matrix',matrix)
     temp = transformer_recovery(matrix)
+    # temp = mean_recovery(matrix)
+    # temp = zero_recovery(matrix)
     np.save('recovered_matrix',temp)
     return temp
 

@@ -40,13 +40,14 @@ max_iter = 100
 
 [bit_graph]
 node_number = -1
-kernel_set = [1]
-dropout = 0.1
+kernel_set = [2,3,6,7]
+dropout = 0.05
 subgraph_size = 5
 node_dim = 3
-seq_len = 1
+seq_len = -1
 lr = 0.001
-epoch = 10
+batch_size = 32
+epoch = 50
 seed = 42
 
 # ALGORITHM DEFAULT VALUES : MACHINE LEARNING
@@ -98,15 +99,15 @@ poly_order = 2
 
 # ALGORITHM DEFAULT VALUES : DEEP LEARNING
 [mrnn]
-hidden_dim = 10
+hidden_dim = -1
 learning_rate = 0.01
-iterations = 50
+iterations = 20
 sequence_length = 7
 
 [brits]
 model = "brits_i_univ"
-epoch = 10
-batch_size = 64
+epoch = 100
+batch_size = 24
 nbr_features = 1
 hidden_layers = 64
 
@@ -142,7 +143,7 @@ tol = 5
 random_init = false
 
 [gain]
-batch_size = 32
+batch_size = 10
 hint_rate = 0.9
 alpha = 10
 epoch = 100

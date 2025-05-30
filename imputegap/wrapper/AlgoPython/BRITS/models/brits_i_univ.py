@@ -1,22 +1,34 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/caow13/BRITS
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://papers.nips.cc/paper_files/paper/2018/hash/734e6bfcd358e25ac1db0a4241b95651-Abstract.html
+# ===============================================================================================================
+
+
 import torch
 import torch.nn as nn
 
 from torch.autograd import Variable
 
-from . import rits_i_univ
+import imputegap.wrapper.AlgoPython.BRITS.models.rits_i_univ as rits_i_univ
+
 
 class Model(nn.Module):
-    def __init__(self, batch_size, nbr_features, hidden_layers, seq_length):
+    def __init__(self, batch_size, nbr_features, hidden_layers, seq_len):
         super(Model, self).__init__()
         self.batch_size = batch_size
-        self.seq_length = seq_length
         self.nbr_features = nbr_features
         self.hidden_layers = hidden_layers
+        self.seq_len = seq_len
         self.build()
 
     def build(self):
-        self.rits_f = rits_i_univ.Model(self.batch_size, self.nbr_features, self.hidden_layers, self.seq_length)
-        self.rits_b = rits_i_univ.Model(self.batch_size, self.nbr_features, self.hidden_layers, self.seq_length)
+        self.rits_f = rits_i_univ.Model(self.batch_size, self.nbr_features, self.hidden_layers, self.seq_len)
+        self.rits_b = rits_i_univ.Model(self.batch_size, self.nbr_features, self.hidden_layers, self.seq_len)
 
     def forward(self, data):
         ret_f = self.rits_f(data, 'forward')
@@ -64,8 +76,8 @@ class Model(nn.Module):
         return ret
 
     def run_on_batch(self, data, optimizer):
-        ret = self(data)
 
+        ret = self(data)
         if optimizer is not None:
             optimizer.zero_grad()
             ret['loss'].backward()

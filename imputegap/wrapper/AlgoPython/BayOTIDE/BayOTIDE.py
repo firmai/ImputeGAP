@@ -21,7 +21,6 @@ import tqdm
 import yaml
 torch.random.manual_seed(300)
 from imputegap.wrapper.AlgoPython.BayOTIDE import utils_BayOTIDE, model_BayOTIDE
-import time
 import warnings
 warnings.filterwarnings("ignore")
 torch.random.manual_seed(300)
@@ -79,171 +78,7 @@ def generate_mask(data_matrix, drop_rate=0.8, valid_rate=0.2, verbose=False):
     return mask_train, mask_test, mask_valid
 
 
-def generate_random_mask(gt, mask_test, mask_valid, droprate=0.2, verbose=False, seed=300):
-    """
-    Generate a random training mask over the non-NaN entries of gt, excluding positions
-    already present in the test and validation masks.
-
-    Parameters
-    ----------
-    gt : numpy.ndarray
-        Ground truth data (no NaNs).
-    mask_test : numpy.ndarray
-        Binary mask indicating test positions.
-    mask_valid : numpy.ndarray
-        Binary mask indicating validation positions.
-    droprate : float
-        Proportion of eligible entries to include in the training mask.
-    verbose : bool
-        Whether to print debug info.
-    seed : int, optional
-        Random seed for reproducibility.
-
-    Returns
-    -------
-    numpy.ndarray
-        Binary mask indicating training positions.
-    """
-    assert gt.shape == mask_test.shape == mask_valid.shape, "All input matrices must have the same shape"
-
-    if seed is not None:
-        np.random.seed(seed)
-
-    # Valid positions: non-NaN and not in test/valid masks
-    occupied_mask = (mask_test + mask_valid).astype(bool)
-    eligible_mask = (~np.isnan(gt)) & (~occupied_mask)
-    eligible_indices = np.argwhere(eligible_mask)
-
-    n_train = int(len(eligible_indices) * droprate)
-
-    np.random.shuffle(eligible_indices)
-    selected_indices = eligible_indices[:n_train]
-
-    mask_train = np.zeros_like(gt, dtype=np.uint8)
-    mask_train[tuple(selected_indices.T)] = 1
-
-    if verbose:
-        print(f"\n4.d) test mask: {mask_test.sum()} values")
-        print(f"4.d) valid mask: {mask_valid.sum()} values")
-        print(f"4.d) eligible entries: {len(eligible_indices)}")
-        print(f"4.d) selected training entries: {n_train}\n")
-
-    # Sanity check: no overlap between training and test masks
-    overlap = np.logical_and(mask_train, mask_test).sum()
-    assert overlap == 0, f"Overlap detected between training and test masks: {overlap} entries."
-
-    # Sanity check: no overlap between training and test masks
-    overlap = np.logical_and(mask_train, mask_valid).sum()
-    assert overlap == 0, f"Overlap detected between training and test masks: {overlap} entries."
-
-    return mask_train
-
-
-
-
-def generate_mask_imputegap(data_matrix, test_rate=0.8, valid_rate=0.2, verbose=False, seed=300):
-    """
-    Dispatch NaN positions in data_matrix to test and validation masks only.
-
-    Parameters
-    ----------
-    data_matrix : numpy.ndarray
-        Input matrix containing NaNs to be split.
-    test_rate : float
-        Proportion of NaNs to assign to the test set (default is 0.8).
-    valid_rate : float
-        Proportion of NaNs to assign to the validation set (default is 0.2).
-        test_rate + valid_rate must equal 1.0.
-    verbose : bool
-        Whether to print debug info.
-    seed : int, optional
-        Random seed for reproducibility.
-
-    Returns
-    -------
-    tuple
-        test_mask : numpy.ndarray
-            Binary mask indicating positions of NaNs in the test set.
-        valid_mask : numpy.ndarray
-            Binary mask indicating positions of NaNs in the validation set.
-        n_nan : int
-            Total number of NaN values found in the input matrix.
-    """
-    assert np.isclose(test_rate + valid_rate, 1.0), "test_rate and valid_rate must sum to 1.0"
-
-    if seed is not None:
-        np.random.seed(seed)
-
-    nan_mask = np.isnan(data_matrix)
-    nan_indices = np.argwhere(nan_mask)
-    np.random.shuffle(nan_indices)
-
-    n_nan = len(nan_indices)
-    n_test = int(n_nan * test_rate)
-    n_valid = n_nan - n_test
-
-    if verbose:
-        print(f"\n4.a) creating mask (testing, validation): Total NaNs = {n_nan}")
-        print(f"4.b) creating mask: Assigned to test = {n_test}")
-        print(f"4.c) creating mask: Assigned to valid = {n_valid}\n")
-
-    test_idx = nan_indices[:n_test]
-    valid_idx = nan_indices[n_test:]
-
-    mask_test = np.zeros_like(data_matrix, dtype=np.uint8)
-    mask_valid = np.zeros_like(data_matrix, dtype=np.uint8)
-
-    mask_test[tuple(test_idx.T)] = 1
-    mask_valid[tuple(valid_idx.T)] = 1
-
-    return mask_test, mask_valid, n_nan
-
-
-
-def prepare_testing_set(incomp_m, tr_ratio, seed=None):
-
-    if seed is not None:
-        np.random.seed(seed)
-
-    data_matrix_cont = incomp_m.copy()
-
-    target_ratio = 1 - tr_ratio
-    total_values = data_matrix_cont.size
-    target_n_nan = int(target_ratio * total_values)
-
-    # 2) Current number of NaNs
-    current_n_nan = np.isnan(data_matrix_cont).sum()
-    n_new_nans = target_n_nan - current_n_nan
-
-    # 2) Get available (non-NaN) indices as 2D coordinates
-    available_indices = np.argwhere(~np.isnan(data_matrix_cont))
-
-    # 3) Randomly pick indices to contaminate
-    if n_new_nans > 0:
-        chosen_indices = available_indices[:n_new_nans]
-        for i, j in chosen_indices:
-            data_matrix_cont[i, j] = np.nan
-
-    # 4) check ratio
-    n_total = data_matrix_cont.size
-    n_nan = np.isnan(data_matrix_cont).sum()
-    n_not_nan = n_total - n_nan
-
-    # Compute actual ratios
-    missing_ratio = n_nan / n_total
-    observed_ratio = n_not_nan / n_total
-
-    # Check if they match expectations (within a small tolerance)
-    assert abs(missing_ratio - target_ratio) < 0.01, f"Missing ratio {missing_ratio} is not {target_ratio}"
-    assert abs(observed_ratio - tr_ratio) < 0.01, f"Missing ratio {observed_ratio} is not {tr_ratio}"
-
-    # Create the new mask
-    new_mask = np.isnan(data_matrix_cont)
-
-    return data_matrix_cont, new_mask
-
-
-def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, tr_ratio=0.6, config=None, args=None, verbose=True):
+def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, tr_ratio=0.8, config=None, args=None, verbose=True):
     """
     Run BayOTIDE model using a provided NumPy data matrix instead of loading from a file.
 
@@ -262,45 +97,26 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     :return: Imputed time series matrix (N x T).
     """
 
-    gt_data_matrix = incomp_m.copy()
-    cont_data_matrix = incomp_m.copy()
     final_result = incomp_m.copy()
     mask_original_nan = np.isnan(incomp_m)
-    original_missing_ratio = utils.get_missing_ratio(cont_data_matrix)
 
     nan_replacement             = 0
     artificial_training_drop    = 0.4
     ts_ratio                    = 0.9
     val_ratio                   = 1-ts_ratio
+    offset                      = 0.05
 
-    if verbose:
-        print(f"\n1.a) original missing ratio = {original_missing_ratio:.2%}")
-        print(f"1.b) original missing numbers = {np.sum(mask_original_nan)}")
+    # building test set ================================================================================================
+    gt_data_matrix = incomp_m.copy()
+    cont_data_matrix = incomp_m.copy()
 
-    if abs((1-tr_ratio) - original_missing_ratio) > 0.01:
-        cont_data_matrix, new_mask = prepare_testing_set(cont_data_matrix, tr_ratio)
-
-        if verbose:
-            print(f"1.c) building of the test set to reach a fix ratio of {1 - tr_ratio:.2%}...")
-            final_ratio = utils.get_missing_ratio(cont_data_matrix)
-            print(f"1.d) final artificially missing ratio for test set = {final_ratio:.2%}")
-            print(f"1.e) final artificially missing numbers = {np.sum(new_mask)}\n")
-
-    else:
-        new_mask = mask_original_nan.copy()
-
-    if verbose:
-        print("\n2.a) reset all testing matrix values to 0 to prevent data leakage.")
-    gt_data_matrix[new_mask] = nan_replacement
-    assert not np.isnan(gt_data_matrix).any(), "gt_data_matrix still contains NaNs"
-    assert (gt_data_matrix == nan_replacement).any(), "gt_data_matrix does not contain any zeros"
+    original_missing_ratio = utils.get_missing_ratio(cont_data_matrix)
+    cont_data_matrix, new_mask = utils.prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, tr_ratio=tr_ratio, verbose=False)
+    gt_data_matrix = utils.prevent_leakage(gt_data_matrix, new_mask, nan_replacement, False)
+    # building test set ================================================================================================
 
     sub_tensor = torch.from_numpy(gt_data_matrix).float()
     zero_ratio = (sub_tensor == nan_replacement).sum().item() / sub_tensor.numel()
-
-    if verbose:
-        print(f"2.b) check ratios : {zero_ratio = }")
-        print(f"2.c) convert matrix to tensor (torch) : {sub_tensor.shape = }\n")
 
     if config is None:
         # Get directory of current file
@@ -311,7 +127,7 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
             config = yaml.safe_load(f)
 
         if verbose:
-            print(f"\n3.a) loading of the configuration file : {config_path = }")
+            print(f"\nloading of the configuration file : {config_path}")
 
     # Conditional updates
     if K_trend is not None:
@@ -333,7 +149,7 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     if verbose:
-        print(f"3.b) Using device: {device}\n")
+        print(f"Using device: {device}\n")
 
     # Set device in config
     config["device"] = device
@@ -346,12 +162,12 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     data_save['time_uni'] = np.linspace(0, 1, sub_tensor.shape[1])
 
     for i in range(config["num_fold"]):
-        mask_test, mask_valid, nbr_nans = generate_mask_imputegap(cont_data_matrix, test_rate=ts_ratio, valid_rate=val_ratio, verbose=verbose, seed=seed)
-        mask_train = generate_random_mask(gt=gt_data_matrix, mask_test=mask_test, mask_valid=mask_valid, droprate=artificial_training_drop, verbose=verbose, seed=seed)
-        data_save['data'].append({'mask_train': mask_train, 'mask_test': mask_test, 'mask_valid': mask_valid})
+        # building masks================================================================================================
+        mask_test, mask_valid, nbr_nans = utils.split_mask_bwt_test_valid(cont_data_matrix, test_rate=ts_ratio, valid_rate=val_ratio, verbose=False, seed=seed)
+        mask_train = utils.generate_random_mask(gt=gt_data_matrix, mask_test=mask_test, mask_valid=mask_valid, droprate=artificial_training_drop, offset=offset, verbose=False, seed=seed)
+        # building masks================================================================================================
 
-    if verbose:
-        print(f"4.e) check : mask_test.sum() / mask_train.size = {mask_test.sum() / mask_train.size}")
+        data_save['data'].append({'mask_train': mask_train, 'mask_test': mask_test, 'mask_valid': mask_valid})
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(base_dir, config["data_path"])
@@ -406,7 +222,7 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
                     print("T_id = {}, train_rmse = {:.3f}, test_rmse= {:.3f}".format(T_id, loss_dict["train_RMSE"], loss_dict["test_RMSE"]))
 
     if verbose:
-        print('\n\n5.a) smoothing back...')
+        print('\nsmoothing back...')
 
     model.smooth()
     model.post_update_U_after_smooth(0)
@@ -415,7 +231,7 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     pred, loss_dict = model.model_test(T_id)
 
     if verbose:
-        print(f"{pred.shape =}")
+        print(f"\t{pred.shape =}")
 
     # Fill NaNs in original data
     if isinstance(pred, torch.Tensor):
@@ -424,7 +240,7 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     final_result[mask_original_nan] = pred[mask_original_nan]
 
     if verbose:
-        print(f"{final_result.shape =}")
+        print(f"\t{final_result.shape =}")
 
     return final_result
 

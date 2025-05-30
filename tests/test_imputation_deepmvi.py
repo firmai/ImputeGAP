@@ -14,18 +14,19 @@ class TestDeepMVI(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10,
-                                              offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data)
 
         algo = Imputation.DeepLearning.DeepMVI(incomp_data).impute()
         algo.score(ts_1.data)
         metrics = algo.metrics
 
+        print(f"{metrics}")
+
         expected_metrics = {
-            "RMSE": 0.14637256541505142,
-            "MAE": 0.11345522331290149,
-            "MI": 0.35551234902424306,
-            "CORRELATION": 0.7168595846429486
+            "RMSE": 0.14590414996535767,
+            "MAE": 0.10577546184718635,
+            "MI": 0.4777684710034327,
+            "CORRELATION": 0.7433559069460258
         }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.1,

@@ -24,10 +24,10 @@ class TestBitGraph(unittest.TestCase):
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.19658792092292338,
-            "MAE": 0.16008693373135194,
-            "MI": 0.18238122193233125,
-            "CORRELATION": 0.3772340675711577
+            "RMSE": 0.20218134150858114,
+            "MAE": 0.16291651426264953,
+            "MI": 0.1489051542044696,
+            "CORRELATION": 0.3801492668587883
         }
 
         ts_1.print_results(algo.metrics, algo.algorithm)
@@ -54,17 +54,17 @@ class TestBitGraph(unittest.TestCase):
 
         incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data)
 
-        algo = Imputation.DeepLearning.BitGraph(incomp_data).impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "epoch":2, "seed":42})  # user defined> or
+        algo = Imputation.DeepLearning.BitGraph(incomp_data).impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "batch_size":16, "epoch":2, "seed":42})  # user defined> or
 
         algo.incomp_data = incomp_data
         algo.score(input_data=ts_1.data, recov_data=algo.recov_data)
         metrics = algo.metrics
 
         expected_metrics = {
-            "RMSE": 0.2107371692641671,
-            "MAE": 0.1685821624473301,
-            "MI": 0.17671310912326704,
-            "CORRELATION": 0.4366175047451947
+            "RMSE": 0.2182651712250408,
+            "MAE": 0.17166088897143494,
+            "MI": 0.1269828471528427,
+            "CORRELATION": 0.22966772152934922
         }
 
         ts_1.print_results(algo.metrics, algo.algorithm)

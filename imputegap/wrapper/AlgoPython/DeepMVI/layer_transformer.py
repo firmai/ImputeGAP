@@ -1,8 +1,17 @@
-from typing import Optional, Any
+# ===============================================================================================================
+# SOURCE: https://github.com/pbansal5/DeepMVI
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2103.01600
+# ===============================================================================================================
 
+from typing import Optional
 import torch
 from torch import Tensor
-from torch.nn import functional as F    
+from torch.nn import functional as F
     
 class MultiheadAttention(torch.nn.Module):
     def __init__(self,d_query:int,d_key:int,d_value:int, nhead:int, dropout=0.1):

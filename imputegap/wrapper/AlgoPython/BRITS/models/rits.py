@@ -1,11 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
 from torch.autograd import Variable
 from torch.nn.parameter import Parameter
 
 import math
+
 
 def binary_cross_entropy_with_logits(input, target, weight=None, size_average=True, reduce=True):
     if not (target.size() == input.size()):
@@ -81,27 +81,27 @@ class TemporalDecay(nn.Module):
         return gamma
 
 class Model(nn.Module):
-    def __init__(self, batch_size, nbr_features, hidden_layers, seq_length):
+    def __init__(self, batch_size, nbr_features, hidden_layers, seq_len):
         super(Model, self).__init__()
         self.batch_size = batch_size
         self.nbr_features = nbr_features
-        self.seq_length = seq_length
+        self.seq_length = seq_len
         self.hidden_layers = hidden_layers
         self.build()
 
     def build(self):
         self.rnn_cell = nn.LSTMCell(self.nbr_features * 2, self.hidden_layers)
 
-        self.temp_decay_h = TemporalDecay(input_size=self.nbr_features, output_size=self.hidden_layers, diag=False)
-        self.temp_decay_x = TemporalDecay(input_size=self.nbr_features, output_size=self.nbr_features, diag=True)
+        self.temp_decay_h = TemporalDecay(input_size = self.nbr_features, output_size = self.hidden_layers, diag = False)
+        self.temp_decay_x = TemporalDecay(input_size = self.nbr_features, output_size = self.nbr_features, diag = True)
 
         self.hist_reg = nn.Linear(self.hidden_layers, self.nbr_features)
         self.feat_reg = FeatureRegression(self.nbr_features)
 
         self.weight_combine = nn.Linear(self.nbr_features * 2, self.nbr_features)
 
-        self.dropout = nn.Dropout(p=0.25)
-        self.out = nn.Linear(self.hidden_layers, self.nbr_features)
+        self.dropout = nn.Dropout(p = 0.25)
+        self.out = nn.Linear(self.hidden_layers, 1)
 
     def forward(self, data, direct):
         # Original sequence with 24 time steps
@@ -122,7 +122,6 @@ class Model(nn.Module):
             h, c = h.cuda(), c.cuda()
 
         x_loss = 0.0
-        y_loss = 0.0
 
         imputations = []
 

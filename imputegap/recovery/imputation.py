@@ -88,7 +88,7 @@ class BaseImputer:
             >>> imputer.score(ts.data, imputer.recov_data) # upstream
             >>> imputer.score(ts.data, imputer.recov_data, {"task": "forecast", "model": "hw-add", "comparator": "ZeroImputation"}) # downstream
         """
-        if self.recov_data is None:
+        if recov_data is not None:
             self.recov_data = recov_data
 
         if isinstance(downstream, dict) and downstream is not None:
@@ -1735,6 +1735,10 @@ class Imputation:
                 """
                 from imputegap.algorithms.mrnn import mrnn
 
+                if not (self._check_dl_split(split_ratio=0.8)):
+                    self.recov_data = self.incomp_data
+                    return
+
                 if params is not None:
                     hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_def, params)
                 else:
@@ -1800,6 +1804,10 @@ class Imputation:
                 """
                 from imputegap.algorithms.brits import brits
 
+                if not (self._check_dl_split(split_ratio=0.8)):
+                    self.recov_data = self.incomp_data
+                    return
+
                 if params is not None:
                     model, epoch, batch_size, nbr_features, hidden_layer = self._check_params(user_def, params)
                 else:
@@ -1862,6 +1870,10 @@ class Imputation:
                 https://github.com/pbansal5/DeepMVI
                 """
                 from imputegap.algorithms.deep_mvi import deep_mvi
+
+                if not (self._check_dl_split(split_ratio=0.8)):
+                    self.recov_data = self.incomp_data
+                    return
 
                 if params is not None:
                     max_epoch, patience, lr = self._check_params(user_def, params)
@@ -2460,7 +2472,7 @@ class Imputation:
                 -------
                     >>> bit_graph_imputer = Imputation.DeepLearning.BitGraph(incomp_data)
                     >>> bit_graph_imputer.impute()  # default parameters for imputation > or
-                    >>> bit_graph_imputer.impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "epoch":10, "seed":42})  # user defined> or
+                    >>> bit_graph_imputer.impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "batch_size": 32, "epoch":10, "seed":42})  # user defined> or
                     >>> bit_graph_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
                     >>> recov_data = bit_graph_imputer.recov_data
 
@@ -2473,9 +2485,9 @@ class Imputation:
                 from imputegap.algorithms.bit_graph import bit_graph
 
                 if params is not None:
-                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed = self._check_params(user_def, params)
+                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed = self._check_params(user_def, params)
                 else:
-                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
                 self.recov_data = bit_graph(incomp_data=self.incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, seed=seed, logs=self.logs, verbose=self.verbose)
 

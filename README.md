@@ -104,7 +104,7 @@ In detail, the package provides:
 
 ## System Requirements
 
-ImputeGAP is compatible with Python>=3.10 (except 3.13) and Unix-compatible environment.
+ImputeGAP runs with Python>=3.10 (except 3.13) and Unix-compatible environment.
 
 <i>To create and set up an environment with Python 3.12, please refer to the [installation guide](https://imputegap.readthedocs.io/en/latest/getting_started.html).</i>
 
@@ -116,7 +116,7 @@ ImputeGAP is compatible with Python>=3.10 (except 3.13) and Unix-compatible envi
 
 ### pip
 
-To install the latest version of ImputeGAP from PyPI, run the following command:
+To install/update the latest version of ImputeGAP, run the following command:
 
 ```bash
 pip install imputegap
@@ -489,8 +489,8 @@ print(f"ImputeGAP features extractors : {ts.extractors}")
 
 ImputeGAP provides Jupyter notebooks available through the following links:
 
-- [Jupyter: Imputegap Imputation Pipeline Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_imputation_pipeline.ipynb)
-- [Jupyter: Imputegap Advanced Analysis Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_advanced_analysis.ipynb)
+- [Jupyter: Imputegap Imputation Pipeline Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/01_imputegap_pipeline_creation.ipynb)
+- [Jupyter: Imputegap Advanced Analysis Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/02_imputegap_advanced_analytics.ipynb)
 
 
 
@@ -562,13 +562,17 @@ If you use ImputeGAP in your research, please cite these papers:
         Quentin is a PhD student jointly supervised by
         <a href="https://exascale.info/members/mourad-khayati/">Mourad Khayati</a> and
         <a href="https://exascale.info/phil/">Philippe Cudré-Mauroux</a> at the Department of Computer Science of the
-        <a href="https://www.unifr.ch/home/en/">University of Fribourg</a>, Switzerland.<br> He completed his Master’s degree in Digital Neuroscience at the University of Fribourg.
+        <a href="https://www.unifr.ch/home/en/">University of Fribourg</a>, Switzerland. He completed his Master’s degree in Digital Neuroscience at the University of Fribourg.
         His research focuses on <strong>time series analytics</strong>,
         including <strong>data imputation</strong>, <strong>machine learning</strong>, and
         <strong>multimodal learning</strong>.
       </div><br>
       👉 <a href="https://exascale.info/members/quentin-nater/">Home Page</a>
     </td>
+  </tr>
+</table>
+<table>
+  <tr>
     <td width="50%" >
       <div  style="text-align: center;" >
         <a href="https://exascale.info/members/mourad-khayati/">

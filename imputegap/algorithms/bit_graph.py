@@ -1,9 +1,9 @@
 import time
 
-from imputegap.wrapper.AlgoPython.BiTGraph.main import recoveryBitGRAPH
+from imputegap.wrapper.AlgoPython.BiTGraph.recovBitGraph import recoveryBitGRAPH
 
 
-def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph_size=5, node_dim=3, seq_len=1, lr=0.001, epoch=10, seed=42, logs=True, verbose=True):
+def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph_size=5, node_dim=3, seq_len=1, lr=0.001, batch_size=32, epoch=10, seed=42, logs=True, verbose=True):
     """
     Perform imputation using Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization
 
@@ -34,6 +34,9 @@ def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph
     lr : float, optional
         Learning rate for model optimization (default: 0.001).
 
+    batch_size : int, optional
+        Size of each batch (default: 32).
+
     epoch : int, optional
         Number of training epochs (default: 10).
 
@@ -63,7 +66,7 @@ def bit_graph(incomp_data, node_number=-1, kernel_set=[1], dropout=0.1, subgraph
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoveryBitGRAPH(input=incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, seed=seed, verbose=verbose)
+    recov_data = recoveryBitGRAPH(input=incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, batch_size=batch_size, epoch=epoch, seed=seed, verbose=verbose)
 
     end_time = time.time()
     if logs and verbose:

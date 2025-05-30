@@ -1,7 +1,17 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/pbansal5/DeepMVI
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2103.01600
+# ===============================================================================================================
+
+
 import torch
 import numpy as np
 import copy
-
 from torch.nn.utils.rnn import pad_sequence
 
 class myDataset(torch.utils.data.Dataset):

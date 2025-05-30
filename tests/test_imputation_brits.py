@@ -21,11 +21,13 @@ class TestBRITS(unittest.TestCase):
         algo.score(ts_1.data)
         metrics = algo.metrics
 
+        print(f"{metrics = }")
+
         expected_metrics = {
-            "RMSE": 0.2206596615153737,
-            "MAE": 0.1746392031857582,
-            "MI": 0.03568629471794133,
-            "CORRELATION": 0.19068315619146248
+            "RMSE": 0.21065895415812347,
+            "MAE": 0.16788589129513257,
+            "MI": 0.07613975792287994,
+            "CORRELATION": -0.02139188659776089
         }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3,
@@ -53,11 +55,13 @@ class TestBRITS(unittest.TestCase):
         algo.score(ts_1.data)
         metrics = algo.metrics
 
+        print(f"{metrics = }")
+
         expected_metrics = {
-            "RMSE": 0.22713571976066324,
-            "MAE": 0.1810771874743223,
-            "MI": 0.02431473600068175,
-            "CORRELATION": 0.10694245305242461
+            "RMSE": 0.22068746824669772,
+            "MAE": 0.1750560135600045,
+            "MI": 0.03955280960548496,
+            "CORRELATION": 0.01536957369895024
         }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3,
@@ -84,11 +88,13 @@ class TestBRITS(unittest.TestCase):
         algo.score(ts_1.data)
         metrics = algo.metrics
 
+        print(f"{metrics = }")
+
         expected_metrics = {
-            "RMSE": 0.3675033082811569,
-            "MAE": 0.3092797280852962,
-            "MI": 0.020841833505307363,
-            "CORRELATION": 0.08306921217575602
+            "RMSE": 0.5103944683247291,
+            "MAE": 0.46702688641321,
+            "MI": 0.03912047856854013,
+            "CORRELATION": -0.013755102488749194
         }
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3,

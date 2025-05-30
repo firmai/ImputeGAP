@@ -1,13 +1,17 @@
-'''
-Quentin Nater (27/09/2024)
-Data Loading
-'''
+# ===============================================================================================================
+# SOURCE: https://github.com/jsyoon0823/MRNN
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://ieeexplore.ieee.org/document/8485748
+# ===============================================================================================================
 
-#%% Necessary Packages
+
 import numpy as np
 
-def Data_Loader_With_Dataset(seq_length, data):
-    # %% Normalization
+def Data_Loader_With_Dataset(seq_length, data_tr, data_ts, mask_train=None, nan_val=None, verbose=False):
     def MinMaxScaler(data):
         dmin = np.nanmin(data, 0)
         dmax = np.nanmax(data, 0)
@@ -15,86 +19,55 @@ def Data_Loader_With_Dataset(seq_length, data):
         denominator = dmax - dmin
         return numerator / (denominator + 1e-8), dmin, dmax
 
-    # %% Data Preprocessing
-    #print("Preparing data...")
+    def make_sequences(data, nan_val=None):
+        col_no = data.shape[1]
+        dataX, dataZ, dataM, dataT = [], [], [], []
+        row_no = len(data) - seq_length
 
-    # Comment out the line where the file is loaded, we assume data is already loaded
-    # xy = np.loadtxt(filename, delimiter=" ", skiprows=0)
-    # xy = xy[::-1]
+        for i in range(row_no):
+            _x = data[i:i + seq_length]
+            dataX.append(_x)
 
+            # Mask (1 if observed, 0 if NaN)
+            m = np.ones([seq_length, col_no])
+            if nan_val is None:
+                m[np.isnan(_x)] = 0
+            else:
+                m[_x == nan_val] = 0
+            dataM.append(m)
 
-    xy, dmin, dmax = MinMaxScaler(data)
-    x = xy
+            # Zero-masked version
+            z = np.copy(_x)
+            if nan_val is None:
+                z[np.isnan(_x)] = 0
+            else:
+                z[_x == nan_val] = 0
+            dataZ.append(z)
 
-    # %% Parameters
-    col_no = len(x[0, :])
-    row_no = len(x[:, 0]) - seq_length
-
-    # Dataset build
-    dataX = []
-    for i in range(0, len(x[:, 0]) - seq_length):
-        _x = x[i:i + seq_length]
-        dataX.append(_x)
-
-    train_size = 0
-
-    for i in range(0, len(x)):
-        anynan = False
-
-        for j in range(0, len(x[i])):
-            if np.isnan(x[i][j]):
-                anynan = True
-
-        if anynan:
-            train_size = i - int(i / 3.0)
-            break
-
-    # %% Introduce Missingness (MCAR)
-
-    dataZ = []
-    dataM = []
-    dataT = []
-
-    for i in range(row_no):
-
-        # %% Missing matrix construct
-        m = np.ones([seq_length, col_no])
-        m[np.where(np.isnan(dataX[i]) == 1)] = 0
-
-        dataM.append(m)
-
-        # %% Introduce missingness to the original data
-        z = np.copy(dataX[i])
-        z[np.where(m == 0)] = 0
-
-        dataZ.append(z)
-
-        # %% Time gap generation
-        t = np.ones([seq_length, col_no])
-        for j in range(col_no):  # for each column
-            for k in range(seq_length):  # for each row (defined by length of sequences)
-                if (k > 0):
-                    if (m[k, j] == 0):
+            # Time gap
+            t = np.ones([seq_length, col_no])
+            for j in range(col_no):
+                for k in range(1, seq_length):
+                    if m[k, j] == 0:
                         t[k, j] = t[k - 1, j] + 1
+            dataT.append(t)
 
-        dataT.append(t)
+        return (
+            np.array(dataX),
+            np.array(dataZ),
+            np.array(dataM),
+            np.array(dataT)
+        )
 
-    # %% Building the dataset
-    '''
-    X: Original Feature
-    Z: Feature with Missing
-    M: Missing Matrix
-    T: Time Gap
-    '''
+    if mask_train is not None:
+        data_tr[mask_train] = np.nan
 
-    # %% Train / Test Division
-    train_rate = 0.01
-    train_size = int(len(dataX) * train_rate)
+    # Process both training and testing datasets
+    trainX, trainZ, trainM, trainT = make_sequences(data_tr, nan_val=nan_val)
+    testX, testZ, testM, testT = make_sequences(data_ts, nan_val=nan_val)
 
-    trainX, testX = np.array(dataX[0:train_size]), np.array(dataX[train_size:len(dataX)])
-    trainZ, testZ = np.array(dataZ[0:train_size]), np.array(dataZ[train_size:len(dataX)])
-    trainM, testM = np.array(dataM[0:train_size]), np.array(dataM[train_size:len(dataX)])
-    trainT, testT = np.array(dataT[0:train_size]), np.array(dataT[train_size:len(dataX)])
+    if verbose:
+        print(f"{trainX.shape = }")
+        print(f"{testX.shape = }\n")
 
-    return [trainX, trainZ, trainM, trainT, testX, testZ, testM, testT, dmin, dmax, train_size, x]
-
+    return [trainX, trainZ, trainM, trainT, testX, testZ, testM, testT, len(trainX), len(testX)]

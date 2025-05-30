@@ -7,11 +7,12 @@
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
         <title>Contributing - ImputeGAP 1.0.9 Documentation</title>
-      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=302659d7" />
-    <link rel="stylesheet" type="text/css" href="static/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=a5c4661c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     
     
 
@@ -217,7 +218,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebook.html">Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
@@ -227,9 +228,11 @@
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmark.html">imputegap.recovery.benchmark package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.downstream.html">imputegap.recovery.downstream package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.evaluation.html">imputegap.recovery.evaluation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
 </ul>
 </li>
 </ul>
@@ -250,7 +253,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="sources/contributing.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/contributing.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -338,21 +341,22 @@ $ cd ./ImputeGAP
 <br></section>
 <section id="iii-optimizer">
 <h4>III. Optimizer<a class="headerlink" href="#iii-optimizer" title="Link to this heading">¶</a></h4>
-<p>To enable the optimization module, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code>:</p>
+<p>To enable the optimization module, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code>.</p>
 <ol class="arabic">
-<li><dl>
-<dt>Open <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code> copy paste lines 59 to 63 and update the algorithm name and parameters, e.g.,</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;new_alg&#39;</span><span class="p">:</span> <span class="p">{</span>
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code> copy paste lines 59 to 63 and update the algorithm name and parameters, e.g.,</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;new_alg&#39;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;param_integer&quot;</span><span class="p">:</span> <span class="n">tune</span><span class="o">.</span><span class="n">grid_search</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span> <span class="mi">1</span><span class="p">)]),</span>
         <span class="s2">&quot;param_float&quot;</span><span class="p">:</span> <span class="n">tune</span><span class="o">.</span><span class="n">loguniform</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
         <span class="s2">&quot;param_string&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;value_1&quot;</span><span class="p">,</span> <span class="s2">&quot;value_n&quot;</span><span class="p">]</span>
     <span class="p">},</span>
 </pre></div>
 </div>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl>
-<dt>Add your parameters in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">save_optimization()</span></code> function of the file <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> to save the optimal parameters, line 820 to 825:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;new_alg&quot;</span><span class="p">:</span>
+<li><p>Add your parameters in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">save_optimization()</span></code> function of the file <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> to save the optimal parameters, line 820 to 825:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;new_alg&quot;</span><span class="p">:</span>
     <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;param_integer&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
         <span class="s2">&quot;param_float&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
@@ -360,8 +364,7 @@ $ cd ./ImputeGAP
 <span class="p">}</span>
 </pre></div>
 </div>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ol>
 <br></section>
@@ -411,11 +414,11 @@ c. Convert the imputed matrix back to a numpy format.</p></li>
 a. Add a function to call your new algorithm by copying and modifying <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">MeanImpute(BaseImputer)</span></code> as needed. You can copy-paste the class into the corresponding category of algorithms.</p></li>
 <li><p>Perform imputation as needed.</p></li>
 </ol>
-<br><br></section>
-<section id="c-example-cdrec-integration">
-<h2>C. Example: CDRec Integration<a class="headerlink" href="#c-example-cdrec-integration" title="Link to this heading">¶</a></h2>
+<br><br><section id="example-with-c-algorithm">
+<h3>Example with C++ Algorithm<a class="headerlink" href="#example-with-c-algorithm" title="Link to this heading">¶</a></h3>
 <p>Once your cpp and h files are ready to be converted (you can look at <code class="docutils literal notranslate"><span class="pre">./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.cpp</span></code> or <code class="docutils literal notranslate"><span class="pre">./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.h</span></code>), create a <code class="docutils literal notranslate"><span class="pre">.so</span></code> file for linux and windows, and a <code class="docutils literal notranslate"><span class="pre">.dylib</span></code> file for MAC OS.</p>
-<ol class="arabic">
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Windows</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Linux</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">MacOs</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><ol class="arabic">
 <li><p>Modify the Makefile:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">libCDREC</span><span class="o">.</span><span class="n">so</span><span class="p">:</span>
     <span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">D</span> <span class="n">ARMA_DONT_USE_WRAPPER</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">rdynamic</span> <span class="o">-</span><span class="n">shared</span> <span class="o">-</span><span class="n">o</span> <span class="n">lib_cdrec</span><span class="o">.</span><span class="n">so</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">Werror</span> <span class="o">-</span><span class="n">Wextra</span> <span class="o">-</span><span class="n">pedantic</span> \
@@ -439,7 +442,31 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-<br><br><ol class="arabic">
+<br><br></div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><ol class="arabic">
+<li><p>Modify the Makefile:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">libCDREC</span><span class="o">.</span><span class="n">so</span><span class="p">:</span>
+    <span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">D</span> <span class="n">ARMA_DONT_USE_WRAPPER</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">rdynamic</span> <span class="o">-</span><span class="n">shared</span> <span class="o">-</span><span class="n">o</span> <span class="n">lib_cdrec</span><span class="o">.</span><span class="n">so</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">Werror</span> <span class="o">-</span><span class="n">Wextra</span> <span class="o">-</span><span class="n">pedantic</span> \
+    <span class="o">-</span><span class="n">Wconversion</span> <span class="o">-</span><span class="n">Wsign</span><span class="o">-</span><span class="n">conversion</span> <span class="o">-</span><span class="n">msse2</span> <span class="o">-</span><span class="n">msse3</span> <span class="o">-</span><span class="n">msse4</span> <span class="o">-</span><span class="n">msse4</span><span class="mf">.1</span> <span class="o">-</span><span class="n">msse4</span><span class="mf">.2</span> <span class="o">-</span><span class="n">fopenmp</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">gnu</span><span class="o">++</span><span class="mi">14</span> \
+    <span class="n">Stats</span><span class="o">/</span><span class="n">Correlation</span><span class="o">.</span><span class="n">cpp</span> <span class="n">Algorithms</span><span class="o">/</span><span class="n">CDMissingValueRecovery</span><span class="o">.</span><span class="n">cpp</span>  <span class="n">Algebra</span><span class="o">/</span><span class="n">Auxiliary</span><span class="o">.</span><span class="n">cpp</span> \
+    <span class="n">Algebra</span><span class="o">/</span><span class="n">CentroidDecomposition</span><span class="o">.</span><span class="n">cpp</span>  <span class="n">shared</span><span class="o">/</span><span class="n">SharedLibCDREC</span><span class="o">.</span><span class="n">cpp</span> \
+    <span class="o">-</span><span class="n">lopenblas</span> <span class="o">-</span><span class="n">larpack</span>
+</pre></div>
+</div>
+</li>
+<li><p>Generate the shared library:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">libCDREC</span><span class="o">.</span><span class="n">so</span>
+</pre></div>
+</div>
+</li>
+<li><p>Place the generated <code class="docutils literal notranslate"><span class="pre">.so</span></code> file in <code class="docutils literal notranslate"><span class="pre">imputegap/algorithms/lib</span></code></p></li>
+<li><p>Optional: To include the .so file in the “in-built” directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">dist</span><span class="o">/</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="n">bdist_wheel</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<br><br></div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><ol class="arabic">
 <li><p>Modify the Makefile:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">libCDREC</span><span class="o">.</span><span class="n">dylib</span><span class="p">:</span>
     <span class="n">clang</span><span class="o">++</span> <span class="o">-</span><span class="n">dynamiclib</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">17</span> <span class="o">-</span><span class="n">o</span> <span class="n">lib_cdrec</span><span class="o">.</span><span class="n">dylib</span> \
@@ -465,7 +492,9 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-<br><br><ol class="arabic">
+<br><br></div></div>
+<br><br><p><strong>Wrapper</strong></p>
+<ol class="arabic">
 <li><p>In <code class="docutils literal notranslate"><span class="pre">imputegap/algorithms/cpp_integration.py</span></code>, update the function name and parameter count, and ensure the <code class="docutils literal notranslate"><span class="pre">.so</span></code> file matches:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">native_cdrec</span><span class="p">(</span><span class="n">__py_matrix</span><span class="p">,</span> <span class="n">__py_rank</span><span class="p">,</span> <span class="n">__py_epsilon</span><span class="p">,</span> <span class="n">__py_iterations</span><span class="p">):</span>
 
@@ -507,7 +536,8 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-<br><br><ol class="arabic">
+<br><br><p><strong>Method Implementation</strong></p>
+<ol class="arabic">
 <li><p>In <code class="docutils literal notranslate"><span class="pre">imputegap/algorithms/cpp_integration.py</span></code>, create or adapt a generic method for your needs:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">cdrec</span><span class="p">(</span><span class="n">contamination</span><span class="p">,</span> <span class="n">truncation_rank</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lib_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
@@ -526,7 +556,8 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
-<br><br><ol class="arabic">
+<br><br><p><strong>Imputer Class</strong></p>
+<ol class="arabic">
 <li><p>Add your algorithm to the catalog in <code class="docutils literal notranslate"><span class="pre">./imputegap/recovery/imputation.py</span></code></p></li>
 <li><p>Copy and modify <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">MeanImpute(BaseImputer)</span></code> to fit your requirements:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MatrixCompletion</span><span class="p">:</span>
@@ -542,6 +573,7 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </div>
 </li>
 </ol>
+</section>
 </section>
 </section>
 
@@ -613,8 +645,10 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#b-integration-steps-other-languages">B. Integration Steps (other languages)</a></li>
-<li><a class="reference internal" href="#c-example-cdrec-integration">C. Example: CDRec Integration</a></li>
+<li><a class="reference internal" href="#b-integration-steps-other-languages">B. Integration Steps (other languages)</a><ul>
+<li><a class="reference internal" href="#example-with-c-algorithm">Example with C++ Algorithm</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -626,11 +660,12 @@ a. Add a function to call your new algorithm by copying and modifying <code clas
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=0abd802e"></script>
-    <script src="static/doctools.js?v=9bcbadda"></script>
-    <script src="static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="static/scripts/furo.js?v=5fa4622c"></script>
-    <script src="static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="static/copybutton.js?v=f281be69"></script>
+</div><script src="_static/documentation_options.js?v=0abd802e"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/tabs.js?v=3030b3cb"></script>
     </body>
 </html>

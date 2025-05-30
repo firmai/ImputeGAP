@@ -1,11 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
 from torch.autograd import Variable
 from torch.nn.parameter import Parameter
 
 import math
+
 
 def binary_cross_entropy_with_logits(input, target, weight=None, size_average=True, reduce=True):
     if not (target.size() == input.size()):
@@ -26,11 +26,11 @@ def binary_cross_entropy_with_logits(input, target, weight=None, size_average=Tr
 
 
 class TemporalDecay(nn.Module):
-    def __init__(self, input_size, hidden_layers):
+    def __init__(self, input_size, hidden_layers=None):
         super(TemporalDecay, self).__init__()
         self.build(input_size, hidden_layers)
 
-    def build(self, input_size, hidden_layers):
+    def build(self, input_size, hidden_layers=None):
         self.W = Parameter(torch.Tensor(hidden_layers, input_size))
         self.b = Parameter(torch.Tensor(hidden_layers))
         self.reset_parameters()
@@ -47,21 +47,21 @@ class TemporalDecay(nn.Module):
         return gamma
 
 class Model(nn.Module):
-    def __init__(self, batch_size, nbr_features, hidden_layers, seq_length):
-        super(Model, self).__init__()
+    def __init__(self, batch_size, nbr_features, hidden_layers, seq_len):
         self.batch_size = batch_size
         self.nbr_features = nbr_features
-        self.seq_length = seq_length
+        self.seq_length = seq_len
         self.hidden_layers = hidden_layers
+        super(Model, self).__init__()
         self.build()
 
     def build(self):
         self.rnn_cell = nn.LSTMCell(self.nbr_features * 2, self.hidden_layers)
 
         self.regression = nn.Linear(self.hidden_layers, self.nbr_features)
-        self.temp_decay = TemporalDecay(input_size=self.nbr_features, hidden_layers=self.hidden_layers)
+        self.temp_decay = TemporalDecay(input_size = self.nbr_features, hidden_layers=self.hidden_layers)
 
-        self.out = nn.Linear(self.hidden_layers, self.nbr_features)
+        self.out = nn.Linear(self.hidden_layers, 1)
 
     def forward(self, data, direct):
         # Original sequence with 24 time steps
@@ -82,6 +82,7 @@ class Model(nn.Module):
             h, c = h.cuda(), c.cuda()
 
         x_loss = 0.0
+
         imputations = []
 
         for t in range(self.seq_length):
