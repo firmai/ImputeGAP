@@ -2,7 +2,7 @@ import time
 from imputegap.wrapper.AlgoPython.MRNN.runnerMRNN import mrnn_recov
 
 
-def mrnn(incomp_data, hidden_dim, learning_rate, iterations, sequence_length, logs=True, verbose=True):
+def mrnn(incomp_data, hidden_dim, learning_rate, iterations, sequence_length, tr_ratio=0.9, logs=True, verbose=True):
     """
     Perform imputation using the Multivariate Recurrent Neural Network (MRNN) algorithm.
 
@@ -18,6 +18,8 @@ def mrnn(incomp_data, hidden_dim, learning_rate, iterations, sequence_length, lo
         The number of iterations for training the MRNN model.
     sequence_length : int
         The length of sequences used within the MRNN model.
+    tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
     logs : bool, optional
         Whether to log the execution time (default is True).
     verbose : bool, optional
@@ -46,7 +48,7 @@ def mrnn(incomp_data, hidden_dim, learning_rate, iterations, sequence_length, lo
     start_time = time.time()  # Record start time
 
     recov_data = mrnn_recov(matrix_in=incomp_data, hidden_dim=hidden_dim, learning_rate=learning_rate,
-                            iterations=iterations, seq_length=sequence_length, verbose=verbose)
+                            iterations=iterations, seq_length=sequence_length, tr_ratio=tr_ratio, verbose=verbose)
 
     end_time = time.time()
     if logs and verbose:

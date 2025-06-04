@@ -19,8 +19,8 @@ In detail, the library provides:
 
 .. admonition:: 📢 News !
 
-       - [28-08-2025] ImputeGAP will be presented as a Tutorial at KDD 2025 in Toronto!
-       - [28-08-2025] Version 1.1.0 is out! Check out the latest updates and improvements!
+        - [12-06-2025] Version 1.1.0 is out! Check out the latest updates and improvements!
+        - [04-06-2025] ImputeGAP will be presented as a Tutorial at KDD 2025 in Toronto! `[Web Site] <https://imputegap-tutorials.github.io/KDD-2025/> `_
 
 .. raw:: html
 
@@ -117,6 +117,9 @@ Get Started
 Citing
 ------
 
+
+If you use ImputeGAP in your research, please cite these papers: `[Paper] <https://arxiv.org/abs/2503.15250>`_ `[Tutorial] <https://exascale.info/assets/pdf/khayati2025kdd.pdf>`_
+
 .. code-block:: bash
 
     @article{nater2025imputegap,
@@ -142,16 +145,16 @@ Citing
 
    <br>
 
+
 .. admonition:: Note
 
     If you like our library, please add a ⭐ in our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
-
-If you use ImputeGAP in your research, please cite these papers:
 
 
 .. raw:: html
 
    <br>
+
 
 
 .. toctree::

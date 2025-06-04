@@ -1,18 +1,32 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/LMZZML/PriSTI
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://ieeexplore.ieee.org/document/10184808
+# ===============================================================================================================
+
 import numpy as np
 import torch
 from torch.optim import Adam
 from tqdm import tqdm
+import pickle
 import logging
 
 def train(
     model,
     config,
     train_loader,
-    valid_loader=None
+    valid_loader=None,
+    foldername="",
 ):
     optimizer = Adam(model.parameters(), lr=config["lr"], weight_decay=1e-6)
     is_lr_decay = config["is_lr_decay"]
-
+    if foldername != "":
+        output_path = foldername + "/model.pth"
+        logging.basicConfig(filename=foldername + '/train_model.log', level=logging.DEBUG)
     if is_lr_decay:
         p1 = int(0.75 * config["epochs"])
         p2 = int(0.9 * config["epochs"])
@@ -61,10 +75,19 @@ def train(
                     logging.info("valid_avg_epoch_loss"+str(avg_loss_valid / batch_no)+", epoch:"+str(epoch_no))
             if best_valid_loss > avg_loss_valid:
                 best_valid_loss = avg_loss_valid
-                print("\n best loss is updated to ", avg_loss_valid / batch_no, "at", epoch_no,
+                print(
+                    "\n best loss is updated to ",
+                    avg_loss_valid / batch_no,
+                    "at",
+                    epoch_no,
                 )
                 logging.info("best loss is updated to "+str(avg_loss_valid / batch_no)+" at "+str(epoch_no))
-                
+                if foldername != "":
+                    torch.save(model.state_dict(), foldername + "/tmp_model"+str(epoch_no)+".pth")
+
+    if foldername != "":
+        torch.save(model.state_dict(), output_path)
+
 
 def quantile_loss(target, forecast, q: float, eval_points) -> float:
     return 2 * torch.sum(
@@ -96,112 +119,141 @@ def calc_quantile_CRPS(target, forecast, eval_points, mean_scaler, scaler):
 def evaluate(model, test_loader, nsample=100, scaler=1, mean_scaler=0, foldername=""):
     with torch.no_grad():
         model.eval()
-        # mse_total = 0
-        # mae_total = 0
-        # evalpoints_total = 0
-        #
-        # all_target = []
-        # all_observed_point = []
-        # all_observed_time = []
-        # all_evalpoint = []
-        # all_generated_samples = []
-        # print(len(test_loader))
-        res = None
+        mse_total = 0
+        mae_total = 0
+        evalpoints_total = 0
+
+        all_target = []
+        all_observed_point = []
+        all_observed_time = []
+        all_evalpoint = []
+        all_generated_samples = []
         with tqdm(test_loader, mininterval=5.0, maxinterval=50.0) as it:
-            for test_batch in it:
+            for batch_no, test_batch in enumerate(it, start=1):
                 output = model.evaluate(test_batch, nsample)
 
                 samples, c_target, eval_points, observed_points, observed_time = output
-                mask = test_batch["observed_mask"].squeeze(-1)
-                obs = test_batch["observed_data"].squeeze(-1)
-                res = samples * (1-mask) + obs * mask
-                res = res.squeeze(0)
-                res = res.squeeze(-1).numpy()
-        return res
+                samples = samples.permute(0, 1, 3, 2)  # (B,nsample,L,K)
+                c_target = c_target.permute(0, 2, 1)  # (B,L,K)
+                eval_points = eval_points.permute(0, 2, 1)
+                observed_points = observed_points.permute(0, 2, 1)
 
-            # for batch_no, test_batch in enumerate(it, start=0):
-            #     output = model.evaluate(test_batch, nsample)
-            #
-            #     samples, c_target, eval_points, observed_points, observed_time = output
-            #     np.savetxt("output.txt", samples.numpy())
-                # samples = samples.permute(0, 1, 3, 2)  # (B,nsample,L,K)
-                # c_target = c_target.permute(0, 2, 1)  # (B,L,K)
-                # eval_points = eval_points.permute(0, 2, 1)
-                # observed_points = observed_points.permute(0, 2, 1)
-                #
-                # samples_median = samples.median(dim=1)
-                # all_target.append(c_target)
-                # all_evalpoint.append(eval_points)
-                # all_observed_point.append(observed_points)
-                # all_observed_time.append(observed_time)
-                # all_generated_samples.append(samples)
-                #
-                # mse_current = (
-                #     ((samples_median.values - c_target) * eval_points) ** 2
-                # ) * (scaler ** 2)
-                # mae_current = (
-                #     torch.abs((samples_median.values - c_target) * eval_points) 
-                # ) * scaler
-                #
-                # mse_total += mse_current.sum().item()
-                # mae_total += mae_current.sum().item()
-                # evalpoints_total += eval_points.sum().item()
-                #
-                # it.set_postfix(
-                #     ordered_dict={
-                #         "rmse_total": np.sqrt(mse_total / evalpoints_total),
-                #         "mae_total": mae_total / evalpoints_total,
-                #         "batch_no": batch_no,
-                #     },
-                #     refresh=True,
-                # )
-                # logging.info("rmse_total={}".format(np.sqrt(mse_total / evalpoints_total)))
-                # logging.info("mae_total={}".format(mae_total / evalpoints_total))
-                # logging.info("batch_no={}".format(batch_no))
-                #
-            # with open(
-            #     foldername + "/generated_outputs_nsample" + str(nsample) + ".pk", "wb"
-            # ) as f:
-            #     all_target = torch.cat(all_target, dim=0)
-            #     all_evalpoint = torch.cat(all_evalpoint, dim=0)
-            #     all_observed_point = torch.cat(all_observed_point, dim=0)
-            #     all_observed_time = torch.cat(all_observed_time, dim=0)
-            #     all_generated_samples = torch.cat(all_generated_samples, dim=0)
-            #
-            #     pickle.dump(
-            #         [
-            #             all_generated_samples,
-            #             all_target,
-            #             all_evalpoint,
-            #             all_observed_point,
-            #             all_observed_time,
-            #             scaler,
-            #             mean_scaler,
-            #         ],
-            #         f,
-            #     )
-            #
-            # CRPS = calc_quantile_CRPS(
-            #     all_target, all_generated_samples, all_evalpoint, mean_scaler, scaler
-            # )
-            #
-            # with open(
-            #     foldername + "/result_nsample" + str(nsample) + ".pk", "wb"
-            # ) as f:
-            #     pickle.dump(
-            #         [
-            #             np.sqrt(mse_total / evalpoints_total),
-            #             mae_total / evalpoints_total,
-            #             CRPS,
-            #         ],
-            #         f,
-            #     )
-            #     print("RMSE:", np.sqrt(mse_total / evalpoints_total))
-            #     print("MAE:", mae_total / evalpoints_total)
-            #     print("CRPS:", CRPS)
-            #     logging.info("RMSE={}".format(np.sqrt(mse_total / evalpoints_total)))
-            #     logging.info("MAE={}".format(mae_total / evalpoints_total))
-            #     logging.info("CRPS={}".format(CRPS))
+                samples_median = samples.median(dim=1)
+                all_target.append(c_target)
+                all_evalpoint.append(eval_points)
+                all_observed_point.append(observed_points)
+                all_observed_time.append(observed_time)
+                all_generated_samples.append(samples)
+
+                mse_current = (
+                    ((samples_median.values - c_target) * eval_points) ** 2
+                ) * (scaler ** 2)
+                mae_current = (
+                    torch.abs((samples_median.values - c_target) * eval_points) 
+                ) * scaler
+
+                mse_total += mse_current.sum().item()
+                mae_total += mae_current.sum().item()
+                evalpoints_total += eval_points.sum().item()
+
+                it.set_postfix(
+                    ordered_dict={
+                        "rmse_total": np.sqrt(mse_total / evalpoints_total),
+                        "mae_total": mae_total / evalpoints_total,
+                        "batch_no": batch_no,
+                    },
+                    refresh=True,
+                )
+                logging.info("rmse_total={}".format(np.sqrt(mse_total / evalpoints_total)))
+                logging.info("mae_total={}".format(mae_total / evalpoints_total))
+                logging.info("batch_no={}".format(batch_no))
+
+            with open(
+                foldername + "/generated_outputs_nsample" + str(nsample) + ".pk", "wb"
+            ) as f:
+                all_target = torch.cat(all_target, dim=0)
+                all_evalpoint = torch.cat(all_evalpoint, dim=0)
+                all_observed_point = torch.cat(all_observed_point, dim=0)
+                all_observed_time = torch.cat(all_observed_time, dim=0)
+                all_generated_samples = torch.cat(all_generated_samples, dim=0)
+
+                pickle.dump(
+                    [
+                        all_generated_samples,
+                        all_target,
+                        all_evalpoint,
+                        all_observed_point,
+                        all_observed_time,
+                        scaler,
+                        mean_scaler,
+                    ],
+                    f,
+                )
+
+            CRPS = calc_quantile_CRPS(
+                all_target, all_generated_samples, all_evalpoint, mean_scaler, scaler
+            )
+
+            with open(
+                foldername + "/result_nsample" + str(nsample) + ".pk", "wb"
+            ) as f:
+                pickle.dump(
+                    [
+                        np.sqrt(mse_total / evalpoints_total),
+                        mae_total / evalpoints_total,
+                        CRPS,
+                    ],
+                    f,
+                )
+                print("RMSE:", np.sqrt(mse_total / evalpoints_total))
+                print("MAE:", mae_total / evalpoints_total)
+                print("CRPS:", CRPS)
+                logging.info("RMSE={}".format(np.sqrt(mse_total / evalpoints_total)))
+                logging.info("MAE={}".format(mae_total / evalpoints_total))
+                logging.info("CRPS={}".format(CRPS))
+
+
+def reconstruct(model, data, test_loader, batch_size, nsample=1, device=None):
+    """
+    Reconstruct the full imputed matrix from overlapping batch predictions.
+    Uses the mask to mix predicted and observed values.
+
+    Assumes total sequence length is 64 and feature dimension is 256.
+    """
+    total_length = data.shape[0]
+    feature_dim = data.shape[1]
+    model.eval()
+
+    with torch.no_grad():
+        recon = np.zeros((total_length, feature_dim))
+        counts = np.zeros((total_length, 1))
+
+        current_pos = 0
+        inc = 0
+
+        with tqdm(test_loader, mininterval=5.0, maxinterval=50.0) as it:
+            for test_batch in it:
+                samples, _, _, _, _ = model.evaluate(test_batch, nsample)
+
+                if samples.shape[-1] != test_batch["observed_data"].shape[-1]:
+                    samples = samples.permute(0, 1, 3, 2)  # [B, nsample, T, N]
+
+                # Use mask to mix observed and imputed
+                imputed = samples
+                imputed = imputed.mean(dim=1).cpu().numpy()  # [B, T, N]
+
+                B, T, N = imputed.shape
+                inc = inc + 1
+                for i in range(B):
+                    for j in range(T):
+                        t = current_pos + j
+                        if t < total_length:
+                            recon[t] += imputed[i, j]
+                            counts[t] += 1
+                    current_pos += T
+
+        recon = recon / np.clip(counts*batch_size, 1e-8, None)
+    return recon
 
 
 def get_randmask(observed_mask, min_miss_ratio=0., max_miss_ratio=1.):
@@ -222,6 +274,7 @@ def get_hist_mask(observed_mask, for_pattern_mask=None, target_strategy='hybrid'
         for_pattern_mask = observed_mask
     if target_strategy == "hybrid":
         rand_mask = get_randmask(observed_mask)
+
     cond_mask = observed_mask.clone()
     mask_choice = np.random.rand()
     if target_strategy == "hybrid" and mask_choice > 0.5:

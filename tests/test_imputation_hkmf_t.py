@@ -23,16 +23,12 @@ class TestHKMF_T(unittest.TestCase):
 
         ts_1.print_results(algo.metrics, algo.algorithm)
 
-        expected_metrics = { "RMSE": 2.1552731429233765, "MAE": 1.7505183102323258, "MI": 0.10187462340733584, "CORRELATION": 0.24287118247579903 }
+        expected_metrics = { "RMSE": 0.2595099673955718, "MAE": 0.20747540959114055, "MI": 0.081000046038931, "CORRELATION": 0.1672221872103301 }
 
-        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
-                       f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
-        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2,
-                        f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
-        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
-                        f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
-        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.3,
-                        f"metrics CORRELATION = {metrics['CORRELATION']}, expected CORRELATION = {expected_metrics['CORRELATION']} ")
+        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
+        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
+        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3, f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
+        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.3, f"metrics CORRELATION = {metrics['CORRELATION']}, expected CORRELATION = {expected_metrics['CORRELATION']} ")
 
 
     def test_imputation_hkmf_t_udef(self):
@@ -52,13 +48,9 @@ class TestHKMF_T(unittest.TestCase):
 
         ts_1.print_results(algo.metrics, algo.algorithm)
 
-        expected_metrics = { "RMSE": 2.1552731429233765, "MAE": 1.7505183102323258, "MI": 0.10187462340733584, "CORRELATION": 0.24287118247579903 }
+        expected_metrics = { "RMSE": 0.2595099673955718, "MAE": 0.20747540959114055, "MI": 0.081000046038931, "CORRELATION": 0.1672221872103301 }
 
-        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2,
-                       f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
-        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2,
-                        f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
-        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3,
-                        f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
-        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.3,
-                        f"metrics CORRELATION = {metrics['CORRELATION']}, expected CORRELATION = {expected_metrics['CORRELATION']} ")
+        self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
+        self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
+        self.assertTrue(abs(metrics["MI"] - expected_metrics["MI"]) < 0.3, f"metrics MI = {metrics['MI']}, expected MI = {expected_metrics['MI']} ")
+        self.assertTrue(abs(metrics["CORRELATION"] - expected_metrics["CORRELATION"]) < 0.3, f"metrics CORRELATION = {metrics['CORRELATION']}, expected CORRELATION = {expected_metrics['CORRELATION']} ")

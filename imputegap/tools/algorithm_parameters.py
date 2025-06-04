@@ -151,10 +151,11 @@ RAYTUNE_PARAMS = {
     },
 
     "pristi": {
-        "target_strategy": tune.choice(["mean", "zero", "hybrid"]),  # Different strategies
+        "target_strategy": "block",  # Different strategies
         "unconditional": tune.choice([True, False]),  # Use unconditional or not
-        "seed": 42,  #tune.grid_search([42, 1234, 5678]),  # Different seeds for reproducibility
-        "device": tune.choice(["cpu"])  # Allow switching between CPU and GPU
+        "batch_size": tune.grid_search([-1, 8]),
+        "embedding": tune.grid_search([-1, 8]),
+        "seed": 42
     },
 
     "knn_impute": {
@@ -259,6 +260,6 @@ RAYTUNE_PARAMS = {
     "hkmf_t": {
         "tags": [],
         "data_names": [],
-        "epoch": tune.grid_search([2, 10, 20])
+        "epoch": tune.grid_search([2, 10])
     }
 }

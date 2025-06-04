@@ -56,14 +56,14 @@ def evaluate(model, val_iter):
     return imputations
 
 
-def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=36, seed=42, verbose=True):
+def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=36, tr_ratio=0.9, seed=42, verbose=True):
     recov = np.copy(incomp_data)
     m_mask = np.isnan(incomp_data)
 
     batch_size = utils.validate_batch_size(batch_size=batch_size, m=incomp_data.shape[0], divisor=2, min_val=4, verbose=verbose)
 
     # ==================================================================================================================
-    cont_data_matrix, mask_train, mask_test, mask_valid = utils.dl_integration_transformation(incomp_data, tr_ratio=0.8, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=-99999, offset=0.05, seed=seed, verbose=False)
+    cont_data_matrix, mask_train, mask_test, mask_valid = utils.dl_integration_transformation(incomp_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=-99999, offset=0.05, seed=seed, verbose=False)
     # ==================================================================================================================
 
     prepare_dat(cont_data_matrix, "brits.tmp", mask_train, mask_test, mask_valid)
@@ -73,7 +73,7 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
 
     print(f"(IMPUTATION) {model.upper()}\n\tMatrix Shape: {incomp_data.shape[0]}, {incomp_data.shape[1]}"
           f"\n\tepoch: {epoch}\n\tbatch_size: {batch_size}\n\tnbr_features: {nbr_features}\n\tseq_length: {seq_length}"
-          f"\n\thidden_layers: {hidden_layers}\n")
+          f"\n\thidden_layers: {hidden_layers}\n\ttr_ratio: {tr_ratio}\n")
 
     model = getattr(models, model).Model(batch_size, nbr_features, hidden_layers, seq_length)
 

@@ -2108,6 +2108,7 @@
 <span class="sd">            Imputation method using Hankel Matrix Factorization to recover from blackouts in tagged time series.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+
 <div class="viewcode-block" id="Imputation.DeepLearning.MRNN">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN">[docs]</a>
         <span class="k">class</span><span class="w"> </span><span class="nc">MRNN</span><span class="p">(</span><span class="n">BaseImputer</span><span class="p">):</span>
@@ -2123,16 +2124,19 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.MRNN.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the MRNN algorithm.</span>
 
 <span class="sd">                Parameters</span>
 <span class="sd">                ----------</span>
+
 <span class="sd">                user_def : bool, optional</span>
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the MRNN algorithm, if None, default ones are loaded.</span>
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2164,6 +2168,10 @@
 <span class="sd">                &quot;&quot;&quot;</span>
                 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.mrnn</span><span class="w"> </span><span class="kn">import</span> <span class="n">mrnn</span>
 
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_dl_split</span><span class="p">(</span><span class="n">split_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">)):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span>
+                    <span class="k">return</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">sequence_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2171,7 +2179,7 @@
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">mrnn</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="n">hidden_dim</span><span class="p">,</span>
                                        <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span>
-                                       <span class="n">sequence_length</span><span class="o">=</span><span class="n">sequence_length</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                                       <span class="n">sequence_length</span><span class="o">=</span><span class="n">sequence_length</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
@@ -2192,7 +2200,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.BRITS.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the BRITS algorithm.</span>
 
@@ -2202,6 +2210,8 @@
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the BRITS algorithm, if None, default ones are loaded.</span>
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2235,6 +2245,10 @@
 <span class="sd">                &quot;&quot;&quot;</span>
                 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.brits</span><span class="w"> </span><span class="kn">import</span> <span class="n">brits</span>
 
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_dl_split</span><span class="p">(</span><span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span>
+                    <span class="k">return</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">model</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">nbr_features</span><span class="p">,</span> <span class="n">hidden_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -2242,7 +2256,7 @@
 
                 <span class="n">seq_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">brits</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">nbr_features</span><span class="o">=</span><span class="n">nbr_features</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="o">=</span><span class="n">hidden_layer</span><span class="p">,</span> <span class="n">seq_length</span><span class="o">=</span><span class="n">seq_length</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">brits</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">nbr_features</span><span class="o">=</span><span class="n">nbr_features</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="o">=</span><span class="n">hidden_layer</span><span class="p">,</span> <span class="n">seq_length</span><span class="o">=</span><span class="n">seq_length</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
 
@@ -2262,7 +2276,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.DeepMVI.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the DeepMVI algorithm.</span>
 
@@ -2272,6 +2286,8 @@
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the DeepMVI algorithm, if None, default ones are loaded.</span>
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2304,12 +2320,16 @@
 <span class="sd">                &quot;&quot;&quot;</span>
                 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.deep_mvi</span><span class="w"> </span><span class="kn">import</span> <span class="n">deep_mvi</span>
 
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_dl_split</span><span class="p">(</span><span class="n">split_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span>
+                    <span class="k">return</span>
+
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">max_epoch</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">max_epoch</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">deep_mvi</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">max_epoch</span><span class="o">=</span><span class="n">max_epoch</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="n">patience</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">deep_mvi</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">max_epoch</span><span class="o">=</span><span class="n">max_epoch</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="n">patience</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
 
@@ -2330,7 +2350,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.MPIN.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the MPIN algorithm.</span>
 <span class="sd">                Need torch-cluster to work.</span>
@@ -2341,6 +2361,8 @@
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the MPIN algorithm, if None, default ones are loaded.</span>
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2389,7 +2411,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">incre_mode</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">weight_decay</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">num_of_iteration</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">base</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">mpin</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">incre_mode</span><span class="o">=</span><span class="n">incre_mode</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weight_decay</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">num_of_iteration</span><span class="o">=</span><span class="n">num_of_iteration</span><span class="p">,</span> <span class="n">thre</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="n">base</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">mpin</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">incre_mode</span><span class="o">=</span><span class="n">incre_mode</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weight_decay</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">num_of_iteration</span><span class="o">=</span><span class="n">num_of_iteration</span><span class="p">,</span> <span class="n">thre</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="n">base</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
 
@@ -2409,7 +2431,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.PRISTI.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the PRISTI algorithm.</span>
 
@@ -2419,6 +2441,8 @@
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the PRISTI algorithm, if None, default ones are loaded.</span>
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2454,11 +2478,11 @@
                 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.algorithms.pristi</span><span class="w"> </span><span class="kn">import</span> <span class="n">pristi</span>
 
                 <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+                    <span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_params</span><span class="p">(</span><span class="n">user_def</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">device</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                    <span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">pristi</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">target_strategy</span><span class="o">=</span><span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="o">=</span><span class="n">unconditional</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">pristi</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">target_strategy</span><span class="o">=</span><span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="o">=</span><span class="n">unconditional</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">embedding</span><span class="o">=</span><span class="n">embedding</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
 
@@ -2479,7 +2503,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.MissNet.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the MissNet algorithm.</span>
 
@@ -2489,6 +2513,8 @@
 <span class="sd">                    Whether to use user-defined or default parameters (default is True).</span>
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the MissNet algorithm, if None, default ones are loaded.</span>
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2533,8 +2559,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">n_cl</span><span class="p">,</span> <span class="n">max_iteration</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">random_init</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">miss_net</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="n">n_cl</span><span class="o">=</span><span class="n">n_cl</span><span class="p">,</span>
-                                       <span class="n">max_iteration</span><span class="o">=</span><span class="n">max_iteration</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">random_init</span><span class="o">=</span><span class="n">random_init</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">miss_net</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="n">n_cl</span><span class="o">=</span><span class="n">n_cl</span><span class="p">,</span> <span class="n">max_iteration</span><span class="o">=</span><span class="n">max_iteration</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">random_init</span><span class="o">=</span><span class="n">random_init</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
@@ -2557,7 +2582,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.GAIN.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the GAIN algorithm.</span>
 
@@ -2568,6 +2593,9 @@
 
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the GAIN algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
 
 
 <span class="sd">                    **Algorithm parameters:**</span>
@@ -2608,7 +2636,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">batch_size</span><span class="p">,</span> <span class="n">hint_rate</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epoch</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">gain</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">hint_rate</span><span class="o">=</span><span class="n">hint_rate</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">gain</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">hint_rate</span><span class="o">=</span><span class="n">hint_rate</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
@@ -2631,7 +2659,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.GRIN.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the Multivariate Time Series Imputation by Graph Neural Networks</span>
 
@@ -2642,6 +2670,10 @@
 
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the GRIN algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
+
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2695,7 +2727,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">d_hidden</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">patience</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">workers</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">grin</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">d_hidden</span><span class="o">=</span><span class="n">d_hidden</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="n">patience</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">grin</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">d_hidden</span><span class="o">=</span><span class="n">d_hidden</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="n">patience</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
@@ -2722,7 +2754,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.BayOTIDE.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.6</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using the Multivariate Time Series Imputation by Deep Learning</span>
 
@@ -2733,6 +2765,10 @@
 
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
+
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2820,7 +2856,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.HKMF_T.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization</span>
 
@@ -2831,6 +2867,10 @@
 
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the HKMF-T algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
+
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2876,7 +2916,7 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">data_names</span><span class="p">:</span>
                     <span class="n">data_names</span> <span class="o">=</span> <span class="kc">None</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">hkmf_t</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="n">data_names</span><span class="o">=</span><span class="n">data_names</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">hkmf_t</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span> <span class="n">data_names</span><span class="o">=</span><span class="n">data_names</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>
@@ -2898,7 +2938,7 @@
 
 <div class="viewcode-block" id="Imputation.DeepLearning.BitGraph.impute">
 <a class="viewcode-back" href="../../../imputegap.imputation.html#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.impute">[docs]</a>
-            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">impute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_def</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Perform imputation using BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES</span>
 
@@ -2909,6 +2949,10 @@
 
 <span class="sd">                params : dict, optional</span>
 <span class="sd">                    Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.</span>
+
+<span class="sd">                tr_ratio: float, optional</span>
+<span class="sd">                    Split ratio between training and testing sets (default is 0.9).</span>
+
 
 <span class="sd">                    **Algorithm parameters:**</span>
 
@@ -2966,7 +3010,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">load_parameters</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">bit_graph</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">node_number</span><span class="o">=</span><span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="o">=</span><span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="o">=</span><span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="o">=</span><span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">recov_data</span> <span class="o">=</span> <span class="n">bit_graph</span><span class="p">(</span><span class="n">incomp_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">incomp_data</span><span class="p">,</span> <span class="n">node_number</span><span class="o">=</span><span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="o">=</span><span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="o">=</span><span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="o">=</span><span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
                 <span class="k">return</span> <span class="bp">self</span></div>
 </div>

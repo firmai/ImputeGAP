@@ -21,7 +21,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 criterion = nn.L1Loss().to(device)
 
 
-def train(model, seq_len, pred_len, mask_ratio, batch_size, epochs, imputegap_dataset=None, verbose=True, deep_verbose=False):
+def train(model, seq_len, pred_len, mask_ratio, batch_size, epochs, imputegap_dataset=None, tr_ratio=0.9, verbose=True, deep_verbose=False):
 
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
     torch.set_num_threads(1)
@@ -29,7 +29,7 @@ def train(model, seq_len, pred_len, mask_ratio, batch_size, epochs, imputegap_da
     if isinstance(imputegap_dataset, str):
         train_dataloader, val_dataloader, test_dataloader, imputegap_dataloader, scaler, scaler_ts = loaddataset(seq_len, pred_len, mask_ratio, imputegap_dataset)
     else:
-        train_dataloader, val_dataloader, test_dataloader, imputegap_dataloader, scaler, scaler_ts = loaddataset_imputegap(seq_len, pred_len, mask_ratio, imputegap_dataset, batch_size, verbose, deep_verbose)
+        train_dataloader, val_dataloader, test_dataloader, imputegap_dataloader, scaler, scaler_ts = loaddataset_imputegap(seq_len, pred_len, mask_ratio, imputegap_dataset, batch_size, tr_ratio, verbose, deep_verbose)
 
     if verbose:
         print(f"\t{len(train_dataloader) = }")
@@ -133,7 +133,7 @@ def reconstruct(model, imputegap_dataloader, scaler, tag="reconstruct", verbose=
 
 
 
-def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[2,3,6,7], dropout=0.05, subgraph_size=5, node_dim=3, seq_len=-1, lr=0.001, epoch=10, batch_size=32, seed=42, verbose=True):
+def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[2,3,6,7], dropout=0.05, subgraph_size=5, node_dim=3, seq_len=-1, lr=0.001, epoch=10, batch_size=32, tr_ratio=0.9, seed=42, verbose=True):
 
     num_layers = 2
     deep_verbose = False
@@ -147,7 +147,7 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[2,3,6,7], dropout=0
             print("(IMPUTATION) BitGRAPH")
             print(f"\n\tnode_number: {node_number}\n\tkernel_set: {kernel_set}\n\tdropout: {dropout}\n\t"
                   f"subgraph_size\n\t{subgraph_size}\n\tnode_dim: {node_dim}\n\tseq_len: {seq_len}\n\t"
-                  f"lr: {lr}\n\tepochs: {epoch}\n\tpred_len: {pred_len}\n\tseed {seed}")
+                  f"lr: {lr}\n\tepochs: {epoch}\n\tpred_len: {pred_len}\n\ttr_ratio: {tr_ratio}\n\tseed {seed}")
 
     else:
         data = np.copy(input)
@@ -197,7 +197,7 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[2,3,6,7], dropout=0
 
     model.to(device)
 
-    imputed_matrix, full_y, best_model = train(model, seq_len, pred_len, 0.2, batch_size, epoch, data, verbose=verbose, deep_verbose=deep_verbose)
+    imputed_matrix, full_y, best_model = train(model, seq_len, pred_len, 0.2, batch_size, epoch, data, tr_ratio=tr_ratio, verbose=verbose, deep_verbose=deep_verbose)
 
     if verbose:
         print("Imputed Matrix Shape Before Reshaping:", imputed_matrix.shape)

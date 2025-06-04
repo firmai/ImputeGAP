@@ -59,13 +59,13 @@ def reconstruct(recover, x, m, size, seq_length, verbose=True):
 
     return np.asarray(x)
 
-def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, seq_length=7, verbose=True, seed=42):
+def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, seq_length=7, tr_ratio=0.9, verbose=True, seed=42):
 
     recov = np.copy(matrix_in)
     m_mask = np.isnan(matrix_in)
 
     # ==================================================================================================================
-    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(matrix_in, tr_ratio=0.8, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
+    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(matrix_in, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
     # ==================================================================================================================
 
     nan_row_selector = np.any(np.isnan(cont_data_matrix), axis=1)
@@ -101,7 +101,8 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
     alpha = recov.copy()
     beta = recov.copy()
 
-    print("\nreconstruction...")
+    if verbose:
+        print("\nreconstruction...")
     tr = reconstruct(Recover_trainX, alpha, m, 0, seq_length, verbose=False)
     ts = reconstruct(Recover_testX, alpha, m, train_size, seq_length, verbose=False)
 

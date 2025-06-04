@@ -33,8 +33,7 @@ def interpolation(incomp_data, method="linear", poly_order=2, logs=True, verbose
     """
 
     if verbose:
-        print(f"(IMPUTATION) interpolation : ({incomp_data.shape[0]},{incomp_data.shape[1]}) for method {method}"
-              f", and polynomial order {poly_order}...")
+        print(f"(IMPUTATION) interpolation\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\tmethod: {method}\n\tpolynomial order: {poly_order}\n")
 
     start_time = time.time()  # Record start time
 

@@ -7,14 +7,14 @@ ts = TimeSeries()
 print(f"Imputation algorithms : {ts.algorithms}")
 
 # load and normalize the dataset
-ts.load_series(utils.search_path("eeg-alcohol"))
+ts.load_series(utils.search_path("chlorine"))
 ts.normalize(normalizer="z_score")
 
 # contaminate the time series
-ts_m = ts.Contamination.mcar(ts.data)
+ts_m = ts.Contamination.aligned(ts.data)
 
 # impute the contaminated series
-imputer = Imputation.DeepLearning.GAIN(ts_m)
+imputer = Imputation.DeepLearning.GRIN(ts_m)
 imputer.impute()
 
 # compute and print the imputation metrics

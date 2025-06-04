@@ -80,7 +80,7 @@ def soft_impute(incomp_data, max_rank, logs=True, verbose=True, lib_path=None):
     start_time = time.time()  # Record start time
 
     if verbose:
-        print("\n\t\t(C++) SoftImpute: Matrix Shape: (", incomp_data.shape[0], ", " , incomp_data.shape[1], ") for max rank ", max_rank, " ...")
+        print(f"(IMPUTATION) SoftImpute\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\tmax rank: {max_rank}\n")
 
 
     # Call the C++ function to perform recovery

@@ -756,7 +756,7 @@ class Benchmark:
 
         self.plots = plt
 
-    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, normalizer="z_score", nbr_series=2500, nbr_vals=2500, verbose=False):
+    def eval(self, algorithms=["cdrec"], datasets=["eeg-alcohol"], patterns=["mcar"], x_axis=[0.05, 0.1, 0.2, 0.4, 0.6, 0.8], optimizers=["default_params"], metrics=["*"], save_dir="./imputegap_assets/benchmark", runs=1, normalizer="z_score", nbr_series=2500, nbr_vals=2500, dl_ratio=0.9, verbose=False):
         """
         Execute a comprehensive evaluation of imputation algorithms over multiple datasets and patterns.
 
@@ -784,6 +784,8 @@ class Benchmark:
             Number of series to take inside the dataset (default is 2500 (as the max values)).
         nbr_vals : int, optional
             Number of values to take inside the series (default is 2500 (as the max values)).
+        dl_ratio : float, optional
+            Training ratio for Deep Learning techniques (default is 0.8)
         verbose : bool, optional
             Whether to display the contamination information (default is False).
 
@@ -802,6 +804,15 @@ class Benchmark:
         not_optimized = ["none"]
         mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries",
                       "meanimpute", "minimpute", "zeroimpute", "meanimputebyseries"]
+
+        if not isinstance(algorithms, list):
+            raise TypeError(f"'algorithms' must be a list, but got {type(algorithms).__name__}")
+        if not isinstance(datasets, list):
+            raise TypeError(f"'datasets' must be a list, but got {type(datasets).__name__}")
+        if not isinstance(patterns, list):
+            raise TypeError(f"'patterns' must be a list, but got {type(patterns).__name__}")
+        if not isinstance(x_axis, list):
+            raise TypeError(f"'x_axis' must be a list, but got {type(x_axis).__name__}")
 
         if "*" in metrics or "all" in metrics:
             metrics = utils.list_of_metrics()
@@ -857,6 +868,7 @@ class Benchmark:
 
                     for algorithm in algorithms:
                         has_been_optimized = False
+
                         if verbose:
                             print("\n3. algorithm evaluated", algorithm, "with", pattern, "\n")
                         else:
@@ -878,8 +890,13 @@ class Benchmark:
                                     if not has_been_optimized and algorithm not in mean_group and algorithm not in not_optimized:
                                         if verbose:
                                             print("\n5. AutoML to set the parameters", optimizer, "\n")
-                                        i_opti = self._config_optimization(0.25, ts_test, pattern, algorithm, block_size_mcar)
-                                        i_opti.impute(user_def=False, params=optimizer_gt)
+                                        i_opti = self._config_optimization(0.20, ts_test, pattern, algorithm, block_size_mcar)
+
+                                        if utils.check_family("DeepLearning", algorithm) or dl:
+                                            i_opti.impute(user_def=False, params=optimizer_gt, tr_ratio=0.80)
+                                        else:
+                                            i_opti.impute(user_def=False, params=optimizer_gt)
+
                                         utils.save_optimization(optimal_params=i_opti.parameters, algorithm=algorithm, dataset=dataset, optimizer="e")
 
                                         has_been_optimized = True
@@ -909,7 +926,13 @@ class Benchmark:
                                 start_time_imputation = time.time()
 
                                 if not self._benchmark_exception(incomp_data, algorithm, pattern, x):
-                                    algo.impute(params=opti_params)
+                                    if utils.check_family("DeepLearning", algorithm):
+                                        if x > round(1-dl_ratio, 2):
+                                            algo.recov_data = incomp_data
+                                        else:
+                                            algo.impute(params=opti_params, tr_ratio=dl_ratio)
+                                    else:
+                                        algo.impute(params=opti_params)
                                 else:
                                     algo.recov_data = incomp_data
 

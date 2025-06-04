@@ -449,7 +449,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.BRITS.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.BRITS.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BRITS.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the BRITS algorithm.</p>
 <section id="id6">
 <h6>Parameters<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h6>
@@ -457,6 +457,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the BRITS algorithm, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -579,7 +581,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.BayOTIDE.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.BayOTIDE.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BayOTIDE.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the Multivariate Time Series Imputation by Deep Learning</p>
 <section id="id15">
 <h6>Parameters<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h6>
@@ -587,6 +589,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -715,7 +719,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.BitGraph.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.BitGraph.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.BitGraph.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES</p>
 <section id="id24">
 <h6>Parameters<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h6>
@@ -723,6 +727,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -850,7 +856,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.DeepMVI.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.DeepMVI.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.DeepMVI.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the DeepMVI algorithm.</p>
 <section id="id33">
 <h6>Parameters<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h6>
@@ -858,6 +864,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the DeepMVI algorithm, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -972,7 +980,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.GAIN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.GAIN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GAIN.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the GAIN algorithm.</p>
 <section id="id42">
 <h6>Parameters<a class="headerlink" href="#id42" title="Link to this heading">¶</a></h6>
@@ -980,6 +988,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the GAIN algorithm or Auto-ML configuration, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -1098,7 +1108,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.GRIN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.GRIN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.GRIN.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the Multivariate Time Series Imputation by Graph Neural Networks</p>
 <section id="id51">
 <h6>Parameters<a class="headerlink" href="#id51" title="Link to this heading">¶</a></h6>
@@ -1106,6 +1116,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the GRIN algorithm or Auto-ML configuration, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -1230,7 +1242,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.HKMF_T.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.HKMF_T.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.HKMF_T.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization</p>
 <section id="id60">
 <h6>Parameters<a class="headerlink" href="#id60" title="Link to this heading">¶</a></h6>
@@ -1238,6 +1250,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the HKMF-T algorithm or Auto-ML configuration, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -1356,7 +1370,7 @@ Need torch-cluster to work.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MPIN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MPIN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MPIN.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the MPIN algorithm.
 Need torch-cluster to work.</p>
 <section id="id69">
@@ -1365,6 +1379,8 @@ Need torch-cluster to work.</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the MPIN algorithm, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -1491,7 +1507,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MRNN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MRNN.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MRNN.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the MRNN algorithm.</p>
 <section id="id78">
 <h6>Parameters<a class="headerlink" href="#id78" title="Link to this heading">¶</a></h6>
@@ -1499,6 +1515,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the MRNN algorithm, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -1619,7 +1637,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MissNet.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.MissNet.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.MissNet.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the MissNet algorithm.</p>
 <section id="id87">
 <h6>Parameters<a class="headerlink" href="#id87" title="Link to this heading">¶</a></h6>
@@ -1627,6 +1645,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the MissNet algorithm, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">
@@ -1750,7 +1770,7 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.impute">
-<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.PRISTI.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.impute" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_def</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/recovery/imputation.html#Imputation.DeepLearning.PRISTI.impute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.recovery.imputation.Imputation.DeepLearning.PRISTI.impute" title="Link to this definition">¶</a></dt>
 <dd><p>Perform imputation using the PRISTI algorithm.</p>
 <section id="id96">
 <h6>Parameters<a class="headerlink" href="#id96" title="Link to this heading">¶</a></h6>
@@ -1758,6 +1778,8 @@ format : {“model”: “forcaster”, “params”: parameters}</p>
 <dt>user_def<span class="classifier">bool, optional</span></dt><dd><p>Whether to use user-defined or default parameters (default is True).</p>
 </dd>
 <dt>params<span class="classifier">dict, optional</span></dt><dd><p>Parameters of the PRISTI algorithm, if None, default ones are loaded.</p>
+</dd>
+<dt>tr_ratio: float, optional</dt><dd><p>Split ratio between training and testing sets (default is 0.9).</p>
 <p><strong>Algorithm parameters:</strong></p>
 <blockquote>
 <div><dl class="simple">

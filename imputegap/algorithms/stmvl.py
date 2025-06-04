@@ -112,8 +112,7 @@ def stmvl(incomp_data, window_size, gamma, alpha, logs=True, verbose=True):
     """
 
     if verbose:
-        print(f"(IMPUTATION) ST-MVL: ({incomp_data.shape[0]},{incomp_data.shape[1]}) for window_size {window_size}, "
-              f"gamma {gamma}, and alpha {alpha}...")
+        print(f"(IMPUTATION) ST-MVL\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\twindow_size: {window_size}\n\tgamma: {gamma}\n\talpha: {alpha}")
 
     start_time = time.time()  # Record start time
 

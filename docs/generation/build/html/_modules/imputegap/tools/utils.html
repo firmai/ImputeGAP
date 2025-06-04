@@ -791,9 +791,10 @@
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;pristi&quot;</span><span class="p">:</span>
         <span class="n">target_strategy</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;target_strategy&#39;</span><span class="p">])</span>
         <span class="n">unconditional</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;unconditional&#39;</span><span class="p">])</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;batch_size&#39;</span><span class="p">])</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;embedding&#39;</span><span class="p">])</span>
         <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
-        <span class="n">device</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;device&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn_impute&quot;</span><span class="p">:</span>
         <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;k&#39;</span><span class="p">])</span>
         <span class="n">weights</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;weights&#39;</span><span class="p">])</span>
@@ -1091,17 +1092,73 @@
 
 <div class="viewcode-block" id="dl_integration_transformation">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.dl_integration_transformation">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">dl_integration_transformation</span><span class="p">(</span><span class="n">input_matrix</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">inside_tr_cont_ratio</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">split_ts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">split_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nan_val</span><span class="o">=-</span><span class="mi">99999</span><span class="p">,</span> <span class="n">prevent_leak</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">dl_integration_transformation</span><span class="p">(</span><span class="n">input_matrix</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">inside_tr_cont_ratio</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">split_ts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">split_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">nan_val</span><span class="o">=-</span><span class="mi">99999</span><span class="p">,</span> <span class="n">prevent_leak</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepares contaminated data and corresponding masks for deep learning-based imputation training,</span>
+<span class="sd">        validation, and testing.</span>
+
+<span class="sd">        This function simulates missingness in a controlled way, optionally prevents information leakage,</span>
+<span class="sd">        and produces masks for training, testing, and validation using different contamination strategies.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_matrix : np.ndarray</span>
+<span class="sd">            The complete input time series data matrix of shape [T, N] (time steps × variables).</span>
+
+<span class="sd">        tr_ratio : float, default=0.8</span>
+<span class="sd">            The fraction of data to reserve for training when constructing the test contamination mask.</span>
+
+<span class="sd">        inside_tr_cont_ratio : float, default=0.2</span>
+<span class="sd">            The proportion of values to randomly drop inside the training data for internal contamination.</span>
+
+<span class="sd">        split_ts : float, default=1</span>
+<span class="sd">            Proportion of the total contaminated data assigned to the test set.</span>
+
+<span class="sd">        split_val : float, default=0</span>
+<span class="sd">            Proportion of the total contaminated data assigned to the validation set.</span>
+
+<span class="sd">        nan_val : float, default=-99999</span>
+<span class="sd">            Value used to represent missing entries in the masked matrix.</span>
+
+<span class="sd">        prevent_leak : bool, default=True</span>
+<span class="sd">            Replace the value of NaN with a high number to prevent leakage.</span>
+
+<span class="sd">        offset : float, default=0.05</span>
+<span class="sd">            Minimum temporal offset in the begining of the series</span>
+
+<span class="sd">        block_selection : bool, default=True</span>
+<span class="sd">            Whether to simulate missing values in contiguous blocks (True) or randomly (False).</span>
+
+<span class="sd">        seed : int, default=42</span>
+<span class="sd">            Seed for NumPy random number generation to ensure reproducibility.</span>
+
+<span class="sd">        verbose : bool, default=False</span>
+<span class="sd">            Whether to print logging/debug information during execution.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">        cont_data_matrix : np.ndarray</span>
+<span class="sd">            The input matrix with synthetic missing values introduced.</span>
+
+<span class="sd">        mask_train : np.ndarray</span>
+<span class="sd">            Boolean mask of shape [T, N] indicating the training contamination locations (True = observed, False = missing).</span>
+
+<span class="sd">        mask_test : np.ndarray</span>
+<span class="sd">            Boolean mask of shape [T, N] indicating the test contamination locations.</span>
+
+<span class="sd">        mask_valid : np.ndarray</span>
+<span class="sd">            Boolean mask of shape [T, N] indicating the validation contamination locations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cont_data_matrix</span> <span class="o">=</span> <span class="n">input_matrix</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">original_missing_ratio</span> <span class="o">=</span> <span class="n">get_missing_ratio</span><span class="p">(</span><span class="n">cont_data_matrix</span><span class="p">)</span>
 
-    <span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">new_mask</span> <span class="o">=</span> <span class="n">prepare_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="o">=</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">original_missing_ratio</span><span class="o">=</span><span class="n">original_missing_ratio</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">new_mask</span> <span class="o">=</span> <span class="n">prepare_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="o">=</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">original_missing_ratio</span><span class="o">=</span><span class="n">original_missing_ratio</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="n">block_selection</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">prevent_leak</span><span class="p">:</span>
         <span class="n">cont_data_matrix</span> <span class="o">=</span> <span class="n">prevent_leakage</span><span class="p">(</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">new_mask</span><span class="p">,</span> <span class="n">nan_val</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
     <span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span><span class="p">,</span> <span class="n">nbr_nans</span> <span class="o">=</span> <span class="n">split_mask_bwt_test_valid</span><span class="p">(</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">test_rate</span><span class="o">=</span><span class="n">split_ts</span><span class="p">,</span> <span class="n">valid_rate</span><span class="o">=</span><span class="n">split_val</span><span class="p">,</span> <span class="n">nan_val</span><span class="o">=</span><span class="n">nan_val</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">mask_train</span> <span class="o">=</span> <span class="n">generate_random_mask</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">mask_test</span><span class="o">=</span><span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span><span class="o">=</span><span class="n">mask_valid</span><span class="p">,</span> <span class="n">droprate</span><span class="o">=</span><span class="n">inside_tr_cont_ratio</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">mask_train</span> <span class="o">=</span> <span class="n">generate_random_mask</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">mask_test</span><span class="o">=</span><span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span><span class="o">=</span><span class="n">mask_valid</span><span class="p">,</span> <span class="n">droprate</span><span class="o">=</span><span class="n">inside_tr_cont_ratio</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">mask_train</span><span class="p">,</span> <span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span></div>
 
@@ -1109,7 +1166,7 @@
 
 <div class="viewcode-block" id="prepare_fixed_testing_set">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.prepare_fixed_testing_set">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">prepare_fixed_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_fixed_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Introduces additional missing values (NaNs) into a data matrix to match a specified training ratio.</span>
 
@@ -1124,6 +1181,12 @@
 
 <span class="sd">    tr_ratio : float</span>
 <span class="sd">       Desired ratio of observed (non-NaN) values in the output matrix. Must be in the range (0, 1).</span>
+
+<span class="sd">    offset : float</span>
+<span class="sd">        Protected zone in the begining of the series</span>
+
+<span class="sd">    block_selection : bool</span>
+<span class="sd">        Select the missing values by blocks or randomly (True, is by block)</span>
 
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Whether to print debug info.</span>
@@ -1159,12 +1222,21 @@
     <span class="n">current_n_nan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_matrix_cont</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
     <span class="n">n_new_nans</span> <span class="o">=</span> <span class="n">target_n_nan</span> <span class="o">-</span> <span class="n">current_n_nan</span>
 
-    <span class="c1"># 2) Get available (non-NaN) indices as 2D coordinates</span>
-    <span class="n">available_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_matrix_cont</span><span class="p">))</span>
+    <span class="n">available_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data_matrix_cont</span><span class="p">)</span>
+
+    <span class="n">offset_vals</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">data_matrix_cont</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data_matrix_cont</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">available_mask</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="p">:</span><span class="n">offset_vals</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># protect leftmost `offset` columns in each row</span>
+
+    <span class="n">available_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">available_mask</span><span class="p">)</span>
 
     <span class="c1"># 3) Pick indices to contaminate</span>
     <span class="k">if</span> <span class="n">n_new_nans</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">chosen_indices</span> <span class="o">=</span> <span class="n">available_indices</span><span class="p">[:</span><span class="n">n_new_nans</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">block_selection</span> <span class="p">:</span>
+            <span class="n">chosen_indices</span> <span class="o">=</span> <span class="n">available_indices</span><span class="p">[:</span><span class="n">n_new_nans</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+            <span class="n">chosen_indices</span> <span class="o">=</span> <span class="n">available_indices</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">available_indices</span><span class="p">),</span> <span class="n">n_new_nans</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">chosen_indices</span><span class="p">:</span>
             <span class="n">data_matrix_cont</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
@@ -1271,7 +1343,7 @@
 
 <div class="viewcode-block" id="generate_random_mask">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.generate_random_mask">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">generate_random_mask</span><span class="p">(</span><span class="n">gt</span><span class="p">,</span> <span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span><span class="p">,</span> <span class="n">droprate</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_random_mask</span><span class="p">(</span><span class="n">gt</span><span class="p">,</span> <span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span><span class="p">,</span> <span class="n">droprate</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a random training mask over the non-NaN entries of gt, excluding positions</span>
 <span class="sd">    already present in the test and validation masks.</span>
@@ -1286,6 +1358,8 @@
 <span class="sd">        Binary mask indicating validation positions.</span>
 <span class="sd">    droprate : float</span>
 <span class="sd">        Proportion of eligible entries to include in the training mask.</span>
+<span class="sd">    offset : float</span>
+<span class="sd">        Protect of not the offset of the dataset</span>
 <span class="sd">    verbose : bool</span>
 <span class="sd">        Whether to print debug info.</span>
 <span class="sd">    seed : int, optional</span>
@@ -1303,12 +1377,23 @@
     <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
+
     <span class="c1"># Valid positions: non-NaN and not in test/valid masks</span>
-    <span class="n">occupied_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask_test</span> <span class="o">+</span> <span class="n">mask_valid</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">num_offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">mask_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">gt</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="o">&gt;</span> <span class="n">droprate</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="n">droprate</span>
+        <span class="n">mask_offset</span><span class="p">[:,</span> <span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="n">gt</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">num_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_offset</span><span class="p">)</span>
+
+
+    <span class="n">occupied_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">mask_test</span> <span class="o">+</span> <span class="n">mask_valid</span> <span class="o">+</span> <span class="n">mask_offset</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
     <span class="n">eligible_mask</span> <span class="o">=</span> <span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">gt</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="n">occupied_mask</span><span class="p">)</span>
+
     <span class="n">eligible_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">eligible_mask</span><span class="p">)</span>
 
-    <span class="n">n_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">eligible_indices</span><span class="p">)</span> <span class="o">*</span> <span class="n">droprate</span><span class="p">)</span>
+    <span class="n">n_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">eligible_indices</span><span class="p">)</span> <span class="o">*</span> <span class="n">droprate</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_offset</span><span class="o">*</span><span class="n">droprate</span><span class="p">)</span>
 
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">eligible_indices</span><span class="p">)</span>
     <span class="n">selected_indices</span> <span class="o">=</span> <span class="n">eligible_indices</span><span class="p">[:</span><span class="n">n_train</span><span class="p">]</span>
@@ -1390,7 +1475,7 @@
 
 <div class="viewcode-block" id="prepare_testing_set">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.prepare_testing_set">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">prepare_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">,</span> <span class="n">original_missing_ratio</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">,</span> <span class="n">original_missing_ratio</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
     <span class="n">mask_original_nan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">)</span>
@@ -1400,7 +1485,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(DL) TEST-SET : original missing numbers = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_original_nan</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">abs</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">tr_ratio</span><span class="p">)</span> <span class="o">-</span> <span class="n">original_missing_ratio</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">:</span>
-        <span class="n">new_m</span><span class="p">,</span> <span class="n">new_mask</span> <span class="o">=</span> <span class="n">prepare_fixed_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="n">new_m</span><span class="p">,</span> <span class="n">new_mask</span> <span class="o">=</span> <span class="n">prepare_fixed_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="n">block_selection</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(DL) TEST-SET : building of the test set to reach a fix ratio of </span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tr_ratio</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
@@ -1457,6 +1542,44 @@
 
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(DL) Batch size to high, its value is set to </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">batch_size</span></div>
+
+
+<div class="viewcode-block" id="compute_batch_size">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.compute_batch_size">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_batch_size</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute an appropriate batch size based on the input data shape.</span>
+
+<span class="sd">    The batch size is computed as `min(M // 2, max_size)`, where M is the number of samples.</span>
+<span class="sd">    If this computed batch size is less than `min_size`, it is set to `min_size` instead.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : np.ndarray or torch.Tensor</span>
+<span class="sd">        Input 2D data of shape (M, N), where M is the number of samples.</span>
+<span class="sd">    min_size : int, optional</span>
+<span class="sd">        Minimum allowed batch size. Default is 4.</span>
+<span class="sd">    max_size : int, optional</span>
+<span class="sd">        Maximum allowed batch size. Default is 16.</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        If True, prints the computed batch size. Default is True.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        Computed batch size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">M</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">M</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">max_size</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">batch_size</span> <span class="o">&lt;</span> <span class="n">min_size</span><span class="p">:</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">min_size</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(Batch-Size) Computed batch size: </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">batch_size</span></div>
 
@@ -1631,8 +1754,9 @@
         <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;target_strategy&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
             <span class="s2">&quot;unconditional&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="s2">&quot;embedding&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
             <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>  <span class="c1"># Default seed</span>
-            <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;cpu&quot;</span>  <span class="c1"># Default device</span>
         <span class="p">}</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn_impute&quot;</span><span class="p">:</span>
         <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
@@ -1931,8 +2055,6 @@
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_normalizers">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">list_of_normalizers</span><span class="p">():</span>
     <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;z_score&quot;</span><span class="p">,</span> <span class="s2">&quot;min_max&quot;</span><span class="p">]</span></div>
-
-
 
 </pre></div>
         </article>

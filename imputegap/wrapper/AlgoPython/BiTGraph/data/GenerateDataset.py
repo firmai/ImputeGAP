@@ -68,7 +68,7 @@ def get_0_1_array(array,rate=0.2):
     re_array = new_array.reshape(array.shape)
     return re_array
 
-def synthetic_data(mask_ratio, dataset, tag="alpha", verbose=False):
+def synthetic_data(mask_ratio, dataset, tr_ratio=0.9, tag="alpha", verbose=False):
 
     if isinstance(dataset, str):
         data_list = []
@@ -88,7 +88,6 @@ def synthetic_data(mask_ratio, dataset, tag="alpha", verbose=False):
         cont_data_matrix = dataset.copy()
 
         nan_replacement = -999999
-        tr_ratio = 0.8
         artificial_training_drop = 0.30
         offset = 0.05
 
@@ -212,12 +211,12 @@ def reverse_window_horizon(X, Y, window=3, horizon=1):
 
 
 
-def loaddataset_imputegap(history_len, pred_len, mask_ratio, dataset, batch_size=32, verbose=True, deep_verbose=False):
+def loaddataset_imputegap(history_len, pred_len, mask_ratio, dataset, batch_size=32, tr_ratio=0.9, verbose=True, deep_verbose=False):
 
     if deep_verbose:
         print("\n\nLoading and transforming dataset...")
 
-    data_imp, data_tr, mask_train_imputegap, mask_test_imputegap = synthetic_data(mask_ratio, dataset, tag="beta", verbose=deep_verbose)
+    data_imp, data_tr, mask_train_imputegap, mask_test_imputegap = synthetic_data(mask_ratio, dataset, tr_ratio=tr_ratio, tag="beta", verbose=deep_verbose)
 
     if deep_verbose:
         print(f"\n\t{data_imp.shape = }")

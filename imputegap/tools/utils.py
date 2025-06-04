@@ -14,10 +14,12 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     ----------
     incomp_data : TimeSeries
         TimeSeries object containing dataset.
+
     algorithm : str
         Name of algorithm
+
     verbose : bool, optional
-                Whether to display the contamination information (default is False).
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -503,9 +505,10 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     elif algorithm == "pristi":
         target_strategy = str(config[algorithm]['target_strategy'])
         unconditional = bool(config[algorithm]['unconditional'])
+        batch_size = int(config[algorithm]['batch_size'])
+        embedding = int(config[algorithm]['embedding'])
         seed = int(config[algorithm]['seed'])
-        device = str(config[algorithm]['device'])
-        return (target_strategy, unconditional, seed, device)
+        return (target_strategy, unconditional, batch_size, embedding, seed)
     elif algorithm == "knn" or algorithm == "knn_impute":
         k = int(config[algorithm]['k'])
         weights = str(config[algorithm]['weights'])
@@ -797,12 +800,69 @@ def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
         raise ValueError(f"The percentage {percentage} is out of the acceptable range.")
 
 
-def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=True, offset=0.05, seed=42, verbose=False):
+def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=True, offset=0.05, block_selection=True, seed=42, verbose=False):
+    """
+        Prepares contaminated data and corresponding masks for deep learning-based imputation training,
+        validation, and testing.
+
+        This function simulates missingness in a controlled way, optionally prevents information leakage,
+        and produces masks for training, testing, and validation using different contamination strategies.
+
+        Parameters:
+        ----------
+        input_matrix : np.ndarray
+            The complete input time series data matrix of shape [T, N] (time steps × variables).
+
+        tr_ratio : float, default=0.8
+            The fraction of data to reserve for training when constructing the test contamination mask.
+
+        inside_tr_cont_ratio : float, default=0.2
+            The proportion of values to randomly drop inside the training data for internal contamination.
+
+        split_ts : float, default=1
+            Proportion of the total contaminated data assigned to the test set.
+
+        split_val : float, default=0
+            Proportion of the total contaminated data assigned to the validation set.
+
+        nan_val : float, default=-99999
+            Value used to represent missing entries in the masked matrix.
+
+        prevent_leak : bool, default=True
+            Replace the value of NaN with a high number to prevent leakage.
+
+        offset : float, default=0.05
+            Minimum temporal offset in the begining of the series
+
+        block_selection : bool, default=True
+            Whether to simulate missing values in contiguous blocks (True) or randomly (False).
+
+        seed : int, default=42
+            Seed for NumPy random number generation to ensure reproducibility.
+
+        verbose : bool, default=False
+            Whether to print logging/debug information during execution.
+
+        Returns:
+        -------
+        cont_data_matrix : np.ndarray
+            The input matrix with synthetic missing values introduced.
+
+        mask_train : np.ndarray
+            Boolean mask of shape [T, N] indicating the training contamination locations (True = observed, False = missing).
+
+        mask_test : np.ndarray
+            Boolean mask of shape [T, N] indicating the test contamination locations.
+
+        mask_valid : np.ndarray
+            Boolean mask of shape [T, N] indicating the validation contamination locations.
+    """
 
     cont_data_matrix = input_matrix.copy()
     original_missing_ratio = get_missing_ratio(cont_data_matrix)
 
-    cont_data_matrix, new_mask = prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, tr_ratio=tr_ratio, verbose=verbose)
+    cont_data_matrix, new_mask = prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, block_selection=block_selection, tr_ratio=tr_ratio, verbose=verbose)
+
     if prevent_leak:
         cont_data_matrix = prevent_leakage(cont_data_matrix, new_mask, nan_val, verbose)
 
@@ -812,7 +872,7 @@ def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_rat
     return cont_data_matrix, mask_train, mask_test, mask_valid
 
 
-def prepare_fixed_testing_set(incomp_m, tr_ratio=0.8, offset=0.05, verbose=True):
+def prepare_fixed_testing_set(incomp_m, tr_ratio=0.8, offset=0.05, block_selection=True, verbose=True):
     """
     Introduces additional missing values (NaNs) into a data matrix to match a specified training ratio.
 
@@ -830,6 +890,9 @@ def prepare_fixed_testing_set(incomp_m, tr_ratio=0.8, offset=0.05, verbose=True)
 
     offset : float
         Protected zone in the begining of the series
+
+    block_selection : bool
+        Select the missing values by blocks or randomly (True, is by block)
 
     verbose : bool
         Whether to print debug info.
@@ -875,7 +938,11 @@ def prepare_fixed_testing_set(incomp_m, tr_ratio=0.8, offset=0.05, verbose=True)
 
     # 3) Pick indices to contaminate
     if n_new_nans > 0:
-        chosen_indices = available_indices[:n_new_nans]
+        if block_selection :
+            chosen_indices = available_indices[:n_new_nans]
+        else:
+            np.random.seed(42)
+            chosen_indices = available_indices[np.random.choice(len(available_indices), n_new_nans, replace=False)]
 
         for i, j in chosen_indices:
             data_matrix_cont[i, j] = np.nan
@@ -1102,17 +1169,22 @@ def prevent_leakage(matrix, mask, replacement=0, verbose=True):
 
     return matrix
 
-def prepare_testing_set(incomp_m, original_missing_ratio, tr_ratio=0.8, verbose=True):
+def prepare_testing_set(incomp_m, original_missing_ratio, block_selection=True, tr_ratio=0.8, verbose=True):
     import numpy as np
 
     mask_original_nan = np.isnan(incomp_m)
 
     if verbose:
+        print(f"\n(DL) TEST-SET : testing ratio to reach = {1-tr_ratio:.2%}")
         print(f"\n(DL) TEST-SET : original missing ratio = {original_missing_ratio:.2%}")
         print(f"(DL) TEST-SET : original missing numbers = {np.sum(mask_original_nan)}")
 
+    if original_missing_ratio > 1-tr_ratio:
+        print(f"\n(ERROR) The proportion of original missing values is too high and will corrupt the training set.\n\tPlease consider reducing the percentage contamination pattern [{original_missing_ratio:.2%}] or decreasing the training ratio [{tr_ratio:.2%}].\n")
+        return incomp_m, mask_original_nan
+
     if abs((1-tr_ratio) - original_missing_ratio) > 0.01:
-        new_m, new_mask = prepare_fixed_testing_set(incomp_m, tr_ratio, verbose=verbose)
+        new_m, new_mask = prepare_fixed_testing_set(incomp_m, tr_ratio, block_selection=block_selection, verbose=verbose)
 
         if verbose:
             print(f"(DL) TEST-SET : building of the test set to reach a fix ratio of {1 - tr_ratio:.2%}...")
@@ -1166,6 +1238,49 @@ def validate_batch_size(batch_size, m, divisor=2, min_val=4, verbose=True):
 
         if verbose:
             print(f"(DL) Batch size to high, its value is set to {batch_size}.")
+
+    return batch_size
+
+def compute_batch_size(data, min_size=4, max_size=16, verbose=True):
+    """
+    Compute an appropriate batch size based on the input data shape.
+
+    The batch size is computed as `min(M // 2, max_size)`, where M is the number of samples.
+    If this computed batch size is less than `min_size`, it is set to `min_size` instead.
+
+    Parameters
+    ----------
+    data : np.ndarray or torch.Tensor
+        Input 2D data of shape (M, N), where M is the number of samples.
+    min_size : int, optional
+        Minimum allowed batch size. Default is 4.
+    max_size : int, optional
+        Maximum allowed batch size. Default is 16.
+    verbose : bool, optional
+        If True, prints the computed batch size. Default is True.
+
+    Returns
+    -------
+    int
+        Computed batch size.
+    """
+    M, N = data.shape
+
+    batch_size = min(M // 2, max_size)
+
+    if batch_size < min_size:
+        batch_size = min_size
+
+    if batch_size % 2 != 0:
+        batch_size = batch_size + 1
+        if batch_size > max_size:
+            batch_size = batch_size -2
+
+    if batch_size < 1:
+        batch_size = 1
+
+    if verbose:
+        print(f"(Batch-Size) Computed batch size: {batch_size}\n")
 
     return batch_size
 
@@ -1334,8 +1449,9 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         params_to_save = {
             "target_strategy": optimal_params[0],
             "unconditional": bool(optimal_params[1]),
+            "batch_size": bool(optimal_params[2]),
+            "embedding": bool(optimal_params[3]),
             "seed": 42,  # Default seed
-            "device": "cpu"  # Default device
         }
     elif algorithm == "knn" or algorithm == "knn_impute":
         params_to_save = {
@@ -1509,6 +1625,20 @@ def list_of_datasets(txt=False):
 
     return list
 
+
+def check_family(family, algorithm):
+    # Normalize input
+    norm_input = algorithm.lower().replace("_", "").replace("-", "")
+
+    for full_name in list_of_algorithms_with_families():
+        if full_name.startswith("DeepLearning."):
+            suffix = full_name.split(".", 1)[1]
+            norm_suffix = suffix.lower().replace("_", "").replace("-", "")
+
+            if norm_input == norm_suffix:
+                return True
+    return False
+
 def list_of_optimizers():
     return sorted([
         "ray_tune",
@@ -1598,5 +1728,3 @@ def list_of_algorithms_with_families():
 
 def list_of_normalizers():
     return ["z_score", "min_max"]
-
-

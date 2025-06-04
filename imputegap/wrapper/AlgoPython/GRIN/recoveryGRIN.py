@@ -33,20 +33,19 @@ def get_model_classes(model_str):
     return model, filler
 
 
-def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=32, window=1, alpha=10.0, patience=4, epochs=20, workers=2,
+def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10.0, patience=4, epochs=20, workers=2,
                  adj_threshold=0.1, val_len=0.2, test_len=0.2, d_ff=16, ff_dropout=0.1, stride=1, l2_reg=0.0,
                  grad_clip_val=5.0, grad_clip_algorithm="norm", loss_fn="l1_loss", use_lr_schedule=True, hint_rate=0.7,
-                 g_train_freq=1, d_train_freq=5, seed=42, verbose=True):
+                 g_train_freq=1, d_train_freq=5, tr_ratio=0.9, seed=42, verbose=True):
 
-    if batch_size > input.shape[0]:
-        batch_size = int(input.shape[0] / 2)
-        if verbose:
-            print("Batch size higher than input data size, reducing batch size to", batch_size)
+    if batch_size == -1:
+        batch_size = utils.compute_batch_size(data=input, min_size=4, max_size=32, verbose=verbose)
 
     if verbose:
-        print("\n(IMPUTATION) GRIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
-              " batch_size ", batch_size, " lr ", lr, " window ", window, " alpha ", alpha, " patience ", patience,
-              " epochs ", epochs, ", and workers ", workers, "=================================================\n\n ")
+        print(f"\n(IMPUTATION) GRIN\n\tMatrix: {input.shape[0]}\n\t, {input.shape[1]}\n\tbatch_size: {batch_size}\n\tlr: {lr}\n\twindow: {window}\n\talpha: {alpha}\n\tpatience: {patience}\n\tepochs: {epochs}\n\tworkers: {workers}\n")
+
+    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
+
 
     input_data = np.copy(input)
 

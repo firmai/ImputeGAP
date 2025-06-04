@@ -128,22 +128,24 @@ threshold = 0.25
 base = "SAGE"
 
 [pristi]
-target_strategy = "hybrid"
+target_strategy = "block"
 unconditional = false
+batch_size = -1
+embedding = -1
 seed = 42
-device = "cpu"
+
 
 [miss_net]
 alpha = 0.5
 beta = 0.1
 L = 10
 n_cl = 1
-max_iter = 20
-tol = 5
+max_iter = 10
+tol = 4
 random_init = false
 
 [gain]
-batch_size = 10
+batch_size = -1
 hint_rate = 0.9
 alpha = 10
 epoch = 100
@@ -151,7 +153,7 @@ epoch = 100
 [grin]
 d_hidden = 32
 lr = 0.001
-batch_size = 32
+batch_size = -1
 window = 1
 alpha = 10.0
 patience = 4
@@ -167,13 +169,13 @@ time_scale = 1
 a0 = 1
 b0 = 1
 v = 1
-tr_ratio = 0.8
+tr_ratio = 0.6
 
 
 [hkmf_t]
 tags = []
 data_names = []
-epoch = 2
+epoch = 7
 
 
 # OPTIMIZER DEFAULT VALUES ==========================================================================
