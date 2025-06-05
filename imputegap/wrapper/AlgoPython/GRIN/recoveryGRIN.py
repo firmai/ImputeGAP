@@ -19,6 +19,7 @@ from imputegap.wrapper.AlgoPython.GRIN.lib.nn.utils.metrics import MaskedMAE, Ma
 from imputegap.wrapper.AlgoPython.GRIN.lib.utils import parser_utils
 
 from imputegap.wrapper.AlgoPython.GRIN.lib import datasets, fillers, config
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def has_graph_support(model_cls):
@@ -38,30 +39,42 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
                  grad_clip_val=5.0, grad_clip_algorithm="norm", loss_fn="l1_loss", use_lr_schedule=True, hint_rate=0.7,
                  g_train_freq=1, d_train_freq=5, tr_ratio=0.9, seed=42, verbose=True):
 
+    recov = np.copy(input)
+    m_mask = np.isnan(input)
+
     if batch_size == -1:
-        batch_size = utils.compute_batch_size(data=input, min_size=4, max_size=32, verbose=verbose)
+        batch_size = utils.compute_batch_size(data=input, min_size=4, max_size=32, divisor=4, verbose=verbose)
 
     if verbose:
-        print(f"\n(IMPUTATION) GRIN\n\tMatrix: {input.shape[0]}\n\t, {input.shape[1]}\n\tbatch_size: {batch_size}\n\tlr: {lr}\n\twindow: {window}\n\talpha: {alpha}\n\tpatience: {patience}\n\tepochs: {epochs}\n\tworkers: {workers}\n")
+        print(f"\n(IMPUTATION) GRIN\n\tMatrix: {input.shape[0]}, {input.shape[1]}\n\tbatch_size: {batch_size}\n\tlr: {lr}\n\twindow: {window}\n\talpha: {alpha}\n\tpatience: {patience}\n\tepochs: {epochs}\n\tworkers: {workers}\n")
 
-    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
+    nan_row_selector = np.any(np.isnan(input), axis=1)
+    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=0.0, prevent_leak=True, offset=0.05, seed=seed, verbose=False)
 
-
-    input_data = np.copy(input)
-
-    if seed:
-        seed = 42
-
+    input_data = np.copy(cont_data_matrix)
     M, N = input_data.shape
 
+
+    # Get indices where the value is True
+    s = ~nan_row_selector
+    tr_indice = np.where(s)[0]
+    tr_indice = np.where(s)[0]
+    np.random.seed(42)
+    num_to_flip = len(tr_indice) // 4
+    other_indices = np.random.choice(tr_indice, size=num_to_flip, replace=False)
+    flip_indices = np.setdiff1d(tr_indice, other_indices)
+    training_mask = np.zeros((M, N), dtype=np.uint8)  # or dtype=bool if preferred
+    training_mask[flip_indices, :] = 1
+
+
     if window > N :
-        window = N // 2
+        window = 1
 
     torch.set_num_threads(seed)
     pl.seed_everything(seed)
 
     model_cls, filler_cls = get_model_classes('grin')
-    dataset = datasets.MissingValuesMyData(input_data)
+    dataset = datasets.MissingValuesMyData(cont_data_matrix, training_mask, mask_test)
 
     ########################################
     # create logdir and save configuration #
@@ -82,8 +95,8 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
         "hint_rate": hint_rate,
         "g_train_freq": g_train_freq,
         "d_train_freq": d_train_freq,
-        "val_len": val_len,
-        "test_len": test_len,
+        "val_len": M,
+        "test_len": len(flip_indices),
         "window": window,
         "stride": stride,
         "d_hidden": d_hidden,  # Default or replace with correct value
@@ -93,7 +106,6 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
 
     exp_name = f"{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}_{seed}"
     logdir = os.path.join(config['logs'], 'grin', exp_name)
-    # save config for logging
     pathlib.Path(logdir).mkdir(parents=True)
 
     ########################################
@@ -102,65 +114,26 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
 
     # instantiate dataset
     dataset_cls = GraphImputationDataset if has_graph_support(model_cls) else ImputationDataset
+    torch_dataset = dataset_cls(*dataset.numpy(return_idx=True), mask=dataset.training_mask, eval_mask=dataset.eval_mask, window=window, stride=stride,)
 
-    torch_dataset = dataset_cls(
-        *dataset.numpy(return_idx=True),
-        mask=dataset.training_mask,
-        eval_mask=dataset.eval_mask,
-        window=window,
-        stride=stride,
-    )
+    indices = np.arange(M)
+    train_idxs = flip_indices
+    test_idxs = other_indices
+    val_idxs = indices
 
-    # get train/val/test indices
-    # ✅ MANUAL DATA SPLITTING (Replacing `splitter`)
-    total_size = len(torch_dataset)
-    indices = np.arange(total_size)
-
-    # Shuffle indices before splitting
-    np.random.shuffle(indices)
-
-    test_size = int(total_size * test_len)
-    val_size = int(total_size * val_len)
-    train_size = total_size - val_size - test_size
-
-    train_idxs = indices[:train_size]
-    val_idxs = indices[train_size:train_size + val_size]
-    test_idxs = indices
-
-    # Check if indices are empty
-    # Check if indices are empty
     if verbose:
         print(f"🔍 torch size: {len(torch_dataset)}")
-        print(f"🔍 Validation Indices: {len(val_idxs) if val_idxs is not None else 0}")
+        print(f"🔍 Training Indices: {len(train_idxs) if train_idxs is not None else 0}")
         print(f"🔍 Test Indices: {len(test_idxs) if test_idxs is not None else 0}")
+        print(f"🔍 Validation Indices: {len(val_idxs) if val_idxs is not None else 0}")
 
-    # Extract only the valid arguments that SpatioTemporalDataModule accepts
-    data_module_conf = {
-        "scale": True,
-        "scaling_axis": "global",
-        "scaling_type": "std",
-        "scale_exogenous": None,
-        "train_idxs": train_idxs,
-        "val_idxs": val_idxs,
-        "test_idxs": test_idxs,
-        "batch_size": batch_size,
-        "workers": workers,
-        "samples_per_epoch": None,
-        "verbose": verbose
-    }
 
-    # Now, pass only the relevant parameters
-    dm = SpatioTemporalDataModule(
-        torch_dataset,
-        **data_module_conf,
-    )
+    data_module_conf = { "scale": True, "scaling_axis": "global", "scaling_type": "std", "scale_exogenous": None, "train_idxs": train_idxs, "val_idxs": val_idxs, "test_idxs": test_idxs, "batch_size": batch_size, "workers": workers, "samples_per_epoch": None, "verbose": verbose }
 
+    dm = SpatioTemporalDataModule(torch_dataset, **data_module_conf, )
     dm.setup()
 
-
-    # get adjacency matrix
     adj = dataset.get_similarity(thr=adj_threshold)
-    # force adj with no self loop
     np.fill_diagonal(adj, 0.0)
 
     ########################################
@@ -169,100 +142,94 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
 
     # model's inputs
     additional_model_hparams = dict(adj=adj, d_in=dm.d_in, n_nodes=dm.n_nodes)
-    model_kwargs = parser_utils.filter_args(args={**split_conf, **additional_model_hparams},
-        target_cls=model_cls  # ✅ Ensure target_cls is set correctly
-    )
+    model_kwargs = parser_utils.filter_args(args={**split_conf, **additional_model_hparams}, target_cls=model_cls  )
 
     # loss and metrics
     loss_fn = MaskedMetric(metric_fn=getattr(F, loss_fn), metric_kwargs={'reduction': 'none'})
 
-    metrics = {'mae': MaskedMAE(compute_on_step=False),
-               'mape': MaskedMAPE(compute_on_step=False),
-               'mse': MaskedMSE(compute_on_step=False),
-               'mre': MaskedMRE(compute_on_step=False)}
+    metrics = {'mae': MaskedMAE(compute_on_step=False), 'mape': MaskedMAPE(compute_on_step=False), 'mse': MaskedMSE(compute_on_step=False), 'mre': MaskedMRE(compute_on_step=False)}
 
     # filler's inputs
     scheduler_class = CosineAnnealingLR if use_lr_schedule else None
     additional_filler_hparams = dict(model_class=model_cls,
                                      model_kwargs=model_kwargs,
                                      optim_class=torch.optim.Adam,
-                                     optim_kwargs={'lr': lr,
-                                                   'weight_decay': l2_reg},
+                                     optim_kwargs={'lr': lr, 'weight_decay': l2_reg},
                                      loss_fn=loss_fn,
                                      metrics=metrics,
                                      scheduler_class=scheduler_class,
-                                     scheduler_kwargs={
-                                         'eta_min': 0.0001,
-                                         'T_max': epochs
-                                     },
+                                     scheduler_kwargs={'eta_min': 0.0001, 'T_max': epochs },
                                      alpha=alpha,
                                      hint_rate=hint_rate,
                                      g_train_freq=g_train_freq,
                                      d_train_freq=d_train_freq)
 
-    filler_kwargs = parser_utils.filter_args(args={**split_conf, **additional_filler_hparams},
-                                             target_cls=filler_cls,
-                                             return_dict=True)
-
+    filler_kwargs = parser_utils.filter_args(args={**split_conf, **additional_filler_hparams}, target_cls=filler_cls, return_dict=True)
     filler = filler_cls(**filler_kwargs)
+    filler.verbose = verbose
 
     ########################################
     # training                             #
     ########################################
+    if verbose:
+        print("\ntraining...")
+
     ########################################
 
     # callbacks
-    early_stop_callback = EarlyStopping(monitor='val_mae', patience=patience, mode='min')
-    checkpoint_callback = ModelCheckpoint(dirpath=logdir, save_top_k=1, monitor='val_mae', mode='min')
-
+    early_stop_callback = EarlyStopping(monitor='val_loss', patience=patience, mode='min')
+    checkpoint_callback = ModelCheckpoint(dirpath=logdir, save_top_k=1, monitor='val_loss', mode='min')
 
     logger = TensorBoardLogger(logdir, name="model")
 
     trainer = pl.Trainer(max_epochs=epochs,
-                         logger=logger,
+                         logger=True,
                          default_root_dir=logdir,
                          accelerator="gpu" if torch.cuda.is_available() else "cpu",  # Automatically detect GPU/CPU
                          devices=1 if torch.cuda.is_available() else "auto", # Use 1 GPU if available, otherwise default
                          gradient_clip_val=grad_clip_val,
                          gradient_clip_algorithm=grad_clip_algorithm,
-                         callbacks=[early_stop_callback, checkpoint_callback])
+                         callbacks=[early_stop_callback, checkpoint_callback],
+                         enable_progress_bar=verbose,  # Disable tqdm bars
+                         enable_model_summary=verbose,  # Disable model summary print
+                         enable_checkpointing=True,
+                         log_every_n_steps=(M%batch_size))
 
     trainer.fit(filler, datamodule=dm)
 
     ########################################
     # testing                              #
     ########################################
+    if verbose:
+        print("\nreconstruct...")
 
-    filler.load_state_dict(
-        torch.load(checkpoint_callback.best_model_path, lambda storage, loc: storage)[
-            "state_dict"
-        ]
-    )
+    checkpoint = torch.load(checkpoint_callback.best_model_path, map_location=device, weights_only=False)  # weights_only=False by default
+    filler.load_state_dict(checkpoint["state_dict"])
+
     filler.freeze()
-    trainer.test(datamodule=dm)  # ✅ Explicitly passing the datamodule
-    filler.eval()
-
+    trainer.test(datamodule=dm, ckpt_path="best")
     filler.eval()
 
     if torch.cuda.is_available():
         filler.cuda()
 
     with torch.no_grad():
-        y_true, y_hat, mask = filler.predict_loader(dm.test_dataloader(), return_mask=True)
+        y_true, y_hat, mask = filler.predict_loader(dm.val_dataloader(), return_mask=True)
 
     # Debugging the shapes before reshaping
-
-
     y_hat = y_hat.detach().cpu().numpy().reshape(input_data.shape)
 
-    imputed_data = np.where(np.isnan(input), y_hat, input_data)  # Replace NaNs with predictions
+    print(f"{y_hat.shape = }")
 
     if verbose:
         print("🔍 y_hat shape before reshape:", y_hat.shape)
         print("🔍 Expected input_data shape:", input_data.shape)
-        print("imputed_data.shape", imputed_data.shape)
 
-    return imputed_data
+    y_hat = y_hat
+
+    recov[m_mask] = y_hat[m_mask]
+
+    return recov
 
 
 if __name__ == '__main__':

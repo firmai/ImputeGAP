@@ -30,15 +30,9 @@ class SpatioTemporalDataModule(pl.LightningDataModule):
         super(SpatioTemporalDataModule, self).__init__()
         self.torch_dataset = dataset
         # splitting
-        self.trainset = Subset(
-            self.torch_dataset, train_idxs if train_idxs is not None else []
-        )
-        self.valset = Subset(
-            self.torch_dataset, val_idxs if val_idxs is not None else []
-        )
-        self.testset = Subset(
-            self.torch_dataset, test_idxs if test_idxs is not None else []
-        )
+        self.trainset = Subset(self.torch_dataset, train_idxs if train_idxs is not None else [])
+        self.valset = Subset(self.torch_dataset, val_idxs if val_idxs is not None else [])
+        self.testset = Subset(self.torch_dataset, test_idxs if test_idxs is not None else [])
         # preprocessing
         self.scale = scale
         self.verbose = verbose
@@ -147,7 +141,7 @@ class SpatioTemporalDataModule(pl.LightningDataModule):
             **kwargs,
         )
 
-    def train_dataloader(self, shuffle=True, batch_size=None):
+    def train_dataloader(self, shuffle=False, batch_size=None):
         if self.samples_per_epoch is not None:
             sampler = RandomSampler(
                 self.trainset, replacement=True, num_samples=self.samples_per_epoch
@@ -161,8 +155,6 @@ class SpatioTemporalDataModule(pl.LightningDataModule):
         return self._data_loader(self.valset, shuffle, batch_size)
 
     def test_dataloader(self, shuffle=False, batch_size=None):
-        if self.verbose:
-            print(f"🔍 Test Dataloader: {len(self.testset)} samples")  # Debugging
         return self._data_loader(self.testset, shuffle, batch_size)
 
     @staticmethod
@@ -170,9 +162,7 @@ class SpatioTemporalDataModule(pl.LightningDataModule):
         parser.add_argument("--batch-size", type=int, default=64)
         parser.add_argument("--scaling-axis", type=str, default="channels")
         parser.add_argument("--scaling-type", type=str, default="std")
-        parser.add_argument(
-            "--scale", type=str_to_bool, nargs="?", const=True, default=True
-        )
+        parser.add_argument("--scale", type=str_to_bool, nargs="?", const=True, default=True)
         parser.add_argument("--workers", type=int, default=0)
         parser.add_argument("--samples-per-epoch", type=int, default=None)
         return parser

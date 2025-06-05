@@ -11,10 +11,11 @@ ts.load_series(utils.search_path("chlorine"))
 ts.normalize(normalizer="z_score")
 
 # contaminate the time series
-ts_m = ts.Contamination.aligned(ts.data)
+ts_m = ts.Contamination.mcar(ts.data)
 
 # impute the contaminated series
 imputer = Imputation.DeepLearning.GRIN(ts_m)
+imputer.verbose = False
 imputer.impute()
 
 # compute and print the imputation metrics

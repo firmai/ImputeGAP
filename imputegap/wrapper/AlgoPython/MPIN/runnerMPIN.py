@@ -54,13 +54,14 @@ def get_window_data(base_X, base_X_mask, start, end, ratio):
 
 def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=None, X_last=None, mask_last=None,
                       mae_last=None, transfer=False, lr=0.01, weight_decay=0.1, epochs=200, out_channels=256,
-                      state=True, k=10, base="SAGE", thre=0.25, eval_ratio=0.05, dynamic=False, device=None):
+                      state=True, k=10, base="SAGE", thre=0.25, eval_ratio=0.05, dynamic=False, device=None, verbose=True):
 
     X, X_mask = get_window_data(base_X=input, base_X_mask=mask, start=start, end=end, ratio=sample_ratio)
 
-    print("\t(IMPUTATION) window_imputation: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
-          " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " threshold ", thre,
-          ", and base ", base, "=================================================\n\n ")
+    if verbose:
+        print("\t(IMPUTATION) window_imputation: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
+                  " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " threshold ", thre,
+              ", and base ", base, "=================================================\n\n ")
 
     ori_X = copy.copy(X)
     feature_dim = ori_X.shape[1]

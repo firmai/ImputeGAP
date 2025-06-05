@@ -8,45 +8,23 @@ from ..utils import sample_mask
 
 
 class MyData(PandasDataset):
-    def __init__(self, data):
-        df, dist, mask = self.load(data=data)
+    def __init__(self, data, mask_tr, mask_ts):
+        df, dist, mask = self.load(data=data , mask_tr=mask_tr, mask_ts=mask_ts)
         self.dist = dist
         self.len, self.ncol = df.shape
         super().__init__(
             dataframe=df, u=None, mask=mask, name="bay", freq=None, aggr="nearest"
         )
 
-    def load(self, data=None, impute_zeros=True):
+    def load(self, data=None, mask_tr=None, mask_ts=None, impute_zeros=True):
 
         if not isinstance(data, pd.DataFrame):
             df = pd.DataFrame(data)
 
-        mask = ~np.isnan(df.values)
-        df.fillna(method="ffill", axis=0, inplace=True)
-        # dist = self.load_distance_matrix(list(df.columns))
+        mask = mask_tr
         dist = np.ones(shape=(df.shape[1], df.shape[1]))
-        return df.astype("float32"), dist, mask.astype("uint8")
+        return df.astype("float32"), dist, mask.astype(bool)
 
-    # def load_distance_matrix(self, ids):
-    #     path = os.path.join(datasets_path["bay"], "pems_bay_dist.npy")
-    #     try:
-    #         dist = np.load(path)
-    #     except:
-    #         distances = pd.read_csv(
-    #             os.path.join(datasets_path["bay"], "distances_bay.csv")
-    #         )
-    #         num_sensors = len(ids)
-    #         dist = np.ones((num_sensors, num_sensors), dtype=np.float32) * np.inf
-    #         # Builds sensor id to index map.
-    #         sensor_id_to_ind = {int(sensor_id): i for i, sensor_id in enumerate(ids)}
-    #
-    #         # Fills cells in the matrix with distances.
-    #         for row in distances.values:
-    #             if row[0] not in sensor_id_to_ind or row[1] not in sensor_id_to_ind:
-    #                 continue
-    #             dist[sensor_id_to_ind[row[0]], sensor_id_to_ind[row[1]]] = row[2]
-    #         np.save(path, dist)
-    #     return dist
 
     def get_similarity(
         self, type="dcrnn", thr=0.1, force_symmetric=False, sparse=False
@@ -91,37 +69,18 @@ class MyData(PandasDataset):
 
 
 class MissingValuesMyData(MyData):
-    def __init__(self, data, seed=42, p_fault=0.0015, p_noise=0.05):
-        super(MissingValuesMyData, self).__init__(data)
+    def __init__(self, data, tr_mask, ts_mask, seed=42, p_fault=0.0015, p_noise=0.05):
+        super(MissingValuesMyData, self).__init__(data, tr_mask, ts_mask)
         self.rng = np.random.default_rng(seed)
         self.p_fault = p_fault
         self.p_noise = p_noise
-        eval_mask = sample_mask(
-            self.numpy().shape,
-            p=p_fault,
-            p_noise=p_noise,
-            min_seq=12,
-            max_seq=12 * 4,
-            rng=self.rng,
-        )
-        self.eval_mask = (eval_mask & self.mask).astype("uint8")
+        eval_mask = sample_mask(self.numpy().shape, p=p_fault, p_noise=p_noise, min_seq=12, max_seq=12 * 4, rng=self.rng, )
+        #self.eval_mask = (eval_mask & self.mask).astype("uint8")
+        self.eval_mask = tr_mask.astype(bool)
+        self._mask = tr_mask.astype(bool)
+        self.tr_mask = tr_mask.astype(bool)
 
     @property
     def training_mask(self):
-        return (
-            self.mask if self.eval_mask is None else (self.mask & (1 - self.eval_mask))
-        )
-
-    def splitter(self, dataset, val_len=0, test_len=0, window=0):
-        idx = np.arange(len(dataset))
-        if test_len < 1:
-            test_len = int(test_len * len(idx))
-        if val_len < 1:
-            val_len = int(val_len * (len(idx) - test_len))
-        test_start = len(idx) - test_len
-        val_start = test_start - val_len
-        return [
-            idx[: val_start - window],
-            idx[val_start : test_start - window],
-            idx[test_start:],
-        ]
+        return self.tr_mask
+        #return (self.mask if self.eval_mask is None else (self.mask & (1 - self.eval_mask)))

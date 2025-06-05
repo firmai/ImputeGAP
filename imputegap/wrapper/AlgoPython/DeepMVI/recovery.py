@@ -27,7 +27,7 @@ def deep_mvi_recovery(input, max_epoch=1000, patience=2, lr=1e-3, tr_ratio=0.9, 
     m_mask = np.isnan(input)
 
     cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
-    temp = transformer_recovery(cont_data_matrix, max_epoch, patience, lr, verbose)
+    temp = transformer_recovery(cont_data_matrix, max_epoch, patience, lr, verbose=verbose)
 
     recov[m_mask] = temp[m_mask]
 

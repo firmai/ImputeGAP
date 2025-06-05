@@ -82,7 +82,7 @@ class MPGRUImputer(nn.Module):
 
         # infer all valid if mask is None
         if mask is None:
-            mask = torch.ones_like(x, dtype=torch.uint8)
+            mask = torch.ones_like(x, dtype=torch.uint8).bool()
 
         # init hidden state using node embedding or the empty state
         if h is None:

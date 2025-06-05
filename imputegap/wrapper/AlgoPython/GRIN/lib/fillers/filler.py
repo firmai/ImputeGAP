@@ -242,7 +242,6 @@ class Filler(pl.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        print(f"Running validation step for filler batch {batch_idx}")  # ✅ Debugging print
 
         # Unpack batch
         batch_data, batch_preprocessing = self._unpack_batch(batch)

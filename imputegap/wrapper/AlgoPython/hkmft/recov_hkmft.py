@@ -453,10 +453,12 @@ def single_main(input,
     #dl.norm(0.0, dataset_norm)
 
     data, mask, tag, gt = dl.get_data()
-    print(f"{data.shape = }")
-    print(f"{mask.shape = }")
-    print(f"{tag.shape = }")
-    print(f"{gt.shape = }")
+
+    if verbose:
+        print(f"{data.shape = }")
+        print(f"{mask.shape = }")
+        print(f"{tag.shape = }")
+        print(f"{gt.shape = }")
 
     rs, rmse_score, dtw_score = method_core(data, mask, tag, gt, max_epoch, train_eta, train_lambda_s, train_lambda_o, train_lambda_e, train_stop_rate, train_converge_threshold, )
 

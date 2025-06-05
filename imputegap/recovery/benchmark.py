@@ -892,7 +892,7 @@ class Benchmark:
                                             print("\n5. AutoML to set the parameters", optimizer, "\n")
                                         i_opti = self._config_optimization(0.20, ts_test, pattern, algorithm, block_size_mcar)
 
-                                        if utils.check_family("DeepLearning", algorithm) or dl:
+                                        if utils.check_family("DeepLearning", algorithm):
                                             i_opti.impute(user_def=False, params=optimizer_gt, tr_ratio=0.80)
                                         else:
                                             i_opti.impute(user_def=False, params=optimizer_gt)

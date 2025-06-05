@@ -151,14 +151,14 @@ alpha = 10
 epoch = 100
 
 [grin]
-d_hidden = 32
+d_hidden = 64
 lr = 0.001
 batch_size = -1
 window = 1
 alpha = 10.0
-patience = 4
-epochs = 20
-workers = 2
+patience = 10
+epochs = 100
+workers = 4
 
 [bay_otide]
 K_trend = 30

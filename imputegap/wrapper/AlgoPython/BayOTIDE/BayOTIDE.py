@@ -100,11 +100,14 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     final_result = incomp_m.copy()
     mask_original_nan = np.isnan(incomp_m)
 
-    nan_replacement             = 0
+    nan_replacement             = -99999
     artificial_training_drop    = 0.4
     ts_ratio                    = 0.9
     val_ratio                   = 1-ts_ratio
     offset                      = 0.05
+
+    if verbose:
+        print(f"(IMPUTATION) BayOTIDE\n\tMatrix: ({incomp_m.shape[0]}, {incomp_m.shape[1]})\n\tK_trend: {K_trend}\n\tK_season: {K_season}\n\tn_season: {n_season}\n\tK_bias: {K_bias}\n\ttime_scale: {time_scale}\n\ta0: {a0}\n\tb0: {b0}\n\ttr_ratio: {tr_ratio}\n")
 
     # building test set ================================================================================================
     gt_data_matrix = incomp_m.copy()
@@ -168,6 +171,7 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
         # building masks================================================================================================
 
         data_save['data'].append({'mask_train': mask_train, 'mask_test': mask_test, 'mask_valid': mask_valid})
+
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(base_dir, config["data_path"])

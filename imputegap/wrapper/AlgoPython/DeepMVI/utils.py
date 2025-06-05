@@ -42,7 +42,6 @@ def make_validation (matrix,num_missing=20):
 
     if (temp.shape[0]>1):
         block_size = temp[int(temp.shape[0]/10):-int(temp.shape[0]/10)-1].mean()
-        print(f"{block_size = }")
     else :
         block_size = temp.mean()
 

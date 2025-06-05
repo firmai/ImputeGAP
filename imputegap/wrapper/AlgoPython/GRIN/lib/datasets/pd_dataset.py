@@ -44,7 +44,7 @@ class PandasDataset:
             self.u = None
 
         if mask is not None:
-            mask = np.asarray(mask).astype("uint8")
+            mask = np.asarray(mask).astype(bool)
         self._mask = mask
 
         if freq is not None:
@@ -106,7 +106,7 @@ class PandasDataset:
     @property
     def mask(self):
         if self._mask is None:
-            return np.ones_like(self.df.values).astype("uint8")
+            return np.ones_like(self.df.values).astype(bool)
         return self._mask
 
     def numpy(self, return_idx=False):

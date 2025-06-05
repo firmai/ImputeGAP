@@ -103,8 +103,10 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
 
     if verbose:
         print("\nreconstruction...")
+
+    perfect_size = min(train_size, test_size)
     tr = reconstruct(Recover_trainX, alpha, m, 0, seq_length, verbose=False)
-    ts = reconstruct(Recover_testX, alpha, m, train_size, seq_length, verbose=False)
+    ts = reconstruct(Recover_testX, alpha, m, perfect_size, seq_length, verbose=False)
 
     tr_inc, ts_inc = 0, 0
     for idx, row in enumerate(recov):

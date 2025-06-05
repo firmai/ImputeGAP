@@ -1241,7 +1241,7 @@ def validate_batch_size(batch_size, m, divisor=2, min_val=4, verbose=True):
 
     return batch_size
 
-def compute_batch_size(data, min_size=4, max_size=16, verbose=True):
+def compute_batch_size(data, min_size=4, max_size=16, divisor=2, verbose=True):
     """
     Compute an appropriate batch size based on the input data shape.
 
@@ -1256,6 +1256,8 @@ def compute_batch_size(data, min_size=4, max_size=16, verbose=True):
         Minimum allowed batch size. Default is 4.
     max_size : int, optional
         Maximum allowed batch size. Default is 16.
+    divisor : int, optional
+        Divisor on the shape of the dataset. Default is 2.
     verbose : bool, optional
         If True, prints the computed batch size. Default is True.
 
@@ -1266,7 +1268,7 @@ def compute_batch_size(data, min_size=4, max_size=16, verbose=True):
     """
     M, N = data.shape
 
-    batch_size = min(M // 2, max_size)
+    batch_size = min(M // divisor, max_size)
 
     if batch_size < min_size:
         batch_size = min_size

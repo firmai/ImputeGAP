@@ -16,7 +16,7 @@ class TestMRNN(unittest.TestCase):
         incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10, offset=0.1, seed=True)
 
         algo = Imputation.DeepLearning.MRNN(incomp_data)
-        algo.impute()
+        algo.impute(tr_ratio=0.8)
         algo.score(ts_1.data)
 
         _, metrics = algo.recov_data, algo.metrics

@@ -44,7 +44,7 @@ class VARImputer(nn.Module):
         # x: [batches, steps, features]
         batch_size, steps, n_feats = x.shape
         if mask is None:
-            mask = torch.ones_like(x, dtype=torch.uint8)
+            mask = torch.ones_like(x, dtype=torch.uint8).bool()
         x = x * mask
         # pad input sequence to start filling from first step
         if self.padding == 'mean':
