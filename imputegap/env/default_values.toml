@@ -107,7 +107,7 @@ sequence_length = 7
 [brits]
 model = "brits_i_univ"
 epoch = 100
-batch_size = 24
+batch_size = -1
 nbr_features = 1
 hidden_layers = 64
 

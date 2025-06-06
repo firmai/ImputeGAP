@@ -37,10 +37,10 @@ In detail, the package provides:
 # Available Imputation Algorithms
 | **Family**         | **Algorithm**             | **Venue -- Year**            |
 |--------------------|---------------------------|------------------------------|
-| Deep Learning      | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
-| Deep Learning      | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
 | Deep Learning      | MissNet [[27]](#ref27)    | KDD -- 2024                  |
 | Deep Learning      | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
+| Deep Learning      | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
+| Deep Learning      | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
 | Deep Learning      | PRISTI [[26]](#ref26)     | ICDE -- 2023                 |
 | Deep Learning      | GRIN [[29]](#ref29)       | ICLR -- 2022                 |
 | Deep Learning      | HKMF_T [[31]](#ref31)     | TKDE -- 2021                 |

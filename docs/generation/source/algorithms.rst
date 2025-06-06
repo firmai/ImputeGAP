@@ -15,14 +15,14 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
      - MissNet [27]_
      - KDD -- 2024
    * - Deep Learning
+     - MPIN [25]_
+     - PVLDB -- 2024
+   * - Deep Learning
      - BitGraph [32]_
      - ICLR -- 2024
    * - Deep Learning
      - BayOTIDE [30]_
      - PMLR -- 2024
-   * - Deep Learning
-     - MPIN* [25]_
-     - PVLDB -- 2024
    * - Deep Learning
      - PRISTI [26]_
      - ICDE -- 2023

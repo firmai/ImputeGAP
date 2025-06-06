@@ -1,5 +1,4 @@
 import unittest
-import numpy as np
 from imputegap.recovery.imputation import Imputation
 from imputegap.tools import utils
 from imputegap.recovery.manager import TimeSeries

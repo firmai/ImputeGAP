@@ -12,8 +12,8 @@ IIM_LEARNING_NEIGHBOR_RANGE = [i for i in range(1, 100)]  # Test up to 100 learn
 
 # MRNN parameters
 MRNN_LEARNING_RATE_CHANGE = np.logspace(-6, 0, num=20)  # log scale for learning rate
-MRNN_HIDDEN_DIM_RANGE = [i for i in range(10)]  # hidden dimension
-MRNN_SEQ_LEN_RANGE = [i for i in range(100)]  # sequence length
+MRNN_HIDDEN_DIM_RANGE = [i for i in range(0, 300, 25)]  # number of epochs
+MRNN_SEQ_LEN_RANGE = [i for i in range(10)]  # sequence length
 MRNN_NUM_ITER_RANGE = [i for i in range(0, 100, 5)]  # number of epochs
 MRNN_KEEP_PROB_RANGE = np.logspace(-6, 0, num=10)  # dropout keep probability
 
@@ -140,13 +140,13 @@ RAYTUNE_PARAMS = {
 
     "mpin": {
         "incre_mode": tune.choice(["alone", "data", "state", "state+transfer", "data+state", "data+state+transfer"]),  # Different incremental modes
-        "window": tune.grid_search([1]),  # Window size variations
+        "window": 1,  # Window size variations
         "k": tune.grid_search([5, 10]),  # Number of neighbors
-        "learning_rate": tune.grid_search([0.001, 0.01, 0.1]),  # Learning rate range
-        "weight_decay": tune.grid_search([0.001, 0.01, 0.1]),  # Weight decay regularization
-        "epochs": tune.grid_search([5, 10, 20]),  # Number of epochs
-        "num_of_iteration": tune.grid_search([1, 5]),  # Number of epochs
-        "threshold":  tune.grid_search([0.1, 0.5]),  # Threshold range
+        "learning_rate": tune.grid_search([0.01, 0.1]),  # Learning rate range
+        "weight_decay": tune.grid_search([0.1, 0.5]),  # Weight decay regularization
+        "epochs": 200,  # Number of epochs
+        "num_of_iteration": 5,  # Number of epochs
+        "threshold":  tune.grid_search([0.25, 0.75]),  # Threshold range
         "base": tune.choice(["SAGE", "GAT", "GCN"])  # Model architectures
     },
 

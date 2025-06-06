@@ -864,6 +864,10 @@ def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_rat
     cont_data_matrix, new_mask = prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, block_selection=block_selection, tr_ratio=tr_ratio, verbose=verbose)
 
     if prevent_leak:
+        if nan_val == -1:
+            import numpy as np
+            nan_val = np.nanmean(input_matrix)
+            print(f"NaN replacement Mean Value : {nan_val}")
         cont_data_matrix = prevent_leakage(cont_data_matrix, new_mask, nan_val, verbose)
 
     mask_test, mask_valid, nbr_nans = split_mask_bwt_test_valid(cont_data_matrix, test_rate=split_ts, valid_rate=split_val, nan_val=nan_val, verbose=verbose, seed=seed)
@@ -1199,47 +1203,6 @@ def prepare_testing_set(incomp_m, original_missing_ratio, block_selection=True, 
 
     return new_m, new_mask
 
-
-def validate_batch_size(batch_size, m, divisor=2, min_val=4, verbose=True):
-    """
-    Validates and adjusts the batch size based on a minimum threshold.
-
-    This function ensures that the batch size is not smaller than a required value `m`.
-    If it is, a new batch size is calculated as `m // divisor`. If this result is
-    zero or negative, the batch size is set to a minimum fallback value `min_val`.
-
-    Parameters:
-    ----------
-    batch_size : int
-        The initial batch size to be validated.
-
-    m : int
-        A reference value that the batch size should at least match.
-
-    divisor : int, optional (default=2)
-        The divisor used to downscale `m` in case the initial batch size is too small.
-
-    min_val : int, optional (default=4)
-        The minimum fallback batch size if downscaled value is zero or less.
-
-    verbose: bool, optional (default=True)
-        Display or not the information
-
-    Returns:
-    -------
-    int
-        A validated and possibly adjusted batch size.
-    """
-
-    if batch_size >= m:
-        batch_size = m//divisor
-        if batch_size <= 0:
-            batch_size = min_val
-
-        if verbose:
-            print(f"(DL) Batch size to high, its value is set to {batch_size}.")
-
-    return batch_size
 
 def compute_batch_size(data, min_size=4, max_size=16, divisor=2, verbose=True):
     """
@@ -1687,7 +1650,7 @@ def list_of_extractors():
     ])
 
 def list_of_families():
-    return sorted(["DeepLearning", "MatrixCompletion", "PatternSearch", "MachineLearning", "Statistics"])
+    return sorted(["DeepLearning", "MatrixCompletion", "PatternSearch", "MachineLearning", "Statistics", "LLMs"])
 
 def list_of_metrics():
     return ["RMSE", "MAE", "MI", "CORRELATION", "RUNTIME", "RUNTIME_LOG"]

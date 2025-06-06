@@ -1,3 +1,14 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/Graph-Machine-Learning-Group/grin
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://openreview.net/pdf?id=kOu3-S3wJ7
+# ===============================================================================================================
+
+
 import datetime
 import os
 import pathlib
@@ -57,7 +68,6 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
 
     # Get indices where the value is True
     s = ~nan_row_selector
-    tr_indice = np.where(s)[0]
     tr_indice = np.where(s)[0]
     np.random.seed(42)
     num_to_flip = len(tr_indice) // 4
@@ -231,15 +241,3 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
 
     return recov
 
-
-if __name__ == '__main__':
-    ts_1 = TimeSeries()
-
-    # 2. load the timeseries from file or from the code
-    ts_1.load_series(utils.search_path("eeg-alcohol"))  # shape 64x256
-    ts_1.normalize(normalizer="min_max")
-
-    # 3. contamination of the data
-    ts_mask = ts_1.Contamination.mcar(ts_1.data)
-
-    imputation, imputation_2 = recoveryGRIN(ts_mask)

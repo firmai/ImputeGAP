@@ -2525,6 +2525,11 @@ class Imputation:
 
                 return self
 
+    class LLMs:
+        """
+        A class containing specific imputation algorithms for LLMs
+        """
+
 
 
 

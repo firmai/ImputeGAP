@@ -60,7 +60,8 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
     recov = np.copy(incomp_data)
     m_mask = np.isnan(incomp_data)
 
-    batch_size = utils.validate_batch_size(batch_size=batch_size, m=incomp_data.shape[0], divisor=2, min_val=4, verbose=verbose)
+    if batch_size == -1:
+        batch_size = utils.compute_batch_size(data=incomp_data, min_size=2, max_size=24, divisor=4, verbose=verbose)
 
     # ==================================================================================================================
     cont_data_matrix, mask_train, mask_test, mask_valid = utils.dl_integration_transformation(incomp_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=-99999, offset=0.05, seed=seed, verbose=False)
@@ -69,6 +70,7 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
     prepare_dat(cont_data_matrix, "brits.tmp", mask_train, mask_test, mask_valid)
 
     if incomp_data.ndim == 2 and nbr_features != 1:
+        print(f"\n(ERROR) The number of features set is not correct for the dimension of the data {incomp_data.ndim} must be higher then 2\n\tNumber of feature set to 1.\n")
         nbr_features = 1
 
 

@@ -64,36 +64,47 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
     recov = np.copy(matrix_in)
     m_mask = np.isnan(matrix_in)
 
-    # ==================================================================================================================
-    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(matrix_in, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
-    # ==================================================================================================================
+    x = False
+    deep_verbose = verbose
+    while not x:
+        # ==================================================================================================================
+        cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(matrix_in, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
+        # ==================================================================================================================
 
-    nan_row_selector = np.any(np.isnan(cont_data_matrix), axis=1)
+        nan_row_selector = np.any(np.isnan(cont_data_matrix), axis=1)
+        cont_data_test = cont_data_matrix[nan_row_selector]
+        cont_data_train = cont_data_matrix[~nan_row_selector]
 
-    cont_data_test = cont_data_matrix[nan_row_selector]
-    cont_data_train = cont_data_matrix[~nan_row_selector]
 
-    indices_ts = np.where(nan_row_selector)[0]
+        indices_ts = np.where(nan_row_selector)[0]
 
-    if hidden_dim == -1:
-        hidden_dim = cont_data_train.shape[1]
-    if seq_length > mask_train.shape[0]//3:
-        seq_length = 7
+        if hidden_dim == -1:
+            hidden_dim = cont_data_train.shape[1]
+        if seq_length > mask_train.shape[0]//3:
+            seq_length = 7
 
-        if seq_length > cont_data_train.shape[0]//3:
-            seq_length = cont_data_train.shape[0]//4
-        if seq_length <= 1:
-            seq_length = 2
+            if seq_length > cont_data_train.shape[0]//3:
+                seq_length = cont_data_train.shape[0]//4
+            if seq_length <= 1:
+                seq_length = 2
 
-    if verbose:
-        print(f"(IMPUTATION) MRNN\n\tMatrix Shape: ({matrix_in.shape[0]}, {matrix_in.shape[1]})\n\thidden_dim: {hidden_dim}\n\tlearning_rate: {learning_rate}\n\titerations: {iterations}\n\tseq_length: {seq_length}")
+        if deep_verbose:
+            print(f"(IMPUTATION) MRNN\n\tMatrix: ({matrix_in.shape[0]}, {matrix_in.shape[1]})\n\thidden_dim: {hidden_dim}\n\tlearning_rate: {learning_rate}\n\titerations: {iterations}\n\tseq_length: {seq_length}")
+            print(f"\n{cont_data_train.shape = }")
+            print(f"{cont_data_test.shape = }\n")
 
-        print(f"\n\n{cont_data_train.shape = }")
-        print(f"{cont_data_test.shape = }\n")
+        #_, trainZ, trainM, trainT, testX, testZ, testM, testT, train_size, test_size
+        trainX, trainZ, trainM, trainT, testX, testZ, testM, testT, train_size, test_size = Data_Loader.Data_Loader_With_Dataset(seq_length, cont_data_train, cont_data_test, mask_train, nan_val=None, verbose=verbose)
 
-    #_, trainZ, trainM, trainT, testX, testZ, testM, testT, train_size, test_size
-    trainX, trainZ, trainM, trainT, testX, testZ, testM, testT, train_size, test_size = Data_Loader.Data_Loader_With_Dataset(seq_length, cont_data_train, cont_data_test, mask_train, nan_val=None, verbose=verbose)
 
+        if len(testX) > 0:
+            x = True
+        else:
+            tr_ratio = tr_ratio - 0.1
+            print(f"Test set is empty. As training ratio is to high, we reduce its value to tr_ratio={tr_ratio}\n")
+            deep_verbose = False
+        if tr_ratio == 0:
+            break
 
     Recover_trainX, Recover_testX = M_RNN(trainZ, trainM, trainT, testZ, testM, testT, hidden_dim=hidden_dim, learning_rate=learning_rate, iterations=iterations)
 

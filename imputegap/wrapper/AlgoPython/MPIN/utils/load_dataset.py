@@ -1,3 +1,13 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/XLI-2020/MPIN
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://www.vldb.org/pvldb/vol17/p345-li.pdf
+# ===============================================================================================================
+
 def get_model_size(model):
     param_size = 0
     buffer_size = 0

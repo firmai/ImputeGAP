@@ -293,8 +293,13 @@
 <section id="module-imputegap.tools.utils">
 <span id="imputegap-tools-utils-module"></span><h2>imputegap.tools.utils module<a class="headerlink" href="#module-imputegap.tools.utils" title="Link to this heading">¶</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="imputegap.tools.utils.check_family">
+<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">check_family</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">family</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/tools/utils.html#check_family"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.check_family" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="imputegap.tools.utils.compute_batch_size">
-<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">compute_batch_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/tools/utils.html#compute_batch_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.compute_batch_size" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">compute_batch_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">divisor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/tools/utils.html#compute_batch_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.compute_batch_size" title="Link to this definition">¶</a></dt>
 <dd><p>Compute an appropriate batch size based on the input data shape.</p>
 <p>The batch size is computed as <cite>min(M // 2, max_size)</cite>, where M is the number of samples.
 If this computed batch size is less than <cite>min_size</cite>, it is set to <cite>min_size</cite> instead.</p>
@@ -306,6 +311,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 <dt>min_size<span class="classifier">int, optional</span></dt><dd><p>Minimum allowed batch size. Default is 4.</p>
 </dd>
 <dt>max_size<span class="classifier">int, optional</span></dt><dd><p>Maximum allowed batch size. Default is 16.</p>
+</dd>
+<dt>divisor<span class="classifier">int, optional</span></dt><dd><p>Divisor on the shape of the dataset. Default is 2.</p>
 </dd>
 <dt>verbose<span class="classifier">bool, optional</span></dt><dd><p>If True, prints the computed batch size. Default is True.</p>
 </dd>
@@ -814,42 +821,11 @@ test_rate + valid_rate must equal 1.0.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="imputegap.tools.utils.validate_batch_size">
-<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">validate_batch_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">divisor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/tools/utils.html#validate_batch_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.validate_batch_size" title="Link to this definition">¶</a></dt>
-<dd><p>Validates and adjusts the batch size based on a minimum threshold.</p>
-<p>This function ensures that the batch size is not smaller than a required value <cite>m</cite>.
-If it is, a new batch size is calculated as <cite>m // divisor</cite>. If this result is
-zero or negative, the batch size is set to a minimum fallback value <cite>min_val</cite>.</p>
-<section id="id31">
-<h3>Parameters:<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h3>
-<dl class="simple">
-<dt>batch_size<span class="classifier">int</span></dt><dd><p>The initial batch size to be validated.</p>
-</dd>
-<dt>m<span class="classifier">int</span></dt><dd><p>A reference value that the batch size should at least match.</p>
-</dd>
-<dt>divisor<span class="classifier">int, optional (default=2)</span></dt><dd><p>The divisor used to downscale <cite>m</cite> in case the initial batch size is too small.</p>
-</dd>
-<dt>min_val<span class="classifier">int, optional (default=4)</span></dt><dd><p>The minimum fallback batch size if downscaled value is zero or less.</p>
-</dd>
-<dt>verbose: bool, optional (default=True)</dt><dd><p>Display or not the information</p>
-</dd>
-</dl>
-</section>
-<section id="id32">
-<h3>Returns:<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h3>
-<dl class="simple">
-<dt>int</dt><dd><p>A validated and possibly adjusted batch size.</p>
-</dd>
-</dl>
-</section>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="imputegap.tools.utils.verification_limitation">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">verification_limitation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">percentage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imputegap/tools/utils.html#verification_limitation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.verification_limitation" title="Link to this definition">¶</a></dt>
 <dd><p>Format and verify that the percentage given by the user is within acceptable bounds.</p>
-<section id="id33">
-<h3>Parameters<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h3>
+<section id="id31">
+<h3>Parameters<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>percentage<span class="classifier">float</span></dt><dd><p>The percentage value to be checked and potentially adjusted.</p>
 </dd>
@@ -859,22 +835,22 @@ zero or negative, the batch size is set to a minimum fallback value <cite>min_va
 </dd>
 </dl>
 </section>
-<section id="id34">
-<h3>Returns<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h3>
+<section id="id32">
+<h3>Returns<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>float</dt><dd><p>Adjusted percentage based on the limits.</p>
 </dd>
 </dl>
 </section>
-<section id="id35">
-<h3>Raises<a class="headerlink" href="#id35" title="Link to this heading">¶</a></h3>
+<section id="id33">
+<h3>Raises<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>ValueError</dt><dd><p>If the percentage is outside the accepted limits.</p>
 </dd>
 </dl>
 </section>
-<section id="id36">
-<h3>Notes<a class="headerlink" href="#id36" title="Link to this heading">¶</a></h3>
+<section id="id34">
+<h3>Notes<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>If the percentage is between 1 and 100, it will be divided by 100 to convert it to a decimal format.</p></li>
 <li><p>If the percentage is outside the low and high limits, the function will print a warning and return the original value.</p></li>
@@ -937,6 +913,7 @@ zero or negative, the batch size is set to a minimum fallback value <cite>min_va
 <li><a class="reference internal" href="#module-imputegap.tools">Modules</a></li>
 <li><a class="reference internal" href="#submodule-documentation">Submodule Documentation</a></li>
 <li><a class="reference internal" href="#module-imputegap.tools.utils">imputegap.tools.utils module</a><ul>
+<li><a class="reference internal" href="#imputegap.tools.utils.check_family"><code class="docutils literal notranslate"><span class="pre">check_family()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.compute_batch_size"><code class="docutils literal notranslate"><span class="pre">compute_batch_size()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.config_contamination"><code class="docutils literal notranslate"><span class="pre">config_contamination()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.config_forecaster"><code class="docutils literal notranslate"><span class="pre">config_forecaster()</span></code></a></li>
@@ -965,7 +942,6 @@ zero or negative, the batch size is set to a minimum fallback value <cite>min_va
 <li><a class="reference internal" href="#imputegap.tools.utils.save_optimization"><code class="docutils literal notranslate"><span class="pre">save_optimization()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.search_path"><code class="docutils literal notranslate"><span class="pre">search_path()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.split_mask_bwt_test_valid"><code class="docutils literal notranslate"><span class="pre">split_mask_bwt_test_valid()</span></code></a></li>
-<li><a class="reference internal" href="#imputegap.tools.utils.validate_batch_size"><code class="docutils literal notranslate"><span class="pre">validate_batch_size()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.verification_limitation"><code class="docutils literal notranslate"><span class="pre">verification_limitation()</span></code></a></li>
 </ul>
 </li>

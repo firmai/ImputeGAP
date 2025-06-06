@@ -1,17 +1,44 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/XLI-2020/MPIN
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://www.vldb.org/pvldb/vol17/p345-li.pdf
+# ===============================================================================================================
+
 import pandas as pd
 import torch
 
+from imputegap.tools import utils
 from imputegap.wrapper.AlgoPython.MPIN.utils.load_dataset import get_model_size
 from imputegap.wrapper.AlgoPython.MPIN.utils.regressor import MLPNet
-from imputegap.wrapper.AlgoPython.MPIN.utils.DynamicGNN import DynamicGCN, DynamicGAT, DynamicGraphSAGE, StaticGCN, \
-    StaticGraphSAGE, StaticGAT
+from imputegap.wrapper.AlgoPython.MPIN.utils.DynamicGNN import DynamicGCN, DynamicGAT, DynamicGraphSAGE, StaticGCN, StaticGraphSAGE, StaticGAT
 
 import torch.optim as optim
 import copy
 import numpy as np
 import random
 
-from torch_geometric.nn import knn_graph
+
+def knn_graph_torch(x, k, loop=False):
+    device = x.device  # ensure all tensors are on the same device
+
+    num_nodes = x.size(0)
+    dist = torch.cdist(x, x, p=2)  # shape: [N, N]
+
+    if not loop:
+        dist.fill_diagonal_(float('inf'))
+
+    knn_idx = dist.topk(k, largest=False).indices  # shape: [N, k]
+
+    row = torch.arange(num_nodes, device=device).unsqueeze(1).repeat(1, k).flatten()
+    col = knn_idx.flatten()
+    edge_index = torch.stack([row, col], dim=0)  # shape: [2, N*k]
+
+    return edge_index
+
 
 def data_transform(X, X_mask, eval_ratio=0.05):
     eval_mask = np.zeros(X_mask.shape)
@@ -52,16 +79,11 @@ def get_window_data(base_X, base_X_mask, start, end, ratio):
     return X, X_mask
 
 
-def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=None, X_last=None, mask_last=None,
+def window_imputation(input, input_test, mask, mask_eval, start, end, sample_ratio, initial_state_dict=None, X_last=None, mask_last=None,
                       mae_last=None, transfer=False, lr=0.01, weight_decay=0.1, epochs=200, out_channels=256,
                       state=True, k=10, base="SAGE", thre=0.25, eval_ratio=0.05, dynamic=False, device=None, verbose=True):
 
     X, X_mask = get_window_data(base_X=input, base_X_mask=mask, start=start, end=end, ratio=sample_ratio)
-
-    if verbose:
-        print("\t(IMPUTATION) window_imputation: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for",
-                  " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " threshold ", thre,
-              ", and base ", base, "=================================================\n\n ")
 
     ori_X = copy.copy(X)
     feature_dim = ori_X.shape[1]
@@ -95,6 +117,8 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
     keep_X = all_X[keep_index]
 
     X, X_mask, eval_X, eval_mask = data_transform(X, X_mask, eval_ratio=eval_ratio)
+    #eval_mask = get_window_data(base_X=input, base_X_mask=mask_eval, start=start, end=end, ratio=sample_ratio)
+
 
     if X_last:
         X_last = np.array(X_last)
@@ -106,7 +130,7 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
         X_mask = np.concatenate([mask_last, X_mask], axis=0)
 
     in_channels = X.shape[1]
-    out_channels = X.shape[0]
+    out_channels = X.shape[1]
     X = torch.FloatTensor(X).to(device)
     X_mask = torch.LongTensor(X_mask).to(device)
     eval_X = torch.FloatTensor(eval_X).to(device)
@@ -149,7 +173,7 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
 
     X_knn = copy.deepcopy(X)
 
-    edge_index = knn_graph(X_knn, k, batch=None, loop=False, cosine=False)
+    edge_index = knn_graph_torch(X_knn, k, loop=False)
 
     min_mae_error = 1e9
     min_mse_error = None
@@ -176,7 +200,6 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
             pred = regressor(X_emb)
             X_imputed = X * X_mask + pred * (1 - X_mask)
             temp_loss = torch.sum(torch.abs(X - pred) * X_mask) / (torch.sum(X_mask) + 1e-5)
-            # print('temp loss:', temp_loss.item())
             loss += temp_loss
 
         loss.backward()
@@ -198,22 +221,26 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
             mae_error = torch.sum(torch.abs(trans_X - trans_eval_X) * eval_mask) / torch.sum(eval_mask)
             mse_error = torch.sum(((trans_X - trans_eval_X) ** 2) * eval_mask) / torch.sum(eval_mask)
             mape_error = torch.sum(torch.abs(trans_X - trans_eval_X) * eval_mask ) / (torch.sum(torch.abs(trans_eval_X) * eval_mask) + 1e-12)
-            print('\t\t\t\timputegap impute error MAE:', mae_error.item())
-            print('\t\t\t\timputegap impute error MSE:', mse_error.item())
-            print('\t\t\t\timputegap impute error MRE:', mape_error.item())
+            if verbose:
+                print('\t\t\t\timputegap impute error MAE:', mae_error.item())
+                print('\t\t\t\timputegap impute error MSE:', mse_error.item())
+                print('\t\t\t\timputegap impute error MRE:', mape_error.item())
 
 
             if mae_error.item() < min_mae_error:
                 opt_epoch = copy.copy(pre_epoch)
                 min_mae_error = round(mae_error.item(), 6)
-                print('\t\t\t{epoch}_opt_mae_error'.format(epoch=pre_epoch), min_mae_error)
+                if verbose:
+                    print('\t\t\t{epoch}_opt_mae_error'.format(epoch=pre_epoch), min_mae_error)
 
                 min_mse_error = round(mse_error.item(), 6)
                 min_mape_error = round(mape_error.item(), 6)
 
-                print('\t\t\t{epoch}_opt time:'.format(epoch=pre_epoch), opt_time)
+                if verbose:
+                    print('\t\t\t{epoch}_opt time:'.format(epoch=pre_epoch), opt_time)
 
                 best_X_imputed = copy.copy(X_imputed)
+                best_X_imputed = best_X_imputed.detach().cpu().numpy()
                 best_X_imputed = best_X_imputed * (1 - ori_X_mask) + ori_X * ori_X_mask
                 best_state_dict = copy.copy(epoch_state_dict)
 
@@ -227,112 +254,69 @@ def window_imputation(input, mask, start, end, sample_ratio, initial_state_dict=
 def recoverMPIN(input, mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, num_of_iteration=5, thre=0.25,
                 base="SAGE", out_channels=64, eval_ratio=0.05, state=True, dynamic=True, tr_ratio=0.9, seed=0, verbose=True):
 
+    recov = np.copy(input)
+    m_mask = np.isnan(input)
+    full_imputed = np.zeros_like(input)
+    full_mask = np.zeros_like(input, dtype=bool)  # to track what has been filled
+
     if verbose:
-        print("(IMPUTATION) MPIN: Matrix Shape: (", input.shape[0], ", ", input.shape[1], ") for mode ", mode,
-              ", window ", window, " k ", k, " lr ", lr, " weight ", weight_decay, " epochs ", epochs, " num_of_iteration ",
-              num_of_iteration, " threshold ", thre, ", and base ", base, "...")
+        print(f"(IMPUTATION) MPIN\n\tMatrix: ({input.shape[0]}, {input.shape[1]})\n\tk: {k}\n\twindow: {window}\n\tlr: {lr}\n\tweight: {weight_decay}\n\tbase: {base}\n\tthreshold: {thre}\n\tepochs: {epochs}")
 
     torch.random.manual_seed(seed)
-    device = torch.device('cpu')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     random.seed(seed)
-    base_X = input
-    base_X_mask = (~np.isnan(base_X)).astype(int)
-    base_X = np.nan_to_num(base_X)
+    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=-1, prevent_leak=True, offset=0.05, seed=seed, verbose=False)
 
     num_windows = window
 
     results_schema = ['opt_epoch', 'opt_mae', 'mse', 'mape', 'para', 'memo', 'opt_time', 'tot_time']
 
     iter_results_list = []
-    best_X_imputed = 0
 
     for iteration in range(num_of_iteration):
         results_collect = []
         for w in range(num_windows):
-            print(f'\t\t\twhich time window:{w}')
             if w == 0:
-                window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=base_X,
-                                                                                                           mask=base_X_mask,
-                                                                                                           start=w,
-                                                                                                           end=w + 1,
-                                                                                                           sample_ratio=1 / num_windows,
-                                                                                                           lr=lr,
-                                                                                                           weight_decay=weight_decay,
-                                                                                                           epochs=epochs,
-                                                                                                           out_channels=out_channels,
-                                                                                                           state=state,
-                                                                                                           k=k,
-                                                                                                           base=base,
-                                                                                                           thre=thre,
-                                                                                                           eval_ratio=eval_ratio,
-                                                                                                           dynamic=dynamic,
-                                                                                                           device=device)
-                results_collect.append(window_results)
-                best_X_imputed = best_X
+                window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test, start=w, end=w + 1, sample_ratio=1 / num_windows, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
             else:
                 if mode == 'alone':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(
-                        input=base_X, mask=base_X_mask, start=w, end=w + 1, sample_ratio=1 / num_windows, lr=lr,
-                        weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k,
-                        base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
-                    results_collect.append(window_results)
-                    best_X_imputed = best_X
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test, start=w, end=w + 1, sample_ratio=1 / num_windows, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
 
                 elif mode == 'data':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(
-                        input=base_X, mask=base_X_mask, start=w, end=w + 1, sample_ratio=1 / num_windows, X_last=X_last,
-                        mask_last=mask_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels,
-                        state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
-                    results_collect.append(window_results)
-                    best_X_imputed = best_X
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, X_last=X_last, mask_last=mask_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
 
                 elif mode == 'state':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(
-                        input=base_X, mask=base_X_mask, start=w, end=w + 1, sample_ratio=1 / num_windows,
-                        initial_state_dict=window_best_state, mae_last=mae_last, lr=lr, weight_decay=weight_decay,
-                        epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre,
-                        eval_ratio=eval_ratio, dynamic=dynamic, device=device)
-                    results_collect.append(window_results)
-                    best_X_imputed = best_X
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
 
                 elif mode == 'state+transfer':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(
-                        input=base_X, mask=base_X_mask, start=w, end=w + 1, sample_ratio=1 / num_windows,
-                        initial_state_dict=window_best_state, transfer=True, mae_last=mae_last, lr=lr,
-                        weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k,
-                        base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
-                    results_collect.append(window_results)
-                    best_X_imputed = best_X
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, transfer=True, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
 
                 elif mode == 'data+state':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(
-                        input=base_X, mask=base_X_mask, start=w, end=w + 1, sample_ratio=1 / num_windows,
-                        initial_state_dict=window_best_state, X_last=X_last, mask_last=mask_last, mae_last=mae_last,
-                        lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k,
-                        base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
-                    results_collect.append(window_results)
-                    best_X_imputed = best_X
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, X_last=X_last, mask_last=mask_last, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
 
                 elif mode == 'data+state+transfer':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(
-                        input=base_X, mask=base_X_mask, start=w, end=w + 1, sample_ratio=1 / num_windows,
-                        initial_state_dict=window_best_state, X_last=X_last, mask_last=mask_last, transfer=True,
-                        mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels,
-                        state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
-                    results_collect.append(window_results)
-                    best_X_imputed = best_X
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, X_last=X_last, mask_last=mask_last, transfer=True, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels,state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
+
+            results_collect.append(window_results)
+
+            if window > 1:
+                start_idx = int(len(input) * w / num_windows)
+                end_idx = int(len(input) * (w + 1) / num_windows)
+                full_imputed[start_idx:end_idx] = best_X
+                full_mask[start_idx:end_idx] = True
+            else:
+                full_imputed = best_X
 
         df = pd.DataFrame(results_collect, index=range(num_windows), columns=results_schema)
         iter_results_list.append(df)
-        # print(res.shape)
-    print('\t\t\tdone!')
 
-    avg_df = sum(iter_results_list) / num_of_iteration
-    avg_df = avg_df.round(4)
+    if verbose:
+     print('\nreconstruct...')
 
-    best_X_imputed = np.array(best_X_imputed)
-    nan_mask = ~np.isnan(input)
-    best_X_imputed[nan_mask] = input[nan_mask]
+    full_imputed = np.array(full_imputed)
+    print(f"{full_imputed.shape = }")
 
-    return best_X_imputed
+    recov[m_mask] = full_imputed[m_mask]
+
+    return recov

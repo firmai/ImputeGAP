@@ -20,7 +20,7 @@ In detail, the library provides:
 .. admonition:: 📢 News !
 
         - [12-06-2025] Version 1.1.0 is out! Check out the latest updates and improvements!
-        - [04-06-2025] ImputeGAP will be presented as a Tutorial at KDD 2025 in Toronto! `[Web Site] <https://imputegap-tutorials.github.io/KDD-2025/> `_
+        - [04-06-2025] ImputeGAP will be presented as a Tutorial at KDD 2025 in Toronto! `[Web Site] <https://imputegap-tutorials.github.io/KDD-2025/>`_
 
 .. raw:: html
 
