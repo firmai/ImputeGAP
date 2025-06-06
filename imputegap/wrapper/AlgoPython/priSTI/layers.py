@@ -12,7 +12,7 @@ import copy
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-from imputegap.wrapper.AlgoPython.PriSTI.generate_adj import *
+from imputegap.wrapper.AlgoPython.pristi.generate_adj import *
 
 
 def Attn_tem(heads=8, layers=1, channels=64):

@@ -1,6 +1,6 @@
 import time
 
-from imputegap.wrapper.AlgoPython.PriSTI.runnerPrisTI import recov_pristi
+from imputegap.wrapper.AlgoPython.pristi.runnerPrisTI import recov_pristi
 
 
 def pristi(incomp_data, target_strategy="hybrid", unconditional=True, batch_size=-1, embedding=-1, tr_ratio=0.9, seed=42, logs=True, verbose=True):
