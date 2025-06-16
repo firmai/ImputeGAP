@@ -177,6 +177,32 @@ tags = []
 data_names = []
 epoch = 7
 
+# ALGORITHM DEFAULT VALUES : PLMs/LLMs
+[nuwats]
+seq_length = -1
+patch_size = -1
+batch_size = -1
+pred_length = -1
+label_length = -1
+enc_in = -1
+dec_in = -1
+c_out = -1
+gpt_layers = 6
+seed = 42
+
+[gpt4ts]
+seq_length = -1
+patch_size = -1
+batch_size = -1
+pred_length = -1
+label_length = -1
+enc_in = -1
+dec_in = -1
+c_out = -1
+gpt_layers = 6
+seed = 42
+
+
 
 # OPTIMIZER DEFAULT VALUES ==========================================================================
 [greedy]

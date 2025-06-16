@@ -261,5 +261,18 @@ RAYTUNE_PARAMS = {
         "tags": [],
         "data_names": [],
         "epoch": tune.grid_search([2, 10])
+    },
+
+    "nuwats": {
+        "seq_length": -1,
+        "patch_size": -1,
+        "batch_size": tune.grid_search([-1, 16, 32]),
+        "pred_length": -1,
+        "label_length":-1,
+        "enc_in": tune.grid_search([4, 10, 16]),
+        "dec_in": tune.grid_search([4, 10, 16]),
+        "c_out": tune.grid_search([4, 10, 16]),
+        "gpt_layers":tune.grid_search([2, 6, 16]),
+        "seed":42
     }
 }

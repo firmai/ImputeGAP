@@ -102,6 +102,10 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer = Imputation.DeepLearning.BitGraph(incomp_data)
     elif alg == "meanimpute":
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
+    elif alg == "nuwats":
+        imputer = Imputation.LLMs.NuwaTS(incomp_data)
+    elif alg == "gpt4ts":
+        imputer = Imputation.LLMs.NuwaTS(incomp_data)
     else:
         raise ValueError(f"(IMP) Algorithm '{algorithm}' not recognized, please choose your algorithm from this list:\n\t{TimeSeries().algorithms}")
         imputer = None
@@ -331,7 +335,7 @@ def search_path(set_name="test"):
     if set_name in list_of_datasets():
         return set_name + ".txt"
     else:
-        filepath = "../imputegap/dataset/" + set_name
+        filepath = "../imputegap/datasets/" + set_name
 
         if not os.path.exists(filepath):
             filepath = filepath[1:]
@@ -584,6 +588,30 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         data_names = config[algorithm]['data_names']
         epoch = int(config[algorithm]['epoch'])
         return (tags, data_names, epoch)
+    elif algorithm == "nuwats":
+        seq_length = int(config[algorithm]['seq_length'])
+        patch_size = int(config[algorithm]['patch_size'])
+        batch_size = int(config[algorithm]['batch_size'])
+        pred_length = int(config[algorithm]['pred_length'])
+        label_length = int(config[algorithm]['label_length'])
+        enc_in = int(config[algorithm]['enc_in'])
+        dec_in = int(config[algorithm]['dec_in'])
+        c_out = int(config[algorithm]['c_out'])
+        gpt_layers = int(config[algorithm]['gpt_layers'])
+        seed = int(config[algorithm]['seed'])
+        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed)
+    elif algorithm == "gpt4ts":
+        seq_length = int(config[algorithm]['seq_length'])
+        patch_size = int(config[algorithm]['patch_size'])
+        batch_size = int(config[algorithm]['batch_size'])
+        pred_length = int(config[algorithm]['pred_length'])
+        label_length = int(config[algorithm]['label_length'])
+        enc_in = int(config[algorithm]['enc_in'])
+        dec_in = int(config[algorithm]['dec_in'])
+        c_out = int(config[algorithm]['c_out'])
+        gpt_layers = int(config[algorithm]['gpt_layers'])
+        seed = int(config[algorithm]['seed'])
+        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed)
     elif algorithm == "bit_graph":
         node_number = int(config[algorithm]['node_number'])
         kernel_set = config[algorithm]['kernel_set']
@@ -827,6 +855,7 @@ def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_rat
 
         nan_val : float, default=-99999
             Value used to represent missing entries in the masked matrix.
+            nan_val=-1 can be used to set mean values
 
         prevent_leak : bool, default=True
             Replace the value of NaN with a high number to prevent leakage.
@@ -1506,6 +1535,32 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "epoch": int(optimal_params[8]),
             "seed": int(optimal_params[9]),
         }
+    elif algorithm == "nuwats":
+        params_to_save = {
+            "seq_length": int(optimal_params[0]),
+            "patch_size": optimal_params[1],
+            "batch_size": float(optimal_params[2]),
+            "pred_length": int(optimal_params[3]),
+            "label_length": int(optimal_params[4]),
+            "enc_in": int(optimal_params[5]),
+            "dec_in": float(optimal_params[6]),
+            "c_out": float(optimal_params[7]),
+            "gpt_layers": int(optimal_params[8]),
+            "seed": int(optimal_params[9]),
+        }
+    elif algorithm == "gpt4ts":
+        params_to_save = {
+            "seq_length": int(optimal_params[0]),
+            "patch_size": optimal_params[1],
+            "batch_size": float(optimal_params[2]),
+            "pred_length": int(optimal_params[3]),
+            "label_length": int(optimal_params[4]),
+            "enc_in": int(optimal_params[5]),
+            "dec_in": float(optimal_params[6]),
+            "c_out": float(optimal_params[7]),
+            "gpt_layers": int(optimal_params[8]),
+            "seed": int(optimal_params[9]),
+        }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
         return
@@ -1551,7 +1606,9 @@ def list_of_algorithms():
         "GRIN",
         "BayOTIDE",
         "HKMF_T",
-        "BitGraph"
+        "BitGraph",
+        "NuwaTS",
+        "GPT4TS"
     ])
 
 def list_of_patterns():
@@ -1575,14 +1632,16 @@ def list_of_datasets(txt=False):
         "drift",
         "eeg-alcohol",
         "eeg-reading",
-        "fmri-objectviewing",
+        "electricity",
         "fmri-stoptask",
         "meteo",
-        "electricity",
         "motion",
         "soccer",
+        "solar-plant",
+        "sport-activity",
+        "stock-exchange",
         "temperature",
-        "forecast-economy"
+        "traffic"
     ])
 
     if txt:
@@ -1688,7 +1747,9 @@ def list_of_algorithms_with_families():
         "DeepLearning.GRIN",
         "DeepLearning.BayOTIDE",
         "DeepLearning.HKMF_T",
-        "DeepLearning.BitGraph"
+        "DeepLearning.BitGraph",
+        "LLMs.NuwaTS",
+        "LLMs.GPT4TS"
     ])
 
 def list_of_normalizers():

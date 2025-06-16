@@ -32,7 +32,7 @@ setuptools.setup(
             'assets/*.png',  # Include logo
             'env/*.toml',  # Include TOML files from env
             'params/*.toml',  # Include TOML files from params
-            'dataset/*.txt',  # Include TXT files from dataset
+            'datasets/*.txt',  # Include TXT files from dataset
             'algorithms/lib/*.dll',  # Include DLL files from algorithms/lib (for Windows)
             'algorithms/lib/*.so'  # Include SO files from algorithms/lib (for Linux/Unix)
             'algorithms/lib/*.dylib'  # Include dylib files from algorithms/lib (for MACOS)

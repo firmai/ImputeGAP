@@ -33,42 +33,50 @@ In detail, the package provides:
 - ---
 
 
-
+   * - LLMs
+     - NuwaTS [33]_
+     - Arxiv -- 2024
+   * - LLMs
+     - GPT4TS [34]_
+     - NIPS -- 2023
+     - 
 # Available Imputation Algorithms
-| **Family**         | **Algorithm**             | **Venue -- Year**            |
-|--------------------|---------------------------|------------------------------|
-| Deep Learning      | MissNet [[27]](#ref27)    | KDD -- 2024                  |
-| Deep Learning      | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
-| Deep Learning      | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
-| Deep Learning      | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
-| Deep Learning      | PRISTI [[26]](#ref26)     | ICDE -- 2023                 |
-| Deep Learning      | GRIN [[29]](#ref29)       | ICLR -- 2022                 |
-| Deep Learning      | HKMF_T [[31]](#ref31)     | TKDE -- 2021                 |
-| Deep Learning      | DeepMVI [[24]](#ref24)    | PVLDB -- 2021                |
-| Deep Learning      | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
-| Deep Learning      | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
-| Deep Learning      | GAIN [[28]](#ref28)       | ICML -- 2018                 |
-| Matrix Completion  | CDRec [[1]](#ref1)        | KAIS -- 2020                 |
-| Matrix Completion  | TRMF [[8]](#ref8)         | NeurIPS -- 2016              |
-| Matrix Completion  | GROUSE [[3]](#ref3)       | PMLR -- 2016                 |
-| Matrix Completion  | ROSL [[4]](#ref4)         | CVPR -- 2014                 |
-| Matrix Completion  | SoftImpute [[6]](#ref6)   | JMLR -- 2010                 |
-| Matrix Completion  | SVT [[7]](#ref7)          | SIAM J. OPTIM -- 2010        |
-| Matrix Completion  | SPIRIT [[5]](#ref5)       | VLDB -- 2005                 |
-| Matrix Completion  | IterativeSVD [[2]](#ref2) | BIOINFORMATICS -- 2001       |
-| Pattern Search     | TKCM [[11]](#ref11)       | EDBT -- 2017                 |
-| Pattern Search     | STMVL [[9]](#ref9)        | IJCAI -- 2016                |
-| Pattern Search     | DynaMMo [[10]](#ref10)    | KDD -- 2009                  |
-| Machine Learning   | IIM [[12]](#ref12)        | ICDE -- 2019                 |
-| Machine Learning   | XGBOOST [[13]](#ref13)    | KDD -- 2016                  |
-| Machine Learning   | MICE [[14]](#ref14)       | Statistical Software -- 2011 |
-| Machine Learning   | MissForest [[15]](#ref15) | BioInformatics -- 2011       |
-| Statistics         | KNNImpute                 | -                            |
-| Statistics         | Interpolation             | -                            |
-| Statistics         | MinImpute                 | -                            |
-| Statistics         | ZeroImpute                | -                            |
-| Statistics         | MeanImpute                | -                            |
-| Statistics         | MeanImputeBySeries        | -                            |
+| **Family**        | **Algorithm**             | **Venue -- Year**            |
+|-------------------|---------------------------|------------------------------|
+| Deep Learning     | MissNet [[27]](#ref27)    | KDD -- 2024                  |
+| Deep Learning     | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
+| Deep Learning     | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
+| Deep Learning     | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
+| Deep Learning     | PRISTI [[26]](#ref26)     | ICDE -- 2023                 |
+| Deep Learning     | GRIN [[29]](#ref29)       | ICLR -- 2022                 |
+| Deep Learning     | HKMF_T [[31]](#ref31)     | TKDE -- 2021                 |
+| Deep Learning     | DeepMVI [[24]](#ref24)    | PVLDB -- 2021                |
+| Deep Learning     | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
+| Deep Learning     | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
+| Deep Learning     | GAIN [[28]](#ref28)       | ICML -- 2018                 |
+| LLMs              | NuwaTS [[33]](#ref35)     | Arxiv -- 2024                |
+| LLMs              | GPT4TS [[34]](#ref36)     | NIPS -- 2023                 |
+| Matrix Completion | CDRec [[1]](#ref1)        | KAIS -- 2020                 |
+| Matrix Completion | TRMF [[8]](#ref8)         | NeurIPS -- 2016              |
+| Matrix Completion | GROUSE [[3]](#ref3)       | PMLR -- 2016                 |
+| Matrix Completion | ROSL [[4]](#ref4)         | CVPR -- 2014                 |
+| Matrix Completion | SoftImpute [[6]](#ref6)   | JMLR -- 2010                 |
+| Matrix Completion | SVT [[7]](#ref7)          | SIAM J. OPTIM -- 2010        |
+| Matrix Completion | SPIRIT [[5]](#ref5)       | VLDB -- 2005                 |
+| Matrix Completion | IterativeSVD [[2]](#ref2) | BIOINFORMATICS -- 2001       |
+| Pattern Search    | TKCM [[11]](#ref11)       | EDBT -- 2017                 |
+| Pattern Search    | STMVL [[9]](#ref9)        | IJCAI -- 2016                |
+| Pattern Search    | DynaMMo [[10]](#ref10)    | KDD -- 2009                  |
+| Machine Learning  | IIM [[12]](#ref12)        | ICDE -- 2019                 |
+| Machine Learning  | XGBOOST [[13]](#ref13)    | KDD -- 2016                  |
+| Machine Learning  | MICE [[14]](#ref14)       | Statistical Software -- 2011 |
+| Machine Learning  | MissForest [[15]](#ref15) | BioInformatics -- 2011       |
+| Statistics        | KNNImpute                 | -                            |
+| Statistics        | Interpolation             | -                            |
+| Statistics        | MinImpute                 | -                            |
+| Statistics        | ZeroImpute                | -                            |
+| Statistics        | MeanImpute                | -                            |
+| Statistics        | MeanImputeBySeries        | -                            |
 
 ---
 
@@ -681,8 +689,13 @@ If you use ImputeGAP in your research, please cite these papers:
 [32] Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
 
 <a name="ref33"></a>
-[33] Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux:
-Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)
+[33] Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux: Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)
 
 <a name="ref33"></a>
 [34] Mourad Khayati, Quentin Nater, Jacques Pasquier: ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proc. VLDB Endow. 17(12): 4329-4332 (2024)
+
+<a name="ref35"></a>
+[35] Jinguo Cheng, Chunwei Yang, Wanlin Cai, Yuxuan Liang, Qingsong Wen, Yuankai Wu: NuwaTS: a Foundation Model Mending Every Incomplete Time Series. Arxiv 2024
+
+<a name="ref36"></a>
+[36] Tian Zhou, Peisong Niu, Xue Wang, Liang Sun, Rong Jin: One fits all: power general time series analysis by pretrained LM. NIPS 2023

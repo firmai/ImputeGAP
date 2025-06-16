@@ -30,6 +30,7 @@ darts<0.34.0
 torch==2.5.1
 torchvision==0.20.1
 torchaudio==2.5.1
+
 # neuralforecast==1.6.4
 
 
@@ -71,4 +72,10 @@ torch-geometric==2.6.1
 pytorch-lightning==2.5.0
 torchmetrics==1.6.1
 lightning==2.5.0
+
+
+# llms
+reformer-pytorch==1.4.4
+transformers==4.52.4
+timm==1.0.15
 

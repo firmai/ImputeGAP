@@ -19,7 +19,7 @@ def mrnn(incomp_data, hidden_dim, learning_rate, iterations, sequence_length, tr
     sequence_length : int
         The length of sequences used within the MRNN model.
     tr_ratio: float, optional
-                    Split ratio between training and testing sets (default is 0.9).
+         Split ratio between training and testing sets (default is 0.9).
     logs : bool, optional
         Whether to log the execution time (default is True).
     verbose : bool, optional

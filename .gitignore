@@ -9,3 +9,8 @@ build_script.txt
 *extractor_pickle.py
 *extractor_pkl.py
 imputegap/tools/extract/*
+imputegap/datasets/chlorine_m200.txt
+imputegap/datasets/airq_m200.txt
+imputegap/datasets/fmri-objectviewing.txt
+imputegap/datasets/pollution.txt
+imputegap/datasets/test-large.txt
