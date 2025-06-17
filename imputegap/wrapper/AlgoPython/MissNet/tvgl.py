@@ -1,3 +1,13 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/zjuwuyy-DL/Generative-Semi-supervised-Learning-for-Multivariate-Time-Series-Imputation
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://www.dm.sanken.osaka-u.ac.jp/~yasushi/publications/missnet.pdf
+# ===============================================================================================================
+
 import numpy as np
 import collections
 import warnings

@@ -1,9 +1,22 @@
-import math
+# ===============================================================================================================
+# SOURCE: https://github.com/pbansal5/DeepMVI
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://arxiv.org/abs/2103.01600
+# ===============================================================================================================
 
-import numpy as np
+
 import torch
+
 import torch.nn as nn
-from typing import List
+import math
+from typing import  List
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
 
 class PositionalEncoding(nn.Module):
 
@@ -54,10 +67,12 @@ class AttentionModule(nn.Module):
 
     
 class OurModel(nn.Module):
-    def __init__(self,sizes,kernel_size=10,block_size=10,time_len=1000,nhead=2,use_embed=True,use_context=True,use_local=True,verbose=True):
+    def __init__(self,sizes,kernel_size=10,block_size=10,time_len=1000,nhead=2,use_embed=True,use_context=True,use_local=True):
         super(OurModel, self).__init__()
         hidden_dim = 512
-        nkernel=32
+        #nkernel=int(32*np.log10(kernel_size))
+        #nkernel=int(3.2*kernel_size)
+        nkernel=64
         embedding_size=10
         
         self.kernel_size = kernel_size
@@ -67,7 +82,7 @@ class OurModel(nn.Module):
         self.use_context = use_context
         self.use_local = use_local
         self.block_size = block_size
-        
+
         if (self.use_context):
             self.atten_qdim = 32
             self.mapping_query = nn.Linear(2*nkernel,self.atten_qdim)
@@ -89,16 +104,8 @@ class OurModel(nn.Module):
         self.pool = nn.AvgPool1d(kernel_size = self.kernel_size,stride = self.kernel_size)
         self.attention = AttentionModule(dquery=self.atten_qdim,dkey=self.atten_qdim,dvalue=self.vdim,nhid=hidden_dim,nhead=nhead,dropout=0.0,mask_len=mask_len)
         # self.mapping_value = nn.Linear(nkernel,self.vdim)
-
-        if verbose:
-            print("\t\t\t\t kernel size", kernel_size, " vs block_size", block_size)
+        
         if (use_local):
-            if self.kernel_size % self.block_size != 0:
-                self.kernel_size = 1
-                self.block_size = 1
-                if verbose:
-                    print("\t\t\t\t self.kernel_size % self.block_size != 0 > reduced to 1...")
-
             assert self.kernel_size % self.block_size == 0
             self.pool2 = nn.AvgPool1d(kernel_size = self.block_size,stride = self.block_size)
             
@@ -143,7 +150,7 @@ class OurModel(nn.Module):
             den = self.pool(mask.unsqueeze(1))[:,0,:]
             den = (torch.repeat_interleave(den,self.kernel_size,dim=1)*self.kernel_size).clamp(min=1)
             out_feats = feat1/den
-        else :
+        else : 
             feat2 = self.pool2(in_series.unsqueeze(1))[:,0,:]
             feat2 = torch.repeat_interleave(feat2,self.block_size,dim=1)*self.block_size
             out_feats = (feat1 - feat2)/(self.kernel_size-self.block_size)
@@ -178,14 +185,7 @@ class OurModel(nn.Module):
         
         if (in_series.shape[1]%self.kernel_size != 0):
             hidden_state = torch.cat([hidden_state,torch.zeros([hidden_state.shape[0],in_series.shape[1]-hidden_state.shape[1],hidden_state.shape[2]]).to(hidden_state.device)],dim=1)
-
-        # Check and align sequence lengths before concatenation
-        seq_len_hidden = hidden_state.shape[1]
-        seq_len_siblings = siblings.shape[1]
-
-        if seq_len_hidden != seq_len_siblings:
-            return None
-
+                
         if (self.use_embed):
             feats = torch.cat([hidden_state,siblings],dim=2)
         else:
@@ -200,11 +200,7 @@ class OurModel(nn.Module):
 
     def forward (self,in_series,mask,residuals,context_info : List[torch.Tensor]):
         mean = self.core(in_series,residuals,context_info)
-
-        if mean is None:
-            return {'error'}
-        else:
-            return {'mae':self.mae_loss(mean,in_series,mask,context_info).mean()}
+        return {'mae':self.mae_loss(mean,in_series,mask,context_info).mean()}
     
     @torch.jit.export
     def validate(self,in_series,mask,residuals, context_info  : List[torch.Tensor],test=False):
@@ -213,7 +209,7 @@ class OurModel(nn.Module):
         return {'loss_values':loss,'values':mean}
 
     def mae_loss(self,y,y_pred,mask,context_info):
-        temp = torch.abs((y_pred-y).cpu()*self.std[context_info[0]])
+        temp = torch.abs((y_pred - y).to(device) * self.std[context_info[0]].to(device))
         loss = temp[mask>0]
         #print (loss.mean())
         return loss

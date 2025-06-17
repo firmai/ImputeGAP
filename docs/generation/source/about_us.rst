@@ -56,3 +56,20 @@ Mourad Khayati is a Senior Researcher and a Lecturer with the eXascale Infolab a
     </a>
     <br><br>
 
+
+Related Papers
+==============
+
+* Quentin Nater, Mourad Khayati, Jacques Pasquier: "ImputeGAP: A Comprehensive Library for Time Series Imputation" arXiv, 2025
+
+* Mourad Khayati, Guillaume Chacun, Zakhar Tymchenko, and Philippe Cudré-Mauroux: “A-DARTS: Stable Model Selection for Data Repair in Time Series.” Proceedings of the 41st IEEE International Conference on Data Engineering (ICDE), 2025.
+
+* Mourad Khayati, Quentin Nater, and Jacques Pasquier: “ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data.” Proceedings of the VLDB Endowment (PVLDB), 2024.
+
+* Mourad Khayati, Ines Arous, Zakhar Tymchenko, and Philippe Cudré-Mauroux: “ORBITS: Online Recovery of Missing Blocks in Multiple Time Series Streams.” In Proceedings of the VLDB Endowment (PVLDB), 2021.
+
+* Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, and Philippe Cudré-Mauroux: “Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series.” In Proceedings of the VLDB Endowment (PVLDB), 2020.
+
+* Mourad Khayati, Philippe Cudré-Mauroux, and Michael H. Böhlen: “Scalable Recovery of Missing Blocks in Time Series with High and Low Cross-Correlations.” In the International Journal of Knowledge and Information Systems (KAIS), 2020.
+
+* Ines Arous, Mourad Khayati, Philippe Cudré-Mauroux, Ying Zhang, Martin Kersten, and Svetlin Stalinlov: “RecovDB: Accurate and Efficient Missing Blocks Recovery for Large Time Series.” In Proceedings of the IEEE International Conference on Data Engineering (ICDE), 2019.

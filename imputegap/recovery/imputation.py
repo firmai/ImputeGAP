@@ -88,7 +88,7 @@ class BaseImputer:
             >>> imputer.score(ts.data, imputer.recov_data) # upstream
             >>> imputer.score(ts.data, imputer.recov_data, {"task": "forecast", "model": "hw-add", "comparator": "ZeroImputation"}) # downstream
         """
-        if self.recov_data is None:
+        if recov_data is not None:
             self.recov_data = recov_data
 
         if isinstance(downstream, dict) and downstream is not None:
@@ -1683,6 +1683,7 @@ class Imputation:
             Imputation method using Hankel Matrix Factorization to recover from blackouts in tagged time series.
         """
 
+
         class MRNN(BaseImputer):
             """
             MRNN class to impute missing values using Multi-directional Recurrent Neural Networks (MRNN).
@@ -1694,16 +1695,19 @@ class Imputation:
             """
             algorithm = "mrnn"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using the MRNN algorithm.
 
                 Parameters
                 ----------
+
                 user_def : bool, optional
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the MRNN algorithm, if None, default ones are loaded.
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
 
                     **Algorithm parameters:**
 
@@ -1735,6 +1739,10 @@ class Imputation:
                 """
                 from imputegap.algorithms.mrnn import mrnn
 
+                if not (self._check_dl_split(split_ratio=tr_ratio)):
+                    self.recov_data = self.incomp_data
+                    return
+
                 if params is not None:
                     hidden_dim, learning_rate, iterations, sequence_length = self._check_params(user_def, params)
                 else:
@@ -1742,7 +1750,7 @@ class Imputation:
 
                 self.recov_data = mrnn(incomp_data=self.incomp_data, hidden_dim=hidden_dim,
                                        learning_rate=learning_rate, iterations=iterations,
-                                       sequence_length=sequence_length, logs=self.logs, verbose=self.verbose)
+                                       sequence_length=sequence_length, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -1757,7 +1765,7 @@ class Imputation:
             """
             algorithm = "brits"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using the BRITS algorithm.
 
@@ -1767,6 +1775,8 @@ class Imputation:
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the BRITS algorithm, if None, default ones are loaded.
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
 
                     **Algorithm parameters:**
 
@@ -1800,6 +1810,10 @@ class Imputation:
                 """
                 from imputegap.algorithms.brits import brits
 
+                if not (self._check_dl_split(split_ratio=0.8)):
+                    self.recov_data = self.incomp_data
+                    return
+
                 if params is not None:
                     model, epoch, batch_size, nbr_features, hidden_layer = self._check_params(user_def, params)
                 else:
@@ -1807,7 +1821,7 @@ class Imputation:
 
                 seq_length = self.incomp_data.shape[1]
 
-                self.recov_data = brits(incomp_data=self.incomp_data, model=model, epoch=epoch, batch_size=batch_size, nbr_features=nbr_features, hidden_layers=hidden_layer, seq_length=seq_length, logs=self.logs, verbose=self.verbose)
+                self.recov_data = brits(incomp_data=self.incomp_data, model=model, epoch=epoch, batch_size=batch_size, nbr_features=nbr_features, hidden_layers=hidden_layer, seq_length=seq_length, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
                 return self
 
         class DeepMVI(BaseImputer):
@@ -1821,7 +1835,7 @@ class Imputation:
             """
             algorithm = "deep_mvi"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using the DeepMVI algorithm.
 
@@ -1831,6 +1845,8 @@ class Imputation:
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the DeepMVI algorithm, if None, default ones are loaded.
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
 
                     **Algorithm parameters:**
 
@@ -1863,12 +1879,16 @@ class Imputation:
                 """
                 from imputegap.algorithms.deep_mvi import deep_mvi
 
+                if not (self._check_dl_split(split_ratio=0.8)):
+                    self.recov_data = self.incomp_data
+                    return
+
                 if params is not None:
                     max_epoch, patience, lr = self._check_params(user_def, params)
                 else:
                     max_epoch, patience, lr = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = deep_mvi(incomp_data=self.incomp_data, max_epoch=max_epoch, patience=patience, lr=lr, logs=self.logs, verbose=self.verbose)
+                self.recov_data = deep_mvi(incomp_data=self.incomp_data, max_epoch=max_epoch, patience=patience, lr=lr, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
                 return self
 
         class MPIN(BaseImputer):
@@ -1883,7 +1903,7 @@ class Imputation:
             """
             algorithm = "mpin"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using the MPIN algorithm.
                 Need torch-cluster to work.
@@ -1894,6 +1914,8 @@ class Imputation:
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the MPIN algorithm, if None, default ones are loaded.
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
 
                     **Algorithm parameters:**
 
@@ -1942,7 +1964,7 @@ class Imputation:
                 else:
                     incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = mpin(incomp_data=self.incomp_data, incre_mode=incre_mode, window=window, k=k, lr=learning_rate, weight_decay=weight_decay, epochs=epochs, num_of_iteration=num_of_iteration, thre=threshold, base=base, logs=self.logs, verbose=self.verbose)
+                self.recov_data = mpin(incomp_data=self.incomp_data, incre_mode=incre_mode, window=window, k=k, lr=learning_rate, weight_decay=weight_decay, epochs=epochs, num_of_iteration=num_of_iteration, thre=threshold, base=base, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
                 return self
 
         class PRISTI(BaseImputer):
@@ -1956,7 +1978,7 @@ class Imputation:
             """
             algorithm = "pristi"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using the PRISTI algorithm.
 
@@ -1966,6 +1988,8 @@ class Imputation:
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the PRISTI algorithm, if None, default ones are loaded.
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
 
                     **Algorithm parameters:**
 
@@ -2001,11 +2025,11 @@ class Imputation:
                 from imputegap.algorithms.pristi import pristi
 
                 if params is not None:
-                    target_strategy, unconditional, seed, device = self._check_params(user_def, params)
+                    target_strategy, unconditional, batch_size, embedding, seed = self._check_params(user_def, params)
                 else:
-                    target_strategy, unconditional, seed, device = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    target_strategy, unconditional, batch_size, embedding, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = pristi(incomp_data=self.incomp_data, target_strategy=target_strategy, unconditional=unconditional, seed=seed, device=device, logs=self.logs, verbose=self.verbose)
+                self.recov_data = pristi(incomp_data=self.incomp_data, target_strategy=target_strategy, unconditional=unconditional, batch_size=batch_size, embedding=embedding, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
                 return self
 
         class MissNet(BaseImputer):
@@ -2020,7 +2044,7 @@ class Imputation:
             """
             algorithm = "miss_net"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using the MissNet algorithm.
 
@@ -2030,6 +2054,8 @@ class Imputation:
                     Whether to use user-defined or default parameters (default is True).
                 params : dict, optional
                     Parameters of the MissNet algorithm, if None, default ones are loaded.
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
 
                     **Algorithm parameters:**
 
@@ -2074,8 +2100,7 @@ class Imputation:
                 else:
                     alpha, beta, L, n_cl, max_iteration, tol, random_init = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = miss_net(incomp_data=self.incomp_data, alpha=alpha, beta=beta, L=L, n_cl=n_cl,
-                                       max_iteration=max_iteration, tol=tol, random_init=random_init, logs=self.logs, verbose=self.verbose)
+                self.recov_data = miss_net(incomp_data=self.incomp_data, alpha=alpha, beta=beta, L=L, n_cl=n_cl, max_iteration=max_iteration, tol=tol, random_init=random_init, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -2092,7 +2117,7 @@ class Imputation:
 
             algorithm = "gain"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using the GAIN algorithm.
 
@@ -2103,6 +2128,9 @@ class Imputation:
 
                 params : dict, optional
                     Parameters of the GAIN algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
 
 
                     **Algorithm parameters:**
@@ -2143,7 +2171,7 @@ class Imputation:
                 else:
                     batch_size, hint_rate, alpha, epoch = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = gain(incomp_data=self.incomp_data, batch_size=batch_size, hint_rate=hint_rate, alpha=alpha, epoch=epoch, logs=self.logs, verbose=self.verbose)
+                self.recov_data = gain(incomp_data=self.incomp_data, batch_size=batch_size, hint_rate=hint_rate, alpha=alpha, epoch=epoch, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -2160,7 +2188,7 @@ class Imputation:
 
             algorithm = "grin"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using the Multivariate Time Series Imputation by Graph Neural Networks
 
@@ -2171,6 +2199,10 @@ class Imputation:
 
                 params : dict, optional
                     Parameters of the GRIN algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
+
 
                     **Algorithm parameters:**
 
@@ -2224,7 +2256,7 @@ class Imputation:
                 else:
                     d_hidden, lr, batch_size, window, alpha, patience, epochs, workers = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = grin(incomp_data=self.incomp_data, d_hidden=d_hidden, lr=lr, batch_size=batch_size, window=window, alpha=alpha, patience=patience, epochs=epochs, workers=workers, logs=self.logs, verbose=self.verbose)
+                self.recov_data = grin(incomp_data=self.incomp_data, d_hidden=d_hidden, lr=lr, batch_size=batch_size, window=window, alpha=alpha, patience=patience, epochs=epochs, workers=workers, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -2245,7 +2277,7 @@ class Imputation:
 
             algorithm = "bay_otide"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.6):
                 """
                 Perform imputation using the Multivariate Time Series Imputation by Deep Learning
 
@@ -2256,6 +2288,10 @@ class Imputation:
 
                 params : dict, optional
                     Parameters of the BayOTIDE algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
+
 
                     **Algorithm parameters:**
 
@@ -2337,7 +2373,7 @@ class Imputation:
 
             algorithm = "hkmf_t"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization
 
@@ -2348,6 +2384,10 @@ class Imputation:
 
                 params : dict, optional
                     Parameters of the HKMF-T algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
+
 
                     **Algorithm parameters:**
 
@@ -2393,7 +2433,7 @@ class Imputation:
                 if not data_names:
                     data_names = None
 
-                self.recov_data = hkmf_t(incomp_data=self.incomp_data, tags=tags, data_names=data_names, epoch=epoch, logs=self.logs, verbose=self.verbose)
+                self.recov_data = hkmf_t(incomp_data=self.incomp_data, tags=tags, data_names=data_names, epoch=epoch, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -2409,7 +2449,7 @@ class Imputation:
 
             algorithm = "bit_graph"
 
-            def impute(self, user_def=True, params=None):
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
                 """
                 Perform imputation using BIASED TEMPORAL CONVOLUTION GRAPH NETWORK FOR TIME SERIES FORECASTING WITH MISSING VALUES
 
@@ -2420,6 +2460,10 @@ class Imputation:
 
                 params : dict, optional
                     Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
+
 
                     **Algorithm parameters:**
 
@@ -2460,7 +2504,7 @@ class Imputation:
                 -------
                     >>> bit_graph_imputer = Imputation.DeepLearning.BitGraph(incomp_data)
                     >>> bit_graph_imputer.impute()  # default parameters for imputation > or
-                    >>> bit_graph_imputer.impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "epoch":10, "seed":42})  # user defined> or
+                    >>> bit_graph_imputer.impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "batch_size": 32, "epoch":10, "seed":42})  # user defined> or
                     >>> bit_graph_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
                     >>> recov_data = bit_graph_imputer.recov_data
 
@@ -2473,18 +2517,219 @@ class Imputation:
                 from imputegap.algorithms.bit_graph import bit_graph
 
                 if params is not None:
-                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed = self._check_params(user_def, params)
+                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed = self._check_params(user_def, params)
                 else:
-                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = bit_graph(incomp_data=self.incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, seed=seed, logs=self.logs, verbose=self.verbose)
+                self.recov_data = bit_graph(incomp_data=self.incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
+
+                return self
+
+    class LLMs:
+        """
+        A class containing specific imputation algorithms for Pre-trained Language Models (LLMs)
+        """
+
+        class NuwaTS(BaseImputer):
+            """
+            NuwaTS class to impute missing values using Foundation Model Mending Every Incomplete Time Series
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the NuwaTS
+            """
+
+            algorithm = "nuwats"
+
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
+                """
+                Perform imputation using Foundation Model Mending Every Incomplete Time Series
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
+                params : dict, optional
+                    Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
+
+
+                    **Algorithm parameters:**
+
+                        incomp_data : numpy.ndarray
+                            The input matrix with contamination (missing values represented as NaNs).
+
+                        seq_length : int, optional
+                            Length of the input sequence for the encoder. If -1, it will be automatically determined (default: -1).
+
+                        patch_size : int, optional
+                            Patch size used for segmenting the sequence in the NuwaTS model (default: -1).
+
+                        batch_size : int, optional
+                            Number of samples per batch during training/inference. If -1, it will be auto-set (default: -1).
+
+                        pred_length : int, optional
+                            Length of the output prediction window (default: -1).
+
+                        label_length : int, optional
+                            Length of the label segment used during decoding (default: -1).
+
+                        enc_in : int, optional
+                            Number of input features for the encoder (default: 10).
+
+                        dec_in : int, optional
+                            Number of input features for the decoder (default: 10).
+
+                        c_out : int, optional
+                            Number of output features of the model (default: 10).
+
+                        gpt_layers : int, optional
+                            Number of layers in the transformer/generator component (default: 6).
+
+                        seed : int, optional
+                            Random seed for reproducibility (default: 42).
+
+                        logs : bool, optional
+                            Whether to print/log execution time and key events (default: True).
+
+                        verbose : bool, optional
+                            Whether to print detailed output information during execution (default: True).
+
+
+                Returns
+                -------
+                self : NuwaTS
+                    NuwaTS object with `recov_data` set.
+
+                Example
+                -------
+                    >>> nuwats_imputer = Imputation.LLMs.NuwaTS(incomp_data)
+                    >>> nuwats_imputer.impute()  # default parameters for imputation > or
+                    >>> nuwats_imputer.impute(user_def=True, params={"seq_length":-1, "patch_size":-1, "batch_size":-1, "pred_length":-1, "label_length":-1, "enc_in":10, "dec_in":10, "c_out": 10, "gpt_layers":6, "seed":42})  # user defined> or
+                    >>> nuwats_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
+                    >>> recov_data = nuwats_imputer.recov_data
+
+                References
+                ----------
+                Cheng, Jinguo and Yang, Chunwei and Cai, Wanlin and Liang, Yuxuan and Wen, Qingsong and Wu, Yuankai: "NuwaTS: Mending Every Incomplete Time Series", arXiv'2024
+                https://github.com/Chengyui/NuwaTS/tree/master
+                """
+
+                from imputegap.algorithms.nuwats import nuwats
+
+                if params is not None:
+                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = self._check_params(user_def, params)
+                else:
+                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+
+                self.recov_data = nuwats(incomp_data=self.incomp_data, seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
 
                 return self
 
 
+        class GPT4TS(BaseImputer):
+            """
+            GPT4TS class to impute missing values using Foundation Model Mending Every Incomplete Time Series
+            (Model used from the NuwaTS repository)
+
+            Methods
+            -------
+            impute(self, user_def=True, params=None):
+                Perform imputation using the GPT4TS
+            """
+
+            algorithm = "gpt4ts"
+
+            def impute(self, user_def=True, params=None, tr_ratio=0.9):
+                """
+                Perform imputation using GPT4TS (Foundation Model Mending Every Incomplete Time Series)
+
+                Parameters
+                ----------
+                user_def : bool, optional
+                    Whether to use user-defined or default parameters (default is True).
+
+                params : dict, optional
+                    Parameters of the BitGraph algorithm or Auto-ML configuration, if None, default ones are loaded.
+
+                tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
 
 
+                    **Algorithm parameters:**
+
+                        incomp_data : numpy.ndarray
+                            The input matrix with contamination (missing values represented as NaNs).
+
+                        seq_length : int, optional
+                            Length of the input sequence for the encoder. If -1, it will be automatically determined (default: -1).
+
+                        patch_size : int, optional
+                            Patch size used for segmenting the sequence in the NuwaTS model (default: -1).
+
+                        batch_size : int, optional
+                            Number of samples per batch during training/inference. If -1, it will be auto-set (default: -1).
+
+                        pred_length : int, optional
+                            Length of the output prediction window (default: -1).
+
+                        label_length : int, optional
+                            Length of the label segment used during decoding (default: -1).
+
+                        enc_in : int, optional
+                            Number of input features for the encoder (default: 10).
+
+                        dec_in : int, optional
+                            Number of input features for the decoder (default: 10).
+
+                        c_out : int, optional
+                            Number of output features of the model (default: 10).
+
+                        gpt_layers : int, optional
+                            Number of layers in the transformer/generator component (default: 6).
+
+                        seed : int, optional
+                            Random seed for reproducibility (default: 42).
+
+                        logs : bool, optional
+                            Whether to print/log execution time and key events (default: True).
+
+                        verbose : bool, optional
+                            Whether to print detailed output information during execution (default: True).
 
 
+                Returns
+                -------
+                self : GPT4TS
+                    GPT4TS object with `recov_data` set.
+
+                Example
+                -------
+                    >>> gpt4ts_imputer = Imputation.LLMs.GPT4TS(incomp_data)
+                    >>> gpt4ts_imputer.impute()  # default parameters for imputation > or
+                    >>> gpt4ts_imputer.impute(user_def=True, params={"seq_length":-1, "patch_size":-1, "batch_size":-1, "pred_length":-1, "label_length":-1, "enc_in":10, "dec_in":10, "c_out": 10, "gpt_layers":6, "seed":42})  # user defined> or
+                    >>> gpt4ts_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
+                    >>> recov_data = gpt4ts_imputer.recov_data
+
+                References
+                ----------
+                Cheng, Jinguo and Yang, Chunwei and Cai, Wanlin and Liang, Yuxuan and Wen, Qingsong and Wu, Yuankai: "NuwaTS: Mending Every Incomplete Time Series", arXiv'2024
+                https://github.com/Chengyui/NuwaTS/tree/master
+                """
+
+                from imputegap.algorithms.gpt4ts import gpt4ts
+
+                if params is not None:
+                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = self._check_params(user_def, params)
+                else:
+                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+
+                self.recov_data = gpt4ts(incomp_data=self.incomp_data,  seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
+
+                return self
 
 

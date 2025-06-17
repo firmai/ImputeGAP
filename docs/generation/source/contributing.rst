@@ -5,6 +5,7 @@ ImputeGAP allows users to integrate their own algorithms. We provide a wrapper t
 
 Initialize a Git Repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 command::
 
         $ git init
@@ -91,9 +92,10 @@ Replace MyFamily with either: Statistics, MatrixCompletion, PatternSearch, Machi
 III. Optimizer
 ______________
 
-To enable the optimization module, please update ``./imputegap/tools/algorithm_parameters.py``:
+To enable the optimization module, please update ``./imputegap/tools/algorithm_parameters.py``.
 
 1. Open ``./imputegap/tools/algorithm_parameters.py`` copy paste lines 59 to 63 and update the algorithm name and parameters, e.g.,
+
     .. code-block:: python
 
         'new_alg': {
@@ -102,7 +104,9 @@ To enable the optimization module, please update ``./imputegap/tools/algorithm_p
                 "param_string": ["value_1", "value_n"]
             },
 
+
 2. Add your parameters in the ``def save_optimization()`` function of the file ``./imputegap/tools/utils.py`` to save the optimal parameters, line 820 to 825:
+
     .. code-block:: python
 
         if algorithm == "new_alg":
@@ -172,65 +176,94 @@ We will show how to adjust the integration wrapper in C++
 
    <br><br>
 
-C. Example: CDRec Integration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example with C++ Algorithm
+--------------------------
+
 Once your cpp and h files are ready to be converted (you can look at ``./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.cpp`` or ``./imputegap/wrapper/AlgoCollection/shared/SharedLibCDREC.h``), create a ``.so`` file for linux and windows, and a ``.dylib`` file for MAC OS.
 
-Shared Object Generation Linux/Windows
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. tabs::
+    .. tab:: Windows
 
-1. Modify the Makefile::
+        1. Modify the Makefile::
 
-    libCDREC.so:
-        g++ -O3 -D ARMA_DONT_USE_WRAPPER -fPIC -rdynamic -shared -o lib_cdrec.so -Wall -Werror -Wextra -pedantic \
-        -Wconversion -Wsign-conversion -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -fopenmp -std=gnu++14 \
-        Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp  Algebra/Auxiliary.cpp \
-        Algebra/CentroidDecomposition.cpp  shared/SharedLibCDREC.cpp \
-        -lopenblas -larpack
+            libCDREC.so:
+                g++ -O3 -D ARMA_DONT_USE_WRAPPER -fPIC -rdynamic -shared -o lib_cdrec.so -Wall -Werror -Wextra -pedantic \
+                -Wconversion -Wsign-conversion -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -fopenmp -std=gnu++14 \
+                Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp  Algebra/Auxiliary.cpp \
+                Algebra/CentroidDecomposition.cpp  shared/SharedLibCDREC.cpp \
+                -lopenblas -larpack
 
-2. Generate the shared library::
+        2. Generate the shared library::
 
-    make libCDREC.so
+            make libCDREC.so
 
-3. Place the generated ``.so`` file in ``imputegap/algorithms/lib``
-4. Optional: To include the .so file in the "in-built" directory::
+        3. Place the generated ``.so`` file in ``imputegap/algorithms/lib``
+        4. Optional: To include the .so file in the "in-built" directory::
 
-    rm -rf dist/
-    python setup.py sdist bdist_wheel
+            rm -rf dist/
+            python setup.py sdist bdist_wheel
+
+        .. raw:: html
+
+            <br><br>
+
+    .. tab:: Linux
+
+        1. Modify the Makefile::
+
+            libCDREC.so:
+                g++ -O3 -D ARMA_DONT_USE_WRAPPER -fPIC -rdynamic -shared -o lib_cdrec.so -Wall -Werror -Wextra -pedantic \
+                -Wconversion -Wsign-conversion -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -fopenmp -std=gnu++14 \
+                Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp  Algebra/Auxiliary.cpp \
+                Algebra/CentroidDecomposition.cpp  shared/SharedLibCDREC.cpp \
+                -lopenblas -larpack
+
+        2. Generate the shared library::
+
+            make libCDREC.so
+
+        3. Place the generated ``.so`` file in ``imputegap/algorithms/lib``
+        4. Optional: To include the .so file in the "in-built" directory::
+
+            rm -rf dist/
+            python setup.py sdist bdist_wheel
+
+        .. raw:: html
+
+            <br><br>
+
+    .. tab:: MacOs
+
+        1. Modify the Makefile::
+
+            libCDREC.dylib:
+                clang++ -dynamiclib -O3 -fPIC -std=c++17 -o lib_cdrec.dylib \
+                -I/opt/homebrew/include \
+                -L/opt/homebrew/lib \
+                -L/opt/homebrew/opt/openblas/lib \
+                Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp Algebra/Auxiliary.cpp \
+                Algebra/CentroidDecomposition.cpp shared/SharedLibCDREC.cpp \
+                -larmadillo -lopenblas -larpack
+        2. Generate the shared library::
+
+            make libCDREC.dylib
+
+        3. Place the generated ``.dylib`` file in ``imputegap/algorithms/lib``
+        4. Optional: To include the .dylib file in the "in-built" directory::
+
+            rm -rf dist/
+            python setup.py sdist bdist_wheel
+
+        .. raw:: html
+
+           <br><br>
 
 .. raw:: html
 
    <br><br>
 
-Shared Object Generation MAC OS
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Wrapper**
 
-1. Modify the Makefile::
-
-    libCDREC.dylib:
-        clang++ -dynamiclib -O3 -fPIC -std=c++17 -o lib_cdrec.dylib \
-        -I/opt/homebrew/include \
-        -L/opt/homebrew/lib \
-        -L/opt/homebrew/opt/openblas/lib \
-        Stats/Correlation.cpp Algorithms/CDMissingValueRecovery.cpp Algebra/Auxiliary.cpp \
-        Algebra/CentroidDecomposition.cpp shared/SharedLibCDREC.cpp \
-        -larmadillo -lopenblas -larpack
-2. Generate the shared library::
-
-    make libCDREC.dylib
-
-3. Place the generated ``.dylib`` file in ``imputegap/algorithms/lib``
-4. Optional: To include the .dylib file in the "in-built" directory::
-
-    rm -rf dist/
-    python setup.py sdist bdist_wheel
-
-.. raw:: html
-
-   <br><br>
-
-Wrapper
-^^^^^^^
 
 1. In ``imputegap/algorithms/cpp_integration.py``, update the function name and parameter count, and ensure the ``.so`` file matches::
 
@@ -272,8 +305,7 @@ Wrapper
 
    <br><br>
 
-Method Implementation
-^^^^^^^^^^^^^^^^^^^^^
+**Method Implementation**
 
 1. In ``imputegap/algorithms/cpp_integration.py``, create or adapt a generic method for your needs::
 
@@ -295,8 +327,7 @@ Method Implementation
 
    <br><br>
 
-Imputer Class
-^^^^^^^^^^^^^
+**Imputer Class**
 
 1. Add your algorithm to the catalog in ``./imputegap/recovery/imputation.py``
 2. Copy and modify ``class MeanImpute(BaseImputer)`` to fit your requirements::

@@ -4,7 +4,7 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"Imputation algorithms : {ts.algorithms}")
+print(f"\nImputation algorithms : {ts.algorithms}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))

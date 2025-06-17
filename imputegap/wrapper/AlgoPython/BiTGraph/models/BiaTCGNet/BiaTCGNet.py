@@ -1,7 +1,18 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/chenxiaodanhit/BiTGraph
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://openreview.net/pdf?id=O9nZCwdGcG
+# ===============================================================================================================
+
 from imputegap.wrapper.AlgoPython.BiTGraph.models.BiaTCGNet.BiaTCGNet_layer import *
 import torch.nn as nn
 import torch
 from torch.nn.utils.parametrizations import weight_norm
+
 class Model(nn.Module):
     def __init__(self, gcn_true, buildA_true, gcn_depth, num_nodes,kernel_set, device, predefined_A=None, static_feat=None, dropout=0.3, subgraph_size=5, node_dim=40, dilation_exponential=1, conv_channels=32, residual_channels=32, skip_channels=64, end_channels=128, seq_length=12, in_dim=2, out_len=12, out_dim=1, layers=3, propalpha=0.05, tanhalpha=3, layer_norm_affline=True):
         super(Model, self).__init__()
@@ -24,6 +35,7 @@ class Model(nn.Module):
                                     kernel_size=(1, 1))
         self.gc = graph_constructor(num_nodes, subgraph_size, node_dim, device, alpha=tanhalpha, static_feat=static_feat)
         self.seq_length = seq_length
+        self.device = device
         kernel_size = self.kernel_set[-1]#7
         if dilation_exponential>1:
             self.receptive_field = int(1+(kernel_size-1)*(dilation_exponential**layers-1)/(dilation_exponential-1))
@@ -88,7 +100,7 @@ class Model(nn.Module):
             self.skipE = weight_norm(nn.Conv2d(in_channels=residual_channels, out_channels=skip_channels, kernel_size=(1, 1), bias=True))
 
 
-        self.idx = torch.arange(self.num_nodes).to(device)
+        self.idx = torch.arange(self.num_nodes, device=self.device)
 
 
     def forward(self, input,mask, k, idx=None):#tx,id

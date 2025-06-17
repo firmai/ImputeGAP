@@ -1,3 +1,13 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/Graph-Machine-Learning-Group/grin
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://openreview.net/pdf?id=kOu3-S3wJ7
+# ===============================================================================================================
+
 import inspect
 from copy import deepcopy
 
@@ -242,7 +252,6 @@ class Filler(pl.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        print(f"Running validation step for filler batch {batch_idx}")  # ✅ Debugging print
 
         # Unpack batch
         batch_data, batch_preprocessing = self._unpack_batch(batch)

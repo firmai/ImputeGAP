@@ -1,9 +1,9 @@
 import time
 
-from imputegap.wrapper.AlgoPython.HKMF_T.recoveryHKMFT import recoveryHKMFT
+from imputegap.wrapper.AlgoPython.hkmft.recov_hkmft import recovery_hkmft
 
 
-def hkmf_t(incomp_data, tags=None, data_names=None, epoch=10, logs=True, verbose=True):
+def hkmf_t(incomp_data, tags=None, data_names=None, epoch=10, tr_ratio=0.9, logs=True, verbose=True):
     """
     Perform imputation using Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization
 
@@ -23,6 +23,9 @@ def hkmf_t(incomp_data, tags=None, data_names=None, epoch=10, logs=True, verbose
     epoch : int, optional
         The maximum number of training epochs for the Hankel Matrix Factorization algorithm.
         If convergence is reached earlier, the process stops (default is 10).
+
+    tr_ratio: float, optional
+        Split ratio between training and testing sets (default is 0.9).
 
     logs : bool, optional
         Whether to log the execution time (default is True).
@@ -47,7 +50,7 @@ def hkmf_t(incomp_data, tags=None, data_names=None, epoch=10, logs=True, verbose
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recoveryHKMFT(miss_data=incomp_data,tags=tags, data_names=data_names, epoch=epoch, verbose=verbose)
+    recov_data = recovery_hkmft(miss_data=incomp_data,tags=tags, data_names=data_names, epoch=epoch, tr_ratio=tr_ratio, verbose=verbose)
 
     end_time = time.time()
     if logs and verbose:

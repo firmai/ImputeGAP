@@ -6,8 +6,6 @@ from imputegap.tools import utils
 from imputegap.tools.algorithm_parameters import SEARCH_SPACES, ALL_ALGO_PARAMS, PARAM_NAMES, SEARCH_SPACES_PSO, RAYTUNE_PARAMS
 import imputegap.tools.algorithm_parameters as sh_params
 
-from pyswarms.utils.reporter import Reporter
-reporter = Reporter()
 
 class BaseOptimizer:
     """
@@ -582,9 +580,7 @@ class Optimization:
             """
             Objective function for RayTune optimization.
             """
-
-            print("\n\n\nPARAMS ", params)
-            imputer = utils.config_impute_algorithm(incomp_data, algorithm)
+            imputer = utils.config_impute_algorithm(incomp_data, algorithm, verbose=False)
             imputer.impute(user_def=True, params=params)
             imputer.score(input_data=input_data)
             score = imputer.metrics.get(used_metric, "Key not found")
@@ -658,7 +654,7 @@ class Optimization:
                 max_concurrent_trials=max_concurrent_trials
             )
 
-            print(f"\n\t\t(OPTI) > Ray tune - BEST CONFIG: {analysis.best_config}\n")
+            print(f"\n(OPTI) > Ray tune - optimal parameters:\n\t{analysis.best_config}\n\n")
 
             end_time = time.time()
             print(f"\n> logs: optimization ray tune - Execution Time: {(end_time - start_time):.4f} seconds_____\n")

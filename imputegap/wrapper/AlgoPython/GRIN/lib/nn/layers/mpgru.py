@@ -1,3 +1,13 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/Graph-Machine-Learning-Group/grin
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://openreview.net/pdf?id=kOu3-S3wJ7
+# ===============================================================================================================
+
 import torch
 from torch import nn
 
@@ -82,7 +92,7 @@ class MPGRUImputer(nn.Module):
 
         # infer all valid if mask is None
         if mask is None:
-            mask = torch.ones_like(x, dtype=torch.uint8)
+            mask = torch.ones_like(x, dtype=torch.uint8).bool()
 
         # init hidden state using node embedding or the empty state
         if h is None:

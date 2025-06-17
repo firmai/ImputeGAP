@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.MPIN.runnerMPIN import recoverMPIN
 
 
-def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, num_of_iteration=5, thre=0.25, base="SAGE", logs=True, verbose=True):
+def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, epochs=200, num_of_iteration=5, thre=0.25, base="SAGE", tr_ratio=0.9, logs=True, verbose=True):
     """
     Perform imputation using the Missing Value Imputation for Multi-attribute Sensor Data Streams via Message Propagation algorithm.
 
@@ -29,6 +29,8 @@ def mpin(incomp_data=None, incre_mode="alone", window=2, k=10, lr=0.01, weight_d
         The threshold for considering a missing value as imputed (default is 0.25).
     base : str, optional
         The base model used for graph representation and message propagation. Common options include "SAGE" and "GCN" (default is "SAGE").
+    tr_ratio: float, optional
+        Split ratio between training and testing sets (default is 0.9).
     logs : bool, optional
         Whether to log the execution time (default is True).
     verbose : bool, optional

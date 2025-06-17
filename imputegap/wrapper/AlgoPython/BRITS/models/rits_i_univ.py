@@ -1,3 +1,14 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/caow13/BRITS
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://papers.nips.cc/paper_files/paper/2018/hash/734e6bfcd358e25ac1db0a4241b95651-Abstract.html
+# ===============================================================================================================
+
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -26,11 +37,11 @@ def binary_cross_entropy_with_logits(input, target, weight=None, size_average=Tr
 
 
 class TemporalDecay(nn.Module):
-    def __init__(self, input_size, hidden_layers):
+    def __init__(self, input_size, hidden_layers=None):
         super(TemporalDecay, self).__init__()
         self.build(input_size, hidden_layers)
 
-    def build(self, input_size, hidden_layers):
+    def build(self, input_size, hidden_layers=None):
         self.W = Parameter(torch.Tensor(hidden_layers, input_size))
         self.b = Parameter(torch.Tensor(hidden_layers))
         self.reset_parameters()
@@ -47,19 +58,19 @@ class TemporalDecay(nn.Module):
         return gamma
 
 class Model(nn.Module):
-    def __init__(self, batch_size, nbr_features, hidden_layers, seq_length):
+    def __init__(self, batch_size, nbr_features, hidden_layers, seq_len):
         super(Model, self).__init__()
         self.batch_size = batch_size
         self.nbr_features = nbr_features
-        self.seq_length = seq_length
         self.hidden_layers = hidden_layers
+        self.seq_len = seq_len
         self.build()
 
     def build(self):
         self.rnn_cell = nn.LSTMCell(self.nbr_features * 2, self.hidden_layers)
 
         self.regression = nn.Linear(self.hidden_layers, self.nbr_features)
-        self.temp_decay = TemporalDecay(input_size=self.nbr_features, hidden_layers=self.hidden_layers)
+        self.temp_decay = TemporalDecay(input_size = self.nbr_features, hidden_layers=self.hidden_layers)
 
         self.out = nn.Linear(self.hidden_layers, 1)
 
@@ -86,7 +97,7 @@ class Model(nn.Module):
 
         imputations = []
 
-        for t in range(0, self.seq_length):
+        for t in range(self.seq_len):
             x = values[:, t, :]
             m = masks[:, t, :]
             d = deltas[:, t, :]
@@ -115,7 +126,7 @@ class Model(nn.Module):
 
         y_h = F.sigmoid(y_h)
 
-        return {'loss': x_loss / self.seq_length + 0.1 *y_loss, 'predictions': y_h,\
+        return {'loss': x_loss / self.seq_len + 0.1 *y_loss, 'predictions': y_h,\
                 'imputations': imputations, 'labels': labels, 'is_train': is_train,\
                 'evals': evals, 'eval_masks': eval_masks}
 

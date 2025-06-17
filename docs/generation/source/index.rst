@@ -5,46 +5,27 @@ ImputeGAP is a comprehensive Python library for imputation of missing values in 
 
 
 In detail, the library provides:
-    - Access to commonly used datasets in the time series imputation field (`Datasets <datasets.html>`_).
-    - Configurable contamination module that simulates real-world missingness patterns (`Patterns <patterns.html>`_).
-    - Parameterizable state-of-the-art time series imputation algorithms (`Algorithms <algorithms.html>`_).
-    - Extensive benchmarking to compare the performance of imputation algorithms (`Benchmark <tutorials.html#benchmark>`_).
-    - Modular tools to assess the impact of imputation on key downstream tasks (`Downstream <tutorials.html#downstream>`_).
-    - Fine-grained analysis of the impact of time series features on imputation results (`Explainer <tutorials.html#explainer>`_).
-    - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R (`Contributing <contributing.html>`_).
+    - Access to commonly used datasets in the time series imputation field.
+    - Configurable contamination module that simulates real-world missingness patterns.
+    - Parameterizable state-of-the-art time series imputation algorithms.
+    - Extensive benchmarking to compare the performance of imputation algorithms.
+    - Modular tools to assess the impact of imputation on key downstream tasks.
+    - Fine-grained analysis of the impact of time series features on imputation results.
+    - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R.
 
 .. raw:: html
 
    <br>
 
-.. note::
+.. admonition:: 📢 News !
 
-    If you like our library, please add a ⭐ in our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
-
-
-
-.. raw:: html
-
-   <br>
-
-.. _data-format:
-
-Data Format
------------
-Please ensure that your input data satisfies the following format:
-
-.. note::
-
-    - Columns are the series' values, and rows are the timestamps
-    - Column separator: empty space
-    - Row separator: newline
-    - Missing values are NaNs
-
-
+        - [18-06-2025] Version 1.1.0 is out! Check out the latest updates and improvements!
+        - [04-06-2025] ImputeGAP will be presented as a Tutorial at KDD 2025 in Toronto! `[Web Site] <https://imputegap-tutorials.github.io/KDD-2025/>`_
 
 .. raw:: html
 
    <br>
+
 
 
 .. _get_started:
@@ -136,7 +117,8 @@ Get Started
 Citing
 ------
 
-If you use ImputeGAP in your research, please cite these papers:
+
+If you use ImputeGAP in your research, please cite these papers: `[Paper] <https://arxiv.org/abs/2503.15250>`_ `[Tutorial] <https://exascale.info/assets/pdf/khayati2025kdd.pdf>`_
 
 .. code-block:: bash
 
@@ -148,13 +130,7 @@ If you use ImputeGAP in your research, please cite these papers:
       archiveprefix = {arXiv},
       primaryclass = {cs.LG},
       url = {https://arxiv.org/abs/2503.15250}
-    }
 
-.. raw:: html
-
-   <br>
-
-.. code-block:: bash
 
     @article{nater2025kdd,
       title = {A Hands-on Tutorial on Time Series Imputation with ImputeGAP},
@@ -164,9 +140,21 @@ If you use ImputeGAP in your research, please cite these papers:
       series = {KDD2025}
     }
 
+
 .. raw:: html
 
    <br>
+
+
+.. admonition:: Note
+
+    If you like our library, please add a ⭐ in our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
+
+
+.. raw:: html
+
+   <br>
+
 
 
 .. toctree::
@@ -178,7 +166,7 @@ If you use ImputeGAP in your research, please cite these papers:
    index
    getting_started
    tutorials
-   notebook
+   notebooks
    datasets
    patterns
    algorithms

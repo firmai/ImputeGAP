@@ -1,10 +1,6 @@
 imputegap.recovery.imputation package
 =========================================
 
-Submodules
-----------
-
-
 Module contents
 ---------------
 

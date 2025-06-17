@@ -17,7 +17,7 @@ In detail, the package provides:
 
 <br>
 
-![Python](https://img.shields.io/badge/Python-v3.12-blue) ![Release](https://img.shields.io/badge/Release-v1.0.9-brightgreen)  ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu) ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen) ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue) ![Language](https://img.shields.io/badge/Language-English-blue) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational) [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/)
+![Python](https://img.shields.io/badge/Python-v3.12-blue) ![Release](https://img.shields.io/badge/Release-v1.1.0-brightgreen)  ![License](https://img.shields.io/badge/License-GPLv3-blue?style=flat&logo=gnu) ![Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen) ![PyPI](https://img.shields.io/pypi/v/imputegap?label=PyPI&color=blue) ![Language](https://img.shields.io/badge/Language-English-blue) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20MacOS-informational) [![Docs](https://img.shields.io/badge/Docs-available-brightgreen?style=flat&logo=readthedocs)](https://imputegap.readthedocs.io/)
 
 <i>If you like our library, please add a ⭐ in our GitHub repository.</i>
 
@@ -33,42 +33,43 @@ In detail, the package provides:
 - ---
 
 
-
 # Available Imputation Algorithms
-| **Family**         | **Algorithm**             | **Venue -- Year**            |
-|--------------------|---------------------------|------------------------------|
-| Deep Learning      | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
-| Deep Learning      | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
-| Deep Learning      | MissNet [[27]](#ref27)    | KDD -- 2024                  |
-| Deep Learning      | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
-| Deep Learning      | PRISTI [[26]](#ref26)     | ICDE -- 2023                 |
-| Deep Learning      | GRIN [[29]](#ref29)       | ICLR -- 2022                 |
-| Deep Learning      | HKMF_T [[31]](#ref31)     | TKDE -- 2021                 |
-| Deep Learning      | DeepMVI [[24]](#ref24)    | PVLDB -- 2021                |
-| Deep Learning      | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
-| Deep Learning      | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
-| Deep Learning      | GAIN [[28]](#ref28)       | ICML -- 2018                 |
-| Matrix Completion  | CDRec [[1]](#ref1)        | KAIS -- 2020                 |
-| Matrix Completion  | TRMF [[8]](#ref8)         | NeurIPS -- 2016              |
-| Matrix Completion  | GROUSE [[3]](#ref3)       | PMLR -- 2016                 |
-| Matrix Completion  | ROSL [[4]](#ref4)         | CVPR -- 2014                 |
-| Matrix Completion  | SoftImpute [[6]](#ref6)   | JMLR -- 2010                 |
-| Matrix Completion  | SVT [[7]](#ref7)          | SIAM J. OPTIM -- 2010        |
-| Matrix Completion  | SPIRIT [[5]](#ref5)       | VLDB -- 2005                 |
-| Matrix Completion  | IterativeSVD [[2]](#ref2) | BIOINFORMATICS -- 2001       |
-| Pattern Search     | TKCM [[11]](#ref11)       | EDBT -- 2017                 |
-| Pattern Search     | STMVL [[9]](#ref9)        | IJCAI -- 2016                |
-| Pattern Search     | DynaMMo [[10]](#ref10)    | KDD -- 2009                  |
-| Machine Learning   | IIM [[12]](#ref12)        | ICDE -- 2019                 |
-| Machine Learning   | XGBOOST [[13]](#ref13)    | KDD -- 2016                  |
-| Machine Learning   | MICE [[14]](#ref14)       | Statistical Software -- 2011 |
-| Machine Learning   | MissForest [[15]](#ref15) | BioInformatics -- 2011       |
-| Statistics         | KNNImpute                 | -                            |
-| Statistics         | Interpolation             | -                            |
-| Statistics         | MinImpute                 | -                            |
-| Statistics         | ZeroImpute                | -                            |
-| Statistics         | MeanImpute                | -                            |
-| Statistics         | MeanImputeBySeries        | -                            |
+| **Family**        | **Algorithm**             | **Venue -- Year**            |
+|-------------------|---------------------------|------------------------------|
+| LLMs              | NuwaTS [[35]](#ref35)     | Arxiv -- 2024                |
+| LLMs              | GPT4TS [[36]](#ref36)     | NIPS -- 2023                 |
+| Deep Learning     | MissNet [[27]](#ref27)    | KDD -- 2024                  |
+| Deep Learning     | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
+| Deep Learning     | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
+| Deep Learning     | BitGraph [[32]](#ref32)   | ICLR -- 2024                 |
+| Deep Learning     | PRISTI [[26]](#ref26)     | ICDE -- 2023                 |
+| Deep Learning     | GRIN [[29]](#ref29)       | ICLR -- 2022                 |
+| Deep Learning     | HKMF_T [[31]](#ref31)     | TKDE -- 2021                 |
+| Deep Learning     | DeepMVI [[24]](#ref24)    | PVLDB -- 2021                |
+| Deep Learning     | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
+| Deep Learning     | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
+| Deep Learning     | GAIN [[28]](#ref28)       | ICML -- 2018                 |
+| Matrix Completion | CDRec [[1]](#ref1)        | KAIS -- 2020                 |
+| Matrix Completion | TRMF [[8]](#ref8)         | NeurIPS -- 2016              |
+| Matrix Completion | GROUSE [[3]](#ref3)       | PMLR -- 2016                 |
+| Matrix Completion | ROSL [[4]](#ref4)         | CVPR -- 2014                 |
+| Matrix Completion | SoftImpute [[6]](#ref6)   | JMLR -- 2010                 |
+| Matrix Completion | SVT [[7]](#ref7)          | SIAM J. OPTIM -- 2010        |
+| Matrix Completion | SPIRIT [[5]](#ref5)       | VLDB -- 2005                 |
+| Matrix Completion | IterativeSVD [[2]](#ref2) | BIOINFORMATICS -- 2001       |
+| Pattern Search    | TKCM [[11]](#ref11)       | EDBT -- 2017                 |
+| Pattern Search    | STMVL [[9]](#ref9)        | IJCAI -- 2016                |
+| Pattern Search    | DynaMMo [[10]](#ref10)    | KDD -- 2009                  |
+| Machine Learning  | IIM [[12]](#ref12)        | ICDE -- 2019                 |
+| Machine Learning  | XGBOOST [[13]](#ref13)    | KDD -- 2016                  |
+| Machine Learning  | MICE [[14]](#ref14)       | Statistical Software -- 2011 |
+| Machine Learning  | MissForest [[15]](#ref15) | BioInformatics -- 2011       |
+| Statistics        | KNNImpute                 | -                            |
+| Statistics        | Interpolation             | -                            |
+| Statistics        | MinImpute                 | -                            |
+| Statistics        | ZeroImpute                | -                            |
+| Statistics        | MeanImpute                | -                            |
+| Statistics        | MeanImputeBySeries        | -                            |
 
 ---
 
@@ -86,7 +87,7 @@ In detail, the package provides:
   - [Explainer](#explainer)  
   - [Downstream Evaluation](#downstream)
   - [Benchmark](#benchmark)  
-  - [Notebook](#Jupyter-Notebook)  
+  - [Notebooks](#Jupyter-Notebooks)  
 
 - **Contribute**  
   - [Integration Guide](#contribution)  
@@ -104,7 +105,7 @@ In detail, the package provides:
 
 ## System Requirements
 
-ImputeGAP is compatible with Python>=3.10 (except 3.13) and Unix-compatible environment.
+ImputeGAP runs with Python>=3.10 (except 3.13) and Unix-compatible environment.
 
 <i>To create and set up an environment with Python 3.12, please refer to the [installation guide](https://imputegap.readthedocs.io/en/latest/getting_started.html).</i>
 
@@ -116,7 +117,7 @@ ImputeGAP is compatible with Python>=3.10 (except 3.13) and Unix-compatible envi
 
 ### pip
 
-To install the latest version of ImputeGAP from PyPI, run the following command:
+To install/update the latest version of ImputeGAP, run the following command:
 
 ```bash
 pip install imputegap
@@ -150,13 +151,13 @@ docker version
 Pull the ImputeGAP Docker image (add `--platform linux/x86_64` in the command for MacOS) :
 
 ```bash
-docker pull qnater/imputegap:0.0.8
+docker pull qnater/imputegap:1.1.1
 ```
 
 Run the Docker container:
 
 ```bash
-docker run -p 8888:8888 qnater/imputegap:0.0.8
+docker run -p 8888:8888 qnater/imputegap:1.1.1
 ``` 
 
 
@@ -185,7 +186,7 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"ImputeGAP datasets : {ts.datasets}")
+print(f"\nImputeGAP datasets : {ts.datasets}")
 
 # load and normalize the dataset from file or from the code
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -294,6 +295,7 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
 ```python
 from imputegap.recovery.manager import TimeSeries
 ts = TimeSeries()
+print(f"Imputation families : {ts.families}")
 print(f"Imputation algorithms : {ts.algorithms}")
 ```
 
@@ -301,7 +303,7 @@ print(f"Imputation algorithms : {ts.algorithms}")
 
 
 ## Parameter Tuning
-The Optimizer component manages algorithm configuration and hyperparameter tuning. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by [Ray Tune](https://docs.ray.io/en/latest/tune/index.html>).
+The Optimizer component manages algorithm configuration and hyperparameter tuning. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by [Ray Tune](https://docs.ray.io/en/latest/tune/index.html).
 
 ### Example Auto-ML
 You can find this example in the file [`runner_optimization.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_optimization.py).
@@ -412,7 +414,6 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"ImputeGAP downstream models for forcasting : {ts.forecasting_models}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("forecast-economy"))
@@ -426,7 +427,7 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute and print the downstream results
-downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
+downstream_config = {"task": "forecast", "model": "hw-add", "baseline": "ZeroImpute"}
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
 ts.print_results(imputer.downstream_metrics, text="Downstream results")
 ```
@@ -472,6 +473,9 @@ exp.shap_explainer(input_data=ts.data, extractor="pycatch", pattern="mcar", file
 
 # print the impact of each feature
 exp.print(exp.shap_values, exp.shap_details)
+
+# plot the feature impacts
+exp.show()
 ```
 
 All feature extractors developed in ImputeGAP are available in the ``ts.extractors`` module, which can be listed as follows:
@@ -485,16 +489,16 @@ print(f"ImputeGAP features extractors : {ts.extractors}")
 
 ---
 
-## Jupyter Notebook
+## Jupyter Notebooks
 
 ImputeGAP provides Jupyter notebooks available through the following links:
 
-- [Jupyter: Imputegap Imputation Pipeline Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_imputation_pipeline.ipynb)
-- [Jupyter: Imputegap Advanced Analysis Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_advanced_analysis.ipynb)
+- [Jupyter: Imputegap Imputation Pipeline Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/01_imputegap_pipeline_creation.ipynb)
+- [Jupyter: Imputegap Advanced Analysis Notebook](https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/02_imputegap_advanced_analytics.ipynb)
 
 
 
-## Google Colab Notebook
+## Google Colab Notebooks
 
 ImputeGAP provides Google Colab notebooks available through the following links:
 
@@ -562,13 +566,17 @@ If you use ImputeGAP in your research, please cite these papers:
         Quentin is a PhD student jointly supervised by
         <a href="https://exascale.info/members/mourad-khayati/">Mourad Khayati</a> and
         <a href="https://exascale.info/phil/">Philippe Cudré-Mauroux</a> at the Department of Computer Science of the
-        <a href="https://www.unifr.ch/home/en/">University of Fribourg</a>, Switzerland.<br> He completed his Master’s degree in Digital Neuroscience at the University of Fribourg.
+        <a href="https://www.unifr.ch/home/en/">University of Fribourg</a>, Switzerland. He completed his Master’s degree in Digital Neuroscience at the University of Fribourg.
         His research focuses on <strong>time series analytics</strong>,
         including <strong>data imputation</strong>, <strong>machine learning</strong>, and
         <strong>multimodal learning</strong>.
       </div><br>
       👉 <a href="https://exascale.info/members/quentin-nater/">Home Page</a>
     </td>
+  </tr>
+</table>
+<table>
+  <tr>
     <td width="50%" >
       <div  style="text-align: center;" >
         <a href="https://exascale.info/members/mourad-khayati/">
@@ -677,8 +685,13 @@ If you use ImputeGAP in your research, please cite these papers:
 [32] Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
 
 <a name="ref33"></a>
-[33] Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux:
-Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)
+[33] Mourad Khayati, Alberto Lerner, Zakhar Tymchenko, Philippe Cudré-Mauroux: Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series. Proc. VLDB Endow. 13(5): 768-782 (2020)
 
 <a name="ref33"></a>
 [34] Mourad Khayati, Quentin Nater, Jacques Pasquier: ImputeVIS: An Interactive Evaluator to Benchmark Imputation Techniques for Time Series Data. Proc. VLDB Endow. 17(12): 4329-4332 (2024)
+
+<a name="ref35"></a>
+[35] Jinguo Cheng, Chunwei Yang, Wanlin Cai, Yuxuan Liang, Qingsong Wen, Yuankai Wu: NuwaTS: a Foundation Model Mending Every Incomplete Time Series. Arxiv 2024
+
+<a name="ref36"></a>
+[36] Tian Zhou, Peisong Niu, Xue Wang, Liang Sun, Rong Jin: One fits all: power general time series analysis by pretrained LM. NIPS 2023

@@ -49,8 +49,7 @@ def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', s
     """
 
     if verbose:
-        print("(IMPUTATION) MISS FOREST : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") for n_estimators ",
-              n_estimators, ", max_iter ", max_iter, " max_features ", max_features, ", and seed ", seed, "...")
+        print(f"(IMPUTATION) MISS FOREST\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\tn_estimators: {n_estimators}\n\tmax_iter: {max_iter}\n\tmax_features: {max_features}\n\tseed: {seed}\n")
 
     # Convert numpy array to pandas DataFrame if needed
     if isinstance(incomp_data, np.ndarray):

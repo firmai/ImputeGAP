@@ -43,9 +43,7 @@ def mice(incomp_data, max_iter=3, tol=0.001, initial_strategy='mean', seed=42, l
     """
 
     if verbose:
-        print("(IMPUTATION) MICE : Matrix Shape: (", incomp_data.shape[0], ", ", incomp_data.shape[1], ") for max_iter ",
-              max_iter, ", tol ", tol, " initial_strategy ", initial_strategy, ", and seed ", seed, "...\n\n\t\t\t"
-              "Careful, this imputation algorithm might take a while to compute.")
+        print(f"(IMPUTATION) MICE\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\tmax_iter: {max_iter}\n\ttol: {tol}\n\tinitial_strategy: {initial_strategy}\n\tseed: {seed}")
 
     start_time = time.time()  # Record start time
 

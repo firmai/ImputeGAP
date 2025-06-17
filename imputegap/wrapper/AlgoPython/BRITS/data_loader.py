@@ -1,3 +1,15 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/caow13/BRITS
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://papers.nips.cc/paper_files/paper/2018/hash/734e6bfcd358e25ac1db0a4241b95651-Abstract.html
+# ===============================================================================================================
+
+
+
 import ujson as json
 import numpy as np
 
@@ -31,11 +43,11 @@ def collate_fn(recs):
 
     def to_tensor_dict(recs):
         values = torch.FloatTensor(list(map(lambda r: r['values'], recs)))
-        masks = torch.FloatTensor(list(map(lambda r: r['masks'], recs)))
+        masks = torch.IntTensor(list(map(lambda r: r['masks'], recs)))
         deltas = torch.FloatTensor(list(map(lambda r: r['deltas'], recs)))
         forwards = torch.FloatTensor(list(map(lambda r: r['forwards'], recs)))
         evals = torch.FloatTensor(list(map(lambda r: r['evals'], recs)))
-        eval_masks = torch.FloatTensor(list(map(lambda r: r['eval_masks'], recs)))
+        eval_masks = torch.IntTensor(list(map(lambda r: r['eval_masks'], recs)))
 
         return {
             'values': values,
@@ -56,14 +68,9 @@ def collate_fn(recs):
 
     return ret_dict
 
-def get_loader(filename, batch_size = 64, shuffle = True):
+def get_loader(filename, batch_size = 16, shuffle = False):
     data_set = MySet(filename)
-    data_iter = DataLoader(dataset = data_set, \
-                              batch_size = batch_size, \
-                              num_workers = 4, \
-                              shuffle = shuffle, \
-                              pin_memory = True, \
-                              collate_fn = collate_fn
-    )
+
+    data_iter = DataLoader(dataset = data_set, batch_size = batch_size, num_workers = 4, shuffle = shuffle, pin_memory = True, collate_fn = collate_fn)
 
     return data_iter

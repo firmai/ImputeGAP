@@ -1,3 +1,13 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/zjuwuyy-DL/Generative-Semi-supervised-Learning-for-Multivariate-Time-Series-Imputation
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://www.dm.sanken.osaka-u.ac.jp/~yasushi/publications/missnet.pdf
+# ===============================================================================================================
+
 import warnings
 import time
 import numpy as np
@@ -112,7 +122,7 @@ class MissNet:
 
         W = ~np.isnan(X)
         if verbose:
-            print('\t\t\t\tnumber of nan',np.count_nonzero(np.isnan(X)), 'percentage', np.round(np.count_nonzero(np.isnan(X))/X.size*100, decimals=1), '%')
+            print('\nnumber of nan',np.count_nonzero(np.isnan(X)), 'percentage', np.round(np.count_nonzero(np.isnan(X))/X.size*100, decimals=1), '%\n')
         self.initialize(X, random_init)
         history = {'lle': [], 'time':[]}
         min_lle, tol_counter = np.inf, 0
@@ -122,7 +132,7 @@ class MissNet:
                 """ E-step """
                 # infer F, Z
                 lle = self.forward_viterbi(X, W)
-                if verbose and self.n_cl>1: print('\t\t\t\tcluster assignments',[np.count_nonzero(self.F==k) for k in range(self.n_cl)])
+                if verbose and self.n_cl>1: print('\tcluster assignments',[np.count_nonzero(self.F==k) for k in range(self.n_cl)])
                 self.backward()
                 # infer V
                 self.update_latent_context()
@@ -137,7 +147,7 @@ class MissNet:
                 toc = time.time()
                 history['time'].append(toc-tic)
                 history['lle'].append(lle)
-                if verbose: print(f'\t\t\t\t\titer= {iteration}, lle= {lle:.3f}, time= {toc-tic:.3f} [sec]')
+                if verbose: print(f'\titer= {iteration}, lle= {lle:.3f}, time= {toc-tic:.3f} [sec]')
 
                 #if LLE no more reduce then convergence (tol=5)
                 if iteration > min_iter:

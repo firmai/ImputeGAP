@@ -1,28 +1,19 @@
 API
 ===
 
-Subpackages
------------
+Module contents
+---------------
+
 
 .. toctree::
    :maxdepth: 4
 
    imputegap.manager
+   imputegap.manager.contamination
    imputegap.imputation
    imputegap.optimization
+   imputegap.benchmark
    imputegap.explainer
-   imputegap.benchmarking
-   imputegap.utils
+   imputegap.downstream
    imputegap.evaluation
-
-
-Submodules
-----------
-
-Module contents
----------------
-
-.. automodule:: imputegap
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   imputegap.utils

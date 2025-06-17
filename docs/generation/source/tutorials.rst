@@ -45,7 +45,8 @@ The module ``ts.datasets`` contains all the publicly available datasets provided
 
 
 
-To load your own dataset, add the path to your file in the ``ts.load_series`` function:
+To load your own dataset, add the path to your file in the ``ts.load_series`` function.
+
 
 .. code-block:: python
 
@@ -54,6 +55,14 @@ To load your own dataset, add the path to your file in the ``ts.load_series`` fu
     ts.load_series("./my_path/my_file.txt")
     ts.print()
 
+.. note::
+
+    Please ensure that your input data satisfies the following format:
+
+    - Columns are the series' values, and rows are the timestamps
+    - Column separator: empty space
+    - Row separator: newline
+    - Missing values are NaNs
 
 
 To import the time series as a matrix, add it to the  ``ts.import_matrix`` function:
@@ -176,6 +185,7 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
 
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
+    print(f"Imputation families : {ts.families}")
     print(f"Imputation algorithms : {ts.algorithms}")
 
 
@@ -329,7 +339,7 @@ ImputeGAP includes a dedicated module for systematically evaluating the impact o
     imputer.impute()
 
     # compute and print the downstream results
-    downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
+    downstream_config = {"task": "forecast", "model": "hw-add", "baseline": "ZeroImpute"}
     imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
     ts.print_results(imputer.downstream_metrics, text="Downstream results")
 
@@ -383,6 +393,9 @@ Let's illustrate the explainer using the CDRec algorithm and MCAR missingness pa
 
     # print the impact of each feature
     exp.print(exp.shap_values, exp.shap_details)
+
+    # plot the features impact
+    exp.show()
 
 
 All feature extractors developed in ImputeGAP are available in the ``ts.extractors`` module, which can be listed as follows:

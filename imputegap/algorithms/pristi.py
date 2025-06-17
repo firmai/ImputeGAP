@@ -1,9 +1,9 @@
 import time
 
-from imputegap.wrapper.AlgoPython.priSTI.runnerPRISTI import recovPRISTI
+from imputegap.wrapper.AlgoPython.Pristi_.runner_pristi import recov_pristi
 
 
-def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, device="cpu", logs=True, verbose=True):
+def pristi(incomp_data, target_strategy="hybrid", unconditional=True, batch_size=-1, embedding=-1, tr_ratio=0.9, seed=42, logs=True, verbose=True):
     """
     Perform imputation using the priSTI (Probabilistic Imputation via Sequential Targeted Imputation) algorithm.
 
@@ -18,8 +18,12 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, d
         If False, conditional imputation models are used, depending on available data patterns.
     seed : int, optional
         Random seed for reproducibility (default is 42).
-    device : str, optional
-        The device to perform computation on, e.g., "cpu" or "cuda" (default is "cpu").
+    batch_size : int, optional
+        Size of the batch to train the deep learning model (-1 means compute automatically based on the dataset shape).
+    embedding : int, optional
+        Size of the embedding used to train the deep learning model (-1 means compute automatically based on the dataset shape).
+    tr_ratio: float, optional
+                    Split ratio between training and testing sets (default is 0.9).
     logs : bool, optional
         Whether to log the execution time (default is True).
     verbose : bool, optional
@@ -42,7 +46,7 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, seed=42, d
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recovPRISTI(data=incomp_data, target_strategy=target_strategy, unconditional=unconditional, seed=seed, device=device, num_workers=1, verbose=verbose)
+    recov_data = recov_pristi(data=incomp_data, target_strategy=target_strategy, unconditional=unconditional, batch_size=batch_size, embedding=embedding, num_workers=4, tr_ratio=tr_ratio, seed=seed, verbose=verbose)
 
     end_time = time.time()
     if logs and verbose:

@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Getting Started" href="getting_started.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>ImputeGAP 1.0.9 Documentation</title>
+        <title>ImputeGAP 1.1.0 Documentation</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">ImputeGAP 1.0.9 Documentation</div></a>
+      <a href="#"><div class="brand">ImputeGAP 1.1.0 Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">ImputeGAP 1.0.9 Documentation</span>
+  <span class="sidebar-brand-text">ImputeGAP 1.1.0 Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -212,12 +212,18 @@
     <svg class="svg-inline--fa fa-box fa-lg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="box" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" width="22px" >
         <path fill="#63AEFF" d="M50.7 58.5L0 160H208V32H93.7C75.5 32 58.9 42.3 50.7 58.5zM240 160H448L397.3 58.5C389.1 42.3 372.5 32 354.3 32H240V160zm208 32H0V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192z"></path></svg><!-- <i class="fa-solid fa-box fa-lg" aria-hidden="true"></i> Font Awesome fontawesome.com -->
     </a>
+
+    <!--<a href="mailto:contact@example.com" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Contact Us">
+        <svg class="svg-inline--fa fa-envelope fa-lg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="22px">
+            <path fill="#63AEFF" d="M502.3 190.8 327.4 338.6c-21.4 17.9-53.4 17.9-74.8 0L9.7 190.8C3.9 186.4 0 179.8 0 172.6V112c0-26.5 21.5-48 48-48h416c26.5 0 48 21.5 48 48v60.6c0 7.2-3.9 13.8-9.7 18.2zM0 208v192c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V208l-165.9 138.2c-37.5 31.3-91.7 31.3-129.2 0L0 208z"></path>
+        </svg>
+    </a>-->
 </div><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebook.html">Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patterns.html">Patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
@@ -227,9 +233,11 @@
 <li class="toctree-l2"><a class="reference internal" href="imputegap.manager.html">imputegap.recovery.manager package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.imputation.html">imputegap.recovery.imputation package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.optimization.html">imputegap.recovery.optimization package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.benchmark.html">imputegap.recovery.benchmark package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.explainer.html">imputegap.recovery.explainer package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.downstream.html">imputegap.recovery.downstream package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="imputegap.evaluation.html">imputegap.recovery.evaluation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imputegap.utils.html">imputegap.tools.utils package</a></li>
 </ul>
 </li>
 </ul>
@@ -275,35 +283,25 @@
 <p>ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair time series datasets. The library supports a diverse range of imputation algorithms and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, and downstream evaluation.</p>
 <dl class="simple">
 <dt>In detail, the library provides:</dt><dd><ul class="simple">
-<li><p>Access to commonly used datasets in the time series imputation field (<a class="reference external" href="datasets.html">Datasets</a>).</p></li>
-<li><p>Configurable contamination module that simulates real-world missingness patterns (<a class="reference external" href="patterns.html">Patterns</a>).</p></li>
-<li><p>Parameterizable state-of-the-art time series imputation algorithms (<a class="reference external" href="algorithms.html">Algorithms</a>).</p></li>
-<li><p>Extensive benchmarking to compare the performance of imputation algorithms (<a class="reference external" href="tutorials.html#benchmark">Benchmark</a>).</p></li>
-<li><p>Modular tools to assess the impact of imputation on key downstream tasks (<a class="reference external" href="tutorials.html#downstream">Downstream</a>).</p></li>
-<li><p>Fine-grained analysis of the impact of time series features on imputation results (<a class="reference external" href="tutorials.html#explainer">Explainer</a>).</p></li>
-<li><p>Seamless integration of new algorithms in Python, C++, Matlab, Java, and R (<a class="reference external" href="contributing.html">Contributing</a>).</p></li>
+<li><p>Access to commonly used datasets in the time series imputation field.</p></li>
+<li><p>Configurable contamination module that simulates real-world missingness patterns.</p></li>
+<li><p>Parameterizable state-of-the-art time series imputation algorithms.</p></li>
+<li><p>Extensive benchmarking to compare the performance of imputation algorithms.</p></li>
+<li><p>Modular tools to assess the impact of imputation on key downstream tasks.</p></li>
+<li><p>Fine-grained analysis of the impact of time series features on imputation results.</p></li>
+<li><p>Seamless integration of new algorithms in Python, C++, Matlab, Java, and R.</p></li>
 </ul>
 </dd>
 </dl>
-<br><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you like our library, please add a ⭐ in our <a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub repository</a>.</p>
-</div>
-<br><section id="data-format">
-<span id="id1"></span><h2>Data Format<a class="headerlink" href="#data-format" title="Link to this heading">¶</a></h2>
-<p>Please ensure that your input data satisfies the following format:</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<br><div class="admonition-news admonition">
+<p class="admonition-title">📢 News !</p>
 <ul class="simple">
-<li><p>Columns are the series’ values, and rows are the timestamps</p></li>
-<li><p>Column separator: empty space</p></li>
-<li><p>Row separator: newline</p></li>
-<li><p>Missing values are NaNs</p></li>
+<li><p>[18-06-2025] Version 1.1.0 is out! Check out the latest updates and improvements!</p></li>
+<li><p>[04-06-2025] ImputeGAP will be presented as a Tutorial at KDD 2025 in Toronto! <a class="reference external" href="https://imputegap-tutorials.github.io/KDD-2025/">[Web Site]</a></p></li>
 </ul>
 </div>
-<br></section>
-<section id="get-started">
-<span id="id2"></span><h2>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h2>
+<br><section id="get-started">
+<span id="id1"></span><h2>Get Started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h2>
 <script>
    function applyTheme(e)
    {
@@ -378,8 +376,8 @@
 
  </div><br></section>
 <section id="citing">
-<span id="id3"></span><h2>Citing<a class="headerlink" href="#citing" title="Link to this heading">¶</a></h2>
-<p>If you use ImputeGAP in your research, please cite these papers:</p>
+<span id="id2"></span><h2>Citing<a class="headerlink" href="#citing" title="Link to this heading">¶</a></h2>
+<p>If you use ImputeGAP in your research, please cite these papers: <a class="reference external" href="https://arxiv.org/abs/2503.15250">[Paper]</a> <a class="reference external" href="https://exascale.info/assets/pdf/khayati2025kdd.pdf">[Tutorial]</a></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>@article<span class="o">{</span>nater2025imputegap,
 <span class="w">  </span><span class="nv">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>ImputeGAP:<span class="w"> </span>A<span class="w"> </span>Comprehensive<span class="w"> </span>Library<span class="w"> </span><span class="k">for</span><span class="w"> </span>Time<span class="w"> </span>Series<span class="w"> </span>Imputation<span class="o">}</span>,
 <span class="w">  </span><span class="nv">author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>Nater,<span class="w"> </span>Quentin<span class="w"> </span>and<span class="w"> </span>Khayati,<span class="w"> </span>Mourad<span class="w"> </span>and<span class="w"> </span>Pasquier,<span class="w"> </span>Jacques<span class="o">}</span>,
@@ -388,10 +386,9 @@
 <span class="w">  </span><span class="nv">archiveprefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>arXiv<span class="o">}</span>,
 <span class="w">  </span><span class="nv">primaryclass</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>cs.LG<span class="o">}</span>,
 <span class="w">  </span><span class="nv">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>https://arxiv.org/abs/2503.15250<span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-<br><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>@article<span class="o">{</span>nater2025kdd,
+
+
+@article<span class="o">{</span>nater2025kdd,
 <span class="w">  </span><span class="nv">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>A<span class="w"> </span>Hands-on<span class="w"> </span>Tutorial<span class="w"> </span>on<span class="w"> </span>Time<span class="w"> </span>Series<span class="w"> </span>Imputation<span class="w"> </span>with<span class="w"> </span>ImputeGAP<span class="o">}</span>,
 <span class="w">  </span><span class="nv">author</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>Nater,<span class="w"> </span>Quentin<span class="w"> </span>and<span class="w"> </span>Khayati,<span class="w"> </span>Mourad<span class="w"> </span>and<span class="w"> </span>Cudré-Mauroux,<span class="w"> </span>Philippe<span class="o">}</span>,
 <span class="w">  </span><span class="nv">year</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="m">2025</span><span class="o">}</span>,
@@ -399,6 +396,10 @@
 <span class="w">  </span><span class="nv">series</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>KDD2025<span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
+</div>
+<br><div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>If you like our library, please add a ⭐ in our <a class="reference external" href="https://github.com/eXascaleInfolab/ImputeGAP/">GitHub repository</a>.</p>
 </div>
 <br><div class="toctree-wrapper compound">
 </div>
@@ -451,7 +452,6 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">ImputeGAP Documentation</a><ul>
-<li><a class="reference internal" href="#data-format">Data Format</a></li>
 <li><a class="reference internal" href="#get-started">Get Started</a></li>
 <li><a class="reference internal" href="#citing">Citing</a></li>
 </ul>
@@ -465,7 +465,7 @@
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=0abd802e"></script>
+</div><script src="static/documentation_options.js?v=fc837d61"></script>
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>

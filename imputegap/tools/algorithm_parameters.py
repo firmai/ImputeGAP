@@ -12,8 +12,8 @@ IIM_LEARNING_NEIGHBOR_RANGE = [i for i in range(1, 100)]  # Test up to 100 learn
 
 # MRNN parameters
 MRNN_LEARNING_RATE_CHANGE = np.logspace(-6, 0, num=20)  # log scale for learning rate
-MRNN_HIDDEN_DIM_RANGE = [i for i in range(10)]  # hidden dimension
-MRNN_SEQ_LEN_RANGE = [i for i in range(100)]  # sequence length
+MRNN_HIDDEN_DIM_RANGE = [i for i in range(0, 300, 25)]  # number of epochs
+MRNN_SEQ_LEN_RANGE = [i for i in range(10)]  # sequence length
 MRNN_NUM_ITER_RANGE = [i for i in range(0, 100, 5)]  # number of epochs
 MRNN_KEEP_PROB_RANGE = np.logspace(-6, 0, num=10)  # dropout keep probability
 
@@ -68,7 +68,7 @@ RAYTUNE_PARAMS = {
 
     "mrnn": {
         "hidden_dim":  tune.grid_search([i for i in range(10, 100, 20)]),  # Hidden dimension
-        "learning_rate": tune.loguniform(1e-6, 1),  # Log scale for learning rate
+        "learning_rate": tune.grid_search([0.001, 0.01, 0.1, 1]),  # Log scale for learning rate
         "num_iter": tune.grid_search([i for i in range(5, 10, 5)]),  # Number of epochs
         "seq_len": 7  # tune.grid_search([i for i in range(5, 7, 2)]),  # Sequence length
         #"keep_prob": tune.loguniform(1e-6, 1)  # Dropout keep probability
@@ -90,8 +90,8 @@ RAYTUNE_PARAMS = {
     },
 
     "rosl": {
-        "rank": tune.grid_search([i for i in range(2, 16, 2)]),  # Testing rank from 2 to 18
-        "regularization": tune.loguniform(0.1, 3)  # Regularization parameter
+        "rank": tune.grid_search([i for i in range(2, 15, 2)]),  # Testing rank from 2 to 18
+        "regularization": tune.grid_search([0.1, 0.2, 0.4, 0.6, 0.8]) # Regularization parameter
     },
 
     "soft_impute": {
@@ -99,14 +99,14 @@ RAYTUNE_PARAMS = {
     },
 
     "spirit": {
-        "k": tune.grid_search([i for i in range(1, 10)]),  # Number of components
-        "w": tune.grid_search([i for i in range(1, 10)]),  # Window size
-        "lvalue": tune.loguniform(0.1, 5)  # Eigenvalue scaling
+        "k": tune.grid_search([i for i in range(1, 10, 2)]),  # Number of components
+        "w": tune.grid_search([i for i in range(1, 10, 2)]),  # Window size
+        "lvalue": tune.grid_search([0.1, 0.5, 1, 3, 5])  # Eigenvalue scaling
     },
 
     "svt": {
-        "tau": tune.loguniform(1e-2, 10),  # Singular value thresholding parameter
-        "delta": tune.loguniform(1e-4, 1),  # Step size for SVT
+        "tau": tune.grid_search([0.01, 0.1, 0.2, 0.5, 1, 5]),  # Singular value thresholding parameter
+        "delta": tune.grid_search([0.001, 0.01, 0.1, 1]),  # Step size for SVT
         "max_iter": tune.grid_search([i * 10 for i in range(5, 20, 5)])  # Max iterations (50 to 150)
     },
 
@@ -125,7 +125,7 @@ RAYTUNE_PARAMS = {
     # --- Newly Added Deep Learning-Based Algorithms ---
 
     "brits": {
-        "model": tune.choice(["brits_i_univ", "brits_i", "brits"]),  # Support both univariate & multivariate models
+        "model": tune.grid_search(["brits_i_univ"]),  # Support both univariate & multivariate models
         "epoch": tune.grid_search([i for i in range(5, 20, 5)]),  # Epochs from 5 to 15
         "batch_size": tune.grid_search([8, 16, 32]),  # Test different batch sizes
         "nbr_features": 1,  # tune.grid_search([1, 2, 5]),  # Number of features
@@ -140,25 +140,26 @@ RAYTUNE_PARAMS = {
 
     "mpin": {
         "incre_mode": tune.choice(["alone", "data", "state", "state+transfer", "data+state", "data+state+transfer"]),  # Different incremental modes
-        "window": tune.grid_search([1]),  # Window size variations
-        "k": tune.grid_search([5, 10, 15]),  # Number of neighbors
-        "learning_rate": tune.loguniform(1e-4, 0.1),  # Learning rate range
-        "weight_decay": tune.loguniform(1e-4, 0.1),  # Weight decay regularization
-        "epochs": tune.grid_search([5, 10, 20]),  # Number of epochs
-        "num_of_iteration": tune.grid_search([1, 5]),  # Number of epochs
-        "threshold": tune.uniform(0.1, 0.5),  # Threshold range
+        "window": 1,  # Window size variations
+        "k": tune.grid_search([5, 10]),  # Number of neighbors
+        "learning_rate": tune.grid_search([0.01, 0.1]),  # Learning rate range
+        "weight_decay": tune.grid_search([0.1, 0.5]),  # Weight decay regularization
+        "epochs": 200,  # Number of epochs
+        "num_of_iteration": 5,  # Number of epochs
+        "threshold":  tune.grid_search([0.25, 0.75]),  # Threshold range
         "base": tune.choice(["SAGE", "GAT", "GCN"])  # Model architectures
     },
 
     "pristi": {
-        "target_strategy": tune.choice(["mean", "zero", "hybrid"]),  # Different strategies
+        "target_strategy": "block",  # Different strategies
         "unconditional": tune.choice([True, False]),  # Use unconditional or not
-        "seed": 42,  #tune.grid_search([42, 1234, 5678]),  # Different seeds for reproducibility
-        "device": tune.choice(["cpu"])  # Allow switching between CPU and GPU
+        "batch_size": tune.grid_search([-1, 8]),
+        "embedding": tune.grid_search([-1, 8]),
+        "seed": 42
     },
 
     "knn_impute": {
-        "k": tune.grid_search([1, 12, 1]),
+        "k": tune.grid_search([1, 3, 5, 7, 10]),
         "weights": tune.choice(["uniform", "distance"])
     },
 
@@ -180,8 +181,8 @@ RAYTUNE_PARAMS = {
         "lambda_x": tune.grid_search([0.1, 1.0, 10.0]),  # Regularization parameter for observations
         "lambda_w": tune.grid_search([0.1, 1.0, 10.0]),  # Regularization parameter for weights
         "eta": tune.grid_search([0.1, 1.0, 5.0]),  # Learning rate-like parameter
-        "alpha": tune.grid_search([100.0, 500.0, 1000.0]),  # Temporal regularization strength
-        "max_iter": tune.choice([10, 100])  # Maximum number of iterations
+        "alpha": tune.grid_search([100.0, 500.0]),  # Temporal regularization strength
+        "max_iter": tune.choice([100])  # Maximum number of iterations
     },
 
     "mice": {
@@ -199,7 +200,7 @@ RAYTUNE_PARAMS = {
     },
 
     "xgboost": {
-        "n_estimators": tune.grid_search([2, 10, 15]),
+        "n_estimators": tune.grid_search([1, 2, 7, 10, 15]),
         "seed": 42
     },
 
@@ -208,56 +209,82 @@ RAYTUNE_PARAMS = {
         "beta": tune.grid_search([0.01, 0.1, 0.5]),  # Example search space for beta
         "L": tune.grid_search([5, 10, 20]),  # Example search space for L (hidden dimension)
         "n_cl": 1,  # Number of clusters
-        "max_iter": tune.grid_search([5, 10]),  # Max iterations
+        "max_iter": tune.grid_search([10]),  # Max iterations
         "tol": tune.grid_search([1, 5, 10]),  # Tolerance values
         "random_init": False
     },
 
     "grin": {
-        "d_hidden": tune.grid_search([16, 32, 64]),  # Example search space for d_hidden
-        "lr": tune.grid_search([0.0001, 0.01]),  # Example search space for learning rate
-        "batch_size": tune.grid_search([1, 32]),  # Example search space for batch size
+        "d_hidden": tune.grid_search([16, 64]),  # Example search space for d_hidden
+        "lr": tune.grid_search([0.001, 0.01]),  # Example search space for learning rate
+        "batch_size": -1,  # Example search space for batch size
         "window": 1,  # Example search space for window size
-        "alpha": tune.grid_search([1, 20]),  # Example search space for alpha
-        "patience": tune.grid_search([2, 6]),  # Patience for early stopping
-        "epochs": 20,  # Max training epochs
-        "workers": tune.grid_search([1, 2])  # Number of workers
+        "alpha": tune.grid_search([10, 20]),  # Example search space for alpha
+        "patience": 10,  # Patience for early stopping
+        "epochs": 100,  # Max training epochs
+        "workers": 4 # Number of workers
     },
 
     "gain": {
-        "batch_size": tune.grid_search([1, 5, 10]),
-        "hint_rate": tune.grid_search([0.01, 0.1, 0.5]),
-        "alpha": tune.grid_search([1, 2, 10]),
+        "batch_size": tune.grid_search([1, 10, 32]),
+        "hint_rate": tune.grid_search([0.01, 0.1, 0.5, 0.75, 0.9]),
+        "alpha": tune.grid_search([1, 5, 10]),
         "epoch": 100
     },
 
     "bay_otide": {
-        "K_trend": tune.grid_search([15, 20, 30]),  # Trend factor search space
+        "K_trend": tune.grid_search([15, 30]),  # Trend factor search space
         "K_season": tune.grid_search([1]),  # Seasonal factor search space
         "n_season": tune.grid_search([3, 7, 10]),  # Seasonal components per factor
         "K_bias": tune.grid_search([0, 1]),  # Bias factor inclusion
         "time_scale": tune.grid_search([1, 2]),  # Time scaling factor
-        "a0": tune.grid_search([0.1, 0.6, 1.0]),  # Prior hyperparameter a0
+        "a0": tune.grid_search([0.1, 0.6, 1]),  # Prior hyperparameter a0
         "b0": tune.grid_search([1, 2.5, 5]),  # Prior hyperparameter b0
         "v": tune.grid_search([0.1, 0.5, 1.0]),  # Variance parameter
-        "tr_ratio": tune.grid_search([0.6])  # tr parameter
+        "tr_ratio": tune.grid_search([0.8])  # tr parameter
     },
 
     "bit_graph": {
             "node_number": -1,  # Trend factor search space
-            "kernel_set": [1],  # Seasonal factor search space
-            "dropout": tune.grid_search([0.3, 0.7]),  # Seasonal components per factor
-            "subgraph_size": tune.grid_search([5, 10]),  # Bias factor inclusion
-            "node_dim": tune.grid_search([3, 10]),  # Time scaling factor
-            "seq_len": 1,  # Prior hyperparameter a0
-            "lr": tune.grid_search([0.001, 0.1]),  # Prior hyperparameter b0
-            "epoch": tune.grid_search([2, 10]),  # Variance parameter
+            "kernel_set": tune.grid_search([[1,2,3,4], [2,3,6,7]]),  # Seasonal factor search space
+            "dropout": tune.grid_search([0.05, 0.3]),  # Seasonal components per factor
+            "subgraph_size": tune.grid_search([2, 5]),  # Bias factor inclusion
+            "node_dim": 3,  # Time scaling factor
+            "seq_len": -1,  # Prior hyperparameter a0
+            "lr": 0.001,  # Prior hyperparameter b0
+            "batch_size": tune.grid_search([8, 32]),   # Prior hyperparameter b0
+            "epoch": 50,  # Variance parameter
             "seed": 42 # Variance parameter
         },
 
     "hkmf_t": {
         "tags": [],
         "data_names": [],
-        "epoch": tune.grid_search([3, 5, 10])
+        "epoch": tune.grid_search([2, 10])
+    },
+
+    "nuwats": {
+        "seq_length": tune.grid_search([-1, 10]),
+        "patch_size": -1,
+        "batch_size": tune.grid_search([-1, 32]),
+        "pred_length": -1,
+        "label_length":-1,
+        "enc_in": tune.grid_search([-1, 16]),
+        "dec_in": tune.grid_search([-1, 16]),
+        "c_out": tune.grid_search([-1, 16]),
+        "gpt_layers":tune.grid_search([2, 6, 16]),
+        "seed":42
+    },
+    "gpt4ts": {
+        "seq_length": tune.grid_search([-1, 10]),
+        "patch_size": -1,
+        "batch_size": tune.grid_search([-1, 32]),
+        "pred_length": -1,
+        "label_length":-1,
+        "enc_in": tune.grid_search([-1, 16]),
+        "dec_in": tune.grid_search([-1, 16]),
+        "c_out": tune.grid_search([-1, 16]),
+        "gpt_layers":tune.grid_search([2, 6, 16]),
+        "seed":42
     }
 }

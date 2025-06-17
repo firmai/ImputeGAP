@@ -16,11 +16,9 @@ class TestOptiMRNN(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(data=utils.search_path(dataset), nbr_val=200)
 
-
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=2, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data)
 
         params = utils.load_parameters(query="default", algorithm=algorithm)
-        params_optimal_load = utils.load_parameters(query="optimal", algorithm=algorithm, dataset=dataset, optimizer="b")
 
         algo_opti = Imputation.DeepLearning.MRNN(incomp_data)
         algo_opti.impute(user_def=False, params={"input_data": ts_1.data, "optimizer": "bayesian", "options": {"n_calls": 2}})
@@ -33,8 +31,8 @@ class TestOptiMRNN(unittest.TestCase):
         algo_default.score(input_data=ts_1.data)
         metrics_default = algo_default.metrics
 
-        algo_load = Imputation.DeepLearning.MRNN(incomp_data)
-        algo_load.impute(params=params_optimal_load)
-        algo_load.score(input_data=ts_1.data)
+        print(f"{metrics_optimal = }")
+        print(f"{metrics_default = }")
+
 
         self.assertTrue(abs(metrics_optimal["RMSE"] - metrics_default["RMSE"]) < 0.1, f"Expected {metrics_optimal['RMSE']} > {metrics_default['RMSE']}")

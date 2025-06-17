@@ -20,13 +20,9 @@ Paper Link: http://proceedings.mlr.press/v80/yoon18a/yoon18a.pdf
 Contact: jsyoon0823@gmail.com
 '''
 
-# Necessary packages
-# import tensorflow as tf
-##IF USING TF 2 use following import to still use TF < 2.0 Functionalities
 import tensorflow.compat.v1 as tf
 
 import numpy as np
-# from tqdm import tqdm
 
 from imputegap.wrapper.AlgoPython.GAIN.utils import normalization, renormalization, rounding
 from imputegap.wrapper.AlgoPython.GAIN.utils import xavier_init

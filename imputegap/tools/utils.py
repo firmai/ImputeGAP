@@ -14,10 +14,12 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     ----------
     incomp_data : TimeSeries
         TimeSeries object containing dataset.
+
     algorithm : str
         Name of algorithm
+
     verbose : bool, optional
-                Whether to display the contamination information (default is False).
+        Whether to display the contamination information (default is False).
 
     Returns
     -------
@@ -100,6 +102,10 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer = Imputation.DeepLearning.BitGraph(incomp_data)
     elif alg == "meanimpute":
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
+    elif alg == "nuwats":
+        imputer = Imputation.LLMs.NuwaTS(incomp_data)
+    elif alg == "gpt4ts":
+        imputer = Imputation.LLMs.GPT4TS(incomp_data)
     else:
         raise ValueError(f"(IMP) Algorithm '{algorithm}' not recognized, please choose your algorithm from this list:\n\t{TimeSeries().algorithms}")
         imputer = None
@@ -329,7 +335,7 @@ def search_path(set_name="test"):
     if set_name in list_of_datasets():
         return set_name + ".txt"
     else:
-        filepath = "../imputegap/dataset/" + set_name
+        filepath = "../imputegap/datasets/" + set_name
 
         if not os.path.exists(filepath):
             filepath = filepath[1:]
@@ -503,9 +509,10 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
     elif algorithm == "pristi":
         target_strategy = str(config[algorithm]['target_strategy'])
         unconditional = bool(config[algorithm]['unconditional'])
+        batch_size = int(config[algorithm]['batch_size'])
+        embedding = int(config[algorithm]['embedding'])
         seed = int(config[algorithm]['seed'])
-        device = str(config[algorithm]['device'])
-        return (target_strategy, unconditional, seed, device)
+        return (target_strategy, unconditional, batch_size, embedding, seed)
     elif algorithm == "knn" or algorithm == "knn_impute":
         k = int(config[algorithm]['k'])
         weights = str(config[algorithm]['weights'])
@@ -581,6 +588,30 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         data_names = config[algorithm]['data_names']
         epoch = int(config[algorithm]['epoch'])
         return (tags, data_names, epoch)
+    elif algorithm == "nuwats":
+        seq_length = int(config[algorithm]['seq_length'])
+        patch_size = int(config[algorithm]['patch_size'])
+        batch_size = int(config[algorithm]['batch_size'])
+        pred_length = int(config[algorithm]['pred_length'])
+        label_length = int(config[algorithm]['label_length'])
+        enc_in = int(config[algorithm]['enc_in'])
+        dec_in = int(config[algorithm]['dec_in'])
+        c_out = int(config[algorithm]['c_out'])
+        gpt_layers = int(config[algorithm]['gpt_layers'])
+        seed = int(config[algorithm]['seed'])
+        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed)
+    elif algorithm == "gpt4ts":
+        seq_length = int(config[algorithm]['seq_length'])
+        patch_size = int(config[algorithm]['patch_size'])
+        batch_size = int(config[algorithm]['batch_size'])
+        pred_length = int(config[algorithm]['pred_length'])
+        label_length = int(config[algorithm]['label_length'])
+        enc_in = int(config[algorithm]['enc_in'])
+        dec_in = int(config[algorithm]['dec_in'])
+        c_out = int(config[algorithm]['c_out'])
+        gpt_layers = int(config[algorithm]['gpt_layers'])
+        seed = int(config[algorithm]['seed'])
+        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed)
     elif algorithm == "bit_graph":
         node_number = int(config[algorithm]['node_number'])
         kernel_set = config[algorithm]['kernel_set']
@@ -589,9 +620,10 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         node_dim = int(config[algorithm]['node_dim'])
         seq_len = int(config[algorithm]['seq_len'])
         lr = float(config[algorithm]['lr'])
+        batch_size = int(config[algorithm]['batch_size'])
         epoch = int(config[algorithm]['epoch'])
         seed = int(config[algorithm]['seed'])
-        return (node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, epoch, seed)
+        return (node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -796,6 +828,462 @@ def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
         raise ValueError(f"The percentage {percentage} is out of the acceptable range.")
 
 
+def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=True, offset=0.05, block_selection=True, seed=42, verbose=False):
+    """
+        Prepares contaminated data and corresponding masks for deep learning-based imputation training,
+        validation, and testing.
+
+        This function simulates missingness in a controlled way, optionally prevents information leakage,
+        and produces masks for training, testing, and validation using different contamination strategies.
+
+        Parameters:
+        ----------
+        input_matrix : np.ndarray
+            The complete input time series data matrix of shape [T, N] (time steps × variables).
+
+        tr_ratio : float, default=0.8
+            The fraction of data to reserve for training when constructing the test contamination mask.
+
+        inside_tr_cont_ratio : float, default=0.2
+            The proportion of values to randomly drop inside the training data for internal contamination.
+
+        split_ts : float, default=1
+            Proportion of the total contaminated data assigned to the test set.
+
+        split_val : float, default=0
+            Proportion of the total contaminated data assigned to the validation set.
+
+        nan_val : float, default=-99999
+            Value used to represent missing entries in the masked matrix.
+            nan_val=-1 can be used to set mean values
+
+        prevent_leak : bool, default=True
+            Replace the value of NaN with a high number to prevent leakage.
+
+        offset : float, default=0.05
+            Minimum temporal offset in the begining of the series
+
+        block_selection : bool, default=True
+            Whether to simulate missing values in contiguous blocks (True) or randomly (False).
+
+        seed : int, default=42
+            Seed for NumPy random number generation to ensure reproducibility.
+
+        verbose : bool, default=False
+            Whether to print logging/debug information during execution.
+
+        Returns:
+        -------
+        cont_data_matrix : np.ndarray
+            The input matrix with synthetic missing values introduced.
+
+        mask_train : np.ndarray
+            Boolean mask of shape [T, N] indicating the training contamination locations (True = observed, False = missing).
+
+        mask_test : np.ndarray
+            Boolean mask of shape [T, N] indicating the test contamination locations.
+
+        mask_valid : np.ndarray
+            Boolean mask of shape [T, N] indicating the validation contamination locations.
+
+        error : bool
+            Tag which is triggered if the operation is impossible.
+    """
+
+    cont_data_matrix = input_matrix.copy()
+    original_missing_ratio = get_missing_ratio(cont_data_matrix)
+
+    cont_data_matrix, new_mask, error = prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, block_selection=block_selection, tr_ratio=tr_ratio, verbose=verbose)
+
+    if prevent_leak:
+        if nan_val == -1:
+            import numpy as np
+            nan_val = np.nanmean(input_matrix)
+            print(f"NaN replacement Mean Value : {nan_val}")
+        cont_data_matrix = prevent_leakage(cont_data_matrix, new_mask, nan_val, verbose)
+
+    mask_test, mask_valid, nbr_nans = split_mask_bwt_test_valid(cont_data_matrix, test_rate=split_ts, valid_rate=split_val, nan_val=nan_val, verbose=verbose, seed=seed)
+    mask_train = generate_random_mask(gt=cont_data_matrix, mask_test=mask_test, mask_valid=mask_valid, droprate=inside_tr_cont_ratio, offset=offset, verbose=verbose, seed=seed)
+
+    return cont_data_matrix, mask_train, mask_test, mask_valid, error
+
+
+def prepare_fixed_testing_set(incomp_m, tr_ratio=0.8, offset=0.05, block_selection=True, verbose=True):
+    """
+    Introduces additional missing values (NaNs) into a data matrix to match a specified training ratio.
+
+    This function modifies a copy of the input matrix `incomp_m` by introducing NaNs
+    such that the proportion of observed (non-NaN) values matches the desired `tr_ratio`.
+    It returns the modified matrix and the corresponding missing data mask.
+
+    Parameters
+    ----------
+    incomp_m : np.ndarray
+       A 2D NumPy array with potential pre-existing NaNs representing missing values.
+
+    tr_ratio : float
+       Desired ratio of observed (non-NaN) values in the output matrix. Must be in the range (0, 1).
+
+    offset : float
+        Protected zone in the begining of the series
+
+    block_selection : bool
+        Select the missing values by blocks or randomly (True, is by block)
+
+    verbose : bool
+        Whether to print debug info.
+
+    Returns
+    -------
+    data_matrix_cont : np.ndarray
+       The modified matrix with additional NaNs introduced to match the specified training ratio.
+
+    new_mask : np.ndarray
+       A boolean mask of the same shape as `data_matrix_cont` where True indicates missing (NaN) entries.
+
+    Raises
+    ------
+    AssertionError:
+       If the final observed and missing ratios deviate from the target by more than 1%.
+
+    Notes
+    -----
+        - The function assumes that the input contains some non-NaN entries.
+        - NaNs are added in row-major order from the list of available (non-NaN) positions.
+    """
+
+    import numpy as np
+
+    data_matrix_cont = incomp_m.copy()
+
+    target_ratio = 1 - tr_ratio
+    total_values = data_matrix_cont.size
+    target_n_nan = int(target_ratio * total_values)
+
+    # 2) Current number of NaNs
+    current_n_nan = np.isnan(data_matrix_cont).sum()
+    n_new_nans = target_n_nan - current_n_nan
+
+    available_mask = ~np.isnan(data_matrix_cont)
+
+    offset_vals = int(offset * data_matrix_cont.shape[1])
+    for row in range(data_matrix_cont.shape[0]):
+        available_mask[row, :offset_vals] = False  # protect leftmost `offset` columns in each row
+
+    available_indices = np.argwhere(available_mask)
+
+    # 3) Pick indices to contaminate
+    if n_new_nans > 0:
+        if block_selection :
+            chosen_indices = available_indices[:n_new_nans]
+        else:
+            np.random.seed(42)
+            chosen_indices = available_indices[np.random.choice(len(available_indices), n_new_nans, replace=False)]
+
+        for i, j in chosen_indices:
+            data_matrix_cont[i, j] = np.nan
+
+    # 4) check ratio
+    n_total = data_matrix_cont.size
+    n_nan = np.isnan(data_matrix_cont).sum()
+    n_not_nan = n_total - n_nan
+
+    # Compute actual ratios
+    missing_ratio = n_nan / n_total
+    observed_ratio = n_not_nan / n_total
+
+    # Check if they match expectations (within a small tolerance)
+    assert abs(missing_ratio - target_ratio) < 0.01, f"Missing ratio {missing_ratio} is not {target_ratio}"
+    assert abs(observed_ratio - tr_ratio) < 0.01, f"Missing ratio {observed_ratio} is not {tr_ratio}"
+
+    # Create the new mask
+    new_mask = np.isnan(data_matrix_cont)
+    new_m = data_matrix_cont.copy()
+
+    if verbose:
+        print(f"(DL): TEST-SET > Test set fixed to {int(round(target_ratio*100))}% of the dataset, for {target_n_nan} values, add test values: {n_new_nans}")
+
+    return new_m, new_mask
+
+def split_mask_bwt_test_valid(data_matrix, test_rate=0.8, valid_rate=0.2, nan_val=None, verbose=False, seed=42):
+    """
+    Dispatch NaN positions in data_matrix to test and validation masks only.
+
+    Parameters
+    ----------
+    data_matrix : numpy.ndarray
+        Input matrix containing NaNs to be split.
+
+    test_rate : float
+        Proportion of NaNs to assign to the test set (default is 0.8).
+
+    valid_rate : float
+        Proportion of NaNs to assign to the validation set (default is 0.2).
+        test_rate + valid_rate must equal 1.0.
+
+    verbose : bool
+        Whether to print debug info.
+
+    seed : int, optional
+        Random seed for reproducibility.
+
+    Returns
+    -------
+    tuple
+        test_mask : numpy.ndarray
+            Binary mask indicating positions of NaNs in the test set.
+
+        valid_mask : numpy.ndarray
+            Binary mask indicating positions of NaNs in the validation set.
+
+        n_nan : int
+            Total number of NaN values found in the input matrix.
+    """
+    import numpy as np
+
+    assert np.isclose(test_rate + valid_rate, 1.0), "test_rate and valid_rate must sum to 1.0"
+
+    if seed is not None:
+        np.random.seed(seed)
+
+    if nan_val is None:
+        nan_mask = np.isnan(data_matrix)
+    else:
+        nan_mask = data_matrix == nan_val
+
+    nan_indices = np.argwhere(nan_mask)
+    np.random.shuffle(nan_indices)
+
+    n_nan = len(nan_indices)
+    n_test = int(n_nan * test_rate)
+    n_valid = n_nan - n_test
+
+    if verbose:
+        print(f"\n(DL): MASKS > creating mask (testing, validation): Total NaNs = {n_nan}")
+        print(f"(DL): TEST-MASK > creating mask: Assigned to test = {n_test}")
+        print(f"(DL): VALID-MASK > creating mask: Assigned to valid = {n_valid}")
+
+    test_idx = nan_indices[:n_test]
+    valid_idx = nan_indices[n_test:]
+
+    mask_test = np.zeros_like(data_matrix, dtype=np.uint8)
+    mask_valid = np.zeros_like(data_matrix, dtype=np.uint8)
+
+    mask_test[tuple(test_idx.T)] = 1
+    mask_valid[tuple(valid_idx.T)] = 1
+
+    if verbose:
+        print(f"(DL): TEST-MASK > Test mask NaNs: {mask_test.sum()}")
+        print(f"(DL): VALID-MASK > Valid mask NaNs: {mask_valid.sum()}\n")
+
+    return mask_test, mask_valid, n_nan
+
+
+def generate_random_mask(gt, mask_test, mask_valid, droprate=0.2, offset=None, verbose=False, seed=42):
+    """
+    Generate a random training mask over the non-NaN entries of gt, excluding positions
+    already present in the test and validation masks.
+
+    Parameters
+    ----------
+    gt : numpy.ndarray
+        Ground truth data (no NaNs).
+    mask_test : numpy.ndarray
+        Binary mask indicating test positions.
+    mask_valid : numpy.ndarray
+        Binary mask indicating validation positions.
+    droprate : float
+        Proportion of eligible entries to include in the training mask.
+    offset : float
+        Protect of not the offset of the dataset
+    verbose : bool
+        Whether to print debug info.
+    seed : int, optional
+        Random seed for reproducibility.
+
+    Returns
+    -------
+    numpy.ndarray
+        Binary mask indicating training positions.
+    """
+    import numpy as np
+
+    assert gt.shape == mask_test.shape == mask_valid.shape, "All input matrices must have the same shape"
+
+    if seed is not None:
+        np.random.seed(seed)
+
+
+    # Valid positions: non-NaN and not in test/valid masks
+    num_offset = 0
+    mask_offset = np.zeros_like(gt, dtype=np.uint8)
+    if offset is not None:
+        if offset > droprate:
+            offset = droprate
+        mask_offset[:, :int(offset * gt.shape[1])] = 1
+        num_offset = np.sum(mask_offset)
+
+
+    occupied_mask = (mask_test + mask_valid + mask_offset).astype(bool)
+    eligible_mask = (~np.isnan(gt)) & (~occupied_mask)
+
+    eligible_indices = np.argwhere(eligible_mask)
+
+    n_train = int(len(eligible_indices) * droprate) + int(num_offset*droprate)
+
+    np.random.shuffle(eligible_indices)
+    selected_indices = eligible_indices[:n_train]
+
+    mask_train = np.zeros_like(gt, dtype=np.uint8)
+    mask_train[tuple(selected_indices.T)] = 1
+
+    if verbose:
+        print(f"(DL): TRAIN-MASK > eligible entries: {len(eligible_indices)}")
+        print(f"(DL): TRAIN-MASK > selected training entries: {n_train}\n")
+
+    # Sanity check: no overlap between training and test masks
+    overlap = np.logical_and(mask_train, mask_test).sum()
+    assert overlap == 0, f"Overlap detected between training and test masks: {overlap} entries."
+
+    # Sanity check: no overlap between training and test masks
+    overlap = np.logical_and(mask_train, mask_valid).sum()
+    assert overlap == 0, f"Overlap detected between training and test masks: {overlap} entries."
+
+    if verbose:
+        print(f"(DL): TRAIN-MASK > Train mask NaNs: {mask_train.sum()}\n")
+
+    return mask_train
+
+def prevent_leakage(matrix, mask, replacement=0, verbose=True):
+    """
+        Replaces missing values in a matrix to prevent data leakage during evaluation.
+
+        This function replaces all entries in `matrix` that are marked as missing in `mask`
+        with a specified `replacement` value (default is 0). It then checks to ensure that
+        there are no remaining NaNs in the matrix and that at least one replacement occurred.
+
+        Parameters
+        ----------
+        matrix : np.ndarray
+            A NumPy array potentially containing missing values (NaNs).
+
+        mask : np.ndarray
+            A boolean mask of the same shape as `matrix`, where True indicates positions
+            to be replaced (typically where original values were NaN).
+
+        replacement : float or int, optional
+            The value to use in place of missing entries. Defaults to 0.
+
+        verbose : bool
+            Whether to print debug info.
+
+        Returns
+        -------
+        matrix : np.ndarray
+            The matrix with missing entries replaced by the specified value.
+
+        Raises
+        ------
+        AssertionError:
+            If any NaNs remain in the matrix after replacement, or if no replacements were made.
+
+        Notes
+        -----
+            - This function is typically used before evaluation to ensure the model does not
+              access ground truth values where data was originally missing.
+    """
+
+    import numpy as np
+
+    matrix[mask] = replacement
+
+    assert not np.isnan(matrix).any(), "matrix still contains NaNs"
+    assert (matrix == replacement).any(), "matrix does not contain any zeros"
+
+    if verbose:
+        print(f"\n(DL) Reset all testing matrix values to {replacement} to prevent data leakage.")
+
+    return matrix
+
+def prepare_testing_set(incomp_m, original_missing_ratio, block_selection=True, tr_ratio=0.8, verbose=True):
+    import numpy as np
+
+    error = False
+    mask_original_nan = np.isnan(incomp_m)
+
+    if verbose:
+        print(f"\n(DL) TEST-SET : testing ratio to reach = {1-tr_ratio:.2%}")
+        print(f"\n(DL) TEST-SET : original missing ratio = {original_missing_ratio:.2%}")
+        print(f"(DL) TEST-SET : original missing numbers = {np.sum(mask_original_nan)}")
+
+    if original_missing_ratio > 1-tr_ratio:
+        print(f"\n(ERROR) The proportion of original missing values is too high and will corrupt the training set.\n\tPlease consider reducing the percentage contamination pattern [{original_missing_ratio:.2%}] or decreasing the training ratio [{tr_ratio:.2%}].\n")
+        return incomp_m, mask_original_nan, True
+
+    if abs((1-tr_ratio) - original_missing_ratio) > 0.01:
+        new_m, new_mask = prepare_fixed_testing_set(incomp_m, tr_ratio, block_selection=block_selection, verbose=verbose)
+
+        if verbose:
+            print(f"(DL) TEST-SET : building of the test set to reach a fix ratio of {1 - tr_ratio:.2%}...")
+            final_ratio = get_missing_ratio(new_m)
+            print(f"(DL) TEST-SET : final artificially missing ratio for test set = {final_ratio:.2%}")
+            print(f"(DL) TEST-SET : final number of rows with NaN values = {np.sum(np.isnan(new_m).any(axis=1))}")
+            print(f"(DL) TEST-SET : final artificially missing numbers = {np.sum(new_mask)}\n")
+
+    else:
+        new_m = incomp_m
+        new_mask = mask_original_nan.copy()
+
+    return new_m, new_mask, error
+
+
+def compute_batch_size(data, min_size=4, max_size=16, divisor=2, verbose=True):
+    """
+    Compute an appropriate batch size based on the input data shape.
+
+    The batch size is computed as `min(M // 2, max_size)`, where M is the number of samples.
+    If this computed batch size is less than `min_size`, it is set to `min_size` instead.
+
+    Parameters
+    ----------
+    data : np.ndarray or torch.Tensor
+        Input 2D data of shape (M, N), where M is the number of samples.
+    min_size : int, optional
+        Minimum allowed batch size. Default is 4.
+    max_size : int, optional
+        Maximum allowed batch size. Default is 16.
+    divisor : int, optional
+        Divisor on the shape of the dataset. Default is 2.
+    verbose : bool, optional
+        If True, prints the computed batch size. Default is True.
+
+    Returns
+    -------
+    int
+        Computed batch size.
+    """
+    M, N = data.shape
+
+    batch_size = min(M // divisor, max_size)
+
+    if batch_size < min_size:
+        batch_size = min_size
+
+    if batch_size % 2 != 0:
+        batch_size = batch_size + 1
+        if batch_size > max_size:
+            batch_size = batch_size -2
+
+    if batch_size < 1:
+        batch_size = 1
+
+    if verbose:
+        print(f"(Batch-Size) Computed batch size: {batch_size}\n")
+
+    return batch_size
+
+
+
 def load_share_lib(name="lib_cdrec", lib=True, verbose=True):
     """
     Load the shared library based on the operating system.
@@ -959,8 +1447,9 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
         params_to_save = {
             "target_strategy": optimal_params[0],
             "unconditional": bool(optimal_params[1]),
+            "batch_size": bool(optimal_params[2]),
+            "embedding": bool(optimal_params[3]),
             "seed": 42,  # Default seed
-            "device": "cpu"  # Default device
         }
     elif algorithm == "knn" or algorithm == "knn_impute":
         params_to_save = {
@@ -1019,7 +1508,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "epochs": int(optimal_params[6]),
             "workers": int(optimal_params[7])
         }
-    elif algorithm == "grin":
+    elif algorithm == "bay_otide":
         params_to_save = {
             "K_trend": int(optimal_params[0]),
             "K_season": int(optimal_params[1]),
@@ -1046,8 +1535,35 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "node_dim": int(optimal_params[4]),
             "seq_len": int(optimal_params[5]),
             "lr": float(optimal_params[6]),
-            "epoch": int(optimal_params[7]),
-            "seed": int(optimal_params[8]),
+            "batch_size": float(optimal_params[7]),
+            "epoch": int(optimal_params[8]),
+            "seed": int(optimal_params[9]),
+        }
+    elif algorithm == "nuwats":
+        params_to_save = {
+            "seq_length": int(optimal_params[0]),
+            "patch_size": optimal_params[1],
+            "batch_size": float(optimal_params[2]),
+            "pred_length": int(optimal_params[3]),
+            "label_length": int(optimal_params[4]),
+            "enc_in": int(optimal_params[5]),
+            "dec_in": float(optimal_params[6]),
+            "c_out": float(optimal_params[7]),
+            "gpt_layers": int(optimal_params[8]),
+            "seed": int(optimal_params[9]),
+        }
+    elif algorithm == "gpt4ts":
+        params_to_save = {
+            "seq_length": int(optimal_params[0]),
+            "patch_size": optimal_params[1],
+            "batch_size": float(optimal_params[2]),
+            "pred_length": int(optimal_params[3]),
+            "label_length": int(optimal_params[4]),
+            "enc_in": int(optimal_params[5]),
+            "dec_in": float(optimal_params[6]),
+            "c_out": float(optimal_params[7]),
+            "gpt_layers": int(optimal_params[8]),
+            "seed": int(optimal_params[9]),
         }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
@@ -1094,7 +1610,9 @@ def list_of_algorithms():
         "GRIN",
         "BayOTIDE",
         "HKMF_T",
-        "BitGraph"
+        "BitGraph",
+        "NuwaTS",
+        "GPT4TS"
     ])
 
 def list_of_patterns():
@@ -1118,20 +1636,37 @@ def list_of_datasets(txt=False):
         "drift",
         "eeg-alcohol",
         "eeg-reading",
-        "fmri-objectviewing",
-        "fmri-stoptask",
-        "meteo",
         "electricity",
+        "fmri-stoptask",
+        "forecast-economy",
+        "meteo",
         "motion",
         "soccer",
+        "solar-plant",
+        "sport-activity",
+        "stock-exchange",
         "temperature",
-        "forecast-economy"
+        "traffic"
     ])
 
     if txt:
         list = [dataset + ".txt" for dataset in list]
 
     return list
+
+
+def check_family(family, algorithm):
+    # Normalize input
+    norm_input = algorithm.lower().replace("_", "").replace("-", "")
+
+    for full_name in list_of_algorithms_with_families():
+        if full_name.startswith("DeepLearning."):
+            suffix = full_name.split(".", 1)[1]
+            norm_suffix = suffix.lower().replace("_", "").replace("-", "")
+
+            if norm_input == norm_suffix:
+                return True
+    return False
 
 def list_of_optimizers():
     return sorted([
@@ -1179,7 +1714,7 @@ def list_of_extractors():
     ])
 
 def list_of_families():
-    return sorted(["DeepLearning", "MatrixCompletion", "PatternSearch", "MachineLearning", "Statistics"])
+    return sorted(["DeepLearning", "MatrixCompletion", "PatternSearch", "MachineLearning", "Statistics", "LLMs"])
 
 def list_of_metrics():
     return ["RMSE", "MAE", "MI", "CORRELATION", "RUNTIME", "RUNTIME_LOG"]
@@ -1217,7 +1752,9 @@ def list_of_algorithms_with_families():
         "DeepLearning.GRIN",
         "DeepLearning.BayOTIDE",
         "DeepLearning.HKMF_T",
-        "DeepLearning.BitGraph"
+        "DeepLearning.BitGraph",
+        "LLMs.NuwaTS",
+        "LLMs.GPT4TS"
     ])
 
 def list_of_normalizers():

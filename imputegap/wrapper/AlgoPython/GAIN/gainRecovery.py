@@ -31,7 +31,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
 
-def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100, verbose=True):
+def gainRecovery(miss_data_x, batch_size=-1, hint_rate=0.9, alpha=10, epoch=100, tr_ratio=0.9, verbose=True):
   '''Main function for UCI letter and spam datasets.
   
   Args:
@@ -47,42 +47,44 @@ def gainRecovery (miss_data_x, batch_size=32, hint_rate=0.9, alpha=10, epoch=100
     - rmse: Root Mean Squared Error
   '''
 
+  recov = np.copy(miss_data_x)
+  m_mask = np.isnan(miss_data_x)
   input_data = np.copy(miss_data_x)
 
-  if batch_size > input_data.shape[0]:
-      batch_size = int(input_data.shape[0] / 2)
-      if verbose:
-          print("Batch size higher than input data size, reducing batch size to", batch_size)
+  if batch_size == -1:
+      batch_size = utils.compute_batch_size(data=miss_data_x, min_size=4, max_size=32, verbose=verbose)
 
   if verbose:
-      print("(IMPUTATION) GAIN: Matrix Shape: (", input_data.shape[0], ", ", input_data.shape[1], ") "
-            "for batch_size ", batch_size, ", hint_rate ", hint_rate, ", alpha ", alpha, ", and epoch ", epoch, "...")
-  
-  gain_parameters = {'batch_size': batch_size,
-                     'hint_rate': hint_rate,
-                     'alpha': alpha,
-                     'iterations': epoch}
+      print(f"(IMPUTATION) GAIN\n\tMatrix: {input_data.shape[0]}, {input_data.shape[1]}\n\tbatch_size: {batch_size}\n\thint_rate: {hint_rate}\n\talpha: {alpha}\n\tepoch: {epoch}\n\ttr_ratio: {tr_ratio}\n")
 
-  if batch_size == -1:
-      batch_size = input_data.shape[1]//1
-  gain_parameters['batch_size'] = batch_size
-  # print('Batch size: ', gain_parameters["batch_size"])
+  cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(input_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, block_selection=False, seed=42, verbose=False)
+  if error:
+      return miss_data_x
 
-  max_trials = 10  # Maximum number of retries
+  gain_parameters = {'batch_size': batch_size, 'hint_rate': hint_rate, 'alpha': alpha, 'iterations': epoch}
+
+  max_trials = 10
   trial = 0
+  tag = False
 
   while trial < max_trials:
-      imputed_data_x = gain(input_data, gain_parameters)
+      imputed_data_x = gain(cont_data_matrix, gain_parameters)
 
       if not np.all(np.isnan(imputed_data_x)):
-          return imputed_data_x  # Successfully imputed, return result
+          if tag:
+              imputed_data_x = imputed_data_x.T
+              break
+          else:
+              break
 
-      if verbose and trial > 0:
-        print(f"GAIN: Trial {trial + 1}...")
-
+      cont_data_matrix = cont_data_matrix.T
+      tag = ~tag
       trial += 1
 
   if verbose:
       print("All trials failed, returning last imputed result.")
 
-  return imputed_data_x  # Return last attempt even if NaN
+  recov[m_mask] = imputed_data_x[m_mask]
+
+
+  return recov  # Return last attempt even if NaN

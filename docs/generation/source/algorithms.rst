@@ -11,18 +11,24 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
    * - **Family**
      - **Algorithm**
      - **Venue -- Year**
+   * - LLMs
+     - NuwaTS [33]_
+     - Arxiv -- 2024
+   * - LLMs
+     - GPT4TS [34]_
+     - NIPS -- 2023
    * - Deep Learning
      - MissNet [27]_
      - KDD -- 2024
+   * - Deep Learning
+     - MPIN [25]_
+     - PVLDB -- 2024
    * - Deep Learning
      - BitGraph [32]_
      - ICLR -- 2024
    * - Deep Learning
      - BayOTIDE [30]_
      - PMLR -- 2024
-   * - Deep Learning
-     - MPIN* [25]_
-     - PVLDB -- 2024
    * - Deep Learning
      - PRISTI [26]_
      - ICDE -- 2023
@@ -166,3 +172,7 @@ References
 .. [31] Liang Wang, Simeng Wu, Tianheng Wu, Xianping Tao, Jian Lu: HKMF-T: Recover From Blackouts in Tagged Time Series With Hankel Matrix Factorization. IEEE Trans. Knowl. Data Eng. 33(11): 3582-3593 (2021)
 
 .. [32] Xiaodan Chen, Xiucheng Li, Bo Liu, Zhijun Li: Biased Temporal Convolution Graph Network for Time Series Forecasting with Missing Values. ICLR 2024
+
+.. [33] Jinguo Cheng, Chunwei Yang, Wanlin Cai, Yuxuan Liang, Qingsong Wen, Yuankai Wu: NuwaTS: a Foundation Model Mending Every Incomplete Time Series. Arxiv 2024
+
+.. [34] Tian Zhou, Peisong Niu, Xue Wang, Liang Sun, Rong Jin: One fits all: power general time series analysis by pretrained LM. NIPS 2023

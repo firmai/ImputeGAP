@@ -9,46 +9,59 @@ ImputeGAP provides datasets for experimenting with imputation techniques and the
    <br>
 
 
-**Climate**
+**Weather**
+
+    -   `climate <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#climate>`_
+    -   `meteo suisse <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#meteo-suisse>`_
+    -   `temperature <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#temperature>`_
+
+
+**Air Quality**
 
     -   `airq <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#AIR-QUALITY>`_
-    -   `climate <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#climate>`_
     -   `drift <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#drift>`_
-    -   `meteo <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#meteo>`_
-    -   `temperature <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#temperature>`_
+
+
+
+**Water Quality**
+
+    -   `bafu <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#bafu>`_
+    -   `chlorine <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#chlorine>`_
 
 
 **Neuroscience**
 
     -   `eeg-alcohol <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#EEG-ALCOHOL>`_
     -   `eeg-reading <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#EEG-READING>`_
-    -   `fmri-objectviewing <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#fMRI-OBJECTVIEWING>`_
     -   `fmri-stoptask <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#fMRI-STOPTASK>`_
 
-**Water**
 
-    -   `bafu <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#bafu>`_
-    -   `chlorine <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#chlorine>`_
-
-
-**Monitoring**
+**IoT Sensing**
 
     -   `motion <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#motion>`_
-
-
-**Power**
-
-    -   `electricity <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#electricity>`_
+    -   `traffic <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#traffic>`_
 
 
 **Sports**
 
     -   `soccer <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#soccer>`_
+    -   `sport-activity <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#sport-activity>`_
 
 
-**Economy**
 
-    -   `forecast-economy <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#FORECAST-ECONOMY>`_
+**Energy**
+
+    -   `electricity <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#electricity>`_
+    -   `solar-plant <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#solar-plant>`_
+
+
+**Finance**
+
+    -   `stock-exchange <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/dataset#stock-exchange>`_
+
+
+
+
 
 
 The datasets are stored in ``./imputegap/dataset``.

@@ -12,7 +12,7 @@ class TestContaminationPercentageShift(unittest.TestCase):
         the goal is to test if the number of NaN values expected are provided in the contamination output
         """
 
-        datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
+        datasets = ["drift", "chlorine", "eeg-alcohol", "stock-exchange", "fmri-stoptask"]
         series_impacted = [0.1, 0.5, 1]  # percentage of series impacted
         missing_rates = [0.1, 0.5, 0.9]  # percentage of missing values with NaN
         P = 0.1  # offset zone

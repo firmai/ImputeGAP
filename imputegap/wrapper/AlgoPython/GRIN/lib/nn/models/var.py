@@ -1,3 +1,13 @@
+# ===============================================================================================================
+# SOURCE: https://github.com/Graph-Machine-Learning-Group/grin
+#
+# THIS CODE HAS BEEN MODIFIED TO ALIGN WITH THE REQUIREMENTS OF IMPUTEGAP (https://arxiv.org/abs/2503.15250),
+#   WHILE STRIVING TO REMAIN AS FAITHFUL AS POSSIBLE TO THE ORIGINAL IMPLEMENTATION.
+#
+# FOR ADDITIONAL DETAILS, PLEASE REFER TO THE ORIGINAL PAPER:
+# https://openreview.net/pdf?id=kOu3-S3wJ7
+# ===============================================================================================================
+
 import torch
 from einops import rearrange
 from torch import nn
@@ -44,7 +54,7 @@ class VARImputer(nn.Module):
         # x: [batches, steps, features]
         batch_size, steps, n_feats = x.shape
         if mask is None:
-            mask = torch.ones_like(x, dtype=torch.uint8)
+            mask = torch.ones_like(x, dtype=torch.uint8).bool()
         x = x * mask
         # pad input sequence to start filling from first step
         if self.padding == 'mean':

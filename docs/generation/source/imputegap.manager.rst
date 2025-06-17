@@ -1,10 +1,6 @@
 imputegap.recovery.manager package
 ===================================
 
-Submodules
-----------
-
-
 Module contents
 ---------------
 

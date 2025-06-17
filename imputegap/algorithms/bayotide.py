@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.BayOTIDE.BayOTIDE import recovBayOTIDE
 
 
-def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5, tr_ratio=0.6, logs=True, verbose=False):
+def bay_otide(incomp_data, K_trend=20, K_season=2, n_season=5, K_bias=1, time_scale=1, a0=0.6, b0=2.5, v=0.5, tr_ratio=0.9, logs=True, verbose=False):
     """
     BayOTIDE class to impute missing values using Bayesian Online Multivariate Time series Imputation with functional decomposition
 
