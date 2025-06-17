@@ -185,6 +185,7 @@ All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` mod
 
     from imputegap.recovery.manager import TimeSeries
     ts = TimeSeries()
+    print(f"Imputation families : {ts.families}")
     print(f"Imputation algorithms : {ts.algorithms}")
 
 

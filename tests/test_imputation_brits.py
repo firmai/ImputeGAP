@@ -14,7 +14,7 @@ class TestBRITS(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data)
 
         algo = Imputation.DeepLearning.BRITS(incomp_data).impute()
         algo.score(ts_1.data)
@@ -22,7 +22,7 @@ class TestBRITS(unittest.TestCase):
 
         print(f"{metrics = }")
 
-        expected_metrics = {"RMSE": 0.20544828078584632, "MAE": 0.16278860114779092, "MI": 0.09506635264902172, "CORRELATION": 0.17877608696392258}
+        expected_metrics = {"RMSE": 0.20352191729774288, "MAE": 0.16224711025280988, "MI": 0.20395832165069708, "CORRELATION": 0.34159910296350854}
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
         self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.3, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
@@ -38,15 +38,15 @@ class TestBRITS(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.4, block_size=10, offset=0.1, seed=True)
 
-        algo = Imputation.DeepLearning.BRITS(incomp_data).impute(params={"model": "brits", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64})
+        algo = Imputation.DeepLearning.BRITS(incomp_data).impute(params={"model": "brits", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64}, tr_ratio=0.8)
         algo.score(ts_1.data)
         metrics = algo.metrics
 
         print(f"{metrics = }")
 
-        expected_metrics = {"RMSE": 0.35227484512747914, "MAE": 0.301381234687457, "MI": 0.044177075777317706, "CORRELATION": -0.0938755109469607}
+        expected_metrics = {"RMSE": 0.28811130093526344, "MAE": 0.23906292137616933, "MI": 0.04126359649153863, "CORRELATION": -0.03440991696318117}
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
         self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.3, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
@@ -61,7 +61,7 @@ class TestBRITS(unittest.TestCase):
         ts_1.load_series(utils.search_path("eeg-alcohol"))
         ts_1.normalize(normalizer="min_max")
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.4, block_size=10, offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data)
 
         algo = Imputation.DeepLearning.BRITS(incomp_data).impute(params={"model": "brits_i", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64})
         algo.score(ts_1.data)
@@ -69,7 +69,7 @@ class TestBRITS(unittest.TestCase):
 
         print(f"{metrics = }")
 
-        expected_metrics = {"RMSE": 0.39256336854727664, "MAE": 0.3433722148849744, "MI": 0.04108650494231535, "CORRELATION": -0.016989121257023697}
+        expected_metrics = {"RMSE": 0.34013719214536997, "MAE": 0.29081929660621414, "MI": 0.11204895391465408, "CORRELATION": 0.060251082945027054}
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.3, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
         self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.3, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")

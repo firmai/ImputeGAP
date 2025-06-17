@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>imputegap.tools.utils - ImputeGAP 1.0.9 Documentation</title>
+        <title>imputegap.tools.utils - ImputeGAP 1.1.0 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">ImputeGAP 1.0.9 Documentation</div></a>
+      <a href="../../../index.html"><div class="brand">ImputeGAP 1.1.0 Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">ImputeGAP 1.0.9 Documentation</span>
+  <span class="sidebar-brand-text">ImputeGAP 1.1.0 Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -375,7 +375,7 @@
     <span class="k">elif</span> <span class="n">alg</span> <span class="o">==</span> <span class="s2">&quot;nuwats&quot;</span><span class="p">:</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">LLMs</span><span class="o">.</span><span class="n">NuwaTS</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">alg</span> <span class="o">==</span> <span class="s2">&quot;gpt4ts&quot;</span><span class="p">:</span>
-        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">LLMs</span><span class="o">.</span><span class="n">NuwaTS</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">LLMs</span><span class="o">.</span><span class="n">GPT4TS</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(IMP) Algorithm &#39;</span><span class="si">{</span><span class="n">algorithm</span><span class="si">}</span><span class="s2">&#39; not recognized, please choose your algorithm from this list:</span><span class="se">\n\t</span><span class="si">{</span><span class="n">TimeSeries</span><span class="p">()</span><span class="o">.</span><span class="n">algorithms</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">imputer</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1179,12 +1179,15 @@
 
 <span class="sd">        mask_valid : np.ndarray</span>
 <span class="sd">            Boolean mask of shape [T, N] indicating the validation contamination locations.</span>
+
+<span class="sd">        error : bool</span>
+<span class="sd">            Tag which is triggered if the operation is impossible.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">cont_data_matrix</span> <span class="o">=</span> <span class="n">input_matrix</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">original_missing_ratio</span> <span class="o">=</span> <span class="n">get_missing_ratio</span><span class="p">(</span><span class="n">cont_data_matrix</span><span class="p">)</span>
 
-    <span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">new_mask</span> <span class="o">=</span> <span class="n">prepare_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="o">=</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">original_missing_ratio</span><span class="o">=</span><span class="n">original_missing_ratio</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="n">block_selection</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">new_mask</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">prepare_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="o">=</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">original_missing_ratio</span><span class="o">=</span><span class="n">original_missing_ratio</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="n">block_selection</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="n">tr_ratio</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">prevent_leak</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">nan_val</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -1196,7 +1199,7 @@
     <span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span><span class="p">,</span> <span class="n">nbr_nans</span> <span class="o">=</span> <span class="n">split_mask_bwt_test_valid</span><span class="p">(</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">test_rate</span><span class="o">=</span><span class="n">split_ts</span><span class="p">,</span> <span class="n">valid_rate</span><span class="o">=</span><span class="n">split_val</span><span class="p">,</span> <span class="n">nan_val</span><span class="o">=</span><span class="n">nan_val</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">mask_train</span> <span class="o">=</span> <span class="n">generate_random_mask</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">mask_test</span><span class="o">=</span><span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span><span class="o">=</span><span class="n">mask_valid</span><span class="p">,</span> <span class="n">droprate</span><span class="o">=</span><span class="n">inside_tr_cont_ratio</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">mask_train</span><span class="p">,</span> <span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span></div>
+    <span class="k">return</span> <span class="n">cont_data_matrix</span><span class="p">,</span> <span class="n">mask_train</span><span class="p">,</span> <span class="n">mask_test</span><span class="p">,</span> <span class="n">mask_valid</span><span class="p">,</span> <span class="n">error</span></div>
 
 
 
@@ -1514,6 +1517,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">prepare_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">,</span> <span class="n">original_missing_ratio</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
+    <span class="n">error</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">mask_original_nan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
@@ -1523,7 +1527,7 @@
 
     <span class="k">if</span> <span class="n">original_missing_ratio</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">-</span><span class="n">tr_ratio</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(ERROR) The proportion of original missing values is too high and will corrupt the training set.</span><span class="se">\n\t</span><span class="s2">Please consider reducing the percentage contamination pattern [</span><span class="si">{</span><span class="n">original_missing_ratio</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">] or decreasing the training ratio [</span><span class="si">{</span><span class="n">tr_ratio</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">].</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">incomp_m</span><span class="p">,</span> <span class="n">mask_original_nan</span>
+        <span class="k">return</span> <span class="n">incomp_m</span><span class="p">,</span> <span class="n">mask_original_nan</span><span class="p">,</span> <span class="kc">True</span>
 
     <span class="k">if</span> <span class="nb">abs</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">tr_ratio</span><span class="p">)</span> <span class="o">-</span> <span class="n">original_missing_ratio</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">:</span>
         <span class="n">new_m</span><span class="p">,</span> <span class="n">new_mask</span> <span class="o">=</span> <span class="n">prepare_fixed_testing_set</span><span class="p">(</span><span class="n">incomp_m</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="p">,</span> <span class="n">block_selection</span><span class="o">=</span><span class="n">block_selection</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
@@ -1539,7 +1543,7 @@
         <span class="n">new_m</span> <span class="o">=</span> <span class="n">incomp_m</span>
         <span class="n">new_mask</span> <span class="o">=</span> <span class="n">mask_original_nan</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="k">return</span> <span class="n">new_m</span><span class="p">,</span> <span class="n">new_mask</span></div>
+    <span class="k">return</span> <span class="n">new_m</span><span class="p">,</span> <span class="n">new_mask</span><span class="p">,</span> <span class="n">error</span></div>
 
 
 
@@ -2144,7 +2148,7 @@
       
     </aside>
   </div>
-</div><script src="../../../static/documentation_options.js?v=0abd802e"></script>
+</div><script src="../../../static/documentation_options.js?v=fc837d61"></script>
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>

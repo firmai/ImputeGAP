@@ -9,8 +9,8 @@ Jupyter Notebooks
 
 The following notebooks are available for local use or execution in Jupyter environments:
 
-- `Jupyter Pipeline Creation <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/01_imputegap_imputation_pipeline.ipynb>`_
-- `Jupyter Advanced Analytics <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebook/02_imputegap_advanced_analysis.ipynb>`_
+- `Jupyter Pipeline Creation <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/01_imputegap_pipeline_creation.ipynb>`_
+- `Jupyter Advanced Analytics <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/02_imputegap_advanced_analytics.ipynb>`_
 
 
 .. raw:: html

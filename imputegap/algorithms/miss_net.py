@@ -57,7 +57,9 @@ def miss_net(incomp_data, alpha, beta, L, n_cl, max_iteration, tol, random_init,
     if verbose:
         print(f"(IMPUTATION) MISS NET\n\tMatrix Shape: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\talpha: {alpha}\n\tbeta: {beta}\n\tL: {L} \n\tn_cl: {n_cl}\n\tmax_iteration: {max_iteration}\n\ttr_ratio: {tr_ratio}\n")
 
-    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(incomp_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, block_selection=False, offset=0.05, seed=42, verbose=False)
+    cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(incomp_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, block_selection=False, offset=0.05, seed=42, verbose=False)
+    if error:
+        return incomp_data
 
     start_time = time.time()  # Record start time
 
