@@ -151,13 +151,13 @@ docker version
 Pull the ImputeGAP Docker image (add `--platform linux/x86_64` in the command for MacOS) :
 
 ```bash
-docker pull qnater/imputegap:1.1.0
+docker pull qnater/imputegap:1.1.1
 ```
 
 Run the Docker container:
 
 ```bash
-docker run -p 8888:8888 qnater/imputegap:1.1.0
+docker run -p 8888:8888 qnater/imputegap:1.1.1
 ``` 
 
 
