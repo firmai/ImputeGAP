@@ -4,17 +4,17 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"Imputation algorithms : {ts.algorithms}")
+print(f"\nImputation algorithms : {ts.algorithms}")
 
 # load and normalize the dataset
-ts.load_series(utils.search_path("fmri-stoptask"), nbr_series=2500)
+ts.load_series(utils.search_path("eeg-alcohol"))
 ts.normalize(normalizer="z_score")
 
 # contaminate the time series
 ts_m = ts.Contamination.mcar(ts.data)
 
 # impute the contaminated series
-imputer = Imputation.LLMs.NuwaTS(ts_m)
+imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute and print the imputation metrics

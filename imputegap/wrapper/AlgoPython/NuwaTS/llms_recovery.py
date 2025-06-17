@@ -44,9 +44,9 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
         if M > 5000:
             seq_length = 3000
         elif M > 3000:
-            seq_length = 2000
+            seq_length = 1400
         elif M > 2000:
-            seq_length = 1600
+            seq_length = 1000
         elif M > 1000:
             seq_length = 600
         elif M > 300:
@@ -263,7 +263,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
 
 
     if verbose:
-        print(f"(IMPUTATION) {model} (LLMs)\n\tMatrix: ({miss.shape[0]}, {miss.shape[1]})\n\tseq_length: {seq_length}\n\tpatch_size: {patch_size}\n\tbatch_size: {batch_size}\n\tpred_length: {pred_length}\n\tlabel_length: {label_length}\n\tenc_in: {enc_in}\n\tdec_in: {dec_in}\n\tc_out: {c_out}\n\tgpt_layers: {gpt_layers}\n\ttr_ratio: {tr_ratio}\n\tseed: {seed}\n\tverbose: {verbose}\n\tGPU: {args.use_gpu}")
+        print(f"(IMPUTATION) {model} (LLMs)\n\tMatrix: {miss.shape[0]}, {miss.shape[1]}\n\tseq_length: {seq_length}\n\tpatch_size: {patch_size}\n\tbatch_size: {batch_size}\n\tpred_length: {pred_length}\n\tlabel_length: {label_length}\n\tenc_in: {enc_in}\n\tdec_in: {dec_in}\n\tc_out: {c_out}\n\tgpt_layers: {gpt_layers}\n\ttr_ratio: {tr_ratio}\n\tseed: {seed}\n\tverbose: {verbose}\n\tGPU: {args.use_gpu}")
 
     Exp= Exp_Imputation
 

@@ -77,9 +77,7 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
 
 
     if verbose:
-        print(f"(IMPUTATION) {model.upper()}\n\tMatrix Shape: {incomp_data.shape[0]}, {incomp_data.shape[1]}"
-              f"\n\tepoch: {epoch}\n\tbatch_size: {batch_size}\n\tnbr_features: {nbr_features}\n\tseq_length: {seq_length}"
-              f"\n\thidden_layers: {hidden_layers}\n\ttr_ratio: {tr_ratio}\n")
+        print(f"(IMPUTATION) {model.upper()}\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\tepoch: {epoch}\n\tbatch_size: {batch_size}\n\tnbr_features: {nbr_features}\n\tseq_length: {seq_length}\n\thidden_layers: {hidden_layers}\n\ttr_ratio: {tr_ratio}\n")
 
     model = getattr(models, model).Model(batch_size, nbr_features, hidden_layers, seq_length)
 

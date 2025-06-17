@@ -5,7 +5,7 @@ from imputegap.tools import utils
 # initialize the time series and explainer object
 ts = TimeSeries()
 exp = Explainer()
-print(f"ImputeGAP explainer features extractor : {ts.extractors}")
+print(f"\nImputeGAP explainer features extractor : {ts.extractors}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -16,3 +16,6 @@ exp.shap_explainer(input_data=ts.data, extractor="pycatch22", pattern="mcar", fi
 
 # print the impact of each feature
 exp.print(exp.shap_values, exp.shap_details)
+
+# plot the feature impacts
+exp.show()

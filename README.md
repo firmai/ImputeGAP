@@ -36,6 +36,8 @@ In detail, the package provides:
 # Available Imputation Algorithms
 | **Family**        | **Algorithm**             | **Venue -- Year**            |
 |-------------------|---------------------------|------------------------------|
+| LLMs              | NuwaTS [[35]](#ref35)     | Arxiv -- 2024                |
+| LLMs              | GPT4TS [[36]](#ref36)     | NIPS -- 2023                 |
 | Deep Learning     | MissNet [[27]](#ref27)    | KDD -- 2024                  |
 | Deep Learning     | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
 | Deep Learning     | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |
@@ -47,8 +49,6 @@ In detail, the package provides:
 | Deep Learning     | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
 | Deep Learning     | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
 | Deep Learning     | GAIN [[28]](#ref28)       | ICML -- 2018                 |
-| LLMs              | NuwaTS [[35]](#ref35)     | Arxiv -- 2024                |
-| LLMs              | GPT4TS [[36]](#ref36)     | NIPS -- 2023                 |
 | Matrix Completion | CDRec [[1]](#ref1)        | KAIS -- 2020                 |
 | Matrix Completion | TRMF [[8]](#ref8)         | NeurIPS -- 2016              |
 | Matrix Completion | GROUSE [[3]](#ref3)       | PMLR -- 2016                 |
@@ -151,13 +151,13 @@ docker version
 Pull the ImputeGAP Docker image (add `--platform linux/x86_64` in the command for MacOS) :
 
 ```bash
-docker pull qnater/imputegap:0.0.8
+docker pull qnater/imputegap:1.1.0
 ```
 
 Run the Docker container:
 
 ```bash
-docker run -p 8888:8888 qnater/imputegap:0.0.8
+docker run -p 8888:8888 qnater/imputegap:1.1.0
 ``` 
 
 
@@ -186,7 +186,7 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"ImputeGAP datasets : {ts.datasets}")
+print(f"\nImputeGAP datasets : {ts.datasets}")
 
 # load and normalize the dataset from file or from the code
 ts.load_series(utils.search_path("eeg-alcohol"))
@@ -414,7 +414,6 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"ImputeGAP downstream models for forcasting : {ts.forecasting_models}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("forecast-economy"))
@@ -474,6 +473,9 @@ exp.shap_explainer(input_data=ts.data, extractor="pycatch", pattern="mcar", file
 
 # print the impact of each feature
 exp.print(exp.shap_values, exp.shap_details)
+
+# plot the feature impacts
+exp.show()
 ```
 
 All feature extractors developed in ImputeGAP are available in the ``ts.extractors`` module, which can be listed as follows:

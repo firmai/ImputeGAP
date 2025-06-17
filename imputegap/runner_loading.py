@@ -3,7 +3,7 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"ImputeGAP datasets : {ts.datasets}")
+print(f"\nImputeGAP datasets : {ts.datasets}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))

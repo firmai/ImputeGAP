@@ -285,12 +285,16 @@ class Benchmark:
             norm = plt.Normalize(vmin=0, vmax=2)
         elif metric == "CORRELATION":
             norm = plt.Normalize(vmin=-2, vmax=2)
-        elif metric.lower() == "RUNTIME":
-            norm = plt.Normalize(vmin=0, vmax=100000)
-        elif metric.lower() == "RUNTIME_LOG":
+        elif metric == "MAE":
+            norm = plt.Normalize(vmin=0, vmax=1)
+        elif metric == "MI":
+            norm = plt.Normalize(vmin=-1, vmax=1.5)
+        elif metric.lower() == "runtime":
+            norm = plt.Normalize(vmin=0, vmax=5000)
+        elif metric.lower() == "runtime_log":
             norm = plt.Normalize(vmin=-2, vmax=10)
         else:
-            norm = plt.Normalize(vmin=0, vmax=2)
+            norm = plt.Normalize(vmin=0, vmax=2000)
 
         # Create the heatmap
         heatmap = ax.imshow(scores_list, cmap=cmap, norm=norm, aspect='auto')

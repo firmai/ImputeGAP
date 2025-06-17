@@ -20,8 +20,7 @@ from imputegap.tools import utils
 def deep_mvi_recovery(input, max_epoch=1000, patience=2, lr=1e-3, tr_ratio=0.9, seed=42, verbose=True):
 
     if verbose:
-        print(f"(IMPUTATION) DEEP-MVI\n\tMatrix Shape: ({input.shape[0]}, {input.shape[1]}) "
-              f"\n\tmax_epoch: {max_epoch}\n\tpatience: {patience}\n\tlr: {lr}")
+        print(f"(IMPUTATION) DEEP-MVI\n\tMatrix: {input.shape[0]}, {input.shape[1]}\n\tmax_epoch: {max_epoch}\n\tpatience: {patience}\n\tlr: {lr}\n\ttr_ratio: {tr_ratio}\n\tseed: {seed}")
 
     recov = np.copy(input)
     m_mask = np.isnan(input)

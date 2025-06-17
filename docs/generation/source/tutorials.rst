@@ -394,6 +394,9 @@ Let's illustrate the explainer using the CDRec algorithm and MCAR missingness pa
     # print the impact of each feature
     exp.print(exp.shap_values, exp.shap_details)
 
+    # plot the features impact
+    exp.show()
+
 
 All feature extractors developed in ImputeGAP are available in the ``ts.extractors`` module, which can be listed as follows:
 

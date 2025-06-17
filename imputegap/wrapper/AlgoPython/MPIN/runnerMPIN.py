@@ -260,7 +260,7 @@ def recoverMPIN(input, mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, 
     full_mask = np.zeros_like(input, dtype=bool)  # to track what has been filled
 
     if verbose:
-        print(f"(IMPUTATION) MPIN\n\tMatrix: ({input.shape[0]}, {input.shape[1]})\n\tk: {k}\n\twindow: {window}\n\tlr: {lr}\n\tweight: {weight_decay}\n\tbase: {base}\n\tthreshold: {thre}\n\tepochs: {epochs}")
+        print(f"(IMPUTATION) MPIN\n\tMatrix: {input.shape[0]}, {input.shape[1]}\n\tk: {k}\n\twindow: {window}\n\tlr: {lr}\n\tweight: {weight_decay}\n\tbase: {base}\n\tthreshold: {thre}\n\tepochs: {epochs}")
 
     torch.random.manual_seed(seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

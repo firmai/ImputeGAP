@@ -91,7 +91,7 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
                 seq_length = 2
 
         if deep_verbose:
-            print(f"(IMPUTATION) MRNN\n\tMatrix: ({matrix_in.shape[0]}, {matrix_in.shape[1]})\n\thidden_dim: {hidden_dim}\n\tlearning_rate: {learning_rate}\n\titerations: {iterations}\n\tseq_length: {seq_length}")
+            print(f"(IMPUTATION) MRNN\n\tMatrix: {matrix_in.shape[0]}, {matrix_in.shape[1]}\n\thidden_dim: {hidden_dim}\n\tlearning_rate: {learning_rate}\n\titerations: {iterations}\n\tseq_length: {seq_length}")
             print(f"\n{cont_data_train.shape = }")
             print(f"{cont_data_test.shape = }\n")
 

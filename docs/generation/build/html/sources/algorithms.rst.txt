@@ -11,6 +11,12 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
    * - **Family**
      - **Algorithm**
      - **Venue -- Year**
+   * - LLMs
+     - NuwaTS [33]_
+     - Arxiv -- 2024
+   * - LLMs
+     - GPT4TS [34]_
+     - NIPS -- 2023
    * - Deep Learning
      - MissNet [27]_
      - KDD -- 2024
@@ -44,12 +50,6 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
    * - Deep Learning
      - GAIN [28]_
      - ICML -- 2018
-   * - LLMs
-     - NuwaTS [33]_
-     - Arxiv -- 2024
-   * - LLMs
-     - GPT4TS [34]_
-     - NIPS -- 2023
    * - Matrix Completion
      - CDRec [1]_
      - KAIS -- 2020

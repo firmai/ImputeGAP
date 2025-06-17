@@ -3,7 +3,7 @@ from imputegap.tools import utils
 
 # initialize the time series object
 ts = TimeSeries()
-print(f"Missingness patterns : {ts.patterns}")
+print(f"\nMissingness patterns : {ts.patterns}")
 
 # load and normalize the dataset
 ts.load_series(utils.search_path("eeg-alcohol"))
