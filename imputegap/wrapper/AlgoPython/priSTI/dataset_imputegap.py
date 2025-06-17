@@ -46,7 +46,8 @@ def sample_mask(shape, p=0.0015, p_noise=0.05, max_seq=1, min_seq=1, rng=None):
 class ImputeGAP_Dataset(Dataset):
     def __init__(self, data, tr_ratio=0.9, eval_length=1, mode="train", val_len=0.1, test_len=0.2, missing_pattern='block', is_interpolate=False, target_strategy='random', batch_size=1):
 
-        cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=0.9, split_val=0.1, nan_val=-999999, prevent_leak=True, offset=0.05, seed=42, verbose=False)
+        cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=0.9, split_val=0.1, nan_val=-999999, prevent_leak=True, offset=0.05, seed=42, verbose=False)
+
 
         self.eval_length = eval_length
         self.is_interpolate = is_interpolate

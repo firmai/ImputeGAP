@@ -58,7 +58,9 @@ def gainRecovery(miss_data_x, batch_size=-1, hint_rate=0.9, alpha=10, epoch=100,
       print(f"(IMPUTATION) GAIN\n\tMatrix Shape: ({input_data.shape[0]}, {input_data.shape[1]})"
             f"\n\tbatch_size: {batch_size}\n\thint_rate: {hint_rate}\n\talpha: {alpha}\n\tepoch: {epoch}\n\ttr_ratio: {tr_ratio}\n")
 
-  cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(input_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, block_selection=False, seed=42, verbose=False)
+  cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(input_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, block_selection=False, seed=42, verbose=False)
+  if error:
+      return miss_data_x
 
   gain_parameters = {'batch_size': batch_size, 'hint_rate': hint_rate, 'alpha': alpha, 'iterations': epoch}
 

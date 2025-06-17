@@ -11,7 +11,7 @@ ts.normalize(normalizer="z_score")
 
 # contaminate and impute the time series
 ts_m = ts.Contamination.mcar(ts.data)
-imputer = Imputation.MatrixCompletion.CDRec(ts_m)
+imputer = Imputation.LLMs.NuwaTS(ts_m)
 
 # use Ray Tune to fine tune the imputation algorithm
 imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})
@@ -20,7 +20,7 @@ imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_
 imputer.score(ts.data, imputer.recov_data)
 
 # compute the imputation metrics with default parameter values
-imputer_def = Imputation.MatrixCompletion.CDRec(ts_m).impute()
+imputer_def = Imputation.LLMs.NuwaTS(ts_m).impute()
 imputer_def.score(ts.data, imputer_def.recov_data)
 
 # print the imputation metrics with default and optimized parameter values

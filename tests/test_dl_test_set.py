@@ -42,12 +42,7 @@ class TestDLTestSet(unittest.TestCase):
             original_missing_ratio - 0.04) < 0.005, f"Unexpected original missing ratio: {original_missing_ratio}"
 
         # Step 2: Apply testing set preparation
-        cont_data_matrix, new_mask = utils.prepare_testing_set(
-            incomp_m=cont_data_matrix,
-            original_missing_ratio=original_missing_ratio,
-            tr_ratio=tr_ratio,
-            verbose=verbose
-        )
+        cont_data_matrix, new_mask, error = utils.prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, tr_ratio=tr_ratio, verbose=verbose)
 
         # Step 3: Diagnostics
         new_missing_ratio = utils.get_missing_ratio(cont_data_matrix)
@@ -66,6 +61,7 @@ class TestDLTestSet(unittest.TestCase):
         assert num_missing == expected_ts, f"Mismatch in NaN count: {num_missing} != {expected_ts}"
         assert mask_sum == expected_ts, f"Mismatch in NaN count: {mask_sum} != {expected_ts}"
         assert mask_sum > 0, "new_mask should contain at least some test-time NaNs"
+        assert not error, "Unexpected format error"
 
         cont_data_matrix = utils.prevent_leakage(cont_data_matrix, new_mask, nan_replacement, verbose)
 

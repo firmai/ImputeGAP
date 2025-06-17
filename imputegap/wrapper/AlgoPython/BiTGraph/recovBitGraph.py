@@ -138,6 +138,11 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[2,3,6,7], dropout=0
     num_layers = 2
     deep_verbose = False
 
+    test_error = input.copy()
+    _, _, _, _, error = utils.dl_integration_transformation(test_error, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
+    if error:
+        return input
+
     if isinstance(input, str):
         node_number = 321
         data = input

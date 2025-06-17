@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 
 data_dict = {'custom': Dataset_Custom}
 
-def data_provider(args, flag, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None):
+def data_provider(args, flag, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None, verbose=False):
     Data = data_dict[args.data]
     timeenc = 0 if args.embed != 'timeF' else 1
 
@@ -33,7 +33,7 @@ def data_provider(args, flag, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None)
         freq=freq,
         ts_m=ts_m,
         batch_size=batch_size,
-        tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts
+        tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts, verbose=verbose
     )
 
     data_loader = DataLoader(

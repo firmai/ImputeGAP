@@ -68,7 +68,7 @@ class Evaluation:
         recov_vals = self.recov_data[nan_locations]
 
         if np.isnan(recov_vals).all():
-            print(f"\n(EVAL) {self.algorithm} ended with errors, the imputed time series contains NaN values.\nPlease, check your configuration, the algorithm might not work with the percentage of contamination or the pattern chosen.")
+            print(f"(EVAL) {self.algorithm} ended with errors, the imputed time series contains NaN values.\n\tPlease, check your configuration, the algorithm might not work with the percentage of contamination or the pattern chosen.")
 
         rmse = self.compute_rmse()
         mae = self.compute_mae()

@@ -19,41 +19,6 @@ import torch.multiprocessing
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 
-def repair_direct(incomp_data, preds, masks, seq_len, label_len, pred_len):
-    """
-    Fills missing values in incomp_data using predictions.
-    Only replaces entries where mask == 0.
-    """
-    repaired = incomp_data.copy()
-    count = np.zeros_like(incomp_data)
-
-    stride = 1
-    T = incomp_data.shape[1]
-    S = incomp_data.shape[0]
-
-    for i in range(preds.shape[0]):
-        s_start = i * stride
-        s_end = s_start + seq_len
-        r_start = s_end - label_len
-        r_end = r_start + label_len + pred_len
-
-        if r_end > T:
-            continue
-
-        # predictions shape: (label_len + pred_len, S) → transpose to (S, L)
-        pred_block = preds[i].T  # (S, L)
-        mask_block = masks[i].T  # (S, L)
-
-        # Insert only missing values
-        missing_mask = (mask_block == 0)
-        repaired[:, r_start:r_end][missing_mask] += pred_block[missing_mask]
-        count[:, r_start:r_end][missing_mask] += 1
-
-    # Avoid division by zero
-    count[count == 0] = 1
-    repaired /= count
-    return repaired
-
 
 def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1, label_length=-1, enc_in=10, dec_in=10, c_out=10, gpt_layers=6, tr_ratio=0.9, model="NuwaTS", seed=42, verbose=True):
 
@@ -61,7 +26,9 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
     m_mask = np.isnan(ts_m)
     miss = np.copy(ts_m)
 
-    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(miss, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.5, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, block_selection=True, seed=seed, verbose=False)
+    cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(miss, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.5, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, block_selection=True, seed=seed, verbose=False)
+    if error:
+        return ts_m
 
     mask_train = 1 - mask_train
     mask_test = 1 - mask_test
@@ -94,7 +61,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
             else:
                 seq_length = 1
     if batch_size == -1:
-        batch_size = utils.compute_batch_size(ts_m, 4, 16, 2, True)
+        batch_size = utils.compute_batch_size(ts_m, 4, 16, 2, verbose)
     if patch_size == -1:
         for p in reversed(range(2, seq_length -1)):
             if seq_length % p == 0:
@@ -307,7 +274,8 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
             exp = Exp(args)  # set experiments
             exp.train(setting, tr=cont_data_train, ts=None, m_tr=cont_mask_train, m_ts=None, model_name=model, verbose=verbose)
 
-            print(f"\n\nreconstruction...\n")
+            if verbose:
+                print(f"\n\nreconstruction...\n")
             pred, _, _  = exp.test(setting, tr=None, ts=cont_data_matrix, m_tr=None, m_ts=mask_test, model_name=model, verbose=verbose)
             torch.cuda.empty_cache()
     """

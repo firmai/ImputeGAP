@@ -68,8 +68,10 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
     deep_verbose = verbose
     while not x:
         # ==================================================================================================================
-        cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(matrix_in, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
+        cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(matrix_in, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
         # ==================================================================================================================
+        if error:
+            return matrix_in
 
         nan_row_selector = np.any(np.isnan(cont_data_matrix), axis=1)
         cont_data_test = cont_data_matrix[nan_row_selector]

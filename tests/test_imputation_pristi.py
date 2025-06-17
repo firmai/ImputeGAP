@@ -21,12 +21,7 @@ class TestPRISTI(unittest.TestCase):
 
         print(f"{metrics = }")
 
-        expected_metrics = {
-            "RMSE": 0.6016833787111799,
-            "MAE": 0.5139590505163977,
-            "MI": 0.07591969788159918,
-            "CORRELATION": -0.020170456468113926
-        }
+        expected_metrics = {"RMSE": 0.6016833787111799, "MAE": 0.5139590505163977, "MI": 0.07591969788159918, "CORRELATION": -0.020170456468113926}
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
         self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")
@@ -50,12 +45,7 @@ class TestPRISTI(unittest.TestCase):
 
         print(f"{metrics = }")
 
-        expected_metrics = {
-            "RMSE": 0.7522595610894065,
-            "MAE": 0.6114987714952743,
-            "MI": 0.10624925130847727,
-            "CORRELATION": -0.06379826680743304
-        }
+        expected_metrics = {"RMSE": 0.7522595610894065, "MAE": 0.6114987714952743, "MI": 0.10624925130847727, "CORRELATION": -0.06379826680743304}
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.2, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
         self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.2, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")

@@ -441,7 +441,10 @@ def single_main(input,
     dataset = np.copy(input)
     recov = np.copy(input)
 
-    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(dataset, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=-999999, prevent_leak=True, offset=0.05, seed=42, verbose=False)
+    cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(dataset, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=-999999, prevent_leak=True, offset=0.05, seed=42, verbose=False)
+    if error:
+        return input
+
     dl = utilsX.dataset_imputegap(cont_data_matrix, tags, data_names, mask_train, mask_test, mask_val, verbose)
 
     if dl is None:

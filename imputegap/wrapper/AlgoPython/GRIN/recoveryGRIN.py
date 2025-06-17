@@ -60,7 +60,9 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
         print(f"\n(IMPUTATION) GRIN\n\tMatrix: {input.shape[0]}, {input.shape[1]}\n\tbatch_size: {batch_size}\n\tlr: {lr}\n\twindow: {window}\n\talpha: {alpha}\n\tpatience: {patience}\n\tepochs: {epochs}\n\tworkers: {workers}\n")
 
     nan_row_selector = np.any(np.isnan(input), axis=1)
-    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=0.0, prevent_leak=True, offset=0.05, seed=seed, verbose=False)
+    cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=0.0, prevent_leak=True, offset=0.05, seed=seed, verbose=False)
+    if error:
+        return input
 
     input_data = np.copy(cont_data_matrix)
     M, N = input_data.shape

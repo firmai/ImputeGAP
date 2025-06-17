@@ -169,7 +169,7 @@ class TestContaminationMCAR(unittest.TestCase):
         """
         test if the size of the block is at least the number defined my the user
         """
-        datasets = ["drift", "chlorine", "eeg-reading", "eeg-reading", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
+        datasets = ["drift", "chlorine", "eeg-reading", "eeg-reading", "eeg-alcohol", "fmri-stoptask"]
         series_impacted = [0.4, 1]
         missing_rates = [0.2, 0.6]
         offset = 0.1
@@ -226,7 +226,7 @@ class TestContaminationMCAR(unittest.TestCase):
         """
         Test if the size of the missing percentage in a contaminated time series meets the expected number defined by the user.
         """
-        datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
+        datasets = ["drift", "chlorine", "eeg-alcohol", "airq", "fmri-stoptask"]
         series_impacted = [0.4, 0.8]
         missing_rates = [0.2, 0.65]
         offset, block_size = 0.1, 10

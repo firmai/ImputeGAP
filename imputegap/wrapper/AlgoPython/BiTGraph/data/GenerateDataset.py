@@ -93,7 +93,7 @@ def synthetic_data(mask_ratio, dataset, tr_ratio=0.9, tag="alpha", verbose=False
 
         # building test set ================================================================================================
         original_missing_ratio = utils.get_missing_ratio(cont_data_matrix)
-        cont_data_matrix, new_mask = utils.prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, tr_ratio=tr_ratio, verbose=False)
+        cont_data_matrix, new_mask, error = utils.prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, tr_ratio=tr_ratio, verbose=False)
 
         valid_rows = ~np.isnan(cont_data_matrix).any(axis=1)
         data_tr = cont_data_matrix[valid_rows]

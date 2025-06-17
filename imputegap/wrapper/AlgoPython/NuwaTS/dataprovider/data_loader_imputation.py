@@ -15,7 +15,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 class Dataset_Custom(Dataset):
-    def __init__(self, root_path, flag='train', size=None, features='S', data_path='ETTh1.csv', target='OT', scale=True, timeenc=0, freq='h',  seasonal_patterns=None, percent=10,  train_sensors=None, val_sensors=None, test_sensors=None, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None, batch_size=None):
+    def __init__(self, root_path, flag='train', size=None, features='S', data_path='ETTh1.csv', target='OT', scale=True, timeenc=0, freq='h',  seasonal_patterns=None, percent=10,  train_sensors=None, val_sensors=None, test_sensors=None, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None, batch_size=None, verbose=True):
         # size [seq_len, label_len, pred_len]
         # info
 
@@ -44,6 +44,7 @@ class Dataset_Custom(Dataset):
         self.m_ts = m_ts
         self.m_tr_heal = None
         self.m_tr_cont = None
+        self.verbose = verbose
 
         self.__read_data__()
 
@@ -120,7 +121,8 @@ class Dataset_Custom(Dataset):
         self.data_x = data
         self.data_y = data
 
-        print(f"{self.data_x.shape = }, {self.data_y.shape = }, {self.data_stamp.shape = }")
+        if self.verbose:
+            print(f"{self.data_x.shape = }, {self.data_y.shape = }, {self.data_stamp.shape = }")
 
 
     def __getitem__(self, index):
@@ -143,7 +145,8 @@ class Dataset_Custom(Dataset):
         else:  # test
             mask = self.m_ts[s_begin:s_end]
 
-        print(f"Index {index} shapes: x={seq_x.shape}, y={seq_y.shape}, x_mark={seq_x_mark.shape}, y_mark={seq_y_mark.shape}, mask={mask.shape}, {self.seq_len = }, {self.patch_size = }, {self.pred_len = }, {self.label_len = }")
+        if self.verbose:
+            print(f"Index {index} shapes: x={seq_x.shape}, y={seq_y.shape}, x_mark={seq_x_mark.shape}, y_mark={seq_y_mark.shape}, mask={mask.shape}, {self.seq_len = }, {self.patch_size = }, {self.pred_len = }, {self.label_len = }")
 
         return seq_x, seq_y, seq_x_mark, seq_y_mark, mask
 

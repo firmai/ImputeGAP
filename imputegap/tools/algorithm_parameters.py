@@ -264,14 +264,26 @@ RAYTUNE_PARAMS = {
     },
 
     "nuwats": {
-        "seq_length": -1,
+        "seq_length": tune.grid_search([-1, 10]),
         "patch_size": -1,
-        "batch_size": tune.grid_search([-1, 16, 32]),
+        "batch_size": tune.grid_search([-1, 32]),
         "pred_length": -1,
         "label_length":-1,
-        "enc_in": tune.grid_search([4, 10, 16]),
-        "dec_in": tune.grid_search([4, 10, 16]),
-        "c_out": tune.grid_search([4, 10, 16]),
+        "enc_in": tune.grid_search([-1, 16]),
+        "dec_in": tune.grid_search([-1, 16]),
+        "c_out": tune.grid_search([-1, 16]),
+        "gpt_layers":tune.grid_search([2, 6, 16]),
+        "seed":42
+    },
+    "gpt4ts": {
+        "seq_length": tune.grid_search([-1, 10]),
+        "patch_size": -1,
+        "batch_size": tune.grid_search([-1, 32]),
+        "pred_length": -1,
+        "label_length":-1,
+        "enc_in": tune.grid_search([-1, 16]),
+        "dec_in": tune.grid_search([-1, 16]),
+        "c_out": tune.grid_search([-1, 16]),
         "gpt_layers":tune.grid_search([2, 6, 16]),
         "seed":42
     }

@@ -2626,7 +2626,7 @@ class Imputation:
                 else:
                     seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = nuwats(incomp_data=self.incomp_data,  seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
+                self.recov_data = nuwats(incomp_data=self.incomp_data, seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
 
                 return self
 

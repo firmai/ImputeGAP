@@ -114,7 +114,9 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     cont_data_matrix = incomp_m.copy()
 
     original_missing_ratio = utils.get_missing_ratio(cont_data_matrix)
-    cont_data_matrix, new_mask = utils.prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, tr_ratio=tr_ratio, verbose=False)
+    cont_data_matrix, new_mask, error = utils.prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, tr_ratio=tr_ratio, verbose=False)
+    if error:
+        return incomp_m
     gt_data_matrix = utils.prevent_leakage(gt_data_matrix, new_mask, nan_replacement, False)
     # building test set ================================================================================================
 

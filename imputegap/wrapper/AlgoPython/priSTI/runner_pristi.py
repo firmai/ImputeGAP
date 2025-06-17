@@ -27,6 +27,11 @@ def recov_pristi(data, target_strategy="block", unconditional=True, batch_size=-
     recov = np.copy(data)
     m_mask = np.isnan(data)
 
+    test_error = data.copy()
+    _, _, _, _, error = utils.dl_integration_transformation(test_error, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=None, prevent_leak=False, offset=0.05, seed=seed, verbose=False)
+    if error:
+        return data
+
     if batch_size == -1:
         batch_size = utils.compute_batch_size(data, min_size=2, max_size=16, verbose=verbose)
     if embedding == -1:

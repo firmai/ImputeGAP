@@ -11,6 +11,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from transformers import GPT2Config
 from transformers.models.gpt2.modeling_gpt2 import GPT2Model
 from imputegap.wrapper.AlgoPython.NuwaTS.layers.Embed import DataEmbedding
 
@@ -35,7 +36,9 @@ class Model(nn.Module):
                                            configs.freq,
                                            configs.dropout)
 
-        self.gpt2 = GPT2Model.from_pretrained('gpt2', output_attentions=True, output_hidden_states=True)
+        config = GPT2Config.from_pretrained('gpt2', output_attentions=True, output_hidden_states=True, attn_implementation="eager" )
+
+        self.gpt2 = self.gpt2 = GPT2Model.from_pretrained('gpt2', config=config)
         self.gpt2.h = self.gpt2.h[:configs.gpt_layers]
 
         for i, (name, param) in enumerate(self.gpt2.named_parameters()):

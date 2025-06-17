@@ -62,8 +62,8 @@ class Exp_Imputation(Exp_Basic):
             model = nn.DataParallel(model, device_ids=self.args.device_ids)
         return model
 
-    def _get_data(self, flag, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None):
-        data_set, data_loader = data_provider(self.args, flag, tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts)
+    def _get_data(self, flag, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None, verbose=False):
+        data_set, data_loader = data_provider(self.args, flag, tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts, verbose=verbose)
         return data_set, data_loader
 
     def _select_optimizer(self):
@@ -111,10 +111,8 @@ class Exp_Imputation(Exp_Basic):
         return total_loss
 
     def train(self, setting, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None, tag="tr", model_name=None, verbose=False):
-        train_data, train_loader = self._get_data(flag='train', tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts)
-        vali_data, vali_loader = self._get_data(flag='val', tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts)
-        if tag == "ts":
-            test_data, test_loader = self._get_data(flag='test', tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts)
+        train_data, train_loader = self._get_data(flag='train', tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts, verbose=verbose)
+        vali_data, vali_loader = self._get_data(flag='val', tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts, verbose=verbose)
 
         if verbose:
             print(f"\n{len(train_data) = }, {len(vali_data) = }")
@@ -127,7 +125,7 @@ class Exp_Imputation(Exp_Basic):
         time_now = time.time()
         train_steps = len(train_loader)
 
-        early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
+        early_stopping = EarlyStopping(patience=self.args.patience, verbose=verbose)
         if self.args.prefix_tuningv2 or self.args.prefix_tuning or self.args.continue_tuningv2 or self.args.continue_tuning:
             Path = 'your pretrained checkpoint'
             ckpt = torch.load(Path, map_location=self.device)
@@ -228,7 +226,7 @@ class Exp_Imputation(Exp_Basic):
 
 
     def test(self, setting, test=0, mask_rate=0.8, tr=None, ts=None, m_tr=None, m_ts=None, ts_m=None, model_name=None, verbose=False):
-        test_data, test_loader = self._get_data(flag='test', tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts)
+        test_data, test_loader = self._get_data(flag='test', tr=tr, ts=ts, m_tr=m_tr, m_ts=m_ts, verbose=verbose)
 
         if test:
             if verbose:
@@ -281,7 +279,8 @@ class Exp_Imputation(Exp_Basic):
             trues = np.concatenate(trues, 0)
             masks = np.concatenate(masks, 0)
 
-            print(f"{preds.shape = }")
+            if verbose:
+                print(f"{preds.shape = }")
 
         return preds, trues, masks
 

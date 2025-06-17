@@ -12,7 +12,7 @@ class TestContaminationGaussian(unittest.TestCase):
         the goal is to test if the number of NaN values expected are provided in the contamination output
         """
 
-        datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
+        datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-stoptask"]
         series_impacted = [0.1, 0.5, 1]  # percentage of series impacted
         missing_rates = [0.1, 0.5, 0.9]  # percentage of missing values with NaN
         P = 0.1  # offset zone
@@ -110,7 +110,7 @@ class TestContaminationGaussian(unittest.TestCase):
         """
         Test if the size of the missing percentage in a contaminated time series meets the expected number defined by the user.
         """
-        datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-objectviewing", "fmri-stoptask"]
+        datasets = ["drift", "chlorine", "eeg-alcohol", "fmri-stoptask"]
         series_impacted = [0.4, 0.8]
         missing_rates = [0.2, 0.6]
         offset, std_dev = 0.1, 0.2

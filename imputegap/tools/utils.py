@@ -105,7 +105,7 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     elif alg == "nuwats":
         imputer = Imputation.LLMs.NuwaTS(incomp_data)
     elif alg == "gpt4ts":
-        imputer = Imputation.LLMs.NuwaTS(incomp_data)
+        imputer = Imputation.LLMs.GPT4TS(incomp_data)
     else:
         raise ValueError(f"(IMP) Algorithm '{algorithm}' not recognized, please choose your algorithm from this list:\n\t{TimeSeries().algorithms}")
         imputer = None
@@ -885,12 +885,15 @@ def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_rat
 
         mask_valid : np.ndarray
             Boolean mask of shape [T, N] indicating the validation contamination locations.
+
+        error : bool
+            Tag which is triggered if the operation is impossible.
     """
 
     cont_data_matrix = input_matrix.copy()
     original_missing_ratio = get_missing_ratio(cont_data_matrix)
 
-    cont_data_matrix, new_mask = prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, block_selection=block_selection, tr_ratio=tr_ratio, verbose=verbose)
+    cont_data_matrix, new_mask, error = prepare_testing_set(incomp_m=cont_data_matrix, original_missing_ratio=original_missing_ratio, block_selection=block_selection, tr_ratio=tr_ratio, verbose=verbose)
 
     if prevent_leak:
         if nan_val == -1:
@@ -902,7 +905,7 @@ def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_rat
     mask_test, mask_valid, nbr_nans = split_mask_bwt_test_valid(cont_data_matrix, test_rate=split_ts, valid_rate=split_val, nan_val=nan_val, verbose=verbose, seed=seed)
     mask_train = generate_random_mask(gt=cont_data_matrix, mask_test=mask_test, mask_valid=mask_valid, droprate=inside_tr_cont_ratio, offset=offset, verbose=verbose, seed=seed)
 
-    return cont_data_matrix, mask_train, mask_test, mask_valid
+    return cont_data_matrix, mask_train, mask_test, mask_valid, error
 
 
 def prepare_fixed_testing_set(incomp_m, tr_ratio=0.8, offset=0.05, block_selection=True, verbose=True):
@@ -1205,6 +1208,7 @@ def prevent_leakage(matrix, mask, replacement=0, verbose=True):
 def prepare_testing_set(incomp_m, original_missing_ratio, block_selection=True, tr_ratio=0.8, verbose=True):
     import numpy as np
 
+    error = False
     mask_original_nan = np.isnan(incomp_m)
 
     if verbose:
@@ -1214,7 +1218,7 @@ def prepare_testing_set(incomp_m, original_missing_ratio, block_selection=True, 
 
     if original_missing_ratio > 1-tr_ratio:
         print(f"\n(ERROR) The proportion of original missing values is too high and will corrupt the training set.\n\tPlease consider reducing the percentage contamination pattern [{original_missing_ratio:.2%}] or decreasing the training ratio [{tr_ratio:.2%}].\n")
-        return incomp_m, mask_original_nan
+        return incomp_m, mask_original_nan, True
 
     if abs((1-tr_ratio) - original_missing_ratio) > 0.01:
         new_m, new_mask = prepare_fixed_testing_set(incomp_m, tr_ratio, block_selection=block_selection, verbose=verbose)
@@ -1230,7 +1234,7 @@ def prepare_testing_set(incomp_m, original_missing_ratio, block_selection=True, 
         new_m = incomp_m
         new_mask = mask_original_nan.copy()
 
-    return new_m, new_mask
+    return new_m, new_mask, error
 
 
 def compute_batch_size(data, min_size=4, max_size=16, divisor=2, verbose=True):

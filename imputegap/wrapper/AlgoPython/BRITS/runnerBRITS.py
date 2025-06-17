@@ -64,8 +64,10 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
         batch_size = utils.compute_batch_size(data=incomp_data, min_size=2, max_size=24, divisor=4, verbose=verbose)
 
     # ==================================================================================================================
-    cont_data_matrix, mask_train, mask_test, mask_valid = utils.dl_integration_transformation(incomp_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=-99999, offset=0.05, seed=seed, verbose=False)
+    cont_data_matrix, mask_train, mask_test, mask_valid, error = utils.dl_integration_transformation(incomp_data, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.2, split_ts=1, split_val=0, nan_val=-99999, prevent_leak=-99999, offset=0.05, seed=seed, verbose=False)
     # ==================================================================================================================
+    if error:
+        return incomp_data
 
     prepare_dat(cont_data_matrix, "brits.tmp", mask_train, mask_test, mask_valid)
 

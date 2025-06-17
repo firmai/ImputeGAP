@@ -926,7 +926,7 @@ class Benchmark:
                                 start_time_imputation = time.time()
 
                                 if not self._benchmark_exception(incomp_data, algorithm, pattern, x):
-                                    if utils.check_family("DeepLearning", algorithm):
+                                    if utils.check_family("DeepLearning", algorithm) or utils.check_family("LLMs", algorithm):
                                         if x > round(1-dl_ratio, 2):
                                             algo.recov_data = incomp_data
                                         else:

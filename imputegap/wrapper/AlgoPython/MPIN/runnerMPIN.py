@@ -266,7 +266,9 @@ def recoverMPIN(input, mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     random.seed(seed)
-    cont_data_matrix, mask_train, mask_test, mask_val = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=-1, prevent_leak=True, offset=0.05, seed=seed, verbose=False)
+    cont_data_matrix, mask_train, mask_test, mask_val, error = utils.dl_integration_transformation(input, tr_ratio=tr_ratio, inside_tr_cont_ratio=0.4, split_ts=1, split_val=0, nan_val=-1, prevent_leak=True, offset=0.05, seed=seed, verbose=False)
+    if error:
+        return input
 
     num_windows = window
 
