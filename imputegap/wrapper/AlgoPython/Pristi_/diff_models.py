@@ -8,7 +8,7 @@
 # https://ieeexplore.ieee.org/document/10184808
 # ===============================================================================================================
 
-from imputegap.wrapper.AlgoPython.pristi.layers import *
+from imputegap.wrapper.AlgoPython.Pristi_.layers import *
 
 class Guide_diff(nn.Module):
     def __init__(self, train_loader, config, inputdim=1, target_dim=36, is_itp=False):

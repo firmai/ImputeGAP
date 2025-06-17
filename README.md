@@ -33,13 +33,6 @@ In detail, the package provides:
 - ---
 
 
-   * - LLMs
-     - NuwaTS [33]_
-     - Arxiv -- 2024
-   * - LLMs
-     - GPT4TS [34]_
-     - NIPS -- 2023
-     - 
 # Available Imputation Algorithms
 | **Family**        | **Algorithm**             | **Venue -- Year**            |
 |-------------------|---------------------------|------------------------------|
@@ -54,8 +47,8 @@ In detail, the package provides:
 | Deep Learning     | MRNN [[22]](#ref22)       | IEEE Trans on BE -- 2019     |
 | Deep Learning     | BRITS [[23]](#ref23)      | NeurIPS -- 2018              |
 | Deep Learning     | GAIN [[28]](#ref28)       | ICML -- 2018                 |
-| LLMs              | NuwaTS [[33]](#ref35)     | Arxiv -- 2024                |
-| LLMs              | GPT4TS [[34]](#ref36)     | NIPS -- 2023                 |
+| LLMs              | NuwaTS [[35]](#ref35)     | Arxiv -- 2024                |
+| LLMs              | GPT4TS [[36]](#ref36)     | NIPS -- 2023                 |
 | Matrix Completion | CDRec [[1]](#ref1)        | KAIS -- 2020                 |
 | Matrix Completion | TRMF [[8]](#ref8)         | NeurIPS -- 2016              |
 | Matrix Completion | GROUSE [[3]](#ref3)       | PMLR -- 2016                 |
@@ -94,7 +87,7 @@ In detail, the package provides:
   - [Explainer](#explainer)  
   - [Downstream Evaluation](#downstream)
   - [Benchmark](#benchmark)  
-  - [Notebook](#Jupyter-Notebook)  
+  - [Notebooks](#Jupyter-Notebooks)  
 
 - **Contribute**  
   - [Integration Guide](#contribution)  
@@ -310,7 +303,7 @@ print(f"Imputation algorithms : {ts.algorithms}")
 
 
 ## Parameter Tuning
-The Optimizer component manages algorithm configuration and hyperparameter tuning. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by [Ray Tune](https://docs.ray.io/en/latest/tune/index.html>).
+The Optimizer component manages algorithm configuration and hyperparameter tuning. The parameters are defined by providing a dictionary containing the ground truth, the chosen optimizer, and the optimizer's options. Several search algorithms are available, including those provided by [Ray Tune](https://docs.ray.io/en/latest/tune/index.html).
 
 ### Example Auto-ML
 You can find this example in the file [`runner_optimization.py`](https://github.com/eXascaleInfolab/ImputeGAP/blob/main/imputegap/runner_optimization.py).
@@ -435,7 +428,7 @@ imputer = Imputation.MatrixCompletion.CDRec(ts_m)
 imputer.impute()
 
 # compute and print the downstream results
-downstream_config = {"task": "forecast", "model": "hw-add", "comparator": "ZeroImpute"}
+downstream_config = {"task": "forecast", "model": "hw-add", "baseline": "ZeroImpute"}
 imputer.score(ts.data, imputer.recov_data, downstream=downstream_config)
 ts.print_results(imputer.downstream_metrics, text="Downstream results")
 ```
@@ -494,7 +487,7 @@ print(f"ImputeGAP features extractors : {ts.extractors}")
 
 ---
 
-## Jupyter Notebook
+## Jupyter Notebooks
 
 ImputeGAP provides Jupyter notebooks available through the following links:
 
@@ -503,7 +496,7 @@ ImputeGAP provides Jupyter notebooks available through the following links:
 
 
 
-## Google Colab Notebook
+## Google Colab Notebooks
 
 ImputeGAP provides Google Colab notebooks available through the following links:
 

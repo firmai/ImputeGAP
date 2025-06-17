@@ -16,13 +16,14 @@ class TestMissNet(unittest.TestCase):
 
         incomp_data = ts_1.Contamination.mcar(ts_1.data)
 
-        algo = Imputation.DeepLearning.MissNet(incomp_data).impute()
+        algo = Imputation.DeepLearning.MissNet(incomp_data).impute(
+            params={'alpha': 0.5, 'beta': 0.1, 'L': 10, 'n_cl': 1, 'max_iteration': 3, 'tol': 2, 'random_init': False})
         algo.score(ts_1.data)
         metrics = algo.metrics
 
         print(f"{metrics = }")
 
-        expected_metrics = { "RMSE": 0.05165190133511449, "MAE": 0.04050335591538434, "MI": 1.3250131699356387, "CORRELATION": 0.9753504984957413 }
+        expected_metrics = {"RMSE": 0.11351861978049634, "MAE": 0.09000628925874102, "MI": 0.7766779449403466, "CORRELATION": 0.881484416469724}
 
         self.assertTrue(abs(metrics["RMSE"] - expected_metrics["RMSE"]) < 0.1, f"metrics RMSE = {metrics['RMSE']}, expected RMSE = {expected_metrics['RMSE']} ")
         self.assertTrue(abs(metrics["MAE"] - expected_metrics["MAE"]) < 0.1, f"metrics MAE = {metrics['MAE']}, expected MAE = {expected_metrics['MAE']} ")

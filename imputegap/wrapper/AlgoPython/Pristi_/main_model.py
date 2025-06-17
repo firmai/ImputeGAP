@@ -11,7 +11,7 @@
 import numpy as np
 import torch
 import torch.nn as nn
-from imputegap.wrapper.AlgoPython.pristi.diff_models import Guide_diff
+from imputegap.wrapper.AlgoPython.Pristi_.diff_models import Guide_diff
 
 
 class PriSTI(nn.Module):

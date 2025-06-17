@@ -1638,6 +1638,7 @@ def list_of_datasets(txt=False):
         "eeg-reading",
         "electricity",
         "fmri-stoptask",
+        "forecast-economy",
         "meteo",
         "motion",
         "soccer",
