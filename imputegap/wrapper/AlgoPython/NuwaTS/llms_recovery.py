@@ -44,7 +44,11 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
         if M > 5000:
             seq_length = 3000
         elif M > 3000:
-            seq_length = 1000
+            seq_length = 2000
+        elif M > 2000:
+            seq_length = 1600
+        elif M > 1000:
+            seq_length = 600
         elif M > 300:
             seq_length = 100
         elif M > 30:

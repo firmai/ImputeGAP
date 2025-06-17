@@ -15,6 +15,7 @@ import torch.optim as optim
 import numpy as np
 from imputegap.wrapper.AlgoPython.BiTGraph.models.BiaTCGNet.BiaTCGNet import Model
 from imputegap.wrapper.AlgoPython.BiTGraph.data.GenerateDataset import loaddataset, loaddataset_imputegap, reverse_window_horizon
+from imputegap.tools import utils
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -217,21 +218,4 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[2,3,6,7], dropout=0
 
     return recov
 
-
-if __name__ == '__main__':
-    from imputegap.recovery.manager import TimeSeries
-    from imputegap.tools import utils
-
-    # initialize the time series object
-    ts = TimeSeries()
-    print(f"Missingness patterns : {ts.patterns}")
-
-    # load and normalize the dataset
-    ts.load_series(utils.search_path("eeg-alcohol"))
-    ts.normalize(normalizer="z_score")
-
-    # contaminate the time series with MCAR pattern
-    ts_m = ts.Contamination.mcar(ts.data, rate_dataset=0.2, rate_series=0.4, block_size=10, seed=True)
-
-    recov = recoveryBitGRAPH(ts_m)
 

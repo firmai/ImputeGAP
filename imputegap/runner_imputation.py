@@ -7,14 +7,14 @@ ts = TimeSeries()
 print(f"Imputation algorithms : {ts.algorithms}")
 
 # load and normalize the dataset
-ts.load_series(utils.search_path("eeg-alcohol"))
+ts.load_series(utils.search_path("fmri-stoptask"), nbr_series=2500)
 ts.normalize(normalizer="z_score")
 
 # contaminate the time series
 ts_m = ts.Contamination.mcar(ts.data)
 
 # impute the contaminated series
-imputer = Imputation.MatrixCompletion.CDRec(ts_m)
+imputer = Imputation.LLMs.NuwaTS(ts_m)
 imputer.impute()
 
 # compute and print the imputation metrics
