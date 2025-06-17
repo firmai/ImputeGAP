@@ -230,7 +230,7 @@ The electricity dataset has data on household energy consumption of 370 individu
 
 ### Sample Plots
 
-![ELECTRICITY dataset](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/dataset/docs/electricity/01_electricity_M.jpg)
+![ELECTRICITY dataset](https://github.com/eXascaleInfolab/ImputeGAP/raw/main/imputegap/datasets/docs/electricity/01_electricity_M.jpg)
 
 
 

@@ -5,7 +5,7 @@ class TestBenchmarking(unittest.TestCase):
 
     def test_benchmarking(self):
         """
-        the goal is to test if only the simple imputation with ST-MVL has the expected outcome
+        the goal is to test if only the simple imputation benchmarking has the expected outcome
         """
         bench = Benchmark()
         expected_datasets = ["eeg-alcohol"]
