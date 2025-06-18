@@ -1,4 +1,4 @@
-name: Pytest - ImputeGAP - IMPUTATION - GAMMA - 12
+name: Pytest - ImputeGAP - IMPUTATION - LLMs - 12
 
 on:
   push:

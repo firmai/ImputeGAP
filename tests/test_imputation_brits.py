@@ -40,7 +40,7 @@ class TestBRITS(unittest.TestCase):
 
         incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.4, block_size=10, offset=0.1, seed=True)
 
-        algo = Imputation.DeepLearning.BRITS(incomp_data).impute(params={"model": "brits", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64}, tr_ratio=0.8)
+        algo = Imputation.DeepLearning.BRITS(incomp_data).impute(params={"model": "brits", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64, "num_workers": 0}, tr_ratio=0.8)
         algo.score(ts_1.data)
         metrics = algo.metrics
 
@@ -64,7 +64,7 @@ class TestBRITS(unittest.TestCase):
 
         incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data)
 
-        algo = Imputation.DeepLearning.BRITS(incomp_data).impute(params={"model": "brits_i", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64})
+        algo = Imputation.DeepLearning.BRITS(incomp_data).impute(params={"model": "brits_i", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64, "num_workers": 0})
         algo.score(ts_1.data)
         metrics = algo.metrics
 
