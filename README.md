@@ -37,7 +37,7 @@ In detail, the package provides:
 | **Family**        | **Algorithm**             | **Venue -- Year**            |
 |-------------------|---------------------------|------------------------------|
 | LLMs              | NuwaTS [[35]](#ref35)     | Arxiv -- 2024                |
-| LLMs              | GPT4TS [[36]](#ref36)     | NIPS -- 2023                 |
+| LLMs              | GPT4TS [[36]](#ref36)     | NeurIPS -- 2023              |
 | Deep Learning     | MissNet [[27]](#ref27)    | KDD -- 2024                  |
 | Deep Learning     | MPIN [[25]](#ref25)       | PVLDB -- 2024                |
 | Deep Learning     | BayOTIDE [[30]](#ref30)   | PMLR -- 2024                 |

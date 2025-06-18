@@ -60,7 +60,7 @@ The missing blocks are disjoint.
    <br>
 
 
-**Overlap**:
+**Overlap**
 
 The missing blocks are overlapping.
 
