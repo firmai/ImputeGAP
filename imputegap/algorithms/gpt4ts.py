@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.NuwaTS.llms_recovery import llms_recov
 
 
-def gpt4ts(incomp_data, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1, label_length=-1, enc_in=10, dec_in=10, c_out=10, gpt_layers=6, tr_ratio=0.9, seed=42, logs=True, verbose=True):
+def gpt4ts(incomp_data, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1, label_length=-1, enc_in=10, dec_in=10, c_out=10, gpt_layers=6, num_workers=0, tr_ratio=0.9, seed=42, logs=True, verbose=True):
     """
     Perform imputation using GPT4TS
 
@@ -40,6 +40,9 @@ def gpt4ts(incomp_data, seq_length=-1, patch_size=-1, batch_size=-1, pred_length
     gpt_layers : int, optional
         Number of layers in the transformer/generator component (default: 6).
 
+    num_workers: int, optional
+         Number of worker for multiprocess (default is 0).
+
     tr_ratio: float, optional
          Split ratio between training and testing sets (default is 0.9).
 
@@ -69,7 +72,7 @@ def gpt4ts(incomp_data, seq_length=-1, patch_size=-1, batch_size=-1, pred_length
     """
     start_time = time.time()  # Record start time
 
-    recov_data = llms_recov(ts_m=incomp_data, seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, tr_ratio=tr_ratio, model="GPT4TS", seed=seed, verbose=verbose)
+    recov_data = llms_recov(ts_m=incomp_data, seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, num_workers=num_workers, tr_ratio=tr_ratio, model="GPT4TS", seed=seed, verbose=verbose)
 
     end_time = time.time()
     if logs and verbose:

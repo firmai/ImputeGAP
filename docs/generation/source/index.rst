@@ -118,7 +118,7 @@ Citing
 ------
 
 
-If you use ImputeGAP in your research, please cite these papers: `[Paper] <https://arxiv.org/abs/2503.15250>`_ `[Tutorial] <https://exascale.info/assets/pdf/khayati2025kdd.pdf>`_
+If you use ImputeGAP in your research, please cite these papers:
 
 .. code-block:: bash
 

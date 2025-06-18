@@ -20,8 +20,7 @@ import torch.multiprocessing
 torch.multiprocessing.set_sharing_strategy('file_system')
 
 
-def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1, label_length=-1, enc_in=10, dec_in=10, c_out=10, gpt_layers=6, tr_ratio=0.9, model="NuwaTS", seed=42, verbose=True):
-
+def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1, label_length=-1, enc_in=10, dec_in=10, c_out=10, gpt_layers=6, num_workers=0, tr_ratio=0.9, model="NuwaTS", seed=42, verbose=True):
     recov = np.copy(ts_m)
     m_mask = np.isnan(ts_m)
     miss = np.copy(ts_m)
@@ -119,6 +118,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
         '--enc_in', str(enc_in),
         '--dec_in', str(dec_in),
         '--c_out', str(c_out),
+        '--num_workers', str(num_workers),
         '--gpt_layers', str(gpt_layers),
         '--batch_size', str(batch_size),
         '--d_model', '768',
@@ -189,7 +189,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
     parser.add_argument('--output_attention', action='store_true', help='whether to output attention in ecoder')
 
     # optimization
-    parser.add_argument('--num_workers', type=int, default=4, help='data loader num workers')
+    parser.add_argument('--num_workers', type=int, default=0, help='data loader num workers')
     parser.add_argument('--itr', type=int, default=1, help='experiments times')
     parser.add_argument('--train_epochs', type=int, default=10, help='train epochs')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data')
@@ -263,7 +263,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
 
 
     if verbose:
-        print(f"(IMPUTATION) {model} (LLMs)\n\tMatrix: {miss.shape[0]}, {miss.shape[1]}\n\tseq_length: {seq_length}\n\tpatch_size: {patch_size}\n\tbatch_size: {batch_size}\n\tpred_length: {pred_length}\n\tlabel_length: {label_length}\n\tenc_in: {enc_in}\n\tdec_in: {dec_in}\n\tc_out: {c_out}\n\tgpt_layers: {gpt_layers}\n\ttr_ratio: {tr_ratio}\n\tseed: {seed}\n\tverbose: {verbose}\n\tGPU: {args.use_gpu}")
+        print(f"(IMPUTATION) {model} (LLMs)\n\tMatrix: {miss.shape[0]}, {miss.shape[1]}\n\tseq_length: {seq_length}\n\tpatch_size: {patch_size}\n\tbatch_size: {batch_size}\n\tpred_length: {pred_length}\n\tlabel_length: {label_length}\n\tenc_in: {enc_in}\n\tdec_in: {dec_in}\n\tc_out: {c_out}\n\tgpt_layers: {gpt_layers}\n\tnum_workers: {num_workers}\n\ttr_ratio: {tr_ratio}\n\tseed: {seed}\n\tverbose: {verbose}\n\tGPU: {args.use_gpu}")
 
     Exp= Exp_Imputation
 

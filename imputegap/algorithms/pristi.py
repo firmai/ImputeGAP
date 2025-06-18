@@ -3,7 +3,7 @@ import time
 from imputegap.wrapper.AlgoPython.Pristi_.runner_pristi import recov_pristi
 
 
-def pristi(incomp_data, target_strategy="hybrid", unconditional=True, batch_size=-1, embedding=-1, tr_ratio=0.9, seed=42, logs=True, verbose=True):
+def pristi(incomp_data, target_strategy="hybrid", unconditional=True, batch_size=-1, embedding=-1, num_workers=0, tr_ratio=0.9, seed=42, logs=True, verbose=True):
     """
     Perform imputation using the priSTI (Probabilistic Imputation via Sequential Targeted Imputation) algorithm.
 
@@ -22,8 +22,10 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, batch_size
         Size of the batch to train the deep learning model (-1 means compute automatically based on the dataset shape).
     embedding : int, optional
         Size of the embedding used to train the deep learning model (-1 means compute automatically based on the dataset shape).
+    num_workers: int, optional
+         Number of worker for multiprocess (default is 0).
     tr_ratio: float, optional
-                    Split ratio between training and testing sets (default is 0.9).
+        Split ratio between training and testing sets (default is 0.9).
     logs : bool, optional
         Whether to log the execution time (default is True).
     verbose : bool, optional
@@ -36,7 +38,7 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, batch_size
 
     Example
     -------
-        >>> recov_data = priSTI(incomp_data=ts_input, target_strategy="hybrid", unconditional=True, seed=42, device="cpu")
+        >>> recov_data = recov_pristi(incomp_data=ts_input, target_strategy="hybrid", unconditional=True, seed=42)
         >>> print(recov_data)
 
     References
@@ -46,7 +48,7 @@ def pristi(incomp_data, target_strategy="hybrid", unconditional=True, batch_size
     """
     start_time = time.time()  # Record start time
 
-    recov_data = recov_pristi(data=incomp_data, target_strategy=target_strategy, unconditional=unconditional, batch_size=batch_size, embedding=embedding, num_workers=4, tr_ratio=tr_ratio, seed=seed, verbose=verbose)
+    recov_data = recov_pristi(data=incomp_data, target_strategy=target_strategy, unconditional=unconditional, batch_size=batch_size, embedding=embedding, num_workers=num_workers, tr_ratio=tr_ratio, seed=seed, verbose=verbose)
 
     end_time = time.time()
     if logs and verbose:

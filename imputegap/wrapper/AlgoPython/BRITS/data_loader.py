@@ -71,6 +71,6 @@ def collate_fn(recs):
 def get_loader(filename, batch_size = 16, shuffle = False):
     data_set = MySet(filename)
 
-    data_iter = DataLoader(dataset = data_set, batch_size = batch_size, num_workers = 4, shuffle = shuffle, pin_memory = True, collate_fn = collate_fn)
+    data_iter = DataLoader(dataset = data_set, batch_size = batch_size, num_workers = 0, shuffle = shuffle, pin_memory = True, collate_fn = collate_fn)
 
     return data_iter

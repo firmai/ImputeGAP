@@ -2000,8 +2000,12 @@ class Imputation:
                             If False, conditional imputation models are used, depending on available data patterns.
                         seed : int, optional
                             Random seed for reproducibility (default is 42).
-                        device : str, optional
-                            The device to perform computation on, e.g., "cpu" or "cuda" (default is "cpu").
+                        batch_size : int, optional
+                            Size of the batch to train the deep learning model (-1 means compute automatically based on the dataset shape).
+                        embedding : int, optional
+                            Size of the embedding used to train the deep learning model (-1 means compute automatically based on the dataset shape).
+                        num_workers: int, optional
+                             Number of worker for multiprocess (default is 0).
 
 
                 Returns
@@ -2013,7 +2017,7 @@ class Imputation:
                 -------
                     >>> pristi_imputer = Imputation.DeepLearning.PRISTI(incomp_data)
                     >>> pristi_imputer.impute()  # default parameters for imputation > or
-                    >>> pristi_imputer.impute(params={"target_strategy":"hybrid", "unconditional":True, "seed":42, "device":"cpu"})  # user-defined > or
+                    >>> pristi_imputer.impute(params={"target_strategy":"hybrid", "unconditional":True, "batch_size":-1, "embedding":-1, "num_workers":0, "seed":42})  # user-defined > or
                     >>> pristi_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # automl with ray_tune
                     >>> recov_data = pristi_imputer.recov_data
 
@@ -2025,11 +2029,11 @@ class Imputation:
                 from imputegap.algorithms.pristi import pristi
 
                 if params is not None:
-                    target_strategy, unconditional, batch_size, embedding, seed = self._check_params(user_def, params)
+                    target_strategy, unconditional, batch_size, embedding, num_workers, seed = self._check_params(user_def, params)
                 else:
-                    target_strategy, unconditional, batch_size, embedding, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    target_strategy, unconditional, batch_size, embedding, num_workers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = pristi(incomp_data=self.incomp_data, target_strategy=target_strategy, unconditional=unconditional, batch_size=batch_size, embedding=embedding, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
+                self.recov_data = pristi(incomp_data=self.incomp_data, target_strategy=target_strategy, unconditional=unconditional, batch_size=batch_size, embedding=embedding, num_workers=num_workers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
                 return self
 
         class MissNet(BaseImputer):
@@ -2319,6 +2323,9 @@ class Imputation:
                         v : float, (optional) (default: 0.5)
                             Variance parameter.
 
+                        num_workers: int, optional
+                             Number of worker for multiprocess (default is 0).
+
                         config : dict, (optional) (default: None)
                             Dictionary containing all configuration parameters, that will replace all other parameters (see documentation).
 
@@ -2335,7 +2342,7 @@ class Imputation:
                 -------
                     >>> bay_otide_imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
                     >>> bay_otide_imputer.impute()  # default parameters for imputation > or
-                    >>> bay_otide_imputer.impute(user_def=True, params={"K_trend":20, "K_season":2, "n_season":5, "K_bias":1, "time_scale":1, "a0":0.6, "b0":2.5, "v":0.5, "tr_ratio":0.6})  # user defined> or
+                    >>> bay_otide_imputer.impute(user_def=True, params={"K_trend":20, "K_season":2, "n_season":5, "K_bias":1, "time_scale":1, "a0":0.6, "b0":2.5, "v":0.5, "num_workers":0, "tr_ratio":0.6})  # user defined> or
                     >>> bay_otide_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
                     >>> recov_data = bay_otide_imputer.recov_data
 
@@ -2351,11 +2358,11 @@ class Imputation:
                     return
 
                 if params is not None:
-                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, tr_ratio = self._check_params(user_def, params)
+                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, num_workers, tr_ratio = self._check_params(user_def, params)
                 else:
-                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, tr_ratio = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, num_workers, tr_ratio = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = bay_otide(incomp_data=self.incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
+                self.recov_data = bay_otide(incomp_data=self.incomp_data, K_trend=K_trend, K_season=K_season, n_season=n_season, K_bias=K_bias, time_scale=time_scale, a0=a0, b0=b0, v=v, num_workers=num_workers, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -2590,6 +2597,9 @@ class Imputation:
                         gpt_layers : int, optional
                             Number of layers in the transformer/generator component (default: 6).
 
+                        num_workers: int, optional
+                            Number of worker for multiprocess (default is 00).
+
                         seed : int, optional
                             Random seed for reproducibility (default: 42).
 
@@ -2609,7 +2619,7 @@ class Imputation:
                 -------
                     >>> nuwats_imputer = Imputation.LLMs.NuwaTS(incomp_data)
                     >>> nuwats_imputer.impute()  # default parameters for imputation > or
-                    >>> nuwats_imputer.impute(user_def=True, params={"seq_length":-1, "patch_size":-1, "batch_size":-1, "pred_length":-1, "label_length":-1, "enc_in":10, "dec_in":10, "c_out": 10, "gpt_layers":6, "seed":42})  # user defined> or
+                    >>> nuwats_imputer.impute(user_def=True, params={"seq_length":-1, "patch_size":-1, "batch_size":-1, "pred_length":-1, "label_length":-1, "enc_in":10, "dec_in":10, "c_out": 10, "gpt_layers":6, "num_workers":0, "seed":42})  # user defined> or
                     >>> nuwats_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
                     >>> recov_data = nuwats_imputer.recov_data
 
@@ -2622,11 +2632,11 @@ class Imputation:
                 from imputegap.algorithms.nuwats import nuwats
 
                 if params is not None:
-                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = self._check_params(user_def, params)
+                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, num_workers, seed = self._check_params(user_def, params)
                 else:
-                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, num_workers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = nuwats(incomp_data=self.incomp_data, seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
+                self.recov_data = nuwats(incomp_data=self.incomp_data, seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, num_workers=num_workers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -2692,6 +2702,9 @@ class Imputation:
                         gpt_layers : int, optional
                             Number of layers in the transformer/generator component (default: 6).
 
+                        num_workers: int, optional
+                            Number of worker for multiprocess (default is 00).
+
                         seed : int, optional
                             Random seed for reproducibility (default: 42).
 
@@ -2711,7 +2724,7 @@ class Imputation:
                 -------
                     >>> gpt4ts_imputer = Imputation.LLMs.GPT4TS(incomp_data)
                     >>> gpt4ts_imputer.impute()  # default parameters for imputation > or
-                    >>> gpt4ts_imputer.impute(user_def=True, params={"seq_length":-1, "patch_size":-1, "batch_size":-1, "pred_length":-1, "label_length":-1, "enc_in":10, "dec_in":10, "c_out": 10, "gpt_layers":6, "seed":42})  # user defined> or
+                    >>> gpt4ts_imputer.impute(user_def=True, params={"seq_length":-1, "patch_size":-1, "batch_size":-1, "pred_length":-1, "label_length":-1, "enc_in":10, "dec_in":10, "c_out": 10, "gpt_layers":6, "num_workers":0, "seed":42})  # user defined> or
                     >>> gpt4ts_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
                     >>> recov_data = gpt4ts_imputer.recov_data
 
@@ -2724,11 +2737,11 @@ class Imputation:
                 from imputegap.algorithms.gpt4ts import gpt4ts
 
                 if params is not None:
-                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = self._check_params(user_def, params)
+                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, num_workers, seed = self._check_params(user_def, params)
                 else:
-                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, num_workers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = gpt4ts(incomp_data=self.incomp_data,  seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
+                self.recov_data = gpt4ts(incomp_data=self.incomp_data,  seq_length=seq_length, patch_size=patch_size, batch_size=batch_size, pred_length=pred_length, label_length=label_length, enc_in=enc_in, dec_in=dec_in, c_out=c_out, gpt_layers=gpt_layers, num_workers=num_workers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
 
                 return self
 

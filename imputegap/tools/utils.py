@@ -511,8 +511,9 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         unconditional = bool(config[algorithm]['unconditional'])
         batch_size = int(config[algorithm]['batch_size'])
         embedding = int(config[algorithm]['embedding'])
+        num_workers = int(config[algorithm]['num_workers'])
         seed = int(config[algorithm]['seed'])
-        return (target_strategy, unconditional, batch_size, embedding, seed)
+        return (target_strategy, unconditional, batch_size, embedding, num_workers, seed)
     elif algorithm == "knn" or algorithm == "knn_impute":
         k = int(config[algorithm]['k'])
         weights = str(config[algorithm]['weights'])
@@ -598,8 +599,9 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         dec_in = int(config[algorithm]['dec_in'])
         c_out = int(config[algorithm]['c_out'])
         gpt_layers = int(config[algorithm]['gpt_layers'])
+        num_workers = int(config[algorithm]['num_workers'])
         seed = int(config[algorithm]['seed'])
-        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed)
+        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, num_workers, seed)
     elif algorithm == "gpt4ts":
         seq_length = int(config[algorithm]['seq_length'])
         patch_size = int(config[algorithm]['patch_size'])
@@ -610,8 +612,9 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         dec_in = int(config[algorithm]['dec_in'])
         c_out = int(config[algorithm]['c_out'])
         gpt_layers = int(config[algorithm]['gpt_layers'])
+        num_workers = int(config[algorithm]['num_workers'])
         seed = int(config[algorithm]['seed'])
-        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed)
+        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, num_workers, seed)
     elif algorithm == "bit_graph":
         node_number = int(config[algorithm]['node_number'])
         kernel_set = config[algorithm]['kernel_set']
@@ -1449,6 +1452,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "unconditional": bool(optimal_params[1]),
             "batch_size": bool(optimal_params[2]),
             "embedding": bool(optimal_params[3]),
+            "num_workers": bool(optimal_params[4]),
             "seed": 42,  # Default seed
         }
     elif algorithm == "knn" or algorithm == "knn_impute":
@@ -1550,7 +1554,8 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "dec_in": float(optimal_params[6]),
             "c_out": float(optimal_params[7]),
             "gpt_layers": int(optimal_params[8]),
-            "seed": int(optimal_params[9]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
         }
     elif algorithm == "gpt4ts":
         params_to_save = {
@@ -1563,7 +1568,8 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "dec_in": float(optimal_params[6]),
             "c_out": float(optimal_params[7]),
             "gpt_layers": int(optimal_params[8]),
-            "seed": int(optimal_params[9]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
         }
     else:
         print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")

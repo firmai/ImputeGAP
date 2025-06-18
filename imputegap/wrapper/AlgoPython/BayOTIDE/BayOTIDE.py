@@ -78,7 +78,7 @@ def generate_mask(data_matrix, drop_rate=0.8, valid_rate=0.2, verbose=False):
     return mask_train, mask_test, mask_valid
 
 
-def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, tr_ratio=0.9, config=None, args=None, verbose=True):
+def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, num_workers=0, tr_ratio=0.9, config=None, args=None, verbose=True):
     """
     Run BayOTIDE model using a provided NumPy data matrix instead of loading from a file.
 

@@ -45,7 +45,7 @@ def get_model_classes(model_str):
     return model, filler
 
 
-def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10.0, patience=4, epochs=20, workers=2,
+def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10.0, patience=4, epochs=20, workers=0,
                  adj_threshold=0.1, val_len=0.2, test_len=0.2, d_ff=16, ff_dropout=0.1, stride=1, l2_reg=0.0,
                  grad_clip_val=5.0, grad_clip_algorithm="norm", loss_fn="l1_loss", use_lr_schedule=True, hint_rate=0.7,
                  g_train_freq=1, d_train_freq=5, tr_ratio=0.9, seed=42, verbose=True):

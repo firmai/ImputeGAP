@@ -150,10 +150,7 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[2,3,6,7], dropout=0
         pred_len = 24
 
         if verbose:
-            print("(IMPUTATION) BitGRAPH")
-            print(f"\n\tnode_number: {node_number}\n\tkernel_set: {kernel_set}\n\tdropout: {dropout}\n\t"
-                  f"subgraph_size\n\t{subgraph_size}\n\tnode_dim: {node_dim}\n\tseq_len: {seq_len}\n\t"
-                  f"lr: {lr}\n\tepochs: {epoch}\n\tpred_len: {pred_len}\n\ttr_ratio: {tr_ratio}\n\tseed {seed}")
+            print(f"(IMPUTATION) BitGRAPH\n\tMatrix:{input.shape[0]}, {input.shape[1]}\n\tnode_number: {node_number}\n\tkernel_set: {kernel_set}\n\tdropout: {dropout}\n\tsubgraph_size\n\t{subgraph_size}\n\tnode_dim: {node_dim}\n\tseq_len: {seq_len}\n\tlr: {lr}\n\tepochs: {epoch}\n\tpred_len: {pred_len}\n\ttr_ratio: {tr_ratio}\n\tseed {seed}")
 
     else:
         data = np.copy(input)

@@ -155,6 +155,7 @@ RAYTUNE_PARAMS = {
         "unconditional": tune.choice([True, False]),  # Use unconditional or not
         "batch_size": tune.grid_search([-1, 8]),
         "embedding": tune.grid_search([-1, 8]),
+        "num_workers": 0,
         "seed": 42
     },
 
@@ -273,6 +274,7 @@ RAYTUNE_PARAMS = {
         "dec_in": tune.grid_search([-1, 16]),
         "c_out": tune.grid_search([-1, 16]),
         "gpt_layers":tune.grid_search([2, 6, 16]),
+        "num_workers":0,
         "seed":42
     },
     "gpt4ts": {
@@ -285,6 +287,7 @@ RAYTUNE_PARAMS = {
         "dec_in": tune.grid_search([-1, 16]),
         "c_out": tune.grid_search([-1, 16]),
         "gpt_layers":tune.grid_search([2, 6, 16]),
+        "num_workers":0,
         "seed":42
     }
 }

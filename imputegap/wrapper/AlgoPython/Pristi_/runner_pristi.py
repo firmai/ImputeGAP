@@ -22,7 +22,7 @@ from imputegap.wrapper.AlgoPython.Pristi_.main_model import PriSTI_PemsBAY
 from imputegap.wrapper.AlgoPython.Pristi_.utils import train, reconstruct
 
 
-def recov_pristi(data, target_strategy="block", unconditional=True, batch_size=-1, embedding=-1, num_workers=4, nsample=100, modelfolder="", tr_ratio=0.9, seed=42, verbose=True):
+def recov_pristi(data, target_strategy="block", unconditional=True, batch_size=-1, embedding=-1, num_workers=0, nsample=100, modelfolder="", tr_ratio=0.9, seed=42, verbose=True):
 
     recov = np.copy(data)
     m_mask = np.isnan(data)
