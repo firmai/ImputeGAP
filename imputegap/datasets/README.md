@@ -426,7 +426,7 @@ the collection of the daily exchange rates of eight foreign countries including 
 
 ## Temperature
 
-Add description here
+This dataset contains temperature data collected from climate stations in China from 1960 to 2012. Temperature time series are very highly correlated with each other.
 
 
 ### Summary

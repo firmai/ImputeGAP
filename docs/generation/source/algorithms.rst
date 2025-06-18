@@ -16,7 +16,7 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
      - Arxiv -- 2024
    * - LLMs
      - GPT4TS [34]_
-     - NIPS -- 2023
+     - NeurIPS -- 2023
    * - Deep Learning
      - MissNet [27]_
      - KDD -- 2024
