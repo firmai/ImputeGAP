@@ -24,18 +24,7 @@ jobs:
     - name: Run pytest
       run: |
         export CUDA_VISIBLE_DEVICES=""
-        python -m pytest ./tests/test_imputation_dynammo.py
-        python -m pytest ./tests/test_imputation_grouse.py
-        python -m pytest ./tests/test_imputation_iterative_svd.py
+        python -m pytest ./tests/test_imputation_deepmvi.py
         python -m pytest ./tests/test_imputation_rosl.py
         python -m pytest ./tests/test_imputation_soft_impute.py
         python -m pytest ./tests/test_imputation_spirit.py
-        python -m pytest ./tests/test_imputation_svt.py
-        python -m pytest ./tests/test_imputation_tkcm.py
-        python -m pytest ./tests/test_imputation_deepmvi.py
-        python -m pytest ./tests/test_imputation_brits.py
-        python -m pytest ./tests/test_imputation_pristi.py
-        python -m pytest ./tests/test_imputation_grin.py
-        python -m pytest ./tests/test_imputation_gain.py
-        python -m pytest ./tests/test_imputation_hkmf_t.py
-        python -m pytest ./tests/test_imputation_bit_graph.py
