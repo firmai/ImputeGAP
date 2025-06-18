@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>imputegap.tools.utils - ImputeGAP 1.1.0 Documentation</title>
+        <title>imputegap.tools.utils - ImputeGAP 1.1.1 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">ImputeGAP 1.1.0 Documentation</div></a>
+      <a href="../../../index.html"><div class="brand">ImputeGAP 1.1.1 Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">ImputeGAP 1.1.0 Documentation</span>
+  <span class="sidebar-brand-text">ImputeGAP 1.1.1 Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -788,7 +788,8 @@
         <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;batch_size&#39;</span><span class="p">])</span>
         <span class="n">nbr_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;nbr_features&#39;</span><span class="p">])</span>
         <span class="n">hidden_layers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;hidden_layers&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">nbr_features</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="p">)</span>
+        <span class="n">num_workers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_workers&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">nbr_features</span><span class="p">,</span> <span class="n">hidden_layers</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;mpin&quot;</span><span class="p">:</span>
         <span class="n">incre_mode</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;incre_mode&#39;</span><span class="p">])</span>
         <span class="n">window</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;window&#39;</span><span class="p">])</span>
@@ -805,8 +806,9 @@
         <span class="n">unconditional</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;unconditional&#39;</span><span class="p">])</span>
         <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;batch_size&#39;</span><span class="p">])</span>
         <span class="n">embedding</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;embedding&#39;</span><span class="p">])</span>
+        <span class="n">num_workers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_workers&#39;</span><span class="p">])</span>
         <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">target_strategy</span><span class="p">,</span> <span class="n">unconditional</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn_impute&quot;</span><span class="p">:</span>
         <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;k&#39;</span><span class="p">])</span>
         <span class="n">weights</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;weights&#39;</span><span class="p">])</span>
@@ -892,8 +894,9 @@
         <span class="n">dec_in</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;dec_in&#39;</span><span class="p">])</span>
         <span class="n">c_out</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;c_out&#39;</span><span class="p">])</span>
         <span class="n">gpt_layers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;gpt_layers&#39;</span><span class="p">])</span>
+        <span class="n">num_workers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_workers&#39;</span><span class="p">])</span>
         <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">seq_length</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">pred_length</span><span class="p">,</span> <span class="n">label_length</span><span class="p">,</span> <span class="n">enc_in</span><span class="p">,</span> <span class="n">dec_in</span><span class="p">,</span> <span class="n">c_out</span><span class="p">,</span> <span class="n">gpt_layers</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">seq_length</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">pred_length</span><span class="p">,</span> <span class="n">label_length</span><span class="p">,</span> <span class="n">enc_in</span><span class="p">,</span> <span class="n">dec_in</span><span class="p">,</span> <span class="n">c_out</span><span class="p">,</span> <span class="n">gpt_layers</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;gpt4ts&quot;</span><span class="p">:</span>
         <span class="n">seq_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seq_length&#39;</span><span class="p">])</span>
         <span class="n">patch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;patch_size&#39;</span><span class="p">])</span>
@@ -904,8 +907,9 @@
         <span class="n">dec_in</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;dec_in&#39;</span><span class="p">])</span>
         <span class="n">c_out</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;c_out&#39;</span><span class="p">])</span>
         <span class="n">gpt_layers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;gpt_layers&#39;</span><span class="p">])</span>
+        <span class="n">num_workers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_workers&#39;</span><span class="p">])</span>
         <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">seq_length</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">pred_length</span><span class="p">,</span> <span class="n">label_length</span><span class="p">,</span> <span class="n">enc_in</span><span class="p">,</span> <span class="n">dec_in</span><span class="p">,</span> <span class="n">c_out</span><span class="p">,</span> <span class="n">gpt_layers</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">seq_length</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">pred_length</span><span class="p">,</span> <span class="n">label_length</span><span class="p">,</span> <span class="n">enc_in</span><span class="p">,</span> <span class="n">dec_in</span><span class="p">,</span> <span class="n">c_out</span><span class="p">,</span> <span class="n">gpt_layers</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;bit_graph&quot;</span><span class="p">:</span>
         <span class="n">node_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;node_number&#39;</span><span class="p">])</span>
         <span class="n">kernel_set</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;kernel_set&#39;</span><span class="p">]</span>
@@ -916,8 +920,9 @@
         <span class="n">lr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;lr&#39;</span><span class="p">])</span>
         <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;batch_size&#39;</span><span class="p">])</span>
         <span class="n">epoch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;epoch&#39;</span><span class="p">])</span>
+        <span class="n">num_workers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_workers&#39;</span><span class="p">])</span>
         <span class="n">seed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;seed&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">node_number</span><span class="p">,</span> <span class="n">kernel_set</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">subgraph_size</span><span class="p">,</span> <span class="n">node_dim</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;greedy&quot;</span><span class="p">:</span>
         <span class="n">n_calls</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;n_calls&#39;</span><span class="p">])</span>
         <span class="n">metrics</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;metrics&#39;</span><span class="p">]</span>
@@ -1747,7 +1752,8 @@
             <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">optimal_params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
             <span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
             <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
-            <span class="s2">&quot;hidden_layers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="s2">&quot;hidden_layers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
         <span class="p">}</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;deep_mvi&quot;</span><span class="p">:</span>
         <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
@@ -1773,6 +1779,7 @@
             <span class="s2">&quot;unconditional&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
             <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
             <span class="s2">&quot;embedding&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
             <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>  <span class="c1"># Default seed</span>
         <span class="p">}</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span> <span class="ow">or</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;knn_impute&quot;</span><span class="p">:</span>
@@ -1861,7 +1868,8 @@
             <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span>
             <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">7</span><span class="p">]),</span>
             <span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">8</span><span class="p">]),</span>
-            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]),</span>
+            <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">10</span><span class="p">]),</span>
         <span class="p">}</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;nuwats&quot;</span><span class="p">:</span>
         <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
@@ -1874,7 +1882,8 @@
             <span class="s2">&quot;dec_in&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span>
             <span class="s2">&quot;c_out&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">7</span><span class="p">]),</span>
             <span class="s2">&quot;gpt_layers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">8</span><span class="p">]),</span>
-            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]),</span>
+            <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">10</span><span class="p">]),</span>
         <span class="p">}</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;gpt4ts&quot;</span><span class="p">:</span>
         <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
@@ -1887,7 +1896,8 @@
             <span class="s2">&quot;dec_in&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span>
             <span class="s2">&quot;c_out&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">7</span><span class="p">]),</span>
             <span class="s2">&quot;gpt_layers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">8</span><span class="p">]),</span>
-            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]),</span>
+            <span class="s2">&quot;num_workers&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">9</span><span class="p">]),</span>
+            <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">optimal_params</span><span class="p">[</span><span class="mi">10</span><span class="p">]),</span>
         <span class="p">}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t\t</span><span class="s2">(SYS) Algorithm </span><span class="si">{</span><span class="n">algorithm</span><span class="si">}</span><span class="s2"> is not recognized.&quot;</span><span class="p">)</span>
@@ -2155,7 +2165,7 @@
       
     </aside>
   </div>
-</div><script src="../../../static/documentation_options.js?v=fc837d61"></script>
+</div><script src="../../../static/documentation_options.js?v=58fbf978"></script>
     <script src="../../../static/doctools.js?v=9bcbadda"></script>
     <script src="../../../static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../static/scripts/furo.js?v=5fa4622c"></script>

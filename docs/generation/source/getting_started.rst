@@ -334,13 +334,13 @@ Installation
 
                 .. code-block:: powershell
 
-                     docker pull qnater/imputegap:1.1.1
+                     docker pull qnater/imputegap:1.1.2
 
                 Run the Docker container:
 
                 .. code-block:: powershell
 
-                    docker run -p 8888:8888 qnater/imputegap:1.1.1
+                    docker run -p 8888:8888 qnater/imputegap:1.1.2
 
                 Open the following link:
 
@@ -361,13 +361,13 @@ Installation
 
                 .. code-block:: bash
 
-                    docker pull qnater/imputegap:1.1.1
+                    docker pull qnater/imputegap:1.1.2
 
                 Run the Docker container:
 
                 .. code-block:: bash
 
-                    docker run -p 8888:8888 qnater/imputegap:1.1.1
+                    docker run -p 8888:8888 qnater/imputegap:1.1.2
 
                 Open the following link:
 
@@ -388,13 +388,13 @@ Installation
 
                 .. code-block:: bash
 
-                    docker pull --platform linux/x86_64 qnater/imputegap:1.1.1
+                    docker pull --platform linux/x86_64 qnater/imputegap:1.1.2
 
                 Run the Docker container:
 
                 .. code-block:: bash
 
-                    docker run -p 8888:8888 qnater/imputegap:1.1.1
+                    docker run -p 8888:8888 qnater/imputegap:1.1.2
 
                 Open the following link:
 

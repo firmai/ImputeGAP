@@ -48,6 +48,7 @@ seq_len = -1
 lr = 0.001
 batch_size = 32
 epoch = 50
+num_workers = 0
 seed = 42
 
 # ALGORITHM DEFAULT VALUES : MACHINE LEARNING
@@ -110,6 +111,7 @@ epoch = 100
 batch_size = -1
 nbr_features = 1
 hidden_layers = 64
+num_workers = 0
 
 [deep_mvi]
 max_epoch = 100

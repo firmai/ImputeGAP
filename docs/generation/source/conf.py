@@ -50,10 +50,10 @@ html_static_path = ['static']
 html_css_files = ['custom.css']
 
 # Set the version and release info
-version = '1.1.0'
-release = '1.1.0'
+version = '1.1.1'
+release = '1.1.1'
 
-html_title = "ImputeGAP 1.1.0 Documentation"
+html_title = "ImputeGAP 1.1.1 Documentation"
 
 
 html_theme_options = {

@@ -290,7 +290,7 @@ def loaddataset_imputegap(history_len, pred_len, mask_ratio, dataset, batch_size
     return train_dataloader, val_dataloader, test_dataloader, imputegap_dataloader, scaler, scaler
 
 
-def loaddataset(history_len,pred_len,mask_ratio,dataset):
+def loaddataset(history_len,pred_len,mask_ratio,dataset,num_workers=0):
     data_numpy,mask=synthetic_data(mask_ratio,dataset)
     x, y, mask,mask_target = Add_Window_Horizon(
         data_numpy, mask,history_len, pred_len)
@@ -316,9 +316,9 @@ def loaddataset(history_len,pred_len,mask_ratio,dataset):
     train_dataset = TSDataset(x_tra, y_tra,masks_tra,masks_target_tra)
     val_dataset = TSDataset(x_val, y_val,masks_val,masks_target_val)
     test_dataset = TSDataset(x_test, y_test,masks_test,masks_target_test)
-    train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=0, drop_last=True)
-    val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=0, drop_last=True)
-    test_dataloader = DataLoader(test_dataset,batch_size=32, shuffle=False, num_workers=0, drop_last=False)
+    train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=num_workers, drop_last=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=num_workers, drop_last=True)
+    test_dataloader = DataLoader(test_dataset,batch_size=32, shuffle=False, num_workers=num_workers, drop_last=False)
 
 
     return train_dataloader, val_dataloader, test_dataloader, test_dataloader, scaler, scaler

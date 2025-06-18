@@ -1790,6 +1790,8 @@ class Imputation:
                             Number of features, dimension in the time series.
                         hidden_layer : int
                             Number of units in the hidden layer of the model. Controls the capacity of the neural network to learn complex patterns.
+                        num_workers: int, optional
+                            Number of worker for multiprocess (default is 0).
 
                 Returns
                 -------
@@ -1800,7 +1802,7 @@ class Imputation:
                 -------
                     >>> brits_imputer = Imputation.DeepLearning.BRITS(incomp_data)
                     >>> brits_imputer.impute()  # default parameters for imputation > or
-                    >>> brits_imputer.impute(params={"model": "brits", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64})  # user-defined > or
+                    >>> brits_imputer.impute(params={"model": "brits", "epoch": 2, "batch_size": 10, "nbr_features": 1, "hidden_layer": 64, "num_workers":0})  # user-defined > or
                     >>> brits_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # automl with ray_tune
                     >>> recov_data = brits_imputer.recov_data
 
@@ -1815,13 +1817,13 @@ class Imputation:
                     return
 
                 if params is not None:
-                    model, epoch, batch_size, nbr_features, hidden_layer = self._check_params(user_def, params)
+                    model, epoch, batch_size, nbr_features, hidden_layer, num_workers = self._check_params(user_def, params)
                 else:
-                    model, epoch, batch_size, nbr_features, hidden_layer = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    model, epoch, batch_size, nbr_features, hidden_layer, num_workers = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
                 seq_length = self.incomp_data.shape[1]
 
-                self.recov_data = brits(incomp_data=self.incomp_data, model=model, epoch=epoch, batch_size=batch_size, nbr_features=nbr_features, hidden_layers=hidden_layer, seq_length=seq_length, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
+                self.recov_data = brits(incomp_data=self.incomp_data, model=model, epoch=epoch, batch_size=batch_size, nbr_features=nbr_features, hidden_layers=hidden_layer, seq_length=seq_length, num_workers=num_workers, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
                 return self
 
         class DeepMVI(BaseImputer):
@@ -2499,6 +2501,9 @@ class Imputation:
                         epoch : int, optional
                             Number of training epochs (default: 10).
 
+                        num_workers: int, optional
+                            Number of worker for multiprocess (default is 0).
+
                         seed : int, optional
                             Random seed for reproducibility (default: 42).
 
@@ -2511,7 +2516,7 @@ class Imputation:
                 -------
                     >>> bit_graph_imputer = Imputation.DeepLearning.BitGraph(incomp_data)
                     >>> bit_graph_imputer.impute()  # default parameters for imputation > or
-                    >>> bit_graph_imputer.impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "batch_size": 32, "epoch":10, "seed":42})  # user defined> or
+                    >>> bit_graph_imputer.impute(user_def=True, params={"node_number":-1, "kernel_set":[1], "dropout":0.1, "subgraph_size":5, "node_dim":3, "seq_len":1, "lr":0.001, "batch_size": 32, "epoch":10, "num_workers":0, "seed":42})  # user defined> or
                     >>> bit_graph_imputer.impute(user_def=False, params={"input_data": ts.data, "optimizer": "ray_tune"})  # auto-ml with ray_tune
                     >>> recov_data = bit_graph_imputer.recov_data
 
@@ -2524,11 +2529,11 @@ class Imputation:
                 from imputegap.algorithms.bit_graph import bit_graph
 
                 if params is not None:
-                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed = self._check_params(user_def, params)
+                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, num_workers, seed = self._check_params(user_def, params)
                 else:
-                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+                    node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, num_workers, seed = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = bit_graph(incomp_data=self.incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
+                self.recov_data = bit_graph(incomp_data=self.incomp_data, node_number=node_number, kernel_set=kernel_set, dropout=dropout, subgraph_size=subgraph_size, node_dim=node_dim, seq_len=seq_len, lr=lr, epoch=epoch, num_workers=num_workers, tr_ratio=tr_ratio, seed=seed, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -2598,7 +2603,7 @@ class Imputation:
                             Number of layers in the transformer/generator component (default: 6).
 
                         num_workers: int, optional
-                            Number of worker for multiprocess (default is 00).
+                            Number of worker for multiprocess (default is 0).
 
                         seed : int, optional
                             Random seed for reproducibility (default: 42).

@@ -494,7 +494,8 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         batch_size = int(config[algorithm]['batch_size'])
         nbr_features = int(config[algorithm]['nbr_features'])
         hidden_layers = int(config[algorithm]['hidden_layers'])
-        return (model, epoch, batch_size, nbr_features, hidden_layers)
+        num_workers = int(config[algorithm]['num_workers'])
+        return (model, epoch, batch_size, nbr_features, hidden_layers, num_workers)
     elif algorithm == "mpin":
         incre_mode = str(config[algorithm]['incre_mode'])
         window = int(config[algorithm]['window'])
@@ -625,8 +626,9 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         lr = float(config[algorithm]['lr'])
         batch_size = int(config[algorithm]['batch_size'])
         epoch = int(config[algorithm]['epoch'])
+        num_workers = int(config[algorithm]['num_workers'])
         seed = int(config[algorithm]['seed'])
-        return (node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed)
+        return (node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, num_workers, seed)
     elif algorithm == "greedy":
         n_calls = int(config[algorithm]['n_calls'])
         metrics = config[algorithm]['metrics']
@@ -1426,7 +1428,8 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "model": optimal_params[0],
             "epoch": int(optimal_params[1]),
             "batch_size": int(optimal_params[2]),
-            "hidden_layers": int(optimal_params[3])
+            "hidden_layers": int(optimal_params[3]),
+            "num_workers": int(optimal_params[4])
         }
     elif algorithm == "deep_mvi":
         params_to_save = {
@@ -1541,7 +1544,8 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "lr": float(optimal_params[6]),
             "batch_size": float(optimal_params[7]),
             "epoch": int(optimal_params[8]),
-            "seed": int(optimal_params[9]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
         }
     elif algorithm == "nuwats":
         params_to_save = {
