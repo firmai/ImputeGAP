@@ -8,7 +8,7 @@ Tutorials
 Dataset Loading
 ---------------
 
-ImputeGAP comes with several time series datasets. The list of datasets is described `here <datasets.html>`_.
+ImputeGAP comes with several time series datasets. The datasets are listed `here <datasets.html>`_.
 
 As an example, we use the eeg-alcohol dataset, composed of individuals with a genetic predisposition to alcoholism. The dataset contains measurements from 64 electrodes placed on subject’s scalps, sampled at 256 Hz. The dimensions of the dataset are 64 series, each containing 256 values.
 
@@ -32,7 +32,7 @@ To load and plot the eeg-alcohol dataset from the library:
 
 
 
-The module ``ts.datasets`` contains all the publicly available datasets provided by the library, which can be listed as follows:
+The module ``ts.datasets`` contains all the publicly available datasets provided by the library. They can be listed as follows:
 
 .. code-block:: python
 
@@ -59,13 +59,13 @@ To load your own dataset, add the path to your file in the ``ts.load_series`` fu
 
     Please ensure that your input data satisfies the following format:
 
-    - Columns are the series' values, and rows are the timestamps
+    - Columns are the series' values
     - Column separator: empty space
     - Row separator: newline
     - Missing values are NaNs
 
 
-To import the time series as a matrix, add it to the  ``ts.import_matrix`` function:
+To import the time series as a matrix, pass it as an argument of the ``ts.import_matrix`` function:
 
 .. code-block:: python
 
@@ -88,7 +88,7 @@ To import the time series as a matrix, add it to the  ``ts.import_matrix`` funct
 
 Data Contamination
 ------------------
-We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. The list of patterns is described `here <patterns.html>`_.
+We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. The patterns are described `here <patterns.html>`_.
 
 As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pattern:
 
@@ -137,7 +137,7 @@ All missingness patterns developed in ImputeGAP are available in the ``ts.patter
 Imputation
 ----------
 
-In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms: Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search.
+In this section, we will illustrate how to impute the contaminated time series. Our library implements six families of imputation algorithms: Statistical, Machine Learning, Matrix Completion, Deep Learning, Pattern Search, and Large Language Models.
 The list of algorithms is described `here <algorithms.html>`_.
 
 
@@ -179,7 +179,7 @@ Imputation can be performed using either default values or user-defined values. 
     imputer.impute(params=config)
 
 
-All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module, which can be listed as follows:
+All algorithms developed in ImputeGAP are available in the ``ts.algorithms`` module. They can be listed as follows:
 
 .. code-block:: python
 
@@ -243,7 +243,7 @@ The Optimizer component manages algorithm configuration and hyperparameter tunin
 
 
 
-All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module, which can be listed as follows:
+All optimizers developed in ImputeGAP are available in the ``ts.optimizers`` module. They can be listed as follows:
 
 .. code-block:: python
 
@@ -346,7 +346,7 @@ ImputeGAP includes a dedicated module for systematically evaluating the impact o
 
 
 
-All downstream models developed in ImputeGAP are available in the ``ts.forecasting_models`` module, which can be listed as follows:
+All downstream models developed in ImputeGAP are available in the ``ts.forecasting_models`` module. They can be listed as follows:
 
 .. code-block:: python
 
@@ -370,7 +370,7 @@ Explainer
 ---------
 
 
-The library provides insights into the algorithm's behavior by identifying the features that impact the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (`SHAP <https://shap.readthedocs.io/en/latest/>`_) to reveal how different time series features influence the model’s predictions.
+The library provides insights into the algorithm's behavior by identifying the features that impact the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (`SHAP <https://shap.readthedocs.io/en/latest/>`_) to measure how different time series features influence the model’s predictions.
 
 Let's illustrate the explainer using the CDRec algorithm and MCAR missingness pattern:
 
@@ -398,7 +398,7 @@ Let's illustrate the explainer using the CDRec algorithm and MCAR missingness pa
     exp.show()
 
 
-All feature extractors developed in ImputeGAP are available in the ``ts.extractors`` module, which can be listed as follows:
+All feature extractors developed in ImputeGAP are available in the ``ts.extractors`` module. They can be listed as follows:
 
 .. code-block:: python
 

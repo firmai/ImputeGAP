@@ -2,7 +2,7 @@
 Datasets
 ========
 
-ImputeGAP provides datasets for experimenting with imputation techniques and the library's modules.
+ImputeGAP provides datasets for experimenting with imputation techniques and the library's modules. The datasets are stored in ``./imputegap/datasets``.
 
 .. raw:: html
 
@@ -12,7 +12,7 @@ ImputeGAP provides datasets for experimenting with imputation techniques and the
 **Weather**
 
     -   `climate <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/datasets#climate>`_
-    -   `meteo suisse <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/datasets#meteo-suisse>`_
+    -   `meteo suisse <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/datasets#meteoswiss>`_
     -   `temperature <https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/datasets#temperature>`_
 
 
@@ -64,4 +64,4 @@ ImputeGAP provides datasets for experimenting with imputation techniques and the
 
 
 
-The datasets are stored in ``./imputegap/datasets``.
+

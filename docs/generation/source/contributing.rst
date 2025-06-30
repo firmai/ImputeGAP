@@ -1,20 +1,20 @@
 Contributing
 ============
 
-ImputeGAP allows users to integrate their own algorithms. We provide a wrapper that needs to be adjusted with the core of the imputation algorithm.
+ImputeGAP allows users to integrate their own algorithms. We describe in turn the integration python and other languages.
 
-Initialize a Git Repository
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initialization
+~~~~~~~~~~~~~~
 
-command::
+Initialize a Git Repository::
 
         $ git init
         $ git clone https://github.com/eXascaleInfolab/ImputeGAP
         $ cd ./ImputeGAP
 
 
-A. Integration Steps (in Python)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A. Python Integration Steps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Basic Features
 --------------
@@ -25,13 +25,13 @@ Basic Features
 4. Replace the section under ``# core of the algorithm`` with your algorithm’s implementation. The algorithms should take as input the ``TimeSeries`` object structure and should return a ``numpy.ndarray`` matrix.
 5. Navigate to ``./imputegap/recovery/imputation.py``:
 
-   a. Copy the ``class MeanImpute(BaseImputer)`` into the corresponding family of algorithms.
+   a. Copy the ``class MeanImpute(BaseImputer)`` into the corresponding class of algorithms' family.
 
    b. Rename the class. e.g., ``class NewAlg(BaseImputer)``.
 
    c. Change the value of the ``algorithm`` variable from ``mean_impute`` to ``new_alg``
 
-   d. In the def ``impute()`` method, replace the call of the function to link into your new algorithm, e.g.,
+   d. In the ``def impute()`` method, replace the call of the function to link into your new algorithm, e.g.,
 
     .. code-block:: python
 
@@ -51,9 +51,7 @@ Advanced Features
 I. Initialize default values
 ____________________________
 
-1. To set the default values of your algorithm, please update ``./imputegap/env/default_values.toml`` and add your configuration:
-
-command::
+1. To set the default values of your algorithm, please update ``./imputegap/env/default_values.toml`` and add your configuration. For example::
 
         [new_alg]
         param_integer = 42
@@ -81,7 +79,7 @@ To access the benchmarking features, please update ``./imputegap/tools/utils.py`
             imputer = Imputation.MyFamily.NewAlg(incomp_data)
 
 
-Replace MyFamily with either: Statistics, MatrixCompletion, PatternSearch, MachineLearning, or DeepLearning
+Replace MyFamily with either: Statistics, MatrixCompletion, PatternSearch, MachineLearning, DeepLearning, or LLMs.
 
 
 .. raw:: html
@@ -145,31 +143,39 @@ Improve the imputation call of the ``NewAlg`` class in the ``def impute()`` func
 
    <br><br>
 
-B. Integration Steps (other languages)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-We will show how to adjust the integration wrapper in C++
+
+B. C++ Integration Steps
+~~~~~~~~~~~~~~~~~~~~~~~~
+We provide a wrapper that can serve as a template for the integration of users’ code. We will show how to adjust the wrapper in C++.
 
 1. Navigate to the ``./imputegap/algorithms`` directory.
-2. If not already done, convert your CPP/H files into a shared object format (``.so``) and place them in the ``imputegap/algorithms/lib`` folder.
+2. Convert your CPP/H files into a shared object format (``.so``) and place them in the ``imputegap/algorithms/lib`` folder.
+
    a. Go to ``./imputegap/wrapper/AlgoCollection`` and update the Makefile. Copy commands from ``libSTMVL.so`` or modify them as needed.
+
    b. Optionally, copy your C++ project files into the directory.
+
    c. Generate the ``.so`` file using the ``make`` command::
 
         make your_lib_name
 
-   d. Optional: To include the .so file in the "in-built" directory, open a command line, navigate to the root directory, and execute the library build process::
+   d. To include the .so file in the "in-built" directory, open a command line, navigate to the root directory, and execute the library build process::
 
         rm -rf dist/
         python setup.py sdist bdist_wheel
 
-3. Rename ``cpp_integration.py`` to reflect your algorithm’s name.
+3. Rename ``cpp_integration.py`` to the name of your algorithm.
 4. Modify the ``native_algo()`` function:
+
    a. Update the shared object parameter to match your shared library.
+
    b. Convert input parameters to the appropriate C++ types and pass them to your shared object methods.
+
    c. Convert the imputed matrix back to a numpy format.
+
 5. Adapt the template method ``your_algo.py`` with the appropriate parameters, ensuring compatibility with the ``TimeSeries`` object and a ``numpy.ndarray`` return type.
-6. Adapt the ``./imputegap/recovery/imputation.py``:
-   a. Add a function to call your new algorithm by copying and modifying ``class MeanImpute(BaseImputer)`` as needed. You can copy-paste the class into the corresponding category of algorithms.
+6. Adapt the ``./imputegap/recovery/imputation.py`` by adding a function to call your new algorithm by copying and modifying ``class MeanImpute(BaseImputer)`` as needed. You can copy-paste the class into the corresponding category of algorithms.
+
 7. Perform imputation as needed.
 
 .. raw:: html

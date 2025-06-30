@@ -8,18 +8,18 @@ real-world time series from various of applications and which cover a wide range
 
 ## Air-Quality
 
-The air quality dataset brings a subset of air quality measurements collected from 36 monitoring stations in China from 2014 to 2015.
+The air quality dataset includes a subset of air quality measurements collected from 36 monitoring stations in China from 2014 to 2015.
 
 ### Summary
 
-| Data info   |                                                                                                                                         |
-|-------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| codename    | airq                                                                                                                                    |
-| name        | Air Quality                                                                                                                             |
-| url         | https://archive.ics.uci.edu/dataset/360/air+quality                                                                                     | 
-| source      | On field calibration of an electronic nose for benzene estimation in an urban pollution monitoring scenario: Sensors and Actuators B'08 | 
-| granularity | hourly                                                                                                                                  |
-| size        | M=10 N=1000                                                                                                                             |
+| Data info   |                                                                                                                                                   |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| codename    | airq                                                                                                                                              |
+| name        | Air Quality                                                                                                                                       |
+| url         | https://archive.ics.uci.edu/dataset/360/air+quality                                                                                               | 
+| source      | On field calibration of an electronic nose for benzene estimation in an urban pollution monitoring scenario: Sensors and Actuators B: Chemical'08 | 
+| granularity | hourly                                                                                                                                            |
+| series      | n_series=10; n_values/series=1000                                                                                                                 |
 
 
 ### Sample plots
@@ -33,7 +33,7 @@ The air quality dataset brings a subset of air quality measurements collected fr
 
 ## BAFU
 
-The BAFU dataset, kindly provided by the BundesAmt Für Umwelt (the Swiss Federal Office for the Environment)[https://www.bafu.admin.ch], contains water discharge time series collected from different Swiss rivers containing between 200k and 1.3 million values each and covers the time period from 1974 to 2015. The BAFU dataset appeared in [[2]](#ref2).
+The BAFU dataset, kindly provided by the BundesAmt Für Umwelt (the Swiss Federal Office for the Environment)[https://www.bafu.admin.ch], contains water discharge time series collected from different Swiss rivers containing between 200k and 1.3 million values each and covers the time period from 1974 to 2015.
 
 ### Summary
 
@@ -44,7 +44,7 @@ The BAFU dataset, kindly provided by the BundesAmt Für Umwelt (the Swiss Federa
 | url         | https://github.com/eXascaleInfolab/bench-vldb20/tree/master                                                   |
 | source      | Mind the Gap: An Experimental Evaluation of Imputation of Missing Values Techniques in Time Series (PVLDB'20) |
 | granularity | 30 minutes                                                                                                    |
-| size        | M=12 N=85203                                                                                                  |
+| size        | n_series=12; n_values/series=85203                                                                            |
 
 
 
@@ -63,14 +63,14 @@ It consists of 50 time series, each representing a distinct location, with 1,000
 
 ### Summary
 
-| Data info            |                                                                                                                                                                                    |
-|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| codename                | chlorine                                                                                                                                                                           |
-| name                    | Chlorine data                                                                                                                                                                      |
-| URL                     | https://www.epa.gov/research                                                                                                                                                       |
-| source                  | Streaming pattern discovery in multiple time-series (PVLDB'05)                                                                                                                     |
-| granularity             | 5 minutes                                                                                                                                                                          |
-| size                    | M=50 N=1000                                                                                                                                                                        |
+| Data info            |                                                                |
+|-------------------------|----------------------------------------------------------------|
+| codename                | chlorine                                                       |
+| name                    | Chlorine data                                                  |
+| URL                     | https://www.epa.gov/research                                   |
+| source                  | Streaming pattern discovery in multiple time-series (PVLDB'05) |
+| granularity             | 5 minutes                                                      |
+| size                    | n_series=50; n_values/series=1000                              |
 
 
 ### Sample Plots
@@ -99,7 +99,7 @@ This structure is particularly valuable for spatio-temporal modeling [Spatial-te
 | url         | https://viterbi-web.usc.edu/~liu32/data.html (NA-1990-2002-Monthly.csv)  |
 | source      | Spatial-temporal causal modeling for climate change attribution (KDD'09) |
 | granularity | 1 month                                                                  |
-| size        | M=10 N=5000                                                              |
+| size        | n_series=10; n_values/series=5000                                        |
 
 
 
@@ -126,7 +126,7 @@ The dataset has a time granularity of 6 hours and consists of 100 time series, e
 | url         | https://archive.ics.uci.edu/ml/datasets/Gas+Sensor+Array+Drift+Dataset+at+Different+Concentrations (only batch 10)                                       |
 | source      | On the calibration of sensor arrays for pattern recognition using the minimal number of experiments (Chemometrics and Intelligent Laboratory Systems'14) |
 | granularity | 6 hours                                                                                                                                                  |
-| size        | M=100  N=1000                                                                                                                                            |
+| size        | n_series=100; n_values/series=1000                                                                                                                       |
 
 
 ### Sample Plots
@@ -151,14 +151,14 @@ This dataset is primarily used for the analysis of medical and brain-related dat
 
 ### Summary
 
-| Data info   | Values                                                                                                                                                            |
-|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| codename    | eeg-alcohol                                                                                                                                                       |
-| name        | EEG Database: Genetic Predisposition to Alcoholism                                                                                                                |
-| url         | https://kdd.ics.uci.edu/databases/eeg/eeg.data.html (batch co3a0000458.rd / S2 match, trial 119)                                                         |
+| Data info   | Values                                                                                                                                                              |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| codename    | eeg-alcohol                                                                                                                                                         |
+| name        | EEG Database: Genetic Predisposition to Alcoholism                                                                                                                  |
+| url         | https://kdd.ics.uci.edu/databases/eeg/eeg.data.html (batch co3a0000458.rd / S2 match, trial 119)                                                                    |
 | source      | Statistical mechanics of neocortical interactions: Canonical momenta indicators of electroencephalography. Physical Review E. Volume 55. Number 4. Pages 4578-4593. |
-| granularity | 1 second per measurement (3.9 ms epoch)                                                                                                                           |
-| size        | M=64 N=256                                                                                                                                              |
+| granularity | 1 second per measurement (3.9 ms epoch)                                                                                                                             |
+| size        | n_series=64; n_values/series=256                                                                                                                                    |
 
 
 
@@ -191,7 +191,7 @@ The extracted dataset contains 1201 values across 33 series.
 | url         | https://doi.org/10.17605/OSF.IO/RKQBU (epoch 1 used on 564)                                  |
 | source      | DERCo: A Dataset for Human Behaviour in Reading Comprehension Using EEG (scientific data'24) |
 | granularity | 1000.0 Hz                                                                                    |
-| size        | M=33 N=1201                                                                                  |
+| size        | n_series=33; n_values/series=1202                                                            |
 
 
 
@@ -224,7 +224,7 @@ The electricity dataset has data on household energy consumption of 370 individu
 | url         | https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014                  | 
 | source      | Artur Trindade, artur.trindade '@' elergone.pt <br> Elergone, NORTE-07-0202-FEDER-038564 | 
 | granularity | 15 minutes                                                                               |
-| size        | M=20 N=5000                                                                              |
+| size        | n_series=20; n_values/series=5000                                                        |
 
 
 
@@ -255,7 +255,7 @@ The fMRI-Stoptask dataset will emphasize brain activity in regions such as the r
 | name       | Visual object recognition                                                                 |
 | url        | https://www.openfmri.org/dataset/ds000007/ (epoch 1 used on 120)                          |
 | source     | Common neural substrates for inhibition of spoken and manual responses. (Cereb Cortex'08) |
-| size       | M=182 N=10000                                                                             |
+| size       | n_series=10000; n_values/series=182                                                       |
 
 
 
@@ -269,7 +269,7 @@ The fMRI-Stoptask dataset will emphasize brain activity in regions such as the r
 
 
 
-## Meteo Suisse
+## MeteoSwiss
 
 The MeteoSwiss dataset, kindly provided by the Swiss Federal Office of Meteorology and Climatology [http://meteoswiss.admin.ch], contains weather time series recorded in different cities in Switzerland from 1980 to 2018. The MeteoSwiss dataset appeared in [[1]](#ref1).
 
@@ -282,7 +282,7 @@ The MeteoSwiss dataset, kindly provided by the Swiss Federal Office of Meteorolo
 | url         | https://www.meteoswiss.admin.ch/services-and-publications/service/open-data.html                  | 
 | source      | Scalable Recovery of Missing Blocks in Time Series with High and Low Cross-Correlations (KAIS'20) | 
 | granularity | 10 minutes                                                                                        |
-| size        | M=20 N=10000                                                                                      |
+| size        | n_series=20; n_values/series=10000                                                                |
 
 ### Sample Plots
 
@@ -307,7 +307,7 @@ The motion dataset consists of time series data collected from accelerometer and
 | url         | https://github.com/mmalekzadeh/motion-sense  | 
 | source      | Mobile Sensor Data Anonymization (IoTDI ’19) | 
 | granularity | 50Hz                                         |
-| size        | M=20 N=10000                                 |
+| size        | n_series=20; n_values/series=10000           |
 
 
 ### Sample Plots
@@ -334,7 +334,7 @@ The soccer dataset, initially presented in the DEBS Challenge 2013 [[3]](#ref3),
 | name      | Soccer                                  |
 | url       | https://debs.org/grand-challenges/      |
 | source    | The DEBS 2013 grand challenge (DEBS'13) |
-| size      | M=10 N=100000                           |
+| size      | n_series=10; n_values/series=100000     |
 
 
 ### Sample Plots
@@ -346,18 +346,28 @@ The soccer dataset, initially presented in the DEBS Challenge 2013 [[3]](#ref3),
 
 ## Solar Plant
 
-Real-time dataset of a thermal solar plant logged in the time of 2016-12-28 till 2018-10-10.
+Real-time dataset of a thermal solar plant logged every minute from December 28, 2016, to October 10, 2018. The recordings come directly from a real plant, capturing the following:
+
+- Temperatures from multiple sensors
+- Pressure readings
+- Flow rates
+- PWM and relay activity
+- Operational runtime
+- Heat energy output
+- Error and status codes
+- And several other system metrics
+
 
 ### Summary
 
-| Dataset info |                                                        |
-|--------------|--------------------------------------------------------|
-| codename     | solar_plant                                            |
-| name         | Solar Plant                                            |
-| url          | https://github.com/stritti/thermal-solar-plant-dataset | 
-| source	     | -                                                      |
-| granularity  | minutes                                                |
-| size         | M=3 N=799                                              |
+| Dataset info |                                                                                                 |
+|--------------|-------------------------------------------------------------------------------------------------|
+| codename     | solar_plant                                                                                     |
+| name         | Solar Plant                                                                                     |
+| url          | https://github.com/stritti/thermal-solar-plant-dataset (temperature 01/2021 used: 20210120.csv) | 
+| source	     | -                                                                                               |
+| granularity  | minutes                                                                                         |
+| size         | n_series=3; n_values/series=799                                                                 |
 
 
 
@@ -383,7 +393,7 @@ Dataset consists of data in categories walking, running, biking, skiing, and rol
 | url          | https://www.kaggle.com/datasets/jarnomatarmaa/sportdata-mts-5?resource=download         | 
 | source	      | A novel multivariate time series dataset of outdoor sport activities (Discover Data'25) |
 | granularity  | 1 minute                                                                                |
-| size         | M=69 N=1140                                                                             |
+| size         | n_series=69; n_values/series=1140                                                       |
 
 
 
@@ -410,7 +420,7 @@ the collection of the daily exchange rates of eight foreign countries including 
 | source       | https://github.com/laiguokun/multivariate-time-series-data/tree/master                                                 | 
 | paper	       | Modeling Long- and Short-Term Temporal Patterns with Deep Neural Networks, Arxiv'17 (https://arxiv.org/abs/1703.07015) |
 | granularity  | daily                                                                                                                  |
-| size         | M=8 N=7588                                                                                                             |
+| size         | n_series=8; n_values/series=7588                                                                                       |
 
 
 
@@ -438,7 +448,7 @@ This dataset contains temperature data collected from climate stations in China 
 | url         | http://www.cma.gov.cn (25 first series)                                   | 
 | source      | ST-MVL: filling missing values in geo-sensory time series data (IJCAI'16) |
 | granularity | daily                                                                     |
-| size        | M=25 N=19358                                                              |
+| size        | n_series=25; n_values/series=19358                                        |
 
 
 ### Sample Plots
@@ -462,7 +472,7 @@ The raw data is in http://pems.dot.ca.gov. The data in this repo is a collection
 | url          | https://github.com/laiguokun/multivariate-time-series-data/tree/master               | 
 | source	      | Modeling Long- and Short-Term Temporal Patterns with Deep Neural Networks (Arxiv'17) |
 | granularity  | hourly                                                                               |
-| size         | M=20 N=17544                                                                         |
+| size         | n_series=20; n_values/series=17544                                                   |
 
 
 

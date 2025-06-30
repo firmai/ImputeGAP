@@ -1,9 +1,6 @@
 imputegap.recovery.optimization package
 ============================================
 
-Submodules
-----------
-
 
 Module contents
 ---------------

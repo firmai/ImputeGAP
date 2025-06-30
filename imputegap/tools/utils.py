@@ -583,8 +583,9 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         a0 = float(config[algorithm]['a0'])
         b0 = float(config[algorithm]['b0'])
         v = float(config[algorithm]['v'])
+        num_workers = int(config[algorithm]['num_workers'])
         tr_ratio = float(config[algorithm]['tr_ratio'])
-        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, tr_ratio)
+        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, num_workers, tr_ratio)
     elif algorithm == "hkmf_t":
         tags = config[algorithm]['tags']
         data_names = config[algorithm]['data_names']

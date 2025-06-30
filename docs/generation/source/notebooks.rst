@@ -9,8 +9,8 @@ Jupyter Notebooks
 
 The following notebooks are available for local use or execution in Jupyter environments:
 
-- `Jupyter Pipeline Creation <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/01_imputegap_pipeline_creation.ipynb>`_
-- `Jupyter Advanced Analytics <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/02_imputegap_advanced_analytics.ipynb>`_
+- `Jupyter: Pipeline_Creation <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/01_imputegap_pipeline_creation.ipynb>`_
+- `Jupyter: Advanced_Analytics <https://github.com/eXascaleInfolab/ImputeGAP/blob/refs/heads/main/imputegap/notebooks/02_imputegap_advanced_analytics.ipynb>`_
 
 
 .. raw:: html
@@ -22,8 +22,8 @@ Google Colab Notebooks
 
 The following notebooks can be run directly in your browser using Google Colab. They are ideal for quick testing and exploration without requiring any local setup:
 
-- `Google Colab Pipeline Creation <https://colab.research.google.com/drive/1Kq1_HVoCTWLtB1zyryR35opxXmaprztV?usp=sharing>`_
-- `Google Colab Advanced Analytics <https://colab.research.google.com/drive/1iOzLtpZTA3KDoyIc-srw2eoX5soEmP8x?usp=sharing>`_
+- `Google Colab: Pipeline_Creation <https://colab.research.google.com/drive/1Kq1_HVoCTWLtB1zyryR35opxXmaprztV?usp=sharing>`_
+- `Google Colab: Advanced_Analytics <https://colab.research.google.com/drive/1iOzLtpZTA3KDoyIc-srw2eoX5soEmP8x?usp=sharing>`_
 
 
 .. raw:: html

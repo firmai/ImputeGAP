@@ -7,13 +7,13 @@ ImputeGAP is a comprehensive Python library for imputation of missing values in 
 
 In detail, the package provides:
 
-  - Access to commonly used datasets in the time series imputation field ([Datasets](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/datasets)).
-  - Configurable contamination that simulates real-world missingness patterns ([Patterns](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery)).
-  - Parameterizable state-of-the-art time series imputation algorithms ([Algorithms](#Available-Imputation-Algorithms)).
-  - Extensive benchmarking to compare the performance of imputation algorithms ([Benchmark](#benchmark)).
-  - Modular tools to assess the impact of imputation on key downstream tasks ([Downstream](#downstream)).
-  - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](#explainer)).
-  - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R ([Contributing](https://imputegap.readthedocs.io/en/latest/contributing.html)).
+  - Access to commonly used datasets in the time series imputation field ([Datasets](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/datasets))
+  - Configurable contamination that simulates real-world missingness patterns ([Patterns](https://github.com/eXascaleInfolab/ImputeGAP/tree/main/imputegap/recovery))
+  - Parameterizable state-of-the-art time series imputation algorithms ([Algorithms](#Available-Imputation-Algorithms))
+  - Extensive benchmarking to compare the performance of imputation algorithms ([Benchmark](#benchmark))
+  - Modular tools to assess the impact of imputation on key downstream tasks ([Downstream](#downstream))
+  - Fine-grained analysis of the impact of time series features on imputation results ([Explainer](#explainer))
+  - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R ([Contributing](https://imputegap.readthedocs.io/en/latest/contributing.html))
 
 <br>
 

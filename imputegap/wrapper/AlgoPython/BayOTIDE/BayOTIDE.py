@@ -107,7 +107,7 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     offset                      = 0.05
 
     if verbose:
-        print(f"(IMPUTATION) BayOTIDE\n\tMatrix: {incomp_m.shape[0]}, {incomp_m.shape[1]}\n\tK_trend: {K_trend}\n\tK_season: {K_season}\n\tn_season: {n_season}\n\tK_bias: {K_bias}\n\ttime_scale: {time_scale}\n\ta0: {a0}\n\tb0: {b0}\n\ttr_ratio: {tr_ratio}\n")
+        print(f"(IMPUTATION) BayOTIDE\n\tMatrix: {incomp_m.shape[0]}, {incomp_m.shape[1]}\n\tK_trend: {K_trend}\n\tK_season: {K_season}\n\tn_season: {n_season}\n\tK_bias: {K_bias}\n\ttime_scale: {time_scale}\n\ta0: {a0}\n\tb0: {b0}\n\tnum_workers: {num_workers}\n\ttr_ratio: {tr_ratio}\n")
 
     # building test set ================================================================================================
     gt_data_matrix = incomp_m.copy()
