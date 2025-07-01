@@ -600,6 +600,8 @@ class Imputation:
                 else:
                     k, weights = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
+                k = utils.compute_rank_check(M=self.incomp_data.shape[0], rank=k, verbose=self.verbose)
+
                 self.recov_data = knn(incomp_data=self.incomp_data, k=k, weights=weights, logs=self.logs, verbose=self.verbose)
 
                 return self
@@ -748,6 +750,8 @@ class Imputation:
                 else:
                     rank, epsilon, iterations = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=False)
 
+                rank = utils.compute_rank_check(M=self.incomp_data.shape[0], rank=rank, verbose=self.verbose)
+
                 self.recov_data = cdrec(incomp_data=self.incomp_data, truncation_rank=rank, iterations=iterations, epsilon=epsilon, logs=self.logs, verbose=self.verbose)
 
                 return self
@@ -806,6 +810,8 @@ class Imputation:
                 else:
                     rank = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
+                rank = utils.compute_rank_check(M=self.incomp_data.shape[0], rank=rank, verbose=self.verbose)
+
                 self.recov_data = iterative_svd(incomp_data=self.incomp_data, truncation_rank=rank, logs=self.logs, verbose=self.verbose)
 
                 return self
@@ -863,6 +869,8 @@ class Imputation:
                     max_rank  = self._check_params(user_def, params)[0]
                 else:
                     max_rank = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+
+                max_rank = utils.compute_rank_check(M=self.incomp_data.shape[0], rank=max_rank, verbose=self.verbose)
 
                 self.recov_data = grouse(incomp_data=self.incomp_data, max_rank=max_rank, logs=self.logs, verbose=self.verbose)
 
@@ -925,6 +933,8 @@ class Imputation:
                 else:
                     rank, regularization = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
+                rank = utils.compute_rank_check(M=self.incomp_data.shape[0], rank=rank, verbose=self.verbose)
+
                 self.recov_data = rosl(incomp_data=self.incomp_data, rank=rank, regularization=regularization, logs=self.logs, verbose=self.verbose)
 
                 return self
@@ -982,6 +992,8 @@ class Imputation:
                     max_rank = self._check_params(user_def, params)[0]
                 else:
                     max_rank = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+
+                max_rank = utils.compute_rank_check(M=self.incomp_data.shape[0], rank=max_rank, verbose=self.verbose)
 
                 self.recov_data = soft_impute(incomp_data=self.incomp_data, max_rank=max_rank, logs=self.logs, verbose=self.verbose)
 
@@ -1594,8 +1606,7 @@ class Imputation:
                 else:
                     h, max_iteration, approximation = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
 
-                self.recov_data = dynammo(incomp_data=self.incomp_data, h=h, max_iteration=max_iteration,
-                                          approximation=approximation, logs=self.logs, verbose=self.verbose)
+                self.recov_data = dynammo(incomp_data=self.incomp_data, h=h, max_iteration=max_iteration, approximation=approximation, logs=self.logs, verbose=self.verbose)
 
                 return self
 
@@ -1650,6 +1661,8 @@ class Imputation:
                     rank = self._check_params(user_def, params)[0]
                 else:
                     rank = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+
+                rank = utils.compute_rank_check(M=self.incomp_data.shape[0], rank=rank, verbose=self.verbose)
 
                 self.recov_data = tkcm(incomp_data=self.incomp_data, rank=rank, logs=self.logs, verbose=self.verbose)
 
@@ -1965,6 +1978,8 @@ class Imputation:
                     incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base = self._check_params(user_def, params)
                 else:
                     incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base = utils.load_parameters(query="default", algorithm=self.algorithm, verbose=self.verbose)
+
+                k = utils.compute_rank_check(M=self.incomp_data.shape[0], rank=k, verbose=self.verbose)
 
                 self.recov_data = mpin(incomp_data=self.incomp_data, incre_mode=incre_mode, window=window, k=k, lr=learning_rate, weight_decay=weight_decay, epochs=epochs, num_of_iteration=num_of_iteration, thre=threshold, base=base, tr_ratio=tr_ratio, logs=self.logs, verbose=self.verbose)
                 return self

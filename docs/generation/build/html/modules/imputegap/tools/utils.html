@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>imputegap.tools.utils - ImputeGAP 1.1.0</title>
+        <title>imputegap.tools.utils - ImputeGAP 1.1.1</title>
       <link rel="stylesheet" type="text/css" href="../../../static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../../static/copybutton.css?v=76b2166b" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">ImputeGAP 1.1.0</div></a>
+      <a href="../../../index.html"><div class="brand">ImputeGAP 1.1.1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">ImputeGAP 1.1.0</span>
+  <span class="sidebar-brand-text">ImputeGAP 1.1.1</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -877,8 +877,9 @@
         <span class="n">a0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;a0&#39;</span><span class="p">])</span>
         <span class="n">b0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;b0&#39;</span><span class="p">])</span>
         <span class="n">v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;v&#39;</span><span class="p">])</span>
+        <span class="n">num_workers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;num_workers&#39;</span><span class="p">])</span>
         <span class="n">tr_ratio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;tr_ratio&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">K_trend</span><span class="p">,</span> <span class="n">K_season</span><span class="p">,</span> <span class="n">n_season</span><span class="p">,</span> <span class="n">K_bias</span><span class="p">,</span> <span class="n">time_scale</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">b0</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">K_trend</span><span class="p">,</span> <span class="n">K_season</span><span class="p">,</span> <span class="n">n_season</span><span class="p">,</span> <span class="n">K_bias</span><span class="p">,</span> <span class="n">time_scale</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">b0</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">num_workers</span><span class="p">,</span> <span class="n">tr_ratio</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;hkmf_t&quot;</span><span class="p">:</span>
         <span class="n">tags</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span>
         <span class="n">data_names</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="s1">&#39;data_names&#39;</span><span class="p">]</span>
@@ -1558,6 +1559,82 @@
 
 
 
+
+<div class="viewcode-block" id="compute_rank_check">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.compute_rank_check">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_rank_check</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validates and adjusts the rank used in matrix operations based on the number of time series.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M : int</span>
+<span class="sd">        Number of series</span>
+<span class="sd">    rank : int</span>
+<span class="sd">        The desired rank (e.g., for matrix factorization or low-rank approximation).</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Print the error or not</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rank: int</span>
+<span class="sd">        A valid rank value, adjusted to avoid exceeding the number of available series.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">rank</span> <span class="o">&gt;=</span> <span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: Rank choosen to high for the number of series: </span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s2"> &gt;= </span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="s2">.</span><span class="se">\n\t</span><span class="s2">Rank reduced to 2.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rank</span></div>
+
+
+
+<div class="viewcode-block" id="compute_seq_length">
+<a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.compute_seq_length">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_seq_length</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute a sequence length based on the input length `M` using heuristic rules.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    M : int</span>
+<span class="sd">        Number of series in the dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    seq_length: int</span>
+<span class="sd">        A derived sequence length appropriate for processing or windowing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="mi">5000</span><span class="p">:</span>
+        <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">3000</span>
+    <span class="k">elif</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">:</span>
+        <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">1400</span>
+    <span class="k">elif</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="mi">2000</span><span class="p">:</span>
+        <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="k">elif</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">600</span>
+    <span class="k">elif</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="mi">300</span><span class="p">:</span>
+        <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="k">elif</span> <span class="n">M</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">M</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">seq_length</span> <span class="o">=</span> <span class="n">M</span> <span class="o">//</span> <span class="mi">5</span>
+        <span class="k">elif</span> <span class="n">M</span> <span class="o">%</span> <span class="mi">6</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">seq_length</span> <span class="o">=</span> <span class="n">M</span> <span class="o">//</span> <span class="mi">6</span>
+        <span class="k">elif</span> <span class="n">M</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">seq_length</span> <span class="o">=</span> <span class="n">M</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">seq_length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">M</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">seq_length</span> <span class="o">=</span> <span class="n">M</span> <span class="o">//</span> <span class="mi">3</span>
+
+    <span class="k">return</span> <span class="n">seq_length</span></div>
+
+
+
 <div class="viewcode-block" id="compute_batch_size">
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.compute_batch_size">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_batch_size</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">divisor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -2132,6 +2209,7 @@
 <a class="viewcode-back" href="../../../imputegap.utils.html#imputegap.tools.utils.list_of_normalizers">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">list_of_normalizers</span><span class="p">():</span>
     <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;z_score&quot;</span><span class="p">,</span> <span class="s2">&quot;min_max&quot;</span><span class="p">]</span></div>
+
 
 </pre></div>
         </article>

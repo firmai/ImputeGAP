@@ -1243,6 +1243,76 @@ def prepare_testing_set(incomp_m, original_missing_ratio, block_selection=True, 
     return new_m, new_mask, error
 
 
+
+def compute_rank_check(M, rank, verbose=True):
+    """
+    Validates and adjusts the rank used in matrix operations based on the number of time series.
+
+    Parameters
+    ----------
+    M : int
+        Number of series
+    rank : int
+        The desired rank (e.g., for matrix factorization or low-rank approximation).
+    verbose : bool
+        Print the error or not
+
+    Returns
+    -------
+    rank: int
+        A valid rank value, adjusted to avoid exceeding the number of available series.
+    """
+    if rank >= M-1:
+        if verbose:
+            print(f"ERROR: Rank choosen to high for the number of series: {rank} >= {M}.\n\tRank reduced to 2.")
+        return 2
+    else:
+        return rank
+
+
+def compute_seq_length(M):
+    """
+    Compute a sequence length based on the input length `M` using heuristic rules.
+
+    Parameters
+    ----------
+    M : int
+        Number of series in the dataset.
+
+    Returns
+    -------
+    seq_length: int
+        A derived sequence length appropriate for processing or windowing.
+    """
+
+    seq_length = 1
+    if M > 5000:
+        seq_length = 3000
+    elif M > 3000:
+        seq_length = 1400
+    elif M > 2000:
+        seq_length = 1000
+    elif M > 1000:
+        seq_length = 600
+    elif M > 300:
+        seq_length = 100
+    elif M > 30:
+        seq_length = 16
+    else:
+        if M % 5 == 0:
+            seq_length = M // 5
+        elif M % 6 == 0:
+            seq_length = M // 6
+        elif M % 2 == 0:
+            seq_length = M // 2 - 2
+            if seq_length < 1:
+                seq_length = 1
+        elif M % 3 == 0:
+            seq_length = M // 3
+
+    return seq_length
+
+
 def compute_batch_size(data, min_size=4, max_size=16, divisor=2, verbose=True):
     """
     Compute an appropriate batch size based on the input data shape.
@@ -1770,3 +1840,4 @@ def list_of_algorithms_with_families():
 
 def list_of_normalizers():
     return ["z_score", "min_max"]
+

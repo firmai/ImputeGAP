@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="imputegap.recovery.evaluation package" href="imputegap.evaluation.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>imputegap.tools.utils package - ImputeGAP 1.1.0</title>
+        <title>imputegap.tools.utils package - ImputeGAP 1.1.1</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">ImputeGAP 1.1.0</div></a>
+      <a href="index.html"><div class="brand">ImputeGAP 1.1.1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">ImputeGAP 1.1.0</span>
+  <span class="sidebar-brand-text">ImputeGAP 1.1.1</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -319,11 +319,55 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="imputegap.tools.utils.compute_rank_check">
+<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">compute_rank_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#compute_rank_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.compute_rank_check" title="Link to this definition">¶</a></dt>
+<dd><p>Validates and adjusts the rank used in matrix operations based on the number of time series.</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>M<span class="classifier">int</span></dt><dd><p>Number of series</p>
+</dd>
+<dt>rank<span class="classifier">int</span></dt><dd><p>The desired rank (e.g., for matrix factorization or low-rank approximation).</p>
+</dd>
+<dt>verbose<span class="classifier">bool</span></dt><dd><p>Print the error or not</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>rank: int</dt><dd><p>A valid rank value, adjusted to avoid exceeding the number of available series.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imputegap.tools.utils.compute_seq_length">
+<span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">compute_seq_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#compute_seq_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.compute_seq_length" title="Link to this definition">¶</a></dt>
+<dd><p>Compute a sequence length based on the input length <cite>M</cite> using heuristic rules.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>M<span class="classifier">int</span></dt><dd><p>Number of series in the dataset.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Returns<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>seq_length: int</dt><dd><p>A derived sequence length appropriate for processing or windowing.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="imputegap.tools.utils.config_contamination">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">config_contamination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">series_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std_dev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explainer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">probabilities</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#config_contamination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.config_contamination" title="Link to this definition">¶</a></dt>
 <dd><p>Configure and execute contamination for selected imputation algorithm and pattern.</p>
-<section id="id1">
-<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>rate<span class="classifier">float</span></dt><dd><p>Mean parameter for contamination missing percentage rate.</p>
 </dd>
@@ -335,8 +379,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 </dd>
 </dl>
 </section>
-<section id="id2">
-<h3>Returns<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<section id="id6">
+<h3>Returns<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>TimeSeries</dt><dd><p>TimeSeries object containing contaminated data.</p>
 </dd>
@@ -348,8 +392,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 <dt class="sig sig-object py" id="imputegap.tools.utils.config_forecaster">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">config_forecaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#config_forecaster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.config_forecaster" title="Link to this definition">¶</a></dt>
 <dd><p>Configure and execute forecaster model for downstream analytics</p>
-<section id="id3">
-<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>model<span class="classifier">str</span></dt><dd><p>name of the forcaster model</p>
 </dd>
@@ -357,8 +401,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 </dd>
 </dl>
 </section>
-<section id="id4">
-<h3>Returns<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<section id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>Forecaster object (SKTIME/DART)</dt><dd><p>Forecaster object for downstream analytics</p>
 </dd>
@@ -370,8 +414,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 <dt class="sig sig-object py" id="imputegap.tools.utils.config_impute_algorithm">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">config_impute_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#config_impute_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.config_impute_algorithm" title="Link to this definition">¶</a></dt>
 <dd><p>Configure and execute algorithm for selected imputation imputer and pattern.</p>
-<section id="id5">
-<h3>Parameters<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<section id="id9">
+<h3>Parameters<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>incomp_data<span class="classifier">TimeSeries</span></dt><dd><p>TimeSeries object containing dataset.</p>
 </dd>
@@ -381,8 +425,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 </dd>
 </dl>
 </section>
-<section id="id6">
-<h3>Returns<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<section id="id10">
+<h3>Returns<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>BaseImputer</dt><dd><p>Configured imputer instance with optimal parameters.</p>
 </dd>
@@ -394,8 +438,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 <dt class="sig sig-object py" id="imputegap.tools.utils.display_title">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">display_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Master</span> <span class="pre">Thesis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Quentin</span> <span class="pre">Nater'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ImputeGAP'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">university</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'University</span> <span class="pre">Fribourg'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#display_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.display_title" title="Link to this definition">¶</a></dt>
 <dd><p>Display the title and author information.</p>
-<section id="id7">
-<h3>Parameters<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<section id="id11">
+<h3>Parameters<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>title<span class="classifier">str, optional</span></dt><dd><p>The title of the thesis (default is “Master Thesis”).</p>
 </dd>
@@ -407,8 +451,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 </dd>
 </dl>
 </section>
-<section id="id8">
-<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<section id="id12">
+<h3>Returns<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
 <p>None</p>
 </section>
 </dd></dl>
@@ -420,8 +464,8 @@ If this computed batch size is less than <cite>min_size</cite>, it is set to <ci
 validation, and testing.</p>
 <p>This function simulates missingness in a controlled way, optionally prevents information leakage,
 and produces masks for training, testing, and validation using different contamination strategies.</p>
-<section id="id9">
-<h3>Parameters:<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<section id="id13">
+<h3>Parameters:<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>input_matrix<span class="classifier">np.ndarray</span></dt><dd><p>The complete input time series data matrix of shape [T, N] (time steps × variables).</p>
 </dd>
@@ -448,8 +492,8 @@ nan_val=-1 can be used to set mean values</p>
 </dd>
 </dl>
 </section>
-<section id="id10">
-<h3>Returns:<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<section id="id14">
+<h3>Returns:<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>cont_data_matrix<span class="classifier">np.ndarray</span></dt><dd><p>The input matrix with synthetic missing values introduced.</p>
 </dd>
@@ -470,8 +514,8 @@ nan_val=-1 can be used to set mean values</p>
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">generate_random_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_valid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">droprate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#generate_random_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.generate_random_mask" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a random training mask over the non-NaN entries of gt, excluding positions
 already present in the test and validation masks.</p>
-<section id="id11">
-<h3>Parameters<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<section id="id15">
+<h3>Parameters<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>gt<span class="classifier">numpy.ndarray</span></dt><dd><p>Ground truth data (no NaNs).</p>
 </dd>
@@ -489,8 +533,8 @@ already present in the test and validation masks.</p>
 </dd>
 </dl>
 </section>
-<section id="id12">
-<h3>Returns<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<section id="id16">
+<h3>Returns<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>numpy.ndarray</dt><dd><p>Binary mask indicating training positions.</p>
 </dd>
@@ -503,15 +547,15 @@ already present in the test and validation masks.</p>
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">get_missing_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incomp_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#get_missing_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.get_missing_ratio" title="Link to this definition">¶</a></dt>
 <dd><p>Check whether the proportion of missing values in the contaminated data is acceptable
 for training a deep learning model.</p>
-<section id="id13">
-<h3>Parameters<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<section id="id17">
+<h3>Parameters<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>incomp_data<span class="classifier">TimeSeries (numpy array)</span></dt><dd><p>TimeSeries object containing dataset.</p>
 </dd>
 </dl>
 </section>
-<section id="id14">
-<h3>Returns<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
+<section id="id18">
+<h3>Returns<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>bool</dt><dd><p>True if the missing data ratio is less than or equal to 40%, False otherwise.</p>
 </dd>
@@ -583,8 +627,8 @@ for training a deep learning model.</p>
 <dt class="sig sig-object py" id="imputegap.tools.utils.load_parameters">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">load_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'chlorine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'b'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#load_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.load_parameters" title="Link to this definition">¶</a></dt>
 <dd><p>Load default or optimal parameters for algorithms from a TOML file.</p>
-<section id="id15">
-<h3>Parameters<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
+<section id="id19">
+<h3>Parameters<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>query<span class="classifier">str, optional</span></dt><dd><p>‘default’ or ‘optimal’ to load default or optimal parameters (default is “default”).</p>
 </dd>
@@ -600,8 +644,8 @@ for training a deep learning model.</p>
 </dd>
 </dl>
 </section>
-<section id="id16">
-<h3>Returns<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
+<section id="id20">
+<h3>Returns<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>tuple</dt><dd><p>A tuple containing the loaded parameters for the given algorithm.</p>
 </dd>
@@ -613,8 +657,8 @@ for training a deep learning model.</p>
 <dt class="sig sig-object py" id="imputegap.tools.utils.load_share_lib">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">load_share_lib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lib_cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lib</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#load_share_lib"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.load_share_lib" title="Link to this definition">¶</a></dt>
 <dd><p>Load the shared library based on the operating system.</p>
-<section id="id17">
-<h3>Parameters<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h3>
+<section id="id21">
+<h3>Parameters<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>name<span class="classifier">str, optional</span></dt><dd><p>The name of the shared library (default is “lib_cdrec”).</p>
 </dd>
@@ -624,8 +668,8 @@ for training a deep learning model.</p>
 </dd>
 </dl>
 </section>
-<section id="id18">
-<h3>Returns<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
+<section id="id22">
+<h3>Returns<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>ctypes.CDLL</dt><dd><p>The loaded shared library object.</p>
 </dd>
@@ -640,8 +684,8 @@ for training a deep learning model.</p>
 <p>This function modifies a copy of the input matrix <cite>incomp_m</cite> by introducing NaNs
 such that the proportion of observed (non-NaN) values matches the desired <cite>tr_ratio</cite>.
 It returns the modified matrix and the corresponding missing data mask.</p>
-<section id="id19">
-<h3>Parameters<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h3>
+<section id="id23">
+<h3>Parameters<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>incomp_m<span class="classifier">np.ndarray</span></dt><dd><p>A 2D NumPy array with potential pre-existing NaNs representing missing values.</p>
 </dd>
@@ -655,8 +699,8 @@ It returns the modified matrix and the corresponding missing data mask.</p>
 </dd>
 </dl>
 </section>
-<section id="id20">
-<h3>Returns<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h3>
+<section id="id24">
+<h3>Returns<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>data_matrix_cont<span class="classifier">np.ndarray</span></dt><dd><p>The modified matrix with additional NaNs introduced to match the specified training ratio.</p>
 </dd>
@@ -694,8 +738,8 @@ It returns the modified matrix and the corresponding missing data mask.</p>
 <p>This function replaces all entries in <cite>matrix</cite> that are marked as missing in <cite>mask</cite>
 with a specified <cite>replacement</cite> value (default is 0). It then checks to ensure that
 there are no remaining NaNs in the matrix and that at least one replacement occurred.</p>
-<section id="id21">
-<h3>Parameters<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h3>
+<section id="id25">
+<h3>Parameters<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>matrix<span class="classifier">np.ndarray</span></dt><dd><p>A NumPy array potentially containing missing values (NaNs).</p>
 </dd>
@@ -708,22 +752,22 @@ to be replaced (typically where original values were NaN).</p>
 </dd>
 </dl>
 </section>
-<section id="id22">
-<h3>Returns<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h3>
+<section id="id26">
+<h3>Returns<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>matrix<span class="classifier">np.ndarray</span></dt><dd><p>The matrix with missing entries replaced by the specified value.</p>
 </dd>
 </dl>
 </section>
-<section id="id23">
-<h3>Raises<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h3>
+<section id="id27">
+<h3>Raises<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>AssertionError:</dt><dd><p>If any NaNs remain in the matrix after replacement, or if no replacements were made.</p>
 </dd>
 </dl>
 </section>
-<section id="id24">
-<h3>Notes<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h3>
+<section id="id28">
+<h3>Notes<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><p>This function is typically used before evaluation to ensure the model does not
@@ -737,8 +781,8 @@ access ground truth values where data was originally missing.</p></li>
 <dt class="sig sig-object py" id="imputegap.tools.utils.save_optimization">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">save_optimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimal_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cdrec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'b'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#save_optimization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.save_optimization" title="Link to this definition">¶</a></dt>
 <dd><p>Save the optimization parameters to a TOML file for later use without recomputing.</p>
-<section id="id25">
-<h3>Parameters<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h3>
+<section id="id29">
+<h3>Parameters<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>optimal_params<span class="classifier">dict</span></dt><dd><p>Dictionary of the optimal parameters.</p>
 </dd>
@@ -752,8 +796,8 @@ access ground truth values where data was originally missing.</p></li>
 </dd>
 </dl>
 </section>
-<section id="id26">
-<h3>Returns<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h3>
+<section id="id30">
+<h3>Returns<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h3>
 <p>None</p>
 </section>
 </dd></dl>
@@ -762,15 +806,15 @@ access ground truth values where data was originally missing.</p></li>
 <dt class="sig sig-object py" id="imputegap.tools.utils.search_path">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">search_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">set_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#search_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.search_path" title="Link to this definition">¶</a></dt>
 <dd><p>Find the accurate path for loading test files.</p>
-<section id="id27">
-<h3>Parameters<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h3>
+<section id="id31">
+<h3>Parameters<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>set_name<span class="classifier">str, optional</span></dt><dd><p>Name of the dataset (default is “test”).</p>
 </dd>
 </dl>
 </section>
-<section id="id28">
-<h3>Returns<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h3>
+<section id="id32">
+<h3>Returns<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>str</dt><dd><p>The correct file path for the dataset.</p>
 </dd>
@@ -782,8 +826,8 @@ access ground truth values where data was originally missing.</p></li>
 <dt class="sig sig-object py" id="imputegap.tools.utils.split_mask_bwt_test_valid">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">split_mask_bwt_test_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valid_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nan_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#split_mask_bwt_test_valid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.split_mask_bwt_test_valid" title="Link to this definition">¶</a></dt>
 <dd><p>Dispatch NaN positions in data_matrix to test and validation masks only.</p>
-<section id="id29">
-<h3>Parameters<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h3>
+<section id="id33">
+<h3>Parameters<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>data_matrix<span class="classifier">numpy.ndarray</span></dt><dd><p>Input matrix containing NaNs to be split.</p>
 </dd>
@@ -798,8 +842,8 @@ test_rate + valid_rate must equal 1.0.</p>
 </dd>
 </dl>
 </section>
-<section id="id30">
-<h3>Returns<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h3>
+<section id="id34">
+<h3>Returns<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>tuple</dt><dd><dl class="simple">
 <dt>test_mask<span class="classifier">numpy.ndarray</span></dt><dd><p>Binary mask indicating positions of NaNs in the test set.</p>
@@ -818,8 +862,8 @@ test_rate + valid_rate must equal 1.0.</p>
 <dt class="sig sig-object py" id="imputegap.tools.utils.verification_limitation">
 <span class="sig-prename descclassname"><span class="pre">imputegap.tools.utils.</span></span><span class="sig-name descname"><span class="pre">verification_limitation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">percentage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/imputegap/tools/utils.html#verification_limitation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imputegap.tools.utils.verification_limitation" title="Link to this definition">¶</a></dt>
 <dd><p>Format and verify that the percentage given by the user is within acceptable bounds.</p>
-<section id="id31">
-<h3>Parameters<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h3>
+<section id="id35">
+<h3>Parameters<a class="headerlink" href="#id35" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>percentage<span class="classifier">float</span></dt><dd><p>The percentage value to be checked and potentially adjusted.</p>
 </dd>
@@ -829,22 +873,22 @@ test_rate + valid_rate must equal 1.0.</p>
 </dd>
 </dl>
 </section>
-<section id="id32">
-<h3>Returns<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h3>
+<section id="id36">
+<h3>Returns<a class="headerlink" href="#id36" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>float</dt><dd><p>Adjusted percentage based on the limits.</p>
 </dd>
 </dl>
 </section>
-<section id="id33">
-<h3>Raises<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h3>
+<section id="id37">
+<h3>Raises<a class="headerlink" href="#id37" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>ValueError</dt><dd><p>If the percentage is outside the accepted limits.</p>
 </dd>
 </dl>
 </section>
-<section id="id34">
-<h3>Notes<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h3>
+<section id="id38">
+<h3>Notes<a class="headerlink" href="#id38" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>If the percentage is between 1 and 100, it will be divided by 100 to convert it to a decimal format.</p></li>
 <li><p>If the percentage is outside the low and high limits, the function will print a warning and return the original value.</p></li>
@@ -906,6 +950,8 @@ test_rate + valid_rate must equal 1.0.</p>
 <li><a class="reference internal" href="#module-imputegap.tools.utils">imputegap.tools.utils module</a><ul>
 <li><a class="reference internal" href="#imputegap.tools.utils.check_family"><code class="docutils literal notranslate"><span class="pre">check_family()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.compute_batch_size"><code class="docutils literal notranslate"><span class="pre">compute_batch_size()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.tools.utils.compute_rank_check"><code class="docutils literal notranslate"><span class="pre">compute_rank_check()</span></code></a></li>
+<li><a class="reference internal" href="#imputegap.tools.utils.compute_seq_length"><code class="docutils literal notranslate"><span class="pre">compute_seq_length()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.config_contamination"><code class="docutils literal notranslate"><span class="pre">config_contamination()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.config_forecaster"><code class="docutils literal notranslate"><span class="pre">config_forecaster()</span></code></a></li>
 <li><a class="reference internal" href="#imputegap.tools.utils.config_impute_algorithm"><code class="docutils literal notranslate"><span class="pre">config_impute_algorithm()</span></code></a></li>

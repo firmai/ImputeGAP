@@ -275,14 +275,14 @@ The MeteoSwiss dataset, kindly provided by the Swiss Federal Office of Meteorolo
 
 ### Summary
 
-| Data  info  |                                                                                                   |
-|-------------|---------------------------------------------------------------------------------------------------|
-| codename    | meteo                                                                                             |
-| name        | Meteo Suisse data                                                                                 |
-| url         | https://www.meteoswiss.admin.ch/services-and-publications/service/open-data.html                  | 
-| source      | Scalable Recovery of Missing Blocks in Time Series with High and Low Cross-Correlations (KAIS'20) | 
-| granularity | 10 minutes                                                                                        |
-| size        | n_series=20; n_values/series=10000                                                                |
+| Data  info  |                                                                                                                                |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------|
+| codename    | meteo                                                                                                                          |
+| name        | Meteo Suisse data                                                                                                              |
+| url         | https://www.meteoswiss.admin.ch/services-and-publications/service/open-data.html (meteo_total_08-12.txt with 9999 first lines) | 
+| source      | Scalable Recovery of Missing Blocks in Time Series with High and Low Cross-Correlations (KAIS'20)                              | 
+| granularity | 10 minutes                                                                                                                     |
+| size        | n_series=4; n_values/series=9999                                                                                               |
 
 ### Sample Plots
 

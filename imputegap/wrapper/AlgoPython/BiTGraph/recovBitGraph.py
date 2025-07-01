@@ -157,6 +157,10 @@ def recoveryBitGRAPH(input=None, node_number=-1, kernel_set=[2,3,6,7], dropout=0
         recov = np.copy(input)
         missing_mask = np.isnan(input)
 
+        if data.shape[0] <= 9:
+            print(f"\n(ERROR) Number of series to train to small for LLMs: current {data.shape[0]}\n\tPlease increase the number of series or change the dataset used.\n")
+            return input
+
         if node_number == -1:
             node_number = data.shape[1]
 

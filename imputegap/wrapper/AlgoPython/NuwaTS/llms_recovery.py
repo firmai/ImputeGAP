@@ -39,30 +39,12 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
     cont_mask_train = mask_train[~nan_row_selector]
 
     M, N = cont_data_train.shape
+    if M <= 2:
+        print(f"\n(ERROR) Number of series to train to small for LLMs: {M}\n\tPlease increase the number of series or change the dataset used.\n")
+        return ts_m
+
     if seq_length == -1:
-        if M > 5000:
-            seq_length = 3000
-        elif M > 3000:
-            seq_length = 1400
-        elif M > 2000:
-            seq_length = 1000
-        elif M > 1000:
-            seq_length = 600
-        elif M > 300:
-            seq_length = 100
-        elif M > 30:
-            seq_length = 16
-        else:
-            if M%5 == 0:
-                seq_length = M // 5
-            elif M%6 == 0:
-                seq_length = M // 6
-            elif M%2 == 0:
-                seq_length = M // 2
-            elif M%3 == 0:
-                seq_length = M // 3
-            else:
-                seq_length = 1
+        seq_length = utils.compute_seq_length(M)
     if batch_size == -1:
         batch_size = utils.compute_batch_size(ts_m, 4, 16, 2, verbose)
     if patch_size == -1:

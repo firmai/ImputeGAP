@@ -11,8 +11,8 @@ import sys
 project = 'imputegap'
 copyright = '2025, Quentin Nater'
 author = 'Quentin Nater'
-html_title = 'ImputeGAP 1.1.0'
-html_short_title = 'ImputeGAP 1.1.0 Documentation'
+html_title = 'ImputeGAP 1.1.1'
+html_short_title = 'ImputeGAP 1.1.1 Documentation'
 
 
 # -- General configuration ---------------------------------------------------

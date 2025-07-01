@@ -57,8 +57,8 @@ class Benchmark:
 
         Parameters
         ----------
-        data : numpy matrix
-            Matrix of data with nan values
+        data : str
+            Dataset used
         algorithm : str
             Name of the imputation algorithm (e.g., 'DEEPMVI', 'PRISTI').
         pattern : str
@@ -86,10 +86,15 @@ class Benchmark:
                 if x < 0.15:
                     print(f"\n(BENCH) The imputation algorithm {algorithm} is not compatible with this configuration {pattern} with missingness rate less then 0.15.")
                     return True
+            if data == "meteo":
+                return True
 
-        if algorithm.upper() == 'MPIN':
-            print(f"\n(BENCH) The imputation algorithm {algorithm} is not compatible with this setup.")
-            return True
+        if data == "meteo":
+            if x >= 0.8:
+                print(f"\n(BENCH) The imputation algorithm {algorithm} is not compatible with this configuration {data}. Not enough series to train the model.")
+                return True
+
+
 
         return False
 
@@ -806,8 +811,7 @@ class Benchmark:
 
         run_storage = []
         not_optimized = ["none"]
-        mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries",
-                      "meanimpute", "minimpute", "zeroimpute", "meanimputebyseries"]
+        mean_group = ["mean", "MeanImpute", "min", "MinImpute", "zero", "ZeroImpute", "MeanImputeBySeries", "meanimpute", "minimpute", "zeroimpute", "meanimputebyseries"]
 
         if not isinstance(algorithms, list):
             raise TypeError(f"'algorithms' must be a list, but got {type(algorithms).__name__}")
@@ -841,7 +845,7 @@ class Benchmark:
                 default_data = TimeSeries()
 
                 header = False
-                if dataset == "eeg-reading":
+                if dataset == "eeg-reading" or dataset == "eegreading":
                     header = True
 
                 reshp = False
@@ -929,7 +933,7 @@ class Benchmark:
 
                                 start_time_imputation = time.time()
 
-                                if not self._benchmark_exception(incomp_data, algorithm, pattern, x):
+                                if not self._benchmark_exception(dataset, algorithm, pattern, x):
                                     if utils.check_family("DeepLearning", algorithm) or utils.check_family("LLMs", algorithm):
                                         if x > round(1-dl_ratio, 2):
                                             algo.recov_data = incomp_data

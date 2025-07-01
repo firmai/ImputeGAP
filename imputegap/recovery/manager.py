@@ -34,6 +34,14 @@ def select_backend():
             except (ImportError, RuntimeError):
                 continue
 
+        try:
+            import PyQt5  # ensure PyQt5 is available
+            matplotlib.use(backend)
+            return
+        except (ImportError, RuntimeError):
+            print()
+
+
 
 
 class TimeSeries:
