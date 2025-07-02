@@ -284,7 +284,9 @@ class Benchmark:
 
         fig, ax = plt.subplots(figsize=(x_size, y_size))
         fig.canvas.manager.set_window_title("benchmark heatmap, " + metric)
-        cmap = plt.cm.Greys
+
+        import matplotlib.colors as mcolors
+        cmap = mcolors.LinearSegmentedColormap.from_list(f"trunc({plt.cm.Greys.name},{0.3:.2f},{0.9:.2f})", plt.cm.Greys(np.linspace(0.3, 0.9, 256)))
 
         if metric == "RMSE":
             norm = plt.Normalize(vmin=0, vmax=2)
@@ -295,7 +297,7 @@ class Benchmark:
         elif metric == "MI":
             norm = plt.Normalize(vmin=-1, vmax=1.5)
         elif metric.lower() == "runtime":
-            norm = plt.Normalize(vmin=-1000, vmax=5000)
+            norm = plt.Normalize(vmin=0, vmax=5000)
         elif metric.lower() == "runtime_log":
             norm = plt.Normalize(vmin=-2, vmax=10)
         else:
@@ -337,9 +339,11 @@ class Benchmark:
         if display:
             plt.tight_layout()
             plt.show()
-            self.heatmap = plt
         else:
-            plt.close()
+            if metric == "RMSE":
+                self.heatmap = plt
+            else:
+                plt.close()
 
         return True
 
@@ -634,7 +638,7 @@ class Benchmark:
                         top=0.97,
                         bottom=0.05,
                         wspace=0.095,
-                        hspace=0.2
+                        hspace=0.35
                     )
 
                     if title_flag is None:

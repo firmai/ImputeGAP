@@ -69,7 +69,7 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
     if error:
         return incomp_data
 
-    prepare_dat(cont_data_matrix, "brits.tmp", mask_train, mask_test, mask_valid)
+    prepare_dat(cont_data_matrix, "./imputegap_assets/models/brits.tmp", mask_train, mask_test, mask_valid)
 
     if incomp_data.ndim == 2 and nbr_features != 1:
         print(f"\n(ERROR) The number of features set is not correct for the dimension of the data {incomp_data.ndim} must be higher then 2\n\tNumber of feature set to 1.\n")
@@ -84,7 +84,7 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
     if torch.cuda.is_available():
         model = model.cuda()
 
-    (model, data_iter) = train(model, "brits.tmp", batch_size, epoch, num_workers, verbose)
+    (model, data_iter) = train(model, "./imputegap_assets/models/brits.tmp", batch_size, epoch, num_workers, verbose)
 
     res = evaluate(model, data_iter)
 
