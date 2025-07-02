@@ -291,11 +291,11 @@ class Benchmark:
         elif metric == "CORRELATION":
             norm = plt.Normalize(vmin=-2, vmax=2)
         elif metric == "MAE":
-            norm = plt.Normalize(vmin=0, vmax=1)
+            norm = plt.Normalize(vmin=0, vmax=1.5)
         elif metric == "MI":
             norm = plt.Normalize(vmin=-1, vmax=1.5)
         elif metric.lower() == "runtime":
-            norm = plt.Normalize(vmin=0, vmax=5000)
+            norm = plt.Normalize(vmin=-1000, vmax=5000)
         elif metric.lower() == "runtime_log":
             norm = plt.Normalize(vmin=-2, vmax=10)
         else:
