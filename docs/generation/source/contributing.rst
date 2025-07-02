@@ -51,7 +51,7 @@ Advanced Features
 I. Initialize default values
 ____________________________
 
-1. To set the default values of your algorithm, please update ``./imputegap/env/default_values.toml`` and add your configuration. For example::
+1. To set the default values of your algorithm, please update ``./imputegap/env/default_values.toml`` (lines 3-6) and add your configuration. For example::
 
         [new_alg]
         param_integer = 42
@@ -70,7 +70,7 @@ ____________________________
 II. Benchmark
 _____________
 
-To access the benchmarking features, please update ``./imputegap/tools/utils.py`` by adding your algorithm in the ``def config_impute_algorithm`` function.
+To access the benchmarking features, please update ``./imputegap/tools/utils.py`` (lines 547-550) by adding your algorithm in the ``def config_impute_algorithm`` function.
 
     .. code-block:: python
 
@@ -92,7 +92,7 @@ ______________
 
 To enable the optimization module, please update ``./imputegap/tools/algorithm_parameters.py``.
 
-1. Open ``./imputegap/tools/algorithm_parameters.py`` copy paste lines 59 to 63 and update the algorithm name and parameters, e.g.,
+1. Open ``./imputegap/tools/algorithm_parameters.py`` copy paste lines 296 to 302 and update the algorithm name and parameters, e.g.,
 
     .. code-block:: python
 
@@ -103,7 +103,7 @@ To enable the optimization module, please update ``./imputegap/tools/algorithm_p
             },
 
 
-2. Add your parameters in the ``def save_optimization()`` function of the file ``./imputegap/tools/utils.py`` to save the optimal parameters, line 820 to 825:
+2. Add your parameters in the ``def save_optimization()`` function of the file ``./imputegap/tools/utils.py`` to save the optimal parameters, line 808 to 815:
 
     .. code-block:: python
 

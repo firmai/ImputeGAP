@@ -1,5 +1,10 @@
 # IMPUTATION DEFAULT VALUES ==========================================================================
 
+#[your_algo_name]
+#param_1 = 3
+#param_2 = "test"
+#param_3 = 0.01
+
 # ALGORITHM DEFAULT VALUES : MATRIX COMPLETION
 [cdrec]
 rank = 3

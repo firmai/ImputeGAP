@@ -6,368 +6,6 @@ import numpy as __numpy_import
 import platform
 
 
-def config_impute_algorithm(incomp_data, algorithm, verbose=True):
-    """
-    Configure and execute algorithm for selected imputation imputer and pattern.
-
-    Parameters
-    ----------
-    incomp_data : TimeSeries
-        TimeSeries object containing dataset.
-
-    algorithm : str
-        Name of algorithm
-
-    verbose : bool, optional
-        Whether to display the contamination information (default is False).
-
-    Returns
-    -------
-    BaseImputer
-        Configured imputer instance with optimal parameters.
-    """
-
-    from imputegap.recovery.imputation import Imputation
-    from imputegap.recovery.manager import TimeSeries
-
-    alg_low = algorithm.lower()
-    alg = alg_low.replace('_', '').replace('-', '')
-
-    # 1st generation
-    if alg == "cdrec":
-        imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
-    elif alg == "stmvl":
-        imputer = Imputation.PatternSearch.STMVL(incomp_data)
-    elif alg == "iim":
-        imputer = Imputation.MachineLearning.IIM(incomp_data)
-    elif alg == "mrnn":
-        imputer = Imputation.DeepLearning.MRNN(incomp_data)
-
-    # 2nd generation
-    elif alg == "iterativesvd" or alg == "itersvd":
-        imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
-    elif alg == "grouse":
-        imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
-    elif alg == "dynammo":
-        imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
-    elif alg == "rosl":
-        imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
-    elif alg == "softimpute" or alg == "softimp":
-        imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
-    elif alg == "spirit":
-        imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
-    elif alg == "svt":
-        imputer = Imputation.MatrixCompletion.SVT(incomp_data)
-    elif alg == "tkcm":
-        imputer = Imputation.PatternSearch.TKCM(incomp_data)
-    elif alg == "deepmvi":
-        imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
-    elif alg == "brits":
-        imputer = Imputation.DeepLearning.BRITS(incomp_data)
-    elif alg == "mpin":
-        imputer = Imputation.DeepLearning.MPIN(incomp_data)
-    elif alg == "pristi":
-        imputer = Imputation.DeepLearning.PRISTI(incomp_data)
-
-    # 3rd generation
-    elif alg == "knn" or alg == "knnimpute":
-        imputer = Imputation.Statistics.KNNImpute(incomp_data)
-    elif alg == "interpolation":
-        imputer = Imputation.Statistics.Interpolation(incomp_data)
-    elif alg == "meanseries" or alg == "meanimputebyseries":
-        imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
-    elif alg == "minimpute":
-        imputer = Imputation.Statistics.MinImpute(incomp_data)
-    elif alg == "zeroimpute":
-        imputer = Imputation.Statistics.ZeroImpute(incomp_data)
-    elif alg == "trmf":
-        imputer = Imputation.MatrixCompletion.TRMF(incomp_data)
-    elif alg == "mice":
-        imputer = Imputation.MachineLearning.MICE(incomp_data)
-    elif alg == "missforest":
-        imputer = Imputation.MachineLearning.MissForest(incomp_data)
-    elif alg == "xgboost":
-        imputer = Imputation.MachineLearning.XGBOOST(incomp_data)
-    elif alg == "missnet":
-        imputer = Imputation.DeepLearning.MissNet(incomp_data)
-    elif alg == "gain":
-        imputer = Imputation.DeepLearning.GAIN(incomp_data)
-    elif alg == "grin":
-        imputer = Imputation.DeepLearning.GRIN(incomp_data)
-    elif alg == "bayotide":
-        imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
-    elif alg == "hkmft":
-        imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
-    elif alg == "bitgraph":
-        imputer = Imputation.DeepLearning.BitGraph(incomp_data)
-    elif alg == "meanimpute":
-        imputer = Imputation.Statistics.MeanImpute(incomp_data)
-    elif alg == "nuwats":
-        imputer = Imputation.LLMs.NuwaTS(incomp_data)
-    elif alg == "gpt4ts":
-        imputer = Imputation.LLMs.GPT4TS(incomp_data)
-    else:
-        raise ValueError(f"(IMP) Algorithm '{algorithm}' not recognized, please choose your algorithm from this list:\n\t{TimeSeries().algorithms}")
-        imputer = None
-
-    if imputer is not None:
-        imputer.verbose = verbose
-
-    return imputer
-
-
-def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0.5, explainer=False, probabilities=None, verbose=True):
-    """
-    Configure and execute contamination for selected imputation algorithm and pattern.
-
-    Parameters
-    ----------
-    rate : float
-        Mean parameter for contamination missing percentage rate.
-    ts_test : TimeSeries
-        A TimeSeries object containing dataset.
-    pattern : str
-        Type of contamination pattern (e.g., "mcar", "mp", "blackout", "disjoint", "overlap", "gaussian").
-    block_size_mcar : int
-        Size of blocks removed in MCAR
-
-    Returns
-    -------
-    TimeSeries
-        TimeSeries object containing contaminated data.
-    """
-
-    from imputegap.recovery.manager import TimeSeries
-
-    pattern_low = pattern.lower()
-    ptn = pattern_low.replace('_', '').replace('-', '')
-
-    if ptn == "mcar" or ptn == "missing_completely_at_random":
-        incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
-    elif ptn == "mp" or ptn == "missingpercentage" or ptn == "aligned":
-        incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, explainer=explainer, verbose=verbose)
-    elif ptn == "ps" or ptn == "percentageshift" or ptn == "scattered":
-        incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
-    elif ptn == "disjoint":
-        incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset, verbose=verbose)
-    elif ptn == "overlap":
-        incomp_data = ts.Contamination.overlap(input_data=ts.data, rate_series=dataset_rate, limit=limit, shift=shift, offset=offset, verbose=verbose)
-    elif ptn == "gaussian":
-        incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
-    elif ptn == "distribution" or pattern == "dist":
-        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities_list=probabilities, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
-    elif ptn == "blackout":
-        incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset, verbose=verbose)
-    else:
-        raise ValueError(f"\n(CONT) Pattern '{pattern}' not recognized, please choose your algorithm on this list :\n\t{TimeSeries().patterns}\n")
-        incomp_data = None
-
-    return incomp_data
-
-
-def config_forecaster(model, params):
-        """
-        Configure and execute forecaster model for downstream analytics
-
-        Parameters
-        ----------
-        model : str
-            name of the forcaster model
-        params : list of params
-            List of paramaters for a forcaster model
-
-        Returns
-        -------
-        Forecaster object (SKTIME/DART)
-            Forecaster object for downstream analytics
-        """
-
-        from imputegap.recovery.manager import TimeSeries
-
-        model_low = model.lower()
-        mdl = model_low.replace('_', '').replace('-', '')
-
-        if mdl == "prophet":
-            from sktime.forecasting.fbprophet import Prophet
-            forecaster = Prophet(**params)
-        elif mdl == "expsmoothing":
-            from sktime.forecasting.exp_smoothing import ExponentialSmoothing
-            forecaster = ExponentialSmoothing(**params)
-        elif mdl == "nbeats":
-            from darts.models import NBEATSModel
-            forecaster = NBEATSModel(**params)
-        elif mdl == "xgboost":
-            from darts.models.forecasting.xgboost import XGBModel
-            forecaster = XGBModel(**params)
-        elif mdl == "lightgbm":
-            from darts.models.forecasting.lgbm import LightGBMModel
-            forecaster = LightGBMModel(**params)
-        elif mdl == "lstm":
-            from darts.models.forecasting.rnn_model import RNNModel
-            forecaster = RNNModel(**params)
-        elif mdl == "deepar":
-            from darts.models.forecasting.rnn_model import RNNModel
-            forecaster = RNNModel(**params)
-        elif mdl == "transformer":
-            from darts.models.forecasting.transformer_model import TransformerModel
-            forecaster = TransformerModel(**params)
-        elif mdl == "hwadd":
-            from sktime.forecasting.exp_smoothing import ExponentialSmoothing
-            forecaster = ExponentialSmoothing(**params)
-        elif mdl == "arima":
-            from sktime.forecasting.arima import AutoARIMA
-            forecaster = AutoARIMA(**params)
-        elif mdl == "sf-arima":
-            from sktime.forecasting.statsforecast import StatsForecastAutoARIMA
-            forecaster = StatsForecastAutoARIMA(**params)
-            forecaster.set_config(warnings='off')
-        elif mdl == "bats":
-            from sktime.forecasting.bats import BATS
-            forecaster = BATS(**params)
-        elif mdl == "ets":
-            from sktime.forecasting.ets import AutoETS
-            forecaster = AutoETS(**params)
-        elif mdl == "croston":
-            from sktime.forecasting.croston import Croston
-            forecaster = Croston(**params)
-        elif mdl == "theta":
-            from sktime.forecasting.theta import ThetaForecaster
-            forecaster = ThetaForecaster(**params)
-        elif mdl == "unobs":
-            from sktime.forecasting.structural import UnobservedComponents
-            forecaster = UnobservedComponents(**params)
-        elif mdl == "naive":
-            from sktime.forecasting.naive import NaiveForecaster
-            forecaster = NaiveForecaster(**params)
-        else:
-            raise ValueError(f"\n(DOWN) Forecasting model '{model}' not recognized, please choose your algorithm on this list :\n\t{TimeSeries().forecasting_models}\n")
-            forecaster = None
-
-        return forecaster
-
-
-
-def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
-    """
-    Marshal a ctypes container as a numpy column-major array.
-
-    Parameters
-    ----------
-    __ctype_container : ctypes.Array
-        The input ctypes container (flattened matrix).
-    __py_sizen : int
-        The number of rows in the numpy array.
-    __py_sizem : int
-        The number of columns in the numpy array.
-
-    Returns
-    -------
-    numpy.ndarray
-        A numpy array reshaped to the original matrix dimensions (row-major order).
-    """
-    __numpy_marshal = __numpy_import.array(__ctype_container).reshape(__py_sizem, __py_sizen).T;
-
-    return __numpy_marshal;
-
-
-def __marshal_as_native_column(__py_matrix):
-    """
-    Marshal a numpy array as a ctypes flat container for passing to native code.
-
-    Parameters
-    ----------
-    __py_matrix : numpy.ndarray
-        The input numpy matrix (2D array).
-
-    Returns
-    -------
-    ctypes.Array
-        A ctypes array containing the flattened matrix (in column-major order).
-    """
-    __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
-    __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
-
-    return __ctype_marshal;
-
-
-def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg"):
-    """
-    Display the title and author information.
-
-    Parameters
-    ----------
-    title : str, optional
-        The title of the thesis (default is "Master Thesis").
-    aut : str, optional
-        The author's name (default is "Quentin Nater").
-    lib : str, optional
-        The library or project name (default is "ImputeGAP").
-    university : str, optional
-        The university or institution (default is "University Fribourg").
-
-    Returns
-    -------
-    None
-    """
-
-    print("=" * 100)
-    print(f"{title} : {aut}")
-    print("=" * 100)
-    print(f"    {lib} - {university}")
-    print("=" * 100)
-
-
-def search_path(set_name="test"):
-    """
-    Find the accurate path for loading test files.
-
-    Parameters
-    ----------
-    set_name : str, optional
-        Name of the dataset (default is "test").
-
-    Returns
-    -------
-    str
-        The correct file path for the dataset.
-    """
-
-    if set_name in list_of_datasets():
-        return set_name + ".txt"
-    else:
-        filepath = "../imputegap/datasets/" + set_name
-
-        if not os.path.exists(filepath):
-            filepath = filepath[1:]
-        return filepath
-
-
-def get_missing_ratio(incomp_data):
-    """
-    Check whether the proportion of missing values in the contaminated data is acceptable
-    for training a deep learning model.
-
-    Parameters
-    ----------
-    incomp_data : TimeSeries (numpy array)
-            TimeSeries object containing dataset.
-
-    Returns
-    -------
-    bool
-        True if the missing data ratio is less than or equal to 40%, False otherwise.
-    """
-    import numpy as np
-
-    miss_m = incomp_data
-    total_values = miss_m.size
-    missing_values = np.isnan(miss_m).sum()
-    missing_ratio = missing_values / total_values
-
-    return missing_ratio
-
-
-
 def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=False):
     """
     Load default or optimal parameters for algorithms from a TOML file.
@@ -784,15 +422,674 @@ def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: s
         input_size = int(config[algorithm]['input_size'])
         inference_input_size = int(config[algorithm]['inference_input_size'])
         return {"input_size": input_size, "inference_input_size": inference_input_size}
-
     elif algorithm == "colors":
         colors = config[algorithm]['plot']
         return colors
     elif algorithm == "other":
         return config
+
+    # Your own default parameters #contributing
+    #
+    #elif algorithm == "your_algo_name":
+    #    param_1 = int(config[algorithm]['param_1'])
+    #    param_2 = config[algorithm]['param_2']
+    #    param_3 = float(config[algorithm]['param_3'])
+    #    return (param_1, param_2, param_3)
+
     else:
         print("(SYS) Default/Optimal config not found for this algorithm")
         return None
+
+
+def config_impute_algorithm(incomp_data, algorithm, verbose=True):
+    """
+    Configure and execute algorithm for selected imputation imputer and pattern.
+
+    Parameters
+    ----------
+    incomp_data : TimeSeries
+        TimeSeries object containing dataset.
+
+    algorithm : str
+        Name of algorithm
+
+    verbose : bool, optional
+        Whether to display the contamination information (default is False).
+
+    Returns
+    -------
+    BaseImputer
+        Configured imputer instance with optimal parameters.
+    """
+
+    from imputegap.recovery.imputation import Imputation
+    from imputegap.recovery.manager import TimeSeries
+
+    alg_low = algorithm.lower()
+    alg = alg_low.replace('_', '').replace('-', '')
+
+    # 1st generation
+    if alg == "cdrec":
+        imputer = Imputation.MatrixCompletion.CDRec(incomp_data)
+    elif alg == "stmvl":
+        imputer = Imputation.PatternSearch.STMVL(incomp_data)
+    elif alg == "iim":
+        imputer = Imputation.MachineLearning.IIM(incomp_data)
+    elif alg == "mrnn":
+        imputer = Imputation.DeepLearning.MRNN(incomp_data)
+
+    # 2nd generation
+    elif alg == "iterativesvd" or alg == "itersvd":
+        imputer = Imputation.MatrixCompletion.IterativeSVD(incomp_data)
+    elif alg == "grouse":
+        imputer = Imputation.MatrixCompletion.GROUSE(incomp_data)
+    elif alg == "dynammo":
+        imputer = Imputation.PatternSearch.DynaMMo(incomp_data)
+    elif alg == "rosl":
+        imputer = Imputation.MatrixCompletion.ROSL(incomp_data)
+    elif alg == "softimpute" or alg == "softimp":
+        imputer = Imputation.MatrixCompletion.SoftImpute(incomp_data)
+    elif alg == "spirit":
+        imputer = Imputation.MatrixCompletion.SPIRIT(incomp_data)
+    elif alg == "svt":
+        imputer = Imputation.MatrixCompletion.SVT(incomp_data)
+    elif alg == "tkcm":
+        imputer = Imputation.PatternSearch.TKCM(incomp_data)
+    elif alg == "deepmvi":
+        imputer = Imputation.DeepLearning.DeepMVI(incomp_data)
+    elif alg == "brits":
+        imputer = Imputation.DeepLearning.BRITS(incomp_data)
+    elif alg == "mpin":
+        imputer = Imputation.DeepLearning.MPIN(incomp_data)
+    elif alg == "pristi":
+        imputer = Imputation.DeepLearning.PRISTI(incomp_data)
+
+    # 3rd generation
+    elif alg == "knn" or alg == "knnimpute":
+        imputer = Imputation.Statistics.KNNImpute(incomp_data)
+    elif alg == "interpolation":
+        imputer = Imputation.Statistics.Interpolation(incomp_data)
+    elif alg == "meanseries" or alg == "meanimputebyseries":
+        imputer = Imputation.Statistics.MeanImputeBySeries(incomp_data)
+    elif alg == "minimpute":
+        imputer = Imputation.Statistics.MinImpute(incomp_data)
+    elif alg == "zeroimpute":
+        imputer = Imputation.Statistics.ZeroImpute(incomp_data)
+    elif alg == "trmf":
+        imputer = Imputation.MatrixCompletion.TRMF(incomp_data)
+    elif alg == "mice":
+        imputer = Imputation.MachineLearning.MICE(incomp_data)
+    elif alg == "missforest":
+        imputer = Imputation.MachineLearning.MissForest(incomp_data)
+    elif alg == "xgboost":
+        imputer = Imputation.MachineLearning.XGBOOST(incomp_data)
+    elif alg == "missnet":
+        imputer = Imputation.DeepLearning.MissNet(incomp_data)
+    elif alg == "gain":
+        imputer = Imputation.DeepLearning.GAIN(incomp_data)
+    elif alg == "grin":
+        imputer = Imputation.DeepLearning.GRIN(incomp_data)
+    elif alg == "bayotide":
+        imputer = Imputation.DeepLearning.BayOTIDE(incomp_data)
+    elif alg == "hkmft":
+        imputer = Imputation.DeepLearning.HKMF_T(incomp_data)
+    elif alg == "bitgraph":
+        imputer = Imputation.DeepLearning.BitGraph(incomp_data)
+    elif alg == "meanimpute":
+        imputer = Imputation.Statistics.MeanImpute(incomp_data)
+
+    # 4th generation
+    elif alg == "nuwats":
+        imputer = Imputation.LLMs.NuwaTS(incomp_data)
+    elif alg == "gpt4ts":
+        imputer = Imputation.LLMs.GPT4TS(incomp_data)
+
+    # your own implementation #contributing
+    #
+    #elif alg == "your_algo_name":
+    #    imputer = Imputation.MyFamily.NewAlg(incomp_data)
+
+    else:
+        raise ValueError(f"(IMP) Algorithm '{algorithm}' not recognized, please choose your algorithm from this list:\n\t{TimeSeries().algorithms}")
+        imputer = None
+
+    if imputer is not None:
+        imputer.verbose = verbose
+
+    return imputer
+
+
+def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="b", file_name=None):
+    """
+    Save the optimization parameters to a TOML file for later use without recomputing.
+
+    Parameters
+    ----------
+    optimal_params : dict
+        Dictionary of the optimal parameters.
+    algorithm : str, optional
+        The name of the imputation algorithm (default is 'cdrec').
+    dataset : str, optional
+        The name of the dataset (default is an empty string).
+    optimizer : str, optional
+        The name of the optimizer used (default is 'b').
+    file_name : str, optional
+        The name of the TOML file to save the results (default is None).
+
+    Returns
+    -------
+    None
+    """
+    if file_name is None:
+        file_name = "./imputegap_assets/params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+    else:
+        file_name += "optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+
+    dir_name = os.path.dirname(file_name)
+    if dir_name and not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
+    if algorithm == "cdrec":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "eps": optimal_params[1],
+            "iters": int(optimal_params[2])
+    }
+    elif algorithm == "mrnn":
+        params_to_save = { "hidden_dim": int(optimal_params[0]),
+            "learning_rate": optimal_params[1],
+            "num_iter": int(optimal_params[2]),
+            "seq_len": 7  # Default value
+        }
+    elif algorithm == "stmvl":
+        params_to_save = {
+            "window_size": int(optimal_params[0]),
+            "gamma": optimal_params[1],
+            "alpha": int(optimal_params[2])
+        }
+    elif algorithm == "iim":
+        params_to_save = {
+            "learning_neighbors": int(optimal_params[0])
+        }
+
+    elif algorithm == "iterative_svd":
+        params_to_save = {
+            "rank": int(optimal_params[0])
+        }
+    elif algorithm == "grouse":
+        params_to_save= {
+            "max_rank": int(optimal_params[0])
+        }
+    elif algorithm == "rosl":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "regularization": optimal_params[1]
+        }
+    elif algorithm == "soft_impute":
+        params_to_save = {
+            "max_rank": int(optimal_params[0])
+        }
+    elif algorithm == "spirit":
+        params_to_save = {
+            "k": int(optimal_params[0]),
+            "w": int(optimal_params[1]),
+            "lvalue": optimal_params[2]
+        }
+    elif algorithm == "svt":
+        params_to_save = {
+            "tau": optimal_params[0],
+            "delta": optimal_params[1],
+            "max_iter": int(optimal_params[2])
+        }
+    elif algorithm == "dynammo":
+        params_to_save = {
+            "h": int(optimal_params[0]),
+            "max_iteration": int(optimal_params[1]),
+            "approximation": bool(optimal_params[2])
+        }
+    elif algorithm == "tkcm":
+        params_to_save = {
+            "rank": int(optimal_params[0])
+        }
+    elif algorithm == "brits":
+        params_to_save = {
+            "model": optimal_params[0],
+            "epoch": int(optimal_params[1]),
+            "batch_size": int(optimal_params[2]),
+            "hidden_layers": int(optimal_params[3]),
+            "num_workers": int(optimal_params[4])
+        }
+    elif algorithm == "deep_mvi":
+        params_to_save = {
+            "max_epoch": int(optimal_params[0]),
+            "patience": int(optimal_params[1]),
+            "lr": float(optimal_params[2])
+        }
+    elif algorithm == "mpin":
+        params_to_save = {
+            "incre_mode": optimal_params[0],
+            "window": int(optimal_params[1]),
+            "k": int(optimal_params[2]),
+            "learning_rate": optimal_params[3],
+            "weight_decay": optimal_params[4],
+            "epochs": int(optimal_params[5]),
+            "num_of_iteration": int(optimal_params[6]),
+            "threshold": optimal_params[7],
+            "base": optimal_params[8]
+        }
+    elif algorithm == "pristi":
+        params_to_save = {
+            "target_strategy": optimal_params[0],
+            "unconditional": bool(optimal_params[1]),
+            "batch_size": bool(optimal_params[2]),
+            "embedding": bool(optimal_params[3]),
+            "num_workers": bool(optimal_params[4]),
+            "seed": 42,  # Default seed
+        }
+    elif algorithm == "knn" or algorithm == "knn_impute":
+        params_to_save = {
+            "k": int(optimal_params[0]),
+            "weights": str(optimal_params[1])
+        }
+    elif algorithm == "interpolation":
+        params_to_save = {
+            "method": str(optimal_params[0]),
+            "poly_order": int(optimal_params[1])
+        }
+    elif algorithm == "mice":
+        params_to_save = {
+            "max_iter": int(optimal_params[0]),
+            "tol": float(optimal_params[1]),
+            "initial_strategy": str(optimal_params[2]),
+            "seed": 42
+        }
+    elif algorithm == "miss_forest":
+        params_to_save = {
+            "n_estimators": int(optimal_params[0]),
+            "max_iter": int(optimal_params[1]),
+            "max_features": str(optimal_params[2]),
+            "seed": 42
+        }
+    elif algorithm == "xgboost":
+        params_to_save = {
+            "n_estimators": int(optimal_params[0]),
+            "seed": 42
+        }
+    elif algorithm == "miss_net":
+        params_to_save = {
+            "alpha": float(optimal_params[0]),
+            "beta": float(optimal_params[1]),
+            "L": int(optimal_params[2]),
+            "n_cl": int(optimal_params[3]),
+            "max_iter": int(optimal_params[4]),
+            "tol": float(optimal_params[5]),
+            "random_init": bool(optimal_params[6])
+        }
+    elif algorithm == "gain":
+        params_to_save = {
+            "batch_size": int(optimal_params[0]),
+            "hint_rate": float(optimal_params[1]),
+            "alpha": int(optimal_params[2]),
+            "epoch": int(optimal_params[3])
+        }
+    elif algorithm == "grin":
+        params_to_save = {
+            "d_hidden": int(optimal_params[0]),
+            "lr": float(optimal_params[1]),
+            "batch_size": int(optimal_params[2]),
+            "window": int(optimal_params[3]),
+            "alpha": int(optimal_params[4]),
+            "patience": int(optimal_params[5]),
+            "epochs": int(optimal_params[6]),
+            "workers": int(optimal_params[7])
+        }
+    elif algorithm == "bay_otide":
+        params_to_save = {
+            "K_trend": int(optimal_params[0]),
+            "K_season": int(optimal_params[1]),
+            "n_season": int(optimal_params[2]),
+            "K_bias": int(optimal_params[3]),
+            "time_scale": int(optimal_params[4]),
+            "a0": float(optimal_params[5]),
+            "b0": float(optimal_params[6]),
+            "v": float(optimal_params[7]),
+            "tr_ratio": float(optimal_params[8])
+        }
+    elif algorithm == "hkmf_t":
+        params_to_save = {
+            "tags": optimal_params[0],
+            "data_names": optimal_params[1],
+            "epoch": int(optimal_params[2]),
+        }
+    elif algorithm == "bit_graph":
+        params_to_save = {
+            "node_number": int(optimal_params[0]),
+            "kernel_set": optimal_params[1],
+            "dropout": float(optimal_params[2]),
+            "subgraph_size": int(optimal_params[3]),
+            "node_dim": int(optimal_params[4]),
+            "seq_len": int(optimal_params[5]),
+            "lr": float(optimal_params[6]),
+            "batch_size": float(optimal_params[7]),
+            "epoch": int(optimal_params[8]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
+        }
+    elif algorithm == "nuwats":
+        params_to_save = {
+            "seq_length": int(optimal_params[0]),
+            "patch_size": optimal_params[1],
+            "batch_size": float(optimal_params[2]),
+            "pred_length": int(optimal_params[3]),
+            "label_length": int(optimal_params[4]),
+            "enc_in": int(optimal_params[5]),
+            "dec_in": float(optimal_params[6]),
+            "c_out": float(optimal_params[7]),
+            "gpt_layers": int(optimal_params[8]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
+        }
+    elif algorithm == "gpt4ts":
+        params_to_save = {
+            "seq_length": int(optimal_params[0]),
+            "patch_size": optimal_params[1],
+            "batch_size": float(optimal_params[2]),
+            "pred_length": int(optimal_params[3]),
+            "label_length": int(optimal_params[4]),
+            "enc_in": int(optimal_params[5]),
+            "dec_in": float(optimal_params[6]),
+            "c_out": float(optimal_params[7]),
+            "gpt_layers": int(optimal_params[8]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
+        }
+
+
+    # Your own optimal save parameters #contributing
+    #
+    #elif algorithm == "your_algo_name":
+    #    params_to_save = {
+    #        "param_1": int(optimal_params[0]),
+    #    "param_2": optimal_params[1],
+    #    "param_3": float(optimal_params[2]),
+    #}
+
+
+    else:
+        print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
+        return
+
+    try:
+        with open(file_name, 'w') as file:
+            toml.dump(params_to_save, file)
+        print(f"\n(SYS) Optimization parameters successfully saved to {file_name}")
+    except Exception as e:
+        print(f"\n(SYS) An error occurred while saving the file: {e}")
+
+
+def check_family(family, algorithm):
+    # Normalize input
+    norm_input = algorithm.lower().replace("_", "").replace("-", "")
+
+    for full_name in list_of_algorithms_with_families():
+        if full_name.startswith("DeepLearning."):
+            suffix = full_name.split(".", 1)[1]
+            norm_suffix = suffix.lower().replace("_", "").replace("-", "")
+
+            if norm_input == norm_suffix:
+                return True
+    return False
+
+
+def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0.5, explainer=False, probabilities=None, verbose=True):
+    """
+    Configure and execute contamination for selected imputation algorithm and pattern.
+
+    Parameters
+    ----------
+    rate : float
+        Mean parameter for contamination missing percentage rate.
+    ts_test : TimeSeries
+        A TimeSeries object containing dataset.
+    pattern : str
+        Type of contamination pattern (e.g., "mcar", "mp", "blackout", "disjoint", "overlap", "gaussian").
+    block_size_mcar : int
+        Size of blocks removed in MCAR
+
+    Returns
+    -------
+    TimeSeries
+        TimeSeries object containing contaminated data.
+    """
+
+    from imputegap.recovery.manager import TimeSeries
+
+    pattern_low = pattern.lower()
+    ptn = pattern_low.replace('_', '').replace('-', '')
+
+    if ptn == "mcar" or ptn == "missing_completely_at_random":
+        incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
+    elif ptn == "mp" or ptn == "missingpercentage" or ptn == "aligned":
+        incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, explainer=explainer, verbose=verbose)
+    elif ptn == "ps" or ptn == "percentageshift" or ptn == "scattered":
+        incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
+    elif ptn == "disjoint":
+        incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset, verbose=verbose)
+    elif ptn == "overlap":
+        incomp_data = ts.Contamination.overlap(input_data=ts.data, rate_series=dataset_rate, limit=limit, shift=shift, offset=offset, verbose=verbose)
+    elif ptn == "gaussian":
+        incomp_data = ts.Contamination.gaussian(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, std_dev=std_dev, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
+    elif ptn == "distribution" or pattern == "dist":
+        incomp_data = ts.Contamination.distribution(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, probabilities_list=probabilities, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
+    elif ptn == "blackout":
+        incomp_data = ts.Contamination.blackout(input_data=ts.data, series_rate=dataset_rate, offset=offset, verbose=verbose)
+    else:
+        raise ValueError(f"\n(CONT) Pattern '{pattern}' not recognized, please choose your algorithm on this list :\n\t{TimeSeries().patterns}\n")
+        incomp_data = None
+
+    return incomp_data
+
+
+def config_forecaster(model, params):
+        """
+        Configure and execute forecaster model for downstream analytics
+
+        Parameters
+        ----------
+        model : str
+            name of the forcaster model
+        params : list of params
+            List of paramaters for a forcaster model
+
+        Returns
+        -------
+        Forecaster object (SKTIME/DART)
+            Forecaster object for downstream analytics
+        """
+
+        from imputegap.recovery.manager import TimeSeries
+
+        model_low = model.lower()
+        mdl = model_low.replace('_', '').replace('-', '')
+
+        if mdl == "prophet":
+            from sktime.forecasting.fbprophet import Prophet
+            forecaster = Prophet(**params)
+        elif mdl == "expsmoothing":
+            from sktime.forecasting.exp_smoothing import ExponentialSmoothing
+            forecaster = ExponentialSmoothing(**params)
+        elif mdl == "nbeats":
+            from darts.models import NBEATSModel
+            forecaster = NBEATSModel(**params)
+        elif mdl == "xgboost":
+            from darts.models.forecasting.xgboost import XGBModel
+            forecaster = XGBModel(**params)
+        elif mdl == "lightgbm":
+            from darts.models.forecasting.lgbm import LightGBMModel
+            forecaster = LightGBMModel(**params)
+        elif mdl == "lstm":
+            from darts.models.forecasting.rnn_model import RNNModel
+            forecaster = RNNModel(**params)
+        elif mdl == "deepar":
+            from darts.models.forecasting.rnn_model import RNNModel
+            forecaster = RNNModel(**params)
+        elif mdl == "transformer":
+            from darts.models.forecasting.transformer_model import TransformerModel
+            forecaster = TransformerModel(**params)
+        elif mdl == "hwadd":
+            from sktime.forecasting.exp_smoothing import ExponentialSmoothing
+            forecaster = ExponentialSmoothing(**params)
+        elif mdl == "arima":
+            from sktime.forecasting.arima import AutoARIMA
+            forecaster = AutoARIMA(**params)
+        elif mdl == "sf-arima":
+            from sktime.forecasting.statsforecast import StatsForecastAutoARIMA
+            forecaster = StatsForecastAutoARIMA(**params)
+            forecaster.set_config(warnings='off')
+        elif mdl == "bats":
+            from sktime.forecasting.bats import BATS
+            forecaster = BATS(**params)
+        elif mdl == "ets":
+            from sktime.forecasting.ets import AutoETS
+            forecaster = AutoETS(**params)
+        elif mdl == "croston":
+            from sktime.forecasting.croston import Croston
+            forecaster = Croston(**params)
+        elif mdl == "theta":
+            from sktime.forecasting.theta import ThetaForecaster
+            forecaster = ThetaForecaster(**params)
+        elif mdl == "unobs":
+            from sktime.forecasting.structural import UnobservedComponents
+            forecaster = UnobservedComponents(**params)
+        elif mdl == "naive":
+            from sktime.forecasting.naive import NaiveForecaster
+            forecaster = NaiveForecaster(**params)
+        else:
+            raise ValueError(f"\n(DOWN) Forecasting model '{model}' not recognized, please choose your algorithm on this list :\n\t{TimeSeries().forecasting_models}\n")
+            forecaster = None
+
+        return forecaster
+
+
+
+def __marshal_as_numpy_column(__ctype_container, __py_sizen, __py_sizem):
+    """
+    Marshal a ctypes container as a numpy column-major array.
+
+    Parameters
+    ----------
+    __ctype_container : ctypes.Array
+        The input ctypes container (flattened matrix).
+    __py_sizen : int
+        The number of rows in the numpy array.
+    __py_sizem : int
+        The number of columns in the numpy array.
+
+    Returns
+    -------
+    numpy.ndarray
+        A numpy array reshaped to the original matrix dimensions (row-major order).
+    """
+    __numpy_marshal = __numpy_import.array(__ctype_container).reshape(__py_sizem, __py_sizen).T;
+
+    return __numpy_marshal;
+
+
+def __marshal_as_native_column(__py_matrix):
+    """
+    Marshal a numpy array as a ctypes flat container for passing to native code.
+
+    Parameters
+    ----------
+    __py_matrix : numpy.ndarray
+        The input numpy matrix (2D array).
+
+    Returns
+    -------
+    ctypes.Array
+        A ctypes array containing the flattened matrix (in column-major order).
+    """
+    __py_input_flat = __numpy_import.ndarray.flatten(__py_matrix.T);
+    __ctype_marshal = __numpy_import.ctypeslib.as_ctypes(__py_input_flat);
+
+    return __ctype_marshal;
+
+
+def display_title(title="Master Thesis", aut="Quentin Nater", lib="ImputeGAP", university="University Fribourg"):
+    """
+    Display the title and author information.
+
+    Parameters
+    ----------
+    title : str, optional
+        The title of the thesis (default is "Master Thesis").
+    aut : str, optional
+        The author's name (default is "Quentin Nater").
+    lib : str, optional
+        The library or project name (default is "ImputeGAP").
+    university : str, optional
+        The university or institution (default is "University Fribourg").
+
+    Returns
+    -------
+    None
+    """
+
+    print("=" * 100)
+    print(f"{title} : {aut}")
+    print("=" * 100)
+    print(f"    {lib} - {university}")
+    print("=" * 100)
+
+
+def search_path(set_name="test"):
+    """
+    Find the accurate path for loading test files.
+
+    Parameters
+    ----------
+    set_name : str, optional
+        Name of the dataset (default is "test").
+
+    Returns
+    -------
+    str
+        The correct file path for the dataset.
+    """
+
+    if set_name in list_of_datasets():
+        return set_name + ".txt"
+    else:
+        filepath = "../imputegap/datasets/" + set_name
+
+        if not os.path.exists(filepath):
+            filepath = filepath[1:]
+        return filepath
+
+
+def get_missing_ratio(incomp_data):
+    """
+    Check whether the proportion of missing values in the contaminated data is acceptable
+    for training a deep learning model.
+
+    Parameters
+    ----------
+    incomp_data : TimeSeries (numpy array)
+            TimeSeries object containing dataset.
+
+    Returns
+    -------
+    bool
+        True if the missing data ratio is less than or equal to 40%, False otherwise.
+    """
+    import numpy as np
+
+    miss_m = incomp_data
+    total_values = miss_m.size
+    missing_values = np.isnan(miss_m).sum()
+    missing_ratio = missing_values / total_values
+
+    return missing_ratio
 
 
 def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
@@ -905,7 +1202,7 @@ def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_rat
         if nan_val == -1:
             import numpy as np
             nan_val = np.nanmean(input_matrix)
-            print(f"NaN replacement Mean Value : {nan_val}")
+            print(f"\nNaN replacement Mean Value : {nan_val}\n")
         cont_data_matrix = prevent_leakage(cont_data_matrix, new_mask, nan_val, verbose)
 
     mask_test, mask_valid, nbr_nans = split_mask_bwt_test_valid(cont_data_matrix, test_rate=split_ts, valid_rate=split_val, nan_val=nan_val, verbose=verbose, seed=seed)
@@ -1402,261 +1699,6 @@ def load_share_lib(name="lib_cdrec", lib=True, verbose=True):
     return ctypes.CDLL(lib_path)
 
 
-def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="b", file_name=None):
-    """
-    Save the optimization parameters to a TOML file for later use without recomputing.
-
-    Parameters
-    ----------
-    optimal_params : dict
-        Dictionary of the optimal parameters.
-    algorithm : str, optional
-        The name of the imputation algorithm (default is 'cdrec').
-    dataset : str, optional
-        The name of the dataset (default is an empty string).
-    optimizer : str, optional
-        The name of the optimizer used (default is 'b').
-    file_name : str, optional
-        The name of the TOML file to save the results (default is None).
-
-    Returns
-    -------
-    None
-    """
-    if file_name is None:
-        file_name = "./imputegap_assets/params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-    else:
-        file_name += "optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-
-    dir_name = os.path.dirname(file_name)
-    if dir_name and not os.path.exists(dir_name):
-        os.makedirs(dir_name)
-
-    if algorithm == "cdrec":
-        params_to_save = {
-            "rank": int(optimal_params[0]),
-            "eps": optimal_params[1],
-            "iters": int(optimal_params[2])
-    }
-    elif algorithm == "mrnn":
-        params_to_save = { "hidden_dim": int(optimal_params[0]),
-            "learning_rate": optimal_params[1],
-            "num_iter": int(optimal_params[2]),
-            "seq_len": 7  # Default value
-        }
-    elif algorithm == "stmvl":
-        params_to_save = {
-            "window_size": int(optimal_params[0]),
-            "gamma": optimal_params[1],
-            "alpha": int(optimal_params[2])
-        }
-    elif algorithm == "iim":
-        params_to_save = {
-            "learning_neighbors": int(optimal_params[0])
-        }
-
-    elif algorithm == "iterative_svd":
-        params_to_save = {
-            "rank": int(optimal_params[0])
-        }
-    elif algorithm == "grouse":
-        params_to_save= {
-            "max_rank": int(optimal_params[0])
-        }
-    elif algorithm == "rosl":
-        params_to_save = {
-            "rank": int(optimal_params[0]),
-            "regularization": optimal_params[1]
-        }
-    elif algorithm == "soft_impute":
-        params_to_save = {
-            "max_rank": int(optimal_params[0])
-        }
-    elif algorithm == "spirit":
-        params_to_save = {
-            "k": int(optimal_params[0]),
-            "w": int(optimal_params[1]),
-            "lvalue": optimal_params[2]
-        }
-    elif algorithm == "svt":
-        params_to_save = {
-            "tau": optimal_params[0],
-            "delta": optimal_params[1],
-            "max_iter": int(optimal_params[2])
-        }
-    elif algorithm == "dynammo":
-        params_to_save = {
-            "h": int(optimal_params[0]),
-            "max_iteration": int(optimal_params[1]),
-            "approximation": bool(optimal_params[2])
-        }
-    elif algorithm == "tkcm":
-        params_to_save = {
-            "rank": int(optimal_params[0])
-        }
-    elif algorithm == "brits":
-        params_to_save = {
-            "model": optimal_params[0],
-            "epoch": int(optimal_params[1]),
-            "batch_size": int(optimal_params[2]),
-            "hidden_layers": int(optimal_params[3]),
-            "num_workers": int(optimal_params[4])
-        }
-    elif algorithm == "deep_mvi":
-        params_to_save = {
-            "max_epoch": int(optimal_params[0]),
-            "patience": int(optimal_params[1]),
-            "lr": float(optimal_params[2])
-        }
-    elif algorithm == "mpin":
-        params_to_save = {
-            "incre_mode": optimal_params[0],
-            "window": int(optimal_params[1]),
-            "k": int(optimal_params[2]),
-            "learning_rate": optimal_params[3],
-            "weight_decay": optimal_params[4],
-            "epochs": int(optimal_params[5]),
-            "num_of_iteration": int(optimal_params[6]),
-            "threshold": optimal_params[7],
-            "base": optimal_params[8]
-        }
-    elif algorithm == "pristi":
-        params_to_save = {
-            "target_strategy": optimal_params[0],
-            "unconditional": bool(optimal_params[1]),
-            "batch_size": bool(optimal_params[2]),
-            "embedding": bool(optimal_params[3]),
-            "num_workers": bool(optimal_params[4]),
-            "seed": 42,  # Default seed
-        }
-    elif algorithm == "knn" or algorithm == "knn_impute":
-        params_to_save = {
-            "k": int(optimal_params[0]),
-            "weights": str(optimal_params[1])
-        }
-    elif algorithm == "interpolation":
-        params_to_save = {
-            "method": str(optimal_params[0]),
-            "poly_order": int(optimal_params[1])
-        }
-    elif algorithm == "mice":
-        params_to_save = {
-            "max_iter": int(optimal_params[0]),
-            "tol": float(optimal_params[1]),
-            "initial_strategy": str(optimal_params[2]),
-            "seed": 42
-        }
-    elif algorithm == "miss_forest":
-        params_to_save = {
-            "n_estimators": int(optimal_params[0]),
-            "max_iter": int(optimal_params[1]),
-            "max_features": str(optimal_params[2]),
-            "seed": 42
-        }
-    elif algorithm == "xgboost":
-        params_to_save = {
-            "n_estimators": int(optimal_params[0]),
-            "seed": 42
-        }
-    elif algorithm == "miss_net":
-        params_to_save = {
-            "alpha": float(optimal_params[0]),
-            "beta": float(optimal_params[1]),
-            "L": int(optimal_params[2]),
-            "n_cl": int(optimal_params[3]),
-            "max_iter": int(optimal_params[4]),
-            "tol": float(optimal_params[5]),
-            "random_init": bool(optimal_params[6])
-        }
-    elif algorithm == "gain":
-        params_to_save = {
-            "batch_size": int(optimal_params[0]),
-            "hint_rate": float(optimal_params[1]),
-            "alpha": int(optimal_params[2]),
-            "epoch": int(optimal_params[3])
-        }
-    elif algorithm == "grin":
-        params_to_save = {
-            "d_hidden": int(optimal_params[0]),
-            "lr": float(optimal_params[1]),
-            "batch_size": int(optimal_params[2]),
-            "window": int(optimal_params[3]),
-            "alpha": int(optimal_params[4]),
-            "patience": int(optimal_params[5]),
-            "epochs": int(optimal_params[6]),
-            "workers": int(optimal_params[7])
-        }
-    elif algorithm == "bay_otide":
-        params_to_save = {
-            "K_trend": int(optimal_params[0]),
-            "K_season": int(optimal_params[1]),
-            "n_season": int(optimal_params[2]),
-            "K_bias": int(optimal_params[3]),
-            "time_scale": int(optimal_params[4]),
-            "a0": float(optimal_params[5]),
-            "b0": float(optimal_params[6]),
-            "v": float(optimal_params[7]),
-            "tr_ratio": float(optimal_params[8])
-        }
-    elif algorithm == "hkmf_t":
-        params_to_save = {
-            "tags": optimal_params[0],
-            "data_names": optimal_params[1],
-            "epoch": int(optimal_params[2]),
-        }
-    elif algorithm == "bit_graph":
-        params_to_save = {
-            "node_number": int(optimal_params[0]),
-            "kernel_set": optimal_params[1],
-            "dropout": float(optimal_params[2]),
-            "subgraph_size": int(optimal_params[3]),
-            "node_dim": int(optimal_params[4]),
-            "seq_len": int(optimal_params[5]),
-            "lr": float(optimal_params[6]),
-            "batch_size": float(optimal_params[7]),
-            "epoch": int(optimal_params[8]),
-            "num_workers": int(optimal_params[9]),
-            "seed": int(optimal_params[10]),
-        }
-    elif algorithm == "nuwats":
-        params_to_save = {
-            "seq_length": int(optimal_params[0]),
-            "patch_size": optimal_params[1],
-            "batch_size": float(optimal_params[2]),
-            "pred_length": int(optimal_params[3]),
-            "label_length": int(optimal_params[4]),
-            "enc_in": int(optimal_params[5]),
-            "dec_in": float(optimal_params[6]),
-            "c_out": float(optimal_params[7]),
-            "gpt_layers": int(optimal_params[8]),
-            "num_workers": int(optimal_params[9]),
-            "seed": int(optimal_params[10]),
-        }
-    elif algorithm == "gpt4ts":
-        params_to_save = {
-            "seq_length": int(optimal_params[0]),
-            "patch_size": optimal_params[1],
-            "batch_size": float(optimal_params[2]),
-            "pred_length": int(optimal_params[3]),
-            "label_length": int(optimal_params[4]),
-            "enc_in": int(optimal_params[5]),
-            "dec_in": float(optimal_params[6]),
-            "c_out": float(optimal_params[7]),
-            "gpt_layers": int(optimal_params[8]),
-            "num_workers": int(optimal_params[9]),
-            "seed": int(optimal_params[10]),
-        }
-    else:
-        print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
-        return
-
-    try:
-        with open(file_name, 'w') as file:
-            toml.dump(params_to_save, file)
-        print(f"\n(SYS) Optimization parameters successfully saved to {file_name}")
-    except Exception as e:
-        print(f"\n(SYS) An error occurred while saving the file: {e}")
-
 
 def list_of_algorithms():
     return sorted([
@@ -1736,18 +1778,6 @@ def list_of_datasets(txt=False):
     return list
 
 
-def check_family(family, algorithm):
-    # Normalize input
-    norm_input = algorithm.lower().replace("_", "").replace("-", "")
-
-    for full_name in list_of_algorithms_with_families():
-        if full_name.startswith("DeepLearning."):
-            suffix = full_name.split(".", 1)[1]
-            norm_suffix = suffix.lower().replace("_", "").replace("-", "")
-
-            if norm_input == norm_suffix:
-                return True
-    return False
 
 def list_of_optimizers():
     return sorted([

@@ -1,3 +1,5 @@
+from imputegap.tools import utils
+
 from imputegap.recovery.benchmark import Benchmark
 
 my_algorithms = ["MeanImpute", "SoftImpute"]
@@ -14,4 +16,4 @@ my_metrics = ["*"]
 
 # launch the evaluation
 bench = Benchmark()
-bench.eval(algorithms=my_algorithms, datasets=my_datasets, patterns=my_patterns, x_axis=range, metrics=my_metrics, optimizers=my_opt)
+bench.eval(algorithms=utils.list_of_algorithms(), datasets=my_datasets, patterns=my_patterns, x_axis=range, metrics=my_metrics, optimizers=my_opt, nbr_series=10, nbr_vals=100)

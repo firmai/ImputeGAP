@@ -45,8 +45,7 @@ def iim_recovery(matrix_nan: np.ndarray, adaptive_flag: bool = False, learning_n
             #print("No complete tuples found, unable to proceed, returning original matrix")
             return matrix_nan
         if adaptive_flag:
-            lr_models = adaptive(complete_tuples, incomplete_tuples, learning_neighbors,
-                                 max_learning_neighbors=min(len(complete_tuples), 10))
+            lr_models = adaptive(complete_tuples, incomplete_tuples, learning_neighbors, max_learning_neighbors=min(len(complete_tuples), 10))
             imputation_result = imputation(incomplete_tuples, lr_models)
 
         else:
@@ -313,7 +312,7 @@ def compute_weights(distances: List[float]):
     return weights
 
 
-def impute_with_algorithm(alg_code: str, matrix: np.ndarray, neighbors=None):
+def impute_with_algorithm(alg_code: str, matrix: np.ndarray, neighbors=None, verbose=True):
     """
     Imputes the input matrix with a specified algorithm.
 
@@ -330,6 +329,10 @@ def impute_with_algorithm(alg_code: str, matrix: np.ndarray, neighbors=None):
     np.ndarray
         The imputed matrix.
     """
+
+    if verbose:
+        print(f"(IMPUTATION) IIM\n\tMatrix: {matrix.shape[0]}, {matrix.shape[1]}\n\talg_code: {alg_code}\n\tneighbors: {neighbors}\n\tverbose: {verbose}")
+
     global rmse
     # Imputation
     alg_code_spl = alg_code.split()

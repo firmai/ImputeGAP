@@ -292,4 +292,12 @@ RAYTUNE_PARAMS = {
         "num_workers":0,
         "seed":42
     }
+
+    # your ray-tune limitation #contributing
+    #
+    #'your_algo_name': {
+    #    "param_1": tune.grid_search([i for i in range(2, 16, 1)]),
+    #    "param_2": tune.loguniform(1e-6, 1),
+    #    "param_3": tune.grid_search([i * 50 for i in range(1, 4)])
+    #},
 }

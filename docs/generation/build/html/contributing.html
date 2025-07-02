@@ -321,7 +321,7 @@ $ cd ./ImputeGAP
 <section id="i-initialize-default-values">
 <h4>I. Initialize default values<a class="headerlink" href="#i-initialize-default-values" title="Link to this heading">¶</a></h4>
 <ol class="arabic">
-<li><p>To set the default values of your algorithm, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/env/default_values.toml</span></code> and add your configuration. For example:</p>
+<li><p>To set the default values of your algorithm, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/env/default_values.toml</span></code> (lines 3-6) and add your configuration. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">new_alg</span><span class="p">]</span>
 <span class="n">param_integer</span> <span class="o">=</span> <span class="mi">42</span>
 <span class="n">param_float</span> <span class="o">=</span> <span class="mf">0.42</span>
@@ -334,7 +334,7 @@ $ cd ./ImputeGAP
 <br></section>
 <section id="ii-benchmark">
 <h4>II. Benchmark<a class="headerlink" href="#ii-benchmark" title="Link to this heading">¶</a></h4>
-<p>To access the benchmarking features, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> by adding your algorithm in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">config_impute_algorithm</span></code> function.</p>
+<p>To access the benchmarking features, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> (lines 547-550) by adding your algorithm in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">config_impute_algorithm</span></code> function.</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">elif</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;new_alg&quot;</span><span class="p">:</span>
     <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputation</span><span class="o">.</span><span class="n">MyFamily</span><span class="o">.</span><span class="n">NewAlg</span><span class="p">(</span><span class="n">incomp_data</span><span class="p">)</span>
@@ -347,7 +347,7 @@ $ cd ./ImputeGAP
 <h4>III. Optimizer<a class="headerlink" href="#iii-optimizer" title="Link to this heading">¶</a></h4>
 <p>To enable the optimization module, please update <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code>.</p>
 <ol class="arabic">
-<li><p>Open <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code> copy paste lines 59 to 63 and update the algorithm name and parameters, e.g.,</p>
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/algorithm_parameters.py</span></code> copy paste lines 296 to 302 and update the algorithm name and parameters, e.g.,</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;new_alg&#39;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;param_integer&quot;</span><span class="p">:</span> <span class="n">tune</span><span class="o">.</span><span class="n">grid_search</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span> <span class="mi">1</span><span class="p">)]),</span>
@@ -358,7 +358,7 @@ $ cd ./ImputeGAP
 </div>
 </div></blockquote>
 </li>
-<li><p>Add your parameters in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">save_optimization()</span></code> function of the file <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> to save the optimal parameters, line 820 to 825:</p>
+<li><p>Add your parameters in the <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">save_optimization()</span></code> function of the file <code class="docutils literal notranslate"><span class="pre">./imputegap/tools/utils.py</span></code> to save the optimal parameters, line 808 to 815:</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s2">&quot;new_alg&quot;</span><span class="p">:</span>
     <span class="n">params_to_save</span> <span class="o">=</span> <span class="p">{</span>
