@@ -78,7 +78,7 @@ def generate_mask(data_matrix, drop_rate=0.8, valid_rate=0.2, verbose=False):
     return mask_train, mask_test, mask_valid
 
 
-def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, tr_ratio=0.9, config=None, args=None, verbose=True):
+def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=None, time_scale=None, a0=None, b0=None, v=None, num_workers=0, tr_ratio=0.9, config=None, args=None, verbose=True):
     """
     Run BayOTIDE model using a provided NumPy data matrix instead of loading from a file.
 
@@ -107,7 +107,7 @@ def recovBayOTIDE(incomp_m, K_trend=None, K_season=None, n_season=None, K_bias=N
     offset                      = 0.05
 
     if verbose:
-        print(f"(IMPUTATION) BayOTIDE\n\tMatrix: {incomp_m.shape[0]}, {incomp_m.shape[1]}\n\tK_trend: {K_trend}\n\tK_season: {K_season}\n\tn_season: {n_season}\n\tK_bias: {K_bias}\n\ttime_scale: {time_scale}\n\ta0: {a0}\n\tb0: {b0}\n\ttr_ratio: {tr_ratio}\n")
+        print(f"(IMPUTATION) BayOTIDE\n\tMatrix: {incomp_m.shape[0]}, {incomp_m.shape[1]}\n\tK_trend: {K_trend}\n\tK_season: {K_season}\n\tn_season: {n_season}\n\tK_bias: {K_bias}\n\ttime_scale: {time_scale}\n\ta0: {a0}\n\tb0: {b0}\n\tnum_workers: {num_workers}\n\ttr_ratio: {tr_ratio}\n")
 
     # building test set ================================================================================================
     gt_data_matrix = incomp_m.copy()

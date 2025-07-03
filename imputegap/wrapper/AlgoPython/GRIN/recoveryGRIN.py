@@ -45,7 +45,7 @@ def get_model_classes(model_str):
     return model, filler
 
 
-def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10.0, patience=4, epochs=20, workers=2,
+def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10.0, patience=4, epochs=20, workers=0,
                  adj_threshold=0.1, val_len=0.2, test_len=0.2, d_ff=16, ff_dropout=0.1, stride=1, l2_reg=0.0,
                  grad_clip_val=5.0, grad_clip_algorithm="norm", loss_fn="l1_loss", use_lr_schedule=True, hint_rate=0.7,
                  g_train_freq=1, d_train_freq=5, tr_ratio=0.9, seed=42, verbose=True):
@@ -67,17 +67,20 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
     input_data = np.copy(cont_data_matrix)
     M, N = input_data.shape
 
-
     # Get indices where the value is True
     s = ~nan_row_selector
     tr_indice = np.where(s)[0]
     np.random.seed(42)
-    num_to_flip = len(tr_indice) // 4
+
+    if M <= 4:
+        num_to_flip = len(tr_indice) // 2
+    else:
+        num_to_flip = len(tr_indice) // 4
+
     other_indices = np.random.choice(tr_indice, size=num_to_flip, replace=False)
     flip_indices = np.setdiff1d(tr_indice, other_indices)
     training_mask = np.zeros((M, N), dtype=np.uint8)  # or dtype=bool if preferred
     training_mask[flip_indices, :] = 1
-
 
     if window > N :
         window = 1
@@ -138,6 +141,10 @@ def recoveryGRIN(input, d_hidden=32, lr=0.001, batch_size=-1, window=1, alpha=10
         print(f"🔍 Training Indices: {len(train_idxs) if train_idxs is not None else 0}")
         print(f"🔍 Test Indices: {len(test_idxs) if test_idxs is not None else 0}")
         print(f"🔍 Validation Indices: {len(val_idxs) if val_idxs is not None else 0}")
+
+    if len(torch_dataset) <= 1 or len(test_idxs) <= 1 :
+        print(f"\n(ERROR) Number of series to train to small for GRIN: {len(test_idxs)}\n\tPlease increase the number of series or change the dataset used.\n")
+        return input
 
 
     data_module_conf = { "scale": True, "scaling_axis": "global", "scaling_type": "std", "scale_exogenous": None, "train_idxs": train_idxs, "val_idxs": val_idxs, "test_idxs": test_idxs, "batch_size": batch_size, "workers": workers, "samples_per_epoch": None, "verbose": verbose }

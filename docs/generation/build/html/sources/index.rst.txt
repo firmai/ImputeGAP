@@ -1,26 +1,24 @@
 ImputeGAP Documentation
 =======================
 
+.. admonition:: 📢 News !
+
+        - [03-07-2025] Version 1.1.1 is out! Check out the latest updates and improvements!
+        - [04-06-2025] ImputeGAP will be presented as a Tutorial at KDD 2025 in Toronto! `[Link] <https://imputegap-tutorials.github.io/KDD-2025/>`_
+
+
 ImputeGAP is a comprehensive Python library for imputation of missing values in  time series data. It implements user-friendly APIs to easily visualize, analyze, and repair time series datasets. The library supports a diverse range of imputation algorithms and modular missing data simulation catering to datasets with varying characteristics. ImputeGAP includes extensive customization options, such as automated hyperparameter tuning, benchmarking, explainability, and downstream evaluation.
 
 
 In detail, the library provides:
-    - Access to commonly used datasets in the time series imputation field.
-    - Configurable contamination module that simulates real-world missingness patterns.
-    - Parameterizable state-of-the-art time series imputation algorithms.
-    - Extensive benchmarking to compare the performance of imputation algorithms.
-    - Modular tools to assess the impact of imputation on key downstream tasks.
-    - Fine-grained analysis of the impact of time series features on imputation results.
-    - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R.
+    - Access to commonly used datasets in the time series imputation field
+    - Configurable contamination module that simulates real-world missingness patterns
+    - Parameterizable state-of-the-art time series imputation algorithms
+    - Extensive benchmarking to compare the performance of imputation algorithms
+    - Modular tools to assess the impact of imputation on key downstream tasks
+    - Fine-grained analysis of the impact of time series features on imputation results
+    - Seamless integration of new algorithms in Python, C++, Matlab, Java, and R
 
-.. raw:: html
-
-   <br>
-
-.. admonition:: 📢 News !
-
-        - [18-06-2025] Version 1.1.0 is out! Check out the latest updates and improvements!
-        - [04-06-2025] ImputeGAP will be presented as a Tutorial at KDD 2025 in Toronto! `[Web Site] <https://imputegap-tutorials.github.io/KDD-2025/>`_
 
 .. raw:: html
 
@@ -94,7 +92,7 @@ Get Started
 
       <div class="card">
         <h3><a href="tutorials.html">📖 Tutorials</a></h3>
-        <p>Check the tutorials to learn how to use ImputeGAP efficiently.</p>
+        <p>Check the tutorials to learn how to use ImputeGAP.</p>
       </div>
 
       <div class="card">
@@ -110,15 +108,20 @@ Get Started
     </div><br>
 
 
+.. raw:: html
+
+   <br>
 
 
-.. _citing:
 
-Citing
-------
+.. _cite:
 
+Cite
+----
 
-If you use ImputeGAP in your research, please cite these papers: `[Paper] <https://arxiv.org/abs/2503.15250>`_ `[Tutorial] <https://exascale.info/assets/pdf/khayati2025kdd.pdf>`_
+If you like our library, please add a ⭐ in our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
+
+If you use ImputeGAP in your research, please cite the following papers:
 
 .. code-block:: bash
 
@@ -140,15 +143,6 @@ If you use ImputeGAP in your research, please cite these papers: `[Paper] <https
       series = {KDD2025}
     }
 
-
-.. raw:: html
-
-   <br>
-
-
-.. admonition:: Note
-
-    If you like our library, please add a ⭐ in our `GitHub repository <https://github.com/eXascaleInfolab/ImputeGAP/>`_.
 
 
 .. raw:: html

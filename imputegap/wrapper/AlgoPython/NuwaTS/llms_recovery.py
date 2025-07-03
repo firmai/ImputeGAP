@@ -20,8 +20,7 @@ import torch.multiprocessing
 torch.multiprocessing.set_sharing_strategy('file_system')
 
 
-def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1, label_length=-1, enc_in=10, dec_in=10, c_out=10, gpt_layers=6, tr_ratio=0.9, model="NuwaTS", seed=42, verbose=True):
-
+def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1, label_length=-1, enc_in=10, dec_in=10, c_out=10, gpt_layers=6, num_workers=0, tr_ratio=0.9, model="NuwaTS", seed=42, verbose=True):
     recov = np.copy(ts_m)
     m_mask = np.isnan(ts_m)
     miss = np.copy(ts_m)
@@ -40,30 +39,12 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
     cont_mask_train = mask_train[~nan_row_selector]
 
     M, N = cont_data_train.shape
+    if M <= 2:
+        print(f"\n(ERROR) Number of series to train to small for LLMs: {M}\n\tPlease increase the number of series or change the dataset used.\n")
+        return ts_m
+
     if seq_length == -1:
-        if M > 5000:
-            seq_length = 3000
-        elif M > 3000:
-            seq_length = 1400
-        elif M > 2000:
-            seq_length = 1000
-        elif M > 1000:
-            seq_length = 600
-        elif M > 300:
-            seq_length = 100
-        elif M > 30:
-            seq_length = 16
-        else:
-            if M%5 == 0:
-                seq_length = M // 5
-            elif M%6 == 0:
-                seq_length = M // 6
-            elif M%2 == 0:
-                seq_length = M // 2
-            elif M%3 == 0:
-                seq_length = M // 3
-            else:
-                seq_length = 1
+        seq_length = utils.compute_seq_length(M)
     if batch_size == -1:
         batch_size = utils.compute_batch_size(ts_m, 4, 16, 2, verbose)
     if patch_size == -1:
@@ -119,6 +100,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
         '--enc_in', str(enc_in),
         '--dec_in', str(dec_in),
         '--c_out', str(c_out),
+        '--num_workers', str(num_workers),
         '--gpt_layers', str(gpt_layers),
         '--batch_size', str(batch_size),
         '--d_model', '768',
@@ -127,7 +109,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
         '--mlp', '1',
         '--learning_rate', '0.001',
         '--prefix_length', '1',
-        '--checkpoints', './checkpoints/'
+        '--checkpoints', './imputegap_assets/models/checkpoints/'
         '--prefix_tuning',
         '--cov_prompt',
     ]
@@ -152,7 +134,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
     parser.add_argument('--features', type=str, default='M', help='forecasting task, options:[M, S, MS]; M:multivariate predict multivariate, S:univariate predict univariate, MS:multivariate predict univariate')
     parser.add_argument('--target', type=str, default='OT', help='target feature in S or MS task')
     parser.add_argument('--freq', type=str, default='h', help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
-    parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
+    parser.add_argument('--checkpoints', type=str, default='./imputegap_assets/models/checkpoints/', help='location of model checkpoints')
 
     # forecasting task
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
@@ -189,7 +171,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
     parser.add_argument('--output_attention', action='store_true', help='whether to output attention in ecoder')
 
     # optimization
-    parser.add_argument('--num_workers', type=int, default=4, help='data loader num workers')
+    parser.add_argument('--num_workers', type=int, default=0, help='data loader num workers')
     parser.add_argument('--itr', type=int, default=1, help='experiments times')
     parser.add_argument('--train_epochs', type=int, default=10, help='train epochs')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data')
@@ -263,7 +245,7 @@ def llms_recov(ts_m, seq_length=-1, patch_size=-1, batch_size=-1, pred_length=-1
 
 
     if verbose:
-        print(f"(IMPUTATION) {model} (LLMs)\n\tMatrix: {miss.shape[0]}, {miss.shape[1]}\n\tseq_length: {seq_length}\n\tpatch_size: {patch_size}\n\tbatch_size: {batch_size}\n\tpred_length: {pred_length}\n\tlabel_length: {label_length}\n\tenc_in: {enc_in}\n\tdec_in: {dec_in}\n\tc_out: {c_out}\n\tgpt_layers: {gpt_layers}\n\ttr_ratio: {tr_ratio}\n\tseed: {seed}\n\tverbose: {verbose}\n\tGPU: {args.use_gpu}")
+        print(f"(IMPUTATION) {model} (LLMs)\n\tMatrix: {miss.shape[0]}, {miss.shape[1]}\n\tseq_length: {seq_length}\n\tpatch_size: {patch_size}\n\tbatch_size: {batch_size}\n\tpred_length: {pred_length}\n\tlabel_length: {label_length}\n\tenc_in: {enc_in}\n\tdec_in: {dec_in}\n\tc_out: {c_out}\n\tgpt_layers: {gpt_layers}\n\tnum_workers: {num_workers}\n\ttr_ratio: {tr_ratio}\n\tseed: {seed}\n\tverbose: {verbose}\n\tGPU: {args.use_gpu}")
 
     Exp= Exp_Imputation
 

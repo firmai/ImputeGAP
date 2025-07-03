@@ -129,7 +129,8 @@ RAYTUNE_PARAMS = {
         "epoch": tune.grid_search([i for i in range(5, 20, 5)]),  # Epochs from 5 to 15
         "batch_size": tune.grid_search([8, 16, 32]),  # Test different batch sizes
         "nbr_features": 1,  # tune.grid_search([1, 2, 5]),  # Number of features
-        "hidden_layers": tune.grid_search([32, 64, 128])  # Hidden layer sizes
+        "hidden_layers": tune.grid_search([32, 64, 128]),
+        "num_workers": 0
     },
 
     "deep_mvi": {
@@ -155,6 +156,7 @@ RAYTUNE_PARAMS = {
         "unconditional": tune.choice([True, False]),  # Use unconditional or not
         "batch_size": tune.grid_search([-1, 8]),
         "embedding": tune.grid_search([-1, 8]),
+        "num_workers": 0,
         "seed": 42
     },
 
@@ -254,6 +256,7 @@ RAYTUNE_PARAMS = {
             "lr": 0.001,  # Prior hyperparameter b0
             "batch_size": tune.grid_search([8, 32]),   # Prior hyperparameter b0
             "epoch": 50,  # Variance parameter
+            "num_workers": 0,  # Variance parameter
             "seed": 42 # Variance parameter
         },
 
@@ -273,6 +276,7 @@ RAYTUNE_PARAMS = {
         "dec_in": tune.grid_search([-1, 16]),
         "c_out": tune.grid_search([-1, 16]),
         "gpt_layers":tune.grid_search([2, 6, 16]),
+        "num_workers":0,
         "seed":42
     },
     "gpt4ts": {
@@ -285,6 +289,15 @@ RAYTUNE_PARAMS = {
         "dec_in": tune.grid_search([-1, 16]),
         "c_out": tune.grid_search([-1, 16]),
         "gpt_layers":tune.grid_search([2, 6, 16]),
+        "num_workers":0,
         "seed":42
     }
+
+    # your ray-tune limitation #contributing
+    #
+    #'your_algo_name': {
+    #    "param_1": tune.grid_search([i for i in range(2, 16, 1)]),
+    #    "param_2": tune.loguniform(1e-6, 1),
+    #    "param_3": tune.grid_search([i * 50 for i in range(1, 4)])
+    #},
 }

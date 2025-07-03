@@ -140,7 +140,7 @@ class ImputeGAP_Dataset(Dataset):
         return len(self.use_index)
 
 
-def get_dataloader(data, tr_ratio, batch_size, device, val_len=0.1, test_len=0.2, missing_pattern='block', is_interpolate=False, num_workers=4, target_strategy='random', eval_length=1):
+def get_dataloader(data, tr_ratio, batch_size, device, val_len=0.1, test_len=0.2, missing_pattern='block', is_interpolate=False, num_workers=0, target_strategy='random', eval_length=1):
     dataset = ImputeGAP_Dataset(data, tr_ratio=tr_ratio, eval_length=eval_length, mode="train", val_len=val_len, test_len=test_len, missing_pattern=missing_pattern, is_interpolate=is_interpolate, target_strategy=target_strategy, batch_size=batch_size)
     train_loader = DataLoader(dataset, batch_size=batch_size, num_workers=num_workers, shuffle=False)
 

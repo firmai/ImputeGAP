@@ -205,7 +205,8 @@ def window_imputation(input, input_test, mask, mask_eval, start, end, sample_rat
         loss.backward()
         opt.step()
         train_loss = loss.item()
-        print('\n\t\t\t{n} epoch loss:'.format(n=pre_epoch), train_loss, '.............')
+        if verbose:
+            print('\n\t\t\t{n} epoch loss:'.format(n=pre_epoch), train_loss, '.............')
 
         trans_X = copy.copy(X_imputed)
         trans_eval_X = copy.copy(eval_X)
@@ -280,25 +281,25 @@ def recoverMPIN(input, mode="alone", window=2, k=10, lr=0.01, weight_decay=0.1, 
         results_collect = []
         for w in range(num_windows):
             if w == 0:
-                window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test, start=w, end=w + 1, sample_ratio=1 / num_windows, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
+                window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test, start=w, end=w + 1, sample_ratio=1 / num_windows, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device, verbose=verbose)
             else:
                 if mode == 'alone':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test, start=w, end=w + 1, sample_ratio=1 / num_windows, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test, start=w, end=w + 1, sample_ratio=1 / num_windows, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device, verbose=verbose)
 
                 elif mode == 'data':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, X_last=X_last, mask_last=mask_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, X_last=X_last, mask_last=mask_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device, verbose=verbose)
 
                 elif mode == 'state':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device, verbose=verbose)
 
                 elif mode == 'state+transfer':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, transfer=True, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, transfer=True, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device, verbose=verbose)
 
                 elif mode == 'data+state':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, X_last=X_last, mask_last=mask_last, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, X_last=X_last, mask_last=mask_last, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels, state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device, verbose=verbose)
 
                 elif mode == 'data+state+transfer':
-                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, X_last=X_last, mask_last=mask_last, transfer=True, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels,state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device)
+                    window_best_state, X_last, mask_last, window_results, mae_last, best_X = window_imputation(input=cont_data_matrix, input_test=cont_data_matrix, mask=mask_train, mask_eval=mask_test,start=w, end=w + 1, sample_ratio=1 / num_windows, initial_state_dict=window_best_state, X_last=X_last, mask_last=mask_last, transfer=True, mae_last=mae_last, lr=lr, weight_decay=weight_decay, epochs=epochs, out_channels=out_channels,state=state, k=k, base=base, thre=thre, eval_ratio=eval_ratio, dynamic=dynamic, device=device, verbose=verbose)
 
             results_collect.append(window_results)
 

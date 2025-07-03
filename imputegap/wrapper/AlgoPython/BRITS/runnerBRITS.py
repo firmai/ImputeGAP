@@ -21,9 +21,9 @@ from imputegap.tools import utils
 from imputegap.wrapper.AlgoPython.BRITS.data_prep_tf import prepare_dat
 
 
-def train(model, input, batch_size, epochs, verbose=True):
+def train(model, input, batch_size, epochs, num_workers=0, verbose=True):
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
-    data_iter = data_loader.get_loader(input, batch_size=batch_size)
+    data_iter = data_loader.get_loader(input, batch_size=batch_size, num_workers=num_workers)
     for epoch in range(0, epochs):
         model.train()
         run_loss = 0.0
@@ -56,7 +56,7 @@ def evaluate(model, val_iter):
     return imputations
 
 
-def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=36, tr_ratio=0.9, seed=42, verbose=True):
+def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nbr_features=1, hidden_layers=64, seq_length=36, num_workers=0, tr_ratio=0.9, seed=42, verbose=True):
     recov = np.copy(incomp_data)
     m_mask = np.isnan(incomp_data)
 
@@ -69,7 +69,7 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
     if error:
         return incomp_data
 
-    prepare_dat(cont_data_matrix, "brits.tmp", mask_train, mask_test, mask_valid)
+    prepare_dat(cont_data_matrix, "./imputegap_assets/models/brits.tmp", mask_train, mask_test, mask_valid)
 
     if incomp_data.ndim == 2 and nbr_features != 1:
         print(f"\n(ERROR) The number of features set is not correct for the dimension of the data {incomp_data.ndim} must be higher then 2\n\tNumber of feature set to 1.\n")
@@ -77,14 +77,14 @@ def brits_recovery(incomp_data, model="brits_i_univ", epoch=10, batch_size=7, nb
 
 
     if verbose:
-        print(f"(IMPUTATION) {model.upper()}\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\tepoch: {epoch}\n\tbatch_size: {batch_size}\n\tnbr_features: {nbr_features}\n\tseq_length: {seq_length}\n\thidden_layers: {hidden_layers}\n\ttr_ratio: {tr_ratio}\n")
+        print(f"(IMPUTATION) {model.upper()}\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\tepoch: {epoch}\n\tbatch_size: {batch_size}\n\tnbr_features: {nbr_features}\n\tseq_length: {seq_length}\n\thidden_layers: {hidden_layers}\n\tnum_workers: {num_workers}\n\ttr_ratio: {tr_ratio}\n")
 
     model = getattr(models, model).Model(batch_size, nbr_features, hidden_layers, seq_length)
 
     if torch.cuda.is_available():
         model = model.cuda()
 
-    (model, data_iter) = train(model, "brits.tmp", batch_size, epoch, verbose)
+    (model, data_iter) = train(model, "./imputegap_assets/models/brits.tmp", batch_size, epoch, num_workers, verbose)
 
     res = evaluate(model, data_iter)
 

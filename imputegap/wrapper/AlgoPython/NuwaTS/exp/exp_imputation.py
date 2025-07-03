@@ -231,10 +231,10 @@ class Exp_Imputation(Exp_Basic):
         if test:
             if verbose:
                 print('loading model...')
-            self.model.load_state_dict(torch.load(os.path.join('./checkpoints/' + setting, 'checkpoint.pth')))
+            self.model.load_state_dict(torch.load(os.path.join('./imputegap_assets/models/checkpoints/' + setting, 'checkpoint.pth')))
 
         preds, trues, masks= [], [], []
-        folder_path = './test_results/' + setting + '/'
+        folder_path = './imputegap_assets/models/test_results/' + setting + '/'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 

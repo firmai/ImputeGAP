@@ -198,6 +198,6 @@ class TestBenchmarking(unittest.TestCase):
                 )
 
 
-        validation = bench.generate_heatmap(scores_list, algos, sets, metric="RMSE", save_dir="./reports", display=False)
+        validation = bench.generate_heatmap(scores_list=scores_list, algos=algos, sets=sets, metric="RMSE", save_dir="./reports", display=False)
 
         self.assertTrue(validation)

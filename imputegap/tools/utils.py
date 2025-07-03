@@ -6,6 +6,441 @@ import numpy as __numpy_import
 import platform
 
 
+def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=False):
+    """
+    Load default or optimal parameters for algorithms from a TOML file.
+
+    Parameters
+    ----------
+    query : str, optional
+        'default' or 'optimal' to load default or optimal parameters (default is "default").
+    algorithm : str, optional
+        Algorithm to load parameters for (default is "cdrec").
+    dataset : str, optional
+        Name of the dataset (default is "chlorine").
+    optimizer : str, optional
+        Optimizer type for optimal parameters (default is "b").
+    path : str, optional
+        Custom file path for the TOML file (default is None).
+    verbose : bool, optional
+        Whether to display the contamination information (default is False).
+
+    Returns
+    -------
+    tuple
+        A tuple containing the loaded parameters for the given algorithm.
+    """
+    if query == "default":
+        if path is None:
+            filepath = importlib.resources.files('imputegap.env').joinpath("./default_values.toml")
+            if not filepath.is_file():
+                filepath = "./env/default_values.toml"
+        else:
+            filepath = path
+            if not os.path.exists(filepath):
+                filepath = "./env/default_values.toml"
+
+    elif query == "optimal":
+        if path is None:
+            filename = "./optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+            filepath = importlib.resources.files('imputegap.params').joinpath(filename)
+            if not filepath.is_file():
+                filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+        else:
+            filepath = path
+            if not os.path.exists(filepath):
+                filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+
+    else:
+        filepath = None
+        print("Query not found for this function ('optimal' or 'default')")
+
+    if not os.path.exists(filepath):
+        filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+        if not os.path.exists(filepath):
+            filepath = filepath[1:]
+
+    with open(filepath, "r") as _:
+        config = toml.load(filepath)
+
+    if verbose:
+        print("\n(SYS) Inner files loaded : ", filepath, "\n")
+
+    if algorithm == "cdrec":
+        truncation_rank = int(config[algorithm]['rank'])
+        epsilon = float(config[algorithm]['epsilon'])
+        iterations = int(config[algorithm]['iteration'])
+        return (truncation_rank, epsilon, iterations)
+    elif algorithm == "stmvl":
+        window_size = int(config[algorithm]['window_size'])
+        gamma = float(config[algorithm]['gamma'])
+        alpha = int(config[algorithm]['alpha'])
+        return (window_size, gamma, alpha)
+    elif algorithm == "iim":
+        learning_neighbors = int(config[algorithm]['learning_neighbors'])
+        if query == "default":
+            algo_code = config[algorithm]['algorithm_code']
+            return (learning_neighbors, algo_code)
+        else:
+            return (learning_neighbors,)
+    elif algorithm == "mrnn":
+        hidden_dim = int(config[algorithm]['hidden_dim'])
+        learning_rate = float(config[algorithm]['learning_rate'])
+        iterations = int(config[algorithm]['iterations'])
+        if query == "default":
+            sequence_length = int(config[algorithm]['sequence_length'])
+            return (hidden_dim, learning_rate, iterations, sequence_length)
+        else:
+            return (hidden_dim, learning_rate, iterations)
+    elif algorithm == "iterative_svd":
+        truncation_rank = int(config[algorithm]['rank'])
+        return (truncation_rank)
+    elif algorithm == "grouse":
+        max_rank = int(config[algorithm]['max_rank'])
+        return (max_rank)
+    elif algorithm == "dynammo":
+        h = int(config[algorithm]['h'])
+        max_iteration = int(config[algorithm]['max_iteration'])
+        approximation = bool(config[algorithm]['approximation'])
+        return (h, max_iteration, approximation)
+    elif algorithm == "rosl":
+        rank = int(config[algorithm]['rank'])
+        regularization = float(config[algorithm]['regularization'])
+        return (rank, regularization)
+    elif algorithm == "soft_impute":
+        max_rank = int(config[algorithm]['max_rank'])
+        return (max_rank)
+    elif algorithm == "spirit":
+        k = int(config[algorithm]['k'])
+        w = int(config[algorithm]['w'])
+        lvalue = float(config[algorithm]['lvalue'])
+        return (k, w, lvalue)
+    elif algorithm == "svt":
+        tau = float(config[algorithm]['tau'])
+        return (tau)
+    elif algorithm == "tkcm":
+        rank = int(config[algorithm]['rank'])
+        return (rank)
+    elif algorithm == "deep_mvi":
+        max_epoch = int(config[algorithm]['max_epoch'])
+        patience = int(config[algorithm]['patience'])
+        lr = float(config[algorithm]['lr'])
+        return (max_epoch, patience, lr)
+    elif algorithm == "brits":
+        model = str(config[algorithm]['model'])
+        epoch = int(config[algorithm]['epoch'])
+        batch_size = int(config[algorithm]['batch_size'])
+        nbr_features = int(config[algorithm]['nbr_features'])
+        hidden_layers = int(config[algorithm]['hidden_layers'])
+        num_workers = int(config[algorithm]['num_workers'])
+        return (model, epoch, batch_size, nbr_features, hidden_layers, num_workers)
+    elif algorithm == "mpin":
+        incre_mode = str(config[algorithm]['incre_mode'])
+        window = int(config[algorithm]['window'])
+        k = int(config[algorithm]['k'])
+        learning_rate = float(config[algorithm]['learning_rate'])
+        weight_decay = float(config[algorithm]['weight_decay'])
+        epochs = int(config[algorithm]['epochs'])
+        num_of_iteration = int(config[algorithm]['num_of_iteration'])
+        threshold = float(config[algorithm]['threshold'])
+        base = str(config[algorithm]['base'])
+        return (incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base)
+    elif algorithm == "pristi":
+        target_strategy = str(config[algorithm]['target_strategy'])
+        unconditional = bool(config[algorithm]['unconditional'])
+        batch_size = int(config[algorithm]['batch_size'])
+        embedding = int(config[algorithm]['embedding'])
+        num_workers = int(config[algorithm]['num_workers'])
+        seed = int(config[algorithm]['seed'])
+        return (target_strategy, unconditional, batch_size, embedding, num_workers, seed)
+    elif algorithm == "knn" or algorithm == "knn_impute":
+        k = int(config[algorithm]['k'])
+        weights = str(config[algorithm]['weights'])
+        return (k, weights)
+    elif algorithm == "interpolation":
+        method = str(config[algorithm]['method'])
+        poly_order = int(config[algorithm]['poly_order'])
+        return (method, poly_order)
+    elif algorithm == "trmf":
+        lags = list(config[algorithm]['lags'])
+        K = int(config[algorithm]['K'])
+        lambda_f = float(config[algorithm]['lambda_f'])
+        lambda_x = float(config[algorithm]['lambda_x'])
+        lambda_w = float(config[algorithm]['lambda_w'])
+        eta = float(config[algorithm]['eta'])
+        alpha = float(config[algorithm]['alpha'])
+        max_iter = int(config[algorithm]['max_iter'])
+        return (lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_iter)
+    elif algorithm == "mice":
+        max_iter = int(config[algorithm]['max_iter'])
+        tol = float(config[algorithm]['tol'])
+        initial_strategy = str(config[algorithm]['initial_strategy'])
+        seed = int(config[algorithm]['seed'])
+        return (max_iter, tol, initial_strategy, seed)
+    elif algorithm == "miss_forest":
+        n_estimators = int(config[algorithm]['n_estimators'])
+        max_iter = int(config[algorithm]['max_iter'])
+        max_features = str(config[algorithm]['max_features'])
+        seed = int(config[algorithm]['seed'])
+        return (n_estimators, max_iter, max_features, seed)
+    elif algorithm == "xgboost":
+        n_estimators = int(config[algorithm]['n_estimators'])
+        seed = int(config[algorithm]['seed'])
+        return (n_estimators, seed)
+    elif algorithm == "miss_net":
+        alpha = float(config[algorithm]['alpha'])
+        beta = float(config[algorithm]['beta'])
+        L = int(config[algorithm]['L'])
+        n_cl = int(config[algorithm]['n_cl'])
+        max_iter = int(config[algorithm]['max_iter'])
+        tol = float(config[algorithm]['tol'])
+        random_init = bool(config[algorithm]['random_init'])
+        return (alpha, beta, L, n_cl, max_iter, tol, random_init)
+    elif algorithm == "gain":
+        batch_size = int(config[algorithm]['batch_size'])
+        hint_rate = float(config[algorithm]['hint_rate'])
+        alpha = int(config[algorithm]['alpha'])
+        epoch = int(config[algorithm]['epoch'])
+        return (batch_size, hint_rate, alpha, epoch)
+    elif algorithm == "grin":
+        d_hidden = int(config[algorithm]['d_hidden'])
+        lr = float(config[algorithm]['lr'])
+        batch_size = int(config[algorithm]['batch_size'])
+        window = int(config[algorithm]['window'])
+        alpha = int(config[algorithm]['alpha'])
+        patience = int(config[algorithm]['patience'])
+        epochs = int(config[algorithm]['epochs'])
+        workers = int(config[algorithm]['workers'])
+        return (d_hidden, lr, batch_size, window, alpha, patience, epochs, workers)
+    elif algorithm == "bay_otide":
+        K_trend = int(config[algorithm]['K_trend'])
+        K_season = int(config[algorithm]['K_season'])
+        n_season = int(config[algorithm]['n_season'])
+        K_bias = int(config[algorithm]['K_bias'])
+        time_scale = int(config[algorithm]['time_scale'])
+        a0 = float(config[algorithm]['a0'])
+        b0 = float(config[algorithm]['b0'])
+        v = float(config[algorithm]['v'])
+        num_workers = int(config[algorithm]['num_workers'])
+        tr_ratio = float(config[algorithm]['tr_ratio'])
+        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, num_workers, tr_ratio)
+    elif algorithm == "hkmf_t":
+        tags = config[algorithm]['tags']
+        data_names = config[algorithm]['data_names']
+        epoch = int(config[algorithm]['epoch'])
+        return (tags, data_names, epoch)
+    elif algorithm == "nuwats":
+        seq_length = int(config[algorithm]['seq_length'])
+        patch_size = int(config[algorithm]['patch_size'])
+        batch_size = int(config[algorithm]['batch_size'])
+        pred_length = int(config[algorithm]['pred_length'])
+        label_length = int(config[algorithm]['label_length'])
+        enc_in = int(config[algorithm]['enc_in'])
+        dec_in = int(config[algorithm]['dec_in'])
+        c_out = int(config[algorithm]['c_out'])
+        gpt_layers = int(config[algorithm]['gpt_layers'])
+        num_workers = int(config[algorithm]['num_workers'])
+        seed = int(config[algorithm]['seed'])
+        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, num_workers, seed)
+    elif algorithm == "gpt4ts":
+        seq_length = int(config[algorithm]['seq_length'])
+        patch_size = int(config[algorithm]['patch_size'])
+        batch_size = int(config[algorithm]['batch_size'])
+        pred_length = int(config[algorithm]['pred_length'])
+        label_length = int(config[algorithm]['label_length'])
+        enc_in = int(config[algorithm]['enc_in'])
+        dec_in = int(config[algorithm]['dec_in'])
+        c_out = int(config[algorithm]['c_out'])
+        gpt_layers = int(config[algorithm]['gpt_layers'])
+        num_workers = int(config[algorithm]['num_workers'])
+        seed = int(config[algorithm]['seed'])
+        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, num_workers, seed)
+    elif algorithm == "bit_graph":
+        node_number = int(config[algorithm]['node_number'])
+        kernel_set = config[algorithm]['kernel_set']
+        dropout = float(config[algorithm]['dropout'])
+        subgraph_size = int(config[algorithm]['subgraph_size'])
+        node_dim = int(config[algorithm]['node_dim'])
+        seq_len = int(config[algorithm]['seq_len'])
+        lr = float(config[algorithm]['lr'])
+        batch_size = int(config[algorithm]['batch_size'])
+        epoch = int(config[algorithm]['epoch'])
+        num_workers = int(config[algorithm]['num_workers'])
+        seed = int(config[algorithm]['seed'])
+        return (node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, num_workers, seed)
+    elif algorithm == "greedy":
+        n_calls = int(config[algorithm]['n_calls'])
+        metrics = config[algorithm]['metrics']
+        return (n_calls, [metrics])
+    elif algorithm.lower() in ["bayesian", "bo", "bayesopt"]:
+        n_calls = int(config['bayesian']['n_calls'])
+        n_random_starts = int(config['bayesian']['n_random_starts'])
+        acq_func = str(config['bayesian']['acq_func'])
+        metrics = config['bayesian']['metrics']
+        return (n_calls, n_random_starts, acq_func, [metrics])
+    elif algorithm.lower() in ['pso', "particle_swarm"]:
+        n_particles = int(config['pso']['n_particles'])
+        c1 = float(config['pso']['c1'])
+        c2 = float(config['pso']['c2'])
+        w = float(config['pso']['w'])
+        iterations = int(config['pso']['iterations'])
+        n_processes = int(config['pso']['n_processes'])
+        metrics = config['pso']['metrics']
+        return (n_particles, c1, c2, w, iterations, n_processes, [metrics])
+    elif algorithm.lower() in  ['sh', "successive_halving"]:
+        num_configs = int(config['sh']['num_configs'])
+        num_iterations = int(config['sh']['num_iterations'])
+        reduction_factor = int(config['sh']['reduction_factor'])
+        metrics = config['sh']['metrics']
+        return (num_configs, num_iterations, reduction_factor, [metrics])
+    elif algorithm.lower() in ['ray_tune', "ray"]:
+        metrics = config['ray_tune']['metrics']
+        n_calls = int(config['ray_tune']['n_calls'])
+        max_concurrent_trials = int(config['ray_tune']['max_concurrent_trials'])
+        return ([metrics], n_calls, max_concurrent_trials)
+    elif algorithm == "forecaster-naive":
+        strategy = str(config[algorithm]['strategy'])
+        window_length = int(config[algorithm]['window_length'])
+        sp = int(config[algorithm]['sp'])
+        return {"strategy": strategy, "window_length": window_length, "sp": sp}
+    elif algorithm == "forecaster-exp-smoothing":
+        trend = str(config[algorithm]['trend'])
+        seasonal = str(config[algorithm]['seasonal'])
+        sp = int(config[algorithm]['sp'])
+        return {"trend": trend, "seasonal": seasonal, "sp": sp}
+    elif algorithm == "forecaster-prophet":
+        seasonality_mode = str(config[algorithm]['seasonality_mode'])
+        n_changepoints = int(config[algorithm]['n_changepoints'])
+        return {"seasonality_mode": seasonality_mode, "n_changepoints": n_changepoints}
+    elif algorithm == "forecaster-nbeats":
+        input_chunk_length = int(config[algorithm]['input_chunk_length'])
+        output_chunk_length = int(config[algorithm]['output_chunk_length'])
+        num_blocks = int(config[algorithm]['num_blocks'])
+        layer_widths = int(config[algorithm]['layer_widths'])
+        random_state = int(config[algorithm]['random_state'])
+        n_epochs = int(config[algorithm]['n_epochs'])
+        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
+        if pl_trainer_kwargs == "cpu":
+            drive = {"accelerator": pl_trainer_kwargs}
+        else:
+            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
+        return {"input_chunk_length": input_chunk_length, "output_chunk_length": output_chunk_length, "num_blocks": num_blocks,
+                "layer_widths": layer_widths, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
+    elif algorithm == "forecaster-xgboost":
+        lags = int(config[algorithm]['lags'])
+        return {"lags": lags}
+    elif algorithm == "forecaster-lightgbm":
+        lags = int(config[algorithm]['lags'])
+        verbose = int(config[algorithm]['verbose'])
+        return {"lags": lags, "verbose": verbose}
+    elif algorithm == "forecaster-lstm":
+        input_chunk_length = int(config[algorithm]['input_chunk_length'])
+        model = str(config[algorithm]['model'])
+        random_state = int(config[algorithm]['random_state'])
+        n_epochs = int(config[algorithm]['n_epochs'])
+        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
+        if pl_trainer_kwargs == "cpu":
+            drive = {"accelerator": pl_trainer_kwargs}
+        else:
+            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
+        return {"input_chunk_length": input_chunk_length, "model": model, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
+    elif algorithm == "forecaster-deepar":
+        input_chunk_length = int(config[algorithm]['input_chunk_length'])
+        model = str(config[algorithm]['model'])
+        random_state = int(config[algorithm]['random_state'])
+        n_epochs = int(config[algorithm]['n_epochs'])
+        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
+        if pl_trainer_kwargs == "cpu":
+            drive = {"accelerator": pl_trainer_kwargs}
+        else:
+            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
+        return {"input_chunk_length": input_chunk_length, "model": model, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
+    elif algorithm == "forecaster-transformer":
+        input_chunk_length = int(config[algorithm]['input_chunk_length'])
+        output_chunk_length = int(config[algorithm]['output_chunk_length'])
+        random_state = int(config[algorithm]['random_state'])
+        n_epochs = int(config[algorithm]['n_epochs'])
+        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
+        if pl_trainer_kwargs == "cpu":
+            drive = {"accelerator": pl_trainer_kwargs}
+        else:
+            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
+        return {"input_chunk_length": input_chunk_length, "output_chunk_length": output_chunk_length, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
+
+    elif algorithm == "forecaster-hw-add":
+        sp = int(config[algorithm]['sp'])
+        trend = str(config[algorithm]['trend'])
+        seasonal = str(config[algorithm]['seasonal'])
+        return {"sp": sp, "trend": trend, "seasonal": seasonal}
+    elif algorithm == "forecaster-arima":
+        sp = int(config[algorithm]['sp'])
+        suppress_warnings = bool(config[algorithm]['suppress_warnings'])
+        start_p = int(config[algorithm]['start_p'])
+        start_q = int(config[algorithm]['start_q'])
+        max_p = int(config[algorithm]['max_p'])
+        max_q = int(config[algorithm]['max_q'])
+        start_P = int(config[algorithm]['start_P'])
+        seasonal = int(config[algorithm]['seasonal'])
+        d = int(config[algorithm]['d'])
+        D = int(config[algorithm]['D'])
+        return {"sp": sp, "suppress_warnings": suppress_warnings, "start_p": start_p, "start_q": start_q,
+                "max_p": max_p, "max_q": max_q, "start_P": start_P, "seasonal": seasonal, "d": d, "D": D}
+    elif algorithm == "forecaster-sf-arima":
+        sp = int(config[algorithm]['sp'])
+        start_p = int(config[algorithm]['start_p'])
+        start_q = int(config[algorithm]['start_q'])
+        max_p = int(config[algorithm]['max_p'])
+        max_q = int(config[algorithm]['max_q'])
+        start_P = int(config[algorithm]['start_P'])
+        seasonal = int(config[algorithm]['seasonal'])
+        d = int(config[algorithm]['d'])
+        D = int(config[algorithm]['D'])
+        return {"sp": sp, "start_p": start_p, "start_q": start_q,
+                "max_p": max_p, "max_q": max_q, "start_P": start_P, "seasonal": seasonal, "d": d, "D": D}
+    elif algorithm == "forecaster-bats":
+        sp = int(config[algorithm]['sp'])
+        use_trend = bool(config[algorithm]['use_trend'])
+        use_box_cox = bool(config[algorithm]['use_box_cox'])
+        return {"sp": sp, "use_trend": use_trend, "use_box_cox": use_box_cox}
+    elif algorithm == "forecaster-ets":
+        sp = int(config[algorithm]['sp'])
+        auto = bool(config[algorithm]['auto'])
+        return {"sp": sp, "auto": auto}
+    elif algorithm == "forecaster-croston":
+        smoothing = float(config[algorithm]['smoothing'])
+        return {"smoothing": smoothing}
+    elif algorithm == "forecaster-unobs":
+        level = bool(config[algorithm]['level'])
+        trend = bool(config[algorithm]['trend'])
+        sp = int(config[algorithm]['sp'])
+        return {"level": level, "trend": trend, "seasonal": sp}
+    elif algorithm == "forecaster-theta":
+        sp = int(config[algorithm]['sp'])
+        deseasonalize = bool(config[algorithm]['deseasonalize'])
+        return {"sp": sp, "deseasonalize": deseasonalize}
+    elif algorithm == "forecaster-rnn":
+        input_size = int(config[algorithm]['input_size'])
+        inference_input_size = int(config[algorithm]['inference_input_size'])
+        return {"input_size": input_size, "inference_input_size": inference_input_size}
+    elif algorithm == "colors":
+        colors = config[algorithm]['plot']
+        return colors
+    elif algorithm == "other":
+        return config
+
+    # Your own default parameters #contributing
+    #
+    #elif algorithm == "your_algo_name":
+    #    param_1 = int(config[algorithm]['param_1'])
+    #    param_2 = config[algorithm]['param_2']
+    #    param_3 = float(config[algorithm]['param_3'])
+    #    return (param_1, param_2, param_3)
+
+    else:
+        print("(SYS) Default/Optimal config not found for this algorithm")
+        return None
+
+
 def config_impute_algorithm(incomp_data, algorithm, verbose=True):
     """
     Configure and execute algorithm for selected imputation imputer and pattern.
@@ -102,10 +537,18 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer = Imputation.DeepLearning.BitGraph(incomp_data)
     elif alg == "meanimpute":
         imputer = Imputation.Statistics.MeanImpute(incomp_data)
+
+    # 4th generation
     elif alg == "nuwats":
         imputer = Imputation.LLMs.NuwaTS(incomp_data)
     elif alg == "gpt4ts":
         imputer = Imputation.LLMs.GPT4TS(incomp_data)
+
+    # your own implementation #contributing
+    #
+    #elif alg == "your_algo_name":
+    #    imputer = Imputation.MyFamily.NewAlg(incomp_data)
+
     else:
         raise ValueError(f"(IMP) Algorithm '{algorithm}' not recognized, please choose your algorithm from this list:\n\t{TimeSeries().algorithms}")
         imputer = None
@@ -114,6 +557,288 @@ def config_impute_algorithm(incomp_data, algorithm, verbose=True):
         imputer.verbose = verbose
 
     return imputer
+
+
+def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="b", file_name=None):
+    """
+    Save the optimization parameters to a TOML file for later use without recomputing.
+
+    Parameters
+    ----------
+    optimal_params : dict
+        Dictionary of the optimal parameters.
+    algorithm : str, optional
+        The name of the imputation algorithm (default is 'cdrec').
+    dataset : str, optional
+        The name of the dataset (default is an empty string).
+    optimizer : str, optional
+        The name of the optimizer used (default is 'b').
+    file_name : str, optional
+        The name of the TOML file to save the results (default is None).
+
+    Returns
+    -------
+    None
+    """
+    if file_name is None:
+        file_name = "./imputegap_assets/params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+    else:
+        file_name += "optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
+
+    dir_name = os.path.dirname(file_name)
+    if dir_name and not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
+    if algorithm == "cdrec":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "eps": optimal_params[1],
+            "iters": int(optimal_params[2])
+    }
+    elif algorithm == "mrnn":
+        params_to_save = { "hidden_dim": int(optimal_params[0]),
+            "learning_rate": optimal_params[1],
+            "num_iter": int(optimal_params[2]),
+            "seq_len": 7  # Default value
+        }
+    elif algorithm == "stmvl":
+        params_to_save = {
+            "window_size": int(optimal_params[0]),
+            "gamma": optimal_params[1],
+            "alpha": int(optimal_params[2])
+        }
+    elif algorithm == "iim":
+        params_to_save = {
+            "learning_neighbors": int(optimal_params[0])
+        }
+
+    elif algorithm == "iterative_svd":
+        params_to_save = {
+            "rank": int(optimal_params[0])
+        }
+    elif algorithm == "grouse":
+        params_to_save= {
+            "max_rank": int(optimal_params[0])
+        }
+    elif algorithm == "rosl":
+        params_to_save = {
+            "rank": int(optimal_params[0]),
+            "regularization": optimal_params[1]
+        }
+    elif algorithm == "soft_impute":
+        params_to_save = {
+            "max_rank": int(optimal_params[0])
+        }
+    elif algorithm == "spirit":
+        params_to_save = {
+            "k": int(optimal_params[0]),
+            "w": int(optimal_params[1]),
+            "lvalue": optimal_params[2]
+        }
+    elif algorithm == "svt":
+        params_to_save = {
+            "tau": optimal_params[0],
+            "delta": optimal_params[1],
+            "max_iter": int(optimal_params[2])
+        }
+    elif algorithm == "dynammo":
+        params_to_save = {
+            "h": int(optimal_params[0]),
+            "max_iteration": int(optimal_params[1]),
+            "approximation": bool(optimal_params[2])
+        }
+    elif algorithm == "tkcm":
+        params_to_save = {
+            "rank": int(optimal_params[0])
+        }
+    elif algorithm == "brits":
+        params_to_save = {
+            "model": optimal_params[0],
+            "epoch": int(optimal_params[1]),
+            "batch_size": int(optimal_params[2]),
+            "hidden_layers": int(optimal_params[3]),
+            "num_workers": int(optimal_params[4])
+        }
+    elif algorithm == "deep_mvi":
+        params_to_save = {
+            "max_epoch": int(optimal_params[0]),
+            "patience": int(optimal_params[1]),
+            "lr": float(optimal_params[2])
+        }
+    elif algorithm == "mpin":
+        params_to_save = {
+            "incre_mode": optimal_params[0],
+            "window": int(optimal_params[1]),
+            "k": int(optimal_params[2]),
+            "learning_rate": optimal_params[3],
+            "weight_decay": optimal_params[4],
+            "epochs": int(optimal_params[5]),
+            "num_of_iteration": int(optimal_params[6]),
+            "threshold": optimal_params[7],
+            "base": optimal_params[8]
+        }
+    elif algorithm == "pristi":
+        params_to_save = {
+            "target_strategy": optimal_params[0],
+            "unconditional": bool(optimal_params[1]),
+            "batch_size": bool(optimal_params[2]),
+            "embedding": bool(optimal_params[3]),
+            "num_workers": bool(optimal_params[4]),
+            "seed": 42,  # Default seed
+        }
+    elif algorithm == "knn" or algorithm == "knn_impute":
+        params_to_save = {
+            "k": int(optimal_params[0]),
+            "weights": str(optimal_params[1])
+        }
+    elif algorithm == "interpolation":
+        params_to_save = {
+            "method": str(optimal_params[0]),
+            "poly_order": int(optimal_params[1])
+        }
+    elif algorithm == "mice":
+        params_to_save = {
+            "max_iter": int(optimal_params[0]),
+            "tol": float(optimal_params[1]),
+            "initial_strategy": str(optimal_params[2]),
+            "seed": 42
+        }
+    elif algorithm == "miss_forest":
+        params_to_save = {
+            "n_estimators": int(optimal_params[0]),
+            "max_iter": int(optimal_params[1]),
+            "max_features": str(optimal_params[2]),
+            "seed": 42
+        }
+    elif algorithm == "xgboost":
+        params_to_save = {
+            "n_estimators": int(optimal_params[0]),
+            "seed": 42
+        }
+    elif algorithm == "miss_net":
+        params_to_save = {
+            "alpha": float(optimal_params[0]),
+            "beta": float(optimal_params[1]),
+            "L": int(optimal_params[2]),
+            "n_cl": int(optimal_params[3]),
+            "max_iter": int(optimal_params[4]),
+            "tol": float(optimal_params[5]),
+            "random_init": bool(optimal_params[6])
+        }
+    elif algorithm == "gain":
+        params_to_save = {
+            "batch_size": int(optimal_params[0]),
+            "hint_rate": float(optimal_params[1]),
+            "alpha": int(optimal_params[2]),
+            "epoch": int(optimal_params[3])
+        }
+    elif algorithm == "grin":
+        params_to_save = {
+            "d_hidden": int(optimal_params[0]),
+            "lr": float(optimal_params[1]),
+            "batch_size": int(optimal_params[2]),
+            "window": int(optimal_params[3]),
+            "alpha": int(optimal_params[4]),
+            "patience": int(optimal_params[5]),
+            "epochs": int(optimal_params[6]),
+            "workers": int(optimal_params[7])
+        }
+    elif algorithm == "bay_otide":
+        params_to_save = {
+            "K_trend": int(optimal_params[0]),
+            "K_season": int(optimal_params[1]),
+            "n_season": int(optimal_params[2]),
+            "K_bias": int(optimal_params[3]),
+            "time_scale": int(optimal_params[4]),
+            "a0": float(optimal_params[5]),
+            "b0": float(optimal_params[6]),
+            "v": float(optimal_params[7]),
+            "tr_ratio": float(optimal_params[8])
+        }
+    elif algorithm == "hkmf_t":
+        params_to_save = {
+            "tags": optimal_params[0],
+            "data_names": optimal_params[1],
+            "epoch": int(optimal_params[2]),
+        }
+    elif algorithm == "bit_graph":
+        params_to_save = {
+            "node_number": int(optimal_params[0]),
+            "kernel_set": optimal_params[1],
+            "dropout": float(optimal_params[2]),
+            "subgraph_size": int(optimal_params[3]),
+            "node_dim": int(optimal_params[4]),
+            "seq_len": int(optimal_params[5]),
+            "lr": float(optimal_params[6]),
+            "batch_size": float(optimal_params[7]),
+            "epoch": int(optimal_params[8]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
+        }
+    elif algorithm == "nuwats":
+        params_to_save = {
+            "seq_length": int(optimal_params[0]),
+            "patch_size": optimal_params[1],
+            "batch_size": float(optimal_params[2]),
+            "pred_length": int(optimal_params[3]),
+            "label_length": int(optimal_params[4]),
+            "enc_in": int(optimal_params[5]),
+            "dec_in": float(optimal_params[6]),
+            "c_out": float(optimal_params[7]),
+            "gpt_layers": int(optimal_params[8]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
+        }
+    elif algorithm == "gpt4ts":
+        params_to_save = {
+            "seq_length": int(optimal_params[0]),
+            "patch_size": optimal_params[1],
+            "batch_size": float(optimal_params[2]),
+            "pred_length": int(optimal_params[3]),
+            "label_length": int(optimal_params[4]),
+            "enc_in": int(optimal_params[5]),
+            "dec_in": float(optimal_params[6]),
+            "c_out": float(optimal_params[7]),
+            "gpt_layers": int(optimal_params[8]),
+            "num_workers": int(optimal_params[9]),
+            "seed": int(optimal_params[10]),
+        }
+
+
+    # Your own optimal save parameters #contributing
+    #
+    #elif algorithm == "your_algo_name":
+    #    params_to_save = {
+    #        "param_1": int(optimal_params[0]),
+    #    "param_2": optimal_params[1],
+    #    "param_3": float(optimal_params[2]),
+    #}
+
+
+    else:
+        print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
+        return
+
+    try:
+        with open(file_name, 'w') as file:
+            toml.dump(params_to_save, file)
+        print(f"\n(SYS) Optimization parameters successfully saved to {file_name}")
+    except Exception as e:
+        print(f"\n(SYS) An error occurred while saving the file: {e}")
+
+
+def check_family(family, algorithm):
+    # Normalize input
+    norm_input = algorithm.lower().replace("_", "").replace("-", "")
+
+    for full_name in list_of_algorithms_with_families():
+        if full_name.startswith("DeepLearning."):
+            suffix = full_name.split(".", 1)[1]
+            norm_suffix = suffix.lower().replace("_", "").replace("-", "")
+
+            if norm_input == norm_suffix:
+                return True
+    return False
 
 
 def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_size=10, offset=0.1, seed=True, limit=1, shift=0.05, std_dev=0.5, explainer=False, probabilities=None, verbose=True):
@@ -367,428 +1092,6 @@ def get_missing_ratio(incomp_data):
     return missing_ratio
 
 
-
-def load_parameters(query: str = "default", algorithm: str = "cdrec", dataset: str = "chlorine", optimizer: str = "b", path=None, verbose=False):
-    """
-    Load default or optimal parameters for algorithms from a TOML file.
-
-    Parameters
-    ----------
-    query : str, optional
-        'default' or 'optimal' to load default or optimal parameters (default is "default").
-    algorithm : str, optional
-        Algorithm to load parameters for (default is "cdrec").
-    dataset : str, optional
-        Name of the dataset (default is "chlorine").
-    optimizer : str, optional
-        Optimizer type for optimal parameters (default is "b").
-    path : str, optional
-        Custom file path for the TOML file (default is None).
-    verbose : bool, optional
-        Whether to display the contamination information (default is False).
-
-    Returns
-    -------
-    tuple
-        A tuple containing the loaded parameters for the given algorithm.
-    """
-    if query == "default":
-        if path is None:
-            filepath = importlib.resources.files('imputegap.env').joinpath("./default_values.toml")
-            if not filepath.is_file():
-                filepath = "./env/default_values.toml"
-        else:
-            filepath = path
-            if not os.path.exists(filepath):
-                filepath = "./env/default_values.toml"
-
-    elif query == "optimal":
-        if path is None:
-            filename = "./optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-            filepath = importlib.resources.files('imputegap.params').joinpath(filename)
-            if not filepath.is_file():
-                filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-        else:
-            filepath = path
-            if not os.path.exists(filepath):
-                filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-
-    else:
-        filepath = None
-        print("Query not found for this function ('optimal' or 'default')")
-
-    if not os.path.exists(filepath):
-        filepath = "./params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-        if not os.path.exists(filepath):
-            filepath = filepath[1:]
-
-    with open(filepath, "r") as _:
-        config = toml.load(filepath)
-
-    if verbose:
-        print("\n(SYS) Inner files loaded : ", filepath, "\n")
-
-    if algorithm == "cdrec":
-        truncation_rank = int(config[algorithm]['rank'])
-        epsilon = float(config[algorithm]['epsilon'])
-        iterations = int(config[algorithm]['iteration'])
-        return (truncation_rank, epsilon, iterations)
-    elif algorithm == "stmvl":
-        window_size = int(config[algorithm]['window_size'])
-        gamma = float(config[algorithm]['gamma'])
-        alpha = int(config[algorithm]['alpha'])
-        return (window_size, gamma, alpha)
-    elif algorithm == "iim":
-        learning_neighbors = int(config[algorithm]['learning_neighbors'])
-        if query == "default":
-            algo_code = config[algorithm]['algorithm_code']
-            return (learning_neighbors, algo_code)
-        else:
-            return (learning_neighbors,)
-    elif algorithm == "mrnn":
-        hidden_dim = int(config[algorithm]['hidden_dim'])
-        learning_rate = float(config[algorithm]['learning_rate'])
-        iterations = int(config[algorithm]['iterations'])
-        if query == "default":
-            sequence_length = int(config[algorithm]['sequence_length'])
-            return (hidden_dim, learning_rate, iterations, sequence_length)
-        else:
-            return (hidden_dim, learning_rate, iterations)
-    elif algorithm == "iterative_svd":
-        truncation_rank = int(config[algorithm]['rank'])
-        return (truncation_rank)
-    elif algorithm == "grouse":
-        max_rank = int(config[algorithm]['max_rank'])
-        return (max_rank)
-    elif algorithm == "dynammo":
-        h = int(config[algorithm]['h'])
-        max_iteration = int(config[algorithm]['max_iteration'])
-        approximation = bool(config[algorithm]['approximation'])
-        return (h, max_iteration, approximation)
-    elif algorithm == "rosl":
-        rank = int(config[algorithm]['rank'])
-        regularization = float(config[algorithm]['regularization'])
-        return (rank, regularization)
-    elif algorithm == "soft_impute":
-        max_rank = int(config[algorithm]['max_rank'])
-        return (max_rank)
-    elif algorithm == "spirit":
-        k = int(config[algorithm]['k'])
-        w = int(config[algorithm]['w'])
-        lvalue = float(config[algorithm]['lvalue'])
-        return (k, w, lvalue)
-    elif algorithm == "svt":
-        tau = float(config[algorithm]['tau'])
-        return (tau)
-    elif algorithm == "tkcm":
-        rank = int(config[algorithm]['rank'])
-        return (rank)
-    elif algorithm == "deep_mvi":
-        max_epoch = int(config[algorithm]['max_epoch'])
-        patience = int(config[algorithm]['patience'])
-        lr = float(config[algorithm]['lr'])
-        return (max_epoch, patience, lr)
-    elif algorithm == "brits":
-        model = str(config[algorithm]['model'])
-        epoch = int(config[algorithm]['epoch'])
-        batch_size = int(config[algorithm]['batch_size'])
-        nbr_features = int(config[algorithm]['nbr_features'])
-        hidden_layers = int(config[algorithm]['hidden_layers'])
-        return (model, epoch, batch_size, nbr_features, hidden_layers)
-    elif algorithm == "mpin":
-        incre_mode = str(config[algorithm]['incre_mode'])
-        window = int(config[algorithm]['window'])
-        k = int(config[algorithm]['k'])
-        learning_rate = float(config[algorithm]['learning_rate'])
-        weight_decay = float(config[algorithm]['weight_decay'])
-        epochs = int(config[algorithm]['epochs'])
-        num_of_iteration = int(config[algorithm]['num_of_iteration'])
-        threshold = float(config[algorithm]['threshold'])
-        base = str(config[algorithm]['base'])
-        return (incre_mode, window, k, learning_rate, weight_decay, epochs, num_of_iteration, threshold, base)
-    elif algorithm == "pristi":
-        target_strategy = str(config[algorithm]['target_strategy'])
-        unconditional = bool(config[algorithm]['unconditional'])
-        batch_size = int(config[algorithm]['batch_size'])
-        embedding = int(config[algorithm]['embedding'])
-        seed = int(config[algorithm]['seed'])
-        return (target_strategy, unconditional, batch_size, embedding, seed)
-    elif algorithm == "knn" or algorithm == "knn_impute":
-        k = int(config[algorithm]['k'])
-        weights = str(config[algorithm]['weights'])
-        return (k, weights)
-    elif algorithm == "interpolation":
-        method = str(config[algorithm]['method'])
-        poly_order = int(config[algorithm]['poly_order'])
-        return (method, poly_order)
-    elif algorithm == "trmf":
-        lags = list(config[algorithm]['lags'])
-        K = int(config[algorithm]['K'])
-        lambda_f = float(config[algorithm]['lambda_f'])
-        lambda_x = float(config[algorithm]['lambda_x'])
-        lambda_w = float(config[algorithm]['lambda_w'])
-        eta = float(config[algorithm]['eta'])
-        alpha = float(config[algorithm]['alpha'])
-        max_iter = int(config[algorithm]['max_iter'])
-        return (lags, K, lambda_f, lambda_x, lambda_w, eta, alpha, max_iter)
-    elif algorithm == "mice":
-        max_iter = int(config[algorithm]['max_iter'])
-        tol = float(config[algorithm]['tol'])
-        initial_strategy = str(config[algorithm]['initial_strategy'])
-        seed = int(config[algorithm]['seed'])
-        return (max_iter, tol, initial_strategy, seed)
-    elif algorithm == "miss_forest":
-        n_estimators = int(config[algorithm]['n_estimators'])
-        max_iter = int(config[algorithm]['max_iter'])
-        max_features = str(config[algorithm]['max_features'])
-        seed = int(config[algorithm]['seed'])
-        return (n_estimators, max_iter, max_features, seed)
-    elif algorithm == "xgboost":
-        n_estimators = int(config[algorithm]['n_estimators'])
-        seed = int(config[algorithm]['seed'])
-        return (n_estimators, seed)
-    elif algorithm == "miss_net":
-        alpha = float(config[algorithm]['alpha'])
-        beta = float(config[algorithm]['beta'])
-        L = int(config[algorithm]['L'])
-        n_cl = int(config[algorithm]['n_cl'])
-        max_iter = int(config[algorithm]['max_iter'])
-        tol = float(config[algorithm]['tol'])
-        random_init = bool(config[algorithm]['random_init'])
-        return (alpha, beta, L, n_cl, max_iter, tol, random_init)
-    elif algorithm == "gain":
-        batch_size = int(config[algorithm]['batch_size'])
-        hint_rate = float(config[algorithm]['hint_rate'])
-        alpha = int(config[algorithm]['alpha'])
-        epoch = int(config[algorithm]['epoch'])
-        return (batch_size, hint_rate, alpha, epoch)
-    elif algorithm == "grin":
-        d_hidden = int(config[algorithm]['d_hidden'])
-        lr = float(config[algorithm]['lr'])
-        batch_size = int(config[algorithm]['batch_size'])
-        window = int(config[algorithm]['window'])
-        alpha = int(config[algorithm]['alpha'])
-        patience = int(config[algorithm]['patience'])
-        epochs = int(config[algorithm]['epochs'])
-        workers = int(config[algorithm]['workers'])
-        return (d_hidden, lr, batch_size, window, alpha, patience, epochs, workers)
-    elif algorithm == "bay_otide":
-        K_trend = int(config[algorithm]['K_trend'])
-        K_season = int(config[algorithm]['K_season'])
-        n_season = int(config[algorithm]['n_season'])
-        K_bias = int(config[algorithm]['K_bias'])
-        time_scale = int(config[algorithm]['time_scale'])
-        a0 = float(config[algorithm]['a0'])
-        b0 = float(config[algorithm]['b0'])
-        v = float(config[algorithm]['v'])
-        tr_ratio = float(config[algorithm]['tr_ratio'])
-        return (K_trend, K_season, n_season, K_bias, time_scale, a0, b0, v, tr_ratio)
-    elif algorithm == "hkmf_t":
-        tags = config[algorithm]['tags']
-        data_names = config[algorithm]['data_names']
-        epoch = int(config[algorithm]['epoch'])
-        return (tags, data_names, epoch)
-    elif algorithm == "nuwats":
-        seq_length = int(config[algorithm]['seq_length'])
-        patch_size = int(config[algorithm]['patch_size'])
-        batch_size = int(config[algorithm]['batch_size'])
-        pred_length = int(config[algorithm]['pred_length'])
-        label_length = int(config[algorithm]['label_length'])
-        enc_in = int(config[algorithm]['enc_in'])
-        dec_in = int(config[algorithm]['dec_in'])
-        c_out = int(config[algorithm]['c_out'])
-        gpt_layers = int(config[algorithm]['gpt_layers'])
-        seed = int(config[algorithm]['seed'])
-        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed)
-    elif algorithm == "gpt4ts":
-        seq_length = int(config[algorithm]['seq_length'])
-        patch_size = int(config[algorithm]['patch_size'])
-        batch_size = int(config[algorithm]['batch_size'])
-        pred_length = int(config[algorithm]['pred_length'])
-        label_length = int(config[algorithm]['label_length'])
-        enc_in = int(config[algorithm]['enc_in'])
-        dec_in = int(config[algorithm]['dec_in'])
-        c_out = int(config[algorithm]['c_out'])
-        gpt_layers = int(config[algorithm]['gpt_layers'])
-        seed = int(config[algorithm]['seed'])
-        return (seq_length, patch_size, batch_size, pred_length, label_length, enc_in, dec_in, c_out, gpt_layers, seed)
-    elif algorithm == "bit_graph":
-        node_number = int(config[algorithm]['node_number'])
-        kernel_set = config[algorithm]['kernel_set']
-        dropout = float(config[algorithm]['dropout'])
-        subgraph_size = int(config[algorithm]['subgraph_size'])
-        node_dim = int(config[algorithm]['node_dim'])
-        seq_len = int(config[algorithm]['seq_len'])
-        lr = float(config[algorithm]['lr'])
-        batch_size = int(config[algorithm]['batch_size'])
-        epoch = int(config[algorithm]['epoch'])
-        seed = int(config[algorithm]['seed'])
-        return (node_number, kernel_set, dropout, subgraph_size, node_dim, seq_len, lr, batch_size, epoch, seed)
-    elif algorithm == "greedy":
-        n_calls = int(config[algorithm]['n_calls'])
-        metrics = config[algorithm]['metrics']
-        return (n_calls, [metrics])
-    elif algorithm.lower() in ["bayesian", "bo", "bayesopt"]:
-        n_calls = int(config['bayesian']['n_calls'])
-        n_random_starts = int(config['bayesian']['n_random_starts'])
-        acq_func = str(config['bayesian']['acq_func'])
-        metrics = config['bayesian']['metrics']
-        return (n_calls, n_random_starts, acq_func, [metrics])
-    elif algorithm.lower() in ['pso', "particle_swarm"]:
-        n_particles = int(config['pso']['n_particles'])
-        c1 = float(config['pso']['c1'])
-        c2 = float(config['pso']['c2'])
-        w = float(config['pso']['w'])
-        iterations = int(config['pso']['iterations'])
-        n_processes = int(config['pso']['n_processes'])
-        metrics = config['pso']['metrics']
-        return (n_particles, c1, c2, w, iterations, n_processes, [metrics])
-    elif algorithm.lower() in  ['sh', "successive_halving"]:
-        num_configs = int(config['sh']['num_configs'])
-        num_iterations = int(config['sh']['num_iterations'])
-        reduction_factor = int(config['sh']['reduction_factor'])
-        metrics = config['sh']['metrics']
-        return (num_configs, num_iterations, reduction_factor, [metrics])
-    elif algorithm.lower() in ['ray_tune', "ray"]:
-        metrics = config['ray_tune']['metrics']
-        n_calls = int(config['ray_tune']['n_calls'])
-        max_concurrent_trials = int(config['ray_tune']['max_concurrent_trials'])
-        return ([metrics], n_calls, max_concurrent_trials)
-    elif algorithm == "forecaster-naive":
-        strategy = str(config[algorithm]['strategy'])
-        window_length = int(config[algorithm]['window_length'])
-        sp = int(config[algorithm]['sp'])
-        return {"strategy": strategy, "window_length": window_length, "sp": sp}
-    elif algorithm == "forecaster-exp-smoothing":
-        trend = str(config[algorithm]['trend'])
-        seasonal = str(config[algorithm]['seasonal'])
-        sp = int(config[algorithm]['sp'])
-        return {"trend": trend, "seasonal": seasonal, "sp": sp}
-    elif algorithm == "forecaster-prophet":
-        seasonality_mode = str(config[algorithm]['seasonality_mode'])
-        n_changepoints = int(config[algorithm]['n_changepoints'])
-        return {"seasonality_mode": seasonality_mode, "n_changepoints": n_changepoints}
-    elif algorithm == "forecaster-nbeats":
-        input_chunk_length = int(config[algorithm]['input_chunk_length'])
-        output_chunk_length = int(config[algorithm]['output_chunk_length'])
-        num_blocks = int(config[algorithm]['num_blocks'])
-        layer_widths = int(config[algorithm]['layer_widths'])
-        random_state = int(config[algorithm]['random_state'])
-        n_epochs = int(config[algorithm]['n_epochs'])
-        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
-        if pl_trainer_kwargs == "cpu":
-            drive = {"accelerator": pl_trainer_kwargs}
-        else:
-            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
-        return {"input_chunk_length": input_chunk_length, "output_chunk_length": output_chunk_length, "num_blocks": num_blocks,
-                "layer_widths": layer_widths, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
-    elif algorithm == "forecaster-xgboost":
-        lags = int(config[algorithm]['lags'])
-        return {"lags": lags}
-    elif algorithm == "forecaster-lightgbm":
-        lags = int(config[algorithm]['lags'])
-        verbose = int(config[algorithm]['verbose'])
-        return {"lags": lags, "verbose": verbose}
-    elif algorithm == "forecaster-lstm":
-        input_chunk_length = int(config[algorithm]['input_chunk_length'])
-        model = str(config[algorithm]['model'])
-        random_state = int(config[algorithm]['random_state'])
-        n_epochs = int(config[algorithm]['n_epochs'])
-        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
-        if pl_trainer_kwargs == "cpu":
-            drive = {"accelerator": pl_trainer_kwargs}
-        else:
-            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
-        return {"input_chunk_length": input_chunk_length, "model": model, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
-    elif algorithm == "forecaster-deepar":
-        input_chunk_length = int(config[algorithm]['input_chunk_length'])
-        model = str(config[algorithm]['model'])
-        random_state = int(config[algorithm]['random_state'])
-        n_epochs = int(config[algorithm]['n_epochs'])
-        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
-        if pl_trainer_kwargs == "cpu":
-            drive = {"accelerator": pl_trainer_kwargs}
-        else:
-            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
-        return {"input_chunk_length": input_chunk_length, "model": model, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
-    elif algorithm == "forecaster-transformer":
-        input_chunk_length = int(config[algorithm]['input_chunk_length'])
-        output_chunk_length = int(config[algorithm]['output_chunk_length'])
-        random_state = int(config[algorithm]['random_state'])
-        n_epochs = int(config[algorithm]['n_epochs'])
-        pl_trainer_kwargs = str(config[algorithm]['pl_trainer_kwargs'])
-        if pl_trainer_kwargs == "cpu":
-            drive = {"accelerator": pl_trainer_kwargs}
-        else:
-            drive = {"accelerator": pl_trainer_kwargs, "devices": [0]}
-        return {"input_chunk_length": input_chunk_length, "output_chunk_length": output_chunk_length, "random_state": random_state, "n_epochs": n_epochs, "pl_trainer_kwargs": drive}
-
-    elif algorithm == "forecaster-hw-add":
-        sp = int(config[algorithm]['sp'])
-        trend = str(config[algorithm]['trend'])
-        seasonal = str(config[algorithm]['seasonal'])
-        return {"sp": sp, "trend": trend, "seasonal": seasonal}
-    elif algorithm == "forecaster-arima":
-        sp = int(config[algorithm]['sp'])
-        suppress_warnings = bool(config[algorithm]['suppress_warnings'])
-        start_p = int(config[algorithm]['start_p'])
-        start_q = int(config[algorithm]['start_q'])
-        max_p = int(config[algorithm]['max_p'])
-        max_q = int(config[algorithm]['max_q'])
-        start_P = int(config[algorithm]['start_P'])
-        seasonal = int(config[algorithm]['seasonal'])
-        d = int(config[algorithm]['d'])
-        D = int(config[algorithm]['D'])
-        return {"sp": sp, "suppress_warnings": suppress_warnings, "start_p": start_p, "start_q": start_q,
-                "max_p": max_p, "max_q": max_q, "start_P": start_P, "seasonal": seasonal, "d": d, "D": D}
-    elif algorithm == "forecaster-sf-arima":
-        sp = int(config[algorithm]['sp'])
-        start_p = int(config[algorithm]['start_p'])
-        start_q = int(config[algorithm]['start_q'])
-        max_p = int(config[algorithm]['max_p'])
-        max_q = int(config[algorithm]['max_q'])
-        start_P = int(config[algorithm]['start_P'])
-        seasonal = int(config[algorithm]['seasonal'])
-        d = int(config[algorithm]['d'])
-        D = int(config[algorithm]['D'])
-        return {"sp": sp, "start_p": start_p, "start_q": start_q,
-                "max_p": max_p, "max_q": max_q, "start_P": start_P, "seasonal": seasonal, "d": d, "D": D}
-    elif algorithm == "forecaster-bats":
-        sp = int(config[algorithm]['sp'])
-        use_trend = bool(config[algorithm]['use_trend'])
-        use_box_cox = bool(config[algorithm]['use_box_cox'])
-        return {"sp": sp, "use_trend": use_trend, "use_box_cox": use_box_cox}
-    elif algorithm == "forecaster-ets":
-        sp = int(config[algorithm]['sp'])
-        auto = bool(config[algorithm]['auto'])
-        return {"sp": sp, "auto": auto}
-    elif algorithm == "forecaster-croston":
-        smoothing = float(config[algorithm]['smoothing'])
-        return {"smoothing": smoothing}
-    elif algorithm == "forecaster-unobs":
-        level = bool(config[algorithm]['level'])
-        trend = bool(config[algorithm]['trend'])
-        sp = int(config[algorithm]['sp'])
-        return {"level": level, "trend": trend, "seasonal": sp}
-    elif algorithm == "forecaster-theta":
-        sp = int(config[algorithm]['sp'])
-        deseasonalize = bool(config[algorithm]['deseasonalize'])
-        return {"sp": sp, "deseasonalize": deseasonalize}
-    elif algorithm == "forecaster-rnn":
-        input_size = int(config[algorithm]['input_size'])
-        inference_input_size = int(config[algorithm]['inference_input_size'])
-        return {"input_size": input_size, "inference_input_size": inference_input_size}
-
-    elif algorithm == "colors":
-        colors = config[algorithm]['plot']
-        return colors
-    elif algorithm == "other":
-        return config
-    else:
-        print("(SYS) Default/Optimal config not found for this algorithm")
-        return None
-
-
 def verification_limitation(percentage, low_limit=0.01, high_limit=1.0):
     """
     Format and verify that the percentage given by the user is within acceptable bounds.
@@ -899,7 +1202,7 @@ def dl_integration_transformation(input_matrix, tr_ratio=0.8, inside_tr_cont_rat
         if nan_val == -1:
             import numpy as np
             nan_val = np.nanmean(input_matrix)
-            print(f"NaN replacement Mean Value : {nan_val}")
+            print(f"\nNaN replacement Mean Value : {nan_val}\n")
         cont_data_matrix = prevent_leakage(cont_data_matrix, new_mask, nan_val, verbose)
 
     mask_test, mask_valid, nbr_nans = split_mask_bwt_test_valid(cont_data_matrix, test_rate=split_ts, valid_rate=split_val, nan_val=nan_val, verbose=verbose, seed=seed)
@@ -1237,6 +1540,76 @@ def prepare_testing_set(incomp_m, original_missing_ratio, block_selection=True, 
     return new_m, new_mask, error
 
 
+
+def compute_rank_check(M, rank, verbose=True):
+    """
+    Validates and adjusts the rank used in matrix operations based on the number of time series.
+
+    Parameters
+    ----------
+    M : int
+        Number of series
+    rank : int
+        The desired rank (e.g., for matrix factorization or low-rank approximation).
+    verbose : bool
+        Print the error or not
+
+    Returns
+    -------
+    rank: int
+        A valid rank value, adjusted to avoid exceeding the number of available series.
+    """
+    if rank >= M-1:
+        if verbose:
+            print(f"ERROR: Rank choosen to high for the number of series: {rank} >= {M}.\n\tRank reduced to 2.")
+        return 2
+    else:
+        return rank
+
+
+def compute_seq_length(M):
+    """
+    Compute a sequence length based on the input length `M` using heuristic rules.
+
+    Parameters
+    ----------
+    M : int
+        Number of series in the dataset.
+
+    Returns
+    -------
+    seq_length: int
+        A derived sequence length appropriate for processing or windowing.
+    """
+
+    seq_length = 1
+    if M > 5000:
+        seq_length = 3000
+    elif M > 3000:
+        seq_length = 1400
+    elif M > 2000:
+        seq_length = 1000
+    elif M > 1000:
+        seq_length = 600
+    elif M > 300:
+        seq_length = 100
+    elif M > 30:
+        seq_length = 16
+    else:
+        if M % 5 == 0:
+            seq_length = M // 5
+        elif M % 6 == 0:
+            seq_length = M // 6
+        elif M % 2 == 0:
+            seq_length = M // 2 - 2
+            if seq_length < 1:
+                seq_length = 1
+        elif M % 3 == 0:
+            seq_length = M // 3
+
+    return seq_length
+
+
 def compute_batch_size(data, min_size=4, max_size=16, divisor=2, verbose=True):
     """
     Compute an appropriate batch size based on the input data shape.
@@ -1326,256 +1699,6 @@ def load_share_lib(name="lib_cdrec", lib=True, verbose=True):
     return ctypes.CDLL(lib_path)
 
 
-def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="b", file_name=None):
-    """
-    Save the optimization parameters to a TOML file for later use without recomputing.
-
-    Parameters
-    ----------
-    optimal_params : dict
-        Dictionary of the optimal parameters.
-    algorithm : str, optional
-        The name of the imputation algorithm (default is 'cdrec').
-    dataset : str, optional
-        The name of the dataset (default is an empty string).
-    optimizer : str, optional
-        The name of the optimizer used (default is 'b').
-    file_name : str, optional
-        The name of the TOML file to save the results (default is None).
-
-    Returns
-    -------
-    None
-    """
-    if file_name is None:
-        file_name = "./imputegap_assets/params/optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-    else:
-        file_name += "optimal_parameters_" + str(optimizer) + "_" + str(dataset) + "_" + str(algorithm) + ".toml"
-
-    dir_name = os.path.dirname(file_name)
-    if dir_name and not os.path.exists(dir_name):
-        os.makedirs(dir_name)
-
-    if algorithm == "cdrec":
-        params_to_save = {
-            "rank": int(optimal_params[0]),
-            "eps": optimal_params[1],
-            "iters": int(optimal_params[2])
-    }
-    elif algorithm == "mrnn":
-        params_to_save = { "hidden_dim": int(optimal_params[0]),
-            "learning_rate": optimal_params[1],
-            "num_iter": int(optimal_params[2]),
-            "seq_len": 7  # Default value
-        }
-    elif algorithm == "stmvl":
-        params_to_save = {
-            "window_size": int(optimal_params[0]),
-            "gamma": optimal_params[1],
-            "alpha": int(optimal_params[2])
-        }
-    elif algorithm == "iim":
-        params_to_save = {
-            "learning_neighbors": int(optimal_params[0])
-        }
-
-    elif algorithm == "iterative_svd":
-        params_to_save = {
-            "rank": int(optimal_params[0])
-        }
-    elif algorithm == "grouse":
-        params_to_save= {
-            "max_rank": int(optimal_params[0])
-        }
-    elif algorithm == "rosl":
-        params_to_save = {
-            "rank": int(optimal_params[0]),
-            "regularization": optimal_params[1]
-        }
-    elif algorithm == "soft_impute":
-        params_to_save = {
-            "max_rank": int(optimal_params[0])
-        }
-    elif algorithm == "spirit":
-        params_to_save = {
-            "k": int(optimal_params[0]),
-            "w": int(optimal_params[1]),
-            "lvalue": optimal_params[2]
-        }
-    elif algorithm == "svt":
-        params_to_save = {
-            "tau": optimal_params[0],
-            "delta": optimal_params[1],
-            "max_iter": int(optimal_params[2])
-        }
-    elif algorithm == "dynammo":
-        params_to_save = {
-            "h": int(optimal_params[0]),
-            "max_iteration": int(optimal_params[1]),
-            "approximation": bool(optimal_params[2])
-        }
-    elif algorithm == "tkcm":
-        params_to_save = {
-            "rank": int(optimal_params[0])
-        }
-    elif algorithm == "brits":
-        params_to_save = {
-            "model": optimal_params[0],
-            "epoch": int(optimal_params[1]),
-            "batch_size": int(optimal_params[2]),
-            "hidden_layers": int(optimal_params[3])
-        }
-    elif algorithm == "deep_mvi":
-        params_to_save = {
-            "max_epoch": int(optimal_params[0]),
-            "patience": int(optimal_params[1]),
-            "lr": float(optimal_params[2])
-        }
-    elif algorithm == "mpin":
-        params_to_save = {
-            "incre_mode": optimal_params[0],
-            "window": int(optimal_params[1]),
-            "k": int(optimal_params[2]),
-            "learning_rate": optimal_params[3],
-            "weight_decay": optimal_params[4],
-            "epochs": int(optimal_params[5]),
-            "num_of_iteration": int(optimal_params[6]),
-            "threshold": optimal_params[7],
-            "base": optimal_params[8]
-        }
-    elif algorithm == "pristi":
-        params_to_save = {
-            "target_strategy": optimal_params[0],
-            "unconditional": bool(optimal_params[1]),
-            "batch_size": bool(optimal_params[2]),
-            "embedding": bool(optimal_params[3]),
-            "seed": 42,  # Default seed
-        }
-    elif algorithm == "knn" or algorithm == "knn_impute":
-        params_to_save = {
-            "k": int(optimal_params[0]),
-            "weights": str(optimal_params[1])
-        }
-    elif algorithm == "interpolation":
-        params_to_save = {
-            "method": str(optimal_params[0]),
-            "poly_order": int(optimal_params[1])
-        }
-    elif algorithm == "mice":
-        params_to_save = {
-            "max_iter": int(optimal_params[0]),
-            "tol": float(optimal_params[1]),
-            "initial_strategy": str(optimal_params[2]),
-            "seed": 42
-        }
-    elif algorithm == "miss_forest":
-        params_to_save = {
-            "n_estimators": int(optimal_params[0]),
-            "max_iter": int(optimal_params[1]),
-            "max_features": str(optimal_params[2]),
-            "seed": 42
-        }
-    elif algorithm == "xgboost":
-        params_to_save = {
-            "n_estimators": int(optimal_params[0]),
-            "seed": 42
-        }
-    elif algorithm == "miss_net":
-        params_to_save = {
-            "alpha": float(optimal_params[0]),
-            "beta": float(optimal_params[1]),
-            "L": int(optimal_params[2]),
-            "n_cl": int(optimal_params[3]),
-            "max_iter": int(optimal_params[4]),
-            "tol": float(optimal_params[5]),
-            "random_init": bool(optimal_params[6])
-        }
-    elif algorithm == "gain":
-        params_to_save = {
-            "batch_size": int(optimal_params[0]),
-            "hint_rate": float(optimal_params[1]),
-            "alpha": int(optimal_params[2]),
-            "epoch": int(optimal_params[3])
-        }
-    elif algorithm == "grin":
-        params_to_save = {
-            "d_hidden": int(optimal_params[0]),
-            "lr": float(optimal_params[1]),
-            "batch_size": int(optimal_params[2]),
-            "window": int(optimal_params[3]),
-            "alpha": int(optimal_params[4]),
-            "patience": int(optimal_params[5]),
-            "epochs": int(optimal_params[6]),
-            "workers": int(optimal_params[7])
-        }
-    elif algorithm == "bay_otide":
-        params_to_save = {
-            "K_trend": int(optimal_params[0]),
-            "K_season": int(optimal_params[1]),
-            "n_season": int(optimal_params[2]),
-            "K_bias": int(optimal_params[3]),
-            "time_scale": int(optimal_params[4]),
-            "a0": float(optimal_params[5]),
-            "b0": float(optimal_params[6]),
-            "v": float(optimal_params[7]),
-            "tr_ratio": float(optimal_params[8])
-        }
-    elif algorithm == "hkmf_t":
-        params_to_save = {
-            "tags": optimal_params[0],
-            "data_names": optimal_params[1],
-            "epoch": int(optimal_params[2]),
-        }
-    elif algorithm == "bit_graph":
-        params_to_save = {
-            "node_number": int(optimal_params[0]),
-            "kernel_set": optimal_params[1],
-            "dropout": float(optimal_params[2]),
-            "subgraph_size": int(optimal_params[3]),
-            "node_dim": int(optimal_params[4]),
-            "seq_len": int(optimal_params[5]),
-            "lr": float(optimal_params[6]),
-            "batch_size": float(optimal_params[7]),
-            "epoch": int(optimal_params[8]),
-            "seed": int(optimal_params[9]),
-        }
-    elif algorithm == "nuwats":
-        params_to_save = {
-            "seq_length": int(optimal_params[0]),
-            "patch_size": optimal_params[1],
-            "batch_size": float(optimal_params[2]),
-            "pred_length": int(optimal_params[3]),
-            "label_length": int(optimal_params[4]),
-            "enc_in": int(optimal_params[5]),
-            "dec_in": float(optimal_params[6]),
-            "c_out": float(optimal_params[7]),
-            "gpt_layers": int(optimal_params[8]),
-            "seed": int(optimal_params[9]),
-        }
-    elif algorithm == "gpt4ts":
-        params_to_save = {
-            "seq_length": int(optimal_params[0]),
-            "patch_size": optimal_params[1],
-            "batch_size": float(optimal_params[2]),
-            "pred_length": int(optimal_params[3]),
-            "label_length": int(optimal_params[4]),
-            "enc_in": int(optimal_params[5]),
-            "dec_in": float(optimal_params[6]),
-            "c_out": float(optimal_params[7]),
-            "gpt_layers": int(optimal_params[8]),
-            "seed": int(optimal_params[9]),
-        }
-    else:
-        print(f"\n\t\t(SYS) Algorithm {algorithm} is not recognized.")
-        return
-
-    try:
-        with open(file_name, 'w') as file:
-            toml.dump(params_to_save, file)
-        print(f"\n(SYS) Optimization parameters successfully saved to {file_name}")
-    except Exception as e:
-        print(f"\n(SYS) An error occurred while saving the file: {e}")
-
 
 def list_of_algorithms():
     return sorted([
@@ -1655,18 +1778,6 @@ def list_of_datasets(txt=False):
     return list
 
 
-def check_family(family, algorithm):
-    # Normalize input
-    norm_input = algorithm.lower().replace("_", "").replace("-", "")
-
-    for full_name in list_of_algorithms_with_families():
-        if full_name.startswith("DeepLearning."):
-            suffix = full_name.split(".", 1)[1]
-            norm_suffix = suffix.lower().replace("_", "").replace("-", "")
-
-            if norm_input == norm_suffix:
-                return True
-    return False
 
 def list_of_optimizers():
     return sorted([
@@ -1759,3 +1870,4 @@ def list_of_algorithms_with_families():
 
 def list_of_normalizers():
     return ["z_score", "min_max"]
+

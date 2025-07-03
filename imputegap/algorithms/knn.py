@@ -39,6 +39,7 @@ def knn(incomp_data, k=5, weights="uniform", logs=True, verbose=True):
     recov_data = np.copy(incomp_data)  # Copy data to avoid modifying original
     num_rows, num_cols = recov_data.shape  # Get dataset dimensions
 
+
     # Standardize data (important for correct neighbor selection)
     norm_data = (incomp_data - np.nanmean(incomp_data, axis=0)) / (np.nanstd(incomp_data, axis=0) + 1e-8)
 

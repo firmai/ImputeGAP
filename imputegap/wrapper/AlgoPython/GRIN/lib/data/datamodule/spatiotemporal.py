@@ -33,7 +33,7 @@ class SpatioTemporalDataModule(pl.LightningDataModule):
         val_idxs=None,
         test_idxs=None,
         batch_size=1000,
-        workers=8,
+        workers=0,
         samples_per_epoch=None,
         verbose=True
     ):

@@ -22,7 +22,7 @@ from imputegap.wrapper.AlgoPython.Pristi_.main_model import PriSTI_PemsBAY
 from imputegap.wrapper.AlgoPython.Pristi_.utils import train, reconstruct
 
 
-def recov_pristi(data, target_strategy="block", unconditional=True, batch_size=-1, embedding=-1, num_workers=4, nsample=100, modelfolder="", tr_ratio=0.9, seed=42, verbose=True):
+def recov_pristi(data, target_strategy="block", unconditional=True, batch_size=-1, embedding=-1, num_workers=0, nsample=100, modelfolder="", tr_ratio=0.9, seed=42, verbose=True):
 
     recov = np.copy(data)
     m_mask = np.isnan(data)
@@ -72,7 +72,7 @@ def recov_pristi(data, target_strategy="block", unconditional=True, batch_size=-
     #print(json.dumps(config, indent=4))
 
     current_time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    foldername = ("./save/pemsbay_" + current_time + "/")
+    foldername = ("./imputegap_assets/models/pristi_" + current_time + "/")
     os.makedirs(foldername, exist_ok=True)
     with open(foldername + "config.json", "w") as f:
         json.dump(config, f, indent=4)
@@ -84,7 +84,7 @@ def recov_pristi(data, target_strategy="block", unconditional=True, batch_size=-
     if modelfolder == "":
         train(model, config["train"], train_loader, valid_loader=valid_loader, foldername=foldername, )
     else:
-        model.load_state_dict(torch.load("./save/" + modelfolder + "/model.pth"))
+        model.load_state_dict(torch.load("./imputegap_assets/models/" + modelfolder + "/model.pth"))
 
     logging.basicConfig(filename=foldername + '/test_model.log', level=logging.DEBUG)
     logging.info("model_name={}".format(modelfolder))

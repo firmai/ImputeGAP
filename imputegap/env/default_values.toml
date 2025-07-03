@@ -1,5 +1,10 @@
 # IMPUTATION DEFAULT VALUES ==========================================================================
 
+#[your_algo_name]
+#param_1 = 3
+#param_2 = "test"
+#param_3 = 0.01
+
 # ALGORITHM DEFAULT VALUES : MATRIX COMPLETION
 [cdrec]
 rank = 3
@@ -38,17 +43,7 @@ eta = 1
 alpha = 10
 max_iter = 100
 
-[bit_graph]
-node_number = -1
-kernel_set = [2,3,6,7]
-dropout = 0.05
-subgraph_size = 5
-node_dim = 3
-seq_len = -1
-lr = 0.001
-batch_size = 32
-epoch = 50
-seed = 42
+
 
 # ALGORITHM DEFAULT VALUES : MACHINE LEARNING
 [iim]
@@ -110,6 +105,7 @@ epoch = 100
 batch_size = -1
 nbr_features = 1
 hidden_layers = 64
+num_workers = 0
 
 [deep_mvi]
 max_epoch = 100
@@ -132,6 +128,7 @@ target_strategy = "block"
 unconditional = false
 batch_size = -1
 embedding = -1
+num_workers = 0
 seed = 42
 
 
@@ -158,7 +155,7 @@ window = 1
 alpha = 10.0
 patience = 10
 epochs = 100
-workers = 4
+workers = 0
 
 [bay_otide]
 K_trend = 30
@@ -169,8 +166,21 @@ time_scale = 1
 a0 = 1
 b0 = 1
 v = 1
+num_workers = 0
 tr_ratio = 0.6
 
+[bit_graph]
+node_number = -1
+kernel_set = [2,3,6,7]
+dropout = 0.05
+subgraph_size = 5
+node_dim = 3
+seq_len = -1
+lr = 0.001
+batch_size = 32
+epoch = 50
+num_workers = 0
+seed = 42
 
 [hkmf_t]
 tags = []
@@ -188,6 +198,7 @@ enc_in = -1
 dec_in = -1
 c_out = -1
 gpt_layers = 6
+num_workers = 0
 seed = 42
 
 [gpt4ts]
@@ -200,6 +211,7 @@ enc_in = -1
 dec_in = -1
 c_out = -1
 gpt_layers = 6
+num_workers = 0
 seed = 42
 
 

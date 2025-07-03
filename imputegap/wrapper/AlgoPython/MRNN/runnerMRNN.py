@@ -77,6 +77,10 @@ def mrnn_recov(matrix_in, hidden_dim=10, learning_rate=0.01, iterations=1000, se
         cont_data_test = cont_data_matrix[nan_row_selector]
         cont_data_train = cont_data_matrix[~nan_row_selector]
 
+        if cont_data_train.shape[0] <= 2:
+            print(f"\n(ERROR) Number of series to train to small for MRNN: {cont_data_train.shape[0]}\n\tPlease increase the number of series or change the dataset used.\n")
+            return matrix_in
+
 
         indices_ts = np.where(nan_row_selector)[0]
 

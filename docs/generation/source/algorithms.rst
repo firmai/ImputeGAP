@@ -17,6 +17,12 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
    * - LLMs
      - GPT4TS [34]_
      - NeurIPS -- 2023
+   * -
+     -
+     -
+   * -
+     -
+     -
    * - Deep Learning
      - MissNet [27]_
      - KDD -- 2024
@@ -50,6 +56,12 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
    * - Deep Learning
      - GAIN [28]_
      - ICML -- 2018
+   * -
+     -
+     -
+   * -
+     -
+     -
    * - Matrix Completion
      - CDRec [1]_
      - KAIS -- 2020
@@ -74,6 +86,12 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
    * - Matrix Completion
      - IterativeSVD [2]_
      - BIOINFORMATICS -- 2001
+   * -
+     -
+     -
+   * -
+     -
+     -
    * - Pattern Search
      - TKCM [11]_
      - EDBT -- 2017
@@ -83,6 +101,12 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
    * - Pattern Search
      - DynaMMo [10]_
      - KDD -- 2009
+   * -
+     -
+     -
+   * -
+     -
+     -
    * - Machine Learning
      - IIM [12]_
      - ICDE -- 2019
@@ -95,6 +119,12 @@ To learn how to use an imputation algorithm, please refer to the `tutorial <tuto
    * - Machine Learning
      - MissForest [15]_
      - BioInformatics -- 2011
+   * -
+     -
+     -
+   * -
+     -
+     -
    * - Statistics
      - KNNImpute
      - _
@@ -135,7 +165,7 @@ References
 
 .. [7] Jian-Feng Cai, Emmanuel J. Candès, Zuowei Shen: A Singular Value Thresholding Algorithm for Matrix Completion. SIAM J. Optim. 20(4): 1956-1982 (2010)
 
-.. [8] Hsiang-Fu Yu, Nikhil Rao, Inderjit S. Dhillon: Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction. NIPS 2016: 847-855
+.. [8] Hsiang-Fu Yu, Nikhil Rao, Inderjit S. Dhillon: Temporal Regularized Matrix Factorization for High-dimensional Time Series Prediction. NeurIPS 2016: 847-855
 
 .. [9] Xiuwen Yi, Yu Zheng, Junbo Zhang, Tianrui Li: ST-MVL: Filling Missing Values in Geo-Sensory Time Series Data. IJCAI 2016: 2704-2710
 
@@ -175,4 +205,4 @@ References
 
 .. [33] Jinguo Cheng, Chunwei Yang, Wanlin Cai, Yuxuan Liang, Qingsong Wen, Yuankai Wu: NuwaTS: a Foundation Model Mending Every Incomplete Time Series. Arxiv 2024
 
-.. [34] Tian Zhou, Peisong Niu, Xue Wang, Liang Sun, Rong Jin: One fits all: power general time series analysis by pretrained LM. NIPS 2023
+.. [34] Tian Zhou, Peisong Niu, Xue Wang, Liang Sun, Rong Jin: One fits all: power general time series analysis by pretrained LM. NeurIPS 2023

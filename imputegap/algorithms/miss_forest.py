@@ -48,6 +48,9 @@ def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', s
     https://pypi.org/project/MissForest/
     """
 
+    recov = np.copy(incomp_data)
+    m_mask = np.isnan(incomp_data)
+
     if verbose:
         print(f"(IMPUTATION) MISS FOREST\n\tMatrix: {incomp_data.shape[0]}, {incomp_data.shape[1]}\n\tn_estimators: {n_estimators}\n\tmax_iter: {max_iter}\n\tmax_features: {max_features}\n\tseed: {seed}\n")
 
@@ -64,9 +67,12 @@ def miss_forest(incomp_data, n_estimators=10, max_iter=3, max_features='sqrt', s
     # Initialize MissForest with custom estimators
     mf_imputer = MissForest(clf=clf, rgr=rgr, max_iter=max_iter)
     recov_data = mf_imputer.fit_transform(incomp_data)
+    recov_data = np.array(recov_data)
 
     end_time = time.time()
     if logs and verbose:
         print(f"\n> logs: imputation MISS FOREST - Execution Time: {(end_time - start_time):.4f} seconds\n")
 
-    return np.array(recov_data)
+    recov[m_mask] = recov_data[m_mask]
+
+    return recov

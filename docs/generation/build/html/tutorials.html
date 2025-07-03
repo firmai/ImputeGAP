@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Notebooks" href="notebooks.html" /><link rel="prev" title="Getting Started" href="getting_started.html" />
 
     <link rel="shortcut icon" href="https://www.naterscreations.com/imputegap/favicon.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
-        <title>Tutorials - ImputeGAP 1.1.0 Documentation</title>
+        <title>Tutorials - ImputeGAP 1.1.1</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
@@ -168,7 +168,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">ImputeGAP 1.1.0 Documentation</div></a>
+      <a href="index.html"><div class="brand">ImputeGAP 1.1.1</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo" src="https://www.naterscreations.com/imputegap/logo_imputegab.png" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">ImputeGAP 1.1.0 Documentation</span>
+  <span class="sidebar-brand-text">ImputeGAP 1.1.1</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -282,7 +282,7 @@
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">¶</a></h1>
 <section id="dataset-loading">
 <span id="loading"></span><h2>Dataset Loading<a class="headerlink" href="#dataset-loading" title="Link to this heading">¶</a></h2>
-<p>ImputeGAP comes with several time series datasets. The list of datasets is described <a class="reference external" href="datasets.html">here</a>.</p>
+<p>ImputeGAP comes with several time series datasets. The datasets are listed <a class="reference external" href="datasets.html">here</a>.</p>
 <p>As an example, we use the eeg-alcohol dataset, composed of individuals with a genetic predisposition to alcoholism. The dataset contains measurements from 64 electrodes placed on subject’s scalps, sampled at 256 Hz. The dimensions of the dataset are 64 series, each containing 256 values.</p>
 <p>To load and plot the eeg-alcohol dataset from the library:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
@@ -300,7 +300,7 @@
 <span class="n">ts</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">input_data</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">nbr_series</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">nbr_val</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;./imputegap_assets&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The module <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> contains all the publicly available datasets provided by the library, which can be listed as follows:</p>
+<p>The module <code class="docutils literal notranslate"><span class="pre">ts.datasets</span></code> contains all the publicly available datasets provided by the library. They can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP datasets : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">datasets</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -317,13 +317,13 @@
 <p class="admonition-title">Note</p>
 <p>Please ensure that your input data satisfies the following format:</p>
 <ul class="simple">
-<li><p>Columns are the series’ values, and rows are the timestamps</p></li>
+<li><p>Columns are the series’ values</p></li>
 <li><p>Column separator: empty space</p></li>
 <li><p>Row separator: newline</p></li>
 <li><p>Missing values are NaNs</p></li>
 </ul>
 </div>
-<p>To import the time series as a matrix, add it to the  <code class="docutils literal notranslate"><span class="pre">ts.import_matrix</span></code> function:</p>
+<p>To import the time series as a matrix, pass it as an argument of the <code class="docutils literal notranslate"><span class="pre">ts.import_matrix</span></code> function:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="n">mat</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
@@ -334,7 +334,7 @@
 <br></section>
 <section id="data-contamination">
 <span id="contamination"></span><h2>Data Contamination<a class="headerlink" href="#data-contamination" title="Link to this heading">¶</a></h2>
-<p>We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. The list of patterns is described <a class="reference external" href="patterns.html">here</a>.</p>
+<p>We now describe how to simulate missing values in the loaded dataset. ImputeGAP implements eight different missingness patterns. The patterns are described <a class="reference external" href="patterns.html">here</a>.</p>
 <p>As example, we show how to contaminate the eeg-alcohol dataset with the MCAR pattern:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
@@ -362,7 +362,7 @@
 <br></section>
 <section id="imputation">
 <span id="id2"></span><h2>Imputation<a class="headerlink" href="#imputation" title="Link to this heading">¶</a></h2>
-<p>In this section, we will illustrate how to impute the contaminated time series. Our library implements five families of imputation algorithms: Statistical, Machine Learning, Matrix Completion, Deep Learning, and Pattern Search.
+<p>In this section, we will illustrate how to impute the contaminated time series. Our library implements six families of imputation algorithms: Statistical, Machine Learning, Matrix Completion, Deep Learning, Pattern Search, and Large Language Models.
 The list of algorithms is described <a class="reference external" href="algorithms.html">here</a>.</p>
 <p>Let’s illustrate the imputation using the CDRec algorithm from the Matrix Completion family.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.imputation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Imputation</span>
@@ -396,7 +396,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">imputer</span><span class="o">.</span><span class="n">impute</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>All algorithms developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.algorithms</span></code> module, which can be listed as follows:</p>
+<p>All algorithms developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.algorithms</span></code> module. They can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Imputation families : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">families</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -443,7 +443,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">utils</span><span class="o">.</span><span class="n">save_optimization</span><span class="p">(</span><span class="n">optimal_params</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">imputer</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="s2">&quot;eeg-alcohol&quot;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;ray_tune&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>All optimizers developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.optimizers</span></code> module, which can be listed as follows:</p>
+<p>All optimizers developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.optimizers</span></code> module. They can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AutoML Optimizers : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">optimizers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -512,7 +512,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">ts</span><span class="o">.</span><span class="n">print_results</span><span class="p">(</span><span class="n">imputer</span><span class="o">.</span><span class="n">downstream_metrics</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Downstream results&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>All downstream models developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.forecasting_models</span></code> module, which can be listed as follows:</p>
+<p>All downstream models developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.forecasting_models</span></code> module. They can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP downstream models for forecasting : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">forecasting_models</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -521,7 +521,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <br></section>
 <section id="explainer">
 <span id="id8"></span><h2>Explainer<a class="headerlink" href="#explainer" title="Link to this heading">¶</a></h2>
-<p>The library provides insights into the algorithm’s behavior by identifying the features that impact the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (<a class="reference external" href="https://shap.readthedocs.io/en/latest/">SHAP</a>) to reveal how different time series features influence the model’s predictions.</p>
+<p>The library provides insights into the algorithm’s behavior by identifying the features that impact the imputation results. It trains a regression model to predict imputation results across various methods and uses SHapley Additive exPlanations (<a class="reference external" href="https://shap.readthedocs.io/en/latest/">SHAP</a>) to measure how different time series features influence the model’s predictions.</p>
 <p>Let’s illustrate the explainer using the CDRec algorithm and MCAR missingness pattern:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.explainer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Explainer</span>
@@ -545,7 +545,7 @@ The list of algorithms is described <a class="reference external" href="algorith
 <span class="n">exp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>All feature extractors developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.extractors</span></code> module, which can be listed as follows:</p>
+<p>All feature extractors developed in ImputeGAP are available in the <code class="docutils literal notranslate"><span class="pre">ts.extractors</span></code> module. They can be listed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">imputegap.recovery.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeries</span>
 <span class="n">ts</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ImputeGAP features extractors : </span><span class="si">{</span><span class="n">ts</span><span class="o">.</span><span class="n">extractors</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -628,7 +628,7 @@ The list of algorithms is described <a class="reference external" href="algorith
       
     </aside>
   </div>
-</div><script src="static/documentation_options.js?v=fc837d61"></script>
+</div><script src="static/documentation_options.js?v=58fbf978"></script>
     <script src="static/doctools.js?v=9bcbadda"></script>
     <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/scripts/furo.js?v=5fa4622c"></script>
