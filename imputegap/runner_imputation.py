@@ -14,7 +14,7 @@ ts.normalize(normalizer="z_score")
 ts_m = ts.Contamination.mcar(ts.data)
 
 # impute the contaminated series
-imputer = Imputation.DeepLearning.DeepMVI(ts_m)
+imputer = Imputation.DeepLearning.BRITS(ts_m)
 imputer.impute()
 
 # compute and print the imputation metrics

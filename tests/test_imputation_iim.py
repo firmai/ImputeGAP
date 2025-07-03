@@ -15,8 +15,7 @@ class TestIIM(unittest.TestCase):
         ts_1 = TimeSeries()
         ts_1.load_series(utils.search_path("chlorine"), nbr_val=200)
 
-        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10,
-                                              offset=0.1, seed=True)
+        incomp_data = ts_1.Contamination.mcar(input_data=ts_1.data, rate_dataset=0.4, rate_series=0.36, block_size=10, offset=0.1, seed=True)
 
         algo = Imputation.MachineLearning.IIM(incomp_data)
         algo.impute()
@@ -24,12 +23,7 @@ class TestIIM(unittest.TestCase):
 
         _, metrics = algo.recov_data, algo.metrics
 
-        expected_metrics = {
-            "RMSE": 0.18572496326764323,
-            "MAE": 0.10949164277232941,
-            "MI": 0.5761195297517298,
-            "CORRELATION": 0.8537949264420192
-        }
+        expected_metrics = {"RMSE": 0.18572496326764323, "MAE": 0.10949164277232941, "MI": 0.5761195297517298, "CORRELATION": 0.8537949264420192}
 
         ts_1.print_results(metrics)
 

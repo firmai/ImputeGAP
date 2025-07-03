@@ -1,0 +1,416 @@
+# IMPUTATION DEFAULT VALUES ==========================================================================
+
+#[your_algo_name]
+#param_1 = 3
+#param_2 = "test"
+#param_3 = 0.01
+
+# ALGORITHM DEFAULT VALUES : MATRIX COMPLETION
+[cdrec]
+rank = 3
+epsilon = 0.000001
+epsilon_str = "E-6"
+iteration = 100
+
+[iterative_svd]
+rank = 3
+
+[grouse]
+max_rank = 3
+
+[rosl]
+rank = 3
+regularization = 0.6
+
+[soft_impute]
+max_rank = 3
+
+[spirit]
+k = 4
+w = 6
+lvalue = 1.0
+
+[svt]
+tau = 0.2
+
+[trmf]
+lags = []
+K = 10
+lambda_f = 0.1
+lambda_x = 0.1
+lambda_w = 0.1
+eta = 1
+alpha = 10
+max_iter = 100
+
+
+
+# ALGORITHM DEFAULT VALUES : MACHINE LEARNING
+[iim]
+learning_neighbors = 10
+algorithm_code = "iim 2"
+
+[mice]
+max_iter = 1
+tol = 0.001
+initial_strategy = "mean"
+seed = 42
+
+[miss_forest]
+n_estimators = 10
+max_iter = 3
+max_features = "sqrt"
+seed = 42
+
+[xgboost]
+n_estimators = 3
+seed = 42
+
+
+
+# ALGORITHM DEFAULT VALUES : PATTERN SEARCH
+[stmvl]
+window_size = 7
+gamma = 0.85
+alpha = 2
+
+[dynammo]
+h = 3
+max_iteration = 100
+approximation = true
+
+[tkcm]
+rank = 4
+
+# ALGORITHM DEFAULT VALUES : STATISTICS
+[knn_impute]
+k = 5
+weights = "uniform"
+
+[interpolation]
+method = "linear"
+poly_order = 2
+
+
+# ALGORITHM DEFAULT VALUES : DEEP LEARNING
+[mrnn]
+hidden_dim = -1
+learning_rate = 0.01
+iterations = 20
+sequence_length = 7
+
+[brits]
+model = "brits_i_univ"
+epoch = 100
+batch_size = -1
+nbr_features = 1
+hidden_layers = 64
+num_workers = 0
+
+[deep_mvi]
+max_epoch = 100
+patience = 2
+lr = 0.001
+
+[mpin]
+incre_mode = "alone"
+window = 1
+k = 10
+learning_rate = 0.01
+weight_decay = 0.1
+epochs = 200
+num_of_iteration = 5
+threshold = 0.25
+base = "SAGE"
+
+[pristi]
+target_strategy = "block"
+unconditional = false
+batch_size = -1
+embedding = -1
+num_workers = 0
+seed = 42
+
+
+[miss_net]
+alpha = 0.5
+beta = 0.1
+L = 10
+n_cl = 1
+max_iter = 10
+tol = 4
+random_init = false
+
+[gain]
+batch_size = -1
+hint_rate = 0.9
+alpha = 10
+epoch = 100
+
+[grin]
+d_hidden = 64
+lr = 0.001
+batch_size = -1
+window = 1
+alpha = 10.0
+patience = 10
+epochs = 100
+workers = 0
+
+[bay_otide]
+K_trend = 30
+K_season = 1
+n_season = 7
+K_bias = 0
+time_scale = 1
+a0 = 1
+b0 = 1
+v = 1
+num_workers = 0
+tr_ratio = 0.6
+
+[bit_graph]
+node_number = -1
+kernel_set = [2,3,6,7]
+dropout = 0.05
+subgraph_size = 5
+node_dim = 3
+seq_len = -1
+lr = 0.001
+batch_size = 32
+epoch = 50
+num_workers = 0
+seed = 42
+
+[hkmf_t]
+tags = []
+data_names = []
+epoch = 7
+
+# ALGORITHM DEFAULT VALUES : PLMs/LLMs
+[nuwats]
+seq_length = -1
+patch_size = -1
+batch_size = -1
+pred_length = -1
+label_length = -1
+enc_in = -1
+dec_in = -1
+c_out = -1
+gpt_layers = 6
+num_workers = 0
+seed = 42
+
+[gpt4ts]
+seq_length = -1
+patch_size = -1
+batch_size = -1
+pred_length = -1
+label_length = -1
+enc_in = -1
+dec_in = -1
+c_out = -1
+gpt_layers = 6
+num_workers = 0
+seed = 42
+
+
+
+# OPTIMIZER DEFAULT VALUES ==========================================================================
+[greedy]
+n_calls = 250
+metrics='RMSE'
+
+[bayesian]
+n_calls = 2
+n_random_starts = 50
+acq_func = 'gp_hedge'
+metrics='RMSE'
+
+[pso]
+n_particles = 50
+c1 = 0.5
+c2 = 0.3
+w = 0.9
+iterations=10
+n_processes=1
+metrics='RMSE'
+
+[sh]
+num_configs = 10
+num_iterations = 2
+reduction_factor = 10
+metrics="RMSE"
+
+[ray_tune]
+metrics = 'RMSE'
+n_calls = 1
+max_concurrent_trials = -1
+
+# DOWNSTREAM DEFAULT VALUES ==========================================================================
+[forecaster-naive]
+strategy = "mean"
+window_length = 10
+sp = 7
+
+[forecaster-exp-smoothing]
+trend = "additive"
+seasonal = "additive"
+sp = 7
+
+[forecaster-prophet]
+seasonality_mode = "additive"
+n_changepoints = 25
+
+[forecaster-nbeats]
+input_chunk_length = 12
+output_chunk_length = 12
+num_blocks = 3
+layer_widths = 20
+random_state = 42
+n_epochs = 10
+pl_trainer_kwargs = "cpu"
+
+[forecaster-xgboost]
+lags = 7
+
+[forecaster-lightgbm]
+lags = 7
+verbose = -1
+
+[forecaster-lstm]
+input_chunk_length = 12
+model = 'LSTM'
+random_state = 42
+n_epochs = 10
+pl_trainer_kwargs = "cpu"
+
+[forecaster-deepar]
+input_chunk_length = 12
+model = 'RNN'
+random_state = 42
+n_epochs = 10
+pl_trainer_kwargs = "cpu"
+
+[forecaster-transformer]
+input_chunk_length = 12
+output_chunk_length = 12
+random_state = 42
+n_epochs = 10
+pl_trainer_kwargs = "cpu"
+
+[forecaster-hw-add]
+sp = 7
+trend = "add"
+seasonal = "additive"
+
+[forecaster-arima]
+sp = 7
+suppress_warnings = true
+start_p = 1
+start_q = 1
+max_p = 3
+max_q = 3
+start_P = 0
+seasonal = true
+d = 1
+D = 1
+
+[forecaster-sf-arima]
+sp= 7
+start_p = 1
+start_q = 1
+max_p = 3
+max_q = 3
+start_P = 0
+seasonal = true
+d = 1
+D = 1
+
+[forecaster-bats]
+sp= 7
+use_trend = true
+use_box_cox = false
+
+
+[forecaster-ets]
+sp= 7
+auto = true
+
+[forecaster-croston]
+smoothing = 0.1
+
+[forecaster-theta]
+sp = 7
+deseasonalize = false
+
+[forecaster-unobs]
+level = true
+trend = true
+sp = 7
+
+[forecaster-rnn]
+input_size = 20
+inference_input_size = 12
+
+
+
+
+
+
+
+# FUNCTION DEFAULT VALUES ==========================================================================
+
+# FUNCTION DEFAULT VALUES : EXPLAINER
+[explainer]
+splitter = 10
+nbr_series = 15
+
+# FUNCTION DEFAULT VALUES : LOADER
+[loading]
+load_dataset = "drift"
+load_algorithm = "cdrec"
+load_normalization = "Normal"
+load_series = ["-3:all_except_two"]
+load_missing_rate = "20"
+load_scenario = "missing_pourcentage"
+load_series_contamination = []
+load_missing_rate_contamination = "0"
+
+
+[colors]
+chart = ["#696969", "#2b908f", "#a6c96a", "#876d5d", "#8f10ba", "#f7a35c", "#434348", "#f15c80", "#910000", "#8085e9", "#365e0c", "#90ed7d"]
+plot = ['dimgrey', 'plum', 'lightblue', 'mediumseagreen', 'khaki', 'gold', 'darkslategrey', 'hotpink', 'chocolate', 'lightseagreen', 'wheat']
+
+
+# MODEL DEFAULT VALUES ==========================================================================
+
+# MODEL PRISTI ==========================================================================
+[train]
+epochs = 20
+batch_size = 16
+lr = 0.01
+valid_epoch_interval = 5
+is_lr_decay = true
+
+[diffusion]
+layers = 2
+channels = 1
+nheads = 1
+diffusion_embedding_dim = 64
+beta_start = 0.0001
+beta_end = 0.2
+num_steps = 100
+schedule = "quad"
+is_adp = true
+proj_t = 8
+is_cross_t = true
+is_cross_s = true
+
+[model]
+is_unconditional = 0
+timeemb = 64
+featureemb = 8
+target_strategy = "hybrid"
+use_guide = true
+mask_sensor = []

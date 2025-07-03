@@ -9,6 +9,8 @@
 # ===============================================================================================================
 
 import json
+import os
+
 import numpy as np
 import pandas as pd
 
@@ -48,6 +50,7 @@ def parse_rec(values, masks, evals, eval_masks, dir_):
 
 def prepare_dat(input, output, m_train, m_test, m_val=None):
 
+    os.makedirs(os.path.dirname(output), exist_ok=True)
     file = open(output, 'w')
     src = input
 

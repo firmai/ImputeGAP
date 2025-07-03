@@ -26,12 +26,7 @@ class TestInterpolation(unittest.TestCase):
 
         _, metrics = algo.recov_data, algo.metrics
 
-        expected_metrics = {
-            "RMSE": 0.14768327523878277,
-            "MAE": 0.10889031013542044,
-            "MI": 0.782928657543708,
-            "CORRELATION": 0.9039106910436514
-        }
+        expected_metrics = {"RMSE": 0.14768327523878277, "MAE": 0.10889031013542044, "MI": 0.782928657543708, "CORRELATION": 0.9039106910436514}
 
         ts_1.print_results(metrics)
 

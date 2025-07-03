@@ -1,0 +1,64 @@
+[CATEGORIES]
+Geometry = [
+  "SB_BinaryStats_mean_longstretch1",
+  "SB_BinaryStats_diff_longstretch0",
+  "SB_TransitionMatrix_3ac_sumdiagcov",
+  "MD_hrv_classic_pnn40",
+  "DN_HistogramMode_5",
+  "DN_HistogramMode_10",
+  "DN_OutlierInclude_p_001_mdrmd",
+  "DN_OutlierInclude_n_001_mdrmd",
+  "CO_Embed2_Dist_tau_d_expfit_meandiff",
+  "SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1",
+  "SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1"
+]
+Correlation = [
+  "CO_f1ecac",
+  "CO_FirstMin_ac",
+  "CO_trev_1_num",
+  "CO_HistogramAMI_even_2_5",
+  "IN_AutoMutualInfoStats_40_gaussian_fmmi",
+  "FC_LocalSimple_mean1_tauresrat"
+]
+Transformation = [
+  "SP_Summaries_welch_rect_area_5_1",
+  "SP_Summaries_welch_rect_centroid"
+]
+Trend = [
+  "PD_PeriodicityWang_th0_01",
+  "FC_LocalSimple_mean3_stderr",
+  "SB_MotifThree_quantile_hh"
+]
+
+[FEATURES]
+"SB_BinaryStats_mean_longstretch1" = "Longest stretch of above-mean values"
+"SB_BinaryStats_diff_longstretch0" = "Longest stretch of decreasing values"
+"SB_TransitionMatrix_3ac_sumdiagcov" = "Transition matrix column variance"
+"MD_hrv_classic_pnn40" = "Proportion of high incremental changes in the series"
+"DN_HistogramMode_5" = "5-bin histogram mode"
+"DN_HistogramMode_10" = "10-bin histogram mode"
+"DN_OutlierInclude_p_001_mdrmd" = "Positive outlier timing"
+"DN_OutlierInclude_n_001_mdrmd" = "Negative outlier timing"
+"CO_Embed2_Dist_tau_d_expfit_meandiff" = "Goodness of exponential fit to embedding distance distribution"
+"SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1" = "Detrended fluctuation analysis (low-scale scaling)"
+"SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1" = "Rescaled range fluctuation analysis (low-scale scaling)"
+"CO_f1ecac" = "First 1/e crossing of the ACF"
+"CO_FirstMin_ac" = "First minimum of the ACF"
+"CO_trev_1_num" = "Time reversibility"
+"CO_HistogramAMI_even_2_5" = "Histogram-based automutual information (lag 2, 5 bins)"
+"IN_AutoMutualInfoStats_40_gaussian_fmmi" = "First minimum of the AMI function"
+"FC_LocalSimple_mean1_tauresrat" = "Change in autocorrelation timescale after incremental differencing"
+"SP_Summaries_welch_rect_area_5_1" = "Power in the lowest 20% of frequencies"
+"SP_Summaries_welch_rect_centroid" = "Centroid frequency"
+"PD_PeriodicityWang_th0_01" = "Wangs periodicity metric"
+"FC_LocalSimple_mean3_stderr" = "Error of 3-point rolling mean forecast"
+"SB_MotifThree_quantile_hh" = "Entropy of successive pairs in symbolized series"
+
+[pycatch]
+categories = ["Geometry", "Correlation", "Transformation", "Trend"]
+
+[tsfel]
+categories = ["spectral", "statistical", "temporal", "fractal"]
+
+[tsfresh]
+categories = ["statistical", "temporal", "shape", "frequency"]
