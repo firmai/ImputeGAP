@@ -589,59 +589,59 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
     if dir_name and not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
-    if algorithm == "cdrec":
+    if algorithm == "cdrec" or algorithm == "CDRec":
         params_to_save = {
             "rank": int(optimal_params[0]),
             "eps": optimal_params[1],
             "iters": int(optimal_params[2])
     }
-    elif algorithm == "mrnn":
+    elif algorithm == "mrnn" or algorithm == "MRNN":
         params_to_save = { "hidden_dim": int(optimal_params[0]),
             "learning_rate": optimal_params[1],
             "num_iter": int(optimal_params[2]),
             "seq_len": 7  # Default value
         }
-    elif algorithm == "stmvl":
+    elif algorithm == "stmvl" or algorithm == "STMVL" or algorithm == "ST-MVL":
         params_to_save = {
             "window_size": int(optimal_params[0]),
             "gamma": optimal_params[1],
             "alpha": int(optimal_params[2])
         }
-    elif algorithm == "iim":
+    elif algorithm == "iim" or algorithm == "IIM":
         params_to_save = {
             "learning_neighbors": int(optimal_params[0])
         }
 
-    elif algorithm == "iterative_svd":
+    elif algorithm == "iterative_svd" or algorithm == "IterativeSVD":
         params_to_save = {
             "rank": int(optimal_params[0])
         }
-    elif algorithm == "grouse":
+    elif algorithm == "grouse" or algorithm == "GROUSE":
         params_to_save= {
             "max_rank": int(optimal_params[0])
         }
-    elif algorithm == "rosl":
+    elif algorithm == "rosl" or algorithm == "ROSL":
         params_to_save = {
             "rank": int(optimal_params[0]),
             "regularization": optimal_params[1]
         }
-    elif algorithm == "soft_impute":
+    elif algorithm == "soft_impute" or algorithm == "SoftImpute":
         params_to_save = {
             "max_rank": int(optimal_params[0])
         }
-    elif algorithm == "spirit":
+    elif algorithm == "spirit" or algorithm == "SPIRIT":
         params_to_save = {
             "k": int(optimal_params[0]),
             "w": int(optimal_params[1]),
             "lvalue": optimal_params[2]
         }
-    elif algorithm == "svt":
+    elif algorithm == "svt" or algorithm == "SVT":
         params_to_save = {
             "tau": optimal_params[0],
             "delta": optimal_params[1],
             "max_iter": int(optimal_params[2])
         }
-    elif algorithm == "dynammo":
+    elif algorithm == "dynammo" or algorithm == "DynamoMO":
         params_to_save = {
             "h": int(optimal_params[0]),
             "max_iteration": int(optimal_params[1]),
@@ -775,7 +775,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "num_workers": int(optimal_params[9]),
             "seed": int(optimal_params[10]),
         }
-    elif algorithm == "nuwats":
+    elif algorithm == "nuwats" or algorithm == "NUWATS":
         params_to_save = {
             "seq_length": int(optimal_params[0]),
             "patch_size": optimal_params[1],
@@ -789,7 +789,7 @@ def save_optimization(optimal_params, algorithm="cdrec", dataset="", optimizer="
             "num_workers": int(optimal_params[9]),
             "seed": int(optimal_params[10]),
         }
-    elif algorithm == "gpt4ts":
+    elif algorithm == "gpt4ts" or algorithm == "GPT4TS":
         params_to_save = {
             "seq_length": int(optimal_params[0]),
             "patch_size": optimal_params[1],

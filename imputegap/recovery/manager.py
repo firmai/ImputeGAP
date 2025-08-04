@@ -470,12 +470,12 @@ class TimeSeries:
 
                 if incomp_data is not None and recov_data is None:  # plot infected matrix
                     if np.isnan(incomp_data[i, :]).any():
-                        ax.plot(timestamps, input_data[i, :nbr_val], linewidth=1.5,
-                                color=color, linestyle='--', label=title_contamination)
+                        ax.plot(timestamps, input_data[i, :nbr_val], linewidth=2,
+                                color="blue", linestyle='--', label=title_contamination)
 
                     if np.isnan(incomp_data[i, :]).any() or not subplot:
                         ax.plot(np.arange(min(incomp_data.shape[1], nbr_val)), incomp_data[i, :nbr_val],
-                                color=color, linewidth=2.5, linestyle='-', label=f'Series')
+                                color=color, linewidth=7, linestyle='-', label=f'Series')
 
                 if recov_data is not None:  # plot imputed matrix
                     if np.isnan(incomp_data[i, :]).any():
@@ -617,6 +617,8 @@ class TimeSeries:
             if seed:
                 seed_value = 42
                 np.random.seed(seed_value)
+            else:
+                seed_value = -1
 
             ts_contaminated = input_data.copy()
             M, NS = ts_contaminated.shape
@@ -1194,5 +1196,3 @@ class TimeSeries:
                 S = S + 1
 
             return ts_contaminated
-
-
