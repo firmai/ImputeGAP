@@ -504,6 +504,38 @@ class Imputation:
 
                 return self
 
+        class Test(BaseImputer):
+            """
+            ZeroImpute class to impute missing values with zeros.
+
+            Methods
+            -------
+            impute(self, params=None):
+                Perform imputation by replacing missing values with zeros.
+            """
+            algorithm = "test"
+
+            def impute(self, params=None):
+                """
+                Impute missing values by replacing them with zeros.
+                Template for adding external new algorithm
+
+                Parameters
+                ----------
+                params : dict, optional
+                    Dictionary of algorithm parameters (default is None).
+
+                Returns
+                -------
+                self : ZeroImpute
+                    The object with `recov_data` set.
+                """
+                from imputegap.algorithms.test import zero_impute
+
+                self.recov_data = zero_impute(self.incomp_data, params)
+
+                return self
+
         class Interpolation(BaseImputer):
             """
             Interpolation class to impute missing values with interpolation-based algorithm
