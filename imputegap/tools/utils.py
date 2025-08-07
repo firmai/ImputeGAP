@@ -871,7 +871,7 @@ def config_contamination(ts, pattern, dataset_rate=0.4, series_rate=0.4, block_s
         incomp_data = ts.Contamination.mcar(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, block_size=block_size, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     elif ptn == "mp" or ptn == "missingpercentage" or ptn == "aligned":
         incomp_data = ts.Contamination.aligned(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, explainer=explainer, verbose=verbose)
-    elif ptn == "ps" or ptn == "percentageshift" or ptn == "scattered":
+    elif ptn == "ps" or ptn == "percentageshift" or ptn == "scattered" or ptn == "scatter":
         incomp_data = ts.Contamination.scattered(input_data=ts.data, rate_dataset=dataset_rate, rate_series=series_rate, offset=offset, seed=seed, explainer=explainer, verbose=verbose)
     elif ptn == "disjoint":
         incomp_data = ts.Contamination.disjoint(input_data=ts.data, rate_series=dataset_rate, limit=1, offset=offset, verbose=verbose)
